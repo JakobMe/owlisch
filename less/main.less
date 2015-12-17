@@ -1,0 +1,29 @@
+/*
+ * LESS-Module: Main.
+ * Haupt-Style-Datei; definiert alle Styles
+ * der Seite, greift auf Variablen und Mixins
+ * der entsprechenden Module zurück.
+ * @author Jakob Metzger <jakob.me@gmail.com>
+ * @copyright 2015 Jakob Metzger
+ */
+
+// HTML
+html { -webkit-text-size-adjust: 100%; }
+
+// Body
+body {
+    -webkit-font-smoothing: subpixel-antialiased;
+    position: fixed;
+    overflow: hidden;
+    margin: 0;
+    padding: 0;
+    width: 100vw;
+    height: 100vh;
+    .font-main();
+}
+
+// Responsive
+@media screen and (min-width: 320px) {
+    
+    // TODO: Styles für Desktop
+}

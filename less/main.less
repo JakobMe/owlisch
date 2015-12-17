@@ -22,6 +22,52 @@ body {
     .font-main();
 }
 
+// Top-Leiste
+#bar-top {
+    position: fixed;
+    text-align: center;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: (@height-statusbar + @height-titlebar);
+    background: @color-titlebar;
+    color: @color-text-on-titlebar;
+    font-size: @font-titlebar;
+    .borderbox();
+    
+    // Statusbar
+    #bar-status { height: @height-statusbar; }
+    
+    // Titlebar
+    #bar-title {
+        position: relative;
+        height: @height-titlebar;
+        
+        // Titel-Text
+        #bar-title-text {
+            font-weight: bold;
+            display: inline-block;
+            text-transform: uppercase;
+            height: @height-titlebar;
+            line-height: @height-titlebar;
+        }
+        
+        // Icons
+        #bar-title-left, #bar-title-right {
+            position: absolute;
+            text-align: center;
+            top: 0;
+            width: @height-titlebar;
+            height: @height-titlebar;
+            line-height: @height-titlebar;
+        }
+        
+        // Icon Positionen
+        #bar-title-left { left: 0; }
+        #bar-title-right { right: 0; }
+    }
+}
+
 // Responsive
 @media screen and (min-width: 320px) {
     

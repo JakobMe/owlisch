@@ -21,6 +21,7 @@ $(document).ready(function() {
     var SEL_BODY                = "body";
     var SEL_QUIZ_STEP           = ".quiz-progress-step";
     var SEL_QUIZ_STEP_CURRENT   = ".quiz-progress-step.current";
+    var SEL_BUTTON              = ".button";
     
     // Konstanten: CSS-Klassen
     var CLASS_WEBAPP            = "webapp";
@@ -52,8 +53,8 @@ $(document).ready(function() {
     /*
      * Bei Klick auf Quit-Fortschritt Quiz zufällig weiter schalten.
      */
-    $(SEL_BODY).on(EVENT_CLICK, ID_QUIZ_STEPS, function() {
-        progressQuiz(Math.random() < 0.5 ? true : false);
+    $(SEL_BODY).on(EVENT_CLICK, SEL_BUTTON, function() {
+        progressQuiz($(this).hasClass(CLASS_SUCCESS) ? true : false);
     });
     
     /*

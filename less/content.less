@@ -27,6 +27,30 @@
         font-size: @font-medium;
         .borderbox();
     }
+    
+    // Innenabstand
+    .content-padding { padding: @size-margin; }
+    
+    // Buttons
+    .button {
+        display: block;
+        font-weight: bold;
+        text-align: center;
+        cursor: pointer;
+        text-decoration: none;
+        margin-bottom: @size-margin;
+        color: @color-white;
+        font-size: @font-big;
+        padding: @size-margin;
+        .round-all();
+        
+        // Icons
+        .fa { margin-right: @size-padding; }
+        
+        // Varianten
+        &.success { background: @color-success; }
+        &.error { background: @color-error; }
+    }
 }
 
 // Responsive

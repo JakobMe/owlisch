@@ -58,7 +58,8 @@
                     display: block;
                     content: "";
                     margin: (@height-quiz-progress / 4) auto;
-                    background: @color-text-pale;
+                    background: @color-white;
+                    border: @size-line-medium solid @color-text-pale;
                     width: (@height-quiz-progress / 2);
                     height: (@height-quiz-progress / 2);
                     .round-all(@height-quiz-progress / 4);
@@ -71,8 +72,6 @@
                     font-size: @font-small;
                     width: @height-quiz-progress;
                     height: @height-quiz-progress;
-                    background: @color-white;
-                    border: @size-line-medium solid @color-text-pale;
                     line-height: (@height-quiz-progress - (2 * @size-line-medium));
                     .round-all(@height-quiz-progress / 2);
                     .transition();

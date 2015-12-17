@@ -51,6 +51,18 @@
                         	</div>
                     	</div>
                     	
+                    	<!--Buttons-->
+                    	<div class="content-padding">
+                        	<a class="button success">
+                            	<i class="fa fa-check"></i>
+                            	Richtig
+                            </a>
+                            <a class="button error">
+                            	<i class="fa fa-close"></i>
+                            	Falsch
+                            </a>
+                    	</div>
+                    	
                 	</div>
             	</article>
         	    

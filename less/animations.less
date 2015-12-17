@@ -1,0 +1,23 @@
+/*
+ * LESS-Modul: Animationen.
+ * Definiert globale CSS-Animationen.
+ * @author Jakob Metzger <jakob.me@gmail.com>
+ * @copyright 2015 Jakob Metzger
+ */
+
+// Quiz Fortschritt Erfolg
+@keyframes step-success {
+    0%   { border-color: @color-success; background: @color-success; }
+    100% { border-color: @color-text-pale; background: @color-white; }
+}
+
+// Quiz Fortschritt Fehler
+@keyframes step-error {
+    0%   { border-color: @color-error; background: @color-error; }
+    100% { border-color: @color-text-pale; background: @color-white; }
+}
+
+// Quiz Fortschritt Animation
+.animation-progress-step(@animation) {
+    animation: @animation @time-animation-progress normal forwards;
+}

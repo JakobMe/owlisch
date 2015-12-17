@@ -11,11 +11,50 @@
  */
 $(document).ready(function() {
     
+    // Konstanten: Events
+    var EVENT_CLICK             = "click";
+    
     // Konstanten: IDs
-    var ID_BODY             = "body";
+    var ID_QUIZ_STEPS           = "#quiz-progress-steps";
+    
+    // Konstanten: Selektoren
+    var SEL_BODY                = "body";
+    var SEL_QUIZ_STEP           = ".quiz-progress-step";
+    var SEL_QUIZ_STEP_CURRENT   = ".quiz-progress-step.current";
     
     // Konstanten: CSS-Klassen
-    var CLASS_WEBAPP        = "webapp";
+    var CLASS_WEBAPP            = "webapp";
+    var CLASS_CURRENT           = "current";
+    var CLASS_SUCCESS           = "success";
+    var CLASS_ERROR             = "error";
+    var CLASS_SOLVED            = "solved";
+    
+    /**
+     * Funktion: Quiz fortschreiten lassen.
+     * Setzt das Quiz auf den nächsten Schritt und setzt Erfolg/Fehler.
+     * @param {boolean} success Erfolg oder Fehler
+     */
+    function progressQuiz(success) {
+        
+        // Aktueller und nächster Schritt
+        var stepCurrent = $(ID_QUIZ_STEPS).children(SEL_QUIZ_STEP_CURRENT);
+        var stepNext = stepCurrent.next(SEL_QUIZ_STEP);
+        
+        // Aktuellen Schritt als gelöst markieren, nächsten Schritt aktivieren
+        stepCurrent.removeClass(CLASS_CURRENT).addClass(CLASS_SOLVED);
+        stepNext.addClass(CLASS_CURRENT);
+        
+        // Erfolg/Fehler setzen
+        if (success === true) { stepCurrent.addClass(CLASS_SUCCESS); }
+        else { stepCurrent.addClass(CLASS_ERROR); }
+    }
+    
+    /*
+     * Bei Klick auf Quit-Fortschritt Quiz zufällig weiter schalten.
+     */
+    $(SEL_BODY).on(EVENT_CLICK, ID_QUIZ_STEPS, function() {
+        progressQuiz(Math.random() < 0.5 ? true : false);
+    });
     
     /*
      * Sobald das Fenster geladen wurde.
@@ -27,7 +66,7 @@ $(document).ready(function() {
         
         // Falls die Seite als iOS Webapp ausgeführt wird
         if (window.navigator.standalone) {
-            $(ID_BODY).addClass(CLASS_WEBAPP);
+            $(SEL_BODY).addClass(CLASS_WEBAPP);
         }
     
     });

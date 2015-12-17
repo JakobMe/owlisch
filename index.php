@@ -36,13 +36,13 @@
                     	<div id="quiz-progress">
                         	<div id="quiz-progress-inner">
                         	    <div id="quiz-progress-bar"></div>
-                        	    <ul id="quiz-progress-container">
-                            	    <li class="quiz-progress-step solved success" data-step="1"></li>
-                            	    <li class="quiz-progress-step solved success" data-step="2"></li>
-                            	    <li class="quiz-progress-step solved error" data-step="3"></li>
-                            	    <li class="quiz-progress-step solved success" data-step="4"></li>
-                            	    <li class="quiz-progress-step solved error" data-step="5"></li>
-                            	    <li class="quiz-progress-step current" data-step="6"></li>
+                        	    <ul id="quiz-progress-steps">
+                            	    <li class="quiz-progress-step current" data-step="1"></li>
+                            	    <li class="quiz-progress-step" data-step="2"></li>
+                            	    <li class="quiz-progress-step" data-step="3"></li>
+                            	    <li class="quiz-progress-step" data-step="4"></li>
+                            	    <li class="quiz-progress-step" data-step="5"></li>
+                            	    <li class="quiz-progress-step" data-step="6"></li>
                             	    <li class="quiz-progress-step" data-step="7"></li>
                             	    <li class="quiz-progress-step" data-step="8"></li>
                             	    <li class="quiz-progress-step" data-step="9"></li>

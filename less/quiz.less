@@ -28,7 +28,7 @@
         }
         
         // Schritt-Container
-        #quiz-progress-container {
+        #quiz-progress-steps {
             overflow: hidden;
             position: absolute;
             list-style-type: none;
@@ -75,6 +75,7 @@
                     border: @size-line-medium solid @color-text-pale;
                     line-height: (@height-quiz-progress - (2 * @size-line-medium));
                     .round-all(@height-quiz-progress / 2);
+                    .transition();
                     .font-icon();
                 }
                 
@@ -82,12 +83,14 @@
                 &.success:after {
                     content: "\f00c";
                     color: @color-success;
+                    .animation-progress-step(step-success);
                 }
                 
                 // Fehler
                 &.error:after {
                     content: "\f00d";
                     color: @color-error;
+                    .animation-progress-step(step-error);
                 }
                 
                 // Aktuell

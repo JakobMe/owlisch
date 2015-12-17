@@ -24,32 +24,70 @@
 	<!--Body-->
 	<body>
     	
-    	<!--Top-Leiste-->
-    	<div id="bar-top">
-        	
-        	<!--Statusbar-->
-        	<div id="bar-status"></div>
-        	
-        	<!--Titlebar-->
-        	<div id="bar-title">
+    	<!--Viewport-->
+    	<section id="viewport">
+        	<div id="viewport-inner">
+        	    
+        	    <!--Inhalt-->
+            	<article id="content">
+                	<div id="content-inner">
+                    	
+                    	Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.
+                    	Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.
+                        Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.
+
+                	</div>
+            	</article>
+        	    
+            	<!--Top-Leiste-->
+            	<header id="bar-top">
+                	
+                	<!--Statusbar-->
+                	<div id="bar-status" class="disabled"></div>
+                	
+                	<!--Titlebar-->
+                	<div id="bar-title">
+                    	
+                    	<!--Linker Button-->
+                    	<a id="bar-title-left" href="#">
+                        	<i class="fa fa-chevron-left"></i>
+                        	<span class="bar-title-button"></span>
+                    	</a>
+                    	
+                    	<!--Rechter Button-->
+                    	<a id="bar-title-right" href="#">
+                        	<i class="fa"></i>
+                        	<span class="bar-title-button"></span>
+                    	</a>
+                    	
+                    	<!--Titel-->
+                    	<h1 id="bar-title-text">OWLisch</h1>
+                	
+                	</div>
+                	
+            	</header>
             	
-            	<!--Linker Button-->
-            	<div id="bar-title-left">
-                	<i class="fa fa-chevron-left"></i>
-            	</div>
-            	
-            	<!--Rechter Button-->
-            	<div id="bar-title-right">
-            	</div>
-            	
-            	<!--Titel-->
-            	<div id="bar-title-text">
-                	OWLisch
-            	</div>
-        	
+            	<!--Bottom-Leiste-->
+            	<nav id="bar-tabs">
+                	<a href="#home" class="bar-tabs-tab active" title="OWLisch">
+                    	<i class="fa fa-home"></i>
+                	</a>
+                	<a href="#quiz" class="bar-tabs-tab" title="Quiz">
+                    	<i class="no-icon">Q</i>
+                	</a>
+                	<a href="#progress" class="bar-tabs-tab" title="Fortschritt">
+                    	<i class="fa fa-line-chart"></i>
+                	</a>
+                	<a href="#dictionary" class="bar-tabs-tab" title="Wörterbuch">
+                    	<i class="fa fa-book"></i>
+                	</a>
+                	<a href="#help" class="bar-tabs-tab" title="Hilfe">
+                    	<i class="fa fa-question-circle"></i>
+                	</a>
+            	</nav>
+            
         	</div>
-        	
-    	</div>
+    	</section>
     	
 	</body>
 	

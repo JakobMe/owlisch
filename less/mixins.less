@@ -16,3 +16,22 @@
          -o-box-sizing: border-box;
             box-sizing: border-box;
 }
+
+// Textschatten
+.textshadow(@color: @color-black, @fade: 10%) {
+    text-shadow: 0 @size-line-medium 0 fade(@color, @fade);
+}
+
+// Schatten
+.shadow(@x, @y, @blur, @spread, @color) {
+    -webkit-box-shadow: @x @y @blur @spread @color;
+       -moz-box-shadow: @x @y @blur @spread @color;
+        -ms-box-shadow: @x @y @blur @spread @color;
+         -o-box-shadow: @x @y @blur @spread @color;
+            box-shadow: @x @y @blur @spread @color;
+}
+
+// Schatten: Linie
+.shadow-line(@y, @color) {
+    .shadow(0, @y, 0, 0, @color);
+}

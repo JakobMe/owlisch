@@ -5,23 +5,42 @@
  * @author Jakob Metzger <jakob.me@gmail.com>
  * @copyright 2015 Jakob Metzger
  */
- 
-// Größen
+
+// Größen (Allgemein)
+@width-responsive:          568px;
+@width-mobile:              320px;
+@width-iphone:              520px;
+@height-mobile:             568px;
+@height-iphone:             900px;
 @height-statusbar:          20px;
 @height-titlebar:           44px;
+
+// Größen (Linien & Abstände)
+@size-padding:              5px;
 @size-margin:               15px;
+@size-line-thin:            1px;
+@size-line-medium:          2px;
+@size-line-bold:            3px;
+@size-gap-mobile-top:       127px;
+@size-gap-mobile-bottom:    205px;
+@size-gap-mobile-sides:     94px;
 
 // Farben (Allgemein)
-@color-background:          #ffffff;
-@color-titlebar:            #5c6367;
+@color-white:               #ffffff;
+@color-black:               #000000;
+@color-background:          #e9f0ee;
+@color-titlebar:            #38ab66;
+@color-tabbar:              #ffffff;
 
 // Farben (Text)
 @color-text-light:          #ffffff;
-@color-text-dark:           #2b2b2b;
+@color-text-dark:           #373a39;
+@color-text-pale:           #bdc9c5;
 @color-text-on-titlebar:    contrast(@color-titlebar, @color-text-dark, @color-text-light);
 
 // Schriftgrößen
 @font-small:                12px;
 @font-medium:               16px;
 @font-big:                  22px;
-@font-titlebar:             18px;
+@font-titlebar-icon:        20px;
+@font-titlebar-text:        18px;

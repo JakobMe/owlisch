@@ -11,6 +11,50 @@
 		"outputPathIsOutsideProject": 0,
 		"outputPathIsSetByUser": 0
 		},
+	"\/img\/iphone-retina.png": {
+		"fileType": 32768,
+		"ignore": 0,
+		"ignoreWasSetByUser": 0,
+		"initialSize": 98588,
+		"inputAbbreviatedPath": "\/img\/iphone-retina.png",
+		"outputAbbreviatedPath": "\/img\/iphone-retina.png",
+		"outputPathIsOutsideProject": 0,
+		"outputPathIsSetByUser": 0,
+		"processed": 1
+		},
+	"\/img\/iphone.png": {
+		"fileType": 32768,
+		"ignore": 0,
+		"ignoreWasSetByUser": 0,
+		"initialSize": 35498,
+		"inputAbbreviatedPath": "\/img\/iphone.png",
+		"outputAbbreviatedPath": "\/img\/iphone.png",
+		"outputPathIsOutsideProject": 0,
+		"outputPathIsSetByUser": 0,
+		"processed": 1
+		},
+	"\/img\/statusbar-retina.png": {
+		"fileType": 32768,
+		"ignore": 0,
+		"ignoreWasSetByUser": 0,
+		"initialSize": 3363,
+		"inputAbbreviatedPath": "\/img\/statusbar-retina.png",
+		"outputAbbreviatedPath": "\/img\/statusbar-retina.png",
+		"outputPathIsOutsideProject": 0,
+		"outputPathIsSetByUser": 0,
+		"processed": 1
+		},
+	"\/img\/statusbar.png": {
+		"fileType": 32768,
+		"ignore": 0,
+		"ignoreWasSetByUser": 0,
+		"initialSize": 1563,
+		"inputAbbreviatedPath": "\/img\/statusbar.png",
+		"outputAbbreviatedPath": "\/img\/statusbar.png",
+		"outputPathIsOutsideProject": 0,
+		"outputPathIsSetByUser": 0,
+		"processed": 1
+		},
 	"\/index.php": {
 		"fileType": 8192,
 		"ignore": 0,

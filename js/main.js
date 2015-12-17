@@ -11,5 +11,25 @@
  */
 $(document).ready(function() {
     
-    // TODO: Alles!
+    // Konstanten: IDs
+    var ID_BODY             = "body";
+    
+    // Konstanten: CSS-Klassen
+    var CLASS_WEBAPP        = "webapp";
+    
+    /*
+     * Sobald das Fenster geladen wurde.
+     * Auf das Laden des Fensters warten, bevor Funktionen
+     * aufgerufen werden, die beim Seitenaufruf die Seitenstruktur
+     * beeinflussen.
+     */
+    $(window).load(function() {
+        
+        // Falls die Seite als iOS Webapp ausgeführt wird
+        if (window.navigator.standalone) {
+            $(ID_BODY).addClass(CLASS_WEBAPP);
+        }
+    
+    });
+    
 });

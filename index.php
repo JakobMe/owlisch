@@ -13,11 +13,11 @@
 		
 		<!--CSS-->
         <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:400,400italic,900"  type="text/css">
-        <link rel="stylesheet" href="css/style.min.css?v=<?php echo rand(0, 100); ?>" type="text/css">
+        <link rel="stylesheet" href="css/style.min.css?v=<?php echo rand(0, 1000); ?>" type="text/css">
         
         <!--Javascript-->
         <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
-        <script type="text/javascript" src="js/main.min.js?v=<?php echo rand(0, 100); ?>"></script>
+        <script type="text/javascript" src="js/main.min.js?v=<?php echo rand(0, 1000); ?>"></script>
         
 	</head>
 	
@@ -32,10 +32,25 @@
             	<article id="content">
                 	<div id="content-inner">
                     	
-                    	Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.
-                    	Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.
-                        Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.
-
+                    	<!--Fortschritt-->
+                    	<div id="quiz-progress">
+                        	<div id="quiz-progress-inner">
+                        	    <div id="quiz-progress-bar"></div>
+                        	    <ul id="quiz-progress-container">
+                            	    <li class="quiz-progress-step solved success" data-step="1"></li>
+                            	    <li class="quiz-progress-step solved success" data-step="2"></li>
+                            	    <li class="quiz-progress-step solved error" data-step="3"></li>
+                            	    <li class="quiz-progress-step solved success" data-step="4"></li>
+                            	    <li class="quiz-progress-step solved error" data-step="5"></li>
+                            	    <li class="quiz-progress-step current" data-step="6"></li>
+                            	    <li class="quiz-progress-step" data-step="7"></li>
+                            	    <li class="quiz-progress-step" data-step="8"></li>
+                            	    <li class="quiz-progress-step" data-step="9"></li>
+                            	    <li class="quiz-progress-step" data-step="10"></li>
+                        	    </ul>
+                        	</div>
+                    	</div>
+                    	
                 	</div>
             	</article>
         	    

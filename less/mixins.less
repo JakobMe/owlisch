@@ -7,6 +7,7 @@
  
 // Haupt-Font
 .font-main() { font-family: "Lato", sans-serif; }
+.font-icon() { font-family: "FontAwesome", sans-serif; }
 
 // Border-Box
 .borderbox() {
@@ -34,4 +35,18 @@
 // Schatten: Linie
 .shadow-line(@y, @color) {
     .shadow(0, @y, 0, 0, @color);
+}
+
+// Abgerundete Ecken
+.round(@tl, @tr, @br, @bl) {
+    -webkit-border-radius: @tl @tr @br @bl;
+       -moz-border-radius: @tl @tr @br @bl;
+        -ms-border-radius: @tl @tr @br @bl;
+         -o-border-radius: @tl @tr @br @bl;
+            border-radius: @tl @tr @br @bl;
+}
+
+// Abgerundete Ecken: Überall
+.round-all(@radius: @size-radius) {
+    .round(@radius, @radius, @radius, @radius);
 }

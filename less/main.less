@@ -1,8 +1,6 @@
 /*
- * LESS-Module: Main.
- * Haupt-Style-Datei; definiert alle Styles
- * der Seite, greift auf Variablen und Mixins
- * der entsprechenden Module zurück.
+ * LESS-Modul: Main.
+ * Haupt-Style-Datei; definiert grundlegende Stile.
  * @author Jakob Metzger <jakob.me@gmail.com>
  * @copyright 2015 Jakob Metzger
  */
@@ -30,148 +28,6 @@ body {
         
         // Innenabstand Content
         #content { padding-top: (@height-statusbar + @height-titlebar); }
-    }
-}
-
-// Top-Leiste
-#bar-top {
-    position: fixed;
-    text-align: center;
-    top: 0;
-    left: 0;
-    width: 100%;
-    background: @color-titlebar;
-    color: @color-text-on-titlebar;
-    font-size: @font-titlebar-text;
-    
-    // Statusbar
-    #bar-status {
-        display: none;
-        height: @height-statusbar;
-    }
-    
-    // Titlebar
-    #bar-title {
-        position: relative;
-        height: @height-titlebar;
-        
-        // Titel-Text
-        #bar-title-text {
-            font-weight: bold;
-            display: inline-block;
-            text-transform: uppercase;
-            margin: 0;
-            padding: 0;
-            height: @height-titlebar;
-            line-height: @height-titlebar;
-            font-size: @font-titlebar-text;
-        }
-        
-        // Buttons
-        #bar-title-left, #bar-title-right {
-            display: block;
-            position: absolute;
-            text-decoration: none;
-            text-transform: uppercase;
-            top: 0;
-            padding: 0 @size-margin;
-            font-size: @font-titlebar-icon;
-            color: @color-text-on-titlebar;
-            height: @height-titlebar;
-            line-height: @height-titlebar;
-            .borderbox();
-            
-            // Icons
-            i {
-                font-size: @font-big;
-                vertical-align: middle;
-            }
-            
-            // Text
-            .bar-title-button {
-                vertical-align: middle;
-                padding: 0 @size-padding;
-                font-size: @font-small;
-                line-height: @height-titlebar;
-            }
-        }
-        
-        // Icon Positionen
-        #bar-title-left { text-align: left; left: 0; }
-        #bar-title-right { text-align: right; right: 0; }
-    }
-}
-
-// Tabs-Leiste
-#bar-tabs {
-    position: fixed;
-    overflow: hidden;
-    left: 0;
-    bottom: 0;
-    width: 100%;
-    height: @height-titlebar;
-    background: @color-tabbar;
-    
-    // Tab-Icons
-    .bar-tabs-tab {
-        float: left;
-        display: block;
-        position: relative;
-        text-align: center;
-        text-decoration: none;
-        width: 20%;
-        color: @color-text-pale;
-        font-size: @font-titlebar-icon;
-        height: @height-titlebar;
-        line-height: @height-titlebar;
-        
-        // Aktiv
-        &.active {
-            color: @color-titlebar;
-            
-            // Linie
-            &:after {
-                display: block;
-                position: absolute;
-                top: 0;
-                left: 10%;
-                width: 80%;
-                content: "";
-                height: @size-line-medium;
-                background: @color-titlebar;
-            }
-        }
-
-        // Ohne Icon
-        .no-icon {
-            font-weight: bold;
-            font-style: normal;
-        }
-    }
-}
-
-// Inhalt
-#content {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    padding: @height-titlebar 0;
-    background: @color-background;
-    .borderbox();
-    
-    // Inhalt Innen
-    #content-inner {
-        -webkit-overflow-scrolling: touch;
-        overflow-y: scroll;
-        overflow-x: hidden;
-        position: relative;
-        max-height: 100%;
-        color: @color-text-dark;
-        font-size: @font-medium;
-        padding: @size-margin;
-        .borderbox();
     }
 }
 
@@ -213,17 +69,6 @@ body {
             width: @width-mobile;
             height: @height-mobile;
         }
-        
-        // Leisten
-        #bar-top, #bar-tabs, #content { position: absolute; }
-        
-        // Statusbar
-        #bar-status {
-            background-image: url("../img/statusbar.png");
-            background-repeat: no-repeat;
-            background-position: center center;
-            background-size: @width-mobile @height-statusbar;
-        }
     }
 }
 
@@ -235,5 +80,4 @@ body {
     
     // Hintergrundbilder
     #viewport { background-image: url("../img/iphone-retina.png"); }
-    #viewport #bar-status { background-image: url("../img/statusbar-retina.png"); }
 }

@@ -1,0 +1,101 @@
+/*
+ * LESS-Modul: Quiz.
+ * Definiert Stile für das Quiz.
+ * @author Jakob Metzger <jakob.me@gmail.com>
+ * @copyright 2015 Jakob Metzger
+ */
+
+// Quiz-Fortschritt
+#quiz-progress {
+    background: @color-white;
+    padding: @size-margin;
+    
+    // Quiz-Fortschritt Innen
+    #quiz-progress-inner {
+        position: relative;
+        height: @height-quiz-progress;
+        
+        // Fortschrittsleiste
+        #quiz-progress-bar {
+            position: absolute;
+            left: 0;
+            width: 100%;
+            z-index: 10;
+            top: ((@height-quiz-progress - @size-line-medium) / 2);
+            background: @color-text-pale;
+            height: @size-line-medium;
+            .round-all(@size-line-medium / 2);
+        }
+        
+        // Schritt-Container
+        #quiz-progress-container {
+            overflow: hidden;
+            position: absolute;
+            list-style-type: none;
+            top: 0;
+            left: 0;
+            margin: 0;
+            padding: 0;
+            z-index: 20;
+            width: 100%;
+            height: 100%;
+            font-size: 0;
+            
+            // Schritte
+            .quiz-progress-step {
+                float: left;
+                display: block;
+                position: relative;
+                text-align: center;
+                width: 8%;
+                padding: 0;
+                margin: 0 1%;
+                height: @height-quiz-progress;
+                line-height: @height-quiz-progress;
+                
+                // Kreis
+                &:after {
+                    display: block;
+                    content: "";
+                    margin: (@height-quiz-progress / 4) auto;
+                    background: @color-text-pale;
+                    width: (@height-quiz-progress / 2);
+                    height: (@height-quiz-progress / 2);
+                    .round-all(@height-quiz-progress / 4);
+                    .borderbox();
+                }
+                
+                // Gelöste und aktuelle Schritte
+                &.solved:after, &.current:after {
+                    margin: 0 auto;
+                    font-size: @font-small;
+                    width: @height-quiz-progress;
+                    height: @height-quiz-progress;
+                    background: @color-white;
+                    border: @size-line-medium solid @color-text-pale;
+                    line-height: (@height-quiz-progress - (2 * @size-line-medium));
+                    .round-all(@height-quiz-progress / 2);
+                    .font-icon();
+                }
+                
+                // Erfolg
+                &.success:after {
+                    content: "\f00c";
+                    color: @color-success;
+                }
+                
+                // Fehler
+                &.error:after {
+                    content: "\f00d";
+                    color: @color-error;
+                }
+                
+                // Aktuell
+                &.current:after {
+                    content: "\f12a";
+                    color: @color-text-pale;
+                }
+            }
+        }
+    }
+}

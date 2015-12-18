@@ -7,14 +7,30 @@
 
 // Quiz Fortschritt Erfolg
 @keyframes step-success {
-    0%   { border-color: @color-success; background: @color-success; }
-    100% { border-color: @color-text-pale; background: @color-white; }
+    0%   {
+        border-color: @color-success;
+        background: @color-success;
+        .shadow(0, 0, @size-padding, 0, @color-success);
+    }
+    100% {
+        border-color: @color-text-pale;
+        background: @color-white;
+        .shadow(0, 0, 0, 0, transparent);
+    }
 }
 
 // Quiz Fortschritt Fehler
 @keyframes step-error {
-    0%   { border-color: @color-error; background: @color-error; }
-    100% { border-color: @color-text-pale; background: @color-white; }
+    0%   {
+        border-color: @color-error;
+        background: @color-error;
+        .shadow(0, 0, @size-padding, 0, @color-error);
+    }
+    100% {
+        border-color: @color-text-pale;
+        background: @color-white;
+        .shadow(0, 0, 0, 0, transparent);
+    }
 }
 
 // Quiz Fortschritt Animation

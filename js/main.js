@@ -18,9 +18,11 @@ $(document).ready(function() {
     var ATTR_HREF               = "href";
     var ATTR_TITLE              = "title";
     var ATTR_DATA_TAB           = "data-tab";
+    var ATTR_DATA_STEP          = "data-step";
     
     // Konstanten: IDs
     var ID_QUIZ_STEPS           = "#quiz-progress-steps";
+    var ID_QUIZ_SLIDER          = "#quiz-slider";
     var ID_TITLE                = "#bar-title-text";
     var ID_TABS_INDICATOR       = "#bar-tabs-indicator";
     var ID_CONTENT_INNER        = "#content-inner";
@@ -30,6 +32,7 @@ $(document).ready(function() {
     var SEL_BODY                = "body";
     var SEL_QUIZ_STEP           = ".quiz-progress-step";
     var SEL_QUIZ_STEP_CURRENT   = ".quiz-progress-step.current";
+    var SEL_QUIZ_SLIDE          = ".quiz-slide.slide-";
     var SEL_BUTTON              = ".button";
     var SEL_TAB                 = ".bar-tabs-tab";
     
@@ -41,6 +44,7 @@ $(document).ready(function() {
     var CLASS_SOLVED            = "solved";
     var CLASS_HIDDEN            = "hidden";
     var CLASS_TAB               = "tab-";
+    var CLASS_SLIDE             = "slide-";
     
     // Konstanten: AJAX-Werte
     var AJAX_EMPTY              = "";
@@ -58,6 +62,7 @@ $(document).ready(function() {
         // Aktueller und nächster Schritt
         var stepCurrent = $(ID_QUIZ_STEPS).children(SEL_QUIZ_STEP_CURRENT);
         var stepNext = stepCurrent.next(SEL_QUIZ_STEP);
+        var stepNextNumber = stepNext.attr(ATTR_DATA_STEP);
         
         // Aktuellen Schritt als gelöst markieren, nächsten Schritt aktivieren
         stepCurrent.removeClass(CLASS_CURRENT).addClass(CLASS_SOLVED);
@@ -66,6 +71,17 @@ $(document).ready(function() {
         // Erfolg/Fehler setzen
         if (success === true) { stepCurrent.addClass(CLASS_SUCCESS); }
         else { stepCurrent.addClass(CLASS_ERROR); }
+        
+        // Aktuelle Klasse für nächsten Slide setzen
+        $(SEL_QUIZ_SLIDE + stepNextNumber)
+            .addClass(CLASS_CURRENT).siblings()
+            .removeClass(CLASS_CURRENT);
+        
+        // Quiz-Slider verschieben
+        if (stepNextNumber !== undefined) {
+            $(ID_QUIZ_SLIDER).removeClass()
+                .addClass(CLASS_SLIDE + stepNextNumber);
+        }
     }
     
     /**
@@ -113,7 +129,7 @@ $(document).ready(function() {
             // Inhalt einblenden
             $(ID_CONTENT).removeClass(CLASS_HIDDEN);
             
-        }, 200);
+        }, 300);
     }
     
     /*

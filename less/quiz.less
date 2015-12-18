@@ -100,3 +100,47 @@
         }
     }
 }
+
+// Quiz-Slider
+#quiz-slider {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 1000%;
+    .transition();
+    
+    // Positionen
+    &.slide-1  { .translate(-0%);  }
+    &.slide-2  { .translate(-10%); }
+    &.slide-3  { .translate(-20%); }
+    &.slide-4  { .translate(-30%); }
+    &.slide-5  { .translate(-40%); }
+    &.slide-6  { .translate(-50%); }
+    &.slide-7  { .translate(-60%); }
+    &.slide-8  { .translate(-70%); }
+    &.slide-9  { .translate(-80%); }
+    &.slide-10 { .translate(-90%); }
+    
+    // Slides
+    .quiz-slide {
+        position: absolute;
+        top: 0;
+        width: 10%;
+        height: 100%;
+        padding-top: ((@size-margin * 2) + @height-quiz-progress);
+        .borderbox();
+        
+        // Positionen
+        &.slide-1  { left: 0;   }
+        &.slide-2  { left: 10%; }
+        &.slide-3  { left: 20%; }
+        &.slide-4  { left: 30%; }
+        &.slide-5  { left: 40%; }
+        &.slide-6  { left: 50%; }
+        &.slide-7  { left: 60%; }
+        &.slide-8  { left: 70%; }
+        &.slide-9  { left: 80%; }
+        &.slide-10 { left: 90%; }
+    }
+}

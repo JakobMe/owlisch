@@ -28,42 +28,12 @@
     	<section id="viewport">
         	<div id="viewport-inner">
         	    
+        	    <!--Spinner-->
+        	    <?php include("php/spinner.php"); ?>
+        	    
         	    <!--Inhalt-->
             	<article id="content">
-                	<div id="content-inner">
-                    	
-                    	<!--Fortschritt-->
-                    	<div id="quiz-progress">
-                        	<div id="quiz-progress-inner">
-                        	    <div id="quiz-progress-bar"></div>
-                        	    <ul id="quiz-progress-steps">
-                            	    <li class="quiz-progress-step current" data-step="1"></li>
-                            	    <li class="quiz-progress-step" data-step="2"></li>
-                            	    <li class="quiz-progress-step" data-step="3"></li>
-                            	    <li class="quiz-progress-step" data-step="4"></li>
-                            	    <li class="quiz-progress-step" data-step="5"></li>
-                            	    <li class="quiz-progress-step" data-step="6"></li>
-                            	    <li class="quiz-progress-step" data-step="7"></li>
-                            	    <li class="quiz-progress-step" data-step="8"></li>
-                            	    <li class="quiz-progress-step" data-step="9"></li>
-                            	    <li class="quiz-progress-step" data-step="10"></li>
-                        	    </ul>
-                        	</div>
-                    	</div>
-                    	
-                    	<!--Buttons-->
-                    	<div class="content-padding">
-                        	<a class="button success">
-                            	<i class="fa fa-check"></i>
-                            	Richtig
-                            </a>
-                            <a class="button error">
-                            	<i class="fa fa-close"></i>
-                            	Falsch
-                            </a>
-                    	</div>
-                    	
-                	</div>
+                	<div id="content-inner"></div>
             	</article>
         	    
             	<!--Top-Leiste-->
@@ -96,21 +66,22 @@
             	
             	<!--Bottom-Leiste-->
             	<nav id="bar-tabs">
-                	<a href="#home" class="bar-tabs-tab active" title="OWLisch">
+                	<a href="#home" class="bar-tabs-tab current" data-tab="1" title="OWLisch">
                     	<i class="fa fa-home"></i>
                 	</a>
-                	<a href="#quiz" class="bar-tabs-tab" title="Quiz">
+                	<a href="#quiz" class="bar-tabs-tab" data-tab="2" title="Quiz">
                     	<i class="no-icon">Q</i>
                 	</a>
-                	<a href="#progress" class="bar-tabs-tab" title="Fortschritt">
+                	<a href="#progress" class="bar-tabs-tab" data-tab="3" title="Fortschritt">
                     	<i class="fa fa-line-chart"></i>
                 	</a>
-                	<a href="#dictionary" class="bar-tabs-tab" title="Wörterbuch">
+                	<a href="#dictionary" class="bar-tabs-tab" data-tab="4" title="Wörterbuch">
                     	<i class="fa fa-book"></i>
                 	</a>
-                	<a href="#help" class="bar-tabs-tab" title="Hilfe">
+                	<a href="#help" class="bar-tabs-tab" data-tab="5" title="Hilfe">
                     	<i class="fa fa-question-circle"></i>
                 	</a>
+                	<div id="bar-tabs-indicator" class="tab-1"></div>
             	</nav>
             
         	</div>

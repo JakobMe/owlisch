@@ -31,6 +31,26 @@ body {
     }
 }
 
+// Viewport
+#viewport #viewport-inner {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: @color-background;
+    
+    // Spinner
+    #spinner {
+        display: block;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        margin-left: -(@height-spinner / 2);
+        margin-top: -(@height-spinner / 2);
+    }
+}
+
 // Responsive
 @media screen and (min-width: @width-responsive) {
     
@@ -62,13 +82,6 @@ body {
         padding: @size-gap-mobile-top @size-gap-mobile-sides;
         padding-bottom: @size-gap-mobile-bottom;
         background-size: @width-iphone @height-iphone;
-        
-        // Viewport Innen
-        #viewport-inner {
-            position: relative;
-            width: @width-mobile;
-            height: @height-mobile;
-        }
     }
 }
 

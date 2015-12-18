@@ -96,29 +96,35 @@
         font-size: @font-titlebar-icon;
         height: @height-titlebar;
         line-height: @height-titlebar;
+        .transition();
         
         // Aktiv
-        &.active {
-            color: @color-titlebar;
-            
-            // Linie
-            &:after {
-                display: block;
-                position: absolute;
-                top: 0;
-                left: 10%;
-                width: 80%;
-                content: "";
-                height: @size-line-medium;
-                background: @color-titlebar;
-            }
-        }
+        &.current { color: @color-titlebar; }
 
         // Ohne Icon
         .no-icon {
             font-weight: bold;
             font-style: normal;
         }
+    }
+    
+    // Aktiv-Indikator
+    #bar-tabs-indicator {
+        display: block;
+        position: absolute;
+        top: 0;
+        width: 14%;
+        content: "";
+        height: @size-line-medium;
+        background: @color-titlebar;
+        .transition();
+        
+        // Positionen
+        &.tab-1 { left: 3%; }
+        &.tab-2 { left: 23%; }
+        &.tab-3 { left: 43%; }
+        &.tab-4 { left: 63%; }
+        &.tab-5 { left: 83%; }
     }
 }
 

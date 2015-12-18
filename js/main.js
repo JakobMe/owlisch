@@ -43,6 +43,7 @@ $(document).ready(function() {
     var CLASS_ERROR             = "error";
     var CLASS_SOLVED            = "solved";
     var CLASS_HIDDEN            = "hidden";
+    var CLASS_FINISHED          = "finished";
     var CLASS_TAB               = "tab-";
     var CLASS_SLIDE             = "slide-";
     
@@ -53,6 +54,23 @@ $(document).ready(function() {
     var AJAX_POST               = "post";
     
     /**
+     *
+     *
+     */
+    function moveQuizSlider(slide) {
+        
+        // Aktuelle Klasse für nächsten Slide setzen
+        $(SEL_QUIZ_SLIDE + slide).addClass(CLASS_CURRENT).siblings()
+                                 .removeClass(CLASS_CURRENT);
+        
+        // Falls Slide-Zahl gültig ist, Slider verschieben
+        if (slide !== undefined) {
+            $(ID_QUIZ_SLIDER).removeClass()
+                .addClass(CLASS_SLIDE + slide);
+        }
+    }
+    
+    /**
      * Funktion: Quiz fortschreiten lassen.
      * Setzt das Quiz auf den nächsten Schritt und setzt Erfolg/Fehler.
      * @param {boolean} success Erfolg oder Fehler
@@ -60,27 +78,48 @@ $(document).ready(function() {
     function progressQuiz(success) {
         
         // Aktueller und nächster Schritt
+        var slidesNumber = $(ID_QUIZ_SLIDER).children().length;
         var stepCurrent = $(ID_QUIZ_STEPS).children(SEL_QUIZ_STEP_CURRENT);
-        var stepNext = stepCurrent.next(SEL_QUIZ_STEP);
-        var stepNextNumber = stepNext.attr(ATTR_DATA_STEP);
         
-        // Aktuellen Schritt als gelöst markieren, nächsten Schritt aktivieren
-        stepCurrent.removeClass(CLASS_CURRENT).addClass(CLASS_SOLVED);
-        stepNext.addClass(CLASS_CURRENT);
-        
-        // Erfolg/Fehler setzen
-        if (success === true) { stepCurrent.addClass(CLASS_SUCCESS); }
-        else { stepCurrent.addClass(CLASS_ERROR); }
-        
-        // Aktuelle Klasse für nächsten Slide setzen
-        $(SEL_QUIZ_SLIDE + stepNextNumber)
-            .addClass(CLASS_CURRENT).siblings()
-            .removeClass(CLASS_CURRENT);
-        
-        // Quiz-Slider verschieben
-        if (stepNextNumber !== undefined) {
-            $(ID_QUIZ_SLIDER).removeClass()
-                .addClass(CLASS_SLIDE + stepNextNumber);
+        // Falls Quiz noch nicht gestartet wurde
+        if (stepCurrent.length <= 0) {
+            
+            // Quiz-Slider verschieben
+            if ($(ID_QUIZ_STEPS).hasClass(CLASS_FINISHED)) {
+                moveQuizSlider(slidesNumber - 1);
+            } else {
+                $(ID_QUIZ_STEPS).children(SEL_QUIZ_STEP).first().addClass(CLASS_CURRENT);
+                moveQuizSlider(1);
+            }
+            
+        // Falls Quiz bereits läuft
+        } else {
+            
+            // Nächsten Schritt ermitteln
+            var stepNext = stepCurrent.next(SEL_QUIZ_STEP);
+            var stepNextNumber = stepNext.attr(ATTR_DATA_STEP);
+            
+            // Aktuellen Schritt als gelöst markieren, nächsten Schritt aktivieren
+            stepCurrent.removeClass(CLASS_CURRENT).addClass(CLASS_SOLVED);
+            
+            // Erfolg/Fehler setzen
+            if (success === true) { stepCurrent.addClass(CLASS_SUCCESS); }
+            else { stepCurrent.addClass(CLASS_ERROR); }
+            
+            // Falls nächste Zahl existiert
+            if (stepNextNumber !== undefined) {
+                
+                // Nächsten Schritt aktivieren, Quiz-Slider verschieben
+                stepNext.addClass(CLASS_CURRENT);
+                moveQuizSlider(stepNextNumber);
+                
+            // Falls nächste Zahl ungültig ist
+            } else {
+                
+                // Quiz abschließen
+                $(ID_QUIZ_STEPS).addClass(CLASS_FINISHED);
+            }
+            
         }
     }
     

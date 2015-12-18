@@ -3,7 +3,7 @@
 	<div id="quiz-progress-inner">
 	    <div id="quiz-progress-bar"></div>
 	    <ul id="quiz-progress-steps">
-    	    <li class="quiz-progress-step current" data-step="1"></li>
+    	    <li class="quiz-progress-step" data-step="1"></li>
     	    <li class="quiz-progress-step" data-step="2"></li>
     	    <li class="quiz-progress-step" data-step="3"></li>
     	    <li class="quiz-progress-step" data-step="4"></li>
@@ -18,7 +18,12 @@
 </div>
 
 <!--Quiz-Karten-->
-<div id="quiz-slider" class="slide-1">
+<div id="quiz-slider" class="slide-0">
+    <div class="quiz-slide slide-0">
+    	<a class="button round centered action" id="quiz-start">
+        	<b>Quiz</b><br/><i>starten</i>
+    	</a>
+    </div>
     <div class="quiz-slide slide-1">
         <div class="content-padding">
         	<a class="button success">
@@ -137,6 +142,11 @@
             	<i class="fa fa-close"></i>
             	Falsch
             </a>
+        </div>
+    </div>
+    <div class="quiz-slide slide-11">
+        <div class="content-padding">
+        	Fertig!
         </div>
     </div>
 </div>

@@ -68,3 +68,15 @@
 .round-all(@radius: @size-radius) {
     .round(@radius, @radius, @radius, @radius);
 }
+
+// Loop: Quiz-Slider Verschiebung
+.loop-slider-translate(@n: @number-slides, @i: 0) when (@i < @n) {
+    &.slide-@{i} { .translate(-((100% / @n) * @i)); }
+    .loop-slider-translate(@n, (@i + 1));
+}
+
+// Loop: Quiz-Slider Verschiebung
+.loop-slide-position(@n: @number-slides, @i: 0) when (@i < @n) {
+    &.slide-@{i} { left: ((100% / @n) * @i); }
+    .loop-slide-position(@n, (@i + 1));
+}

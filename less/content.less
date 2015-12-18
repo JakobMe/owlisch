@@ -53,6 +53,28 @@
         // Varianten
         &.success { background: @color-success; }
         &.error { background: @color-error; }
+        &.action { background: @color-success; }
+        &.round { .round-all(50%); }
+        
+        // Zentriert
+        &.centered {
+            position: absolute;
+            text-transform: uppercase;
+            top: 50%;
+            left: 50%;
+            font-size: @font-big;
+            width: @size-button-round;
+            height: @size-button-round;
+            margin-left: -(@size-button-round / 2);
+            padding: (@size-margin * 2.5) 0;
+            line-height: ((@size-button-round - (5 * @size-margin)) / 2);
+            margin-top: -(@size-button-round / 2) + (((@size-margin * 2) + @height-quiz-progress) / 2);
+            .borderbox();
+            
+            // Hervorgehoben
+            b { font-size: @font-huge; }
+            i { font-style: normal; font-weight: normal; }
+        }
     }
 }
 

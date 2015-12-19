@@ -45,7 +45,7 @@
 
 // Textschatten
 .textshadow(@color: @color-black, @fade: 10%) {
-    text-shadow: 0 @size-line-medium 0 fade(@color, @fade);
+    text-shadow: 0 @size-line-thin 0 fade(@color, @fade);
 }
 
 // Schatten
@@ -62,6 +62,16 @@
     .shadow(0, @y, 0, 0, @color);
 }
 
+// Schatten: Linie Auswahl-Button
+.shadow-line-choice-button() {
+    .shadow-line(@size-line-thin, darken(@color-background, 10%));
+}
+
+// Schatten: Linie Erfolgs-Button
+.shadow-line-success-button() {
+    .shadow-line(@size-line-medium, darken(@color-success, 15%));
+}
+
 // Abgerundete Ecken
 .round(@tl, @tr, @br, @bl) {
     -webkit-border-radius: @tl @tr @br @bl;
@@ -74,6 +84,14 @@
 // Abgerundete Ecken: Überall
 .round-all(@radius: @size-radius) {
     .round(@radius, @radius, @radius, @radius);
+}
+
+// Verlauf Vertikal
+.gradient-vertical(@color-top, @color-bottom, @pos-top: 0%, @pos-bottom: 100%) {
+    background-image: -webkit-linear-gradient(top, @color-top @pos-top, @color-bottom @pos-bottom);
+    background-image:    -moz-linear-gradient(top, @color-top @pos-top, @color-bottom @pos-bottom);
+    background-image:      -o-linear-gradient(top, @color-top @pos-top, @color-bottom @pos-bottom);
+    background-image:         linear-gradient(top, @color-top @pos-top, @color-bottom @pos-bottom);
 }
 
 // Loop: Quiz-Slider Verschiebung

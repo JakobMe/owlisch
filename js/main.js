@@ -21,6 +21,7 @@ $(document).ready(function() {
     var ATTR_DATA_STEP          = "data-step";
     
     // Konstanten: IDs
+    var ID_QUIZ_PROGRESS        = "#quiz-progress";
     var ID_QUIZ_STEPS           = "#quiz-progress-steps";
     var ID_QUIZ_SLIDER          = "#quiz-slider";
     var ID_QUIZ_START           = "#quiz-start";
@@ -48,6 +49,7 @@ $(document).ready(function() {
     var CLASS_SUCCESS           = "success";
     var CLASS_ERROR             = "error";
     var CLASS_SOLVED            = "solved";
+    var CLASS_WAITING           = "waiting";
     var CLASS_RIGHT             = "right";
     var CLASS_HIDDEN            = "hidden";
     var CLASS_QUIZ_NEXT         = "quiz-next";
@@ -231,6 +233,7 @@ $(document).ready(function() {
             // Wenn Antworten nicht blockiert sind, lösen
             if (!$(this).parents(SEL_QUIZ_CHOICES).hasClass(CLASS_LOCKED)) {
                 if ($(this).is($(ID_QUIZ_START))) {
+                    $(ID_QUIZ_PROGRESS).removeClass(CLASS_WAITING);
                     progressQuiz();
                 } else {
                     revealResult($(this));

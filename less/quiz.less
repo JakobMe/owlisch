@@ -10,6 +10,11 @@
     background: @color-white;
     padding: @size-margin;
     
+    // Variante: Wartend
+    &.waiting {
+        .shadow-line(@size-line-thin, darken(@color-background, 10%));
+    }
+    
     // Quiz-Fortschritt Innen
     #quiz-progress-inner {
         position: relative;
@@ -97,6 +102,7 @@
 
 // Quiz-Slider
 #quiz-slider {
+    overflow: hidden;
     position: absolute;
     top: 0;
     left: 0;
@@ -135,6 +141,28 @@
     b { border-bottom: @size-line-medium solid darken(@color-background, 10%); }
 }
 
+// Quiz-Info
+.quiz-info {
+    overflow: hidden;
+    font-size: @font-small;
+    color: @color-text-dark;
+    padding: (@size-padding * 2) @size-margin;
+    background: lighten(@color-background, 5%);
+    border-bottom: @size-line-thin solid darken(@color-background, 10%);
+    .gradient-vertical(@color-white, lighten(@color-background, 2%));
+    
+    // Schwierigkeit
+    .quiz-info-difficulty {
+        float: left;
+        font-style: italic;
+    }
+    
+    // Stufe
+    .quiz-info-level {
+        float: right;
+    }
+}
+
 // Inhalt
 #content {
     
@@ -169,6 +197,7 @@
             padding: 0 @height-titlebar;
             height: @height-titlebar;
             line-height: (@height-titlebar - (2 * @size-line-medium));
+            .shadow-line-choice-button();
             .transition();
             .borderbox();
             .ellipsis();
@@ -228,6 +257,9 @@
             padding: (@size-margin * 2.5) 0;
             line-height: ((@size-button-round - (5 * @size-margin)) / 2);
             margin-top: -(@size-button-round / 2) + (((@size-margin * 2) + @height-quiz-progress) / 2);
+            .gradient-vertical(@color-success, darken(@color-success, 5%));
+            .shadow-line-success-button();
+            .textshadow();
             .borderbox();
             
             // Hervorgehoben
@@ -238,6 +270,9 @@
         // Variante: Nächstes Quiz
         &.quiz-next {
             margin: 0;
+            .gradient-vertical(@color-success, darken(@color-success, 5%));
+            .shadow-line-success-button();
+            .textshadow();
             .transition();
             
             // Icon

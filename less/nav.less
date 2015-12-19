@@ -15,6 +15,8 @@
     background: @color-titlebar;
     color: @color-text-light;
     font-size: @font-titlebar-text;
+    .shadow-line(@size-line-thin, darken(@color-titlebar, 10%));
+    .textshadow();
     
     // Statusbar
     #bar-status {
@@ -77,12 +79,12 @@
 // Tabs-Leiste
 #bar-tabs {
     position: fixed;
-    overflow: hidden;
     left: 0;
     bottom: 0;
     width: 100%;
     height: @height-titlebar;
     background: @color-tabbar;
+    .shadow-line(-(@size-line-thin), darken(@color-background, 10%));
     .transition();
     
     // Tab-Icons
@@ -113,10 +115,10 @@
     #bar-tabs-indicator {
         display: block;
         position: absolute;
-        top: 0;
+        top: -(@size-line-thin);
         width: 14%;
         content: "";
-        height: @size-line-medium;
+        height: @size-line-bold;
         background: @color-titlebar;
         .transition();
         

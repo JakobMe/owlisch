@@ -33,6 +33,7 @@ body {
 
 // Viewport
 #viewport #viewport-inner {
+    overflow: hidden;
     position: absolute;
     top: 0;
     left: 0;
@@ -48,6 +49,14 @@ body {
         left: 50%;
         margin-left: -(@height-spinner / 2);
         margin-top: -(@height-spinner / 2) + (@height-statusbar / 2);
+    }
+    
+    // Variante: Quiz
+    &.quiz {
+        
+        // Tabs-Bar ausblenden
+        #content { padding-bottom: 0; }
+        #bar-tabs { .translate(0, @height-titlebar); }
     }
 }
 

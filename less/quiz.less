@@ -81,14 +81,14 @@
                 &.success:after {
                     content: "\f00c";
                     color: @color-success;
-                    .animation-progress-step(step-success);
+                    .animation(step-success);
                 }
                 
                 // Fehler
                 &.error:after {
                     content: "\f00d";
                     color: @color-error;
-                    .animation-progress-step(step-error);
+                    .animation(step-error);
                 }
             }
         }
@@ -114,5 +114,146 @@
         padding-top: ((@size-margin * 2) + @height-quiz-progress);
         .loop-slide-position();
         .borderbox();
+    }
+}
+
+// Quiz-Titel
+.quiz-title {
+    text-align: center;
+    font-weight: normal;
+    font-style: italic;
+    position: relative;
+    margin: 0;
+    line-height: 1.4;
+    padding: 0 (@size-margin * 2);
+    padding-bottom: @size-margin;
+    color: @color-text-dark;
+    font-size: @font-large;
+    background: @color-white;
+    
+    // Hervorhebung
+    b { border-bottom: @size-line-medium solid darken(@color-background, 10%); }
+}
+
+// Inhalt
+#content {
+    
+    // Buttons
+    .button {
+        display: block;
+        font-weight: bold;
+        text-align: center;
+        cursor: pointer;
+        text-decoration: none;
+        margin-bottom: @size-margin;
+        color: @color-white;
+        font-size: @font-big;
+        padding: @size-margin;
+        .round-all();
+        
+        // Icons
+        .fa { margin-right: @size-padding; }
+        
+        // Varianten
+        &.success { background: @color-success; color: @color-text-light; }
+        &.error { background: @color-error; color: @color-text-light; }
+        &.action { background: @color-success; color: @color-text-light; }
+        &.round { .round-all(50%); }
+        
+        // Variante: Quiz-Auswahl
+        &.choice {
+            position: relative;
+            background: @color-white;
+            color: @color-text-dark;
+            border: @size-line-medium solid @color-white;
+            padding: 0 @height-titlebar;
+            height: @height-titlebar;
+            line-height: (@height-titlebar - (2 * @size-line-medium));
+            .transition();
+            .borderbox();
+            .ellipsis();
+            
+            // Icon
+            &:before {
+                display: block;
+                position: absolute;
+                text-align: center;
+                top: 0;
+                left: 0;
+                opacity: 0;
+                content: "";
+                height: @height-titlebar;
+                width: @height-titlebar;
+                .transition();
+                .font-icon();
+            }
+            
+            // Erfolg
+            &.success {
+                border-color: @color-success;
+                .animation(answer-right);
+                
+                // Icon
+                &:before {
+                    opacity: 1;
+                    content: "\f00c";
+                    color: @color-success;
+                }
+            }
+            
+            // Fehler
+            &.error {
+                border-color: @color-error;
+                .animation(answer-wrong);
+                
+                // Icon
+                &:before {
+                    opacity: 1;
+                    content: "\f00d";
+                    color: @color-error;
+                }
+            }
+        }
+        
+        // Variante: Zentriert
+        &.centered {
+            position: absolute;
+            text-transform: uppercase;
+            top: 50%;
+            left: 50%;
+            font-size: @font-big;
+            width: @size-button-round;
+            height: @size-button-round;
+            margin-left: -(@size-button-round / 2);
+            padding: (@size-margin * 2.5) 0;
+            line-height: ((@size-button-round - (5 * @size-margin)) / 2);
+            margin-top: -(@size-button-round / 2) + (((@size-margin * 2) + @height-quiz-progress) / 2);
+            .borderbox();
+            
+            // Hervorgehoben
+            b { font-size: @font-huge; }
+            i { font-style: normal; font-weight: normal; }
+        }
+        
+        // Variante: Nächstes Quiz
+        &.quiz-next {
+            margin: 0;
+            .transition();
+            
+            // Icon
+            .fa { margin: 0 0 0 @size-padding; }
+            
+            // Variante: Versteckt
+            &.hidden { .translate(0, 200%, 0); }
+        }
+    }
+    
+    // Gesperrte Buttons ausgrauen
+    .quiz-choices.locked .button.choice {
+        cursor: not-allowed;
+        opacity: 0.5;
+        
+        // Ausnahme: Fehler und Erfolg
+        &.success, &.error { opacity: 1; }
     }
 }

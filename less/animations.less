@@ -33,7 +33,19 @@
     }
 }
 
-// Quiz Fortschritt Animation
-.animation-progress-step(@animation) {
-    animation: @animation @time-animation-progress normal forwards;
+// Quiz Antwort Richtig
+@keyframes answer-right {
+    0%   { .shadow(0, 0, @size-padding, 0, @color-success); }
+    100% { .shadow(0, 0, 0, 0, transparent); }
+}
+
+// Quiz Antwort Falsch
+@keyframes answer-wrong {
+    0%   { .shadow(0, 0, @size-padding, 0, @color-error); }
+    100% { .shadow(0, 0, 0, 0, transparent); }
+}
+
+// Animations-Mixin
+.animation(@animation, @time: @time-animation-progress) {
+    animation: @animation @time normal forwards;
 }

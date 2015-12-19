@@ -9,6 +9,13 @@
 .font-main() { font-family: "Lato", sans-serif; }
 .font-icon() { font-family: "FontAwesome", sans-serif; }
 
+// Ellipse
+.ellipsis() {
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
 // Transition
 .transition(@type: all, @time: @time-transition, @delay: @time-delay) {
     -webkit-transition: @type @time ease @delay;

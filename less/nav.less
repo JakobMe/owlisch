@@ -13,7 +13,7 @@
     left: 0;
     width: 100%;
     background: @color-titlebar;
-    color: @color-text-on-titlebar;
+    color: @color-text-light;
     font-size: @font-titlebar-text;
     
     // Statusbar
@@ -48,7 +48,7 @@
             top: 0;
             padding: 0 @size-margin;
             font-size: @font-titlebar-icon;
-            color: @color-text-on-titlebar;
+            color: @color-text-light;
             height: @height-titlebar;
             line-height: @height-titlebar;
             .borderbox();
@@ -83,6 +83,7 @@
     width: 100%;
     height: @height-titlebar;
     background: @color-tabbar;
+    .transition();
     
     // Tab-Icons
     .bar-tabs-tab {

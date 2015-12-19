@@ -14,6 +14,7 @@
     height: 100%;
     padding: @height-titlebar 0;
     background: @color-background;
+    .transition();
     .borderbox();
     
     // Variante: Versteckt
@@ -26,54 +27,24 @@
         overflow-x: hidden;
         position: relative;
         height: 100%;
+        line-height: 1.2;
         color: @color-text-dark;
         font-size: @font-medium;
         .borderbox();
     }
     
     // Innenabstand
-    .content-padding { padding: @size-margin; }
-    
-    // Buttons
-    .button {
-        display: block;
-        font-weight: bold;
-        text-align: center;
-        cursor: pointer;
-        text-decoration: none;
-        margin-bottom: @size-margin;
-        color: @color-white;
-        font-size: @font-big;
+    .content-padding {
         padding: @size-margin;
-        .round-all();
         
-        // Icons
-        .fa { margin-right: @size-padding; }
-        
-        // Varianten
-        &.success { background: @color-success; }
-        &.error { background: @color-error; }
-        &.action { background: @color-success; }
-        &.round { .round-all(50%); }
-        
-        // Zentriert
-        &.centered {
+        // Variante: Unten
+        &.bottom {
             position: absolute;
-            text-transform: uppercase;
-            top: 50%;
-            left: 50%;
-            font-size: @font-big;
-            width: @size-button-round;
-            height: @size-button-round;
-            margin-left: -(@size-button-round / 2);
-            padding: (@size-margin * 2.5) 0;
-            line-height: ((@size-button-round - (5 * @size-margin)) / 2);
-            margin-top: -(@size-button-round / 2) + (((@size-margin * 2) + @height-quiz-progress) / 2);
+            left: 0;
+            bottom: 0;
+            margin: 0;
+            width: 100%;
             .borderbox();
-            
-            // Hervorgehoben
-            b { font-size: @font-huge; }
-            i { font-style: normal; font-weight: normal; }
         }
     }
 }

@@ -47,7 +47,7 @@
                     	
                     	<!--Linker Button-->
                     	<a id="bar-title-left" href="#">
-                        	<i class="fa fa-chevron-left"></i>
+                        	<i class="fa"></i>
                         	<span class="bar-title-button"></span>
                     	</a>
                     	

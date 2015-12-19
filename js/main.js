@@ -23,27 +23,36 @@ $(document).ready(function() {
     // Konstanten: IDs
     var ID_QUIZ_STEPS           = "#quiz-progress-steps";
     var ID_QUIZ_SLIDER          = "#quiz-slider";
+    var ID_QUIZ_START           = "#quiz-start";
     var ID_TITLE                = "#bar-title-text";
     var ID_TABS_INDICATOR       = "#bar-tabs-indicator";
     var ID_CONTENT_INNER        = "#content-inner";
     var ID_CONTENT              = "#content";
+    var ID_VIEWPORT             = "#viewport-inner";
     
     // Konstanten: Selektoren
     var SEL_BODY                = "body";
+    var SEL_QUIZ_CHOICES        = ".quiz-choices";
     var SEL_QUIZ_STEP           = ".quiz-progress-step";
     var SEL_QUIZ_STEP_CURRENT   = ".quiz-progress-step.current";
     var SEL_QUIZ_SLIDE          = ".quiz-slide.slide-";
+    var SEL_BUTTON_NEXT         = ".quiz-slide.current .quiz-next";
     var SEL_BUTTON              = ".button";
+    var SEL_RIGHT               = ".right";
     var SEL_TAB                 = ".bar-tabs-tab";
     
     // Konstanten: CSS-Klassen
+    var CLASS_QUIZ              = "quiz";
     var CLASS_WEBAPP            = "webapp";
     var CLASS_CURRENT           = "current";
     var CLASS_SUCCESS           = "success";
     var CLASS_ERROR             = "error";
     var CLASS_SOLVED            = "solved";
+    var CLASS_RIGHT             = "right";
     var CLASS_HIDDEN            = "hidden";
+    var CLASS_QUIZ_NEXT         = "quiz-next";
     var CLASS_FINISHED          = "finished";
+    var CLASS_LOCKED            = "locked";
     var CLASS_TAB               = "tab-";
     var CLASS_SLIDE             = "slide-";
     
@@ -54,8 +63,10 @@ $(document).ready(function() {
     var AJAX_POST               = "post";
     
     /**
-     *
-     *
+     * Funktion: Quiz-Slider verschieben.
+     * Verschiebt den Quiz-Slider auf die gegebene Position,
+     * indem eine entsprechende Klasse hinzugefügt wird.
+     * @param {integer} slide Nummer des Ziel-Slides
      */
     function moveQuizSlider(slide) {
         
@@ -71,11 +82,50 @@ $(document).ready(function() {
     }
     
     /**
+     * Funktion: Quiz-Antwort offenbaren.
+     * Zeigt in Abhängigkeit der gewählten Antwort an, welche
+     * Antworten des Quizes richtig oder falsch waren.
+     * @param {object} answer jQuery-Objekt der gewählten Antwort
+     */
+    function revealResult(answer) {
+        
+        // Aktuelles Quiz blockieren, Weiter-Button anzeigen
+        answer.parents(SEL_QUIZ_CHOICES).addClass(CLASS_LOCKED);
+        $(SEL_BUTTON_NEXT).removeClass(CLASS_HIDDEN);
+        
+        // Prüfen, ob Antwort richtig ist
+        var answerRight = answer.hasClass(CLASS_RIGHT) ? true : false;
+        
+        // Aktuellen und nächsten Schritt ermitteln
+        var stepCurrent = $(ID_QUIZ_STEPS).children(SEL_QUIZ_STEP_CURRENT);
+        var stepNextNumber = stepCurrent.next(SEL_QUIZ_STEP)
+                                        .attr(ATTR_DATA_STEP);
+        
+        // Wenn die Antwort richtig ist, Erfolg setzen
+        if (answerRight) {
+            stepCurrent.addClass(CLASS_SUCCESS);
+            answer.addClass(CLASS_SUCCESS);
+            
+        // Wenn die Antwort falsch ist, Fehler setzen
+        } else {
+            stepCurrent.addClass(CLASS_ERROR);
+            answer.addClass(CLASS_ERROR).siblings(SEL_RIGHT)
+                  .addClass(CLASS_SUCCESS);
+        }
+        
+        // Falls nächste Zahl existiert
+        if (stepNextNumber === undefined) {
+            
+            // Quiz abschließen
+            $(ID_QUIZ_STEPS).addClass(CLASS_FINISHED);            
+        }
+    }
+    
+    /**
      * Funktion: Quiz fortschreiten lassen.
      * Setzt das Quiz auf den nächsten Schritt und setzt Erfolg/Fehler.
-     * @param {boolean} success Erfolg oder Fehler
      */
-    function progressQuiz(success) {
+    function progressQuiz() {
         
         // Aktueller und nächster Schritt
         var slidesNumber = $(ID_QUIZ_SLIDER).children().length;
@@ -86,8 +136,10 @@ $(document).ready(function() {
             
             // Quiz-Slider verschieben
             if ($(ID_QUIZ_STEPS).hasClass(CLASS_FINISHED)) {
+                $(ID_VIEWPORT).removeClass(CLASS_QUIZ);
                 moveQuizSlider(slidesNumber - 1);
             } else {
+                $(ID_VIEWPORT).addClass(CLASS_QUIZ);
                 $(ID_QUIZ_STEPS).children(SEL_QUIZ_STEP).first().addClass(CLASS_CURRENT);
                 moveQuizSlider(1);
             }
@@ -102,24 +154,13 @@ $(document).ready(function() {
             // Aktuellen Schritt als gelöst markieren, nächsten Schritt aktivieren
             stepCurrent.removeClass(CLASS_CURRENT).addClass(CLASS_SOLVED);
             
-            // Erfolg/Fehler setzen
-            if (success === true) { stepCurrent.addClass(CLASS_SUCCESS); }
-            else { stepCurrent.addClass(CLASS_ERROR); }
-            
             // Falls nächste Zahl existiert
             if (stepNextNumber !== undefined) {
                 
                 // Nächsten Schritt aktivieren, Quiz-Slider verschieben
                 stepNext.addClass(CLASS_CURRENT);
                 moveQuizSlider(stepNextNumber);
-                
-            // Falls nächste Zahl ungültig ist
-            } else {
-                
-                // Quiz abschließen
-                $(ID_QUIZ_STEPS).addClass(CLASS_FINISHED);
             }
-            
         }
     }
     
@@ -172,10 +213,31 @@ $(document).ready(function() {
     }
     
     /*
-     * Bei Klick auf Quit-Fortschritt Quiz zufällig weiter schalten.
+     * Bei Klick auf Quiz-Buttons.
+     * Entscheided anhand der Eigenschaften, ob das Quit ausgelöst werden,
+     * begonnen werden oder fortgeführt werden soll.
      */
     $(SEL_BODY).on(EVENT_CLICK, SEL_BUTTON, function() {
-        progressQuiz($(this).hasClass(CLASS_SUCCESS) ? true : false);
+        
+        // Falls Button ein Weiter-Button ist
+        if ($(this).hasClass(CLASS_QUIZ_NEXT)) {
+            
+            // Quit fortführen
+            progressQuiz();
+            
+        // Wenn Button kein Weiter-Button ist
+        } else {
+            
+            // Wenn Antworten nicht blockiert sind, lösen
+            if (!$(this).parents(SEL_QUIZ_CHOICES).hasClass(CLASS_LOCKED)) {
+                if ($(this).is($(ID_QUIZ_START))) {
+                    progressQuiz();
+                } else {
+                    revealResult($(this));
+                }
+            }
+        }
+        
     });
     
     /*

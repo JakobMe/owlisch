@@ -346,16 +346,24 @@
         color: @color-white;
         font-size: @font-big;
         padding: @size-margin;
+        .shadow-button();
         .round-all();
         
         // Icons
         .fa { margin-right: @size-padding; }
         
-        // Varianten
-        &.success { background: @color-success; color: @color-text-light; }
-        &.error { background: @color-error; color: @color-text-light; }
-        &.action { background: @color-titlebar; color: @color-text-light; }
+        // Variante: Rund
         &.round { .round-all(50%); }
+        
+        // Variante: Action
+        &.action {
+            background: @color-titlebar;
+            color: @color-text-light;
+            border: @size-line-thin solid darken(@color-titlebar, 10%);
+            .gradient-vertical(@color-titlebar, darken(@color-titlebar, 4%));
+            .shadow-button-strong();
+            .textshadow();
+        }
         
         // Variante: Quiz-Auswahl
         &.choice {
@@ -365,16 +373,12 @@
             border: 0 solid @color-white;
             padding: 0 @height-titlebar;
             height: @height-button-choice;
-            line-height: @height-button-choice;
+            line-height: (@height-button-choice - (2 * @size-line-thin));
+            border: @size-line-thin solid darken(@color-background, 10%);
             .gradient-vertical(@color-white, lighten(@color-background, 2%));
-            .shadow-line-choice-button();
             .transition(border-color);
             .borderbox();
             .ellipsis();
-            
-            // Rahmenfarben
-            &.right { border-color: @color-success; }
-            &.wrong { border-color: @color-error; }
             
             // Icon
             &:before {
@@ -439,7 +443,6 @@
             padding: (@size-margin * 2.5) 0;
             line-height: ((@size-button-round - (5 * @size-margin)) / 2);
             margin-top: -(@size-button-round / 2) + ((@size-margin-double + @height-quiz-progress) / 2);
-            .gradient-vertical(@color-titlebar, darken(@color-titlebar, 5%));
             .textshadow();
             .borderbox();
             
@@ -459,8 +462,6 @@
             font-weight: normal;
             text-transform: uppercase;
             margin: 0;
-            .gradient-vertical(@color-titlebar, darken(@color-titlebar, 5%));
-            .textshadow();
             .transition();
             
             // Hervorgehoben

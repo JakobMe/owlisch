@@ -67,9 +67,14 @@
     .shadow(0, @y, 0, 0, @color);
 }
 
-// Schatten: Linie Auswahl-Button
-.shadow-line-choice-button() {
-    .shadow-line(@size-line-thin, darken(@color-background, 10%));
+// Schatten: Button
+.shadow-button() {
+    .shadow(0, @size-line-medium, @size-line-medium, 0, darken(@color-background, 3%));
+}
+
+// Schatten: Button Stark
+.shadow-button-strong() {
+    .shadow(0, @size-line-medium, @size-line-medium, 0, darken(@color-background, 6%));
 }
 
 // Abgerundete Ecken

@@ -28,12 +28,14 @@ $(document).ready(function() {
     var ID_QUIZ_SLIDER          = "#quiz-slider";
     var ID_QUIZ_START           = "#quiz-start";
     var ID_TITLE                = "#bar-title-text";
+    var ID_TITLE_RIGHT          = "#bar-title-right";
     var ID_TABS_INDICATOR       = "#bar-tabs-indicator";
     var ID_CONTENT_INNER        = "#content-inner";
     var ID_CONTENT              = "#content";
     var ID_VIEWPORT             = "#viewport-inner";
     
     // Konstanten: Selektoren
+    var SEL_I                   = "i";
     var SEL_BODY                = "body";
     var SEL_QUIZ_CHOICES        = ".quiz-choices";
     var SEL_QUIZ_STEP           = ".quiz-progress-step";
@@ -46,8 +48,11 @@ $(document).ready(function() {
     var SEL_BUTTON              = ".button";
     var SEL_RIGHT               = ".right";
     var SEL_TAB                 = ".bar-tabs-tab";
+    var SEL_TITLE_BUTTON        = ".bar-title-button";
+    var SEL_NAV_BUTTON          = ".nav-button";
     
     // Konstanten: CSS-Klassen
+    var CLASS_FA                = "fa";
     var CLASS_QUIZ              = "quiz";
     var CLASS_WEBAPP            = "webapp";
     var CLASS_CURRENT           = "current";
@@ -69,6 +74,12 @@ $(document).ready(function() {
     var AJAX_ERROR              = "error";
     var AJAX_LOAD               = "php/load.php";
     var AJAX_POST               = "post";
+    
+    // Konstanten: Views
+    var VIEW_QUIZ               = "#quiz";
+    
+    // Konstanten: Button-Beschriftungen
+    var BTN_END                 = "beenden";
     
     /**
      * Funktion: Quiz-Slider verschieben.
@@ -182,6 +193,9 @@ $(document).ready(function() {
                 $(ID_VIEWPORT).removeClass(CLASS_QUIZ);
                 $(ID_QUIZ_PROGRESS).addClass(CLASS_WAITING);
                 moveQuizSlider(slidesNumber - 1);
+                
+                // "Beenden"-Button zurücksetzen
+                resetTitleButtonRight();
             }
         }
     }
@@ -234,6 +248,40 @@ $(document).ready(function() {
         }, 300);
     }
     
+    /**
+     * Funktion: Titel-Button setzen.
+     * Setzt einen Link, Text und ein Icon für einen Titel-Button,
+     * sperrt/entsperrt den Button.
+     * @param {object} button jQuery-Objekt des Buttons
+     * @param {string} text Button-Text
+     * @param {string} href HREF-Attribut des Links
+     * @param {string} icon FontAwesome Icon-Name
+     * @param {boolean} locked Button sperren/entsperren
+     */
+    function setTitleButton(button, text, href, icon, locked) {
+        
+        // Button Link, Text und Icon setzen
+        button.attr(ATTR_HREF, href);
+        button.children(SEL_TITLE_BUTTON).text(text);
+        button.children(SEL_I).removeClass().addClass(CLASS_FA).addClass(icon);
+        
+        // Button sperren/entsperren
+        if (locked === true) { button.addClass(CLASS_LOCKED); }
+        else if (locked === false) { button.removeClass(CLASS_LOCKED); }
+    }
+    
+    /**
+     * Funktion: Rechten Titel-Button zurücksetzen.
+     * Setzt den rechten Titel-Button auf leere Werte zurück
+     * und sperrt ihn.
+     */
+    function resetTitleButtonRight() {
+        setTitleButton(
+            $(ID_TITLE_RIGHT), AJAX_EMPTY,
+            AJAX_EMPTY, AJAX_EMPTY, true
+        );
+    }
+    
     /*
      * Bei Klick auf Quiz-Buttons.
      * Entscheided anhand der Eigenschaften, ob das Quit ausgelöst werden,
@@ -242,20 +290,28 @@ $(document).ready(function() {
     $(SEL_BODY).on(EVENT_CLICK, SEL_BUTTON, function() {
         
         // Falls Button ein Weiter-Button ist
-        if ($(this).hasClass(CLASS_QUIZ_NEXT)) {
-            
+        if (($(this).hasClass(CLASS_QUIZ_NEXT)) ||
+            ($(this).is($(ID_QUIZ_START)))) {
+                
             // Quit fortführen
             progressQuiz();
+            
+            // Wenn Quiz gestartet wurde
+            if ($(this).is($(ID_QUIZ_START))) {
+                
+                // "Beenden"-Button aktivieren
+                setTitleButton(
+                    $(ID_TITLE_RIGHT), BTN_END, VIEW_QUIZ,
+                    AJAX_EMPTY, false
+                );
+            }
             
         // Wenn Button kein Weiter-Button ist
         } else {
             
-            // Wenn Antworten nicht blockiert sind, lösen
+            // Wenn Antworten nicht blockiert sind, Frage auflösen
             if (!$(this).parents(SEL_QUIZ_CHOICES).hasClass(CLASS_LOCKED)) {
-                
-                // Quiz starten oder Lösung zeigen
-                if ($(this).is($(ID_QUIZ_START))) { progressQuiz(); }
-                else { revealResult($(this)); }
+                revealResult($(this));
             }
         }
         
@@ -288,7 +344,10 @@ $(document).ready(function() {
      * Setzt den App-Titel und lädt den entsprechenden Inhalt,
      * wenn ein Tab in der Tab-Leiste geklickt wird.
      */
-    $(SEL_TAB).click(function() {
+    $(SEL_TAB).click(function(event) {
+        
+        // Event aufhalten
+        event.preventDefault();
         
         // Titel und neuen Inhalt setzen
         $(ID_TITLE).text($(this).attr(ATTR_TITLE));
@@ -299,8 +358,40 @@ $(document).ready(function() {
             CLASS_TAB + $(this).attr(ATTR_DATA_TAB)
         );
         
-        //
+        // Tab aktivieren
         $(this).addClass(CLASS_CURRENT).siblings().removeClass(CLASS_CURRENT);
+        
+    });
+    
+    /*
+     * Bei Klick auf Navigations-Button (Titel-Leiste).
+     * Prüft, ob Button gesperrt ist und ändert die View entsprechend
+     * der Attribute des Buttons.
+     */
+    $(SEL_NAV_BUTTON).click(function(event) {
+        
+        // Event aufhalten
+        event.preventDefault();
+        
+        // Wenn Button nicht gesperrt ist
+        if (!$(this).hasClass(CLASS_LOCKED)) {
+            
+            // View ermitteln
+            var view = $(this).attr(ATTR_HREF);
+            
+            // Wenn View "#quiz" ist
+            if (view === VIEW_QUIZ) {
+                
+                // View ändern
+                changeView(view.substring(1));
+                
+                // Button zurücksetzen
+                resetTitleButtonRight();
+                
+                // Viewport Quiz-Modus deaktivieren
+                $(ID_VIEWPORT).removeClass(CLASS_QUIZ);
+            }
+        }
         
     });
     

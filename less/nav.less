@@ -54,7 +54,15 @@
             color: @color-text-light;
             height: @height-titlebar;
             line-height: @height-titlebar;
+            .transition(opacity);
             .borderbox();
+            
+            // Variante: Gesperrt
+            &.locked {
+                width: 0;
+                opacity: 0;
+                padding: 0;
+            }
             
             // Icons
             i {
@@ -64,8 +72,9 @@
             
             // Text
             .bar-title-button {
+                font-weight: bold;
                 vertical-align: middle;
-                padding: 0 @size-padding;
+                padding: 0;
                 font-size: @font-small;
                 line-height: @height-titlebar;
             }

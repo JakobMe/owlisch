@@ -70,13 +70,13 @@
                 	<div id="bar-title">
                     	
                     	<!--Linker Button-->
-                    	<a id="bar-title-left" href="#">
+                    	<a id="bar-title-left" class="nav-button locked" href="#">
                         	<i class="fa"></i>
                         	<span class="bar-title-button"></span>
                     	</a>
                     	
                     	<!--Rechter Button-->
-                    	<a id="bar-title-right" href="#">
+                    	<a id="bar-title-right" class="nav-button locked" href="#">
                         	<i class="fa"></i>
                         	<span class="bar-title-button"></span>
                     	</a>

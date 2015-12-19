@@ -13,6 +13,7 @@ $(document).ready(function() {
     
     // Konstanten: Events
     var EVENT_CLICK             = "click";
+    var EVENT_ENDED             = "ended";
     
     // Konstanen: Attribute
     var ATTR_HREF               = "href";
@@ -40,6 +41,8 @@ $(document).ready(function() {
     var SEL_QUIZ_SLIDE          = ".quiz-slide.slide-";
     var SEL_BUTTON_NEXT         = ".quiz-slide.current .quiz-next";
     var SEL_LEVEL               = ".quiz-slide.current .quiz-info-level";
+    var SEL_AUDIO_PLAY          = ".quiz-info-audio-play";
+    var SEL_AUDIO               = ".quiz-info-audio";
     var SEL_BUTTON              = ".button";
     var SEL_RIGHT               = ".right";
     var SEL_TAB                 = ".bar-tabs-tab";
@@ -255,6 +258,28 @@ $(document).ready(function() {
                 else { revealResult($(this)); }
             }
         }
+        
+    });
+    
+    /*
+     * Bei Klick auf "Audio abspielen".
+     * Spielt eine Audio-Datei ab, wenn der entsprechende
+     * Button geklickt wird.
+     */
+    $(SEL_BODY).on(EVENT_CLICK, SEL_AUDIO_PLAY, function() {
+        
+        // Button und Audio definieren
+        var button = $(this);
+        var audio = $(this).siblings(SEL_AUDIO).get(0);
+        
+        // Button markieren, Audio abspielen
+        button.addClass(CLASS_CURRENT);
+        audio.play();
+        
+        // Wenn Audio beendet wurde, Markierung entfernen
+        audio.addEventListener(EVENT_ENDED, function() {
+            button.removeClass(CLASS_CURRENT);
+        });
         
     });
     

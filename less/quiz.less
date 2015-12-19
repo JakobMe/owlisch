@@ -161,21 +161,34 @@
         position: absolute;
         font-style: italic;
         top: 0;
+        padding: 0 @size-padding-double;
         left: @size-margin;
         height: @height-bar-info;
         line-height: @height-bar-info;
     }
     
+    // Audio
+    .quiz-info-audio { display: none; }
+    
     // Vorlesen
-    .quiz-info-audio {
+    .quiz-info-audio-play {
         display: block;
+        cursor: pointer;
         position: absolute;
         top: 0;
+        padding: 0 @size-padding-double;
         right: @size-margin;
         height: @height-bar-info;
         color: @color-text-pale;
         font-size: @font-medium;
         line-height: @height-bar-info;
+        .transition();
+        
+        // Aktiv
+        &.current {
+            color: @color-success;
+            .textshadow-glow(@color-success);
+        }
     }
     
     // Stufen

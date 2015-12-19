@@ -143,7 +143,8 @@
 
 // Quiz-Info
 .quiz-info {
-    overflow: hidden;
+    overflow: visible;
+    height: @size-margin;
     font-size: @font-small;
     color: @color-text-pale;
     background: @color-white;
@@ -155,11 +156,69 @@
     .quiz-info-difficulty {
         float: left;
         font-style: italic;
+        height: @size-margin;
+        line-height: @size-margin;
     }
     
-    // Stufe
+    // Stufen
     .quiz-info-level {
         float: right;
+        height: @size-margin;
+        line-height: @size-margin;
+        
+        // Stufe (Stern)
+        .level {
+            font-style: normal;
+            display: inline-block;
+            margin-left: @size-padding;
+            .transition();
+            
+            // Icon
+            &:after {
+                color: @color-star;
+                .transition();
+                .font-icon();
+            }
+        }
+        
+        // Mixin: Stufe erreicht
+        .quiz-level-achieved() {
+            content: "\f005";
+            color: @color-star;
+            .animation(quiz-level-up);
+        }
+        
+        // Mixin: Stufe nicht erreicht
+        .quiz-level-not-achieved() {
+            content: "\f006";
+            color: @color-text-pale;
+        }
+        
+        // Stufe 0
+        &.level-0 {
+            .level-1, .level-2, .level-3 {
+                &:after { .quiz-level-not-achieved(); }
+            }
+        }
+        
+        // Stufe 1
+        &.level-1 {
+            .level-1           { &:after { .quiz-level-achieved();     } }
+            .level-2, .level-3 { &:after { .quiz-level-not-achieved(); } }
+        }
+        
+        // Stufe 2
+        &.level-2 {
+            .level-1, .level-2 { &:after { .quiz-level-achieved();     } }
+            .level-3           { &:after { .quiz-level-not-achieved(); } }
+        }
+        
+        // Stufe 3
+        &.level-3 {
+            .level-1, .level-2, .level-3 {
+                &:after { .quiz-level-achieved(); }
+            }
+        }
     }
 }
 

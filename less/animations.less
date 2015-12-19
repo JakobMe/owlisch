@@ -45,6 +45,12 @@
     100% { .shadow-line-choice-button(); }
 }
 
+// Quiz Stufenaufstieg
+@keyframes quiz-level-up {
+    0%   { .textshadow-glow(@color-star); }
+    100% { .textshadow-glow(fade(@color-star, 0%)); }
+}
+
 // Animations-Mixin
 .animation(@animation, @time: @time-animation-progress) {
     animation: @animation @time normal forwards;

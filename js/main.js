@@ -19,6 +19,7 @@ $(document).ready(function() {
     var ATTR_TITLE              = "title";
     var ATTR_DATA_TAB           = "data-tab";
     var ATTR_DATA_STEP          = "data-step";
+    var ATTR_DATA_LEVEL         = "data-level";
     
     // Konstanten: IDs
     var ID_QUIZ_PROGRESS        = "#quiz-progress";
@@ -38,6 +39,7 @@ $(document).ready(function() {
     var SEL_QUIZ_STEP_CURRENT   = ".quiz-progress-step.current";
     var SEL_QUIZ_SLIDE          = ".quiz-slide.slide-";
     var SEL_BUTTON_NEXT         = ".quiz-slide.current .quiz-next";
+    var SEL_LEVEL               = ".quiz-slide.current .quiz-info-level";
     var SEL_BUTTON              = ".button";
     var SEL_RIGHT               = ".right";
     var SEL_TAB                 = ".bar-tabs-tab";
@@ -57,6 +59,7 @@ $(document).ready(function() {
     var CLASS_LOCKED            = "locked";
     var CLASS_TAB               = "tab-";
     var CLASS_SLIDE             = "slide-";
+    var CLASS_LEVEL             = "level-";
     
     // Konstanten: AJAX-Werte
     var AJAX_EMPTY              = "";
@@ -105,9 +108,19 @@ $(document).ready(function() {
         
         // Wenn die Antwort richtig ist, Erfolg setzen
         if (answerRight) {
+            
+            // Erfolg setzen
             stepCurrent.addClass(CLASS_SUCCESS);
             answer.addClass(CLASS_SUCCESS);
             
+            // Level ermitteln
+            var levelCurrent = parseInt($(SEL_LEVEL).attr(ATTR_DATA_LEVEL));
+            var levelNext = Math.min(levelCurrent + 1, 3);
+            
+            // Level erhöhen
+            $(SEL_LEVEL).removeClass(CLASS_LEVEL + levelCurrent)
+                        .addClass(CLASS_LEVEL + levelNext);
+
         // Wenn die Antwort falsch ist, Fehler setzen
         } else {
             stepCurrent.addClass(CLASS_ERROR);

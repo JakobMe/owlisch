@@ -48,6 +48,11 @@
     text-shadow: 0 @size-line-thin 0 fade(@color, @fade);
 }
 
+// Textschatten: Glühen
+.textshadow-glow(@color) {
+    text-shadow: 0 0 @size-padding @color;
+}
+
 // Schatten
 .shadow(@x, @y, @blur, @spread, @color) {
     -webkit-box-shadow: @x @y @blur @spread @color;

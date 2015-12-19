@@ -117,7 +117,7 @@
         top: 0;
         height: 100%;
         width: (100% / @number-slides);
-        padding-top: ((@size-margin * 2) + @height-quiz-progress);
+        padding-top: (@size-margin-double + @height-quiz-progress);
         .loop-slide-position();
         .borderbox();
     }
@@ -131,8 +131,8 @@
     position: relative;
     margin: 0;
     line-height: 1.4;
-    padding: 0 (@size-margin * 2);
-    padding-bottom: @size-margin;
+    padding: 0 @size-margin-double;
+    padding-bottom: @size-padding-double;
     color: @color-text-dark;
     font-size: @font-large;
     background: @color-white;
@@ -145,9 +145,9 @@
 .quiz-info {
     overflow: hidden;
     font-size: @font-small;
-    color: @color-text-dark;
-    padding: (@size-padding * 2) @size-margin;
-    background: lighten(@color-background, 5%);
+    color: @color-text-pale;
+    background: @color-white;
+    padding: 0 @size-margin @size-padding-double @size-margin;
     border-bottom: @size-line-thin solid darken(@color-background, 10%);
     .gradient-vertical(@color-white, lighten(@color-background, 2%));
     
@@ -193,12 +193,13 @@
             position: relative;
             background: @color-white;
             color: @color-text-dark;
-            border: @size-line-medium solid @color-white;
+            border: 0 solid @color-success;
             padding: 0 @height-titlebar;
-            height: @height-titlebar;
-            line-height: (@height-titlebar - (2 * @size-line-medium));
+            height: @height-button-choice;
+            line-height: @height-button-choice;
+            .gradient-vertical(@color-white, lighten(@color-background, 2%));
             .shadow-line-choice-button();
-            .transition();
+            .transition(border-color);
             .borderbox();
             .ellipsis();
             
@@ -211,10 +212,16 @@
                 left: 0;
                 opacity: 0;
                 content: "";
-                height: @height-titlebar;
-                width: @height-titlebar;
+                height: @height-button-choice;
+                width: @height-button-choice;
                 .transition();
                 .font-icon();
+            }
+            
+            // Erfolg & Fehler
+            &.success, &.error {
+                border-width: @size-line-medium;
+                line-height: (@height-button-choice - (2 * @size-line-medium));
             }
             
             // Erfolg
@@ -256,7 +263,7 @@
             margin-left: -(@size-button-round / 2);
             padding: (@size-margin * 2.5) 0;
             line-height: ((@size-button-round - (5 * @size-margin)) / 2);
-            margin-top: -(@size-button-round / 2) + (((@size-margin * 2) + @height-quiz-progress) / 2);
+            margin-top: -(@size-button-round / 2) + ((@size-margin-double + @height-quiz-progress) / 2);
             .gradient-vertical(@color-success, darken(@color-success, 5%));
             .shadow-line-success-button();
             .textshadow();
@@ -269,7 +276,7 @@
         
         // Variante: Nächstes Quiz
         &.quiz-next {
-            margin: 0;
+            margin: 0 0 @size-line-thin 0;
             .gradient-vertical(@color-success, darken(@color-success, 5%));
             .shadow-line-success-button();
             .textshadow();

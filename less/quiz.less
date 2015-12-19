@@ -267,12 +267,13 @@
 #quiz-result {
     overflow: hidden;
     position: relative;
-    padding: @size-padding;
-    height: @height-button-choice;
+    padding: @size-padding-double 0;
+    height: @height-titlebar;
     background: @color-white;
     border: @size-line-thin solid darken(@color-background, 10%);
     border-left: none;
     border-right: none;
+    .gradient-vertical(lighten(@color-background, 2%), @color-white);
     .borderbox();
     
     // Innerer Container
@@ -282,52 +283,51 @@
         width: 100%;
     }
     
-    // Leisten
-    #quiz-result-right, #quiz-result-wrong {
-        float: left;
-        overflow: hidden;
-        width: 0;
+    // Eregebnis-Leiste
+    #result-bar {
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 50%;
         height: 100%;
+        border: @size-line-thin solid darken(@color-success, 10%);
+        border-bottom-color: darken(@color-success, 14%);
+        border-left: none;
+        .gradient-vertical(@color-success, darken(@color-success, 4%));
+        .shadow-result();
+        .round-right();
         .borderbox();
-        
-        // Leiste
-        .result-bar {
-            font-weight: bold;
-            text-align: center;
-            width: 100%;
-            height: 100%;
-            font-size: @font-medium;
-            color: @color-white;
-            line-height: (@height-button-choice - @size-padding-double - (4 * @size-line-thin));
-            .textshadow();
-            .borderbox();
-            .round-all();
-        }
-        
-        // Variante: Versteckt
-        &.hidden { padding: 0; width: 0; opacity: 0; }
-        &.no-label .result-bar { font-size: 0; }
+
+        // Variante
+        &.hidden { opacity: 0; }
+        &.full { border-right: none; .round-all(0); }
     }
     
-    // Leiste Falsch
-    #quiz-result-wrong {
-        padding-left: (@size-padding / 2);
+    // Ergebnis Linien
+    #result-lines {
+        width: 100%;
+        height: 100%;
         
-        // Leiste
-        .result-bar {
-            border-bottom: @size-line-thin solid darken(@color-error, 15%);
-            .gradient-vertical(@color-error, darken(@color-error, 5%));
-        }
-    }
-    
-    // Leiste Richtig
-    #quiz-result-right {
-        padding-right: (@size-padding / 2);
-        
-        // Leiste
-        .result-bar {
-            border-bottom: @size-line-thin solid darken(@color-success, 15%);
-            .gradient-vertical(@color-success, darken(@color-success, 5%));
+        // Linie
+        .result-line {
+            position: absolute;
+            top: -50%;
+            height: 200%;
+            background: @color-background;
+            width: @size-line-thin;
+            margin-left: -(@size-line-thin);
+            .gradient-vertical(lighten(@color-background, 2%), @color-background);
+            
+            // Positionen
+            &.line-1 { left: 10%; }
+            &.line-2 { left: 20%; }
+            &.line-3 { left: 30%; }
+            &.line-4 { left: 40%; }
+            &.line-5 { left: 50%; }
+            &.line-6 { left: 60%; }
+            &.line-7 { left: 70%; }
+            &.line-8 { left: 80%; }
+            &.line-9 { left: 90%; }
         }
     }
 }
@@ -360,6 +360,7 @@
             background: @color-titlebar;
             color: @color-text-light;
             border: @size-line-thin solid darken(@color-titlebar, 10%);
+            border-bottom-color: darken(@color-titlebar, 14%);
             .gradient-vertical(@color-titlebar, darken(@color-titlebar, 4%));
             .shadow-button-strong();
             .textshadow();
@@ -375,6 +376,7 @@
             height: @height-button-choice;
             line-height: (@height-button-choice - (2 * @size-line-thin));
             border: @size-line-thin solid darken(@color-background, 10%);
+            border-bottom-color: darken(@color-background, 12%);
             .gradient-vertical(@color-white, lighten(@color-background, 2%));
             .transition(border-color);
             .borderbox();

@@ -31,9 +31,9 @@
         <link rel="shortcut icon" href="img/favicon/favicon.ico?v=<?php echo $v; ?>">
         <meta name="apple-mobile-web-app-title" content="OWLisch">
         <meta name="application-name" content="OWLisch">
-        <meta name="msapplication-TileColor" content="#388fab">
+        <meta name="msapplication-TileColor" content="#3bbb77">
         <meta name="msapplication-TileImage" content="img/favicon/mstile-144x144.png?v=<?php echo $v; ?>">
-        <meta name="theme-color" content="#388fab">
+        <meta name="theme-color" content="#3bbb77">
 		
 		<!--CSS-->
         <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic"  type="text/css">

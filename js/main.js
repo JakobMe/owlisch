@@ -29,8 +29,7 @@ $(document).ready(function() {
     var ID_QUIZ_SLIDER          = "#quiz-slider";
     var ID_QUIZ_START           = "#quiz-start";
     var ID_QUIZ_RESTART         = "#quiz-restart";
-    var ID_QUIZ_RIGHT           = "#quiz-result-right";
-    var ID_QUIZ_WRONG           = "#quiz-result-wrong";
+    var ID_RESULT_BAR           = "#result-bar";
     var ID_RESULT_RIGHT         = "#result-right";
     var ID_RESULT_TOTAL         = "#result-total";
     var ID_TITLE                = "#bar-title-text";
@@ -47,7 +46,6 @@ $(document).ready(function() {
     var SEL_QUIZ_STEP           = ".quiz-progress-step";
     var SEL_QUIZ_STEP_CURRENT   = ".quiz-progress-step.current";
     var SEL_QUIZ_STEP_SUCCESS   = ".quiz-progress-step.success";
-    var SEL_QUIZ_STEP_ERROR     = ".quiz-progress-step.error";
     var SEL_QUIZ_SLIDE          = ".quiz-slide.slide-";
     var SEL_BUTTON_NEXT         = ".quiz-slide.current .quiz-next";
     var SEL_LEVEL               = ".quiz-slide.current .quiz-info-level";
@@ -70,10 +68,10 @@ $(document).ready(function() {
     var CLASS_SOLVED            = "solved";
     var CLASS_WAITING           = "waiting";
     var CLASS_RIGHT             = "right";
+    var CLASS_FULL              = "full";
     var CLASS_HIDDEN            = "hidden";
     var CLASS_QUIZ_NEXT         = "quiz-next";
     var CLASS_FINISHED          = "finished";
-    var CLASS_NOLABEL           = "no-label";
     var CLASS_LOCKED            = "locked";
     var CLASS_TAB               = "tab-";
     var CLASS_SLIDE             = "slide-";
@@ -204,39 +202,25 @@ $(document).ready(function() {
                 // Ergebniss zusammenzählen
                 var steps = $(ID_QUIZ_STEPS);
                 var stepsTotal = steps.children(SEL_QUIZ_STEP).length;
-                var right = steps.children(SEL_QUIZ_STEP_SUCCESS).length;
-                var wrong = steps.children(SEL_QUIZ_STEP_ERROR).length;
-                
-                // Prozentzahlen berechnen
-                var percentRight = (right / stepsTotal) * 100;
-                var percentWrong = (wrong / stepsTotal) * 100;
+                var stepsRight = steps.children(SEL_QUIZ_STEP_SUCCESS).length;
+                var percentRight = (stepsRight / stepsTotal) * 100;
                 
                 // Richtig-Leiste setzen
-                $(ID_QUIZ_RIGHT).removeClass(CLASS_HIDDEN)
+                $(ID_RESULT_BAR).removeClass(CLASS_HIDDEN)
                                 .css(ATTR_WIDTH, percentRight + AJAX_PERCENT);
                 
-                // Falsch-Leiste setzen
-                $(ID_QUIZ_WRONG).removeClass(CLASS_HIDDEN)
-                                .css(ATTR_WIDTH, percentWrong + AJAX_PERCENT);
-                
                 // Zahlen setzen
-                $(ID_RESULT_RIGHT).text(right);
+                $(ID_RESULT_RIGHT).text(stepsRight);
                 $(ID_RESULT_TOTAL).text(stepsTotal);
                 
-                // Wenn weniger als einer richtig, anpassen        
-                if (right <= 1) {
-                    //$(ID_QUIZ_RIGHT).addClass(CLASS_NOLABEL);
-                    if (right === 0) {
-                        $(ID_QUIZ_RIGHT).addClass(CLASS_HIDDEN);
-                    }
+                // Wenn keine richtige Antwort, Leiste ausblenden        
+                if (stepsRight === 0) {
+                    $(ID_RESULT_BAR).addClass(CLASS_HIDDEN);
                 }
                 
-                // Wenn weniger als einer falsch, anpassen 
-                if (wrong <= 1) {
-                    //$(ID_QUIZ_WRONG).addClass(CLASS_NOLABEL);
-                    if (wrong === 0) {
-                        $(ID_QUIZ_WRONG).addClass(CLASS_HIDDEN);
-                    }
+                // Wenn alle richtigen Antworten, Leiste anpassen 
+                if (stepsRight === stepsTotal) {
+                    $(ID_RESULT_BAR).addClass(CLASS_FULL);
                 }
                 
                 // Quiz beenden, zum letzten Slide gehen

@@ -72,11 +72,6 @@
     .shadow-line(@size-line-thin, darken(@color-background, 10%));
 }
 
-// Schatten: Linie Erfolgs-Button
-.shadow-line-success-button() {
-    .shadow-line(@size-line-thin, darken(@color-success, 15%));
-}
-
 // Abgerundete Ecken
 .round(@tl, @tr, @br, @bl) {
     -webkit-border-radius: @tl @tr @br @bl;
@@ -89,6 +84,16 @@
 // Abgerundete Ecken: Überall
 .round-all(@radius: @size-radius) {
     .round(@radius, @radius, @radius, @radius);
+}
+
+// Abgerundete Ecken: Links
+.round-left(@radius: @size-radius) {
+    .round(@radius, 0, 0, @radius);
+}
+
+// Abgerundete Ecken: Rechts
+.round-right(@radius: @size-radius) {
+    .round(0, @radius, @radius, 0);
 }
 
 // Verlauf Vertikal

@@ -138,6 +138,13 @@
     font-size: @font-large;
     background: @color-white;
     
+    // Variante: Abgeschlossen
+    &.finished {
+        padding-bottom: @size-margin;
+        .gradient-vertical(@color-white, lighten(@color-background, 2%));
+        .shadow-line(@size-line-thin, darken(@color-background, 10%));
+    }
+    
     // Hervorhebung
     b { border-bottom: @size-line-medium solid darken(@color-background, 10%); }
 }
@@ -186,8 +193,8 @@
         
         // Aktiv
         &.current {
-            color: @color-success;
-            .textshadow-glow(@color-success);
+            color: @color-titlebar;
+            .textshadow-glow(@color-titlebar);
         }
     }
     
@@ -256,6 +263,75 @@
     }
 }
 
+// Quiz-Ergebnis
+#quiz-result {
+    overflow: hidden;
+    position: relative;
+    padding: @size-padding;
+    height: @height-button-choice;
+    background: @color-white;
+    border: @size-line-thin solid darken(@color-background, 10%);
+    border-left: none;
+    border-right: none;
+    .borderbox();
+    
+    // Innerer Container
+    #quiz-result-inner {
+        position: relative;
+        height: 100%;
+        width: 100%;
+    }
+    
+    // Leisten
+    #quiz-result-right, #quiz-result-wrong {
+        float: left;
+        overflow: hidden;
+        width: 0;
+        height: 100%;
+        .borderbox();
+        
+        // Leiste
+        .result-bar {
+            font-weight: bold;
+            text-align: center;
+            width: 100%;
+            height: 100%;
+            font-size: @font-medium;
+            color: @color-white;
+            line-height: (@height-button-choice - @size-padding-double - (4 * @size-line-thin));
+            .textshadow();
+            .borderbox();
+            .round-all();
+        }
+        
+        // Variante: Versteckt
+        &.hidden { padding: 0; width: 0; opacity: 0; }
+        &.no-label .result-bar { font-size: 0; }
+    }
+    
+    // Leiste Falsch
+    #quiz-result-wrong {
+        padding-left: (@size-padding / 2);
+        
+        // Leiste
+        .result-bar {
+            border-bottom: @size-line-thin solid darken(@color-error, 15%);
+            .gradient-vertical(@color-error, darken(@color-error, 5%));
+        }
+    }
+    
+    // Leiste Richtig
+    #quiz-result-right {
+        padding-right: (@size-padding / 2);
+        
+        // Leiste
+        .result-bar {
+            border-bottom: @size-line-thin solid darken(@color-success, 15%);
+            .gradient-vertical(@color-success, darken(@color-success, 5%));
+        }
+    }
+}
+
 // Inhalt
 #content {
     
@@ -278,7 +354,7 @@
         // Varianten
         &.success { background: @color-success; color: @color-text-light; }
         &.error { background: @color-error; color: @color-text-light; }
-        &.action { background: @color-success; color: @color-text-light; }
+        &.action { background: @color-titlebar; color: @color-text-light; }
         &.round { .round-all(50%); }
         
         // Variante: Quiz-Auswahl
@@ -286,7 +362,7 @@
             position: relative;
             background: @color-white;
             color: @color-text-dark;
-            border: 0 solid @color-success;
+            border: 0 solid @color-white;
             padding: 0 @height-titlebar;
             height: @height-button-choice;
             line-height: @height-button-choice;
@@ -296,11 +372,16 @@
             .borderbox();
             .ellipsis();
             
+            // Rahmenfarben
+            &.right { border-color: @color-success; }
+            &.wrong { border-color: @color-error; }
+            
             // Icon
             &:before {
                 display: block;
                 position: absolute;
                 text-align: center;
+                font-weight: normal;
                 top: 0;
                 left: 0;
                 opacity: 0;
@@ -346,6 +427,7 @@
         
         // Variante: Zentriert
         &.centered {
+            display: block;
             position: absolute;
             text-transform: uppercase;
             top: 50%;
@@ -357,23 +439,32 @@
             padding: (@size-margin * 2.5) 0;
             line-height: ((@size-button-round - (5 * @size-margin)) / 2);
             margin-top: -(@size-button-round / 2) + ((@size-margin-double + @height-quiz-progress) / 2);
-            .gradient-vertical(@color-success, darken(@color-success, 5%));
-            .shadow-line-success-button();
+            .gradient-vertical(@color-titlebar, darken(@color-titlebar, 5%));
             .textshadow();
             .borderbox();
             
             // Hervorgehoben
             b { font-size: @font-huge; }
             i { font-style: normal; font-weight: normal; }
+            
+            // Variante: Inline
+            &.inline {
+                position: static;
+                margin: 0 auto;
+            }
         }
         
         // Variante: Nächstes Quiz
         &.quiz-next {
-            margin: 0 0 @size-line-thin 0;
-            .gradient-vertical(@color-success, darken(@color-success, 5%));
-            .shadow-line-success-button();
+            font-weight: normal;
+            text-transform: uppercase;
+            margin: 0;
+            .gradient-vertical(@color-titlebar, darken(@color-titlebar, 5%));
             .textshadow();
             .transition();
+            
+            // Hervorgehoben
+            b { font-weight: bold; }
             
             // Icon
             .fa { margin: 0 0 0 @size-padding; }

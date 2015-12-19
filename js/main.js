@@ -21,12 +21,18 @@ $(document).ready(function() {
     var ATTR_DATA_TAB           = "data-tab";
     var ATTR_DATA_STEP          = "data-step";
     var ATTR_DATA_LEVEL         = "data-level";
+    var ATTR_WIDTH              = "width";
     
     // Konstanten: IDs
     var ID_QUIZ_PROGRESS        = "#quiz-progress";
     var ID_QUIZ_STEPS           = "#quiz-progress-steps";
     var ID_QUIZ_SLIDER          = "#quiz-slider";
     var ID_QUIZ_START           = "#quiz-start";
+    var ID_QUIZ_RESTART         = "#quiz-restart";
+    var ID_QUIZ_RIGHT           = "#quiz-result-right";
+    var ID_QUIZ_WRONG           = "#quiz-result-wrong";
+    var ID_RESULT_RIGHT         = "#result-right";
+    var ID_RESULT_TOTAL         = "#result-total";
     var ID_TITLE                = "#bar-title-text";
     var ID_TITLE_RIGHT          = "#bar-title-right";
     var ID_TABS_INDICATOR       = "#bar-tabs-indicator";
@@ -40,6 +46,8 @@ $(document).ready(function() {
     var SEL_QUIZ_CHOICES        = ".quiz-choices";
     var SEL_QUIZ_STEP           = ".quiz-progress-step";
     var SEL_QUIZ_STEP_CURRENT   = ".quiz-progress-step.current";
+    var SEL_QUIZ_STEP_SUCCESS   = ".quiz-progress-step.success";
+    var SEL_QUIZ_STEP_ERROR     = ".quiz-progress-step.error";
     var SEL_QUIZ_SLIDE          = ".quiz-slide.slide-";
     var SEL_BUTTON_NEXT         = ".quiz-slide.current .quiz-next";
     var SEL_LEVEL               = ".quiz-slide.current .quiz-info-level";
@@ -55,6 +63,7 @@ $(document).ready(function() {
     var CLASS_FA                = "fa";
     var CLASS_QUIZ              = "quiz";
     var CLASS_WEBAPP            = "webapp";
+    var CLASS_CHOICE            = "choice";
     var CLASS_CURRENT           = "current";
     var CLASS_SUCCESS           = "success";
     var CLASS_ERROR             = "error";
@@ -64,6 +73,7 @@ $(document).ready(function() {
     var CLASS_HIDDEN            = "hidden";
     var CLASS_QUIZ_NEXT         = "quiz-next";
     var CLASS_FINISHED          = "finished";
+    var CLASS_NOLABEL           = "no-label";
     var CLASS_LOCKED            = "locked";
     var CLASS_TAB               = "tab-";
     var CLASS_SLIDE             = "slide-";
@@ -71,6 +81,8 @@ $(document).ready(function() {
     
     // Konstanten: AJAX-Werte
     var AJAX_EMPTY              = "";
+    var AJAX_HASH               = "#";
+    var AJAX_PERCENT            = "%";
     var AJAX_ERROR              = "error";
     var AJAX_LOAD               = "php/load.php";
     var AJAX_POST               = "post";
@@ -189,6 +201,44 @@ $(document).ready(function() {
             // Falls Quiz am Ende ist
             } else {
                 
+                // Ergebniss zusammenzählen
+                var steps = $(ID_QUIZ_STEPS);
+                var stepsTotal = steps.children(SEL_QUIZ_STEP).length;
+                var right = steps.children(SEL_QUIZ_STEP_SUCCESS).length;
+                var wrong = steps.children(SEL_QUIZ_STEP_ERROR).length;
+                
+                // Prozentzahlen berechnen
+                var percentRight = (right / stepsTotal) * 100;
+                var percentWrong = (wrong / stepsTotal) * 100;
+                
+                // Richtig-Leiste setzen
+                $(ID_QUIZ_RIGHT).removeClass(CLASS_HIDDEN)
+                                .css(ATTR_WIDTH, percentRight + AJAX_PERCENT);
+                
+                // Falsch-Leiste setzen
+                $(ID_QUIZ_WRONG).removeClass(CLASS_HIDDEN)
+                                .css(ATTR_WIDTH, percentWrong + AJAX_PERCENT);
+                
+                // Zahlen setzen
+                $(ID_RESULT_RIGHT).text(right);
+                $(ID_RESULT_TOTAL).text(stepsTotal);
+                
+                // Wenn weniger als einer richtig, anpassen        
+                if (right <= 1) {
+                    //$(ID_QUIZ_RIGHT).addClass(CLASS_NOLABEL);
+                    if (right === 0) {
+                        $(ID_QUIZ_RIGHT).addClass(CLASS_HIDDEN);
+                    }
+                }
+                
+                // Wenn weniger als einer falsch, anpassen 
+                if (wrong <= 1) {
+                    //$(ID_QUIZ_WRONG).addClass(CLASS_NOLABEL);
+                    if (wrong === 0) {
+                        $(ID_QUIZ_WRONG).addClass(CLASS_HIDDEN);
+                    }
+                }
+                
                 // Quiz beenden, zum letzten Slide gehen
                 $(ID_VIEWPORT).removeClass(CLASS_QUIZ);
                 $(ID_QUIZ_PROGRESS).addClass(CLASS_WAITING);
@@ -208,7 +258,12 @@ $(document).ready(function() {
      * @param {string} view Name der View
      * @return {boolean} false bei AJAX-Fehler, sonst true
      */
-    function changeView(view) {
+    function changeView(view, callback) {
+        
+        // Wenn erstes Zeichen eine Raute ist, entfernen
+        if (view.charAt(0) === AJAX_HASH) {
+            view = view.substring(1);
+        }
         
         // Inhalt ausblenden
         $(ID_CONTENT).addClass(CLASS_HIDDEN);
@@ -230,7 +285,10 @@ $(document).ready(function() {
                     } else {
                         $(ID_CONTENT_INNER).html(AJAX_EMPTY);
                     }
-    
+                        
+                    // Callback
+                    callback();
+                    
                     // Erfolg melden
                     return true;
                 },
@@ -282,6 +340,23 @@ $(document).ready(function() {
         );
     }
     
+    /**
+     * Funktion: Quiz starten.
+     * Greift auf andere Funktionen zurück, um das Quiz
+     * zu starten; setzt den "Beenden"-Button in der Titel-Leiste.
+     */
+    function startQuiz() {
+        
+        // Starten
+        progressQuiz();
+        
+        // "Beenden"-Button aktivieren
+        setTitleButton(
+            $(ID_TITLE_RIGHT), BTN_END, VIEW_QUIZ,
+            AJAX_EMPTY, false
+        );
+    }
+    
     /*
      * Bei Klick auf Quiz-Buttons.
      * Entscheided anhand der Eigenschaften, ob das Quit ausgelöst werden,
@@ -290,28 +365,32 @@ $(document).ready(function() {
     $(SEL_BODY).on(EVENT_CLICK, SEL_BUTTON, function() {
         
         // Falls Button ein Weiter-Button ist
-        if (($(this).hasClass(CLASS_QUIZ_NEXT)) ||
-            ($(this).is($(ID_QUIZ_START)))) {
+        if (($(this).hasClass(CLASS_QUIZ_NEXT))) {
                 
             // Quit fortführen
             progressQuiz();
-            
-            // Wenn Quiz gestartet wurde
-            if ($(this).is($(ID_QUIZ_START))) {
-                
-                // "Beenden"-Button aktivieren
-                setTitleButton(
-                    $(ID_TITLE_RIGHT), BTN_END, VIEW_QUIZ,
-                    AJAX_EMPTY, false
-                );
-            }
             
         // Wenn Button kein Weiter-Button ist
         } else {
             
             // Wenn Antworten nicht blockiert sind, Frage auflösen
-            if (!$(this).parents(SEL_QUIZ_CHOICES).hasClass(CLASS_LOCKED)) {
+            if (($(this).hasClass(CLASS_CHOICE)) &&
+                (!$(this).parents(SEL_QUIZ_CHOICES).hasClass(CLASS_LOCKED))) {
                 revealResult($(this));
+            }
+            
+            // Wenn Quiz gestartet wurde
+            if ($(this).is($(ID_QUIZ_START))) {
+                startQuiz();
+            }
+            
+            // Wenn Quiz neu gestartet wurde
+            if ($(this).is($(ID_QUIZ_RESTART))) {
+                
+                // Quiz laden, zur ersten Frage springen
+                changeView(VIEW_QUIZ, function() {
+                    startQuiz();
+                });
             }
         }
         

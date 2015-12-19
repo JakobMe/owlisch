@@ -9,6 +9,7 @@
 #quiz-progress {
     background: @color-white;
     padding: @size-margin;
+    .transition();
     
     // Variante: Wartend
     &.waiting {
@@ -144,7 +145,9 @@
 // Quiz-Info
 .quiz-info {
     overflow: visible;
-    height: @size-margin;
+    text-align: center;
+    position: relative;
+    height: @height-bar-info;
     font-size: @font-small;
     color: @color-text-pale;
     background: @color-white;
@@ -154,17 +157,32 @@
     
     // Schwierigkeit
     .quiz-info-difficulty {
-        float: left;
+        display: block;
+        position: absolute;
         font-style: italic;
-        height: @size-margin;
-        line-height: @size-margin;
+        top: 0;
+        left: @size-margin;
+        height: @height-bar-info;
+        line-height: @height-bar-info;
+    }
+    
+    // Vorlesen
+    .quiz-info-audio {
+        display: block;
+        position: absolute;
+        top: 0;
+        right: @size-margin;
+        height: @height-bar-info;
+        color: @color-text-pale;
+        font-size: @font-medium;
+        line-height: @height-bar-info;
     }
     
     // Stufen
     .quiz-info-level {
-        float: right;
-        height: @size-margin;
-        line-height: @size-margin;
+        display: inline-block;
+        height: @height-bar-info;
+        line-height: @height-bar-info;
         
         // Stufe (Stern)
         .level {
@@ -172,6 +190,9 @@
             display: inline-block;
             margin-left: @size-padding;
             .transition();
+            
+            // Erstes Element
+            &:first-child { margin-left: 0; }
             
             // Icon
             &:after {

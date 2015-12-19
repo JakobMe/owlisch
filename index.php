@@ -12,7 +12,7 @@
 		<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 		
 		<!--CSS-->
-        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:400,400italic,900"  type="text/css">
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic"  type="text/css">
         <link rel="stylesheet" href="css/style.min.css?v=<?php echo rand(0, 1000); ?>" type="text/css">
         
         <!--Javascript-->

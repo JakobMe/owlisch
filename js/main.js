@@ -149,15 +149,11 @@ $(document).ready(function() {
         // Falls Quiz noch nicht gestartet wurde
         if (stepCurrent.length <= 0) {
             
-            // Quiz-Slider verschieben
-            if ($(ID_QUIZ_STEPS).hasClass(CLASS_FINISHED)) {
-                $(ID_VIEWPORT).removeClass(CLASS_QUIZ);
-                moveQuizSlider(slidesNumber - 1);
-            } else {
-                $(ID_VIEWPORT).addClass(CLASS_QUIZ);
-                $(ID_QUIZ_STEPS).children(SEL_QUIZ_STEP).first().addClass(CLASS_CURRENT);
-                moveQuizSlider(1);
-            }
+            // Quiz-Slider zur ersten Frage verschieben
+            $(ID_VIEWPORT).addClass(CLASS_QUIZ);
+            $(ID_QUIZ_PROGRESS).removeClass(CLASS_WAITING);
+            $(ID_QUIZ_STEPS).children(SEL_QUIZ_STEP).first().addClass(CLASS_CURRENT);
+            moveQuizSlider(1);
             
         // Falls Quiz bereits läuft
         } else {
@@ -175,6 +171,14 @@ $(document).ready(function() {
                 // Nächsten Schritt aktivieren, Quiz-Slider verschieben
                 stepNext.addClass(CLASS_CURRENT);
                 moveQuizSlider(stepNextNumber);
+            
+            // Falls Quiz am Ende ist
+            } else {
+                
+                // Quiz beenden, zum letzten Slide gehen
+                $(ID_VIEWPORT).removeClass(CLASS_QUIZ);
+                $(ID_QUIZ_PROGRESS).addClass(CLASS_WAITING);
+                moveQuizSlider(slidesNumber - 1);
             }
         }
     }
@@ -245,12 +249,10 @@ $(document).ready(function() {
             
             // Wenn Antworten nicht blockiert sind, lösen
             if (!$(this).parents(SEL_QUIZ_CHOICES).hasClass(CLASS_LOCKED)) {
-                if ($(this).is($(ID_QUIZ_START))) {
-                    $(ID_QUIZ_PROGRESS).removeClass(CLASS_WAITING);
-                    progressQuiz();
-                } else {
-                    revealResult($(this));
-                }
+                
+                // Quiz starten oder Lösung zeigen
+                if ($(this).is($(ID_QUIZ_START))) { progressQuiz(); }
+                else { revealResult($(this)); }
             }
         }
         

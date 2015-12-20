@@ -82,6 +82,15 @@
     .shadow(0, @size-line-medium, @size-line-medium, 0, fade(@color-black, 15%));
 }
 
+// Schatten: Ohne
+.shadow-none() {
+    -webkit-box-shadow: none;
+       -moz-box-shadow: none;
+        -ms-box-shadow: none;
+         -o-box-shadow: none;
+            box-shadow: none;
+}
+
 // Abgerundete Ecken
 .round(@tl, @tr, @br, @bl) {
     -webkit-border-radius: @tl @tr @br @bl;

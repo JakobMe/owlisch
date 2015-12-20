@@ -334,6 +334,9 @@
 
 // Inhalt
 #content {
+
+    // Quiz-Antworten mit Bildern
+    .quiz-choices.images { padding: (@size-margin / 2); }
     
     // Buttons
     .button {
@@ -345,7 +348,7 @@
         margin-bottom: @size-margin;
         color: @color-white;
         font-size: @font-big;
-        padding: @size-margin;
+        padding: @size-padding-double @size-margin;
         .shadow-button();
         .round-all();
         
@@ -367,18 +370,20 @@
         }
         
         // Variante: Quiz-Auswahl
-        &.choice {
+        &.choice:not(.image), &.choice.image .button-image {
             position: relative;
             background: @color-white;
             color: @color-text-dark;
             border: 0 solid @color-white;
             padding: 0 @height-titlebar;
             height: @height-button-choice;
-            line-height: (@height-button-choice - (2 * @size-line-thin));
+            line-height: (@height-button-choice - @size-line-medium);
             border: @size-line-thin solid darken(@color-background, 10%);
             border-bottom-color: darken(@color-background, 12%);
             .gradient-vertical(@color-white, lighten(@color-background, 2%));
             .transition(border-color);
+            .shadow-button();
+            .round-all();
             .borderbox();
             .ellipsis();
             
@@ -394,18 +399,24 @@
                 content: "";
                 height: @height-button-choice;
                 width: @height-button-choice;
+                line-height: (@height-button-choice - @size-line-medium);
                 .transition();
                 .font-icon();
             }
+        }
+        
+        // Variante: Quiz-Auswahl (Erfolg & Fehler)
+        &.choice {
             
             // Erfolg & Fehler
-            &.success, &.error {
+            &:not(.image).success, &:not(.image).error,
+            &.image.success .button-image, &.image.error .button-image {
                 border-width: @size-line-medium;
                 line-height: (@height-button-choice - (2 * @size-line-medium));
             }
             
             // Erfolg
-            &.success {
+            &:not(.image).success, &.image.success .button-image {
                 border-color: @color-success;
                 .animation(answer-right);
                 
@@ -418,7 +429,7 @@
             }
             
             // Fehler
-            &.error {
+            &:not(.image).error, &.image.error .button-image {
                 border-color: @color-error;
                 .animation(answer-wrong);
                 
@@ -427,6 +438,50 @@
                     opacity: 1;
                     content: "\f00d";
                     color: @color-error;
+                }
+            }
+        }
+        
+        // Variante: Quiz-Auswahl Bild
+        &.choice.image {
+            float: left;
+            border: none;
+            height: auto;
+            display: block;
+            overflow: visible;
+            background: transparent;
+            margin: 0;
+            width: 50%;
+            padding: (@size-margin / 2);
+            .shadow-none();
+            .borderbox();
+            
+            // Bild-Button
+            .button-image {
+                height: auto;
+                display: block;
+                overflow: hidden;
+                padding: 0;
+                
+                // Icon
+                &:before {
+                    top: auto;
+                    bottom: 0;
+                    left: 0;
+                    width: @size-margin-double;
+                    height: @size-margin-double;
+                    line-height: @size-margin-double;
+                    background: @color-white;
+                    .shadow(0, 0, @size-padding, @size-padding, @color-white);
+                    .round-all();
+                    .borderbox();
+                }
+                
+                // Bild
+                img {
+                    display: block;
+                    max-width: 100%;
+                    .round-all(@size-radius - @size-line-thin);
                 }
             }
         }
@@ -477,12 +532,21 @@
         }
     }
     
-    // Gesperrte Buttons ausgrauen
-    .quiz-choices.locked .button.choice {
-        cursor: not-allowed;
-        opacity: 0.5;
+    // Gesperrte Auswahl-Buttons
+    .quiz-choices.locked {
+        
+        // Buttons ausgrauen
+        .button.choice:not(.image), .button.choice.image .button-image {
+            cursor: not-allowed;
+            opacity: 0.3;
+        }
         
         // Ausnahme: Fehler und Erfolg
-        &.success, &.error { opacity: 1; }
+        .button.choice {
+            &:not(.image).success, &.image.success .button-image,
+            &:not(.image).error, &.image.error .button-image {
+                opacity: 1;
+            }
+        }
     }
 }

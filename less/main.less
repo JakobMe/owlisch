@@ -10,7 +10,7 @@ html { -webkit-text-size-adjust: 100%; }
 
 // Body
 body {
-    -webkit-font-smoothing: subpixel-antialiased;
+    -webkit-font-smoothing: antialiased;
     position: fixed;
     overflow: hidden;
     margin: 0;
@@ -59,6 +59,9 @@ body {
         #bar-tabs { .translate(0, (@height-titlebar + @size-line-thin)); }
     }
 }
+
+// Clearfix
+.clear { clear: both; }
 
 // Responsive
 @media screen and (min-width: @width-iphone) {

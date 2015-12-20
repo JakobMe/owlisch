@@ -11,6 +11,50 @@
 		"outputPathIsOutsideProject": 0,
 		"outputPathIsSetByUser": 0
 		},
+	"\/img\/content\/blume.jpg": {
+		"fileType": 16384,
+		"ignore": 0,
+		"ignoreWasSetByUser": 0,
+		"initialSize": 25040,
+		"inputAbbreviatedPath": "\/img\/content\/blume.jpg",
+		"outputAbbreviatedPath": "\/img\/content\/blume.jpg",
+		"outputPathIsOutsideProject": 0,
+		"outputPathIsSetByUser": 0,
+		"processed": 1
+		},
+	"\/img\/content\/pinienzapfen.jpg": {
+		"fileType": 16384,
+		"ignore": 0,
+		"ignoreWasSetByUser": 0,
+		"initialSize": 29977,
+		"inputAbbreviatedPath": "\/img\/content\/pinienzapfen.jpg",
+		"outputAbbreviatedPath": "\/img\/content\/pinienzapfen.jpg",
+		"outputPathIsOutsideProject": 0,
+		"outputPathIsSetByUser": 0,
+		"processed": 1
+		},
+	"\/img\/content\/schnapsglas.jpg": {
+		"fileType": 16384,
+		"ignore": 0,
+		"ignoreWasSetByUser": 0,
+		"initialSize": 11423,
+		"inputAbbreviatedPath": "\/img\/content\/schnapsglas.jpg",
+		"outputAbbreviatedPath": "\/img\/content\/schnapsglas.jpg",
+		"outputPathIsOutsideProject": 0,
+		"outputPathIsSetByUser": 0,
+		"processed": 1
+		},
+	"\/img\/content\/schraube.jpg": {
+		"fileType": 16384,
+		"ignore": 0,
+		"ignoreWasSetByUser": 0,
+		"initialSize": 7365,
+		"inputAbbreviatedPath": "\/img\/content\/schraube.jpg",
+		"outputAbbreviatedPath": "\/img\/content\/schraube.jpg",
+		"outputPathIsOutsideProject": 0,
+		"outputPathIsSetByUser": 0,
+		"processed": 1
+		},
 	"\/img\/favicon\/android-chrome-144x144.png": {
 		"fileType": 32768,
 		"ignore": 0,

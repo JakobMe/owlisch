@@ -225,8 +225,9 @@ $(document).ready(function() {
             // Quiz-Slider zur ersten Frage verschieben
             $(ID_VIEWPORT).addClass(CLASS_QUIZ);
             setTimeout(function() {
-                $(ID_QUIZ_STEPS).children(SEL_QUIZ_STEP).first().addClass(CLASS_CURRENT);
                 moveQuizSlider(1);
+                $(ID_QUIZ_STEPS).children(SEL_QUIZ_STEP).first()
+                                .addClass(CLASS_CURRENT);
             }, TIME_ANIMATION);
             
         // Falls Quiz bereits läuft
@@ -236,7 +237,7 @@ $(document).ready(function() {
             var stepNext = stepCurrent.next(SEL_QUIZ_STEP);
             var stepNextNumber = stepNext.attr(ATTR_DATA_STEP);
             
-            // Aktuellen Schritt als gelöst markieren, nächsten Schritt aktivieren
+            // Aktuellen Schritt lösen, nächsten Schritt aktivieren
             stepCurrent.removeClass(CLASS_CURRENT).addClass(CLASS_SOLVED);
             
             // Falls nächste Zahl existiert
@@ -421,7 +422,7 @@ $(document).ready(function() {
                             SEL_CHOICE + inputPrev.attr(ATTR_DATA_CHOICE)
                         ).removeClass(CLASS_LOCKED);
                         
-                        // Löschen-Button sperren, wenn erster Input gelöscht wurde
+                        // Button sperren, wenn erster Input gelöscht wurde
                         if (inputPrev.is(SEL_FIRST_CHILD)) {
                             button.addClass(CLASS_LOCKED);
                         }

@@ -179,8 +179,10 @@ $(document).ready(function() {
             
             // Quiz-Slider zur ersten Frage verschieben
             $(ID_VIEWPORT).addClass(CLASS_QUIZ);
-            $(ID_QUIZ_STEPS).children(SEL_QUIZ_STEP).first().addClass(CLASS_CURRENT);
-            moveQuizSlider(2);
+            setTimeout(function() {
+                $(ID_QUIZ_STEPS).children(SEL_QUIZ_STEP).first().addClass(CLASS_CURRENT);
+                moveQuizSlider(1);
+            }, 300);
             
         // Falls Quiz bereits läuft
         } else {
@@ -197,7 +199,7 @@ $(document).ready(function() {
                 
                 // Nächsten Schritt aktivieren, Quiz-Slider verschieben
                 stepNext.addClass(CLASS_CURRENT);
-                moveQuizSlider(parseInt(stepNextNumber) + 1);
+                moveQuizSlider(stepNextNumber);
             
             // Falls Quiz am Ende ist
             } else {
@@ -257,17 +259,14 @@ $(document).ready(function() {
         // Inhalt laden
         setTimeout(function() {
             $(ID_CONTENT_INNER).load(AJAX_PATH + view + AJAX_HTML, function() {
-                setTimeout(function() {
-                    
-                    // Inhalt einblenden
-                    $(ID_CONTENT).removeClass(CLASS_HIDDEN);
-                    
-                    // Callback
-                    if ($.isFunction(callback)) {
-                        callback();
-                    }
-                    
-                }, 0);
+                
+                // Inhalt einblenden
+                $(ID_CONTENT).removeClass(CLASS_HIDDEN);
+                
+                // Callback
+                if ($.isFunction(callback)) {
+                    callback();
+                }
             });
         }, 300);
     }

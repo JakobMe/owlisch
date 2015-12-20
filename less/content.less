@@ -14,7 +14,7 @@
     height: 100%;
     padding: @height-titlebar 0;
     background: @color-background;
-    .transition();
+    .transition(opacity);
     .borderbox();
     
     // Variante: Versteckt
@@ -39,6 +39,12 @@
         
         // Variante: Zentriert
         &.center { text-align: center; }
+        
+        // Variante Vertikal Klein
+        &.small-vertical {
+            padding-top: @size-margin-half;
+            padding-bottom: @size-margin-half;
+        }
         
         // Variante: Unten
         &.bottom {
@@ -76,6 +82,9 @@
             font-style: italic;
             font-size: @font-big;
             color: @color-text-pale;
+            
+            // Variante: Klein
+            &.small { font-size: @font-small; }
         }
     }
 }

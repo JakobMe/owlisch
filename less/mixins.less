@@ -134,3 +134,11 @@
     &.slide-@{i} { left: ((100% / @n) * @i); }
     .loop-slide-position(@n, (@i + 1));
 }
+
+// Loop: Input-Buchstaben Breite
+.loop-input-characters(@n: @number-chars-max, @i: 1) when (@i <= @n) {
+    &.characters-@{i} .input-character {
+        width: (100% / @i);
+    }
+    .loop-input-characters(@n, (@i + 1));
+}

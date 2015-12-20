@@ -18,17 +18,22 @@
 </div>
 
 <!--Quiz-Karten-->
-<div id="quiz-slider" class="slide-0">
+<div id="quiz-slider" class="slide-1">
     
     <!--Start-->
-    <div class="quiz-slide slide-0">
-    	<a class="button round centered action" id="quiz-start">
-        	<b>Quiz</b><br/><i>starten</i>
-    	</a>
+    <div class="quiz-slide slide-0"></div>
+    
+    <!--Start-->
+    <div class="quiz-slide slide-1">
+        <div class="content-padding">
+        	<a class="button round centered inline action" id="quiz-start">
+            	<b>Quiz</b><br/><i>starten</i>
+        	</a>
+        </div>
     </div>
     
-    <!--Frage 1: Text zu Text-->
-    <div class="quiz-slide slide-1">
+    <!--Frage 1: OWL zu Deutsch-->
+    <div class="quiz-slide slide-6">
         <h2 class="quiz-title">
             Was ist ein <b>Pinniken</b>?
         </h2>
@@ -64,8 +69,39 @@
         </div>
     </div>
     
-    <!--Frage 2: Text zu Bild-->
-    <div class="quiz-slide slide-2">
+    <!--Frage 2: Deutsch zu OWL-->
+    <div class="quiz-slide slide-3">
+        <h2 class="quiz-title">
+            Was ist ein <b>Schnapsglas</b>?
+        </h2>
+        <div class="quiz-info">
+            <span class="quiz-info-difficulty">
+                Leicht
+            </span>
+            <span class="quiz-info-level level-0" data-level="0">
+                <i class="level level-1"></i>
+                <i class="level level-2"></i>
+                <i class="level level-3"></i>
+            </span>
+        </div>
+        <div class="content-padding">
+            <div class="quiz-choices">
+                <a class="button choice wrong">Öpperken</a>
+                <a class="button choice right">Pinniken</a>
+                <a class="button choice wrong">Pankauken</a>
+                <a class="button choice wrong">Pömpel</a>
+            </div>
+        </div>
+        <div class="content-padding bottom">
+            <a class="button action quiz-next hidden">
+                <b>Weiter</b>
+                <i class="fa fa-arrow-right"></i>
+            </a>
+        </div>
+    </div>
+    
+    <!--Frage 3: OWL zu Bild-->
+    <div class="quiz-slide slide-4">
         <h2 class="quiz-title">
             Was ist ein <b>Pinniken</b>?
         </h2>
@@ -116,8 +152,8 @@
         </div>
     </div>
     
-    <!--Frage 3: Bild zu Text-->
-    <div class="quiz-slide slide-3">
+    <!--Frage 4: Bild zu OWL-->
+    <div class="quiz-slide slide-5">
         <h2 class="quiz-title image">
             Was ist <b>das</b>?
         </h2>
@@ -150,73 +186,60 @@
         </div>
     </div>
     
-    <!--Frage-4-->
-    <div class="quiz-slide slide-4">
+    <!--Frage 5: Detsch zu Buchstaben-->
+    <div class="quiz-slide slide-2">
         <h2 class="quiz-title">
-            Was ist ein <b>Pinniken</b>?
+            Was ist ein <b>Schnapsglas</b>?
         </h2>
         <div class="quiz-info">
             <span class="quiz-info-difficulty">
-                Leicht
+                Mittel
             </span>
             <span class="quiz-info-level level-1" data-level="1">
                 <i class="level level-1"></i>
                 <i class="level level-2"></i>
                 <i class="level level-3"></i>
             </span>
-            <span class="quiz-info-audio-play">
-                <i class="fa fa-volume-up"></i>
-            </span>
-            <audio class="quiz-info-audio">
-                <source src="audio/pinniken.mp3" type="audio/mpeg">
-            </audio>
         </div>
-        <div class="content-padding">
-            <div class="quiz-choices">
-                <a class="button choice wrong">Schraube</a>
-                <a class="button choice right">Schnapsglas</a>
-                <a class="button choice wrong">Blume</a>
-                <a class="button choice wrong">Pinienzapfen</a>
-            </div>
+        <div class="content-padding center small-vertical">
+            <p class="info small">
+        	    Tippe auf die Buchstaben, um das Wort auszufüllen.
+        	</p>
         </div>
-        <div class="content-padding bottom">
-            <a class="button action quiz-next hidden">
-                <b>Weiter</b>
-                <i class="fa fa-arrow-right"></i>
+        <div class="quiz-input-characters quiz-solution characters-8"
+             data-solution="Pinniken">
+            <span class="input-character current" data-choice=""></span>
+            <span class="input-character" data-choice=""></span>
+            <span class="input-character" data-choice=""></span>
+            <span class="input-character" data-choice=""></span>
+            <span class="input-character" data-choice=""></span>
+            <span class="input-character" data-choice=""></span>
+            <span class="input-character" data-choice=""></span>
+            <span class="input-character" data-choice=""></span>
+        </div>
+        <div class="quiz-input-choices">
+            <a class="button input-delete">
+                <i class="fa fa-long-arrow-left"></i>
+                Löschen
             </a>
-        </div>
-    </div>
-    
-    <!--Frage-5-->
-    <div class="quiz-slide slide-5">
-        <h2 class="quiz-title">
-            Was ist ein <b>Pinniken</b>?
-        </h2>
-        <div class="quiz-info">
-            <span class="quiz-info-difficulty">
-                Leicht
-            </span>
-            <span class="quiz-info-level level-1" data-level="1">
-                <i class="level level-1"></i>
-                <i class="level level-2"></i>
-                <i class="level level-3"></i>
-            </span>
-            <span class="quiz-info-audio-play">
-                <i class="fa fa-volume-up"></i>
-            </span>
-            <audio class="quiz-info-audio">
-                <source src="audio/pinniken.mp3" type="audio/mpeg">
-            </audio>
-        </div>
-        <div class="content-padding">
-            <div class="quiz-choices">
-                <a class="button choice wrong">Schraube</a>
-                <a class="button choice right">Schnapsglas</a>
-                <a class="button choice wrong">Blume</a>
-                <a class="button choice wrong">Pinienzapfen</a>
-            </div>
+            <br/>
+            <span class="button input-choice choice-1" data-choice="1">K</span>
+            <span class="button input-choice choice-2" data-choice="2">E</span>
+            <span class="button input-choice choice-3" data-choice="3">N</span>
+            <span class="button input-choice choice-4" data-choice="4">S</span>
+            <span class="button input-choice choice-5" data-choice="5">I</span>
+            <span class="button input-choice choice-6" data-choice="6">P</span>
+            <span class="button input-choice choice-7" data-choice="7">N</span>
+            <span class="button input-choice choice-8" data-choice="8">E</span>
+            <span class="button input-choice choice-9" data-choice="9">T</span>
+            <span class="button input-choice choice-10" data-choice="10">N</span>
+            <span class="button input-choice choice-11" data-choice="11">I</span>
         </div>
         <div class="content-padding bottom">
+            <a class="button action quiz-solve">
+                <b>Lösen</b>
+                <i class="fa fa-lightbulb-o"></i>
+            </a>
             <a class="button action quiz-next hidden">
                 <b>Weiter</b>
                 <i class="fa fa-arrow-right"></i>
@@ -225,43 +248,6 @@
     </div>
     
     <!--Frage-6-->
-    <div class="quiz-slide slide-6">
-        <h2 class="quiz-title">
-            Was ist ein <b>Pinniken</b>?
-        </h2>
-        <div class="quiz-info">
-            <span class="quiz-info-difficulty">
-                Leicht
-            </span>
-            <span class="quiz-info-level level-1" data-level="1">
-                <i class="level level-1"></i>
-                <i class="level level-2"></i>
-                <i class="level level-3"></i>
-            </span>
-            <span class="quiz-info-audio-play">
-                <i class="fa fa-volume-up"></i>
-            </span>
-            <audio class="quiz-info-audio">
-                <source src="audio/pinniken.mp3" type="audio/mpeg">
-            </audio>
-        </div>
-        <div class="content-padding">
-            <div class="quiz-choices">
-                <a class="button choice wrong">Schraube</a>
-                <a class="button choice right">Schnapsglas</a>
-                <a class="button choice wrong">Blume</a>
-                <a class="button choice wrong">Pinienzapfen</a>
-            </div>
-        </div>
-        <div class="content-padding bottom">
-            <a class="button action quiz-next hidden">
-                <b>Weiter</b>
-                <i class="fa fa-arrow-right"></i>
-            </a>
-        </div>
-    </div>
-    
-    <!--Frage-7-->
     <div class="quiz-slide slide-7">
         <h2 class="quiz-title">
             Was ist ein <b>Pinniken</b>?
@@ -298,7 +284,7 @@
         </div>
     </div>
     
-    <!--Frage-8-->
+    <!--Frage-7-->
     <div class="quiz-slide slide-8">
         <h2 class="quiz-title">
             Was ist ein <b>Pinniken</b>?
@@ -335,7 +321,7 @@
         </div>
     </div>
     
-    <!--Frage-9-->
+    <!--Frage-8-->
     <div class="quiz-slide slide-9">
         <h2 class="quiz-title">
             Was ist ein <b>Pinniken</b>?
@@ -372,7 +358,7 @@
         </div>
     </div>
     
-    <!--Frage-10-->
+    <!--Frage-9-->
     <div class="quiz-slide slide-10">
         <h2 class="quiz-title">
             Was ist ein <b>Pinniken</b>?
@@ -409,8 +395,45 @@
         </div>
     </div>
     
-    <!--Ende-->
+    <!--Frage-10-->
     <div class="quiz-slide slide-11">
+        <h2 class="quiz-title">
+            Was ist ein <b>Pinniken</b>?
+        </h2>
+        <div class="quiz-info">
+            <span class="quiz-info-difficulty">
+                Leicht
+            </span>
+            <span class="quiz-info-level level-1" data-level="1">
+                <i class="level level-1"></i>
+                <i class="level level-2"></i>
+                <i class="level level-3"></i>
+            </span>
+            <span class="quiz-info-audio-play">
+                <i class="fa fa-volume-up"></i>
+            </span>
+            <audio class="quiz-info-audio">
+                <source src="audio/pinniken.mp3" type="audio/mpeg">
+            </audio>
+        </div>
+        <div class="content-padding">
+            <div class="quiz-choices">
+                <a class="button choice wrong">Schraube</a>
+                <a class="button choice right">Schnapsglas</a>
+                <a class="button choice wrong">Blume</a>
+                <a class="button choice wrong">Pinienzapfen</a>
+            </div>
+        </div>
+        <div class="content-padding bottom">
+            <a class="button action quiz-next hidden">
+                <b>Weiter</b>
+                <i class="fa fa-arrow-right"></i>
+            </a>
+        </div>
+    </div>
+    
+    <!--Ende-->
+    <div class="quiz-slide slide-12">
         <h2 class="quiz-title finished">
             <b>Fertig!</b>
         </h2>

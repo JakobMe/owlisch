@@ -21,6 +21,7 @@ $(document).ready(function() {
     var ATTR_DATA_TAB           = "data-tab";
     var ATTR_DATA_STEP          = "data-step";
     var ATTR_DATA_LEVEL         = "data-level";
+    var ATTR_DATA_CHOICE        = "data-choice";
     var ATTR_WIDTH              = "width";
     
     // Konstanten: IDs
@@ -50,11 +51,17 @@ $(document).ready(function() {
     var SEL_LEVEL               = ".quiz-slide.current .quiz-info-level";
     var SEL_AUDIO_PLAY          = ".quiz-info-audio-play";
     var SEL_AUDIO               = ".quiz-info-audio";
+    var SEL_INPUT_CHOICE        = ".input-choice";
+    var SEL_CHOICE              = ".choice-";
+    var SEL_INPUT_CHARS         = ".quiz-input-characters";
+    var SEL_INPUT_CURRENT       = ".input-character.current";
+    var SEL_INPUT_DELETE        = ".input-delete";
     var SEL_BUTTON              = ".button";
     var SEL_RIGHT               = ".right";
     var SEL_TAB                 = ".bar-tabs-tab";
     var SEL_TITLE_BUTTON        = ".bar-title-button";
     var SEL_NAV_BUTTON          = ".nav-button";
+    var SEL_LAST_CHILD          = ":last-child";
     
     // Konstanten: CSS-Klassen
     var CLASS_FA                = "fa";
@@ -79,9 +86,8 @@ $(document).ready(function() {
     var AJAX_EMPTY              = "";
     var AJAX_HASH               = "#";
     var AJAX_PERCENT            = "%";
-    var AJAX_ERROR              = "error";
-    var AJAX_LOAD               = "php/load.php";
-    var AJAX_POST               = "post";
+    var AJAX_PATH               = "view/";
+    var AJAX_HTML               = ".html";
     
     // Konstanten: Views
     var VIEW_QUIZ               = "#quiz";
@@ -174,7 +180,7 @@ $(document).ready(function() {
             // Quiz-Slider zur ersten Frage verschieben
             $(ID_VIEWPORT).addClass(CLASS_QUIZ);
             $(ID_QUIZ_STEPS).children(SEL_QUIZ_STEP).first().addClass(CLASS_CURRENT);
-            moveQuizSlider(1);
+            moveQuizSlider(2);
             
         // Falls Quiz bereits läuft
         } else {
@@ -191,7 +197,7 @@ $(document).ready(function() {
                 
                 // Nächsten Schritt aktivieren, Quiz-Slider verschieben
                 stepNext.addClass(CLASS_CURRENT);
-                moveQuizSlider(stepNextNumber);
+                moveQuizSlider(parseInt(stepNextNumber) + 1);
             
             // Falls Quiz am Ende ist
             } else {
@@ -248,43 +254,21 @@ $(document).ready(function() {
         // Inhalt ausblenden
         $(ID_CONTENT).addClass(CLASS_HIDDEN);
         
-        // Kurz warten
+        // Inhalt laden
         setTimeout(function() {
-            
-            // AJAX-Anfrage
-            $.ajax({
-                async: false,
-                url: AJAX_LOAD,
-                type: AJAX_POST,
-                data: { file: view },
-                success: function(content) {
+            $(ID_CONTENT_INNER).load(AJAX_PATH + view + AJAX_HTML, function() {
+                setTimeout(function() {
                     
-                    // Inhalt in Container laden
-                    if (content !== AJAX_ERROR) {
-                        $(ID_CONTENT_INNER).html(content);
-                    } else {
-                        $(ID_CONTENT_INNER).html(AJAX_EMPTY);
-                    }
-                        
+                    // Inhalt einblenden
+                    $(ID_CONTENT).removeClass(CLASS_HIDDEN);
+                    
                     // Callback
                     if ($.isFunction(callback)) {
                         callback();
                     }
                     
-                    // Erfolg melden
-                    return true;
-                },
-                error: function() {
-                    
-                    // Fehler melden
-                    return false;
-                    
-                }
+                }, 300);
             });
-            
-            // Inhalt einblenden
-            $(ID_CONTENT).removeClass(CLASS_HIDDEN);
-            
         }, 300);
     }
     
@@ -339,6 +323,80 @@ $(document).ready(function() {
         );
     }
     
+    /**
+     * Funktion: Buchstaben-Eingabe steuern.
+     * Steuer die Buchstaben-Eingabe bei entsprechenden Quiz-Typen;
+     * erlaubt das Eingeben von Buchstaben aus einer Auswahl und das
+     * Löschen des zuletzt eingegebenen Buchstabens.
+     * @param {object} button jQuery-Objekt des gedrückten Buttons
+     */
+    function controlCharacterInput(button) {
+        
+        // Buchstabe und aktuellen Input ermitteln
+        var inputChar = button.text();
+        var inputCharacters = button.parent().siblings(SEL_INPUT_CHARS);
+        var inputCurrent = inputCharacters.children(SEL_INPUT_CURRENT);
+        var inputNext = inputCurrent.next();
+        var inputPrev = inputCurrent.prev();
+        var inputChoice = button.attr(ATTR_DATA_CHOICE);
+        
+        // Wenn Button ein Input-Lösch-Button ist
+        if (button.is($(SEL_INPUT_DELETE))) {
+            
+            // Falls überhaupt gelöscht werden kann
+            if (inputPrev.length > 0) {
+                
+                // Wenn aktueller Input der letzte ist
+                if (inputCurrent.is(SEL_LAST_CHILD) &&
+                    inputCharacters.hasClass(CLASS_FULL)) {
+                    
+                    // Input löschen, nach links verschieben
+                    inputCurrent.text(AJAX_EMPTY);
+                    inputCharacters.removeClass(CLASS_FULL);
+                    
+                    // Auswahl-Button entsperren
+                    button.siblings(
+                        SEL_CHOICE + inputCurrent.attr(ATTR_DATA_CHOICE)
+                    ).removeClass(CLASS_LOCKED);
+                    
+                // Ansoonsten
+                } else {
+                    
+                    // Input löschen, nach links verschieben
+                    inputCurrent.removeClass(CLASS_CURRENT);
+                    inputPrev.text(AJAX_EMPTY).addClass(CLASS_CURRENT);
+                    
+                    // Auswahl-Button entsperren
+                    button.siblings(
+                        SEL_CHOICE + inputPrev.attr(ATTR_DATA_CHOICE)
+                    ).removeClass(CLASS_LOCKED);
+                }
+            }
+            
+        // Ansonsten
+        } else {
+            
+            // Wenn Input nicht schon voll ist
+            if (!inputCharacters.hasClass(CLASS_FULL)) {
+                
+                // Button sperren
+                button.addClass(CLASS_LOCKED);
+                
+                // Buchstaben ausfüllen, Input verschieben
+                inputCurrent.text(inputChar)
+                    .attr(ATTR_DATA_CHOICE, inputChoice);
+                
+                // Wenn aktueller Input das letzte Feld ist
+                if (inputCurrent.is(SEL_LAST_CHILD)) {
+                    inputCharacters.addClass(CLASS_FULL);
+                } else {
+                    inputCurrent.removeClass(CLASS_CURRENT);
+                    inputNext.addClass(CLASS_CURRENT);
+                }
+            }
+        }
+    }
+    
     /*
      * Bei Klick auf Quiz-Buttons.
      * Entscheided anhand der Eigenschaften, ob das Quit ausgelöst werden,
@@ -346,8 +404,11 @@ $(document).ready(function() {
      */
     $(SEL_BODY).on(EVENT_CLICK, SEL_BUTTON, function() {
         
+        // Button definieren
+        var button = $(this);
+        
         // Falls Button ein Weiter-Button ist
-        if (($(this).hasClass(CLASS_QUIZ_NEXT))) {
+        if (button.hasClass(CLASS_QUIZ_NEXT)) {
                 
             // Quit fortführen
             progressQuiz();
@@ -356,18 +417,27 @@ $(document).ready(function() {
         } else {
             
             // Wenn Antworten nicht blockiert sind, Frage auflösen
-            if (($(this).hasClass(CLASS_CHOICE)) &&
-                (!$(this).parents(SEL_QUIZ_CHOICES).hasClass(CLASS_LOCKED))) {
+            if ((button.hasClass(CLASS_CHOICE)) &&
+                (!button.parents(SEL_QUIZ_CHOICES).hasClass(CLASS_LOCKED))) {
                 revealResult($(this));
             }
             
+            // Falls Button ein Buchstaben-Input ist
+            if ((button.is($(SEL_INPUT_CHOICE)) &&
+                !button.hasClass(CLASS_LOCKED)) ||
+                (button.is($(SEL_INPUT_DELETE)))) {
+                
+                // Input steuern
+                controlCharacterInput(button);
+            }
+            
             // Wenn Quiz gestartet wurde
-            if ($(this).is($(ID_QUIZ_START))) {
+            if (button.is($(ID_QUIZ_START))) {
                 startQuiz();
             }
             
             // Wenn Quiz neu gestartet wurde
-            if ($(this).is($(ID_QUIZ_RESTART))) {
+            if (button.is($(ID_QUIZ_RESTART))) {
                 
                 // Quiz laden, zur ersten Frage springen
                 changeView(VIEW_QUIZ, function() {
@@ -463,6 +533,10 @@ $(document).ready(function() {
      * beeinflussen.
      */
     $(window).load(function() {
+        
+        $(function() {
+            FastClick.attach(document.body);
+        });
         
         // Falls die Seite als iOS Webapp ausgeführt wird
         if (window.navigator.standalone) {

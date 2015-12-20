@@ -343,16 +343,55 @@
     }
 }
 
+// Quiz Zeichen-Eingabe
+.quiz-input-characters {
+    overflow: hidden;
+    text-align: center;
+    position: relative;
+    border-top: @size-line-thin solid darken(@color-background, 12%);
+    border-bottom: @size-line-thin solid darken(@color-background, 10%);
+    .gradient-vertical(lighten(@color-background, 2%), @color-white);
+    .loop-input-characters();
+    
+    // Buchstaben
+    .input-character {
+        float: left;
+        display: block;
+        font-weight: bold;
+        text-align: center;
+        text-transform: uppercase;
+        font-size: @font-big;
+        color: @color-text-dark;
+        height: @height-button-choice;
+        line-height: @height-button-choice;
+        border-right: @size-line-thin solid darken(@color-background, 5%);
+        .borderbox();
+        
+        // Letzter Buchstabe
+        &:last-child { border-right: none; }
+    }
+}
+
+// Quiz Input-Auswahl
+.quiz-input-choices {
+    text-align: center;
+    font-size: 0;
+    padding: @size-margin (@size-margin - @size-padding-half);
+    padding-bottom: (@size-margin - @size-padding-half);
+}
+
 // Inhalt
 #content {
 
     // Quiz-Antworten mit Bildern
     .quiz-choices.images {
-        padding: (@size-margin - (@size-padding / 2));
+        padding: (@size-margin - @size-padding-half);
     }
     
     // Buttons
     .button {
+        -webkit-touch-action: manipulation;
+        touch-action: manipulation;
         display: block;
         font-weight: bold;
         text-align: center;
@@ -489,7 +528,7 @@
             background: transparent;
             margin: 0;
             width: 50%;
-            padding: (@size-padding / 2);
+            padding: @size-padding-half;
             .shadow-none();
             .borderbox();
             
@@ -522,6 +561,41 @@
                     .round-all(@size-radius - @size-line-thin);
                 }
             }
+        }
+        
+        // Variante: Input-Auswahl
+        &.input-choice, &.input-delete {
+            display: inline-block;
+            text-align: center;
+            padding: 0;
+            background: @color-white;
+            color: @color-text-dark;
+            border: 0 solid @color-white;
+            height: @height-button-small;
+            width: @height-button-small;
+            font-size: @font-medium;
+            line-height: (@height-button-small - @size-line-medium);
+            border: @size-line-thin solid darken(@color-background, 10%);
+            border-bottom-color: darken(@color-background, 12%);
+            margin: 0 @size-padding-half;
+            margin-bottom: @size-padding;
+            .gradient-vertical(@color-white, lighten(@color-background, 2%));
+            .transition();
+            .shadow-button();
+            .round-all();
+            .borderbox();
+            
+            // Variante: Gesperrt
+            &.locked { opacity: 0.3; }
+        }
+        
+        // Variante: Input-Löschen
+        &.input-delete {
+            width: auto;
+            text-transform: uppercase;
+            padding: 0 @size-margin;
+            font-size: @font-small;
+            margin-bottom: @size-margin;
         }
         
         // Variante: Zentriert
@@ -566,6 +640,14 @@
             
             // Variante: Versteckt
             &.hidden { .translate(0, 200%, 0); }
+        }
+        
+        // Variante: Quiz lösen
+        &.quiz-solve {
+            position: absolute;
+            left: @size-margin;
+            right: @size-margin;
+            .borderbox();
         }
     }
     

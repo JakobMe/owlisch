@@ -149,6 +149,19 @@
     b { border-bottom: @size-line-medium solid darken(@color-background, 10%); }
 }
 
+// Quiz-Bild
+.quiz-image {
+    background: @color-white;
+    
+    // Bild
+    img {
+        display: block;
+        margin: 0 auto;
+        padding-bottom: @size-padding-double;
+        height: @size-quiz-image;
+    }
+}
+
 // Quiz-Info
 .quiz-info {
     overflow: visible;
@@ -336,7 +349,9 @@
 #content {
 
     // Quiz-Antworten mit Bildern
-    .quiz-choices.images { padding: (@size-margin / 2); }
+    .quiz-choices.images {
+        padding: (@size-margin - (@size-padding / 2));
+    }
     
     // Buttons
     .button {
@@ -348,7 +363,7 @@
         margin-bottom: @size-margin;
         color: @color-white;
         font-size: @font-big;
-        padding: @size-padding-double @size-margin;
+        padding: @size-padding-tripple @size-margin;
         .shadow-button();
         .round-all();
         
@@ -375,17 +390,21 @@
             background: @color-white;
             color: @color-text-dark;
             border: 0 solid @color-white;
-            padding: 0 @height-titlebar;
+            padding: 0 @height-button-choice;
             height: @height-button-choice;
             line-height: (@height-button-choice - @size-line-medium);
             border: @size-line-thin solid darken(@color-background, 10%);
             border-bottom-color: darken(@color-background, 12%);
+            margin-bottom: @size-padding;
             .gradient-vertical(@color-white, lighten(@color-background, 2%));
             .transition(border-color);
             .shadow-button();
             .round-all();
             .borderbox();
             .ellipsis();
+            
+            // Letzter Button
+            &:last-of-type { margin-bottom: 0; }
             
             // Icon
             &:before {
@@ -403,6 +422,21 @@
                 .transition();
                 .font-icon();
             }
+            
+            // Variante: Klein
+            &.small {
+                font-size: @font-medium;
+                padding: 0 @height-button-small;
+                height: @height-button-small;
+                line-height: (@height-button-small - @size-line-medium);
+                
+                // Icon
+                &:before {
+                    height: @height-button-small;
+                    width: @height-button-small;
+                    line-height: (@height-button-small - @size-line-medium);
+                }
+            }
         }
         
         // Variante: Quiz-Auswahl (Erfolg & Fehler)
@@ -413,6 +447,11 @@
             &.image.success .button-image, &.image.error .button-image {
                 border-width: @size-line-medium;
                 line-height: (@height-button-choice - (2 * @size-line-medium));
+                
+                // Variante: Klein
+                &.small {
+                    line-height: (@height-button-small - (2 * @size-line-medium));
+                }
             }
             
             // Erfolg
@@ -452,7 +491,7 @@
             background: transparent;
             margin: 0;
             width: 50%;
-            padding: (@size-margin / 2);
+            padding: (@size-padding / 2);
             .shadow-none();
             .borderbox();
             
@@ -462,6 +501,7 @@
                 display: block;
                 overflow: hidden;
                 padding: 0;
+                margin: 0;
                 
                 // Icon
                 &:before {
@@ -517,7 +557,6 @@
         // Variante: Nächstes Quiz
         &.quiz-next {
             font-weight: normal;
-            text-transform: uppercase;
             margin: 0;
             .transition();
             

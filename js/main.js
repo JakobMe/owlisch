@@ -271,7 +271,9 @@ $(document).ready(function() {
                     }
                         
                     // Callback
-                    callback();
+                    if ($.isFunction(callback)) {
+                        callback();
+                    }
                     
                     // Erfolg melden
                     return true;

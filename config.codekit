@@ -352,49 +352,49 @@
 		"outputPathIsSetByUser": 0,
 		"processed": 1
 		},
-	"\/img\/iphone-retina.png": {
+	"\/img\/layout\/iphone-retina.png": {
 		"fileType": 32768,
 		"ignore": 0,
 		"ignoreWasSetByUser": 0,
 		"initialSize": 98588,
-		"inputAbbreviatedPath": "\/img\/iphone-retina.png",
-		"outputAbbreviatedPath": "\/img\/iphone-retina.png",
+		"inputAbbreviatedPath": "\/img\/layout\/iphone-retina.png",
+		"outputAbbreviatedPath": "\/img\/layout\/iphone-retina.png",
 		"outputPathIsOutsideProject": 0,
 		"outputPathIsSetByUser": 0,
 		"processed": 1
 		},
-	"\/img\/iphone.png": {
+	"\/img\/layout\/iphone.png": {
 		"fileType": 32768,
 		"ignore": 0,
 		"ignoreWasSetByUser": 0,
-		"initialSize": 35498,
-		"inputAbbreviatedPath": "\/img\/iphone.png",
-		"outputAbbreviatedPath": "\/img\/iphone.png",
+		"initialSize": 36012,
+		"inputAbbreviatedPath": "\/img\/layout\/iphone.png",
+		"outputAbbreviatedPath": "\/img\/layout\/iphone.png",
 		"outputPathIsOutsideProject": 0,
 		"outputPathIsSetByUser": 0,
-		"processed": 1
+		"processed": 0
 		},
-	"\/img\/statusbar-retina.png": {
+	"\/img\/layout\/statusbar-retina.png": {
 		"fileType": 32768,
 		"ignore": 0,
 		"ignoreWasSetByUser": 0,
-		"initialSize": 3363,
-		"inputAbbreviatedPath": "\/img\/statusbar-retina.png",
-		"outputAbbreviatedPath": "\/img\/statusbar-retina.png",
+		"initialSize": 2244,
+		"inputAbbreviatedPath": "\/img\/layout\/statusbar-retina.png",
+		"outputAbbreviatedPath": "\/img\/layout\/statusbar-retina.png",
 		"outputPathIsOutsideProject": 0,
 		"outputPathIsSetByUser": 0,
-		"processed": 1
+		"processed": 0
 		},
-	"\/img\/statusbar.png": {
+	"\/img\/layout\/statusbar.png": {
 		"fileType": 32768,
 		"ignore": 0,
 		"ignoreWasSetByUser": 0,
-		"initialSize": 1563,
-		"inputAbbreviatedPath": "\/img\/statusbar.png",
-		"outputAbbreviatedPath": "\/img\/statusbar.png",
+		"initialSize": 1158,
+		"inputAbbreviatedPath": "\/img\/layout\/statusbar.png",
+		"outputAbbreviatedPath": "\/img\/layout\/statusbar.png",
 		"outputPathIsOutsideProject": 0,
 		"outputPathIsSetByUser": 0,
-		"processed": 1
+		"processed": 0
 		},
 	"\/index.php": {
 		"fileType": 8192,

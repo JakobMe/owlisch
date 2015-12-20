@@ -52,9 +52,6 @@
     	<section id="viewport">
         	<div id="viewport-inner">
         	    
-        	    <!--Spinner-->
-        	    <?php include("view/spinner.html"); ?>
-        	    
         	    <!--Inhalt-->
             	<article id="content">
                 	<div id="content-inner"></div>

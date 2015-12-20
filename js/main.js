@@ -267,7 +267,7 @@ $(document).ready(function() {
                         callback();
                     }
                     
-                }, 300);
+                }, 0);
             });
         }, 300);
     }
@@ -520,7 +520,9 @@ $(document).ready(function() {
                 resetTitleButtonRight();
                 
                 // Viewport Quiz-Modus deaktivieren
-                $(ID_VIEWPORT).removeClass(CLASS_QUIZ);
+                setTimeout(function() {
+                    $(ID_VIEWPORT).removeClass(CLASS_QUIZ);
+                }, 300);
             }
         }
         

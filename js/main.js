@@ -89,18 +89,23 @@ $(document).ready(function() {
     var CLASS_LEVEL             = "level-";
     
     // Konstanten: AJAX-Werte
-    var AJAX_EMPTY              = "";
-    var AJAX_HASH               = "#";
-    var AJAX_PERCENT            = "%";
     var AJAX_PATH               = "view/";
     var AJAX_HTML               = ".html";
-    var AJAX_BOOLEAN            = "boolean";
+    
+    // Konstanten: String
+    var STR_EMPTY               = "";
+    var STR_HASH                = "#";
+    var STR_PERCENT             = "%";
+    var STR_BOOLEAN             = "boolean";
     
     // Konstanten: Views
     var VIEW_QUIZ               = "#quiz";
     
     // Konstanten: Button-Beschriftungen
     var BTN_END                 = "beenden";
+    
+    // Konstanten: Zeiten
+    var TIME_ANIMATION          = 300;
     
     /**
      * Funktion: Quiz-Slider verschieben.
@@ -133,7 +138,7 @@ $(document).ready(function() {
         var answerRight;
         
         // Wenn Antwort ein boolscher Wert ist
-        if (typeof answer === AJAX_BOOLEAN) {
+        if (typeof answer === STR_BOOLEAN) {
             
             // Antwort setzen, Lösungs-Button ausblenden
             answerRight = answer;
@@ -222,7 +227,7 @@ $(document).ready(function() {
             setTimeout(function() {
                 $(ID_QUIZ_STEPS).children(SEL_QUIZ_STEP).first().addClass(CLASS_CURRENT);
                 moveQuizSlider(1);
-            }, 300);
+            }, TIME_ANIMATION);
             
         // Falls Quiz bereits läuft
         } else {
@@ -252,7 +257,7 @@ $(document).ready(function() {
                 
                 // Richtig-Leiste setzen
                 $(ID_RESULT_BAR).removeClass(CLASS_HIDDEN)
-                                .css(ATTR_WIDTH, percentRight + AJAX_PERCENT);
+                                .css(ATTR_WIDTH, percentRight + STR_PERCENT);
                 
                 // Zahlen setzen
                 $(ID_RESULT_RIGHT).text(stepsRight);
@@ -289,7 +294,7 @@ $(document).ready(function() {
     function changeView(view, callback) {
         
         // Wenn erstes Zeichen eine Raute ist, entfernen
-        if (view.charAt(0) === AJAX_HASH) {
+        if (view.charAt(0) === STR_HASH) {
             view = view.substring(1);
         }
         
@@ -309,9 +314,9 @@ $(document).ready(function() {
                         callback();
                     }
                     
-                }, 300);
+                }, TIME_ANIMATION);
             });
-        }, 300);
+        }, TIME_ANIMATION);
     }
     
     /**
@@ -343,8 +348,8 @@ $(document).ready(function() {
      */
     function resetTitleButtonRight() {
         setTitleButton(
-            $(ID_TITLE_RIGHT), AJAX_EMPTY,
-            AJAX_EMPTY, AJAX_EMPTY, true
+            $(ID_TITLE_RIGHT), STR_EMPTY,
+            STR_EMPTY, STR_EMPTY, true
         );
     }
     
@@ -361,7 +366,7 @@ $(document).ready(function() {
         // "Beenden"-Button aktivieren
         setTitleButton(
             $(ID_TITLE_RIGHT), BTN_END, VIEW_QUIZ,
-            AJAX_EMPTY, false
+            STR_EMPTY, false
         );
     }
     
@@ -396,7 +401,7 @@ $(document).ready(function() {
                         inputCharacters.hasClass(CLASS_FULL)) {
                         
                         // Input löschen, nach links verschieben
-                        inputCurrent.text(AJAX_EMPTY);
+                        inputCurrent.text(STR_EMPTY);
                         inputCharacters.removeClass(CLASS_FULL);
                         
                         // Auswahl-Button entsperren
@@ -409,7 +414,7 @@ $(document).ready(function() {
                         
                         // Input löschen, nach links verschieben
                         inputCurrent.removeClass(CLASS_CURRENT);
-                        inputPrev.text(AJAX_EMPTY).addClass(CLASS_CURRENT);
+                        inputPrev.text(STR_EMPTY).addClass(CLASS_CURRENT);
                         
                         // Auswahl-Button entsperren
                         button.siblings(
@@ -489,7 +494,7 @@ $(document).ready(function() {
                 // Lösung ermitteln, Nutzer-Lösung initialisieren
                 var solution = $(SEL_QUIZ_SOLUTION);
                 var solutionWord = solution.attr(ATTR_DATA_SOLUTION);
-                var solutionUser = AJAX_EMPTY;
+                var solutionUser = STR_EMPTY;
                 
                 // Nutzerlösung zusammenstellen
                 solution.children().each(function() {
@@ -594,7 +599,7 @@ $(document).ready(function() {
                 // Viewport Quiz-Modus deaktivieren
                 setTimeout(function() {
                     $(ID_VIEWPORT).removeClass(CLASS_QUIZ);
-                }, 300);
+                }, TIME_ANIMATION);
             }
         }
         
@@ -607,10 +612,9 @@ $(document).ready(function() {
      * beeinflussen.
      */
     $(window).load(function() {
-        
-        $(function() {
-            FastClick.attach(document.body);
-        });
+
+        // FastClick aktivieren
+        FastClick.attach(document.body);
         
         // Falls die Seite als iOS Webapp ausgeführt wird
         if (window.navigator.standalone) {

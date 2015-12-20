@@ -208,8 +208,8 @@
         
         // Aktiv
         &.current {
-            color: @color-titlebar;
-            .textshadow-glow(@color-titlebar);
+            color: @color-main;
+            .textshadow-glow(@color-main);
         }
     }
     
@@ -377,11 +377,11 @@
         
         // Variante: Action
         &.action {
-            background: @color-titlebar;
-            color: @color-text-light;
-            border: @size-line-thin solid darken(@color-titlebar, 10%);
-            border-bottom-color: darken(@color-titlebar, 14%);
-            .gradient-vertical(@color-titlebar, darken(@color-titlebar, 4%));
+            background: @color-main;
+            color: @color-white;
+            border: @size-line-thin solid darken(@color-main, 10%);
+            border-bottom-color: darken(@color-main, 14%);
+            .gradient-vertical(@color-main, darken(@color-main, 4%));
             .shadow-button-strong();
             .textshadow();
         }

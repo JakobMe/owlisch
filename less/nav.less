@@ -12,10 +12,10 @@
     top: 0;
     left: 0;
     width: 100%;
-    background: @color-titlebar;
-    color: @color-text-light;
+    background: @color-main;
+    color: @color-white;
     font-size: @font-titlebar-text;
-    .shadow-line(@size-line-thin, darken(@color-titlebar, 10%));
+    .shadow-line(@size-line-thin, darken(@color-main, 10%));
     .textshadow();
     
     // Statusbar
@@ -50,7 +50,7 @@
             top: 0;
             padding: 0 @size-margin;
             font-size: @font-titlebar-icon;
-            color: @color-text-light;
+            color: @color-white;
             height: @height-titlebar;
             line-height: (@height-titlebar - @size-line-medium);
             .transition(opacity);
@@ -92,8 +92,9 @@
     bottom: 0;
     width: 100%;
     height: @height-titlebar;
-    background: @color-tabbar;
+    background: @color-white;
     .shadow-line(-(@size-line-thin), darken(@color-background, 10%));
+    .gradient-vertical(@color-white, lighten(@color-background, 2%));
     .transition();
     
     // Tab-Icons
@@ -111,7 +112,7 @@
         .transition();
         
         // Aktiv
-        &.current { color: @color-titlebar; }
+        &.current { color: @color-main; }
 
         // Ohne Icon
         .no-icon {
@@ -128,7 +129,7 @@
         width: 14%;
         content: "";
         height: @size-line-bold;
-        background: @color-titlebar;
+        background: @color-main;
         .transition();
         
         // Positionen

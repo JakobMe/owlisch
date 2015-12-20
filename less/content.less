@@ -36,6 +36,7 @@
     // Innenabstand
     .content-padding {
         padding: @size-margin;
+        .transition();
         
         // Variante: Zentriert
         &.center { text-align: center; }
@@ -55,6 +56,13 @@
             width: 100%;
             padding-top: 0;
             .borderbox();
+        }
+        
+        // Variante: Versteckt
+        &.hidden {
+            overflow: hidden;
+            opacity: 0;
+            height: 0;
         }
     }
     

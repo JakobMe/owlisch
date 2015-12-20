@@ -22,6 +22,7 @@ $(document).ready(function() {
     var ATTR_DATA_STEP          = "data-step";
     var ATTR_DATA_LEVEL         = "data-level";
     var ATTR_DATA_CHOICE        = "data-choice";
+    var ATTR_DATA_SOLUTION      = "data-solution";
     var ATTR_WIDTH              = "width";
     
     // Konstanten: IDs
@@ -47,8 +48,12 @@ $(document).ready(function() {
     var SEL_QUIZ_STEP_CURRENT   = ".quiz-progress-step.current";
     var SEL_QUIZ_STEP_SUCCESS   = ".quiz-progress-step.success";
     var SEL_QUIZ_SLIDE          = ".quiz-slide.slide-";
+    var SEL_QUIZ_SOLVE          = ".quiz-slide.current .quiz-solve";
+    var SEL_QUIZ_SOLUTION       = ".quiz-slide.current .quiz-solution";
+    var SEL_QUIZ_SOLUTION_ICON  = ".quiz-slide.current .quiz-solution-icon";
     var SEL_BUTTON_NEXT         = ".quiz-slide.current .quiz-next";
     var SEL_LEVEL               = ".quiz-slide.current .quiz-info-level";
+    var SEL_INPUT_CHOICES       = ".quiz-slide.current .quiz-input-choices";
     var SEL_AUDIO_PLAY          = ".quiz-info-audio-play";
     var SEL_AUDIO               = ".quiz-info-audio";
     var SEL_INPUT_CHOICE        = ".input-choice";
@@ -62,6 +67,7 @@ $(document).ready(function() {
     var SEL_TITLE_BUTTON        = ".bar-title-button";
     var SEL_NAV_BUTTON          = ".nav-button";
     var SEL_LAST_CHILD          = ":last-child";
+    var SEL_FIRST_CHILD         = ":first-child";
     
     // Konstanten: CSS-Klassen
     var CLASS_FA                = "fa";
@@ -88,6 +94,7 @@ $(document).ready(function() {
     var AJAX_PERCENT            = "%";
     var AJAX_PATH               = "view/";
     var AJAX_HTML               = ".html";
+    var AJAX_BOOLEAN            = "boolean";
     
     // Konstanten: Views
     var VIEW_QUIZ               = "#quiz";
@@ -118,28 +125,61 @@ $(document).ready(function() {
      * Funktion: Quiz-Antwort offenbaren.
      * Zeigt in Abhängigkeit der gewählten Antwort an, welche
      * Antworten des Quizes richtig oder falsch waren.
-     * @param {object} answer jQuery-Objekt der gewählten Antwort
+     * @param {object|boolean} answer Button der gewählten Antwort oder Bool
      */
     function revealResult(answer) {
         
-        // Aktuelles Quiz blockieren, Weiter-Button anzeigen
-        answer.parents(SEL_QUIZ_CHOICES).addClass(CLASS_LOCKED);
-        $(SEL_BUTTON_NEXT).removeClass(CLASS_HIDDEN);
+        // Antwortstatus initialsieren
+        var answerRight;
         
-        // Prüfen, ob Antwort richtig ist
-        var answerRight = answer.hasClass(CLASS_RIGHT) ? true : false;
+        // Wenn Antwort ein boolscher Wert ist
+        if (typeof answer === AJAX_BOOLEAN) {
+            
+            // Antwort setzen, Lösungs-Button ausblenden
+            answerRight = answer;
+            $(SEL_QUIZ_SOLVE).addClass(CLASS_HIDDEN);
+            $(SEL_INPUT_CHOICES).addClass(CLASS_LOCKED);
+            
+            // Lösung zeigen
+            $(SEL_QUIZ_SOLUTION).add($(SEL_QUIZ_SOLUTION_ICON)).addClass(
+                answerRight ? CLASS_SUCCESS : CLASS_ERROR
+            );
+            
+        // Wenn Antwort ein Button ist
+        } else {
+            
+            // Aktuelles Quiz blockieren, Antwort prüfen
+            answer.parents(SEL_QUIZ_CHOICES).addClass(CLASS_LOCKED);
+            answerRight = answer.hasClass(CLASS_RIGHT) ? true : false;
+            
+            // Wenn Antwort richtig ist
+            if (answerRight) {
+                
+                // Erfolg setzen
+                answer.addClass(CLASS_SUCCESS);
+            
+            // Wenn Antwort falsch ist
+            } else {
+                
+                // Fehler und Erfolg setzen
+                answer.addClass(CLASS_ERROR).siblings(SEL_RIGHT)
+                      .addClass(CLASS_SUCCESS);
+            }
+        }
+
+        // Weiter-Button anzeigen
+        $(SEL_BUTTON_NEXT).removeClass(CLASS_HIDDEN);
         
         // Aktuellen und nächsten Schritt ermitteln
         var stepCurrent = $(ID_QUIZ_STEPS).children(SEL_QUIZ_STEP_CURRENT);
         var stepNextNumber = stepCurrent.next(SEL_QUIZ_STEP)
                                         .attr(ATTR_DATA_STEP);
         
-        // Wenn die Antwort richtig ist, Erfolg setzen
+        // Wenn die Antwort richtig ist
         if (answerRight) {
             
             // Erfolg setzen
             stepCurrent.addClass(CLASS_SUCCESS);
-            answer.addClass(CLASS_SUCCESS);
             
             // Level ermitteln
             var levelCurrent = parseInt($(SEL_LEVEL).attr(ATTR_DATA_LEVEL));
@@ -149,11 +189,11 @@ $(document).ready(function() {
             $(SEL_LEVEL).removeClass(CLASS_LEVEL + levelCurrent)
                         .addClass(CLASS_LEVEL + levelNext);
 
-        // Wenn die Antwort falsch ist, Fehler setzen
+        // Wenn die Antwort falsch ist
         } else {
+            
+            // Fehler setzen
             stepCurrent.addClass(CLASS_ERROR);
-            answer.addClass(CLASS_ERROR).siblings(SEL_RIGHT)
-                  .addClass(CLASS_SUCCESS);
         }
         
         // Falls nächste Zahl existiert
@@ -230,7 +270,7 @@ $(document).ready(function() {
                 
                 // Quiz beenden, zum letzten Slide gehen
                 $(ID_VIEWPORT).removeClass(CLASS_QUIZ);
-                moveQuizSlider(slidesNumber - 1);
+                moveQuizSlider(slidesNumber - 2);
                 
                 // "Beenden"-Button zurücksetzen
                 resetTitleButtonRight();
@@ -334,66 +374,76 @@ $(document).ready(function() {
      */
     function controlCharacterInput(button) {
         
-        // Buchstabe und aktuellen Input ermitteln
-        var inputChar = button.text();
-        var inputCharacters = button.parent().siblings(SEL_INPUT_CHARS);
-        var inputCurrent = inputCharacters.children(SEL_INPUT_CURRENT);
-        var inputNext = inputCurrent.next();
-        var inputPrev = inputCurrent.prev();
-        var inputChoice = button.attr(ATTR_DATA_CHOICE);
-        
-        // Wenn Button ein Input-Lösch-Button ist
-        if (button.is($(SEL_INPUT_DELETE))) {
+        // Wenn Eingabe nicht gesperrt ist
+        if (!button.parent().hasClass(CLASS_LOCKED)) {
             
-            // Falls überhaupt gelöscht werden kann
-            if (inputPrev.length > 0) {
+            // Buchstabe und aktuellen Input ermitteln
+            var inputChar = button.text();
+            var inputCharacters = button.parent().siblings(SEL_INPUT_CHARS);
+            var inputCurrent = inputCharacters.children(SEL_INPUT_CURRENT);
+            var inputNext = inputCurrent.next();
+            var inputPrev = inputCurrent.prev();
+            var inputChoice = button.attr(ATTR_DATA_CHOICE);
+            
+            // Wenn Button ein Input-Lösch-Button ist
+            if (button.is($(SEL_INPUT_DELETE))) {
                 
-                // Wenn aktueller Input der letzte ist
-                if (inputCurrent.is(SEL_LAST_CHILD) &&
-                    inputCharacters.hasClass(CLASS_FULL)) {
+                // Falls überhaupt gelöscht werden kann
+                if (inputPrev.length > 0) {
                     
-                    // Input löschen, nach links verschieben
-                    inputCurrent.text(AJAX_EMPTY);
-                    inputCharacters.removeClass(CLASS_FULL);
-                    
-                    // Auswahl-Button entsperren
-                    button.siblings(
-                        SEL_CHOICE + inputCurrent.attr(ATTR_DATA_CHOICE)
-                    ).removeClass(CLASS_LOCKED);
-                    
-                // Ansoonsten
-                } else {
-                    
-                    // Input löschen, nach links verschieben
-                    inputCurrent.removeClass(CLASS_CURRENT);
-                    inputPrev.text(AJAX_EMPTY).addClass(CLASS_CURRENT);
-                    
-                    // Auswahl-Button entsperren
-                    button.siblings(
-                        SEL_CHOICE + inputPrev.attr(ATTR_DATA_CHOICE)
-                    ).removeClass(CLASS_LOCKED);
+                    // Wenn aktueller Input der letzte ist
+                    if (inputCurrent.is(SEL_LAST_CHILD) &&
+                        inputCharacters.hasClass(CLASS_FULL)) {
+                        
+                        // Input löschen, nach links verschieben
+                        inputCurrent.text(AJAX_EMPTY);
+                        inputCharacters.removeClass(CLASS_FULL);
+                        
+                        // Auswahl-Button entsperren
+                        button.siblings(
+                            SEL_CHOICE + inputCurrent.attr(ATTR_DATA_CHOICE)
+                        ).removeClass(CLASS_LOCKED);
+                        
+                    // Ansonsten
+                    } else {
+                        
+                        // Input löschen, nach links verschieben
+                        inputCurrent.removeClass(CLASS_CURRENT);
+                        inputPrev.text(AJAX_EMPTY).addClass(CLASS_CURRENT);
+                        
+                        // Auswahl-Button entsperren
+                        button.siblings(
+                            SEL_CHOICE + inputPrev.attr(ATTR_DATA_CHOICE)
+                        ).removeClass(CLASS_LOCKED);
+                        
+                        // Löschen-Button sperren, wenn erster Input gelöscht wurde
+                        if (inputPrev.is(SEL_FIRST_CHILD)) {
+                            button.addClass(CLASS_LOCKED);
+                        }
+                    }
                 }
-            }
-            
-        // Ansonsten
-        } else {
-            
-            // Wenn Input nicht schon voll ist
-            if (!inputCharacters.hasClass(CLASS_FULL)) {
                 
-                // Button sperren
-                button.addClass(CLASS_LOCKED);
-                
-                // Buchstaben ausfüllen, Input verschieben
-                inputCurrent.text(inputChar)
-                    .attr(ATTR_DATA_CHOICE, inputChoice);
-                
-                // Wenn aktueller Input das letzte Feld ist
-                if (inputCurrent.is(SEL_LAST_CHILD)) {
-                    inputCharacters.addClass(CLASS_FULL);
-                } else {
-                    inputCurrent.removeClass(CLASS_CURRENT);
-                    inputNext.addClass(CLASS_CURRENT);
+            // Ansonsten
+            } else {
+    
+                // Wenn Input nicht schon voll ist
+                if (!inputCharacters.hasClass(CLASS_FULL)) {
+                    
+                    // Button sperren
+                    button.addClass(CLASS_LOCKED).siblings(SEL_INPUT_DELETE)
+                          .removeClass(CLASS_LOCKED);
+                    
+                    // Buchstaben ausfüllen, Input verschieben
+                    inputCurrent.text(inputChar)
+                        .attr(ATTR_DATA_CHOICE, inputChoice);
+                    
+                    // Wenn aktueller Input das letzte Feld ist
+                    if (inputCurrent.is(SEL_LAST_CHILD)) {
+                        inputCharacters.addClass(CLASS_FULL);
+                    } else {
+                        inputCurrent.removeClass(CLASS_CURRENT);
+                        inputNext.addClass(CLASS_CURRENT);
+                    }
                 }
             }
         }
@@ -431,6 +481,26 @@ $(document).ready(function() {
                 
                 // Input steuern
                 controlCharacterInput(button);
+            }
+            
+            // Wenn Button ein Quiz-Löse-Button ist
+            if (button.is(SEL_QUIZ_SOLVE)) {
+                
+                // Lösung ermitteln, Nutzer-Lösung initialisieren
+                var solution = $(SEL_QUIZ_SOLUTION);
+                var solutionWord = solution.attr(ATTR_DATA_SOLUTION);
+                var solutionUser = AJAX_EMPTY;
+                
+                // Nutzerlösung zusammenstellen
+                solution.children().each(function() {
+                    solutionUser += $(this).text();
+                });
+
+                // Ergebnis zeigen
+                revealResult(
+                    solutionWord.toUpperCase() ===
+                    solutionUser.toUpperCase() ? true : false
+                );
             }
             
             // Wenn Quiz gestartet wurde

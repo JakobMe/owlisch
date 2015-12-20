@@ -139,6 +139,8 @@
 .loop-input-characters(@n: @number-chars-max, @i: 1) when (@i <= @n) {
     &.characters-@{i} .input-character {
         width: (100% / @i);
+        & when (@i > 8)  { font-size: @font-medium; }
+        & when (@i > 13) { font-size: @font-small; }
     }
     .loop-input-characters(@n, (@i + 1));
 }

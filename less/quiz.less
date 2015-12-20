@@ -344,47 +344,121 @@
     }
 }
 
-// Quiz Zeichen-Eingabe
-.quiz-input-characters {
-    overflow: hidden;
-    text-align: center;
-    position: relative;
-    margin: 0 @size-margin;
-    border: @size-line-thin solid darken(@color-background, 10%);
-    border-top-color: darken(@color-background, 12%);
-    .gradient-vertical(lighten(@color-background, 2%), @color-white);
-    .loop-input-characters();
-    .round-all();
-    
-    // Buchstaben
-    .input-character {
-        float: left;
-        display: block;
-        font-weight: bold;
-        text-align: center;
-        text-transform: uppercase;
-        font-size: @font-big;
-        color: @color-text-dark;
-        height: @height-button-small;
-        line-height: @height-button-small;
-        border-right: @size-line-thin solid darken(@color-background, 5%);
-        .borderbox();
-        
-        // Letzter Buchstabe
-        &:last-child { border-right: none; }
-    }
-}
-
-// Quiz Input-Auswahl
-.quiz-input-choices {
-    text-align: center;
-    font-size: 0;
-    padding: @size-margin (@size-margin - @size-padding-half);
-    padding-bottom: (@size-margin - @size-padding-half);
-}
-
 // Inhalt
 #content {
+    
+    // Quiz Zeichen-Eingabe
+    .quiz-input-characters {
+        overflow: hidden;
+        text-align: center;
+        position: relative;
+        margin: 0 @size-margin;
+        margin-top: @size-margin;
+        border: @size-line-thin solid darken(@color-background, 10%);
+        border-top-color: darken(@color-background, 12%);
+        .gradient-vertical(lighten(@color-background, 2%), @color-white);
+        .loop-input-characters();
+        .round-all();
+        .transition(border-color);
+        .shadow-button();
+        
+        // Richtige Lösung
+        & + .quiz-solution-reveal {
+            overflow: hidden;
+            height: 0;
+            opacity: 0;
+            padding-top: 0;
+            padding-bottom: 0;
+            line-height: @height-button-small;
+            .transition(opacity);
+        }
+        
+        // Buchstaben
+        .input-character {
+            float: left;
+            display: block;
+            font-weight: bold;
+            text-align: center;
+            text-transform: uppercase;
+            font-size: @font-big;
+            color: @color-text-dark;
+            height: @height-button-small;
+            line-height: @height-button-small;
+            border-right: @size-line-thin solid darken(@color-background, 5%);
+            .borderbox();
+            
+            // Letzter Buchstabe
+            &:last-child { border-right: none; }
+        }
+        
+        // Fehler & Erfolg
+        &.error, &.success {
+            
+            // Buchstaben
+            .input-character {
+                height: @height-button-small - (@size-line-medium);
+                line-height: @height-button-small - (@size-line-medium);
+            }
+            
+            // Richtige Lösung
+            & + .quiz-solution-reveal {
+                overflow: visible;
+                opacity: 1;
+                //height: @height-button-small;
+                
+                // Icon
+                .quiz-solution-icon:before {
+                    font-style: normal;
+                    font-weight: normal;
+                    .font-icon();
+                }
+            }
+        }
+        
+        // Fehler
+        &.error {
+            border-color: @color-error;
+            border-width: @size-line-medium;
+            .animation(answer-wrong);
+            
+            // Icon
+            & + .quiz-solution-reveal .quiz-solution-icon:before {
+                content: "\f00d";
+                color: @color-error;
+            }
+        }
+        
+        // Erfolg
+        &.success {
+            border-color: @color-success;
+            border-width: @size-line-medium;
+            .animation(answer-right);
+            
+            // Icon
+            & + .quiz-solution-reveal .quiz-solution-icon:before {
+                content: "\f00c";
+                color: @color-success;
+            }
+        }
+    }
+    
+    // Quiz Input-Auswahl
+    .quiz-input-choices {
+        text-align: center;
+        font-size: 0;
+        padding: @size-margin (@size-margin - @size-padding-half);
+        padding-bottom: (@size-margin - @size-padding-half);
+        .transition();
+        
+        // Variante: Gesperrt
+        &.locked {
+            opacity: 0.3;
+            .translate(0, @height-button-small);
+            
+            // Cursor ändern
+            .button { cursor: not-allowed !important; }
+        }
+    }
 
     // Quiz-Antworten mit Bildern
     .quiz-choices.images {
@@ -598,7 +672,6 @@
             text-transform: uppercase;
             padding: 0 @size-margin;
             font-size: @font-small;
-            margin-bottom: @size-margin;
         }
         
         // Variante: Zentriert
@@ -633,16 +706,9 @@
         &.quiz-next {
             font-weight: normal;
             margin: 0;
-            .transition();
             
             // Hervorgehoben
             b { font-weight: bold; }
-            
-            // Icon
-            .fa { margin: 0 0 0 @size-padding; }
-            
-            // Variante: Versteckt
-            &.hidden { .translate(0, 200%, 0); }
         }
         
         // Variante: Quiz lösen
@@ -651,6 +717,13 @@
             left: @size-margin;
             right: @size-margin;
             .borderbox();
+        }
+        
+        // Varianten: Quiz Lösen & Nächstes Quiz
+        &.quiz-solve, &.quiz-next {
+            .transition(all, @time-transition-long);
+            .fa { margin: 0 0 0 @size-padding; }
+            &.hidden { .translate(0, 150%, 0); }
         }
     }
     

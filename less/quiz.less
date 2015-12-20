@@ -9,12 +9,8 @@
 #quiz-progress {
     background: @color-white;
     padding: @size-margin;
+    .shadow-line(@size-line-thin, darken(@color-background, 10%));
     .transition();
-    
-    // Variante: Wartend
-    &.waiting {
-        .shadow-line(@size-line-thin, darken(@color-background, 10%));
-    }
     
     // Quiz-Fortschritt Innen
     #quiz-progress-inner {

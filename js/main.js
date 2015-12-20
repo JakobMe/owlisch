@@ -24,7 +24,6 @@ $(document).ready(function() {
     var ATTR_WIDTH              = "width";
     
     // Konstanten: IDs
-    var ID_QUIZ_PROGRESS        = "#quiz-progress";
     var ID_QUIZ_STEPS           = "#quiz-progress-steps";
     var ID_QUIZ_SLIDER          = "#quiz-slider";
     var ID_QUIZ_START           = "#quiz-start";
@@ -66,7 +65,6 @@ $(document).ready(function() {
     var CLASS_SUCCESS           = "success";
     var CLASS_ERROR             = "error";
     var CLASS_SOLVED            = "solved";
-    var CLASS_WAITING           = "waiting";
     var CLASS_RIGHT             = "right";
     var CLASS_FULL              = "full";
     var CLASS_HIDDEN            = "hidden";
@@ -175,7 +173,6 @@ $(document).ready(function() {
             
             // Quiz-Slider zur ersten Frage verschieben
             $(ID_VIEWPORT).addClass(CLASS_QUIZ);
-            $(ID_QUIZ_PROGRESS).removeClass(CLASS_WAITING);
             $(ID_QUIZ_STEPS).children(SEL_QUIZ_STEP).first().addClass(CLASS_CURRENT);
             moveQuizSlider(1);
             
@@ -225,7 +222,6 @@ $(document).ready(function() {
                 
                 // Quiz beenden, zum letzten Slide gehen
                 $(ID_VIEWPORT).removeClass(CLASS_QUIZ);
-                $(ID_QUIZ_PROGRESS).addClass(CLASS_WAITING);
                 moveQuizSlider(slidesNumber - 1);
                 
                 // "Beenden"-Button zurücksetzen

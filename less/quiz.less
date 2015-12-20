@@ -112,6 +112,7 @@
     .quiz-slide {
         position: absolute;
         top: 0;
+        left: 0;
         height: 100%;
         width: (100% / @number-slides);
         padding-top: (@size-margin-double + @height-quiz-progress);
@@ -348,10 +349,12 @@
     overflow: hidden;
     text-align: center;
     position: relative;
-    border-top: @size-line-thin solid darken(@color-background, 12%);
-    border-bottom: @size-line-thin solid darken(@color-background, 10%);
+    margin: 0 @size-margin;
+    border: @size-line-thin solid darken(@color-background, 10%);
+    border-top-color: darken(@color-background, 12%);
     .gradient-vertical(lighten(@color-background, 2%), @color-white);
     .loop-input-characters();
+    .round-all();
     
     // Buchstaben
     .input-character {
@@ -362,8 +365,8 @@
         text-transform: uppercase;
         font-size: @font-big;
         color: @color-text-dark;
-        height: @height-button-choice;
-        line-height: @height-button-choice;
+        height: @height-button-small;
+        line-height: @height-button-small;
         border-right: @size-line-thin solid darken(@color-background, 5%);
         .borderbox();
         

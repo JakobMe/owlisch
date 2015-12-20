@@ -259,14 +259,17 @@ $(document).ready(function() {
         // Inhalt laden
         setTimeout(function() {
             $(ID_CONTENT_INNER).load(AJAX_PATH + view + AJAX_HTML, function() {
-                
-                // Inhalt einblenden
-                $(ID_CONTENT).removeClass(CLASS_HIDDEN);
-                
-                // Callback
-                if ($.isFunction(callback)) {
-                    callback();
-                }
+                setTimeout(function() {
+                    
+                    // Inhalt einblenden
+                    $(ID_CONTENT).removeClass(CLASS_HIDDEN);
+                    
+                    // Callback
+                    if ($.isFunction(callback)) {
+                        callback();
+                    }
+                    
+                }, 300);
             });
         }, 300);
     }

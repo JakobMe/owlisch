@@ -125,19 +125,13 @@
     #bar-tabs-indicator {
         display: block;
         position: absolute;
-        top: -(@size-line-thin);
-        width: 14%;
         content: "";
+        top: -(@size-line-thin);
+        width: @width-tabs-indicator;
         height: @size-line-bold;
         background: @color-main;
+        .loop-tabs-indicator();
         .transition();
-        
-        // Positionen
-        &.tab-1 { left: 3%;  }
-        &.tab-2 { left: 23%; }
-        &.tab-3 { left: 43%; }
-        &.tab-4 { left: 63%; }
-        &.tab-5 { left: 83%; }
     }
 }
 

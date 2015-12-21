@@ -1,0 +1,44 @@
+/*
+ * LESS-Modul: Loops.
+ * Definiert globale LESS-Schleifen für
+ * regelmäßige/wiederholte Eigenschaften.
+ * @author Jakob Metzger <jakob.me@gmail.com>
+ * @copyright 2015 Jakob Metzger
+ */
+ 
+// Loop: Quiz-Slider Verschiebung
+.loop-slider-translate(@n: @number-slides, @i: 0) when (@i < @n) {
+    &.slide-@{i} { .translate(-((100% / @n) * (@i + 1))); }
+    .loop-slider-translate(@n, (@i + 1));
+}
+
+// Loop: Quiz-Slider Verschiebung
+.loop-slide-position(@n: @number-slides, @i: 0) when (@i < @n) {
+    &.slide-@{i} { left: ((100% / @n) * (@i + 1)); }
+    .loop-slide-position(@n, (@i + 1));
+}
+
+// Loop: Input-Buchstaben Breite
+.loop-input-characters(@n: @number-chars-max, @i: 1) when (@i <= @n) {
+    &.characters-@{i} .input-character {
+        width: (100% / @i);
+        & when (@i > 8)  { font-size: @font-medium; }
+        & when (@i > 13) { font-size: @font-small; }
+    }
+    .loop-input-characters(@n, (@i + 1));
+}
+
+// Loop: Tabs-Indikator Positionen
+.loop-tabs-indicator(@n: @number-tabs, @i: 1) when (@i <= @n) {
+    &.tab-@{i} {
+        left: (((100% / @n) - @width-tabs-indicator) / 2) +
+              ((100% / @n) * (@i - 1));
+    }
+    .loop-tabs-indicator(@n, (@i + 1));
+}
+
+// Loop: Quiz-Ergebnis Linien
+.loop-result-line(@n: @number-quiz, @i: 1) when (@i < @n) {
+    &.line-@{i} { left: (10% * @i); }
+    .loop-result-line(@n, (@i + 1));
+}

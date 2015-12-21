@@ -140,10 +140,7 @@
         .gradient-vertical(@color-white, lighten(@color-background, 2%));
         .shadow-line(@size-line-thin, darken(@color-background, 10%));
     }
-    
-    // Variante: Mit Bild
-    &.image { padding-bottom: 0; }
-    
+
     // Hervorhebung
     b { border-bottom: @size-line-medium solid darken(@color-background, 10%); }
 }
@@ -328,17 +325,7 @@
             width: @size-line-thin;
             margin-left: -(@size-line-thin);
             .gradient-vertical(lighten(@color-background, 2%), @color-background);
-            
-            // Positionen
-            &.line-1 { left: 10%; }
-            &.line-2 { left: 20%; }
-            &.line-3 { left: 30%; }
-            &.line-4 { left: 40%; }
-            &.line-5 { left: 50%; }
-            &.line-6 { left: 60%; }
-            &.line-7 { left: 70%; }
-            &.line-8 { left: 80%; }
-            &.line-9 { left: 90%; }
+            .loop-result-line();
         }
     }
 }

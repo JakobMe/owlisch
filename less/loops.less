@@ -51,3 +51,9 @@
     }
     .loop-statistic-last-bars(@n, (@i + 1));
 }
+
+// Loop: Statistik-Balken Translate
+.loop-statistic-last-bars-translate(@n: @number-quiz-last, @i: 0) when (@i <= @n) {
+    &:nth-child(@{i}) { .transition(all, (@time-animation-short * (@n - @i))); }
+    .loop-statistic-last-bars-translate(@n, (@i + 1));
+}

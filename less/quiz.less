@@ -81,14 +81,14 @@
                 
                 // Erfolg
                 &.success:after {
-                    content: "\f00c";
+                    content: @fa-var-check;
                     color: @color-success;
                     .animation(step-success);
                 }
                 
                 // Fehler
                 &.error:after {
-                    content: "\f00d";
+                    content: @fa-var-close;
                     color: @color-error;
                     .animation(step-error);
                 }
@@ -242,14 +242,14 @@
         
         // Mixin: Stufe erreicht
         .quiz-level-achieved() {
-            content: "\f005";
+            content: @fa-var-star;
             color: @color-star;
             .animation(quiz-level-up);
         }
         
         // Mixin: Stufe nicht erreicht
         .quiz-level-not-achieved() {
-            content: "\f006";
+            content: @fa-var-star-o;
             color: @color-text-pale;
         }
         
@@ -472,7 +472,7 @@
             
             // Icon
             & + .quiz-solution-reveal .quiz-solution-icon:before {
-                content: "\f00d";
+                content: @fa-var-close;
                 color: @color-error;
             }
         }
@@ -485,7 +485,7 @@
             
             // Icon
             & + .quiz-solution-reveal .quiz-solution-icon:before {
-                content: "\f00c";
+                content: @fa-var-check;
                 color: @color-success;
             }
         }
@@ -620,7 +620,7 @@
                 // Icon
                 &:before {
                     opacity: 1;
-                    content: "\f00c";
+                    content: @fa-var-check;
                     color: @color-success;
                 }
             }
@@ -633,7 +633,7 @@
                 // Icon
                 &:before {
                     opacity: 1;
-                    content: "\f00d";
+                    content: @fa-var-close;
                     color: @color-error;
                 }
             }

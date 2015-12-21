@@ -41,7 +41,8 @@
             position: relative;
             height: 100%;
             width: (100% / @number-quiz);
-            .loop-statistic-last-bars();
+            opacity: @opacity-invisible;
+            .transition(opacity);
             .borderbox();
             
             // Balken
@@ -50,8 +51,10 @@
                 bottom: 0;
                 left: 20%;
                 width: 60%;
+                height: 0;
                 background: @color-main;
                 .border-button-action();
+                .transition(height);
                 .shadow-result();
                 .gradient-main();
                 .borderbox();
@@ -91,9 +94,14 @@
                 font-size: @font-small;
             }
             
-            // Zahlen Farben
-            &.bar-10:after { color: @color-success; }
+            // Zahl Null Farbe
             &.bar-0:after { color: @color-text-pale; }
+        }
+        
+        // Balken wachsen lassen
+        &.grow .statistic-bar {
+            opacity: @opacity-full;
+            .loop-statistic-last-bars();
         }
     }
 }

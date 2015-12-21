@@ -71,6 +71,7 @@ $(document).ready(function() {
     var SEL_TAB                 = ".bar-tabs-tab";
     var SEL_TITLE_BUTTON        = ".bar-title-button";
     var SEL_NAV_BUTTON          = ".nav-button";
+    var SEL_STATISTICS          = ".statistics";
     var SEL_LAST_CHILD          = ":last-child";
     var SEL_FIRST_CHILD         = ":first-child";
     
@@ -90,6 +91,7 @@ $(document).ready(function() {
     var CLASS_FINISHED          = "finished";
     var CLASS_LOCKED            = "locked";
     var CLASS_AUTOFOCUS         = "autofocus";
+    var CLASS_GROW              = "grow";
     var CLASS_TAB               = "tab-";
     var CLASS_SLIDE             = "slide-";
     var CLASS_LEVEL             = "level-";
@@ -109,6 +111,7 @@ $(document).ready(function() {
     // Konstanten: Views
     var VIEW_QUIZ               = "#quiz";
     var VIEW_HOME               = "#home";
+    var VIEW_PROGRESS           = "#progress";
 
     // Konstanten: Zeiten
     var TIME_ANIMATION          = 300;
@@ -624,7 +627,7 @@ $(document).ready(function() {
         
         // Titel und neuen Inhalt setzen
         $(ID_TITLE).text($(this).attr(ATTR_TITLE));
-        changeView($(this).attr(ATTR_HREF).substring(1));
+        var view = $(this).attr(ATTR_HREF);
         
         // Tab-Indikator verschieben
         $(ID_TABS_INDICATOR).removeClass().addClass(
@@ -633,6 +636,23 @@ $(document).ready(function() {
         
         // Tab aktivieren
         $(this).addClass(CLASS_CURRENT).siblings().removeClass(CLASS_CURRENT);
+        
+        // Wenn View "Fortschritt" ist
+        if (view === VIEW_PROGRESS) {
+            
+            // View ändern, Statistik aktivieren
+            changeView(view, function() {
+                setTimeout(function() {
+                    $(SEL_STATISTICS).addClass(CLASS_GROW);
+                }, TIME_ANIMATION);
+            });
+            
+        // Ansonsten
+        } else {
+            
+            // View laden
+            changeView(view);
+        }
         
     });
     

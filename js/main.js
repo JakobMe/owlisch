@@ -107,6 +107,7 @@ $(document).ready(function() {
     
     // Konstanten: Views
     var VIEW_QUIZ               = "#quiz";
+    var VIEW_HOME               = "#home";
     
     // Konstanten: Button-Beschriftungen
     var BTN_END                 = "beenden";
@@ -139,7 +140,7 @@ $(document).ready(function() {
                     $(SEL_QUIZ_SLIDE + slide + STR_SPACE + SEL_INPUT_TEXT)
                         .focus();
                 }
-            }, TIME_ANIMATION * 1.5);
+            }, TIME_ANIMATION / 2);
         }
     }
     
@@ -701,6 +702,9 @@ $(document).ready(function() {
         if (window.navigator.standalone) {
             $(SEL_BODY).addClass(CLASS_WEBAPP);
         }
+        
+        // Startseite laden
+        changeView(VIEW_HOME);
     
     });
     

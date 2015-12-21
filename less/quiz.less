@@ -135,14 +135,20 @@
     background: @color-white;
     
     // Variante: Abgeschlossen
-    &.finished {
+    &.finished, &.standalone {
         padding-bottom: @size-margin;
         .gradient-vertical(@color-white, lighten(@color-background, 2%));
         .shadow-line(@size-line-thin, darken(@color-background, 10%));
     }
+    
+    // Variante: Alleinstehend
+    &.standalone { padding-top: @size-margin; }
 
     // Hervorhebung
     b { border-bottom: @size-line-medium solid darken(@color-background, 10%); }
+    
+    // Icon
+    .fa { margin-left: @size-padding; }
 }
 
 // Quiz-Bild
@@ -155,6 +161,9 @@
         margin: 0 auto;
         height: @size-quiz-image;
     }
+    
+    // Variante: Groß
+    &.big img { height: @size-quiz-image-big; }
 }
 
 // Quiz-Info
@@ -173,6 +182,7 @@
     // Schwierigkeit
     .quiz-info-difficulty {
         display: block;
+        font-weight: bold;
         position: absolute;
         font-style: italic;
         top: 0;
@@ -738,7 +748,11 @@
         
         // Varianten: Quiz Lösen & Nächstes Quiz
         &.quiz-solve, &.quiz-next {
+            font-weight: bold;
+            text-transform: uppercase;
             .transition();
+            
+            // Icon & Versteckt
             .fa { margin: 0 0 0 @size-padding; }
             &.hidden { .translate(0, 150%, 0); }
         }

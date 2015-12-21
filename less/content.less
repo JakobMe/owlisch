@@ -83,6 +83,12 @@
                 font-weight: bold;
                 border-bottom: @size-line-medium solid darken(@color-background, 10%);
             }
+            
+            // Kursiv
+            def {
+                font-style: italic;
+                color: @color-text-pale;
+            }
         }
         
         // Info-Absatz
@@ -93,6 +99,12 @@
             
             // Variante: Klein
             &.small { font-size: @font-small; }
+            
+            // Hervorgehoben
+            b {
+                font-weight: bold;
+                border-bottom: @size-line-thin solid lighten(@color-text-pale, 10%);
+            }
         }
     }
 }

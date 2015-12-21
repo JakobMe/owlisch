@@ -14,6 +14,8 @@ $(document).ready(function() {
     // Konstanten: Events
     var EVENT_CLICK             = "click";
     var EVENT_ENDED             = "ended";
+    var EVENT_FOCUS             = "focus";
+    var EVENT_SUBMIT            = "submit";
     
     // Konstanen: Attribute
     var ATTR_HREF               = "href";
@@ -24,6 +26,7 @@ $(document).ready(function() {
     var ATTR_DATA_CHOICE        = "data-choice";
     var ATTR_DATA_SOLUTION      = "data-solution";
     var ATTR_WIDTH              = "width";
+    var ATTR_DISABLED           = "readonly";
     
     // Konstanten: IDs
     var ID_QUIZ_STEPS           = "#quiz-progress-steps";
@@ -43,6 +46,7 @@ $(document).ready(function() {
     // Konstanten: Selektoren
     var SEL_I                   = "i";
     var SEL_BODY                = "body";
+    var SEL_BODY_HTML           = "body, html";
     var SEL_QUIZ_CHOICES        = ".quiz-choices";
     var SEL_QUIZ_STEP           = ".quiz-progress-step";
     var SEL_QUIZ_STEP_CURRENT   = ".quiz-progress-step.current";
@@ -50,12 +54,13 @@ $(document).ready(function() {
     var SEL_QUIZ_SLIDE          = ".quiz-slide.slide-";
     var SEL_QUIZ_SOLVE          = ".quiz-slide.current .quiz-solve";
     var SEL_QUIZ_SOLUTION       = ".quiz-slide.current .quiz-solution";
-    var SEL_QUIZ_SOLUTION_ICON  = ".quiz-slide.current .quiz-solution-icon";
     var SEL_BUTTON_NEXT         = ".quiz-slide.current .quiz-next";
     var SEL_LEVEL               = ".quiz-slide.current .quiz-info-level";
     var SEL_INPUT_CHOICES       = ".quiz-slide.current .quiz-input-choices";
     var SEL_AUDIO_PLAY          = ".quiz-info-audio-play";
     var SEL_AUDIO               = ".quiz-info-audio";
+    var SEL_QUIZ_INPUT_TEXT     = ".quiz-input-text";
+    var SEL_INPUT_TEXT          = ".input-text";
     var SEL_INPUT_CHOICE        = ".input-choice";
     var SEL_CHOICE              = ".choice-";
     var SEL_INPUT_CHARS         = ".quiz-input-characters";
@@ -84,6 +89,7 @@ $(document).ready(function() {
     var CLASS_QUIZ_NEXT         = "quiz-next";
     var CLASS_FINISHED          = "finished";
     var CLASS_LOCKED            = "locked";
+    var CLASS_AUTOFOCUS         = "autofocus";
     var CLASS_TAB               = "tab-";
     var CLASS_SLIDE             = "slide-";
     var CLASS_LEVEL             = "level-";
@@ -94,6 +100,7 @@ $(document).ready(function() {
     
     // Konstanten: String
     var STR_EMPTY               = "";
+    var STR_SPACE               = " ";
     var STR_HASH                = "#";
     var STR_PERCENT             = "%";
     var STR_BOOLEAN             = "boolean";
@@ -119,10 +126,20 @@ $(document).ready(function() {
         $(SEL_QUIZ_SLIDE + slide).addClass(CLASS_CURRENT).siblings()
                                  .removeClass(CLASS_CURRENT);
         
-        // Falls Slide-Zahl gültig ist, Slider verschieben
+        // Falls Slide-Zahl gültig ist
         if (slide !== undefined) {
+            
+            // Slieder verschieben
             $(ID_QUIZ_SLIDER).removeClass()
                 .addClass(CLASS_SLIDE + slide);
+                
+            // Autofokus
+            setTimeout(function() {       
+                if ($(SEL_QUIZ_SLIDE + slide).hasClass(CLASS_AUTOFOCUS)) {
+                    $(SEL_QUIZ_SLIDE + slide + STR_SPACE + SEL_INPUT_TEXT)
+                        .focus();
+                }
+            }, TIME_ANIMATION * 1.5);
         }
     }
     
@@ -146,7 +163,7 @@ $(document).ready(function() {
             $(SEL_INPUT_CHOICES).addClass(CLASS_LOCKED);
             
             // Lösung zeigen
-            $(SEL_QUIZ_SOLUTION).add($(SEL_QUIZ_SOLUTION_ICON)).addClass(
+            $(SEL_QUIZ_SOLUTION).addClass(
                 answerRight ? CLASS_SUCCESS : CLASS_ERROR
             );
             
@@ -494,19 +511,34 @@ $(document).ready(function() {
                 
                 // Lösung ermitteln, Nutzer-Lösung initialisieren
                 var solution = $(SEL_QUIZ_SOLUTION);
-                var solutionWord = solution.attr(ATTR_DATA_SOLUTION);
+                var solutionWord = solution.attr(ATTR_DATA_SOLUTION).trim();
                 var solutionUser = STR_EMPTY;
                 
-                // Nutzerlösung zusammenstellen
-                solution.children().each(function() {
-                    solutionUser += $(this).text();
-                });
-
-                // Ergebnis zeigen
-                revealResult(
-                    solutionWord.toUpperCase() ===
-                    solutionUser.toUpperCase() ? true : false
-                );
+                // Wenn Lösung ein Text-Input ist
+                if (solution.is(SEL_QUIZ_INPUT_TEXT)) {
+                    
+                    // Nutzerlösung aus Input ermitteln
+                    solutionUser = solution.children().val().trim();
+                    if (solutionUser !== STR_EMPTY) {
+                        solution.children().attr(ATTR_DISABLED, ATTR_DISABLED);
+                    }
+                    
+                // Wenn Lösung eine Buchstaben-Eingabe ist
+                } else {
+                    
+                    // Nutzerlösung zusammenstellen
+                    solution.children().each(function() {
+                        solutionUser += $(this).text().trim();
+                    });
+                }
+                
+                // Ergebnis zeigen (wenn nicht leer)
+                if (solutionUser !== STR_EMPTY) {
+                    revealResult(
+                        solutionWord.toUpperCase() ===
+                        solutionUser.toUpperCase() ? true : false
+                    );
+                }
             }
             
             // Wenn Quiz gestartet wurde
@@ -523,6 +555,37 @@ $(document).ready(function() {
                 });
             }
         }
+        
+    });
+    
+    /*
+     * Beim Abschicken eines Quiz-Formulars.
+     * Verhindert das Standardverhalten des Formulars,
+     * prüft das eingegebene Wort und zeigt das Ergebnis an.
+     */
+    $(SEL_BODY).on(EVENT_SUBMIT, SEL_QUIZ_INPUT_TEXT, function(event) {
+        
+        // Ergebnis ermitteln
+        var solution = $(this);
+        var solutionWord = solution.attr(ATTR_DATA_SOLUTION).trim();
+        var solutionUser = solution.children().val().trim();
+        
+        // Wenn Lösung nicht leer ist
+        if (solutionUser !== STR_EMPTY) {
+            
+            // Input deaktivieren
+            solution.children().blur().attr(ATTR_DISABLED, ATTR_DISABLED);
+            
+            // Ergebnis zeigen
+            revealResult(
+                solutionWord.toUpperCase() ===
+                solutionUser.toUpperCase() ? true : false
+            );
+        }
+        
+        // Event verhindern
+        event.preventDefault();
+        return false;
         
     });
     
@@ -604,6 +667,23 @@ $(document).ready(function() {
             }
         }
         
+    });
+    
+    /*
+     * Beim Fokussieren eines Quiz-Inputs.
+     * Verhindert das normale Scroll-Verhalten vom Browser
+     * beim Fokussieren von Inputs.
+     */
+    $(SEL_BODY).on(EVENT_FOCUS, SEL_QUIZ_INPUT_TEXT, function() {
+        if (window.navigator.standalone) {
+            setTimeout(function() {
+                $(SEL_BODY_HTML).animate(
+                    { scrollTop: 0 },
+                    TIME_ANIMATION / 2
+                );
+                return false;
+            }, 1);
+        }
     });
     
     /*

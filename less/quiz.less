@@ -130,7 +130,6 @@
     margin: 0;
     line-height: 1.4;
     padding: 0 @size-margin-double;
-    padding-bottom: @size-padding-double;
     color: @color-text-dark;
     font-size: @font-large;
     background: @color-white;
@@ -170,7 +169,7 @@
     font-size: @font-small;
     color: @color-text-pale;
     background: @color-white;
-    padding: 0 @size-margin @size-padding-double @size-margin;
+    padding: 0 @size-margin;
     border-bottom: @size-line-thin solid darken(@color-background, 10%);
     .gradient-vertical(@color-white, lighten(@color-background, 2%));
     
@@ -180,7 +179,7 @@
         position: absolute;
         font-style: italic;
         top: 0;
-        padding: 0 @size-padding-double;
+        padding: 0 @size-padding-tripple;
         left: @size-margin;
         height: @height-bar-info;
         line-height: @height-bar-info;
@@ -195,7 +194,7 @@
         cursor: pointer;
         position: absolute;
         top: 0;
-        padding: 0 @size-padding-double;
+        padding: 0 @size-padding-tripple;
         right: @size-margin;
         height: @height-bar-info;
         color: @color-text-pale;
@@ -349,29 +348,7 @@
     
     // Quiz Zeichen-Eingabe
     .quiz-input-characters {
-        overflow: hidden;
-        text-align: center;
-        position: relative;
-        margin: 0 @size-margin;
-        margin-top: @size-margin;
-        border: @size-line-thin solid darken(@color-background, 10%);
-        border-top-color: darken(@color-background, 12%);
-        .gradient-vertical(lighten(@color-background, 2%), @color-white);
         .loop-input-characters();
-        .round-all();
-        .transition(border-color);
-        .shadow-button();
-        
-        // Richtige Lösung
-        & + .quiz-solution-reveal {
-            overflow: hidden;
-            height: 0;
-            opacity: 0;
-            padding-top: 0;
-            padding-bottom: 0;
-            line-height: @height-button-small;
-            .transition(opacity);
-        }
         
         // Buchstaben
         .input-character {
@@ -399,12 +376,87 @@
                 height: @height-button-small - (@size-line-medium);
                 line-height: @height-button-small - (@size-line-medium);
             }
+        }
+    }
+    
+    // Quiz Text-Eingabe
+    .quiz-input-text {
+        
+        // Input
+        .input-text {
+            border: none;
+            outline: none;
+            display: block;
+            font-weight: bold;
+            text-align: center;
+            background: transparent;
+            -webkit-appearance: none;
+            width: 100%;
+            padding: @size-margin-half @size-margin;
+            font-size: @font-big;
+            color: @color-text-dark;
+            height: @height-button-small;
+            line-height: (@height-button-small - @size-margin);
+            .round-all(@size-radius - @size-line-thin);
+            .font-main();
+            .borderbox();
+            
+            // Variante: Deaktiviert
+            &:disabled, &[readonly] {
+                cursor: not-allowed;
+                color: @color-text-dark;
+            }
+        }
+        
+        // Submit-Button ausblenden
+        .input-submit { display: none; }
+        
+        // Lösungs-Information
+        & + .quiz-solution-reveal + .quiz-solution-info {
+            .transition();
+        }
+        
+        // Lösungs-Information verschoben
+        &.error, &.success {
+            & + .quiz-solution-reveal + .quiz-solution-info {
+                opacity: 0;
+                .translate(0, @height-button-small);
+            }
+        }
+    }
+    
+    // Quiz Zeichen- und Text-Eingabe
+    .quiz-input-characters, .quiz-input-text {
+        overflow: hidden;
+        text-align: center;
+        position: relative;
+        margin: 0 @size-margin;
+        margin-top: @size-margin;
+        border: @size-line-thin solid darken(@color-background, 10%);
+        border-top-color: darken(@color-background, 12%);
+        .gradient-vertical(lighten(@color-background, 2%), @color-white);
+        .transition(border-color);
+        .shadow-button();
+        .round-all();
+                
+        // Richtige Lösung
+        & + .quiz-solution-reveal {
+            overflow: hidden;
+            height: 0;
+            opacity: 0;
+            padding-top: 0;
+            padding-bottom: 0;
+            line-height: @height-button-small;
+            .transition(opacity);
+        }
+        
+        // Fehler & Erfolg
+        &.error, &.success {
             
             // Richtige Lösung
             & + .quiz-solution-reveal {
                 overflow: visible;
                 opacity: 1;
-                //height: @height-button-small;
                 
                 // Icon
                 .quiz-solution-icon:before {
@@ -467,8 +519,6 @@
     
     // Buttons
     .button {
-        -webkit-touch-action: manipulation;
-        touch-action: manipulation;
         display: block;
         font-weight: bold;
         text-align: center;

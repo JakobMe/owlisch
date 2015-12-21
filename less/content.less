@@ -129,7 +129,16 @@
         }
         
         // Variante: Alleinstehend
-        &.standalone { padding-top: @size-margin; }
+        &.standalone {
+            padding-top: @size-margin;
+            
+            // Variante: Klein
+            &.small {
+                font-size: @font-big;
+                padding-top: @size-margin-half;
+                padding-bottom: @size-margin-half;
+            }
+        }
     
         // Hervorhebung
         b { border-bottom: @size-line-medium solid darken(@color-background, @darken-border); }

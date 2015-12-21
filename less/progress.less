@@ -9,7 +9,7 @@
 .statistic-last {
     position: relative;
     padding: @size-margin-half;
-    padding-bottom: @size-margin-double;
+    padding-bottom: (@size-margin-half + @size-margin);
     border-top: @size-line-thin solid darken(@color-background, @darken-border);
     border-bottom: @size-line-thin solid darken(@color-background, @darken-border-background);
     .gradient-background();
@@ -32,7 +32,7 @@
         width: 100%;
         height: 100%;
         padding: @size-margin-half;
-        padding-bottom: @size-margin-double;
+        padding-bottom: (@size-margin-half + @size-margin);
         .borderbox();
         
         // Balken
@@ -91,7 +91,8 @@
                 font-size: @font-small;
             }
             
-            // Zahl Null
+            // Zahlen Farben
+            &.bar-10:after { color: @color-success; }
             &.bar-0:after { color: @color-text-pale; }
         }
     }

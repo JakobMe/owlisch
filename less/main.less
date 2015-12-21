@@ -67,6 +67,11 @@ body {
     body {
         overflow: auto;
         position: static;
+        background-repeat: repeat;
+        background-position: left top;
+        background-image: url("../img/layout/background.png");
+        background-color: lighten(@color-background, (@darken-background * 2));
+        background-size: @size-background @size-background;
         
         // Webapp Besonderheiten
         &, &.webapp {
@@ -87,7 +92,7 @@ body {
         background-image: url("../img/layout/iphone.png");
         width: @width-mobile;
         height: @height-mobile;
-        margin-top: @height-titlebar;
+        margin-top: (@size-gap-mobile-bottom - @size-gap-mobile-top);
         padding: @size-gap-mobile-top @size-gap-mobile-sides;
         padding-bottom: @size-gap-mobile-bottom;
         background-size: @width-iphone @height-iphone;
@@ -108,5 +113,6 @@ body {
               and (min-resolution: 144dpi) {
     
     // Hintergrundbilder
+    body { background-image: url("../img/layout/background-retina.png"); }
     #viewport { background-image: url("../img/layout/iphone-retina.png"); }
 }

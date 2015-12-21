@@ -521,9 +521,6 @@
         // Icons
         .fa { margin-right: @size-padding; }
         
-        // Variante: Rund
-        &.round { .round-all(50%); }
-        
         // Variante: Action
         &.action {
             background: @color-main;
@@ -711,42 +708,25 @@
             font-size: @font-small;
         }
         
-        // Variante: Zentriert
-        &.centered {
-            display: block;
-            position: absolute;
+        // Variante: Rund
+        &.round {
             text-transform: uppercase;
-            top: 50%;
-            left: 50%;
+            margin: 0 auto;
             font-size: @font-medium;
             width: @size-button-round;
             height: @size-button-round;
-            margin-left: -(@size-button-round / 2);
             padding: (@size-margin * 2.5) 0;
             line-height: ((@size-button-round - (5 * @size-margin)) / 2);
-            margin-top: -(@size-button-round / 2) + ((@size-margin-double + @height-quiz-progress) / 2);
-            .textshadow();
+            .round-all(50%);
             .borderbox();
             
             // Hervorgehoben
             b { font-size: @font-huge; }
             i { font-style: normal; font-weight: bold; }
-            
-            // Variante: Inline
-            &.inline {
-                position: static;
-                margin: 0 auto;
-            }
         }
         
         // Variante: Nächstes Quiz
-        &.quiz-next {
-            font-weight: normal;
-            margin: 0;
-            
-            // Hervorgehoben
-            b { font-weight: bold; }
-        }
+        &.quiz-next { margin: 0; }
         
         // Variante: Quiz lösen
         &.quiz-solve {

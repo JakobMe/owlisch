@@ -1,0 +1,98 @@
+/*
+ * LESS-Modul: Fortschritt.
+ * Definiert Stile für die Fortschritts-Statistik.
+ * @author Jakob Metzger <jakob.me@gmail.com>
+ * @copyright 2015 Jakob Metzger
+ */
+
+// Quiz-Statistik
+.statistic-last {
+    position: relative;
+    padding: @size-margin-half;
+    padding-bottom: @size-margin-double;
+    border-top: @size-line-thin solid darken(@color-background, @darken-border);
+    border-bottom: @size-line-thin solid darken(@color-background, @darken-border-background);
+    .gradient-background();
+    
+    // Stufe
+    .statistic-step {
+        height: @size-margin;
+        border-top: @size-line-thin solid darken(@color-background, (@darken-border / 2));
+        .borderbox();
+        
+        // Erste Stufe
+        &:first-child { border: none; }
+    }
+    
+    // Balken-Container
+    .statistic-bars {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        padding: @size-margin-half;
+        padding-bottom: @size-margin-double;
+        .borderbox();
+        
+        // Balken
+        .statistic-bar {
+            float: left;
+            position: relative;
+            height: 100%;
+            width: (100% / @number-quiz);
+            .loop-statistic-last-bars();
+            .borderbox();
+            
+            // Balken
+            &:not(.bar-0) .bar {
+                position: absolute;
+                bottom: 0;
+                left: 20%;
+                width: 60%;
+                background: @color-main;
+                .border-button-action();
+                .shadow-result();
+                .gradient-main();
+                .borderbox();
+                .round-all();
+            }
+            
+            // Balken Null
+            &.bar-0 .bar {
+                position: absolute;
+                text-align: center;
+                left: 0;
+                bottom: 0;
+                width: 100%;
+                font-size: @font-small;
+                color: @color-text-pale;
+                height: @size-padding-tripple;
+                line-height: @size-padding-tripple;
+                .font-icon();
+                
+                // Icon
+                &:before { content: @fa-var-frown-o; }
+            }
+            
+            // Zahlen
+            &:after {
+                display: block;
+                font-weight: bold;
+                position: absolute;
+                text-align: center;
+                font-style: italic;
+                left: 0;
+                width: 100%;
+                height: (@size-margin + @size-margin-half);
+                bottom: -(@size-margin-half + @size-margin);
+                line-height: (@size-margin + @size-margin-half);
+                color: @color-text-dark;
+                font-size: @font-small;
+            }
+            
+            // Zahl Null
+            &.bar-0:after { color: @color-text-pale; }
+        }
+    }
+}

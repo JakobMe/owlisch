@@ -115,6 +115,16 @@
     .round(0, @radius, @radius, 0);
 }
 
+// Abgerundete Ecken: Oben
+.round-top(@radius: @size-radius) {
+    .round(@radius, @radius, 0, 0);
+}
+
+// Abgerundete Ecken: Unten
+.round-bottom(@radius: @size-radius) {
+    .round(0, 0, @radius, @radius);
+}
+
 // Rahmen Action-Button
 .border-button-action() {
     border: @size-line-thin solid darken(@color-main, @darken-border);

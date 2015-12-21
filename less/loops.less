@@ -47,7 +47,7 @@
 .loop-statistic-last-bars(@n: @number-quiz, @i: 0) when (@i <= @n) {
     &.bar-@{i} {
         &:after { content: "@{i}"; }
-        & when (@i > 0) { .bar { height: (10% * @i); } }
+        & when (@i > 0) { .bar { height: ((100% / @n) * @i); } }
     }
     .loop-statistic-last-bars(@n, (@i + 1));
 }

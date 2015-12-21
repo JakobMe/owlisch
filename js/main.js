@@ -105,6 +105,7 @@ $(document).ready(function() {
     var STR_SPACE               = " ";
     var STR_HASH                = "#";
     var STR_PERCENT             = "%";
+    var STR_UNDEFINED           = "undefined";
     var STR_BOOLEAN             = "boolean";
     var STR_END                 = "beenden";
     
@@ -117,6 +118,9 @@ $(document).ready(function() {
     var TIME_ANIMATION          = 300;
     var TIME_ANIMATION_HALF     = TIME_ANIMATION / 2;
     var TIME_ANIMATION_LONG     = TIME_ANIMATION * 1.5;
+    
+    // View-Cache initialisieren
+    var viewCache = [];
     
     /**
      * Funktion: Quiz-Slider verschieben.
@@ -323,21 +327,49 @@ $(document).ready(function() {
         // Inhalt ausblenden
         $(ID_CONTENT).addClass(CLASS_HIDDEN);
         
-        // Inhalt laden
+        // Warten
         setTimeout(function() {
-            $(ID_CONTENT_INNER).load(AJAX_PATH + view + AJAX_HTML, function() {
-                setTimeout(function() {
+            
+            // Wenn View bereits im Cache ist
+            if (typeof viewCache[view] !== STR_UNDEFINED) {
+
+                // Inhalt laden
+                $(ID_CONTENT_INNER).html(viewCache[view])
+                                   .promise().done(function() {
                     
-                    // Inhalt einblenden
-                    $(ID_CONTENT).removeClass(CLASS_HIDDEN);
-                    
-                    // Callback
-                    if ($.isFunction(callback)) {
-                        callback();
-                    }
-                    
-                }, TIME_ANIMATION);
-            });
+                    // Warten
+                    setTimeout(function() {
+                        
+                        // Inhalt einblenden, Callback
+                        $(ID_CONTENT).removeClass(CLASS_HIDDEN);
+                        if ($.isFunction(callback)) { callback(); }
+                        
+                    }, TIME_ANIMATION);
+                });
+                
+            // Wenn View zum ersten Mal geladen wird
+            } else {
+                
+                // Dateipfad zusammensetzen
+                var file = AJAX_PATH + view + AJAX_HTML;
+        
+                // Inhalt laden
+                $(ID_CONTENT_INNER).load(file, function(response) {
+                    setTimeout(function() {
+                        
+                        // Inhalt einblenden, Callback
+                        $(ID_CONTENT).removeClass(CLASS_HIDDEN);
+                        if ($.isFunction(callback)) { callback(); }
+                        
+                        // Falls Datei noch nicht gecached ist
+                        if (typeof viewCache[view] === STR_UNDEFINED) {
+                            viewCache[view] = response;
+                        }
+
+                    }, TIME_ANIMATION);
+                });
+            }
+            
         }, TIME_ANIMATION);
     }
     

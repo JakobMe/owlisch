@@ -9,7 +9,7 @@
 #quiz-progress {
     background: @color-white;
     padding: @size-margin;
-    .shadow-line(@size-line-thin, darken(@color-background, 10%));
+    .shadow-line(@size-line-thin, darken(@color-background, @darken-border));
     .transition();
     
     // Quiz-Fortschritt Innen
@@ -139,15 +139,15 @@
     // Variante: Abgeschlossen
     &.finished, &.standalone {
         padding-bottom: @size-margin;
-        .gradient-vertical(@color-white, lighten(@color-background, 2%));
-        .shadow-line(@size-line-thin, darken(@color-background, 10%));
+        .shadow-line(@size-line-thin, darken(@color-background, @darken-border));
+        .gradient-background();
     }
     
     // Variante: Alleinstehend
     &.standalone { padding-top: @size-margin; }
 
     // Hervorhebung
-    b { border-bottom: @size-line-medium solid darken(@color-background, 10%); }
+    b { border-bottom: @size-line-medium solid darken(@color-background, @darken-border); }
     
     // Icon
     .fa { margin-left: @size-padding; }
@@ -178,8 +178,8 @@
     color: @color-text-pale;
     background: @color-white;
     padding: 0 @size-margin;
-    border-bottom: @size-line-thin solid darken(@color-background, 10%);
-    .gradient-vertical(@color-white, lighten(@color-background, 2%));
+    border-bottom: @size-line-thin solid darken(@color-background, @darken-border);
+    .gradient-background();
     
     // Schwierigkeit
     .quiz-info-difficulty {
@@ -215,6 +215,13 @@
         &.current {
             color: @color-main;
             .textshadow-glow(@color-main);
+        }
+        
+        // Hover
+        &:not(.current) {
+            &:hover, &:active {
+                color: @color-text-dark;
+            }
         }
     }
     
@@ -290,10 +297,10 @@
     padding: @size-padding-double 0;
     height: @height-titlebar;
     background: @color-white;
-    border: @size-line-thin solid darken(@color-background, 10%);
+    border: @size-line-thin solid darken(@color-background, @darken-border);
     border-left: none;
     border-right: none;
-    .gradient-vertical(lighten(@color-background, 2%), @color-white);
+    .gradient-background-reverse();
     .borderbox();
     
     // Innerer Container
@@ -310,17 +317,16 @@
         top: 0;
         width: 50%;
         height: 100%;
-        border: @size-line-thin solid darken(@color-success, 10%);
-        border-bottom-color: darken(@color-success, 14%);
-        border-left: none;
-        .gradient-vertical(@color-success, darken(@color-success, 4%));
+        .border-button-action();
+        .gradient-success();
         .shadow-result();
         .round-right();
         .borderbox();
 
-        // Variante
-        &.hidden { opacity: 0; }
-        &.full { border-right: none; .round-all(0); }
+        // Varianten
+        &.hidden { opacity: @opacity-invisible; }
+        &:not(.full) { border-left: none; }
+        &.full { border-right: none; border-left: none; .round-all(0); }
     }
     
     // Ergebnis Linien
@@ -336,7 +342,7 @@
             background: @color-background;
             width: @size-line-thin;
             margin-left: -(@size-line-thin);
-            .gradient-vertical(lighten(@color-background, 2%), @color-background);
+            .gradient-vertical(lighten(@color-background, @darken-background), @color-background);
             .loop-result-line();
         }
     }
@@ -360,7 +366,7 @@
             color: @color-text-dark;
             height: @height-button-small;
             line-height: @height-button-small;
-            border-right: @size-line-thin solid darken(@color-background, 5%);
+            border-right: @size-line-thin solid darken(@color-background, (@darken-border / 2));
             .borderbox();
             
             // Letzter Buchstabe
@@ -418,7 +424,7 @@
         // Lösungs-Information verschoben
         &.error, &.success {
             & + .quiz-solution-reveal + .quiz-solution-info {
-                opacity: 0;
+                opacity: @opacity-invisible;
                 .translate(0, @height-button-small);
             }
         }
@@ -431,10 +437,9 @@
         position: relative;
         margin: 0 @size-margin;
         margin-top: @size-margin;
-        border: @size-line-thin solid darken(@color-background, 10%);
-        border-top-color: darken(@color-background, 12%);
-        .gradient-vertical(lighten(@color-background, 2%), @color-white);
+        .gradient-background-reverse();
         .transition(border-color);
+        .border-button-choice();
         .shadow-button();
         .round-all();
                 
@@ -442,9 +447,9 @@
         & + .quiz-solution-reveal {
             overflow: hidden;
             height: 0;
-            opacity: 0;
             padding-top: 0;
             padding-bottom: 0;
+            opacity: @opacity-invisible;
             line-height: @height-button-small;
             .transition(opacity);
         }
@@ -503,7 +508,7 @@
         
         // Variante: Gesperrt
         &.locked {
-            opacity: 0.3;
+            opacity: @opacity-locked;
             .translate(0, @height-button-small);
             
             // Cursor ändern
@@ -537,11 +542,16 @@
         &.action {
             background: @color-main;
             color: @color-white;
-            border: @size-line-thin solid darken(@color-main, 10%);
-            border-bottom-color: darken(@color-main, 14%);
-            .gradient-vertical(@color-main, darken(@color-main, 4%));
+            .border-button-action();
             .shadow-button-strong();
+            .gradient-main();
+            .transition();
             .textshadow();
+            
+            // Hover
+            &:hover, &:active {
+                .shadow(0, 0, @size-margin-half, @size-padding, fade(@color-main, 50%));
+            }
         }
         
         // Variante: Quiz-Auswahl
@@ -553,11 +563,10 @@
             padding: 0 @height-button-choice;
             height: @height-button-choice;
             line-height: (@height-button-choice - @size-line-medium);
-            border: @size-line-thin solid darken(@color-background, 10%);
-            border-bottom-color: darken(@color-background, 12%);
             margin-bottom: @size-padding;
-            .gradient-vertical(@color-white, lighten(@color-background, 2%));
-            .transition(border-color);
+            //.transition(border-color);
+            .gradient-background();
+            .border-button-choice();
             .shadow-button();
             .round-all();
             .borderbox();
@@ -574,8 +583,8 @@
                 font-weight: normal;
                 top: 0;
                 left: 0;
-                opacity: 0;
                 content: "";
+                opacity: @opacity-invisible;
                 height: @height-button-choice;
                 width: @height-button-choice;
                 line-height: (@height-button-choice - @size-line-medium);
@@ -607,6 +616,7 @@
             &.image.success .button-image, &.image.error .button-image {
                 border-width: @size-line-medium;
                 line-height: (@height-button-choice - (2 * @size-line-medium));
+                .shadow-button-strong();
                 
                 // Variante: Klein
                 &.small {
@@ -621,7 +631,7 @@
                 
                 // Icon
                 &:before {
-                    opacity: 1;
+                    opacity: @opacity-full;
                     content: @fa-var-check;
                     color: @color-success;
                 }
@@ -634,7 +644,7 @@
                 
                 // Icon
                 &:before {
-                    opacity: 1;
+                    opacity: @opacity-full;
                     content: @fa-var-close;
                     color: @color-error;
                 }
@@ -691,25 +701,31 @@
             display: inline-block;
             text-align: center;
             padding: 0;
+            border: 0 solid @color-white;
             background: @color-white;
             color: @color-text-dark;
-            border: 0 solid @color-white;
             height: @height-button-small;
             width: @height-button-small;
             font-size: @font-medium;
             line-height: (@height-button-small - @size-line-medium);
-            border: @size-line-thin solid darken(@color-background, 10%);
-            border-bottom-color: darken(@color-background, 12%);
             margin: 0 @size-padding-half;
             margin-bottom: @size-padding;
-            .gradient-vertical(@color-white, lighten(@color-background, 2%));
-            .transition();
+            .border-button-choice();
+            .gradient-background();
             .shadow-button();
+            .transition();
             .round-all();
             .borderbox();
             
             // Variante: Gesperrt
-            &.locked { opacity: 0.3; }
+            &.locked { opacity: @opacity-locked; }
+            
+            // Hover
+            &:not(.locked) {
+                &:hover, &:active {
+                    .shadow-button-strong();
+                }
+            }
         }
         
         // Variante: Input-Löschen
@@ -766,14 +782,14 @@
         // Buttons ausgrauen
         .button.choice:not(.image), .button.choice.image .button-image {
             cursor: not-allowed;
-            opacity: 0.3;
+            opacity: @opacity-locked;
         }
         
         // Ausnahme: Fehler und Erfolg
         .button.choice {
             &:not(.image).success, &.image.success .button-image,
             &:not(.image).error, &.image.error .button-image {
-                opacity: 1;
+                opacity: @opacity-full;
             }
         }
     }

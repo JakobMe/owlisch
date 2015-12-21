@@ -94,7 +94,7 @@
     height: @height-titlebar;
     background: @color-white;
     .shadow-line(-(@size-line-thin), darken(@color-background, 10%));
-    .gradient-vertical(@color-white, lighten(@color-background, 2%));
+    .gradient-background();
     .transition();
     
     // Tab-Icons
@@ -121,6 +121,13 @@
         .no-icon {
             font-weight: bold;
             font-style: normal;
+        }
+        
+        // Hover
+        &:not(.current) {
+            &:hover, &:active {
+                color: @color-text-dark;
+            }
         }
     }
     

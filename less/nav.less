@@ -112,7 +112,10 @@
         .transition();
         
         // Aktiv
-        &.current { color: @color-main; }
+        &.current {
+            color: @color-main;
+            .animation(select-tab);
+        }
 
         // Ohne Icon
         .no-icon {

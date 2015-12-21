@@ -104,16 +104,15 @@ $(document).ready(function() {
     var STR_HASH                = "#";
     var STR_PERCENT             = "%";
     var STR_BOOLEAN             = "boolean";
+    var STR_END                 = "beenden";
     
     // Konstanten: Views
     var VIEW_QUIZ               = "#quiz";
     var VIEW_HOME               = "#home";
-    
-    // Konstanten: Button-Beschriftungen
-    var BTN_END                 = "beenden";
-    
+
     // Konstanten: Zeiten
     var TIME_ANIMATION          = 300;
+    var TIME_ANIMATION_HALF     = TIME_ANIMATION / 2;
     
     /**
      * Funktion: Quiz-Slider verschieben.
@@ -140,7 +139,7 @@ $(document).ready(function() {
                     $(SEL_QUIZ_SLIDE + slide + STR_SPACE + SEL_INPUT_TEXT)
                         .focus();
                 }
-            }, TIME_ANIMATION / 2);
+            }, TIME_ANIMATION_HALF);
         }
     }
     
@@ -384,7 +383,7 @@ $(document).ready(function() {
         
         // "Beenden"-Button aktivieren
         setTitleButton(
-            $(ID_TITLE_RIGHT), BTN_END, VIEW_QUIZ,
+            $(ID_TITLE_RIGHT), STR_END, VIEW_QUIZ,
             STR_EMPTY, false
         );
     }
@@ -680,7 +679,7 @@ $(document).ready(function() {
             setTimeout(function() {
                 $(SEL_BODY_HTML).animate(
                     { scrollTop: 0 },
-                    TIME_ANIMATION / 2
+                    TIME_ANIMATION_HALF
                 );
                 return false;
             }, 1);

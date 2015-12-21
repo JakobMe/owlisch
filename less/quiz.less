@@ -111,12 +111,14 @@
     // Slides
     .quiz-slide {
         position: absolute;
+        -webkit-backface-visibility: hidden;
         top: 0;
         left: 0;
         height: 100%;
         width: (100% / @number-slides);
         padding-top: (@size-margin-double + @height-quiz-progress);
         .loop-slide-position();
+        .translate(0);
         .borderbox();
     }
 }

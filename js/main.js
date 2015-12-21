@@ -113,6 +113,7 @@ $(document).ready(function() {
     // Konstanten: Zeiten
     var TIME_ANIMATION          = 300;
     var TIME_ANIMATION_HALF     = TIME_ANIMATION / 2;
+    var TIME_ANIMATION_LONG     = TIME_ANIMATION * 1.5;
     
     /**
      * Funktion: Quiz-Slider verschieben.
@@ -139,7 +140,7 @@ $(document).ready(function() {
                     $(SEL_QUIZ_SLIDE + slide + STR_SPACE + SEL_INPUT_TEXT)
                         .focus();
                 }
-            }, TIME_ANIMATION_HALF);
+            }, TIME_ANIMATION_LONG);
         }
     }
     

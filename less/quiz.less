@@ -7,8 +7,8 @@
 
 // Quiz-Fortschritt
 #quiz-progress {
-    background: @color-white;
     padding: @size-margin;
+    background: @color-white;
     .shadow-line(@size-line-thin, darken(@color-background, @darken-border));
     .transition();
     
@@ -71,7 +71,7 @@
                 // Gelöste und aktuelle Schritte
                 &.solved:after, &.current:after {
                     margin: 0 auto;
-                    font-size: @font-small;
+                    font-size: @font-progress;
                     width: @height-quiz-progress;
                     height: @height-quiz-progress;
                     line-height: (@height-quiz-progress - (2 * @size-line-medium));
@@ -101,6 +101,7 @@
 #quiz-slider {
     overflow: hidden;
     position: absolute;
+    -webkit-backface-visibility: hidden;
     top: 0;
     left: 0;
     height: 100%;

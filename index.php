@@ -89,18 +89,23 @@
                 <nav id="bar-tabs">
                     <a href="#home" class="bar-tabs-tab current" data-tab="1" title="OWLisch">
                         <i class="fa fa-home"></i>
+                        <span class="tab-label">Start</span>
                     </a>
-                    <a href="#quiz" class="bar-tabs-tab" data-tab="2" title="Quiz">
-                        <i class="no-icon">Q</i>
-                    </a>
-                    <a href="#progress" class="bar-tabs-tab" data-tab="3" title="Fortschritt">
-                        <i class="fa fa-line-chart"></i>
-                    </a>
-                    <a href="#dictionary" class="bar-tabs-tab" data-tab="4" title="Wörterbuch">
+                    <a href="#dictionary" class="bar-tabs-tab" data-tab="2" title="Wörterbuch">
                         <i class="fa fa-book"></i>
+                        <span class="tab-label">Wörterbuch</span>
+                    </a>
+                    <a href="#quiz" class="bar-tabs-tab" data-tab="3" title="Quiz">
+                        <i class="no-icon">Q</i>
+                        <span class="tab-label">Quiz</span>
+                    </a>
+                    <a href="#progress" class="bar-tabs-tab" data-tab="4" title="Fortschritt">
+                        <i class="fa fa-line-chart"></i>
+                        <span class="tab-label">Fortschritt</span>
                     </a>
                     <a href="#help" class="bar-tabs-tab" data-tab="5" title="Hilfe">
                         <i class="fa fa-question-circle"></i>
+                        <span class="tab-label">Hilfe</span>
                     </a>
                     <div id="bar-tabs-indicator" class="tab-1"></div>
                 </nav>

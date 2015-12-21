@@ -51,12 +51,6 @@
     100% { .textshadow-glow(fade(@color-star, 0%)); }
 }
 
-// Tab-Auswahl
-@keyframes select-tab {
-    0%   { .textshadow-glow(@color-main); }
-    100% { .textshadow-glow(fade(@color-main, 0%)); }
-}
-
 // Animations-Mixin
 .animation(@animation, @time: @time-animation) {
     animation: @animation @time normal forwards;

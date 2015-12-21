@@ -108,24 +108,38 @@
         color: @color-text-pale;
         font-size: @font-titlebar-icon;
         height: @height-titlebar;
-        line-height: @height-titlebar;
+        line-height: (@height-titlebar - @size-padding-tripple);
+        padding-bottom: @size-padding-tripple;
+        .borderbox();
         .transition();
         
         // Aktiv
-        &.current {
-            color: @color-main;
-            .animation(select-tab);
-        }
+        &.current { color: @color-main; }
 
         // Ohne Icon
         .no-icon {
             font-weight: bold;
             font-style: normal;
+            font-size: @font-large;
+            .font-icon();
+        }
+        
+        // Tab Label
+        .tab-label {
+            font-weight: bold;
+            position: absolute;
+            left: 0;
+            width: 100%;
+            font-size: @font-tiny;
+            height: @size-padding-double;
+            line-height: @size-padding-double;
+            bottom: @size-padding + @size-padding-half;
+            .font-main();
         }
         
         // Hover
         &:not(.current) {
-            &:hover, &:active {
+            &:hover {
                 color: @color-text-dark;
             }
         }

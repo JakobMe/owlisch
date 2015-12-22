@@ -849,16 +849,4 @@ $(document).ready(function() {
         changeView(VIEW_HOME);
     });
     
-    /*
-    function fixSafariScrolling(element) {
-        element.addClass("no-scroll");
-        setTimeout(function () {
-            element.removeClass("no-scroll");
-        }, 0);
-    }
-    
-    $(SEL_BODY).on('webkitAnimationEnd', ID_DICTIONARY_SLIDER, function() {
-        fixSafariScrolling($(this));
-    });*/
-    
 });

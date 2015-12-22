@@ -65,16 +65,20 @@
             
             // Icons
             i {
-                font-size: @font-big;
                 vertical-align: middle;
+                font-size: @font-titlebar-icon;
+                height: @height-titlebar;
+                line-height: (@height-titlebar + @size-line-medium);
             }
             
             // Text
             .bar-title-button {
+                display: inline-block;
                 font-weight: bold;
                 vertical-align: middle;
                 padding: 0;
-                font-size: @font-small;
+                font-size: @font-progress;
+                height: @height-titlebar;
                 line-height: @height-titlebar;
             }
         }

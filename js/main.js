@@ -72,6 +72,7 @@ $(document).ready(function() {
     var SEL_DICTIONARY_WORD     = ".dictionary-word";
     var SEL_BUTTON              = ".button";
     var SEL_RIGHT               = ".right";
+    var SEL_SCROLL              = ".scroll";
     var SEL_TAB                 = ".bar-tabs-tab";
     var SEL_TITLE_BUTTON        = ".bar-title-button";
     var SEL_NAV_BUTTON          = ".nav-button";
@@ -746,10 +747,20 @@ $(document).ready(function() {
             // Wenn View "#dictionary" ist
             } else if (view === VIEW_DICTIONARY) {
                 
-                // Button und Wörterbuch-Slider zurücksetzen
+                // Zurück-Button zurücksetzen
                 resetTitleButtonLeft();
+                
+                // Slider verschieben, Scroll-Container zurücksetzen
                 $(ID_DICTIONARY_SLIDER).removeClass()
-                                       .addClass(CLASS_SLIDE + 0);
+                                       .addClass(CLASS_SLIDE + 0)
+                                       .children(SEL_SCROLL)
+                                       .addClass(CLASS_HIDDEN);
+                
+                // Scroll-Container zurücksetzen
+                setTimeout(function() {
+                    $(ID_DICTIONARY_SLIDER)
+                        .children(SEL_SCROLL).removeClass(CLASS_HIDDEN);
+                }, 1);
             }
         }
     });
@@ -837,5 +848,17 @@ $(document).ready(function() {
         // Startseite laden
         changeView(VIEW_HOME);
     });
+    
+    /*
+    function fixSafariScrolling(element) {
+        element.addClass("no-scroll");
+        setTimeout(function () {
+            element.removeClass("no-scroll");
+        }, 0);
+    }
+    
+    $(SEL_BODY).on('webkitAnimationEnd', ID_DICTIONARY_SLIDER, function() {
+        fixSafariScrolling($(this));
+    });*/
     
 });

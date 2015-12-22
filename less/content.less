@@ -221,6 +221,7 @@
             display: inline-block;
             height: @height-bar-info;
             line-height: @height-bar-info;
+            .quiz-level-status();
             
             // Stufe (Stern)
             .level {
@@ -237,45 +238,6 @@
                     color: @color-star;
                     .transition();
                     .font-icon();
-                }
-            }
-            
-            // Mixin: Stufe erreicht
-            .quiz-level-achieved() {
-                content: @fa-var-star;
-                color: @color-star;
-                .animation(quiz-level-up);
-            }
-            
-            // Mixin: Stufe nicht erreicht
-            .quiz-level-not-achieved() {
-                content: @fa-var-star-o;
-                color: @color-text-pale;
-            }
-            
-            // Stufe 0
-            &.level-0 {
-                .level-1, .level-2, .level-3 {
-                    &:after { .quiz-level-not-achieved(); }
-                }
-            }
-            
-            // Stufe 1
-            &.level-1 {
-                .level-1           { &:after { .quiz-level-achieved();     } }
-                .level-2, .level-3 { &:after { .quiz-level-not-achieved(); } }
-            }
-            
-            // Stufe 2
-            &.level-2 {
-                .level-1, .level-2 { &:after { .quiz-level-achieved();     } }
-                .level-3           { &:after { .quiz-level-not-achieved(); } }
-            }
-            
-            // Stufe 3
-            &.level-3 {
-                .level-1, .level-2, .level-3 {
-                    &:after { .quiz-level-achieved(); }
                 }
             }
         }

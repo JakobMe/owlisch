@@ -9,20 +9,22 @@
 .statistic-last {
     overflow: hidden;
     position: relative;
-    padding: @size-margin-half;
-    padding-bottom: (@size-margin-half + @size-margin);
+    padding: @size-margin 0;
+    padding-bottom: @size-margin-double;
     border-top: @size-line-thin solid darken(@color-background, @darken-border);
     border-bottom: @size-line-thin solid darken(@color-background, @darken-border-background);
     .gradient-background();
     
     // Stufe
     .statistic-step {
+        display: block;
         height: @size-margin;
         border-top: @size-line-thin solid darken(@color-background, (@darken-border / 2));
+        .loop-statistic-line();
         .borderbox();
         
         // Erste Stufe
-        &:first-child { border: none; }
+        &:first-of-type { border: none; }
     }
     
     // Balken-Container
@@ -33,8 +35,8 @@
         width: 100%;
         height: 100%;
         opacity: @opacity-invisible;
-        padding: @size-margin-half;
-        padding-bottom: (@size-margin-half + @size-margin);
+        padding: @size-margin;
+        padding-bottom: @size-margin-double;
         .transition(opacity, (@time-animation-short * @number-quiz-last));
         .borderbox();
         
@@ -58,11 +60,11 @@
                 left: 20%;
                 width: 60%;
                 background: @color-main;
+                .round-all(@size-line-medium);
                 .border-button-action();
                 .shadow-result();
                 .gradient-main();
                 .borderbox();
-                .round-all();
             }
             
             // Balken Null
@@ -100,6 +102,121 @@
             
             // Zahl Null Farbe
             &.bar-0:after { color: @color-text-pale; }
+        }
+        
+        // Balken wachsen lassen
+        &.grow {
+            opacity: @opacity-full;
+            .statistic-bar { .translate(0); }
+        }
+    }
+}
+
+// Wörterbuch-Statistik
+.statistic-dictionary {
+    overflow: hidden;
+    position: relative;
+    padding: 0 @size-margin;
+    padding-right: (@size-margin-double * 3);
+    border-top: @size-line-thin solid darken(@color-background, @darken-border);
+    border-bottom: @size-line-thin solid darken(@color-background, @darken-border-background);
+    .gradient-background();
+    
+    // Innerer Container
+    .statistic-inner {
+        position: relative;
+        width: 100%;
+        height: ((@number-levels * @height-bar-progress) + @size-margin);
+    }
+    
+    // Stufe
+    .statistic-step {
+        display: block;
+        position: absolute;
+        top: 0;
+        height: 100%;
+        width: @size-line-thin;
+        .gradient-vertical(@color-background, lighten(@color-background, @darken-background));
+        .loop-result-line(@number-progress);
+        .borderbox();
+    }
+    
+    // Balken-Container
+    .statistic-bars {
+        position: absolute;
+        left: 0;
+        bottom: 0;
+        width: 100%;
+        height: 100%;
+        padding: @size-margin-half 0;
+        opacity: @opacity-invisible;
+        .transition(opacity, (@time-animation-short * @number-quiz-last));
+        .borderbox();
+        
+        // Balken
+        .statistic-bar {
+            -webkit-backface-visibility: hidden;
+            position: relative;
+            width: 100%;
+            height: (100% / @number-levels);
+            .loop-statistic-last-bars-translate(@number-quiz-last);
+            .translate(-100%);
+            .transition();
+            .borderbox();
+            
+            // Balken
+            .bar {
+                position: absolute;
+                left: 0;
+                top: 20%;
+                height: 60%;
+                width: 100%;
+                background: @color-star;
+                border: @size-line-thin solid darken(@color-star, @darken-border);
+                border-bottom-color: darken(@color-star, @darken-border-main);
+                .gradient-vertical(@color-star, darken(@color-star, @darken-main));
+                .round-all(@size-line-medium);
+                .shadow-result();
+                .borderbox();
+            }
+            
+            // Label
+            .bar-label {
+                display: block;
+                position: absolute;
+                font-style: italic;
+                top: 0;
+                height: 100%;
+                padding: 0 @size-margin-half;
+                font-size: @font-small;
+                padding-right: @size-margin;
+                line-height: @height-bar-progress;
+                right: -(@size-margin-double * 3);
+                width: (@size-margin-double * 3);
+                .quiz-level-status();
+                .borderbox();
+                
+                // Stufe (Stern)
+                .level {
+                    font-style: normal;
+                    display: inline-block;
+                    letter-spacing: -(@size-line-thin);
+                    .transition();
+                    
+                    // Icon
+                    &:after {
+                        color: @color-star;
+                        .transition();
+                        .font-icon();
+                    }
+                }
+                
+                // Prozent
+                .percent {
+                    float: right;
+                    font-weight: bold;
+                }
+            }
         }
         
         // Balken wachsen lassen

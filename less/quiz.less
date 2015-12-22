@@ -147,20 +147,23 @@
     // Eregebnis-Leiste
     #result-bar {
         position: absolute;
-        left: 0;
         top: 0;
-        width: 50%;
+        left: 0;
+        width: 0;
         height: 100%;
+        .translate(-100%);
+        .transition(all, @time-animation * 2);
+        .round-right(@size-line-medium);
         .border-button-action();
         .gradient-success();
         .shadow-result();
-        .round-right();
         .borderbox();
-
+        
         // Varianten
         &.hidden { opacity: @opacity-invisible; }
         &:not(.full) { border-left: none; }
         &.full { border-right: none; border-left: none; .round-all(0); }
+        &.grow { .translate(0); }
     }
     
     // Ergebnis Linien

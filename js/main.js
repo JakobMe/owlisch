@@ -118,6 +118,7 @@ $(document).ready(function() {
     var TIME_ANIMATION          = 300;
     var TIME_ANIMATION_HALF     = TIME_ANIMATION / 2;
     var TIME_ANIMATION_LONG     = TIME_ANIMATION * 1.5;
+    var TIME_ANIMATION_LONGER   = TIME_ANIMATION * 2;
     
     // View-Cache initialisieren
     var viewCache = [];
@@ -130,20 +131,21 @@ $(document).ready(function() {
      */
     function moveQuizSlider(slide) {
         
+        // Neuen Slide definieren
+        var newSlide = $(SEL_QUIZ_SLIDE + slide);
+        
         // Aktuelle Klasse für nächsten Slide setzen
-        $(SEL_QUIZ_SLIDE + slide).addClass(CLASS_CURRENT).siblings()
-                                 .removeClass(CLASS_CURRENT);
+        newSlide.addClass(CLASS_CURRENT).siblings().removeClass(CLASS_CURRENT);
         
         // Falls Slide-Zahl gültig ist
         if (slide !== undefined) {
             
             // Slieder verschieben
-            $(ID_QUIZ_SLIDER).removeClass()
-                .addClass(CLASS_SLIDE + slide);
+            $(ID_QUIZ_SLIDER).removeClass().addClass(CLASS_SLIDE + slide);
                 
             // Autofokus
-            setTimeout(function() {       
-                if ($(SEL_QUIZ_SLIDE + slide).hasClass(CLASS_AUTOFOCUS)) {
+            setTimeout(function() {    
+                if (newSlide.hasClass(CLASS_AUTOFOCUS)) {
                     $(SEL_QUIZ_SLIDE + slide + STR_SPACE + SEL_INPUT_TEXT)
                         .focus();
                 }
@@ -302,6 +304,11 @@ $(document).ready(function() {
                 // Quiz beenden, zum letzten Slide gehen
                 $(ID_VIEWPORT).removeClass(CLASS_QUIZ);
                 moveQuizSlider(slidesNumber - 2);
+                
+                // Ergebnisleiste
+                setTimeout(function() {
+                    $(ID_RESULT_BAR).addClass(CLASS_GROW);
+                }, TIME_ANIMATION_LONGER);
                 
                 // "Beenden"-Button zurücksetzen
                 resetTitleButtonRight();

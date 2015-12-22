@@ -43,6 +43,12 @@
     .loop-result-line(@n, (@i + 1));
 }
 
+// Loop: Statistik-Linien (Horizontal)
+.loop-statistic-line(@n: @number-quiz, @i: 1) when (@i <= @n) {
+    &.line-@{i} { opacity: ((1.0 / @n) * @i); }
+    .loop-statistic-line(@n, (@i + 1));
+}
+
 // Loop: Statistik-Balken
 .loop-statistic-last-bars(@n: @number-quiz, @i: 0) when (@i <= @n) {
     &.bar-@{i} {

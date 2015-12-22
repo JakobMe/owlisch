@@ -164,3 +164,46 @@
 .gradient-background-reverse() {
     .gradient-vertical(lighten(@color-background, @darken-background), @color-white);
 }
+
+// Quiz-Level: Stufe erreicht
+.quiz-level-achieved() {
+    content: @fa-var-star;
+    color: @color-star;
+    .animation(quiz-level-up);
+}
+
+// Quiz-Level: Stufe nicht erreicht
+.quiz-level-not-achieved() {
+    content: @fa-var-star-o;
+    color: @color-text-pale;
+}
+
+// Quiz-Level: Status
+.quiz-level-status() {
+    
+    // Stufe 0
+    &.level-0 {
+        .level-1, .level-2, .level-3 {
+            &:after { .quiz-level-not-achieved(); }
+        }
+    }
+    
+    // Stufe 1
+    &.level-1 {
+        .level-1           { &:after { .quiz-level-achieved();     } }
+        .level-2, .level-3 { &:after { .quiz-level-not-achieved(); } }
+    }
+    
+    // Stufe 2
+    &.level-2 {
+        .level-1, .level-2 { &:after { .quiz-level-achieved();     } }
+        .level-3           { &:after { .quiz-level-not-achieved(); } }
+    }
+    
+    // Stufe 3
+    &.level-3 {
+        .level-1, .level-2, .level-3 {
+            &:after { .quiz-level-achieved(); }
+        }
+    }
+}

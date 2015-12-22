@@ -38,7 +38,10 @@ $(document).ready(function() {
     var ID_RESULT_TOTAL         = "#result-total";
     var ID_TITLE                = "#bar-title-text";
     var ID_TITLE_RIGHT          = "#bar-title-right";
+    var ID_TITLE_LEFT           = "#bar-title-left";
     var ID_TABS_INDICATOR       = "#bar-tabs-indicator";
+    var ID_DICTIONARY_SLIDER    = "#dictionary-slider";
+    var ID_CONTENT_DICTIONARY   = "#content-dictionary";
     var ID_CONTENT_INNER        = "#content-inner";
     var ID_CONTENT              = "#content";
     var ID_VIEWPORT             = "#viewport-inner";
@@ -66,6 +69,7 @@ $(document).ready(function() {
     var SEL_INPUT_CHARS         = ".quiz-input-characters";
     var SEL_INPUT_CURRENT       = ".input-character.current";
     var SEL_INPUT_DELETE        = ".input-delete";
+    var SEL_DICTIONARY_WORD     = ".dictionary-word";
     var SEL_BUTTON              = ".button";
     var SEL_RIGHT               = ".right";
     var SEL_TAB                 = ".bar-tabs-tab";
@@ -95,9 +99,11 @@ $(document).ready(function() {
     var CLASS_TAB               = "tab-";
     var CLASS_SLIDE             = "slide-";
     var CLASS_LEVEL             = "level-";
+    var CLASS_ICON_BACK         = "fa-chevron-left";
     
     // Konstanten: AJAX-Werte
     var AJAX_PATH               = "view/";
+    var AJAX_PATH_DICTIONARY    = "view/dictionary/";
     var AJAX_HTML               = ".html";
     
     // Konstanten: String
@@ -113,6 +119,7 @@ $(document).ready(function() {
     var VIEW_QUIZ               = "#quiz";
     var VIEW_HOME               = "#home";
     var VIEW_PROGRESS           = "#progress";
+    var VIEW_DICTIONARY         = "#dictionary";
 
     // Konstanten: Zeiten
     var TIME_ANIMATION          = 300;
@@ -120,8 +127,9 @@ $(document).ready(function() {
     var TIME_ANIMATION_LONG     = TIME_ANIMATION * 1.5;
     var TIME_ANIMATION_LONGER   = TIME_ANIMATION * 2;
     
-    // View-Cache initialisieren
-    var viewCache = [];
+    // Chaches initialisieren
+    var cacheView = [];
+    var cacheDictionary = [];
     
     /**
      * Funktion: Quiz-Slider verschieben.
@@ -326,6 +334,10 @@ $(document).ready(function() {
      */
     function changeView(view, callback) {
         
+        // Titel-Buttons zurücksetzen
+        resetTitleButtonLeft();
+        resetTitleButtonRight();
+        
         // Wenn erstes Zeichen eine Raute ist, entfernen
         if (view.charAt(0) === STR_HASH) {
             view = view.substring(1);
@@ -338,10 +350,10 @@ $(document).ready(function() {
         setTimeout(function() {
             
             // Wenn View bereits im Cache ist
-            if (typeof viewCache[view] !== STR_UNDEFINED) {
+            if (typeof cacheView[view] !== STR_UNDEFINED) {
 
                 // Inhalt laden
-                $(ID_CONTENT_INNER).html(viewCache[view])
+                $(ID_CONTENT_INNER).html(cacheView[view])
                                    .promise().done(function() {
                     
                     // Warten
@@ -369,8 +381,8 @@ $(document).ready(function() {
                         if ($.isFunction(callback)) { callback(); }
                         
                         // Falls Datei noch nicht gecached ist
-                        if (typeof viewCache[view] === STR_UNDEFINED) {
-                            viewCache[view] = response;
+                        if (typeof cacheView[view] === STR_UNDEFINED) {
+                            cacheView[view] = response;
                         }
 
                     }, TIME_ANIMATION);
@@ -404,12 +416,22 @@ $(document).ready(function() {
     
     /**
      * Funktion: Rechten Titel-Button zurücksetzen.
-     * Setzt den rechten Titel-Button auf leere Werte zurück
-     * und sperrt ihn.
+     * Setzt den rechten Titel-Button auf leere Werte zurück und sperrt ihn.
      */
     function resetTitleButtonRight() {
         setTitleButton(
             $(ID_TITLE_RIGHT), STR_EMPTY,
+            STR_EMPTY, STR_EMPTY, true
+        );
+    }
+    
+    /**
+     * Funktion: Linken Titel-Button zurücksetzen.
+     * Setzt den linken Titel-Button auf leere Werte zurück und sperrt ihn.
+     */
+    function resetTitleButtonLeft() {
+        setTitleButton(
+            $(ID_TITLE_LEFT), STR_EMPTY,
             STR_EMPTY, STR_EMPTY, true
         );
     }
@@ -598,7 +620,6 @@ $(document).ready(function() {
                 });
             }
         }
-        
     });
     
     /*
@@ -628,8 +649,7 @@ $(document).ready(function() {
         
         // Event verhindern
         event.preventDefault();
-        return false;
-        
+        return false; 
     });
     
     /*
@@ -651,7 +671,6 @@ $(document).ready(function() {
         audio.addEventListener(EVENT_ENDED, function() {
             button.removeClass(CLASS_CURRENT);
         });
-        
     });
     
     /*
@@ -692,7 +711,6 @@ $(document).ready(function() {
             // View laden
             changeView(view);
         }
-        
     });
     
     /*
@@ -724,9 +742,63 @@ $(document).ready(function() {
                 setTimeout(function() {
                     $(ID_VIEWPORT).removeClass(CLASS_QUIZ);
                 }, TIME_ANIMATION);
+                
+            // Wenn View "#dictionary" ist
+            } else if (view === VIEW_DICTIONARY) {
+                
+                // Button und Wörterbuch-Slider zurücksetzen
+                resetTitleButtonLeft();
+                $(ID_DICTIONARY_SLIDER).removeClass()
+                                       .addClass(CLASS_SLIDE + 0);
             }
         }
+    });
+    
+    /*
+     * Bei Klick auf Wörterbuch-Wort.
+     * Versucht, das Wort aus dem Cache oder per AJAX aus einer
+     * Datei zu laden; bewegt den Wörterbuch-Slider nach rechts.
+     */
+    $(SEL_BODY).on(EVENT_CLICK, SEL_DICTIONARY_WORD, function() {
         
+        // Wort ermitteln
+        var word = $(this).attr(ATTR_HREF).substring(1);
+        var file = AJAX_PATH_DICTIONARY + word + AJAX_HTML;
+
+        // Zurück-Button setzen
+        setTitleButton(
+            $(ID_TITLE_LEFT), STR_EMPTY, VIEW_DICTIONARY,
+            CLASS_ICON_BACK, false
+        );
+        
+        // Wenn das Wort bereits im Cache ist
+        if (typeof cacheDictionary[word] !== STR_UNDEFINED) {
+
+            // Inhalt laden
+            $(ID_CONTENT_DICTIONARY).html(cacheDictionary[word])
+                                    .promise().done(function() {
+                
+                // Slider bewegen 
+                $(ID_DICTIONARY_SLIDER)
+                    .removeClass().addClass(CLASS_SLIDE + 1);
+            });
+        
+        // Wenn das Wort zum ersten Mal geladen wird
+        } else {
+            
+            // Wort laden
+            $(ID_CONTENT_DICTIONARY).load(file, function(response) {
+                
+                // Falls Datei noch nicht gecached ist
+                if (typeof cacheDictionary[word] === STR_UNDEFINED) {
+                    cacheDictionary[word] = response;
+                }
+                
+                // Slider bewegen 
+                $(ID_DICTIONARY_SLIDER)
+                    .removeClass().addClass(CLASS_SLIDE + 1);
+            });
+        }
     });
     
     /*
@@ -764,7 +836,6 @@ $(document).ready(function() {
         
         // Startseite laden
         changeView(VIEW_HOME);
-    
     });
     
 });

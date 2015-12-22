@@ -181,6 +181,21 @@
 // Quiz-Level: Status
 .quiz-level-status() {
     
+    // Levels
+    .level {
+        font-style: normal;
+        display: inline-block;
+        letter-spacing: -(@size-line-thin);
+        .transition();
+        
+        // Icon
+        &:after {
+            color: @color-star;
+            .transition();
+            .font-icon();
+        }
+    }
+    
     // Stufe 0
     &.level-0 {
         .level-1, .level-2, .level-3 {

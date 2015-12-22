@@ -1,0 +1,46 @@
+/*
+ * LESS-Modul: Wörter.
+ * Definiert Stile für das Wörterbuch.
+ * @author Jakob Metzger <jakob.me@gmail.com>
+ * @copyright 2015 Jakob Metzger
+ */
+
+// Wörterbuch-Slider
+#dictionary-slider {
+    overflow: hidden;
+    position: absolute;
+    -webkit-backface-visibility: hidden;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 300%;
+    .transition();
+    
+    // Slide-Position
+    &.slide-0 { .translate(-(100% / 3) * 1); }
+    &.slide-1 { .translate(-(100% / 3) * 2); }
+ 
+    // Slides
+    .dictionary-slide {
+        position: absolute;
+        -webkit-backface-visibility: hidden;
+        top: 0;
+        left: 0;
+        height: 100%;
+        width: (100% / 3);
+        .transition(opacity);
+        .translate(0);
+        .borderbox();
+        
+        // Slide-Positionen
+        &.slide-0 { left: (100% / 3) * 1; }
+        &.slide-1 { left: (100% / 3) * 2; }
+        
+        // Variante: Scrollbar
+        &.scroll {
+            -webkit-overflow-scrolling: touch;
+            overflow-x: hidden;
+            overflow-y: auto;
+        }
+    }
+}

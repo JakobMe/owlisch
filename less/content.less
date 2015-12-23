@@ -262,11 +262,31 @@
             line-height: @height-bar-info;
             .transition();
             
-            // Aktiv
-            &.current {
+            // Variante: Aktiv
+            &.current:not(.loading) {
                 color: @color-main;
                 .textshadow-glow(@color-main);
             }
+            
+            // Laden-Icon
+            &:before {
+                display: block;
+                position: absolute;
+                background-repeat: no-repeat;
+                background-position: center center;
+                top: 0;
+                content: "";
+                background-image: url("../img/layout/spinner-small.gif");
+                opacity: @opacity-invisible;
+                width: @height-bar-info;
+                height: @height-bar-info;
+                left: -(@size-margin + @size-margin-half);
+                background-size: @size-margin @size-margin;
+                .transition(opacity);
+            }
+            
+            // Variante: Laden
+            &.loading:before { opacity: @opacity-full; }
             
             // Hover
             &:not(.current) {

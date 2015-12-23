@@ -16,6 +16,7 @@ $(document).ready(function() {
     var EVENT_ENDED             = "ended";
     var EVENT_FOCUS             = "focus";
     var EVENT_SUBMIT            = "submit";
+    var EVENT_LOADEDDATA        = "loadeddata";
     
     // Konstanen: Attribute
     var ATTR_HREF               = "href";
@@ -92,6 +93,7 @@ $(document).ready(function() {
     var CLASS_RIGHT             = "right";
     var CLASS_FULL              = "full";
     var CLASS_HIDDEN            = "hidden";
+    var CLASS_LOADING           = "loading";
     var CLASS_QUIZ_NEXT         = "quiz-next";
     var CLASS_FINISHED          = "finished";
     var CLASS_LOCKED            = "locked";
@@ -668,9 +670,17 @@ $(document).ready(function() {
         button.addClass(CLASS_CURRENT);
         audio.play();
         
+        // Wenn Audio noch nicht geladen wurde, Klasse hinzufügen
+        if (audio.readyState !== 4) { button.addClass(CLASS_LOADING); }
+        
         // Wenn Audio beendet wurde, Markierung entfernen
         audio.addEventListener(EVENT_ENDED, function() {
             button.removeClass(CLASS_CURRENT);
+        });
+        
+        // Wenn Audio geladen wurde, Klasse entfernen
+        audio.addEventListener(EVENT_LOADEDDATA, function() {
+            button.removeClass(CLASS_LOADING);
         });
     });
     

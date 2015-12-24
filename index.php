@@ -100,7 +100,7 @@
                         <span class="tab-label">Quiz</span>
                     </a>
                     <a href="#progress" class="bar-tabs-tab" data-tab="4" title="Fortschritt">
-                        <i class="fa fa-line-chart"></i>
+                        <i class="fa fa-bar-chart"></i>
                         <span class="tab-label">Fortschritt</span>
                     </a>
                     <a href="#help" class="bar-tabs-tab" data-tab="5" title="Hilfe">

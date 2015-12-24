@@ -694,10 +694,11 @@ $(document).ready(function() {
         // Event aufhalten
         event.preventDefault();
         
-        // Tab, Titel und View definieren
+        // Tab, Titel, View und Callback definieren
         var tab = $(this);
         var title = $(ID_TITLE);
         var view = $(this).attr(ATTR_HREF);
+        var callback = null;
         
         // Titel setzen
         title.addClass(CLASS_HIDDEN);
@@ -714,22 +715,19 @@ $(document).ready(function() {
         // Tab aktivieren
         tab.addClass(CLASS_CURRENT).siblings().removeClass(CLASS_CURRENT);
         
-        // Wenn View "Fortschritt" ist
+        // Callback-Funktion beim Fortschritts-Tab setzen
         if (view === VIEW_PROGRESS) {
-            
-            // View ändern, Statistik aktivieren
-            changeView(view, function() {
+            callback = function() {
                 setTimeout(function() {
                     $(SEL_STATISTICS).addClass(CLASS_GROW);
                 }, TIME_ANIMATION);
-            });
-            
-        // Ansonsten
-        } else {
-            
-            // View laden
-            changeView(view);
+            };
         }
+        
+        // View ändern
+        setTimeout(function() {
+            changeView(view, callback);
+        }, TIME_ANIMATION);
     });
     
     /*

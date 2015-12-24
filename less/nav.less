@@ -39,6 +39,10 @@
             height: @height-titlebar;
             line-height: @height-titlebar;
             font-size: @font-titlebar-text;
+            .transition(opacity);
+            
+            // Variante: Versteckt
+            &.hidden { opacity: @opacity-invisible; }
         }
         
         // Buttons

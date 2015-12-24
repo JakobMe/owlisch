@@ -694,17 +694,25 @@ $(document).ready(function() {
         // Event aufhalten
         event.preventDefault();
         
-        // Titel und neuen Inhalt setzen
-        $(ID_TITLE).text($(this).attr(ATTR_TITLE));
+        // Tab, Titel und View definieren
+        var tab = $(this);
+        var title = $(ID_TITLE);
         var view = $(this).attr(ATTR_HREF);
+        
+        // Titel setzen
+        title.addClass(CLASS_HIDDEN);
+        setTimeout(function() {
+            title.text(tab.attr(ATTR_TITLE))
+                 .removeClass(CLASS_HIDDEN);
+        }, TIME_ANIMATION);
         
         // Tab-Indikator verschieben
         $(ID_TABS_INDICATOR).removeClass().addClass(
-            CLASS_TAB + $(this).attr(ATTR_DATA_TAB)
+            CLASS_TAB + tab.attr(ATTR_DATA_TAB)
         );
         
         // Tab aktivieren
-        $(this).addClass(CLASS_CURRENT).siblings().removeClass(CLASS_CURRENT);
+        tab.addClass(CLASS_CURRENT).siblings().removeClass(CLASS_CURRENT);
         
         // Wenn View "Fortschritt" ist
         if (view === VIEW_PROGRESS) {

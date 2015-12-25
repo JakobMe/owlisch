@@ -157,15 +157,24 @@
     #bar-tabs-indicator {
         display: block;
         position: absolute;
-        content: "";
+        left: 0;
+        width: (100% / @number-tabs);
+        padding: 0 @size-padding-indicator;
         top: -(@size-line-thin);
-        width: @width-tabs-indicator;
         height: @size-line-bold;
-        background: @color-main;
-        border-top: @size-line-thin solid darken(@color-main, 5%);
         .loop-tabs-indicator();
         .transition();
         .borderbox();
+        
+        // Indikator-Balken
+        .indicator-bar {
+            width: 100%;
+            height: 100%;
+            background: @color-main;
+            border-top: @size-line-thin solid darken(@color-main, @darken-main);
+            .round-all(@size-line-thin);
+            .borderbox();
+        }
     }
 }
 

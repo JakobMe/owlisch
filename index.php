@@ -107,7 +107,9 @@
                         <i class="fa fa-question-circle"></i>
                         <span class="tab-label">Hilfe</span>
                     </a>
-                    <div id="bar-tabs-indicator" class="tab-1"></div>
+                    <div id="bar-tabs-indicator" class="tab-1">
+                        <div class="indicator-bar"></div>
+                    </div>
                 </nav>
             
             </div>

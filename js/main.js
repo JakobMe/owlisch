@@ -716,9 +716,7 @@ $(document).ready(function() {
         }
         
         // View ändern
-        setTimeout(function() {
-            changeView(view, callback);
-        }, TIME_ANIMATION);
+        changeView(view, callback);
     });
     
     /*

@@ -358,15 +358,10 @@ $(document).ready(function() {
                 // Inhalt laden
                 $(ID_CONTENT_INNER).html(cacheView[view])
                                    .promise().done(function() {
-                    
-                    // Warten
-                    setTimeout(function() {
-                        
-                        // Inhalt einblenden, Callback
-                        $(ID_CONTENT).removeClass(CLASS_HIDDEN);
-                        if ($.isFunction(callback)) { callback(); }
-                        
-                    }, TIME_ANIMATION);
+                                   
+                    // Inhalt einblenden, Callback
+                    $(ID_CONTENT).removeClass(CLASS_HIDDEN);
+                    if ($.isFunction(callback)) { callback(); }
                 });
                 
             // Wenn View zum ersten Mal geladen wird
@@ -377,21 +372,17 @@ $(document).ready(function() {
         
                 // Inhalt laden
                 $(ID_CONTENT_INNER).load(file, function(response) {
-                    setTimeout(function() {
-                        
-                        // Inhalt einblenden, Callback
-                        $(ID_CONTENT).removeClass(CLASS_HIDDEN);
-                        if ($.isFunction(callback)) { callback(); }
-                        
-                        // Falls Datei noch nicht gecached ist
-                        if (typeof cacheView[view] === STR_UNDEFINED) {
-                            cacheView[view] = response;
-                        }
 
-                    }, TIME_ANIMATION);
+                    // Inhalt einblenden, Callback
+                    $(ID_CONTENT).removeClass(CLASS_HIDDEN);
+                    if ($.isFunction(callback)) { callback(); }
+                    
+                    // Falls Datei noch nicht gecached ist, cachen
+                    if (typeof cacheView[view] === STR_UNDEFINED) {
+                        cacheView[view] = response;
+                    }
                 });
             }
-            
         }, TIME_ANIMATION);
     }
     
@@ -758,7 +749,7 @@ $(document).ready(function() {
                 // Viewport Quiz-Modus deaktivieren
                 setTimeout(function() {
                     $(ID_VIEWPORT).removeClass(CLASS_QUIZ);
-                }, TIME_ANIMATION);
+                }, TIME_ANIMATION_HALF);
                 
             // Wenn View "#dictionary" ist
             } else if (view === VIEW_DICTIONARY) {
@@ -767,16 +758,20 @@ $(document).ready(function() {
                 resetTitleButtonLeft();
                 
                 // Slider verschieben, Scroll-Container zurücksetzen
-                $(ID_DICTIONARY_SLIDER).removeClass()
-                                       .addClass(CLASS_SLIDE + 0)
-                                       .children(SEL_SCROLL)
-                                       .addClass(CLASS_HIDDEN);
+                $(ID_DICTIONARY_SLIDER)
+                    .removeClass().addClass(CLASS_SLIDE + 0)
+                    .children(SEL_SCROLL).addClass(CLASS_HIDDEN);
                 
                 // Scroll-Container zurücksetzen
                 setTimeout(function() {
                     $(ID_DICTIONARY_SLIDER)
                         .children(SEL_SCROLL).removeClass(CLASS_HIDDEN);
                 }, 1);
+                
+                // Wörterbuch-Inhalt löschen
+                setTimeout(function() {
+                    $(ID_CONTENT_DICTIONARY).html(STR_EMPTY);
+                }, TIME_ANIMATION);
             }
         }
     });
@@ -798,34 +793,46 @@ $(document).ready(function() {
             CLASS_ICON_BACK, false
         );
         
-        // Wenn das Wort bereits im Cache ist
-        if (typeof cacheDictionary[word] !== STR_UNDEFINED) {
-
-            // Inhalt laden
-            $(ID_CONTENT_DICTIONARY).html(cacheDictionary[word])
-                                    .promise().done(function() {
-                
-                // Slider bewegen 
-                $(ID_DICTIONARY_SLIDER)
-                    .removeClass().addClass(CLASS_SLIDE + 1);
-            });
+        // Slider bewegen
+        $(ID_DICTIONARY_SLIDER).removeClass().addClass(CLASS_SLIDE + 1);
         
-        // Wenn das Wort zum ersten Mal geladen wird
-        } else {
+        // Warten
+        setTimeout(function() {
             
-            // Wort laden
-            $(ID_CONTENT_DICTIONARY).load(file, function(response) {
+            // Inhalt ausblenden
+            $(ID_CONTENT).addClass(CLASS_HIDDEN);
+            
+            // Warten
+            setTimeout(function() {
                 
-                // Falls Datei noch nicht gecached ist
-                if (typeof cacheDictionary[word] === STR_UNDEFINED) {
-                    cacheDictionary[word] = response;
+                // Wenn das Wort bereits im Cache ist
+                if (typeof cacheDictionary[word] !== STR_UNDEFINED) {
+        
+                    // Inhalt laden
+                    $(ID_CONTENT_DICTIONARY).html(cacheDictionary[word])
+                                            .promise().done(function() {
+                        
+                        // Inhalt einblenden
+                        $(ID_CONTENT).removeClass(CLASS_HIDDEN);
+                    });
+                
+                // Wenn das Wort zum ersten Mal geladen wird
+                } else {
+                    
+                    // Wort laden
+                    $(ID_CONTENT_DICTIONARY).load(file, function(response) {
+                        
+                        // Falls Datei noch nicht gecached ist
+                        if (typeof cacheDictionary[word] === STR_UNDEFINED) {
+                            cacheDictionary[word] = response;
+                        }
+                        
+                        // Inhalt einblenden
+                        $(ID_CONTENT).removeClass(CLASS_HIDDEN);
+                    });
                 }
-                
-                // Slider bewegen 
-                $(ID_DICTIONARY_SLIDER)
-                    .removeClass().addClass(CLASS_SLIDE + 1);
-            });
-        }
+            }, TIME_ANIMATION_HALF);
+        }, TIME_ANIMATION_HALF);
     });
     
     /*

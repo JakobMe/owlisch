@@ -100,6 +100,9 @@
             // Variante: Klein
             &.small { font-size: @font-small; }
             
+            // Variante: Wichtig
+            &.important { color: @color-text-dark; }
+            
             // Hervorgehoben
             b { font-weight: bold; }
         }
@@ -138,6 +141,9 @@
                 padding-bottom: @size-margin-half;
             }
         }
+        
+        // Variante: Erstes Element
+        &:first-child { padding-top: @size-margin; }
         
         // Variante: Wörterbuch-Wort
         &.dictionary-word {

@@ -116,11 +116,16 @@
         top: 0;
         left: 0;
         height: 100%;
+        opacity: @opacity-invisible;
         width: (100% / @number-slides);
         padding-top: (@size-margin-double + @height-quiz-progress);
         .loop-slide-position();
+        .transition();
         .translate(0);
         .borderbox();
+        
+        // Variante: Aktuell
+        &.current { opacity: @opacity-full; }
     }
 }
 

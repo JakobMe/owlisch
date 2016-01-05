@@ -67,13 +67,13 @@ $(document).ready(function() {
     var SEL_INPUT_TEXT          = ".input-text";
     var SEL_INPUT_CHOICE        = ".input-choice";
     var SEL_CHOICE              = ".choice-";
+    var SEL_SLIDE               = ".slide-";
     var SEL_INPUT_CHARS         = ".quiz-input-characters";
     var SEL_INPUT_CURRENT       = ".input-character.current";
     var SEL_INPUT_DELETE        = ".input-delete";
     var SEL_DICTIONARY_WORD     = ".dictionary-word";
     var SEL_BUTTON              = ".button";
     var SEL_RIGHT               = ".right";
-    var SEL_SCROLL              = ".scroll";
     var SEL_TAB                 = ".bar-tabs-tab";
     var SEL_TITLE_BUTTON        = ".bar-title-button";
     var SEL_NAV_BUTTON          = ".nav-button";
@@ -153,7 +153,7 @@ $(document).ready(function() {
             
             // Slieder verschieben
             $(ID_QUIZ_SLIDER).removeClass().addClass(CLASS_SLIDE + slide);
-                
+            
             // Autofokus
             setTimeout(function() {    
                 if (newSlide.hasClass(CLASS_AUTOFOCUS)) {
@@ -340,7 +340,7 @@ $(document).ready(function() {
         // Titel-Buttons zurücksetzen
         resetTitleButtonLeft();
         resetTitleButtonRight();
-        
+
         // Wenn erstes Zeichen eine Raute ist, entfernen
         if (view.charAt(0) === STR_HASH) {
             view = view.substring(1);
@@ -758,13 +758,8 @@ $(document).ready(function() {
                 // Slider verschieben, Scroll-Container zurücksetzen
                 $(ID_DICTIONARY_SLIDER)
                     .removeClass().addClass(CLASS_SLIDE + 0)
-                    .children(SEL_SCROLL).addClass(CLASS_HIDDEN);
-                
-                // Scroll-Container zurücksetzen
-                setTimeout(function() {
-                    $(ID_DICTIONARY_SLIDER)
-                        .children(SEL_SCROLL).removeClass(CLASS_HIDDEN);
-                }, 1);
+                    .children(SEL_SLIDE + 1).removeClass(CLASS_CURRENT)
+                    .siblings(SEL_SLIDE + 0).addClass(CLASS_CURRENT);
                 
                 // Wörterbuch-Inhalt löschen
                 setTimeout(function() {
@@ -792,7 +787,10 @@ $(document).ready(function() {
         );
         
         // Slider bewegen
-        $(ID_DICTIONARY_SLIDER).removeClass().addClass(CLASS_SLIDE + 1);
+        $(ID_DICTIONARY_SLIDER)
+            .removeClass().addClass(CLASS_SLIDE + 1)
+            .children(SEL_SLIDE + 0).removeClass(CLASS_CURRENT)
+            .siblings(SEL_SLIDE + 1).addClass(CLASS_CURRENT);
         
         // Warten
         setTimeout(function() {

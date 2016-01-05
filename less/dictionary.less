@@ -28,7 +28,8 @@
         left: 0;
         height: 100%;
         width: (100% / 3);
-        .transition(opacity);
+        opacity: @opacity-invisible;
+        .transition();
         .translate(0);
         .borderbox();
         
@@ -41,9 +42,9 @@
             -webkit-overflow-scrolling: touch;
             overflow-x: hidden;
             overflow-y: auto;
-            
-            // Variante: Versteckt
-            &.hidden { display: none; }
         }
+        
+        // Variante: Aktuell
+        &.current { opacity: @opacity-full; }
     }
 }

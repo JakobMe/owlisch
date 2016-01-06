@@ -1,7 +1,7 @@
 /*
  * Main-Javascript.
  * @author Jakob Metzger <jakob.me@gmail.com>
- * @copyright 2015 Jakob Metzger
+ * @copyright 2016 Jakob Metzger
  */
 
 /*
@@ -333,6 +333,7 @@ $(document).ready(function() {
      * View zu laden; der Name der View muss mit dem Dateinamen
      * übereinstimmen. Blendet anschließend den Inhalt wieder ein.
      * @param {string} view Name der View
+     * @param {function} callback (optionale) Callback-Funktion
      * @return {boolean} false bei AJAX-Fehler, sonst true
      */
     function changeView(view, callback) {

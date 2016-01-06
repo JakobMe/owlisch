@@ -35,14 +35,6 @@
         <meta name="msapplication-TileImage" content="img/favicon/mstile-144x144.png?v=<?php echo $v; ?>">
         <meta name="theme-color" content="#3bbb77">
         
-        <!--CSS-->
-        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic"  type="text/css">
-        <link rel="stylesheet" href="css/style.min.css?v=<?php echo $v; ?>" type="text/css">
-        
-        <!--Javascript-->
-        <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
-        <script type="text/javascript" src="js/main.min.js?v=<?php echo $v; ?>"></script>
-        
     </head>
     
     <!--Body-->
@@ -114,6 +106,14 @@
             
             </div>
         </section>
+        
+        <!--CSS-->
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic" type="text/css">
+        <link rel="stylesheet" href="css/style.min.css?v=<?php echo $v; ?>" type="text/css">
+        
+        <!--Javascript-->
+        <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+        <script type="text/javascript" src="js/main.min.js?v=<?php echo $v; ?>"></script>
         
     </body>
     

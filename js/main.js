@@ -774,7 +774,10 @@ $(document).ready(function() {
      * Versucht, das Wort aus dem Cache oder per AJAX aus einer
      * Datei zu laden; bewegt den Wörterbuch-Slider nach rechts.
      */
-    $(SEL_BODY).on(EVENT_CLICK, SEL_DICTIONARY_WORD, function() {
+    $(SEL_BODY).on(EVENT_CLICK, SEL_DICTIONARY_WORD, function(event) {
+        
+        // Standardverhalten unterdrücken
+        event.preventDefault();
         
         // Wort ermitteln
         var word = $(this).attr(ATTR_HREF).substring(1);

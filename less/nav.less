@@ -7,7 +7,7 @@
 
 // Top-Leiste
 #bar-top {
-    position: fixed;
+    position: absolute;
     text-align: center;
     top: 0;
     left: 0;
@@ -95,7 +95,7 @@
 
 // Tabs-Leiste
 #bar-tabs {
-    position: fixed;
+    position: absolute;
     left: 0;
     bottom: 0;
     width: 100%;
@@ -180,9 +180,6 @@
 
 // Responsive
 @media screen and (min-width: @width-iphone) {
-        
-    // Leisten
-    #bar-top, #bar-tabs { position: absolute; }
     
     // Statusbar
     #bar-top #bar-status {

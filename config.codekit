@@ -1091,9 +1091,9 @@
 	},
 "projectAttributes": {
 	"bowerAbbreviatedPath": "",
-	"displayValue": "Mobile Learning",
+	"displayValue": "OWLisch",
 	"displayValueWasSetByUser": 1,
-	"iconImageName": "globe_blue"
+	"iconImageName": "\/img\/favicon\/apple-touch-icon-180x180.png"
 	},
 "projectSettings": {
 	"alwaysUseExternalServer": 0,
@@ -1427,7 +1427,7 @@
 			},
 		"maxlen": {
 			"active": 0,
-			"flagValue": 150
+			"flagValue": 80
 			},
 		"maxparams": {
 			"active": 0,

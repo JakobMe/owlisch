@@ -11,16 +11,74 @@
     if (($sort !== "alpha") && ($sort !== "level")) { $sort = "alpha"; }
     if (($dir !== "asc") && ($dir !== "desc")) { $dir = "asc"; }
     
-    // Sortierfunktionen definieren
-    function sortWordsAlpha($a, $b) { return strcmp($a["word"], $b["word"]); }
-    function sortWordsLevel($a, $b) { return $a["level"] - $b["level"]; }
+    /**
+     * Sortieren: Alphabetisch aufsteigend.
+     * Vergleicht zwei Wörter und ordnet sie alphabetisch aufsteigend.
+     */
+    function sortWordsAlphaAsc($a, $b) {
+        return strcmp($a["word"], $b["word"]);
+    }
     
-    // Wörter sortieren
-    if ($sort === "alpha") { uasort($words, "sortWordsAlpha"); }
-    else if ($sort === "level") { uasort($words, "sortWordsLevel"); }
+    /**
+     * Sortieren: Alphabetisch absteigend.
+     * Vergleicht zwei Wörter und ordnet sie alphabetisch absteigend.
+     */
+    function sortWordsAlphaDesc($a, $b) {
+        return strcmp($b["word"], $a["word"]);
+    }
     
-    // Bei Absteigender Sortierung Wort-Array umkehren
-    if ($dir === "desc") { $words = array_reverse($words, true); }
+    /**
+     * Sortieren: Nach Stufe aufsteigend.
+     * Vergleicht zwei Wörter und ordnet sie alphabetisch, wenn die Stufen
+     * identisch sind und numerisch, falls sich die Stufen unterscheiden;
+     * beide Vergleiche werden aufsteigend geordnet.
+     */
+    function sortWordsLevelAsc($a, $b) {
+        if ($a["level"] === $b["level"]) {
+            return strcmp($a["word"], $b["word"]);
+        } else {
+            return $a["level"] - $b["level"];
+        }
+    }
+    
+    /**
+     * Sortieren: Nach Stufe absteigend.
+     * Vergleicht zwei Wörter und ordnet sie alphabetisch, wenn die Stufen
+     * identisch sind und numerisch, falls sich die Stufen unterscheiden;
+     * beide Vergleiche werden absteigend geordnet.
+     */
+    function sortWordsLevelDesc($a, $b) {
+        if ($a["level"] === $b["level"]) {
+            return strcmp($a["word"], $b["word"]);
+        } else {
+            return $b["level"] - $a["level"];
+        }
+    }
+    
+    // Wörter alphabetisch sortieren
+    if ($sort === "alpha") {
+        
+        // Aufsteigend
+        if ($dir === "asc") {
+            uasort($words, "sortWordsAlphaAsc");
+        
+        // Absteigend
+        } else if ($dir === "desc") {
+            uasort($words, "sortWordsAlphaDesc");
+        }
+        
+    // Wörter nach Stufe sortieren
+    } else if ($sort === "level") {
+        
+        // Aufsteigend
+        if ($dir === "asc") {
+            uasort($words, "sortWordsLevelAsc");
+        
+        // Absteigend
+        } else if ($dir === "desc") {
+            uasort($words, "sortWordsLevelDesc");
+        }
+    }
     
 ?>
 

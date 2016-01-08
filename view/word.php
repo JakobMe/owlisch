@@ -36,6 +36,7 @@
 </div>
 <div class="content-padding center">
     <p class="title">
+        <i class="fa fa-comments-o"></i>
         <b><?php echo $word["translate"]; ?></b>
     </p>
     <p class="info important small">

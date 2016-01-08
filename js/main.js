@@ -111,7 +111,6 @@ $(document).ready(function() {
     
     // Konstanten: AJAX-Werte
     var AJAX_PATH               = "view/";
-    var AJAX_PATH_DICTIONARY    = "view/dictionary/";
     var AJAX_PHP                = ".php";
     var AJAX_SORT_ALPHA         = "alpha";
     var AJAX_SORT_ASC           = "asc";

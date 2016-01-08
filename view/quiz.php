@@ -137,22 +137,22 @@
         <div class="quiz-choices images">
             <a class="button choice wrong image">
                 <span class="button-image">
-                    <img src="img/content/pinienzapfen.jpg?v=10" />
+                    <img src="img/content/pinienzapfen.jpg" />
                 </span>
             </a>
             <a class="button choice wrong image">
                 <span class="button-image">
-                    <img src="img/content/schraube.jpg?v=10" />
+                    <img src="img/content/schraube.jpg" />
                 </span>
             </a>
             <a class="button choice right image">
                 <span class="button-image">
-                    <img src="img/content/schnapsglas.jpg?v=10" />
+                    <img src="img/content/pinneken.jpg" />
                 </span>
             </a>
             <a class="button choice wrong image">
                 <span class="button-image">
-                    <img src="img/content/blume.jpg?v=10" />
+                    <img src="img/content/blume.jpg" />
                 </span>
             </a>
             <div class="clear"></div>           
@@ -171,7 +171,7 @@
             Was ist <b>das</b>?
         </h2>
         <div class="quiz-image">
-            <img src="img/content/schnapsglas.jpg?v=10" />
+            <img src="img/content/pinneken.jpg" />
         </div>
         <div class="quiz-info">
             <span class="quiz-info-difficulty">
@@ -361,22 +361,22 @@
         <div class="quiz-choices images">
             <a class="button choice wrong image">
                 <span class="button-image">
-                    <img src="img/content/pinienzapfen.jpg?v=10" />
+                    <img src="img/content/pinienzapfen.jpg" />
                 </span>
             </a>
             <a class="button choice wrong image">
                 <span class="button-image">
-                    <img src="img/content/schraube.jpg?v=10" />
+                    <img src="img/content/schraube.jpg" />
                 </span>
             </a>
             <a class="button choice right image">
                 <span class="button-image">
-                    <img src="img/content/schnapsglas.jpg?v=10" />
+                    <img src="img/content/pinneken.jpg" />
                 </span>
             </a>
             <a class="button choice wrong image">
                 <span class="button-image">
-                    <img src="img/content/blume.jpg?v=10" />
+                    <img src="img/content/blume.jpg" />
                 </span>
             </a>
             <div class="clear"></div>           
@@ -395,7 +395,7 @@
             Was ist <b>das</b>?
         </h2>
         <div class="quiz-image">
-            <img src="img/content/schnapsglas.jpg?v=10" />
+            <img src="img/content/pinneken.jpg" />
         </div>
         <div class="quiz-info">
             <span class="quiz-info-difficulty">

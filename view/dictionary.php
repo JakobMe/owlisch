@@ -1,48 +1,7 @@
 <?php
     
-    // Liste der Wörter
-    $words = array(
-        "pinneken"       => array(
-            "level"      => "3",
-            "word"       => "Pinneken"
-        ),
-        "anneeckeliegen" => array(
-            "level"      => "1",
-            "word"       => "Anne Ecke liegen"
-        ),
-        "buetterken"     => array(
-            "level"      => "2",
-            "word"       => "Bütterken"
-        ),
-        "doelmern"       => array(
-            "level"      => "1",
-            "word"       => "Dölmern"
-        ),
-        "doenekens"      => array(
-            "level"      => "2",
-            "word"       => "Dönekens"
-        ),
-        "fickerig"       => array(
-            "level"      => "1",
-            "word"       => "Fickerig"
-        ),
-        "latuechte"      => array(
-            "level"      => "1",
-            "word"       => "Latüchte"
-        ),
-        "noenkern"       => array(
-            "level"      => "2",
-            "word"       => "Nönkern"
-        ),
-        "pluedden"       => array(
-            "level"      => "1",
-            "word"       => "Plüdden"
-        ),
-        "vermackeln"     => array(
-            "level"      => "3",
-            "word"       => "Vermackeln"
-        ),
-    );
+    // Daten inkludieren
+    include("data.php");
     
     // Sortieroption ermitteln
     $sort = $_POST["sort"];

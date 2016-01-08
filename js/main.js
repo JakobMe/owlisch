@@ -131,6 +131,7 @@ $(document).ready(function() {
     var VIEW_PROGRESS           = "#progress";
     var VIEW_DICTIONARY         = "#dictionary";
     var VIEW_SORT               = "#sort";
+    var VIEW_WORD               = "#word";
 
     // Konstanten: Zeiten
     var TIME_ANIMATION          = 300;
@@ -347,16 +348,21 @@ $(document).ready(function() {
      */
     function changeView(view, callback, params) {
         
-        // Titel-Buttons zurücksetzen
+        // Linken Titel-Button zurücksetzen
         resetTitleButtonLeft();
-        resetTitleButtonRight();
         
         // Wenn View Wörterbuch ist, Sortier-Button setzen
         if (view === VIEW_DICTIONARY) {
-            setTitleButton(
-                $(ID_TITLE_RIGHT), STR_EMPTY, VIEW_SORT,
-                CLASS_ICON_SORT, false
-            );
+            if ($(ID_TITLE_RIGHT).attr(ATTR_HREF) !== VIEW_SORT) {
+                setTitleButton(
+                    $(ID_TITLE_RIGHT), STR_EMPTY, VIEW_SORT,
+                    CLASS_ICON_SORT, false
+                );
+            }
+            
+        // Ansonsten rechten Titel-Button zurücksetzen
+        } else {
+            resetTitleButtonRight();
         }
 
         // Wenn erstes Zeichen eine Raute ist, entfernen
@@ -421,14 +427,21 @@ $(document).ready(function() {
      */
     function setTitleButton(button, text, href, icon, locked) {
         
-        // Button Link, Text und Icon setzen
-        button.attr(ATTR_HREF, href);
-        button.children(SEL_TITLE_BUTTON).text(text);
-        button.children(SEL_I).removeClass().addClass(CLASS_FA).addClass(icon);
+        // Button ausblenden
+        button.addClass(CLASS_LOCKED);
         
-        // Button sperren/entsperren
-        if (locked === true) { button.addClass(CLASS_LOCKED); }
-        else if (locked === false) { button.removeClass(CLASS_LOCKED); }
+        // Auf Animation warten
+        setTimeout(function() {
+            
+            // Button Link, Text und Icon setzen
+            button.attr(ATTR_HREF, href);
+            button.children(SEL_TITLE_BUTTON).text(text);
+            button.children(SEL_I).removeClass().addClass(CLASS_FA).addClass(icon);
+            
+            // Button entsperren/einblenden
+            if (locked === false) { button.removeClass(CLASS_LOCKED); }
+            
+        }, TIME_ANIMATION);
     }
     
     /**
@@ -842,7 +855,7 @@ $(document).ready(function() {
         
         // Wort ermitteln
         var word = $(this).attr(ATTR_HREF).substring(1);
-        var file = AJAX_PATH_DICTIONARY + word + AJAX_PHP;
+        var file = AJAX_PATH + VIEW_WORD.substring(1) + AJAX_PHP;
         
         // Action-Button entfernen
         resetTitleButtonRight();
@@ -883,7 +896,8 @@ $(document).ready(function() {
                 } else {
                     
                     // Wort laden
-                    $(ID_CONTENT_DICTIONARY).load(file, function(response) {
+                    $(ID_CONTENT_DICTIONARY).load(
+                        file, { word: word }, function(response) {
                         
                         // Falls Datei noch nicht gecached ist
                         if (typeof cacheDictionary[word] === STR_UNDEFINED) {

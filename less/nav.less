@@ -57,14 +57,13 @@
             color: @color-white;
             height: @height-titlebar;
             line-height: (@height-titlebar - @size-line-medium);
-            .transition(opacity);
+            .transition();
             .borderbox();
             
             // Variante: Gesperrt
             &.locked {
-                width: 0;
-                opacity: 0;
-                padding: 0;
+                cursor: default;
+                opacity: @opacity-invisible;
             }
             
             // Icons
@@ -87,9 +86,17 @@
             }
         }
         
-        // Icon Positionen
-        #bar-title-left { text-align: left; left: 0; }
-        #bar-title-right { text-align: right; right: 0; }
+        // Icon Links
+        #bar-title-left {
+            text-align: left;
+            left: 0;
+        }
+        
+        // Icon Rechts
+        #bar-title-right {
+            text-align: right;
+            right: 0;
+        }
     }
 }
 

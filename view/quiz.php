@@ -286,10 +286,10 @@
                 <i class="quiz-solution-icon"></i>
             </p>
         </div>
-        <div class="content-padding small-vertical quiz-solution-info center">
-            <p class="info small">
-                <i class="fa fa-lightbulb-o"></i>
-                Benutze die Tastatur, um die Lösung einzugeben.
+        <div class="quiz-solution-info center">
+            <p class="label"><span class="text">Hinweis</span></p>
+            <p class="word description info">
+                Benutze die <b>Tastatur</b>, um die Lösung einzugeben.
             </p>
         </div>
         <div class="content-padding bottom">

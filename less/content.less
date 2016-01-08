@@ -104,6 +104,12 @@
             }
         }
         
+        // Variante: Info
+        &.info:not(.word) {
+            font-style: italic;
+            color: @color-text-pale;
+        }
+        
         // Variante: Wort
         &.word {
             margin: 0;
@@ -219,10 +225,11 @@
         &.dictionary-word {
             text-align: left;
             font-weight: bold;
+            font-style: normal;
             position: relative;
             padding-top: 0;
             padding-bottom: 0;
-            font-size: @font-big;
+            font-size: @font-medium;
             padding-right: @height-button-choice;
             height: @height-button-choice;
             line-height: @height-button-choice;

@@ -5,6 +5,63 @@
  * @copyright 2015 Jakob Metzger
  */
 
+// Wörterbuch-Sortierung
+#dictionary-sort {
+    display: block;
+    position: absolute;
+    list-style-type: none;
+    top: 0;
+    margin: 0;
+    padding: 0;
+    z-index: 500;
+    left: (100% / 3);
+    width: (100% / 3);
+    border-bottom: @size-line-thin solid fade(@color-black, 25%);
+    .transition();
+    .shadow-big();
+    
+    // Variante: Versteckt
+    &.hidden {
+        opacity: @opacity-invisible;
+        .translate(0, -100%);
+    }
+    
+    // Optionen
+    .sort {
+        display: block;
+        cursor: pointer;
+        font-weight: bold;
+        font-size: @font-small;
+        padding: @size-margin;
+        background: @color-white;
+        border-bottom: @size-line-thin solid darken(@color-background, @darken-border);
+        
+        // Schriftfarbe
+        &, .fa {
+            color: @color-text-pale;
+            .transition(color);
+        }
+        
+        // Letzte Option
+        &:last-child { border-bottom: none; }
+        
+        // Icons
+        .fa {
+            font-weight: normal;
+            margin-right: @size-margin-half;
+        }
+    }
+    
+    // Aktive Option
+    &.sort-alpha-asc .sort-alpha-asc,
+    &.sort-alpha-desc .sort-alpha-desc,
+    &.sort-level-asc .sort-level-asc,
+    &.sort-level-desc .sort-level-desc {
+        background: lighten(@color-background, @darken-main);
+        &, .fa { color: @color-text-dark; }
+    }
+}
+
 // Wörterbuch-Slider
 #dictionary-slider {
     overflow: hidden;

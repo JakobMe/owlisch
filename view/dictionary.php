@@ -44,28 +44,49 @@
         ),
     );
     
-    // Sortierfunktion: Alphabetisch
-    function sortWordsAlpha($a, $b) {
-        return strcmp($a["word"], $b["word"]);
-    }
-    
-    // Sortierfunktion: Level
-    function sortWordsLevel($a, $b) {
-        return $a["level"] - $b["level"];
-    }
-    
-    // Sortieroption ermitteln/setzen
+    // Sortieroption ermitteln
     $sort = $_POST["sort"];
-    if ($sort == "") { $sort = "alpha"; }
+    $dir = $_POST["dir"];
+    
+    // Sortierung bei fehlerhaften Angaben korrigieren
+    if (($sort !== "alpha") && ($sort !== "level")) { $sort = "alpha"; }
+    if (($dir !== "asc") && ($dir !== "desc")) { $dir = "asc"; }
+    
+    // Sortierfunktionen definieren
+    function sortWordsAlpha($a, $b) { return strcmp($a["word"], $b["word"]); }
+    function sortWordsLevel($a, $b) { return $a["level"] - $b["level"]; }
     
     // Wörter sortieren
     if ($sort === "alpha") { uasort($words, "sortWordsAlpha"); }
     else if ($sort === "level") { uasort($words, "sortWordsLevel"); }
     
+    // Bei Absteigender Sortierung Wort-Array umkehren
+    if ($dir === "desc") { $words = array_reverse($words, true); }
+    
 ?>
 
 <!--Wörterbuch-Slider-->
 <div id="dictionary-slider" class="slide-0">
+    
+    <!--Sortierung-->
+    <ul id="dictionary-sort" class="hidden sort-<?php echo $sort; ?>-<?php echo $dir; ?>">
+        <li class="sort sort-alpha-asc" data-sort="alpha" data-dir="asc">
+            <i class="fa fa-sort-alpha-asc"></i>
+            Alphabetisch sortieren (aufsteigend)
+        </li>
+        <li class="sort sort-alpha-desc" data-sort="alpha" data-dir="desc">
+            <i class="fa fa-sort-alpha-desc"></i>
+            Alphabetisch sortieren (absteigend)
+        </li>
+        <li class="sort sort-level-asc" data-sort="level" data-dir="asc">
+            <i class="fa fa-sort-numeric-asc"></i>
+            Nach Stufe sortieren (aufsteigend)
+        </li>
+        <li class="sort sort-level-desc" data-sort="level" data-dir="desc">
+            <i class="fa fa-sort-numeric-desc"></i>
+            Nach Stufe sortieren (absteigend)
+        </li>
+    </ul>
     
     <!--Leer-->
     <div class="dictionary-slide slide-empty"></div>

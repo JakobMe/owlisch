@@ -26,6 +26,8 @@ $(document).ready(function() {
     var ATTR_DATA_LEVEL         = "data-level";
     var ATTR_DATA_CHOICE        = "data-choice";
     var ATTR_DATA_SOLUTION      = "data-solution";
+    var ATTR_DATA_SORT          = "data-sort";
+    var ATTR_DATA_DIR           = "data-dir";
     var ATTR_WIDTH              = "width";
     var ATTR_DISABLED           = "readonly";
     
@@ -42,6 +44,7 @@ $(document).ready(function() {
     var ID_TITLE_LEFT           = "#bar-title-left";
     var ID_TABS_INDICATOR       = "#bar-tabs-indicator";
     var ID_DICTIONARY_SLIDER    = "#dictionary-slider";
+    var ID_DICTIONARY_SORT      = "#dictionary-sort";
     var ID_CONTENT_DICTIONARY   = "#content-dictionary";
     var ID_CONTENT_INNER        = "#content-inner";
     var ID_CONTENT              = "#content";
@@ -72,6 +75,7 @@ $(document).ready(function() {
     var SEL_INPUT_CURRENT       = ".input-character.current";
     var SEL_INPUT_DELETE        = ".input-delete";
     var SEL_DICTIONARY_WORD     = ".dictionary-word";
+    var SEL_DICTIONARY_SORT     = "#dictionary-sort .sort";
     var SEL_BUTTON              = ".button";
     var SEL_RIGHT               = ".right";
     var SEL_TAB                 = ".bar-tabs-tab";
@@ -110,7 +114,7 @@ $(document).ready(function() {
     var AJAX_PATH_DICTIONARY    = "view/dictionary/";
     var AJAX_PHP                = ".php";
     var AJAX_SORT_ALPHA         = "alpha";
-    //var AJAX_SORT_LEVEL         = "level";
+    var AJAX_SORT_ASC           = "asc";
     
     // Konstanten: String
     var STR_EMPTY               = "";
@@ -360,7 +364,7 @@ $(document).ready(function() {
             view = view.substring(1);
         }
         
-        //
+        // Wenn keine Parameter angegeben sind, Standard definieren
         if (typeof params === STR_UNDEFINED) {
             params = { post: STR_EMPTY };
         }
@@ -728,7 +732,7 @@ $(document).ready(function() {
         
         // Post-Parameter beim Wörterbuch-Tab setzen (Sortierung)
         if (view === VIEW_DICTIONARY) {
-            params = { sort: AJAX_SORT_ALPHA };
+            params = { sort: AJAX_SORT_ALPHA, dir: AJAX_SORT_ASC };
         }
         
         // Callback-Funktion beim Fortschritts-Tab setzen
@@ -796,8 +800,34 @@ $(document).ready(function() {
                 setTimeout(function() {
                     $(ID_CONTENT_DICTIONARY).html(STR_EMPTY);
                 }, TIME_ANIMATION);
+            
+            // Wenn View "Sortieren" ist
+            } else if (view === VIEW_SORT) {
+                
+                // Sortier-Overlay ein-/ausblenden
+                $(ID_DICTIONARY_SORT).toggleClass(CLASS_HIDDEN);
             }
         }
+    });
+    
+    /*
+     * Bei Klick auf Wörterbuch-Sortierung.
+     * Ermittelt die gewählte Sortierung (Alphabetisch/Stufe & Auf-/Absteigend)
+     * und lädt die View mit diesen Parametern neu.
+     */
+    $(SEL_BODY).on(EVENT_CLICK, SEL_DICTIONARY_SORT, function() {
+
+        // Wörterbuch-View aus dem Cache löschen
+        delete cacheView[VIEW_DICTIONARY.substring(1)];
+        
+        // Wörterbuch-View mit gewählten Parametern neu laden
+        changeView(
+            VIEW_DICTIONARY, null,
+            {
+                sort: $(this).attr(ATTR_DATA_SORT),
+                dir: $(this).attr(ATTR_DATA_DIR)
+            }
+        );
     });
     
     /*
@@ -882,6 +912,25 @@ $(document).ready(function() {
                 );
                 return false;
             }, 1);
+        }
+    });
+    
+    /**
+     * Bei Klick auf den Body.
+     * Blendet bestimmte Elemente (z.B: Wörterbuch-Sortierung) unter
+     * bestimmten Bedingungen aus, sobald etwas geklickt wird.
+     */
+    $(SEL_BODY).click(function(event) {
+        
+        // Geklicktes Element ermitteln
+        var clicked = $(event.target);
+
+        // Falls Element nicht Sortier-Button ist, Sortierung ausblenden
+        if ((!clicked.add(clicked.parents()).is(ID_TITLE_RIGHT)) &&
+            ($(ID_DICTIONARY_SORT).length > 0)) {
+            if (!$(ID_DICTIONARY_SORT).hasClass(CLASS_HIDDEN)) {
+                $(ID_DICTIONARY_SORT).addClass(CLASS_HIDDEN);
+            }
         }
     });
     

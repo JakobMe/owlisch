@@ -40,7 +40,6 @@
         <b><?php echo $word["translate"]; ?></b>
     </p>
     <p class="info important small">
-        <i class="fa fa-info-circle"></i>
         <?php echo trim($word["info"]); ?>
     </p>
 </div>

@@ -949,128 +949,128 @@
 		"outputPathIsOutsideProject": 0,
 		"outputPathIsSetByUser": 0
 		},
-	"\/view\/dictionary\/anneeckeliegen.html": {
+	"\/view\/dictionary\/anneeckeliegen.php": {
 		"fileType": 8192,
 		"ignore": 0,
 		"ignoreWasSetByUser": 0,
-		"inputAbbreviatedPath": "\/view\/dictionary\/anneeckeliegen.html",
+		"inputAbbreviatedPath": "\/view\/dictionary\/anneeckeliegen.php",
 		"outputAbbreviatedPath": "No Output Path",
 		"outputPathIsOutsideProject": 0,
 		"outputPathIsSetByUser": 0
 		},
-	"\/view\/dictionary\/buetterken.html": {
+	"\/view\/dictionary\/buetterken.php": {
 		"fileType": 8192,
 		"ignore": 0,
 		"ignoreWasSetByUser": 0,
-		"inputAbbreviatedPath": "\/view\/dictionary\/buetterken.html",
+		"inputAbbreviatedPath": "\/view\/dictionary\/buetterken.php",
 		"outputAbbreviatedPath": "No Output Path",
 		"outputPathIsOutsideProject": 0,
 		"outputPathIsSetByUser": 0
 		},
-	"\/view\/dictionary\/doelmern.html": {
+	"\/view\/dictionary\/doelmern.php": {
 		"fileType": 8192,
 		"ignore": 0,
 		"ignoreWasSetByUser": 0,
-		"inputAbbreviatedPath": "\/view\/dictionary\/doelmern.html",
+		"inputAbbreviatedPath": "\/view\/dictionary\/doelmern.php",
 		"outputAbbreviatedPath": "No Output Path",
 		"outputPathIsOutsideProject": 0,
 		"outputPathIsSetByUser": 0
 		},
-	"\/view\/dictionary\/doenekens.html": {
+	"\/view\/dictionary\/doenekens.php": {
 		"fileType": 8192,
 		"ignore": 0,
 		"ignoreWasSetByUser": 0,
-		"inputAbbreviatedPath": "\/view\/dictionary\/doenekens.html",
+		"inputAbbreviatedPath": "\/view\/dictionary\/doenekens.php",
 		"outputAbbreviatedPath": "No Output Path",
 		"outputPathIsOutsideProject": 0,
 		"outputPathIsSetByUser": 0
 		},
-	"\/view\/dictionary\/fickerig.html": {
+	"\/view\/dictionary\/fickerig.php": {
 		"fileType": 8192,
 		"ignore": 0,
 		"ignoreWasSetByUser": 0,
-		"inputAbbreviatedPath": "\/view\/dictionary\/fickerig.html",
+		"inputAbbreviatedPath": "\/view\/dictionary\/fickerig.php",
 		"outputAbbreviatedPath": "No Output Path",
 		"outputPathIsOutsideProject": 0,
 		"outputPathIsSetByUser": 0
 		},
-	"\/view\/dictionary\/latuechte.html": {
+	"\/view\/dictionary\/latuechte.php": {
 		"fileType": 8192,
 		"ignore": 0,
 		"ignoreWasSetByUser": 0,
-		"inputAbbreviatedPath": "\/view\/dictionary\/latuechte.html",
+		"inputAbbreviatedPath": "\/view\/dictionary\/latuechte.php",
 		"outputAbbreviatedPath": "No Output Path",
 		"outputPathIsOutsideProject": 0,
 		"outputPathIsSetByUser": 0
 		},
-	"\/view\/dictionary\/noenkern.html": {
+	"\/view\/dictionary\/noenkern.php": {
 		"fileType": 8192,
 		"ignore": 0,
 		"ignoreWasSetByUser": 0,
-		"inputAbbreviatedPath": "\/view\/dictionary\/noenkern.html",
+		"inputAbbreviatedPath": "\/view\/dictionary\/noenkern.php",
 		"outputAbbreviatedPath": "No Output Path",
 		"outputPathIsOutsideProject": 0,
 		"outputPathIsSetByUser": 0
 		},
-	"\/view\/dictionary\/pinneken.html": {
+	"\/view\/dictionary\/pinneken.php": {
 		"fileType": 8192,
 		"ignore": 0,
 		"ignoreWasSetByUser": 0,
-		"inputAbbreviatedPath": "\/view\/dictionary\/pinneken.html",
+		"inputAbbreviatedPath": "\/view\/dictionary\/pinneken.php",
 		"outputAbbreviatedPath": "No Output Path",
 		"outputPathIsOutsideProject": 0,
 		"outputPathIsSetByUser": 0
 		},
-	"\/view\/dictionary\/pluedden.html": {
+	"\/view\/dictionary\/pluedden.php": {
 		"fileType": 8192,
 		"ignore": 0,
 		"ignoreWasSetByUser": 0,
-		"inputAbbreviatedPath": "\/view\/dictionary\/pluedden.html",
+		"inputAbbreviatedPath": "\/view\/dictionary\/pluedden.php",
 		"outputAbbreviatedPath": "No Output Path",
 		"outputPathIsOutsideProject": 0,
 		"outputPathIsSetByUser": 0
 		},
-	"\/view\/dictionary\/vermackeln.html": {
+	"\/view\/dictionary\/vermackeln.php": {
 		"fileType": 8192,
 		"ignore": 0,
 		"ignoreWasSetByUser": 0,
-		"inputAbbreviatedPath": "\/view\/dictionary\/vermackeln.html",
+		"inputAbbreviatedPath": "\/view\/dictionary\/vermackeln.php",
 		"outputAbbreviatedPath": "No Output Path",
 		"outputPathIsOutsideProject": 0,
 		"outputPathIsSetByUser": 0
 		},
-	"\/view\/help.html": {
+	"\/view\/help.php": {
 		"fileType": 8192,
 		"ignore": 0,
 		"ignoreWasSetByUser": 0,
-		"inputAbbreviatedPath": "\/view\/help.html",
+		"inputAbbreviatedPath": "\/view\/help.php",
 		"outputAbbreviatedPath": "No Output Path",
 		"outputPathIsOutsideProject": 0,
 		"outputPathIsSetByUser": 0
 		},
-	"\/view\/home.html": {
+	"\/view\/home.php": {
 		"fileType": 8192,
 		"ignore": 0,
 		"ignoreWasSetByUser": 0,
-		"inputAbbreviatedPath": "\/view\/home.html",
+		"inputAbbreviatedPath": "\/view\/home.php",
 		"outputAbbreviatedPath": "No Output Path",
 		"outputPathIsOutsideProject": 0,
 		"outputPathIsSetByUser": 0
 		},
-	"\/view\/progress.html": {
+	"\/view\/progress.php": {
 		"fileType": 8192,
 		"ignore": 0,
 		"ignoreWasSetByUser": 0,
-		"inputAbbreviatedPath": "\/view\/progress.html",
+		"inputAbbreviatedPath": "\/view\/progress.php",
 		"outputAbbreviatedPath": "No Output Path",
 		"outputPathIsOutsideProject": 0,
 		"outputPathIsSetByUser": 0
 		},
-	"\/view\/quiz.html": {
+	"\/view\/quiz.php": {
 		"fileType": 8192,
 		"ignore": 0,
 		"ignoreWasSetByUser": 0,
-		"inputAbbreviatedPath": "\/view\/quiz.html",
+		"inputAbbreviatedPath": "\/view\/quiz.php",
 		"outputAbbreviatedPath": "No Output Path",
 		"outputPathIsOutsideProject": 0,
 		"outputPathIsSetByUser": 0

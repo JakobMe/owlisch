@@ -108,7 +108,6 @@ $(document).ready(function() {
     // Konstanten: AJAX-Werte
     var AJAX_PATH               = "view/";
     var AJAX_PATH_DICTIONARY    = "view/dictionary/";
-    var AJAX_HTML               = ".html";
     var AJAX_PHP                = ".php";
     var AJAX_SORT_ALPHA         = "alpha";
     //var AJAX_SORT_LEVEL         = "level";
@@ -348,12 +347,8 @@ $(document).ready(function() {
         resetTitleButtonLeft();
         resetTitleButtonRight();
         
-        // Dateiendung initialisieren
-        var fileExtension = AJAX_HTML;
-        
         // Wenn View Wörterbuch ist, Sortier-Button setzen
         if (view === VIEW_DICTIONARY) {
-            fileExtension = AJAX_PHP;
             setTitleButton(
                 $(ID_TITLE_RIGHT), STR_EMPTY, VIEW_SORT,
                 CLASS_ICON_SORT, false
@@ -392,7 +387,7 @@ $(document).ready(function() {
             } else {
                 
                 // Dateipfad zusammensetzen
-                var file = AJAX_PATH + view + fileExtension;
+                var file = AJAX_PATH + view + AJAX_PHP;
         
                 // Inhalt laden
                 $(ID_CONTENT_INNER).load(file, params, function(response) {
@@ -817,7 +812,7 @@ $(document).ready(function() {
         
         // Wort ermitteln
         var word = $(this).attr(ATTR_HREF).substring(1);
-        var file = AJAX_PATH_DICTIONARY + word + AJAX_HTML;
+        var file = AJAX_PATH_DICTIONARY + word + AJAX_PHP;
         
         // Action-Button entfernen
         resetTitleButtonRight();

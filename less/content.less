@@ -313,7 +313,6 @@
         font-size: @font-small;
         color: @color-text-pale;
         background: @color-white;
-        padding: 0 @size-margin;
         border-bottom: @size-line-thin solid darken(@color-background, @darken-border);
         .gradient-background();
         
@@ -324,8 +323,8 @@
             position: absolute;
             font-style: italic;
             top: 0;
-            padding: 0;
-            left: @size-margin;
+            left: 0;
+            padding: 0 @size-margin;
             height: @height-bar-info;
             line-height: @height-bar-info;
         }
@@ -339,8 +338,8 @@
             cursor: pointer;
             position: absolute;
             top: 0;
-            padding: 0 0 0 @size-padding-tripple;
-            right: @size-margin;
+            right: 0;
+            padding: 0 @size-margin;
             height: @height-bar-info;
             color: @color-text-pale;
             font-size: @font-medium;
@@ -362,10 +361,10 @@
                 top: 0;
                 content: "";
                 background-image: url("../img/layout/spinner-small.gif");
+                width: @size-margin;
                 opacity: @opacity-invisible;
-                width: @height-bar-info;
                 height: @height-bar-info;
-                left: -(@size-margin + @size-margin-half);
+                left: -(@size-margin-half);
                 background-size: @size-margin @size-margin;
                 .transition(opacity);
             }

@@ -103,11 +103,15 @@ $(document).ready(function() {
     var CLASS_SLIDE             = "slide-";
     var CLASS_LEVEL             = "level-";
     var CLASS_ICON_BACK         = "fa-chevron-left";
+    var CLASS_ICON_SORT         = "fa-sort";
     
     // Konstanten: AJAX-Werte
     var AJAX_PATH               = "view/";
     var AJAX_PATH_DICTIONARY    = "view/dictionary/";
     var AJAX_HTML               = ".html";
+    var AJAX_PHP                = ".php";
+    var AJAX_SORT_ALPHA         = "alpha";
+    //var AJAX_SORT_LEVEL         = "level";
     
     // Konstanten: String
     var STR_EMPTY               = "";
@@ -123,6 +127,7 @@ $(document).ready(function() {
     var VIEW_HOME               = "#home";
     var VIEW_PROGRESS           = "#progress";
     var VIEW_DICTIONARY         = "#dictionary";
+    var VIEW_SORT               = "#sort";
 
     // Konstanten: Zeiten
     var TIME_ANIMATION          = 300;
@@ -334,17 +339,35 @@ $(document).ready(function() {
      * übereinstimmen. Blendet anschließend den Inhalt wieder ein.
      * @param {string} view Name der View
      * @param {function} callback (optionale) Callback-Funktion
+     * @param {object} params (optionale) POST-Parameter für Ajax
      * @return {boolean} false bei AJAX-Fehler, sonst true
      */
-    function changeView(view, callback) {
+    function changeView(view, callback, params) {
         
         // Titel-Buttons zurücksetzen
         resetTitleButtonLeft();
         resetTitleButtonRight();
+        
+        // Dateiendung initialisieren
+        var fileExtension = AJAX_HTML;
+        
+        // Wenn View Wörterbuch ist, Sortier-Button setzen
+        if (view === VIEW_DICTIONARY) {
+            fileExtension = AJAX_PHP;
+            setTitleButton(
+                $(ID_TITLE_RIGHT), STR_EMPTY, VIEW_SORT,
+                CLASS_ICON_SORT, false
+            );
+        }
 
         // Wenn erstes Zeichen eine Raute ist, entfernen
         if (view.charAt(0) === STR_HASH) {
             view = view.substring(1);
+        }
+        
+        //
+        if (typeof params === STR_UNDEFINED) {
+            params = { post: STR_EMPTY };
         }
         
         // Inhalt ausblenden
@@ -369,10 +392,10 @@ $(document).ready(function() {
             } else {
                 
                 // Dateipfad zusammensetzen
-                var file = AJAX_PATH + view + AJAX_HTML;
+                var file = AJAX_PATH + view + fileExtension;
         
                 // Inhalt laden
-                $(ID_CONTENT_INNER).load(file, function(response) {
+                $(ID_CONTENT_INNER).load(file, params, function(response) {
 
                     // Inhalt einblenden, Callback
                     $(ID_CONTENT).removeClass(CLASS_HIDDEN);
@@ -691,6 +714,7 @@ $(document).ready(function() {
         var title = $(ID_TITLE);
         var view = $(this).attr(ATTR_HREF);
         var callback = null;
+        var params = null;
         
         // Titel setzen
         title.addClass(CLASS_HIDDEN);
@@ -707,6 +731,11 @@ $(document).ready(function() {
         // Tab aktivieren
         tab.addClass(CLASS_CURRENT).siblings().removeClass(CLASS_CURRENT);
         
+        // Post-Parameter beim Wörterbuch-Tab setzen (Sortierung)
+        if (view === VIEW_DICTIONARY) {
+            params = { sort: AJAX_SORT_ALPHA };
+        }
+        
         // Callback-Funktion beim Fortschritts-Tab setzen
         if (view === VIEW_PROGRESS) {
             callback = function() {
@@ -717,7 +746,7 @@ $(document).ready(function() {
         }
         
         // View ändern
-        changeView(view, callback);
+        changeView(view, callback, params);
     });
     
     /*
@@ -756,6 +785,12 @@ $(document).ready(function() {
                 // Zurück-Button zurücksetzen
                 resetTitleButtonLeft();
                 
+                // Sortier-Button setzen
+                setTitleButton(
+                    $(ID_TITLE_RIGHT), STR_EMPTY, VIEW_SORT,
+                    CLASS_ICON_SORT, false
+                );
+                
                 // Slider verschieben, Scroll-Container zurücksetzen
                 $(ID_DICTIONARY_SLIDER)
                     .removeClass().addClass(CLASS_SLIDE + 0)
@@ -783,7 +818,10 @@ $(document).ready(function() {
         // Wort ermitteln
         var word = $(this).attr(ATTR_HREF).substring(1);
         var file = AJAX_PATH_DICTIONARY + word + AJAX_HTML;
-
+        
+        // Action-Button entfernen
+        resetTitleButtonRight();
+        
         // Zurück-Button setzen
         setTitleButton(
             $(ID_TITLE_LEFT), STR_EMPTY, VIEW_DICTIONARY,

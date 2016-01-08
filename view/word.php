@@ -36,17 +36,9 @@
         </audio>
     </div>
     <div class="word-text">
-        <p class="label">
-            <span class="text">Übersetzung</span>
-        </p>
-        <p class="word translation">
-            „<?php echo $word["translate"]; ?>“
-        </p>
-        <p class="label">
-            <span class="text">Beschreibung</span>
-        </p>
-        <p class="word description">
-            <?php echo trim($word["info"]); ?>
-        </p>
+        <p class="label"><span class="text">Übersetzung</span></p>
+        <p class="word translation">„<?php echo $word["translate"]; ?>“</p>
+        <p class="label"><span class="text">Beschreibung</span></p>
+        <p class="word description"><?php echo trim($word["info"]); ?></p>
     </div>
 </div>

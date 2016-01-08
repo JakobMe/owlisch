@@ -104,19 +104,6 @@
             }
         }
         
-        // Info-Absatz
-        &.info {
-            font-style: italic;
-            font-size: @font-big;
-            color: @color-text-pale;
-            
-            // Variante: Klein
-            &.small { font-size: @font-small; }
-
-            // Hervorgehoben
-            b { font-weight: bold; }
-        }
-        
         // Variante: Wort
         &.word {
             margin: 0;
@@ -138,6 +125,10 @@
                 text-align: justify;
                 font-size: @font-small;
                 .hyphens();
+                
+                // Variante: Abstand Unten
+                &.margin-bottom { margin-bottom: @size-margin; }
+                &.info { text-align: center; color: @color-text-pale; }
             }
         }
         
@@ -157,7 +148,7 @@
             color: @color-text-pale;
             
             // Erstes Label
-            &:first-child { margin-top: @size-margin; }
+            &:first-child, &:first-of-type { margin-top: @size-margin; }
             
             // Linien
             &:after, &:before {

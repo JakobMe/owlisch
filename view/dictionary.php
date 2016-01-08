@@ -124,13 +124,11 @@
             <?php } ?>
             
             <!--Hinweis-->
-            <div class="content-padding center">
-                <p class="info small">
-                    <i class="fa fa-info-circle"></i> <b>Hinweis:</b><br/>
-                    Dein persönliches Wörterbuch füllt sich automatisch
-                    mit allen Wörtern, die Du schon erraten hast.
-                </p>
-            </div>
+            <p class="label"><span class="text">Hinweis</span></p>
+            <p class="word description info">
+                Dein persönliches <b>Wörterbuch</b> füllt sich automatisch
+                mit allen Wörtern, die Du schon erraten hast.
+            </p>
         </div>
         
     </div>

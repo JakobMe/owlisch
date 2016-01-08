@@ -30,11 +30,12 @@
                 <i class="fa fa-graduation-cap"></i>
                 Teste dein <b>Wissen</b>!
             </p>
-            <p class="info">
-                Je häufiger du ein Wort richtig errätst,
-                desto schwieriger werden die Fragen.
-            </p>
         </div>
+        <p class="label"><span class="text">Hinweis</span></p>
+        <p class="word description margin-bottom info">
+            Je häufiger du ein Wort <b>richtig</b> errätst,
+            desto <b>schwieriger</b> werden die Fragen.
+        </p>
         <div class="content-padding">
             <a class="button round action" id="quiz-start">
                 <b>Quiz</b><br/><i>starten</i>

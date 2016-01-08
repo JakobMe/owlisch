@@ -10,8 +10,8 @@
 ?>
 
 <!--Wort: <?php echo $word["word"]; ?>-->
-<?php if (file_exists("../img/content/$selected.jpg")) { ?>
 <div id="word">
+    <?php if (file_exists("../img/content/$selected.jpg")) { ?>
     <div class="quiz-image big">
         <img src="img/content/<?php echo $selected; ?>.jpg" />
     </div>

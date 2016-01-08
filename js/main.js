@@ -322,7 +322,7 @@ $(document).ready(function() {
                 
                 // Quiz beenden, zum letzten Slide gehen
                 $(ID_VIEWPORT).removeClass(CLASS_QUIZ);
-                moveQuizSlider(slidesNumber - 2);
+                moveQuizSlider(slidesNumber - 1);
                 
                 // Ergebnisleiste
                 setTimeout(function() {

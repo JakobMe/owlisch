@@ -107,9 +107,7 @@
     bottom: 0;
     width: 100%;
     height: @height-titlebar;
-    background: @color-white;
-    .shadow-line(-(@size-line-thin), darken(@color-background, 10%));
-    .gradient-background();
+    border-top: @size-line-thin solid fade(@color-black, 20%);
     .transition();
     
     // Tab-Icons
@@ -125,6 +123,7 @@
         height: @height-titlebar;
         line-height: (@height-titlebar - @size-padding-tripple);
         padding-bottom: @size-padding-tripple;
+        .gradient-background();
         .borderbox();
         .transition();
         

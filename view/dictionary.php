@@ -105,9 +105,6 @@
         </li>
     </ul>
     
-    <!--Leer-->
-    <div class="dictionary-slide slide-empty"></div>
-    
     <!--Übersicht-->
     <div class="dictionary-slide slide-0 scroll current">
         

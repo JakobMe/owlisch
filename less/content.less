@@ -33,6 +33,12 @@
         .borderbox();
     }
     
+    // Wort-Container
+    #word {
+        max-height: 100%;
+        overflow-y: auto;
+    }
+    
     // Innenabstand
     .content-padding {
         padding: @size-margin;
@@ -81,7 +87,7 @@
             // Hervorgehoben
             b {
                 font-weight: bold;
-                border-bottom: @size-line-medium solid darken(@color-background, 10%);
+                border-bottom: @size-line-medium solid darken(@color-background, @darken-border);
             }
             
             // Kursiv
@@ -106,12 +112,78 @@
             
             // Variante: Klein
             &.small { font-size: @font-small; }
-            
-            // Variante: Wichtig
-            &.important { color: @color-text-dark; }
-            
+
             // Hervorgehoben
             b { font-weight: bold; }
+        }
+        
+        // Variante: Wort
+        &.word {
+            margin: 0;
+            padding: 0 @size-margin;
+            
+            // Letzter Absatz
+            &:last-child { padding-bottom: @size-margin; }
+            
+            // Variante: Übersetzung
+            &.translation {
+                font-weight: bold;
+                text-align: center;
+                line-height: 1.2;
+                font-size: @font-large;
+            }
+            
+            // Variante: Beschreibung
+            &.description {
+                text-align: justify;
+                font-size: @font-small;
+                .hyphens();
+            }
+        }
+        
+        // Variante: Label
+        &.label {
+            display: block;
+            overflow: hidden;
+            font-weight: bold;
+            text-align: center;
+            position: relative;
+            font-style: italic;
+            margin: @size-margin-half @size-margin;
+            margin-top: @size-margin-double;
+            line-height: @size-margin;
+            height: @size-margin;
+            font-size: @font-small;
+            color: @color-text-pale;
+            
+            // Erstes Label
+            &:first-child { margin-top: @size-margin; }
+            
+            // Linien
+            &:after, &:before {
+                display: block;
+                position: absolute;
+                width: 50%;
+                z-index: 50;
+                content: "";
+                top: @size-margin-half;
+                height: @size-line-thin;
+                opacity: @opacity-half;
+            }
+            
+            // Linien Positionen
+            &:after { right: 0; .gradient-horizontal(@color-text-pale, @color-background, 75%, 100%); }
+            &:before { left: 0; .gradient-horizontal(@color-background, @color-text-pale, 0%, 25%); }
+            
+            // Text
+            .text {
+                display: inline-block;
+                position: relative;
+                z-index: 100;
+                padding: 0 @size-padding;
+                background: @color-background;
+                .shadow(0, 0, @size-margin, @size-margin, @color-background);
+            }
         }
     }
     
@@ -252,7 +324,7 @@
             position: absolute;
             font-style: italic;
             top: 0;
-            padding: 0 @size-padding-tripple;
+            padding: 0;
             left: @size-margin;
             height: @height-bar-info;
             line-height: @height-bar-info;
@@ -267,7 +339,7 @@
             cursor: pointer;
             position: absolute;
             top: 0;
-            padding: 0 @size-padding-tripple;
+            padding: 0 0 0 @size-padding-tripple;
             right: @size-margin;
             height: @height-bar-info;
             color: @color-text-pale;

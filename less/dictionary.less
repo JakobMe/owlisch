@@ -11,11 +11,11 @@
     position: absolute;
     list-style-type: none;
     top: 0;
+    left: 0;
     margin: 0;
     padding: 0;
     z-index: 500;
-    left: (100% / 3);
-    width: (100% / 3);
+    width: (100% / @number-dictionary);
     border-bottom: @size-line-thin solid fade(@color-black, 25%);
     .transition();
     .shadow-big();
@@ -91,13 +91,10 @@
     top: 0;
     left: 0;
     height: 100%;
-    width: 300%;
+    width: (100% * @number-dictionary);
+    .loop-slider-translate(@number-dictionary);
     .transition();
-    
-    // Slide-Position
-    &.slide-0 { .translate(-(100% / 3) * 1); }
-    &.slide-1 { .translate(-(100% / 3) * 2); }
- 
+
     // Slides
     .dictionary-slide {
         position: absolute;
@@ -105,15 +102,12 @@
         top: 0;
         left: 0;
         height: 100%;
-        width: (100% / 3);
+        width: (100% / @number-dictionary);
         opacity: @opacity-invisible;
+        .loop-slide-position(@number-dictionary);
         .transition();
         .translate(0);
         .borderbox();
-        
-        // Slide-Positionen
-        &.slide-0 { left: (100% / 3) * 1; }
-        &.slide-1 { left: (100% / 3) * 2; }
         
         // Variante: Scrollbar
         &.scroll {

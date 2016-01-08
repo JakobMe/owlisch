@@ -71,7 +71,7 @@
                         </a>
                         
                         <!--Titel-->
-                        <h1 id="bar-title-text">OWLisch</h1>
+                        <h1 id="bar-title-text">Wort des Tages</h1>
                     
                     </div>
                     
@@ -79,7 +79,7 @@
                 
                 <!--Bottom-Leiste-->
                 <nav id="bar-tabs">
-                    <a href="#home" class="bar-tabs-tab current" data-tab="1" title="OWLisch">
+                    <a href="#home" class="bar-tabs-tab current" data-tab="1" title="Wort des Tages">
                         <i class="fa fa-home"></i>
                         <span class="tab-label">Start</span>
                     </a>

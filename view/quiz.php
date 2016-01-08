@@ -20,9 +20,6 @@
 <!--Quiz-Karten-->
 <div id="quiz-slider" class="slide-0">
     
-    <!--Leer-->
-    <div class="quiz-slide slide-empty"></div>
-    
     <!--Start-->
     <div class="quiz-slide slide-0 current">
         <h2 class="quiz-title finished">

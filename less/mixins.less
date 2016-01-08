@@ -16,6 +16,15 @@
     text-overflow: ellipsis;
 }
 
+// Silbentrennung
+.hyphens() {
+    -webkit-hyphens: auto;
+       -moz-hyphens: auto;
+        -ms-hyphens: auto;
+         -o-hyphens: auto;
+            hyphens: auto;
+}
+
 // Transition
 .transition(@type: all, @time: @time-animation, @delay: @time-delay) {
     -webkit-transition: @type @time ease @delay;
@@ -140,6 +149,14 @@
 .border-button-choice() {
     border: @size-line-thin solid darken(@color-background, @darken-border);
     border-bottom-color: darken(@color-background, @darken-border-background);
+}
+
+// Verlauf Horizontal
+.gradient-horizontal(@color-left, @color-right, @pos-left: 0%, @pos-right: 100%) {
+    background-image: -webkit-linear-gradient(left, @color-left @pos-left, @color-right @pos-right);
+    background-image:    -moz-linear-gradient(left, @color-left @pos-left, @color-right @pos-right);
+    background-image:      -o-linear-gradient(left, @color-left @pos-left, @color-right @pos-right);
+    background-image:         linear-gradient(left, @color-left @pos-left, @color-right @pos-right);
 }
 
 // Verlauf Vertikal

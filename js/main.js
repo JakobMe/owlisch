@@ -143,9 +143,21 @@ $(document).ready(function() {
     var TIME_ANIMATION_LONG     = TIME_ANIMATION * 1.5;
     var TIME_ANIMATION_LONGER   = TIME_ANIMATION * 2;
     
+    // Wichtige jQuery-Objekte initialisieren
+    var body                    = $(SEL_BODY);
+    var viewport                = $(ID_VIEWPORT);
+    var titleText               = $(ID_TITLE);
+    var titleBar                = $(ID_TITLE_BAR);
+    var titleButton             = $(SEL_NAV_BUTTON);
+    var titleButtonLeft         = $(ID_TITLE_LEFT);
+    var titleButtonRight        = $(ID_TITLE_RIGHT);
+    var content                 = $(ID_CONTENT);
+    var contentInner            = $(ID_CONTENT_INNER);
+    var tab                     = $(SEL_TAB);
+    
     // Chaches initialisieren
-    var cacheView = [];
-    var cacheDictionary = [];
+    var cacheView               = [];
+    var cacheDictionary         = [];
     
     /**
      * Funktion: Quiz-Slider verschieben.
@@ -274,7 +286,7 @@ $(document).ready(function() {
         if (stepCurrent.length <= 0) {
             
             // Quiz-Slider zur ersten Frage verschieben
-            $(ID_VIEWPORT).addClass(CLASS_QUIZ);
+            viewport.addClass(CLASS_QUIZ);
             setTimeout(function() {
                 moveQuizSlider(1);
                 $(ID_QUIZ_STEPS).children(SEL_QUIZ_STEP).first()
@@ -326,7 +338,7 @@ $(document).ready(function() {
                 }
                 
                 // Quiz beenden, zum letzten Slide gehen
-                $(ID_VIEWPORT).removeClass(CLASS_QUIZ);
+                viewport.removeClass(CLASS_QUIZ);
                 moveQuizSlider(slidesNumber - 1);
                 
                 // Ergebnisleiste
@@ -353,19 +365,13 @@ $(document).ready(function() {
     function changeView(view, callback, params) {
         
         // Suche deaktivieren
-        $(ID_TITLE_BAR).removeClass(CLASS_SEARCH);
+        titleBar.removeClass(CLASS_SEARCH);
         
         // Wenn View Wörterbuch ist, Titel-Buttons setzen
         if (view === VIEW_DICTIONARY) {
-            if ($(ID_TITLE_RIGHT).attr(ATTR_HREF) !== VIEW_SORT) {
-                setTitleButton(
-                    $(ID_TITLE_RIGHT), STR_EMPTY, VIEW_SORT,
-                    CLASS_ICON_SORT, false
-                );
-                setTitleButton(
-                    $(ID_TITLE_LEFT), STR_EMPTY, VIEW_SEARCH,
-                    CLASS_ICON_SEARCH, false
-                );
+            if (titleButtonRight.attr(ATTR_HREF) !== VIEW_SORT) {
+                setTitleButtonRight(VIEW_SORT, CLASS_ICON_SORT);
+                setTitleButtonLeft(VIEW_SEARCH, CLASS_ICON_SEARCH);
             }
             
         // Ansonsten Titel-Buttons zurücksetzen
@@ -385,7 +391,7 @@ $(document).ready(function() {
         }
         
         // Inhalt ausblenden
-        $(ID_CONTENT).addClass(CLASS_HIDDEN);
+        content.addClass(CLASS_HIDDEN);
         
         // Warten
         setTimeout(function() {
@@ -394,11 +400,11 @@ $(document).ready(function() {
             if (typeof cacheView[view] !== STR_UNDEFINED) {
 
                 // Inhalt laden
-                $(ID_CONTENT_INNER).html(cacheView[view])
+                contentInner.html(cacheView[view])
                                    .promise().done(function() {
                                    
                     // Inhalt einblenden, Callback
-                    $(ID_CONTENT).removeClass(CLASS_HIDDEN);
+                    content.removeClass(CLASS_HIDDEN);
                     if ($.isFunction(callback)) { callback(); }
                 });
                 
@@ -409,10 +415,10 @@ $(document).ready(function() {
                 var file = AJAX_PATH + view + AJAX_PHP;
         
                 // Inhalt laden
-                $(ID_CONTENT_INNER).load(file, params, function(response) {
+                contentInner.load(file, params, function(response) {
 
                     // Inhalt einblenden, Callback
-                    $(ID_CONTENT).removeClass(CLASS_HIDDEN);
+                    content.removeClass(CLASS_HIDDEN);
                     if ($.isFunction(callback)) { callback(); }
                     
                     // Falls Datei noch nicht gecached ist, cachen
@@ -454,12 +460,38 @@ $(document).ready(function() {
     }
     
     /**
+     * Funktion: Linken Titel-Button setzen.
+     * Greift auf allgemeine Funktion zurück, um den linken Titel-Button
+     * zu setzen (Link, Icon und Text).
+     * @param {string} href HREF-Attribut des Links
+     * @param {string} icon FontAwesome Icon-Name
+     * @param {string} text Button-Text (optional)
+     */
+    function setTitleButtonLeft(href, icon, text) {
+        if (typeof text === STR_UNDEFINED) { text = STR_EMPTY; }
+        setTitleButton(titleButtonLeft, text, href, icon, false);
+    }
+    
+    /**
+     * Funktion: Rechten Titel-Button setzen.
+     * Greift auf allgemeine Funktion zurück, um den rechten Titel-Button
+     * zu setzen (Link, Icon und Text).
+     * @param {string} href HREF-Attribut des Links
+     * @param {string} icon FontAwesome Icon-Name
+     * @param {string} text Button-Text (optional)
+     */
+    function setTitleButtonRight(href, icon, text) {
+        if (typeof text === STR_UNDEFINED) { text = STR_EMPTY; }
+        setTitleButton(titleButtonRight, text, href, icon, false);
+    }
+    
+    /**
      * Funktion: Rechten Titel-Button zurücksetzen.
      * Setzt den rechten Titel-Button auf leere Werte zurück und sperrt ihn.
      */
     function resetTitleButtonRight() {
         setTitleButton(
-            $(ID_TITLE_RIGHT), STR_EMPTY,
+            titleButtonRight, STR_EMPTY,
             STR_EMPTY, STR_EMPTY, true
         );
     }
@@ -470,7 +502,7 @@ $(document).ready(function() {
      */
     function resetTitleButtonLeft() {
         setTitleButton(
-            $(ID_TITLE_LEFT), STR_EMPTY,
+            titleButtonLeft, STR_EMPTY,
             STR_EMPTY, STR_EMPTY, true
         );
     }
@@ -482,14 +514,9 @@ $(document).ready(function() {
      */
     function startQuiz() {
         
-        // Starten
+        // Starten, "Beenden"-Button setzen
         progressQuiz();
-        
-        // "Beenden"-Button aktivieren
-        setTitleButton(
-            $(ID_TITLE_RIGHT), STR_END, VIEW_QUIZ,
-            STR_EMPTY, false
-        );
+        setTitleButtonRight(VIEW_QUIZ, STR_EMPTY, STR_END);
     }
     
     /**
@@ -581,7 +608,7 @@ $(document).ready(function() {
      * Entscheided anhand der Eigenschaften, ob das Quit ausgelöst werden,
      * begonnen werden oder fortgeführt werden soll.
      */
-    $(SEL_BODY).on(EVENT_CLICK, SEL_BUTTON, function() {
+    body.on(EVENT_CLICK, SEL_BUTTON, function() {
         
         // Button definieren
         var button = $(this);
@@ -666,7 +693,7 @@ $(document).ready(function() {
      * Verhindert das Standardverhalten des Formulars,
      * prüft das eingegebene Wort und zeigt das Ergebnis an.
      */
-    $(SEL_BODY).on(EVENT_SUBMIT, SEL_QUIZ_INPUT_TEXT, function(event) {
+    body.on(EVENT_SUBMIT, SEL_QUIZ_INPUT_TEXT, function(event) {
         
         // Ergebnis ermitteln
         var solution = $(this);
@@ -696,7 +723,7 @@ $(document).ready(function() {
      * Spielt eine Audio-Datei ab, wenn der entsprechende
      * Button geklickt wird.
      */
-    $(SEL_BODY).on(EVENT_CLICK, SEL_AUDIO_PLAY, function() {
+    body.on(EVENT_CLICK, SEL_AUDIO_PLAY, function() {
         
         // Button und Audio definieren
         var button = $(this);
@@ -725,32 +752,31 @@ $(document).ready(function() {
      * Setzt den App-Titel und lädt den entsprechenden Inhalt,
      * wenn ein Tab in der Tab-Leiste geklickt wird.
      */
-    $(SEL_TAB).click(function(event) {
+    tab.click(function(event) {
         
         // Event aufhalten
         event.preventDefault();
         
         // Tab, Titel, View und Callback definieren
-        var tab = $(this);
-        var title = $(ID_TITLE);
+        var thisTab = $(this);
         var view = $(this).attr(ATTR_HREF);
         var callback = null;
         var params = null;
         
         // Titel setzen
-        title.addClass(CLASS_HIDDEN);
+        titleText.addClass(CLASS_HIDDEN);
         setTimeout(function() {
-            title.text(tab.attr(ATTR_TITLE))
+            titleText.text(thisTab.attr(ATTR_TITLE))
                  .removeClass(CLASS_HIDDEN);
         }, TIME_ANIMATION);
         
         // Tab-Indikator verschieben
         $(ID_TABS_INDICATOR).removeClass().addClass(
-            CLASS_TAB + tab.attr(ATTR_DATA_TAB)
+            CLASS_TAB + thisTab.attr(ATTR_DATA_TAB)
         );
         
         // Tab aktivieren
-        tab.addClass(CLASS_CURRENT).siblings().removeClass(CLASS_CURRENT);
+        thisTab.addClass(CLASS_CURRENT).siblings().removeClass(CLASS_CURRENT);
         
         // Post-Parameter beim Wörterbuch-Tab setzen (Sortierung)
         if (view === VIEW_DICTIONARY) {
@@ -775,7 +801,7 @@ $(document).ready(function() {
      * Prüft, ob Button gesperrt ist und ändert die View entsprechend
      * der Attribute des Buttons.
      */
-    $(SEL_NAV_BUTTON).click(function(event) {
+    titleButton.click(function(event) {
         
         // Event aufhalten
         event.preventDefault();
@@ -797,36 +823,27 @@ $(document).ready(function() {
                 
                 // Viewport Quiz-Modus deaktivieren
                 setTimeout(function() {
-                    $(ID_VIEWPORT).removeClass(CLASS_QUIZ);
+                    viewport.removeClass(CLASS_QUIZ);
                 }, TIME_ANIMATION_HALF);
                 
             // Wenn View "#dictionary" ist
             } else if (view === VIEW_DICTIONARY) {
                 
                 // Wenn Suche aktiv ist
-                if ($(ID_TITLE_BAR).hasClass(CLASS_SEARCH)) {
+                if (titleBar.hasClass(CLASS_SEARCH)) {
                     
-                    // Suche-Button setzen
-                    setTitleButton(
-                        $(ID_TITLE_LEFT), STR_EMPTY, VIEW_SEARCH,
-                        CLASS_ICON_CLOSE, false
-                    );
+                    // Abbrechen-Button setzen
+                    setTitleButtonLeft(VIEW_SEARCH, CLASS_ICON_CLOSE);
                 
                 // Wenn Suche inaktiv ist
                 } else {
                     
                     // Suche-Button setzen
-                    setTitleButton(
-                        $(ID_TITLE_LEFT), STR_EMPTY, VIEW_SEARCH,
-                        CLASS_ICON_SEARCH, false
-                    );
+                    setTitleButtonLeft(VIEW_SEARCH, CLASS_ICON_SEARCH);
                 }
                 
                 // Sortier-Button setzen
-                setTitleButton(
-                    $(ID_TITLE_RIGHT), STR_EMPTY, VIEW_SORT,
-                    CLASS_ICON_SORT, false
-                );
+                setTitleButtonRight(VIEW_SORT, CLASS_ICON_SORT);
                 
                 // Slider verschieben, Scroll-Container zurücksetzen
                 $(ID_DICTIONARY_SLIDER)
@@ -849,24 +866,18 @@ $(document).ready(function() {
             } else if (view === VIEW_SEARCH) {
                 
                 // Wenn Suche inaktiv ist
-                if ($(ID_TITLE_LEFT).children().hasClass(CLASS_ICON_SEARCH)) {
+                if (titleButtonLeft.children().hasClass(CLASS_ICON_SEARCH)) {
                     
                     // Suche aktivieren
-                    $(ID_TITLE_BAR).addClass(CLASS_SEARCH);
-                    setTitleButton(
-                        $(ID_TITLE_LEFT), STR_EMPTY, VIEW_SEARCH,
-                        CLASS_ICON_CLOSE, false
-                    );
+                    titleBar.addClass(CLASS_SEARCH);
+                    setTitleButtonLeft(VIEW_SEARCH, CLASS_ICON_CLOSE);
                 
                 // Wenn Suche aktiv ist
                 } else {
                     
                     // Suche deaktivieren
-                    $(ID_TITLE_BAR).removeClass(CLASS_SEARCH);
-                    setTitleButton(
-                        $(ID_TITLE_LEFT), STR_EMPTY, VIEW_SEARCH,
-                        CLASS_ICON_SEARCH, false
-                    );
+                    titleBar.removeClass(CLASS_SEARCH);
+                    setTitleButtonLeft(VIEW_SEARCH, CLASS_ICON_SEARCH);
                 }
             }
         }
@@ -877,7 +888,7 @@ $(document).ready(function() {
      * Ermittelt die gewählte Sortierung (Alphabetisch/Stufe & Auf-/Absteigend)
      * und lädt die View mit diesen Parametern neu.
      */
-    $(SEL_BODY).on(EVENT_CLICK, SEL_DICTIONARY_SORT, function() {
+    body.on(EVENT_CLICK, SEL_DICTIONARY_SORT, function() {
 
         // Wörterbuch-View aus dem Cache löschen
         delete cacheView[VIEW_DICTIONARY.substring(1)];
@@ -897,7 +908,7 @@ $(document).ready(function() {
      * Versucht, das Wort aus dem Cache oder per AJAX aus einer
      * Datei zu laden; bewegt den Wörterbuch-Slider nach rechts.
      */
-    $(SEL_BODY).on(EVENT_CLICK, SEL_DICTIONARY_WORD, function(event) {
+    body.on(EVENT_CLICK, SEL_DICTIONARY_WORD, function(event) {
         
         // Standardverhalten unterdrücken
         event.preventDefault();
@@ -906,14 +917,9 @@ $(document).ready(function() {
         var word = $(this).attr(ATTR_HREF).substring(1);
         var file = AJAX_PATH + VIEW_WORD.substring(1) + AJAX_PHP;
         
-        // Action-Button entfernen
+        // Action-Button entfernen, Zurück-Button setzen
         resetTitleButtonRight();
-        
-        // Zurück-Button setzen
-        setTitleButton(
-            $(ID_TITLE_LEFT), STR_EMPTY, VIEW_DICTIONARY,
-            CLASS_ICON_BACK, false
-        );
+        setTitleButtonLeft(VIEW_DICTIONARY, CLASS_ICON_BACK);
         
         // Slider bewegen
         $(ID_DICTIONARY_SLIDER)
@@ -925,7 +931,7 @@ $(document).ready(function() {
         setTimeout(function() {
             
             // Inhalt ausblenden
-            $(ID_CONTENT).addClass(CLASS_HIDDEN);
+            content.addClass(CLASS_HIDDEN);
             
             // Warten
             setTimeout(function() {
@@ -938,7 +944,7 @@ $(document).ready(function() {
                                             .promise().done(function() {
                         
                         // Inhalt einblenden
-                        $(ID_CONTENT).removeClass(CLASS_HIDDEN);
+                        content.removeClass(CLASS_HIDDEN);
                     });
                 
                 // Wenn das Wort zum ersten Mal geladen wird
@@ -954,7 +960,7 @@ $(document).ready(function() {
                         }
                         
                         // Inhalt einblenden
-                        $(ID_CONTENT).removeClass(CLASS_HIDDEN);
+                        content.removeClass(CLASS_HIDDEN);
                     });
                 }
             }, TIME_ANIMATION_HALF);
@@ -966,7 +972,7 @@ $(document).ready(function() {
      * Verhindert das normale Scroll-Verhalten vom Browser
      * beim Fokussieren von Inputs.
      */
-    $(SEL_BODY).on(EVENT_FOCUS, SEL_QUIZ_INPUT_TEXT, function() {
+    body.on(EVENT_FOCUS, SEL_QUIZ_INPUT_TEXT, function() {
         if (window.navigator.standalone) {
             setTimeout(function() {
                 $(SEL_BODY_HTML).animate(
@@ -983,7 +989,7 @@ $(document).ready(function() {
      * Blendet bestimmte Elemente (z.B: Wörterbuch-Sortierung) unter
      * bestimmten Bedingungen aus, sobald etwas geklickt wird.
      */
-    $(SEL_BODY).click(function(event) {
+    body.click(function(event) {
         
         // Geklicktes Element ermitteln
         var clicked = $(event.target);
@@ -1010,7 +1016,7 @@ $(document).ready(function() {
         
         // Falls die Seite als iOS Webapp ausgeführt wird
         if (window.navigator.standalone) {
-            $(SEL_BODY).addClass(CLASS_WEBAPP);
+            body.addClass(CLASS_WEBAPP);
         }
         
         // Startseite laden

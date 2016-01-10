@@ -234,7 +234,7 @@
             padding-right: @height-button-choice;
             height: @height-button-choice;
             line-height: @height-button-choice;
-            border-bottom: @size-line-thin solid darken(@color-background, @darken-border-background);
+            border-top: @size-line-thin solid darken(@color-background, @darken-border);
             .shadow-none();
             .ellipsis();
             
@@ -273,11 +273,6 @@
                 content: @fa-var-chevron-right;
                 .transition(color);
                 .font-icon();
-            }
-            
-            // Erstes Wort
-            &:first-child {
-                border-top: @size-line-thin solid darken(@color-background, @darken-border);
             }
             
             // Variante: Versteckt

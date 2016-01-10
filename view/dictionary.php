@@ -123,13 +123,14 @@
             </a>        
             <?php } ?>
             
-            <!--Hinweis-->
-            <p class="label"><span class="text">Hinweis</span></p>
-            <p class="word description info">
-                Dein persönliches <b>Wörterbuch</b> füllt sich automatisch
-                mit allen Wörtern, die Du schon erraten hast.
-            </p>
         </div>
+        
+        <!--Hinweis-->
+        <p class="label"><span class="text">Hinweis</span></p>
+        <p class="word description info">
+            Dein persönliches <b>Wörterbuch</b> füllt sich automatisch
+            mit allen Wörtern, die Du schon erraten hast.
+        </p>
         
     </div>
     

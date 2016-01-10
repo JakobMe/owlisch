@@ -35,8 +35,14 @@
     
     // Wort-Container
     #word {
-        max-height: 100%;
+        -webkit-overflow-scrolling: touch;
         overflow-y: auto;
+        max-height: 100%;
+        
+        // Erstes Element
+        & > *:first-child {
+            border-top: @size-line-thin solid darken(@color-background, @darken-border);
+        }
     }
     
     // Innenabstand

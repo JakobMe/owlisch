@@ -7,7 +7,7 @@
 
 // Top-Leiste
 #bar-top {
-    position: absolute;
+    position: fixed;
     text-align: center;
     top: 0;
     left: 0;
@@ -15,7 +15,7 @@
     background: @color-main;
     color: @color-white;
     font-size: @font-titlebar-text;
-    .shadow-line(@size-line-thin, darken(@color-main, 10%));
+    .shadow-line(@size-line-thin, darken(@color-main, @darken-border));
     .textshadow();
     
     // Statusbar
@@ -38,7 +38,7 @@
             margin: 0;
             padding: 0;
             height: @height-titlebar;
-            line-height: @height-titlebar;
+            line-height: (@height-titlebar);
             font-size: @font-titlebar-text;
             .transition();
             
@@ -53,11 +53,12 @@
             text-decoration: none;
             text-transform: uppercase;
             top: 0;
+            font-size: 0;
             padding: 0 @size-margin;
-            font-size: @font-titlebar-icon;
+            min-width: @size-margin-tripple;
             color: @color-white;
             height: @height-titlebar;
-            line-height: (@height-titlebar - @size-line-medium);
+            line-height: @height-titlebar;
             .transition();
             .borderbox();
             
@@ -74,10 +75,9 @@
                 height: @height-titlebar;
                 line-height: @height-titlebar;
                 
-                // Ausnahme: Chevron
-                &.fa-chevron-left {
-                    line-height: (@height-titlebar + @size-line-medium);
-                }
+                // Ausnahmen (Zeilenhöhe)
+                &.fa-close { line-height: (@height-titlebar - @size-line-medium); }
+                &.fa-search { line-height: (@height-titlebar - @size-line-medium); }
             }
             
             // Text
@@ -88,7 +88,7 @@
                 padding: 0;
                 font-size: @font-progress;
                 height: @height-titlebar;
-                line-height: @height-titlebar;
+                line-height: (@height-titlebar - @size-line-medium);
             }
         }
         
@@ -130,7 +130,6 @@
                 border: none;
                 outline: none;
                 display: block;
-                font-style: italic;
                 font-weight: bold;
                 width: 100%;
                 color: @color-white;
@@ -138,11 +137,14 @@
                 background: darken(@color-main, @darken-main);
                 padding: @size-padding @size-padding-double;
                 height: (@height-titlebar - @size-margin);
-                line-height: (@height-titlebar - @size-margin - @size-padding-double);
                 .textshadow();
                 .font-main();
                 .borderbox();
                 .round-all();
+                .gradient-vertical(
+                    darken(@color-main, @darken-main-dark),
+                    darken(@color-main, @darken-main)
+                );
             }
         }
         
@@ -166,7 +168,7 @@
 
 // Tabs-Leiste
 #bar-tabs {
-    position: absolute;
+    position: fixed;
     left: 0;
     bottom: 0;
     width: 100%;
@@ -250,6 +252,9 @@
 
 // Responsive
 @media screen and (min-width: @width-iphone) {
+    
+    // Navigation Position korrigieren
+    #bar-tabs, #bar-top { position: absolute; }
     
     // Statusbar
     #bar-top #bar-status {

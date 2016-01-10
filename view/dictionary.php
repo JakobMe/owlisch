@@ -125,6 +125,15 @@
             
         </div>
         
+        <!--Fehler-->
+        <div class="error">
+            <p class="label"><span class="text">Nichts gefunden</span></p>
+            <p class="word description error">
+                Es konnten keine Wörter gefunden werden, die zu dem eingegebenen
+                Suchbegriff passen.
+            </p>
+        </div>
+        
         <!--Hinweis-->
         <p class="label"><span class="text">Hinweis</span></p>
         <p class="word description info">

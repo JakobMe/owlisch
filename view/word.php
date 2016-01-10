@@ -19,7 +19,7 @@
     <h2 class="quiz-title">
         <b><?php echo $word["word"]; ?></b>
     </h2>
-    <div class="quiz-info">
+    <div class="quiz-info static">
         <span class="quiz-info-difficulty">
             Fortschritt:
         </span>

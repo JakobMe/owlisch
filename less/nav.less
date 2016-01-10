@@ -32,6 +32,9 @@
         
         // Titel-Text
         #bar-title-text {
+            -webkit-perspective: 1000;
+            -webkit-transform-style: preserve-3d;
+            -webkit-backface-visibility: hidden;
             font-weight: bold;
             display: inline-block;
             text-transform: uppercase;
@@ -40,7 +43,8 @@
             height: @height-titlebar;
             line-height: (@height-titlebar);
             font-size: @font-titlebar-text;
-            .transition();
+            .translate(0);
+            .transition(all, @time-animation-half);
             
             // Variante: Versteckt
             &.hidden { opacity: @opacity-invisible; }
@@ -48,6 +52,9 @@
         
         // Buttons
         #bar-title-left, #bar-title-right {
+            -webkit-perspective: 1000;
+            -webkit-transform-style: preserve-3d;
+            -webkit-backface-visibility: hidden;
             display: block;
             position: absolute;
             text-decoration: none;
@@ -59,7 +66,7 @@
             color: @color-white;
             height: @height-titlebar;
             line-height: @height-titlebar;
-            .transition();
+            .transition(all, @time-animation-half);
             .borderbox();
             
             // Variante: Gesperrt
@@ -112,6 +119,9 @@
         
         // Wörterbuch-Suche
         #dictionary-search {
+            -webkit-perspective: 1000;
+            -webkit-transform-style: preserve-3d;
+            -webkit-backface-visibility: hidden;
             overflow: hidden;
             position: absolute;
             top: 0;
@@ -120,7 +130,7 @@
             height: 100%;
             padding: @size-margin-half @size-margin-tripple;
             opacity: @opacity-invisible;
-            .translate(-100%);
+            .translate(0, 150%);
             .transition(opacity);
             .borderbox();
             

@@ -165,7 +165,7 @@
         // Dittken
         "dittken"        => array(
             "level"      => "1",
-            "word"       => "Das läuft wie’n Dittken!",
+            "word"       => "Das läuft wie'n Dittken!",
             "translate"  => "Das läuft rund",
             "info"       => "
                 <b>„Dittken“</b> bezeichnet ein 10-Pfennig-Stück. Weil man

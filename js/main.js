@@ -77,6 +77,7 @@ $(document).ready(function() {
     var SEL_INPUT_CURRENT       = ".input-character.current";
     var SEL_INPUT_DELETE        = ".input-delete";
     var SEL_WORD                = ".word";
+    var SEL_DICTIONARY_WORDS    = ".dictionary-words";
     var SEL_DICTIONARY_WORD     = ".dictionary-word";
     var SEL_DICTIONARY_SORT     = "#dictionary-sort .sort";
     var SEL_BUTTON              = ".button";
@@ -130,6 +131,8 @@ $(document).ready(function() {
     var STR_UNDEFINED           = "undefined";
     var STR_BOOLEAN             = "boolean";
     var STR_END                 = "beenden";
+    var STR_I_START             = "<i>";
+    var STR_I_END               = "</i>";
     
     // Konstanten: Views
     var VIEW_QUIZ               = "#quiz";
@@ -142,6 +145,7 @@ $(document).ready(function() {
 
     // Konstanten: Zeiten
     var TIME_ANIMATION          = 300;
+    var TIME_ANIMATION_MEDIUM   = TIME_ANIMATION + 50;
     var TIME_ANIMATION_HALF     = TIME_ANIMATION / 2;
     var TIME_ANIMATION_LONG     = TIME_ANIMATION * 1.5;
     var TIME_ANIMATION_LONGER   = TIME_ANIMATION * 2;
@@ -466,7 +470,7 @@ $(document).ready(function() {
             // Button entsperren/einblenden
             if (locked === false) { button.removeClass(CLASS_LOCKED); }
             
-        }, TIME_ANIMATION);
+        }, TIME_ANIMATION_HALF);
     }
     
     /**
@@ -625,35 +629,57 @@ $(document).ready(function() {
         // Wenn Filter zurückgesetzt werden soll
         if (reset === true) {
             
-            // Wörter einblenden
-            $(SEL_DICTIONARY_WORD).removeClass(CLASS_HIDDEN);
+            // Wörter einblenden und zurücksetzen
+            $(SEL_DICTIONARY_WORD).each(function() {
+                var word = $(this);
+                word.children(SEL_WORD).text(word.children(SEL_WORD).text());
+                word.removeClass(CLASS_HIDDEN);
+                $(SEL_DICTIONARY_WORDS).removeClass(CLASS_ERROR);
+            });
             
         // Wenn Wörter gefiltert werden sollen
         } else {
             
             // Filter-Wort ermitteln
             var filter = searchInput.val().toUpperCase();
+            var len = filter.length;
+            var i = 0;
             
             // Alle Wörterbuch-Wörter iterieren
             $(SEL_DICTIONARY_WORD).each(function() {
                 
                 // Wort definieren
                 var word = $(this);
+                var text = word.children(SEL_WORD).text();
+                var pos = text.toUpperCase().indexOf(filter);
                 
                 // Wenn Wort Filter-Wort enthält
-                if (word.children(SEL_WORD).text().toUpperCase()
-                        .indexOf(filter) >= 0) {
-                               
-                    // Wort einblenden
+                if (pos >= 0) {
+
+                    // Markiertes Wort zusammensetzen
+                    var output = text.substr(0, pos) + STR_I_START +
+                                 text.substr(pos, len) + STR_I_END +
+                                 text.substr(pos + len);
+                    
+                    // Wort einblenden und markieren
+                    word.children(SEL_WORD).html(output);
                     word.removeClass(CLASS_HIDDEN);
+                    
+                    // Laufvariable erhöhen
+                    i++;
                     
                 // Wenn Wort Filter-Wort nicht enthält
                 } else {
                     
-                    // Wort ausblenden
+                    // Wort ausblenden und zurücksetzen
+                    word.children(SEL_WORD).text(text);
                     word.addClass(CLASS_HIDDEN);
                 }
             });
+            
+            // Fehler ein-/ausblenden
+            if (i === 0) { $(SEL_DICTIONARY_WORDS).addClass(CLASS_ERROR); }
+            else { $(SEL_DICTIONARY_WORDS).removeClass(CLASS_ERROR); }
         }
     }
     
@@ -821,8 +847,8 @@ $(document).ready(function() {
         titleText.addClass(CLASS_HIDDEN);
         setTimeout(function() {
             titleText.text(thisTab.attr(ATTR_TITLE))
-                 .removeClass(CLASS_HIDDEN);
-        }, TIME_ANIMATION);
+                     .removeClass(CLASS_HIDDEN);
+        }, TIME_ANIMATION_HALF);
         
         // Tab-Indikator verschieben
         $(ID_TABS_INDICATOR).removeClass().addClass(
@@ -927,9 +953,13 @@ $(document).ready(function() {
                     // Suche aktivieren
                     titleBar.addClass(CLASS_SEARCH);
                     setTitleButtonLeft(VIEW_SEARCH, CLASS_ICON_CLOSE);
-                    setTimeout(function() { searchInput.focus(); }, 1);
                     filterDictionaryWords();
-                
+                    
+                    // Suchfeld fokussieren
+                    setTimeout(function() {
+                        searchInput.focus();
+                    }, TIME_ANIMATION_MEDIUM);
+                    
                 // Wenn Suche aktiv ist
                 } else {
                     

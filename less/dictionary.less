@@ -124,4 +124,7 @@
 // Wörterbuch-Wörter
 .dictionary-words {
     border-bottom: @size-line-thin solid darken(@color-background, @darken-border-background);
+    
+    // Fehler ein-/ausblenden
+    &:not(.error) + .error { display: none; }
 }

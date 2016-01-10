@@ -141,6 +141,7 @@
                 // Variante: Abstand Unten
                 &.margin-bottom { margin-bottom: @size-margin; }
                 &.info { text-align: center; color: @color-text-pale; }
+                &.error { text-align: center; font-weight: bold; }
             }
         }
         
@@ -244,6 +245,14 @@
             .shadow-none();
             .ellipsis();
             
+            // Text
+            .word i {
+                font-style: normal;
+                color: darken(@color-star, @darken-star);
+                background: fade(@color-star, 50%);
+                .round-all();
+            }
+            
             // Wort-Stufe
             .word-level {
                 display: inline-block;
@@ -252,7 +261,7 @@
                 font-size: @font-small;
                 margin-bottom: @size-line-bold;
                 margin-right: @size-margin-half;
-                .quiz-level-status();
+                .quiz-level-status(false);
                 
                 // Stufe
                 .level {

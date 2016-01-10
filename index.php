@@ -62,7 +62,7 @@
                         <div id="dictionary-search">
                             <input id="dictionary-search-input" type="text"
                                    spellcheck="false" autocomplete="off"
-                                   autocorrect="off">
+                                   autocorrect="off" autocapitalize="none">
                         </div>
                         
                         <!--Linker Button-->

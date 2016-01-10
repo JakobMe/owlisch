@@ -58,6 +58,13 @@
                     <!--Titlebar-->
                     <div id="bar-title">
                         
+                        <!--Wörterbuch-Suche-->
+                        <div id="dictionary-search">
+                            <input id="dictionary-search-input" type="text"
+                                   spellcheck="false" autocomplete="off"
+                                   autocorrect="off">
+                        </div>
+                        
                         <!--Linker Button-->
                         <a id="bar-title-left" class="nav-button locked" href="#">
                             <i class="fa"></i>

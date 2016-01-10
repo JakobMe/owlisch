@@ -39,7 +39,7 @@
             height: @height-titlebar;
             line-height: @height-titlebar;
             font-size: @font-titlebar-text;
-            .transition(opacity);
+            .transition();
             
             // Variante: Versteckt
             &.hidden { opacity: @opacity-invisible; }
@@ -71,7 +71,12 @@
                 vertical-align: middle;
                 font-size: @font-titlebar-icon;
                 height: @height-titlebar;
-                line-height: (@height-titlebar + @size-line-medium);
+                line-height: @height-titlebar;
+                
+                // Ausnahme: Chevron
+                &.fa-chevron-left {
+                    line-height: (@height-titlebar + @size-line-medium);
+                }
             }
             
             // Text
@@ -90,12 +95,70 @@
         #bar-title-left {
             text-align: left;
             left: 0;
+            
+            // Gesperrt
+            &.locked { .translate(-100%); }
         }
         
         // Icon Rechts
         #bar-title-right {
             text-align: right;
             right: 0;
+            
+            // Gesperrt
+            &.locked { .translate(100%); }
+        }
+        
+        // Wörterbuch-Suche
+        #dictionary-search {
+            overflow: hidden;
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            padding: @size-margin-half @size-margin;
+            padding-left: @size-margin-tripple;
+            opacity: @opacity-invisible;
+            .translate(-100%);
+            .transition();
+            .borderbox();
+            
+            // Input
+            #dictionary-search-input {
+                -webkit-appearance: none;
+                border: none;
+                outline: none;
+                display: block;
+                font-weight: bold;
+                width: 100%;
+                color: @color-white;
+                font-size: @font-small;
+                background: darken(@color-main, @darken-main);
+                padding: @size-padding @size-padding-double;
+                height: (@height-titlebar - @size-margin);
+                line-height: (@height-titlebar - @size-margin - @size-padding-double);
+                .textshadow();
+                .font-main();
+                .borderbox();
+                .round-all();
+            }
+        }
+        
+        // Variante: Suche aktiv
+        &.search {
+            
+            // Titel & Button ausblenden
+            #bar-title-right, #bar-title-text {
+                opacity: @opacity-invisible;
+                .translate(200%);
+            }
+            
+            // Suche einblenden
+            #dictionary-search {
+                opacity: @opacity-full;
+                .translate(0);
+            }
         }
     }
 }

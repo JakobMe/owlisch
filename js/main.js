@@ -39,6 +39,7 @@ $(document).ready(function() {
     var ID_RESULT_BAR           = "#result-bar";
     var ID_RESULT_RIGHT         = "#result-right";
     var ID_RESULT_TOTAL         = "#result-total";
+    var ID_TITLE_BAR            = "#bar-title";
     var ID_TITLE                = "#bar-title-text";
     var ID_TITLE_RIGHT          = "#bar-title-right";
     var ID_TITLE_LEFT           = "#bar-title-left";
@@ -97,6 +98,7 @@ $(document).ready(function() {
     var CLASS_RIGHT             = "right";
     var CLASS_FULL              = "full";
     var CLASS_HIDDEN            = "hidden";
+    var CLASS_SEARCH            = "search";
     var CLASS_LOADING           = "loading";
     var CLASS_QUIZ_NEXT         = "quiz-next";
     var CLASS_FINISHED          = "finished";
@@ -107,7 +109,9 @@ $(document).ready(function() {
     var CLASS_SLIDE             = "slide-";
     var CLASS_LEVEL             = "level-";
     var CLASS_ICON_BACK         = "fa-chevron-left";
+    var CLASS_ICON_SEARCH       = "fa-search";
     var CLASS_ICON_SORT         = "fa-sort";
+    var CLASS_ICON_CLOSE        = "fa-close";
     
     // Konstanten: AJAX-Werte
     var AJAX_PATH               = "view/";
@@ -131,6 +135,7 @@ $(document).ready(function() {
     var VIEW_DICTIONARY         = "#dictionary";
     var VIEW_SORT               = "#sort";
     var VIEW_WORD               = "#word";
+    var VIEW_SEARCH             = "#search";
 
     // Konstanten: Zeiten
     var TIME_ANIMATION          = 300;
@@ -347,20 +352,25 @@ $(document).ready(function() {
      */
     function changeView(view, callback, params) {
         
-        // Linken Titel-Button zurücksetzen
-        resetTitleButtonLeft();
+        // Suche deaktivieren
+        $(ID_TITLE_BAR).removeClass(CLASS_SEARCH);
         
-        // Wenn View Wörterbuch ist, Sortier-Button setzen
+        // Wenn View Wörterbuch ist, Titel-Buttons setzen
         if (view === VIEW_DICTIONARY) {
             if ($(ID_TITLE_RIGHT).attr(ATTR_HREF) !== VIEW_SORT) {
                 setTitleButton(
                     $(ID_TITLE_RIGHT), STR_EMPTY, VIEW_SORT,
                     CLASS_ICON_SORT, false
                 );
+                setTitleButton(
+                    $(ID_TITLE_LEFT), STR_EMPTY, VIEW_SEARCH,
+                    CLASS_ICON_SEARCH, false
+                );
             }
             
-        // Ansonsten rechten Titel-Button zurücksetzen
+        // Ansonsten Titel-Buttons zurücksetzen
         } else {
+            resetTitleButtonLeft();
             resetTitleButtonRight();
         }
 
@@ -793,8 +803,24 @@ $(document).ready(function() {
             // Wenn View "#dictionary" ist
             } else if (view === VIEW_DICTIONARY) {
                 
-                // Zurück-Button zurücksetzen
-                resetTitleButtonLeft();
+                // Wenn Suche aktiv ist
+                if ($(ID_TITLE_BAR).hasClass(CLASS_SEARCH)) {
+                    
+                    // Suche-Button setzen
+                    setTitleButton(
+                        $(ID_TITLE_LEFT), STR_EMPTY, VIEW_SEARCH,
+                        CLASS_ICON_CLOSE, false
+                    );
+                
+                // Wenn Suche inaktiv ist
+                } else {
+                    
+                    // Suche-Button setzen
+                    setTitleButton(
+                        $(ID_TITLE_LEFT), STR_EMPTY, VIEW_SEARCH,
+                        CLASS_ICON_SEARCH, false
+                    );
+                }
                 
                 // Sortier-Button setzen
                 setTitleButton(
@@ -818,6 +844,30 @@ $(document).ready(function() {
                 
                 // Sortier-Overlay ein-/ausblenden
                 $(ID_DICTIONARY_SORT).toggleClass(CLASS_HIDDEN);
+                
+            // Wenn View "Suchen" ist
+            } else if (view === VIEW_SEARCH) {
+                
+                // Wenn Suche inaktiv ist
+                if ($(ID_TITLE_LEFT).children().hasClass(CLASS_ICON_SEARCH)) {
+                    
+                    // Suche aktivieren
+                    $(ID_TITLE_BAR).addClass(CLASS_SEARCH);
+                    setTitleButton(
+                        $(ID_TITLE_LEFT), STR_EMPTY, VIEW_SEARCH,
+                        CLASS_ICON_CLOSE, false
+                    );
+                
+                // Wenn Suche aktiv ist
+                } else {
+                    
+                    // Suche deaktivieren
+                    $(ID_TITLE_BAR).removeClass(CLASS_SEARCH);
+                    setTitleButton(
+                        $(ID_TITLE_LEFT), STR_EMPTY, VIEW_SEARCH,
+                        CLASS_ICON_SEARCH, false
+                    );
+                }
             }
         }
     });

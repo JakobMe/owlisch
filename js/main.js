@@ -50,6 +50,7 @@ $(document).ready(function() {
     var ID_CONTENT_INNER        = "#content-inner";
     var ID_CONTENT              = "#content";
     var ID_VIEWPORT             = "#viewport-inner";
+    var ID_SEARCH_INPUT         = "#dictionary-search-input";
     
     // Konstanten: Selektoren
     var SEL_I                   = "i";
@@ -75,6 +76,7 @@ $(document).ready(function() {
     var SEL_INPUT_CHARS         = ".quiz-input-characters";
     var SEL_INPUT_CURRENT       = ".input-character.current";
     var SEL_INPUT_DELETE        = ".input-delete";
+    var SEL_WORD                = ".word";
     var SEL_DICTIONARY_WORD     = ".dictionary-word";
     var SEL_DICTIONARY_SORT     = "#dictionary-sort .sort";
     var SEL_BUTTON              = ".button";
@@ -99,6 +101,7 @@ $(document).ready(function() {
     var CLASS_FULL              = "full";
     var CLASS_HIDDEN            = "hidden";
     var CLASS_SEARCH            = "search";
+    var CLASS_SEARCH_BACK       = "back-to-search";
     var CLASS_LOADING           = "loading";
     var CLASS_QUIZ_NEXT         = "quiz-next";
     var CLASS_FINISHED          = "finished";
@@ -154,6 +157,7 @@ $(document).ready(function() {
     var content                 = $(ID_CONTENT);
     var contentInner            = $(ID_CONTENT_INNER);
     var tab                     = $(SEL_TAB);
+    var searchInput             = $(ID_SEARCH_INPUT);
     
     // Chaches initialisieren
     var cacheView               = [];
@@ -365,12 +369,18 @@ $(document).ready(function() {
     function changeView(view, callback, params) {
         
         // Suche deaktivieren
-        titleBar.removeClass(CLASS_SEARCH);
+        titleBar.removeClass(CLASS_SEARCH).removeClass(CLASS_SEARCH_BACK);
         
         // Wenn View Wörterbuch ist, Titel-Buttons setzen
         if (view === VIEW_DICTIONARY) {
+            
+            // Sortier-Button setzen (wenn noch nicht gesetzt)
             if (titleButtonRight.attr(ATTR_HREF) !== VIEW_SORT) {
                 setTitleButtonRight(VIEW_SORT, CLASS_ICON_SORT);
+            }
+            
+            // Suche-Button setzen (wenn noch nicht gesetzt)
+            if (!titleButtonLeft.children().hasClass(CLASS_ICON_SEARCH)) {
                 setTitleButtonLeft(VIEW_SEARCH, CLASS_ICON_SEARCH);
             }
             
@@ -603,9 +613,53 @@ $(document).ready(function() {
         }
     }
     
+    /**
+     * Funktion: Wörterbuch-Wörter filtern.
+     * Nimmt den Inhalt des Wörterbuch-Suchfeldes als Filterwort
+     * und iteriert das Wörterbuch, um alle Wörter auszublenden
+     * die das Filterwort nicht enthalten.
+     * @param {boolean} reset Filter zurücketzen ja/nein
+     */
+    function filterDictionaryWords(reset) {
+        
+        // Wenn Filter zurückgesetzt werden soll
+        if (reset === true) {
+            
+            // Wörter einblenden
+            $(SEL_DICTIONARY_WORD).removeClass(CLASS_HIDDEN);
+            
+        // Wenn Wörter gefiltert werden sollen
+        } else {
+            
+            // Filter-Wort ermitteln
+            var filter = searchInput.val().toUpperCase();
+            
+            // Alle Wörterbuch-Wörter iterieren
+            $(SEL_DICTIONARY_WORD).each(function() {
+                
+                // Wort definieren
+                var word = $(this);
+                
+                // Wenn Wort Filter-Wort enthält
+                if (word.children(SEL_WORD).text().toUpperCase()
+                        .indexOf(filter) >= 0) {
+                               
+                    // Wort einblenden
+                    word.removeClass(CLASS_HIDDEN);
+                    
+                // Wenn Wort Filter-Wort nicht enthält
+                } else {
+                    
+                    // Wort ausblenden
+                    word.addClass(CLASS_HIDDEN);
+                }
+            });
+        }
+    }
+    
     /*
      * Bei Klick auf Quiz-Buttons.
-     * Entscheided anhand der Eigenschaften, ob das Quit ausgelöst werden,
+     * Entscheided anhand der Eigenschaften, ob das Quiz ausgelöst werden,
      * begonnen werden oder fortgeführt werden soll.
      */
     body.on(EVENT_CLICK, SEL_BUTTON, function() {
@@ -616,7 +670,7 @@ $(document).ready(function() {
         // Falls Button ein Weiter-Button ist
         if (button.hasClass(CLASS_QUIZ_NEXT)) {
                 
-            // Quit fortführen
+            // Quiz fortführen
             progressQuiz();
             
         // Wenn Button kein Weiter-Button ist
@@ -830,10 +884,12 @@ $(document).ready(function() {
             } else if (view === VIEW_DICTIONARY) {
                 
                 // Wenn Suche aktiv ist
-                if (titleBar.hasClass(CLASS_SEARCH)) {
+                if (titleBar.hasClass(CLASS_SEARCH_BACK)) {
                     
-                    // Abbrechen-Button setzen
+                    // Abbrechen-Button setzen, Suche aktivieren
                     setTitleButtonLeft(VIEW_SEARCH, CLASS_ICON_CLOSE);
+                    titleBar.removeClass(CLASS_SEARCH_BACK)
+                            .addClass(CLASS_SEARCH);
                 
                 // Wenn Suche inaktiv ist
                 } else {
@@ -871,6 +927,8 @@ $(document).ready(function() {
                     // Suche aktivieren
                     titleBar.addClass(CLASS_SEARCH);
                     setTitleButtonLeft(VIEW_SEARCH, CLASS_ICON_CLOSE);
+                    setTimeout(function() { searchInput.focus(); }, 1);
+                    filterDictionaryWords();
                 
                 // Wenn Suche aktiv ist
                 } else {
@@ -878,6 +936,7 @@ $(document).ready(function() {
                     // Suche deaktivieren
                     titleBar.removeClass(CLASS_SEARCH);
                     setTitleButtonLeft(VIEW_SEARCH, CLASS_ICON_SEARCH);
+                    filterDictionaryWords(true);
                 }
             }
         }
@@ -920,6 +979,11 @@ $(document).ready(function() {
         // Action-Button entfernen, Zurück-Button setzen
         resetTitleButtonRight();
         setTitleButtonLeft(VIEW_DICTIONARY, CLASS_ICON_BACK);
+        
+        // Wenn Suche aktiv ist, deaktivieren, aber merken
+        if (titleBar.hasClass(CLASS_SEARCH)) {
+            titleBar.addClass(CLASS_SEARCH_BACK).removeClass(CLASS_SEARCH);
+        }
         
         // Slider bewegen
         $(ID_DICTIONARY_SLIDER)
@@ -1001,6 +1065,15 @@ $(document).ready(function() {
                 $(ID_DICTIONARY_SORT).addClass(CLASS_HIDDEN);
             }
         }
+    });
+    
+    /*
+     * Bei Tastatureingabe ins Wörterbuch-Suchfeld.
+     * Ruft die Wörterbuch-Filterfunktion auf, sobald etwas
+     * in das zugehörige Suchfeld eingegeben wird.
+     */
+    searchInput.keyup(function() {
+        filterDictionaryWords();
     });
     
     /*

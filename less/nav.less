@@ -26,6 +26,7 @@
     
     // Titlebar
     #bar-title {
+        overflow: hidden;
         position: relative;
         height: @height-titlebar;
         
@@ -117,11 +118,10 @@
             left: 0;
             width: 100%;
             height: 100%;
-            padding: @size-margin-half @size-margin;
-            padding-left: @size-margin-tripple;
+            padding: @size-margin-half @size-margin-tripple;
             opacity: @opacity-invisible;
             .translate(-100%);
-            .transition();
+            .transition(opacity);
             .borderbox();
             
             // Input
@@ -130,6 +130,7 @@
                 border: none;
                 outline: none;
                 display: block;
+                font-style: italic;
                 font-weight: bold;
                 width: 100%;
                 color: @color-white;
@@ -148,10 +149,10 @@
         // Variante: Suche aktiv
         &.search {
             
-            // Titel & Button ausblenden
-            #bar-title-right, #bar-title-text {
+            // Titel ausblenden
+            #bar-title-text {
                 opacity: @opacity-invisible;
-                .translate(200%);
+                .translate(0, 100%);
             }
             
             // Suche einblenden

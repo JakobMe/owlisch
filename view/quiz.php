@@ -1,18 +1,109 @@
+<?php
+    
+    // Daten inkludieren
+    include("data.php");
+    
+    // CSS-Klassen
+    $clsEmpty  = "";
+    $clsRight  = " right";
+    $clsWrong  = " wrong";
+    $clsImages = " images";
+    $clsImage  = " image";
+    $clsSmall  = " small";
+    $clsCurr   = " current";
+    $clsFocus  = " autofocus";
+    
+    // Liste der Fragen
+    $questions = array(
+        
+        // Frage 1:
+        array(
+            "word"     => "pinneken",
+            "question" => "foreign",
+            "answer"   => "german",
+            "options"  => "Schraube,Blume,Pinienzapfen"
+        ),
+        
+        // Frage 2:
+        array(
+            "word"     => "pinneken",
+            "question" => "german",
+            "answer"   => "foreign",
+            "options"  => "Öpperken,Pankauken,Pömpel"
+        ),
+        
+        // Frage 3:
+        array(
+            "word"     => "pinneken",
+            "question" => "foreign",
+            "answer"   => "image",
+            "options"  => "blume,pinienzapfen,schraube"
+        ),
+        
+        // Frage 4:
+        array(
+            "word"     => "pinneken",
+            "question" => "image",
+            "answer"   => "foreign",
+            "options"  => "Öpperken,Pankauken,Pömpel"
+        ),
+        
+        // Frage 5:
+        array(
+            "word"     => "pinneken",
+            "question" => "german",
+            "answer"   => "letters"
+        ),
+        
+        // Frage 6:
+        array(
+            "word"     => "pinneken",
+            "question" => "german",
+            "answer"   => "input"
+        ),
+        
+        // Frage 7:
+        array(
+            "word"     => "pinneken",
+            "question" => "german",
+            "answer"   => "foreign",
+            "options"  => "Öpperken,Pankauken,Pömpel"
+        ),
+        
+        // Frage 8:
+        array(
+            "word"     => "pinneken",
+            "question" => "foreign",
+            "answer"   => "image",
+            "options"  => "blume,pinienzapfen,schraube"
+        ),
+        
+        // Frage 9:
+        array(
+            "word"     => "pinneken",
+            "question" => "image",
+            "answer"   => "foreign",
+            "options"  => "Schraube,Blume,Pinienzapfen"
+        ),
+        
+        // Frage 10:
+        array(
+            "word"     => "pinneken",
+            "question" => "german",
+            "answer"   => "letters"
+        )
+    );
+    
+?>
+
 <!--Fortschritt-->
 <div id="quiz-progress">
     <div id="quiz-progress-inner">
         <div id="quiz-progress-bar"></div>
         <ul id="quiz-progress-steps">
-            <li class="quiz-progress-step" data-step="1"></li>
-            <li class="quiz-progress-step" data-step="2"></li>
-            <li class="quiz-progress-step" data-step="3"></li>
-            <li class="quiz-progress-step" data-step="4"></li>
-            <li class="quiz-progress-step" data-step="5"></li>
-            <li class="quiz-progress-step" data-step="6"></li>
-            <li class="quiz-progress-step" data-step="7"></li>
-            <li class="quiz-progress-step" data-step="8"></li>
-            <li class="quiz-progress-step" data-step="9"></li>
-            <li class="quiz-progress-step" data-step="10"></li>
+            <?php for ($i = 1; $i <= sizeof($questions); $i++) { ?>
+            <li class="quiz-progress-step" data-step="<?php echo $i; ?>"></li>
+            <?php } ?>
         </ul>
     </div>
 </div>
@@ -42,190 +133,129 @@
             </a>
         </div>
     </section>
+    <?php
     
-    <!--Frage 1: OWL zu Deutsch-->
-    <section class="quiz-slide slide-1">
-        <h1 class="quiz-title">
-            Was ist ein <b>Pinneken</b>?
-        </h1>
+    // Alle Fragen iterieren
+    foreach ($questions as $slide => $q) {
+        
+        // Frage-Eigenschaften definieren
+        $text      = "das";
+        $id        = $q["word"];
+        $question  = $q["question"];
+        $answer    = $q["answer"];
+        $options   = $q["options"];
+        $word      = $words[$id]["word"];
+        $level     = $words[$id]["level"];
+        $translate = $words[$id]["translate"];
+
+        // Zustände definieren
+        $aOptions = (empty($options)         ? false : $options);
+        $qImage   = ($question === "image"   ? true : false);
+        $qGerman  = ($question === "german"  ? true : false);
+        $qForeign = ($question === "foreign" ? true : false);
+        $aImage   = ($answer   === "image"   ? true : false);
+        $aGerman  = ($answer   === "german"  ? true : false);
+        $aForeign = ($answer   === "foreign" ? true : false);
+        $aLetters = ($answer   === "letters" ? true : false);
+        $aInput   = ($answer   === "input"   ? true : false);
+        
+        // Externe Dateien validieren
+        $fImage = (file_exists("../img/content/$id.jpg") ? "img/content/$id.jpg" : false);
+        $fAudio = (file_exists("../audio/$id.mp3")       ? "audio/$id.mp3"       : false);
+        
+        // Schwierigkeit festlegen
+        if ($aLetters)    { $diff = "Mittel"; }
+        else if ($aInput) { $diff = "Schwer"; }
+        else              { $diff = "Leicht"; }
+        
+        // Falls Optionen existieren
+        if ($aOptions) {
+            
+            // Ausgabe-Klasse zusammenfügen
+            $class = $clsEmpty;
+            if ($aImage) { $class .= $clsImage; }
+            if ($qImage) { $class .= $clsSmall; }
+            
+            // Definierte Optionen in Array speichern
+            $opt = array();
+            foreach (explode(",", $aOptions) as $o) {
+                array_push($opt, array($o, $class . $clsWrong));
+            }
+            
+            // Richtige Antwort hinzufügen (abhängig vom Antwort-Typen)
+            if ($aForeign) { array_push($opt, array($word, $class . $clsRight)); }
+            if ($aImage)   { array_push($opt, array($id, $class . $clsRight)); }
+            if ($aGerman)  { array_push($opt, array($translate, $class . $clsRight)); }
+            
+            // Optionen mischen und speichern
+            shuffle($opt);
+            $aOptions = $opt;
+        }
+        
+        // Wenn Antwort-Typ Buchstaben sind, Buchstaben-Mix erzeugen
+        if ($aLetters) {
+            $alpha = range("a", "z");
+            $aLetters = str_split($word);
+            $aSize = sizeof($aLetters);
+            $random = array_rand($alpha, 3);
+            foreach ($random as $r) { array_push($aLetters, $alpha[$r]); }
+            shuffle($aLetters);
+        }
+        
+        // Frage-Text entsprechend es Frage-Typens ändern
+        if ($qForeign) { $text = $word; }
+        if ($qGerman) { $text = $translate; }
+        
+    ?>
+    <section class="quiz-slide slide-<?php echo ($slide + 1); echo ($aInput ? $clsFocus : $clsEmpty); ?>">
+        <h1 class="quiz-title">Was bedeutet <b><?php echo $text; ?></b>?</h1>
+        <?php if ($qImage && $fImage) { ?>
+        <div class="quiz-image"><img src="<?php echo $fImage; ?>" /></div>
+        <?php } ?>
         <div class="quiz-info">
-            <span class="quiz-info-difficulty">
-                Leicht
+            <span class="quiz-info-difficulty"><?php echo $diff; ?></span>
+            <span class="quiz-info-level level-<?php echo $level; ?>"
+                  data-level="<?php echo $level; ?>">
+                  <i class="level level-1"></i>
+                  <i class="level level-2"></i>
+                  <i class="level level-3"></i>
             </span>
-            <span class="quiz-info-level level-0" data-level="0">
-                <i class="level level-1"></i>
-                <i class="level level-2"></i>
-                <i class="level level-3"></i>
-            </span>
+            <?php if ($fAudio && $qForeign) { ?>
             <span class="quiz-info-audio-play">
                 <i class="fa fa-volume-up"></i>
             </span>
             <audio preload="none" class="quiz-info-audio">
-                <source src="audio/pinneken.mp3" type="audio/mpeg">
+                <source src="<?php echo $fAudio; ?>" type="audio/mpeg">
             </audio>
+            <?php } ?>
         </div>
-        <div class="content-padding">
-            <div class="quiz-choices">
-                <a class="button choice wrong">Schraube</a>
-                <a class="button choice right">Schnapsglas</a>
-                <a class="button choice wrong">Blume</a>
-                <a class="button choice wrong">Pinienzapfen</a>
+        <?php if ($aOptions) { ?>
+        <?php if (!$aImage) { ?><div class="content-padding"><?php } ?>
+            <div class="quiz-choices<?php echo ($aImage ? $clsImages : $clsEmpty); ?>">
+            <?php foreach ($aOptions as $opt) { ?>
+                <a class="button choice<?php echo $opt[1]; ?>">
+                   <?php if ($aImage) { ?>
+                    <span class="button-image">
+                        <img src="img/content/<?php echo $opt[0]; ?>.jpg" />
+                    </span>
+                   <?php } else { ?>
+                   <?php echo $opt[0]; ?>
+                   <?php } ?>
+                </a>
+            <?php } ?>
             </div>
-        </div>
-        <div class="content-padding bottom">
-            <a class="button action quiz-next hidden">
-                Weiter
-                <i class="fa fa-arrow-right"></i>
-            </a>
-        </div>
-    </section>
-    
-    <!--Frage 2: Deutsch zu OWL-->
-    <section class="quiz-slide slide-2">
-        <h1 class="quiz-title">
-            Was ist ein <b>Schnapsglas</b>?
-        </h1>
-        <div class="quiz-info">
-            <span class="quiz-info-difficulty">
-                Leicht
-            </span>
-            <span class="quiz-info-level level-0" data-level="0">
-                <i class="level level-1"></i>
-                <i class="level level-2"></i>
-                <i class="level level-3"></i>
-            </span>
-        </div>
-        <div class="content-padding">
-            <div class="quiz-choices">
-                <a class="button choice wrong">Öpperken</a>
-                <a class="button choice right">Pinneken</a>
-                <a class="button choice wrong">Pankauken</a>
-                <a class="button choice wrong">Pömpel</a>
-            </div>
-        </div>
-        <div class="content-padding bottom">
-            <a class="button action quiz-next hidden">
-                Weiter
-                <i class="fa fa-arrow-right"></i>
-            </a>
-        </div>
-    </section>
-    
-    <!--Frage 3: OWL zu Bild-->
-    <section class="quiz-slide slide-3">
-        <h1 class="quiz-title">
-            Was ist ein <b>Pinneken</b>?
-        </h1>
-        <div class="quiz-info">
-            <span class="quiz-info-difficulty">
-                Leicht
-            </span>
-            <span class="quiz-info-level level-0" data-level="0">
-                <i class="level level-1"></i>
-                <i class="level level-2"></i>
-                <i class="level level-3"></i>
-            </span>
-            <span class="quiz-info-audio-play">
-                <i class="fa fa-volume-up"></i>
-            </span>
-            <audio preload="none" class="quiz-info-audio">
-                <source src="audio/pinneken.mp3" type="audio/mpeg">
-            </audio>
-        </div>
-        <div class="quiz-choices images">
-            <a class="button choice wrong image">
-                <span class="button-image">
-                    <img src="img/content/pinienzapfen.jpg" />
-                </span>
-            </a>
-            <a class="button choice wrong image">
-                <span class="button-image">
-                    <img src="img/content/schraube.jpg" />
-                </span>
-            </a>
-            <a class="button choice right image">
-                <span class="button-image">
-                    <img src="img/content/pinneken.jpg" />
-                </span>
-            </a>
-            <a class="button choice wrong image">
-                <span class="button-image">
-                    <img src="img/content/blume.jpg" />
-                </span>
-            </a>
-            <div class="clear"></div>           
-        </div>
-        <div class="content-padding bottom">
-            <a class="button action quiz-next hidden">
-                Weiter
-                <i class="fa fa-arrow-right"></i>
-            </a>
-        </div>
-    </section>
-    
-    <!--Frage 4: Bild zu OWL-->
-    <section class="quiz-slide slide-4">
-        <h1 class="quiz-title image">
-            Was ist <b>das</b>?
-        </h1>
-        <div class="quiz-image">
-            <img src="img/content/pinneken.jpg" />
-        </div>
-        <div class="quiz-info">
-            <span class="quiz-info-difficulty">
-                Leicht
-            </span>
-            <span class="quiz-info-level level-0" data-level="0">
-                <i class="level level-1"></i>
-                <i class="level level-2"></i>
-                <i class="level level-3"></i>
-            </span>
-        </div>
-        <div class="content-padding">
-            <div class="quiz-choices">
-                <a class="button choice small wrong">Öpperken</a>
-                <a class="button choice small right">Pinneken</a>
-                <a class="button choice small wrong">Pankauken</a>
-                <a class="button choice small wrong">Pömpel</a>
-            </div>
-        </div>
-        <div class="content-padding bottom">
-            <a class="button action quiz-next hidden">
-                Weiter
-                <i class="fa fa-arrow-right"></i>
-            </a>
-        </div>
-    </section>
-    
-    <!--Frage 5: Deutsch zu Buchstaben-->
-    <section class="quiz-slide slide-5">
-        <h1 class="quiz-title">
-            Was ist ein <b>Schnapsglas</b>?
-        </h1>
-        <div class="quiz-info">
-            <span class="quiz-info-difficulty">
-                Mittel
-            </span>
-            <span class="quiz-info-level level-1" data-level="1">
-                <i class="level level-1"></i>
-                <i class="level level-2"></i>
-                <i class="level level-3"></i>
-            </span>
-        </div>
-        <div class="quiz-input-characters quiz-solution characters-8"
-             data-solution="Pinneken">
-            <span class="input-character current" data-choice=""></span>
-            <span class="input-character" data-choice=""></span>
-            <span class="input-character" data-choice=""></span>
-            <span class="input-character" data-choice=""></span>
-            <span class="input-character" data-choice=""></span>
-            <span class="input-character" data-choice=""></span>
-            <span class="input-character" data-choice=""></span>
-            <span class="input-character" data-choice=""></span>
+        <?php if (!$aImage) { ?></div><?php } ?>
+        <?php } ?>
+        <?php if ($aLetters) { ?>
+        <div class="quiz-input-characters quiz-solution characters-<?php echo $aSize; ?>"
+             data-solution="<?php echo $word; ?>">
+             <?php for ($i = 1; $i <= $aSize; $i++) { ?>
+             <span class="input-character<?php echo ($i === 1 ? $clsCurr : $clsEmpty); ?>" data-choice=""></span>
+             <?php } ?>
         </div>
         <div class="content-padding center quiz-solution-reveal">
             <p class="title">
-                <i>Lösung: <b>Pinneken</b></i>
+                <i>Lösung: <b><?php echo $word; ?></b></i>
                 <i class="quiz-solution-icon"></i>
             </p>
         </div>
@@ -235,54 +265,24 @@
                 Entfernen
             </a>
             <br/>
-            <span class="button input-choice choice-1" data-choice="1">K</span>
-            <span class="button input-choice choice-2" data-choice="2">E</span>
-            <span class="button input-choice choice-3" data-choice="3">N</span>
-            <span class="button input-choice choice-4" data-choice="4">S</span>
-            <span class="button input-choice choice-5" data-choice="5">I</span>
-            <span class="button input-choice choice-6" data-choice="6">P</span>
-            <span class="button input-choice choice-7" data-choice="7">N</span>
-            <span class="button input-choice choice-8" data-choice="8">E</span>
-            <span class="button input-choice choice-9" data-choice="9">T</span>
-            <span class="button input-choice choice-10" data-choice="10">N</span>
-            <span class="button input-choice choice-11" data-choice="11">I</span>
-        </div>
-        <div class="content-padding bottom">
-            <a class="button action quiz-solve">
-                Lösen
-                <i class="fa fa-lightbulb-o"></i>
-            </a>
-            <a class="button action quiz-next hidden">
-                Weiter
-                <i class="fa fa-arrow-right"></i>
-            </a>
-        </div>
-    </section>
-    
-    <!--Frage 6: Deutsch zu Eingabe-->
-    <section class="quiz-slide slide-6 autofocus">
-        <h1 class="quiz-title">
-            Was ist ein <b>Schnapsglas</b>?
-        </h1>
-        <div class="quiz-info">
-            <span class="quiz-info-difficulty">
-                Schwer
+            <?php foreach ($aLetters as $i => $l) { ?>
+            <span class="button input-choice choice-<?php echo ($i + 1); ?>"
+                  data-choice="<?php echo ($i + 1); ?>">
+                  <?php echo strtoupper($l); ?>
             </span>
-            <span class="quiz-info-level level-2" data-level="2">
-                <i class="level level-1"></i>
-                <i class="level level-2"></i>
-                <i class="level level-3"></i>
-            </span>
+            <?php } ?>
         </div>
+        <?php } ?>
+        <?php if ($aInput) { ?>
         <form class="quiz-input-text quiz-solution"
-             data-solution="Pinneken">
+             data-solution="<?php echo $word; ?>">
              <input spellcheck="false" autocomplete="off" autocorrect="off"
                     class="input-text" type="text" />
              <input class="input-submit" type="submit" />
         </form>
         <div class="content-padding center quiz-solution-reveal">
             <p class="title">
-                <i>Lösung: <b>Pinneken</b></i>
+                <i>Lösung: <b><?php echo $word; ?></b></i>
                 <i class="quiz-solution-icon"></i>
             </p>
         </div>
@@ -292,6 +292,8 @@
                 Benutze die <b>Tastatur</b>, um die Lösung einzugeben.
             </p>
         </div>
+        <?php } ?>
+        <?php if ($aLetters || $aInput) { ?>
         <div class="content-padding bottom">
             <a class="button action quiz-solve">
                 Lösen
@@ -302,212 +304,36 @@
                 <i class="fa fa-arrow-right"></i>
             </a>
         </div>
-    </section>
-    
-    <!--Frage 7: Deutsch zu OWL-->
-    <section class="quiz-slide slide-7">
-        <h1 class="quiz-title">
-            Was ist ein <b>Schnapsglas</b>?
-        </h1>
-        <div class="quiz-info">
-            <span class="quiz-info-difficulty">
-                Leicht
-            </span>
-            <span class="quiz-info-level level-0" data-level="0">
-                <i class="level level-1"></i>
-                <i class="level level-2"></i>
-                <i class="level level-3"></i>
-            </span>
-        </div>
-        <div class="content-padding">
-            <div class="quiz-choices">
-                <a class="button choice wrong">Öpperken</a>
-                <a class="button choice right">Pinneken</a>
-                <a class="button choice wrong">Pankauken</a>
-                <a class="button choice wrong">Pömpel</a>
-            </div>
-        </div>
+        <?php } else { ?>
         <div class="content-padding bottom">
             <a class="button action quiz-next hidden">
                 Weiter
                 <i class="fa fa-arrow-right"></i>
             </a>
         </div>
+        <?php } ?>
     </section>
-    
-    <!--Frage 8: OWL zu Bild-->
-    <section class="quiz-slide slide-8">
-        <h1 class="quiz-title">
-            Was ist ein <b>Pinneken</b>?
-        </h1>
-        <div class="quiz-info">
-            <span class="quiz-info-difficulty">
-                Leicht
-            </span>
-            <span class="quiz-info-level level-0" data-level="0">
-                <i class="level level-1"></i>
-                <i class="level level-2"></i>
-                <i class="level level-3"></i>
-            </span>
-            <span class="quiz-info-audio-play">
-                <i class="fa fa-volume-up"></i>
-            </span>
-            <audio preload="none" class="quiz-info-audio">
-                <source src="audio/pinneken.mp3" type="audio/mpeg">
-            </audio>
-        </div>
-        <div class="quiz-choices images">
-            <a class="button choice wrong image">
-                <span class="button-image">
-                    <img src="img/content/pinienzapfen.jpg" />
-                </span>
-            </a>
-            <a class="button choice wrong image">
-                <span class="button-image">
-                    <img src="img/content/schraube.jpg" />
-                </span>
-            </a>
-            <a class="button choice right image">
-                <span class="button-image">
-                    <img src="img/content/pinneken.jpg" />
-                </span>
-            </a>
-            <a class="button choice wrong image">
-                <span class="button-image">
-                    <img src="img/content/blume.jpg" />
-                </span>
-            </a>
-            <div class="clear"></div>           
-        </div>
-        <div class="content-padding bottom">
-            <a class="button action quiz-next hidden">
-                Weiter
-                <i class="fa fa-arrow-right"></i>
-            </a>
-        </div>
-    </section>
-    
-    <!--Frage 9: Bild zu OWL-->
-    <section class="quiz-slide slide-9">
-        <h1 class="quiz-title image">
-            Was ist <b>das</b>?
-        </h1>
-        <div class="quiz-image">
-            <img src="img/content/pinneken.jpg" />
-        </div>
-        <div class="quiz-info">
-            <span class="quiz-info-difficulty">
-                Leicht
-            </span>
-            <span class="quiz-info-level level-0" data-level="0">
-                <i class="level level-1"></i>
-                <i class="level level-2"></i>
-                <i class="level level-3"></i>
-            </span>
-        </div>
-        <div class="content-padding">
-            <div class="quiz-choices">
-                <a class="button choice small wrong">Öpperken</a>
-                <a class="button choice small right">Pinneken</a>
-                <a class="button choice small wrong">Pankauken</a>
-                <a class="button choice small wrong">Pömpel</a>
-            </div>
-        </div>
-        <div class="content-padding bottom">
-            <a class="button action quiz-next hidden">
-                Weiter
-                <i class="fa fa-arrow-right"></i>
-            </a>
-        </div>
-    </section>
-    
-    <!--Frage 10: Deutsch zu Buchstaben-->
-    <section class="quiz-slide slide-10">
-        <h1 class="quiz-title">
-            Was ist ein <b>Schnapsglas</b>?
-        </h1>
-        <div class="quiz-info">
-            <span class="quiz-info-difficulty">
-                Mittel
-            </span>
-            <span class="quiz-info-level level-1" data-level="1">
-                <i class="level level-1"></i>
-                <i class="level level-2"></i>
-                <i class="level level-3"></i>
-            </span>
-        </div>
-        <div class="quiz-input-characters quiz-solution characters-8"
-             data-solution="Pinneken">
-            <span class="input-character current" data-choice=""></span>
-            <span class="input-character" data-choice=""></span>
-            <span class="input-character" data-choice=""></span>
-            <span class="input-character" data-choice=""></span>
-            <span class="input-character" data-choice=""></span>
-            <span class="input-character" data-choice=""></span>
-            <span class="input-character" data-choice=""></span>
-            <span class="input-character" data-choice=""></span>
-        </div>
-        <div class="content-padding center quiz-solution-reveal">
-            <p class="title">
-                <i>Lösung: <b>Pinneken</b></i>
-                <i class="quiz-solution-icon"></i>
-            </p>
-        </div>
-        <div class="quiz-input-choices">
-            <a class="button input-delete locked">
-                <i class="fa fa-long-arrow-left"></i>
-                Entfernen
-            </a>
-            <br/>
-            <span class="button input-choice choice-1" data-choice="1">K</span>
-            <span class="button input-choice choice-2" data-choice="2">E</span>
-            <span class="button input-choice choice-3" data-choice="3">N</span>
-            <span class="button input-choice choice-4" data-choice="4">S</span>
-            <span class="button input-choice choice-5" data-choice="5">I</span>
-            <span class="button input-choice choice-6" data-choice="6">P</span>
-            <span class="button input-choice choice-7" data-choice="7">N</span>
-            <span class="button input-choice choice-8" data-choice="8">E</span>
-            <span class="button input-choice choice-9" data-choice="9">T</span>
-            <span class="button input-choice choice-10" data-choice="10">N</span>
-            <span class="button input-choice choice-11" data-choice="11">I</span>
-        </div>
-        <div class="content-padding bottom">
-            <a class="button action quiz-solve">
-                Lösen
-                <i class="fa fa-lightbulb-o"></i>
-            </a>
-            <a class="button action quiz-next hidden">
-                Weiter
-                <i class="fa fa-arrow-right"></i>
-            </a>
-        </div>
-    </section>
+    <?php } ?>
     
     <!--Ende-->
-    <section class="quiz-slide slide-11">
+    <section class="quiz-slide slide-<?php echo (sizeof($questions) + 1); ?>">
         <h1 class="quiz-title finished">
             <b>Fertig!</b>
         </h1>
         <div id="quiz-result">
             <div id="quiz-result-inner">
                 <div id="result-lines">
-                    <div class="result-line line-1"></div>
-                    <div class="result-line line-2"></div>
-                    <div class="result-line line-3"></div>
-                    <div class="result-line line-4"></div>
-                    <div class="result-line line-5"></div>
-                    <div class="result-line line-6"></div>
-                    <div class="result-line line-7"></div>
-                    <div class="result-line line-8"></div>
-                    <div class="result-line line-9"></div>
+                    <?php for ($i = 1; $i < sizeof($questions); $i++) { ?>
+                    <div class="result-line line-<?php echo $i; ?>"></div>
+                    <?php } ?>
                 </div>
                 <div id="result-bar" class="hidden"></div>
             </div>
         </div>
         <div class="content-padding center">
             <p class="title">
-                Du hast <b><span id="result-right">5</span> von
-                <span id="result-total">10</span></b>
+                Du hast <b><span id="result-right">0</span> von
+                <span id="result-total"><?php echo sizeof($questions); ?></span></b>
                 Fragen richtig beantwortet!
                 <i class="fa fa-smile-o"></i>
             </p>

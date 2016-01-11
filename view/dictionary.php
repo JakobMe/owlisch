@@ -7,16 +7,23 @@
     $sort = $_POST["sort"];
     $dir = $_POST["dir"];
     
+    // Sortieroptionen definieren
+    $sAlpha = "alpha";
+    $sLevel = "level";
+    $sAsc   = "asc";
+    $sDesc  = "desc";
+
     // Sortierung bei fehlerhaften Angaben korrigieren
-    if (($sort !== "alpha") && ($sort !== "level")) { $sort = "alpha"; }
-    if (($dir !== "asc") && ($dir !== "desc")) { $dir = "asc"; }
+    if (($sort !== $sAlpha) && ($sort !== $sLevel)) { $sort = $sAlpha; }
+    if (($dir !== $sAsc) && ($dir !== $sDesc)) { $dir = $sAsc; }
     
     /**
      * Sortieren: Alphabetisch aufsteigend.
      * Vergleicht zwei Wörter und ordnet sie alphabetisch aufsteigend.
      */
     function sortWordsAlphaAsc($a, $b) {
-        return strcmp($a["word"], $b["word"]);
+        global $iWord;
+        return strcmp($a[$word], $b[$word]);
     }
     
     /**
@@ -24,7 +31,8 @@
      * Vergleicht zwei Wörter und ordnet sie alphabetisch absteigend.
      */
     function sortWordsAlphaDesc($a, $b) {
-        return strcmp($b["word"], $a["word"]);
+        global $iWord;
+        return strcmp($b[$word], $a[$word]);
     }
     
     /**
@@ -34,10 +42,11 @@
      * beide Vergleiche werden aufsteigend geordnet.
      */
     function sortWordsLevelAsc($a, $b) {
-        if ($a["level"] === $b["level"]) {
-            return strcmp($a["word"], $b["word"]);
+        global $iWord, $iLevel;
+        if ($a[$level] === $b[$level]) {
+            return strcmp($a[$word], $b[$word]);
         } else {
-            return $a["level"] - $b["level"];
+            return $a[$level] - $b[$level];
         }
     }
     
@@ -48,34 +57,35 @@
      * beide Vergleiche werden absteigend geordnet.
      */
     function sortWordsLevelDesc($a, $b) {
-        if ($a["level"] === $b["level"]) {
-            return strcmp($a["word"], $b["word"]);
+        global $iWord, $iLevel;
+        if ($a[$level] === $b[$level]) {
+            return strcmp($a[$word], $b[$word]);
         } else {
-            return $b["level"] - $a["level"];
+            return $b[$level] - $a[$level];
         }
     }
     
     // Wörter alphabetisch sortieren
-    if ($sort === "alpha") {
+    if ($sort === $sAlpha) {
         
         // Aufsteigend
-        if ($dir === "asc") {
+        if ($dir === $sAsc) {
             uasort($words, "sortWordsAlphaAsc");
         
         // Absteigend
-        } else if ($dir === "desc") {
+        } else if ($dir === $sDesc) {
             uasort($words, "sortWordsAlphaDesc");
         }
         
     // Wörter nach Stufe sortieren
-    } else if ($sort === "level") {
+    } else if ($sort === $sLevel) {
         
         // Aufsteigend
-        if ($dir === "asc") {
+        if ($dir === $sAsc) {
             uasort($words, "sortWordsLevelAsc");
         
         // Absteigend
-        } else if ($dir === "desc") {
+        } else if ($dir === $sDesc) {
             uasort($words, "sortWordsLevelDesc");
         }
     }
@@ -114,12 +124,12 @@
             <?php foreach ($words as $id => $word) { ?>
             <li>
                 <a class="dictionary-word" href="#<?php echo $id; ?>">
-                    <span class="word-level level-<?php echo $word["level"]; ?>">
+                    <span class="word-level level-<?php echo $word[$iLevel]; ?>">
                         <i class="level level-1"></i>
                         <i class="level level-2"></i>
                         <i class="level level-3"></i>
                     </span>
-                    <span class="word"><?php echo $word["word"]; ?></span>
+                    <span class="word"><?php echo $word[$iWord]; ?></span>
                 </a>
             </li>
             <?php } ?>

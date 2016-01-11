@@ -94,6 +94,9 @@
         )
     );
     
+    // Fragen mischen
+    shuffle($questions);
+    
 ?>
 
 <!--Fortschritt-->
@@ -149,15 +152,15 @@
         $translate = $words[$id]["translate"];
 
         // Zustände definieren
-        $aOptions = (empty($options)         ? false : $options);
-        $qImage   = ($question === "image"   ? true : false);
-        $qGerman  = ($question === "german"  ? true : false);
-        $qForeign = ($question === "foreign" ? true : false);
-        $aImage   = ($answer   === "image"   ? true : false);
-        $aGerman  = ($answer   === "german"  ? true : false);
-        $aForeign = ($answer   === "foreign" ? true : false);
-        $aLetters = ($answer   === "letters" ? true : false);
-        $aInput   = ($answer   === "input"   ? true : false);
+        $aOptions  = (empty($options)         ? false : $options);
+        $qImage    = ($question === "image"   ? true : false);
+        $qGerman   = ($question === "german"  ? true : false);
+        $qForeign  = ($question === "foreign" ? true : false);
+        $aImage    = ($answer   === "image"   ? true : false);
+        $aGerman   = ($answer   === "german"  ? true : false);
+        $aForeign  = ($answer   === "foreign" ? true : false);
+        $aLetters  = ($answer   === "letters" ? true : false);
+        $aInput    = ($answer   === "input"   ? true : false);
         
         // Externe Dateien validieren
         $fImage = (file_exists("../img/content/$id.jpg") ? "img/content/$id.jpg" : false);

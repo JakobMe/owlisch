@@ -189,7 +189,10 @@
         }
         
         // Variante: Alleinstehend
-        &.standalone { padding-top: @size-margin; }
+        &.standalone {
+            padding-top: @size-margin;
+            &:first-child { border-top: @size-line-thin solid darken(@color-background, @darken-border); }
+        }
         
         // Variante: Erstes Element
         &:first-child { padding-top: @size-margin; }

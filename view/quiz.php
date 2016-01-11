@@ -341,7 +341,7 @@
                 <i class="fa fa-smile-o"></i>
             </p>
             <p class="info">
-                Willst Du noch einmal spielen?
+                Willst du noch einmal spielen?
             </p>
         </div>
         <a class="button round action" id="quiz-restart">

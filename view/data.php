@@ -35,7 +35,7 @@
         
         // Bütterken
         "buetterken"     => array(
-            $iLevel      => "2",
+            $iLevel      => "1",
             $iWord       => "Bütterken",
             $iTranslate  => "Kleines Butterbrot",
             $iInfo       => "
@@ -49,7 +49,7 @@
         
         // Dölmern
         "doelmern"       => array(
-            $iLevel      => "1",
+            $iLevel      => "2",
             $iWord       => "Dölmern",
             $iTranslate  => "Spielen",
             $iInfo       => "
@@ -60,7 +60,7 @@
         
         // Dönekens
         "doenekens"      => array(
-            $iLevel      => "2",
+            $iLevel      => "3",
             $iWord       => "Dönekens",
             $iTranslate  => "Anekdoten",
             $iInfo       => "
@@ -95,7 +95,7 @@
         
         // Nönkern
         "noenkern"       => array(
-            $iLevel      => "2",
+            $iLevel      => "1",
             $iWord       => "Nönkern",
             $iTranslate  => "Mittagsschlag halten",
             $iInfo       => "
@@ -110,7 +110,7 @@
         
         // Plüdden
         "pluedden"       => array(
-            $iLevel      => "1",
+            $iLevel      => "2",
             $iWord       => "Plüdden",
             $iTranslate  => "Alte Klamotten",
             $iInfo       => "
@@ -135,7 +135,7 @@
         
         // Nöhlen
         "noehlen"        => array(
-            $iLevel      => "1",
+            $iLevel      => "2",
             $iWord       => "Nöhlen",
             $iTranslate  => "Meckern",
             $iInfo       => "
@@ -159,7 +159,7 @@
         
         // Beömmeln
         "beoemmeln"      => array(
-            $iLevel      => "3",
+            $iLevel      => "2",
             $iWord       => "Beömmeln",
             $iTranslate  => "Sich totlachen",
             $iInfo       => "
@@ -171,7 +171,7 @@
         // Dittken
         "dittken"        => array(
             $iLevel      => "1",
-            $iWord       => "Das läuft wie'n Dittken!",
+            $iWord       => "Das läuft wie'n Dittken",
             $iTranslate  => "Das läuft rund",
             $iInfo       => "
                 <b>„Dittken“</b> bezeichnet ein 10-Pfennig-Stück. Weil man
@@ -186,7 +186,7 @@
         
         // Knüpp
         "knuepp"         => array(
-            $iLevel      => "2",
+            $iLevel      => "1",
             $iWord       => "Knüpp",
             $iTranslate  => "Knoten",
             $iInfo       => "

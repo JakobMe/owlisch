@@ -11,6 +11,17 @@
 		"outputPathIsOutsideProject": 0,
 		"outputPathIsSetByUser": 0
 		},
+	"\/img\/content\/beoemmeln.jpg": {
+		"fileType": 16384,
+		"ignore": 0,
+		"ignoreWasSetByUser": 0,
+		"initialSize": 17355,
+		"inputAbbreviatedPath": "\/img\/content\/beoemmeln.jpg",
+		"outputAbbreviatedPath": "\/img\/content\/beoemmeln.jpg",
+		"outputPathIsOutsideProject": 0,
+		"outputPathIsSetByUser": 0,
+		"processed": 1
+		},
 	"\/img\/content\/blume.jpg": {
 		"fileType": 16384,
 		"ignore": 0,
@@ -18,6 +29,50 @@
 		"initialSize": 25040,
 		"inputAbbreviatedPath": "\/img\/content\/blume.jpg",
 		"outputAbbreviatedPath": "\/img\/content\/blume.jpg",
+		"outputPathIsOutsideProject": 0,
+		"outputPathIsSetByUser": 0,
+		"processed": 1
+		},
+	"\/img\/content\/buetterken.jpg": {
+		"fileType": 16384,
+		"ignore": 0,
+		"ignoreWasSetByUser": 0,
+		"initialSize": 25146,
+		"inputAbbreviatedPath": "\/img\/content\/buetterken.jpg",
+		"outputAbbreviatedPath": "\/img\/content\/buetterken.jpg",
+		"outputPathIsOutsideProject": 0,
+		"outputPathIsSetByUser": 0,
+		"processed": 1
+		},
+	"\/img\/content\/knuepp.jpg": {
+		"fileType": 16384,
+		"ignore": 0,
+		"ignoreWasSetByUser": 0,
+		"initialSize": 21352,
+		"inputAbbreviatedPath": "\/img\/content\/knuepp.jpg",
+		"outputAbbreviatedPath": "\/img\/content\/knuepp.jpg",
+		"outputPathIsOutsideProject": 0,
+		"outputPathIsSetByUser": 0,
+		"processed": 1
+		},
+	"\/img\/content\/latuechte.jpg": {
+		"fileType": 16384,
+		"ignore": 0,
+		"ignoreWasSetByUser": 0,
+		"initialSize": 14694,
+		"inputAbbreviatedPath": "\/img\/content\/latuechte.jpg",
+		"outputAbbreviatedPath": "\/img\/content\/latuechte.jpg",
+		"outputPathIsOutsideProject": 0,
+		"outputPathIsSetByUser": 0,
+		"processed": 1
+		},
+	"\/img\/content\/noenkern.jpg": {
+		"fileType": 16384,
+		"ignore": 0,
+		"ignoreWasSetByUser": 0,
+		"initialSize": 16190,
+		"inputAbbreviatedPath": "\/img\/content\/noenkern.jpg",
+		"outputAbbreviatedPath": "\/img\/content\/noenkern.jpg",
 		"outputPathIsOutsideProject": 0,
 		"outputPathIsSetByUser": 0,
 		"processed": 1

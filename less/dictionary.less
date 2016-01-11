@@ -121,16 +121,16 @@
     }
 }
 
-// Wort-Container
-#word {
+// Wörterbuch-Inhalt
+#content-dictionary {
     -webkit-overflow-scrolling: touch;
     overflow-y: auto;
     max-height: 100%;
-    
-    // Erstes Element
-    & > *:first-child {
-        border-top: @size-line-thin solid darken(@color-background, @darken-border);
-    }
+}
+
+// Wort-Container
+#word > *:first-child {
+    border-top: @size-line-thin solid darken(@color-background, @darken-border);
 }
 
 // Wörterbuch-Wörter

@@ -18,79 +18,79 @@
         
         // Frage 1:
         array(
-            "word"     => "pinneken",
+            "word"     => "dittken",
             "question" => "foreign",
             "answer"   => "german",
-            "options"  => "Schraube,Blume,Pinienzapfen"
+            "options"  => "Das läuft langsam,Das läuft schlecht,Das läuft schnell"
         ),
         
         // Frage 2:
         array(
-            "word"     => "pinneken",
-            "question" => "german",
-            "answer"   => "foreign",
-            "options"  => "Öpperken,Pankauken,Pömpel"
+            "word"     => "knuepp",
+            "question" => "foreign",
+            "answer"   => "image",
+            "options"  => "blume,pinienzapfen,schraube"
         ),
         
         // Frage 3:
         array(
-            "word"     => "pinneken",
-            "question" => "foreign",
-            "answer"   => "image",
-            "options"  => "blume,pinienzapfen,schraube"
+            "word"     => "anneeckeliegen",
+            "question" => "german",
+            "answer"   => "foreign",
+            "options"  => "Bedötscht,Drömmeligkeit,Patt"
         ),
         
         // Frage 4:
         array(
-            "word"     => "pinneken",
+            "word"     => "buetterken",
             "question" => "image",
             "answer"   => "foreign",
-            "options"  => "Öpperken,Pankauken,Pömpel"
+            "options"  => "Pankauken,Knüpp,Plüdden"
         ),
         
         // Frage 5:
         array(
-            "word"     => "pinneken",
-            "question" => "german",
-            "answer"   => "letters"
+            "word"     => "latuechte",
+            "question" => "image",
+            "answer"   => "foreign",
+            "options"  => "Pinnorkel,Ommes,Knüpp"
         ),
         
         // Frage 6:
         array(
-            "word"     => "pinneken",
+            "word"     => "noenkern",
             "question" => "german",
-            "answer"   => "input"
+            "answer"   => "foreign",
+            "options"  => "Nöhlen,Baseln,Dölmern"
         ),
         
         // Frage 7:
         array(
-            "word"     => "pinneken",
-            "question" => "german",
-            "answer"   => "foreign",
-            "options"  => "Öpperken,Pankauken,Pömpel"
+            "word"     => "fickerig",
+            "question" => "foreign",
+            "answer"   => "german",
+            "options"  => "Erregt,Wütend,Fröhlich"
         ),
         
         // Frage 8:
         array(
-            "word"     => "pinneken",
-            "question" => "foreign",
-            "answer"   => "image",
-            "options"  => "blume,pinienzapfen,schraube"
+            "word"     => "beoemmeln",
+            "question" => "german",
+            "answer"   => "letters"
         ),
         
         // Frage 9:
         array(
-            "word"     => "pinneken",
-            "question" => "image",
-            "answer"   => "foreign",
-            "options"  => "Schraube,Blume,Pinienzapfen"
+            "word"     => "noehlen",
+            "question" => "german",
+            "answer"   => "letters"
         ),
         
         // Frage 10:
         array(
             "word"     => "pinneken",
             "question" => "german",
-            "answer"   => "letters"
+            "answer"   => "input"
         )
     );
     
@@ -198,7 +198,9 @@
         // Wenn Antwort-Typ Buchstaben sind, Buchstaben-Mix erzeugen
         if ($aLetters) {
             $alpha = range("a", "z");
-            $aLetters = str_split($word);
+            $aLetters = array();
+            preg_match_all("/./u", $word, $aLetters);
+            $aLetters = $aLetters[0];
             $aSize = sizeof($aLetters);
             $random = array_rand($alpha, 3);
             foreach ($random as $r) { array_push($aLetters, $alpha[$r]); }
@@ -242,7 +244,7 @@
                         <img src="img/content/<?php echo $opt[0]; ?>.jpg" />
                     </span>
                    <?php } else { ?>
-                   <?php echo $opt[0]; ?>
+                   <span><?php echo $opt[0]; ?></span>
                    <?php } ?>
                 </a>
             <?php } ?>
@@ -271,7 +273,7 @@
             <?php foreach ($aLetters as $i => $l) { ?>
             <span class="button input-choice choice-<?php echo ($i + 1); ?>"
                   data-choice="<?php echo ($i + 1); ?>">
-                  <?php echo strtoupper($l); ?>
+                  <?php echo mb_strtoupper($l, "UTF-8"); ?>
             </span>
             <?php } ?>
         </div>

@@ -23,7 +23,7 @@
      */
     function sortWordsAlphaAsc($a, $b) {
         global $iWord;
-        return strcmp($a[$word], $b[$word]);
+        return strcmp($a[$iWord], $b[$iWord]);
     }
     
     /**
@@ -32,7 +32,7 @@
      */
     function sortWordsAlphaDesc($a, $b) {
         global $iWord;
-        return strcmp($b[$word], $a[$word]);
+        return strcmp($b[$iWord], $a[$iWord]);
     }
     
     /**
@@ -43,10 +43,10 @@
      */
     function sortWordsLevelAsc($a, $b) {
         global $iWord, $iLevel;
-        if ($a[$level] === $b[$level]) {
-            return strcmp($a[$word], $b[$word]);
+        if ($a[$iLevel] === $b[$iLevel]) {
+            return strcmp($a[$iWord], $b[$iWord]);
         } else {
-            return $a[$level] - $b[$level];
+            return $a[$iLevel] - $b[$iLevel];
         }
     }
     
@@ -58,10 +58,10 @@
      */
     function sortWordsLevelDesc($a, $b) {
         global $iWord, $iLevel;
-        if ($a[$level] === $b[$level]) {
-            return strcmp($a[$word], $b[$word]);
+        if ($a[$iLevel] === $b[$iLevel]) {
+            return strcmp($a[$iWord], $b[$iWord]);
         } else {
-            return $b[$level] - $a[$level];
+            return $b[$iLevel] - $a[$iLevel];
         }
     }
     

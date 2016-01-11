@@ -18,20 +18,20 @@
 </div>
 
 <!--Quiz-Karten-->
-<div id="quiz-slider" class="slide-0">
+<article id="quiz-slider" class="slide-0">
     
     <!--Start-->
-    <div class="quiz-slide slide-0 current">
-        <h2 class="quiz-title finished">
+    <section class="quiz-slide slide-0 current">
+        <h1 class="quiz-title finished">
             <b>OWL</b>-Quiz
-        </h2>
+        </h1>
         <div class="content-padding center">
             <p class="title">
                 <i class="fa fa-graduation-cap"></i>
                 Teste dein <b>Wissen</b>!
             </p>
         </div>
-        <p class="label"><span class="text">Hinweis</span></p>
+        <h4 class="subtitle"><span class="text">Hinweis</span></h4>
         <p class="word description margin-bottom info">
             Je häufiger du ein Wort <b>richtig</b> errätst,
             desto <b>schwieriger</b> werden die Fragen.
@@ -41,13 +41,13 @@
                 <b>Quiz</b><br/><i>starten</i>
             </a>
         </div>
-    </div>
+    </section>
     
     <!--Frage 1: OWL zu Deutsch-->
-    <div class="quiz-slide slide-1">
-        <h2 class="quiz-title">
+    <section class="quiz-slide slide-1">
+        <h1 class="quiz-title">
             Was ist ein <b>Pinneken</b>?
-        </h2>
+        </h1>
         <div class="quiz-info">
             <span class="quiz-info-difficulty">
                 Leicht
@@ -78,13 +78,13 @@
                 <i class="fa fa-arrow-right"></i>
             </a>
         </div>
-    </div>
+    </section>
     
     <!--Frage 2: Deutsch zu OWL-->
-    <div class="quiz-slide slide-2">
-        <h2 class="quiz-title">
+    <section class="quiz-slide slide-2">
+        <h1 class="quiz-title">
             Was ist ein <b>Schnapsglas</b>?
-        </h2>
+        </h1>
         <div class="quiz-info">
             <span class="quiz-info-difficulty">
                 Leicht
@@ -109,13 +109,13 @@
                 <i class="fa fa-arrow-right"></i>
             </a>
         </div>
-    </div>
+    </section>
     
     <!--Frage 3: OWL zu Bild-->
-    <div class="quiz-slide slide-3">
-        <h2 class="quiz-title">
+    <section class="quiz-slide slide-3">
+        <h1 class="quiz-title">
             Was ist ein <b>Pinneken</b>?
-        </h2>
+        </h1>
         <div class="quiz-info">
             <span class="quiz-info-difficulty">
                 Leicht
@@ -161,13 +161,13 @@
                 <i class="fa fa-arrow-right"></i>
             </a>
         </div>
-    </div>
+    </section>
     
     <!--Frage 4: Bild zu OWL-->
-    <div class="quiz-slide slide-4">
-        <h2 class="quiz-title image">
+    <section class="quiz-slide slide-4">
+        <h1 class="quiz-title image">
             Was ist <b>das</b>?
-        </h2>
+        </h1>
         <div class="quiz-image">
             <img src="img/content/pinneken.jpg" />
         </div>
@@ -195,13 +195,13 @@
                 <i class="fa fa-arrow-right"></i>
             </a>
         </div>
-    </div>
+    </section>
     
     <!--Frage 5: Deutsch zu Buchstaben-->
-    <div class="quiz-slide slide-5">
-        <h2 class="quiz-title">
+    <section class="quiz-slide slide-5">
+        <h1 class="quiz-title">
             Was ist ein <b>Schnapsglas</b>?
-        </h2>
+        </h1>
         <div class="quiz-info">
             <span class="quiz-info-difficulty">
                 Mittel
@@ -257,13 +257,13 @@
                 <i class="fa fa-arrow-right"></i>
             </a>
         </div>
-    </div>
+    </section>
     
     <!--Frage 6: Deutsch zu Eingabe-->
-    <div class="quiz-slide slide-6 autofocus">
-        <h2 class="quiz-title">
+    <section class="quiz-slide slide-6 autofocus">
+        <h1 class="quiz-title">
             Was ist ein <b>Schnapsglas</b>?
-        </h2>
+        </h1>
         <div class="quiz-info">
             <span class="quiz-info-difficulty">
                 Schwer
@@ -287,7 +287,7 @@
             </p>
         </div>
         <div class="quiz-solution-info center">
-            <p class="label"><span class="text">Hinweis</span></p>
+            <h4 class="subtitle"><span class="text">Hinweis</span></h4>
             <p class="word description info">
                 Benutze die <b>Tastatur</b>, um die Lösung einzugeben.
             </p>
@@ -302,13 +302,13 @@
                 <i class="fa fa-arrow-right"></i>
             </a>
         </div>
-    </div>
+    </section>
     
     <!--Frage 7: Deutsch zu OWL-->
-    <div class="quiz-slide slide-7">
-        <h2 class="quiz-title">
+    <section class="quiz-slide slide-7">
+        <h1 class="quiz-title">
             Was ist ein <b>Schnapsglas</b>?
-        </h2>
+        </h1>
         <div class="quiz-info">
             <span class="quiz-info-difficulty">
                 Leicht
@@ -333,13 +333,13 @@
                 <i class="fa fa-arrow-right"></i>
             </a>
         </div>
-    </div>
+    </section>
     
     <!--Frage 8: OWL zu Bild-->
-    <div class="quiz-slide slide-8">
-        <h2 class="quiz-title">
+    <section class="quiz-slide slide-8">
+        <h1 class="quiz-title">
             Was ist ein <b>Pinneken</b>?
-        </h2>
+        </h1>
         <div class="quiz-info">
             <span class="quiz-info-difficulty">
                 Leicht
@@ -385,13 +385,13 @@
                 <i class="fa fa-arrow-right"></i>
             </a>
         </div>
-    </div>
+    </section>
     
     <!--Frage 9: Bild zu OWL-->
-    <div class="quiz-slide slide-9">
-        <h2 class="quiz-title image">
+    <section class="quiz-slide slide-9">
+        <h1 class="quiz-title image">
             Was ist <b>das</b>?
-        </h2>
+        </h1>
         <div class="quiz-image">
             <img src="img/content/pinneken.jpg" />
         </div>
@@ -419,13 +419,13 @@
                 <i class="fa fa-arrow-right"></i>
             </a>
         </div>
-    </div>
+    </section>
     
     <!--Frage 10: Deutsch zu Buchstaben-->
-    <div class="quiz-slide slide-10">
-        <h2 class="quiz-title">
+    <section class="quiz-slide slide-10">
+        <h1 class="quiz-title">
             Was ist ein <b>Schnapsglas</b>?
-        </h2>
+        </h1>
         <div class="quiz-info">
             <span class="quiz-info-difficulty">
                 Mittel
@@ -481,13 +481,13 @@
                 <i class="fa fa-arrow-right"></i>
             </a>
         </div>
-    </div>
+    </section>
     
     <!--Ende-->
-    <div class="quiz-slide slide-11">
-        <h2 class="quiz-title finished">
+    <section class="quiz-slide slide-11">
+        <h1 class="quiz-title finished">
             <b>Fertig!</b>
-        </h2>
+        </h1>
         <div id="quiz-result">
             <div id="quiz-result-inner">
                 <div id="result-lines">
@@ -518,6 +518,6 @@
         <a class="button round action" id="quiz-restart">
             <b>Quiz</b><br/><i>starten</i>
         </a>
-    </div>
+    </section>
     
-</div>
+</article>

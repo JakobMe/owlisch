@@ -57,13 +57,13 @@
     <body>
         
         <!--Viewport-->
-        <section id="viewport">
+        <div id="viewport">
             <div id="viewport-inner">
                 
                 <!--Inhalt-->
-                <article id="content">
+                <main id="content">
                     <div id="content-inner"></div>
-                </article>
+                </main>
                 
                 <!--Top-Leiste-->
                 <header id="bar-top">
@@ -128,7 +128,7 @@
                 </nav>
             
             </div>
-        </section>
+        </div>
         
         <!--CSS-->
         <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic" type="text/css">

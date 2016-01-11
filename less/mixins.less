@@ -229,14 +229,14 @@
     
     // Stufe 1
     &.level-1 {
-        .level-1           { &:after { .quiz-level-achieved(@animation);     } }
-        .level-2, .level-3 { &:after { .quiz-level-not-achieved(); } }
+        .level-1           { &:after { .quiz-level-achieved(@animation); } }
+        .level-2, .level-3 { &:after { .quiz-level-not-achieved();       } }
     }
     
     // Stufe 2
     &.level-2 {
-        .level-1, .level-2 { &:after { .quiz-level-achieved(@animation);     } }
-        .level-3           { &:after { .quiz-level-not-achieved(); } }
+        .level-1, .level-2 { &:after { .quiz-level-achieved(@animation); } }
+        .level-3           { &:after { .quiz-level-not-achieved();       } }
     }
     
     // Stufe 3

@@ -121,10 +121,95 @@
     }
 }
 
+// Wort-Container
+#word {
+    -webkit-overflow-scrolling: touch;
+    overflow-y: auto;
+    max-height: 100%;
+    
+    // Erstes Element
+    & > *:first-child {
+        border-top: @size-line-thin solid darken(@color-background, @darken-border);
+    }
+}
+
 // Wörterbuch-Wörter
 .dictionary-words {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
     border-bottom: @size-line-thin solid darken(@color-background, @darken-border-background);
     
     // Fehler ein-/ausblenden
     &:not(.error) + .error { display: none; }
+    
+    // Wörterbuch-Wort
+    .dictionary-word {        
+        display: block;
+        text-align: left;
+        font-weight: bold;
+        font-style: normal;
+        position: relative;
+        overflow: hidden;
+        text-decoration: none;
+        margin: 0;
+        padding: 0 @size-margin;
+        color: @color-text-dark;
+        font-size: @font-medium;
+        padding-right: @height-button-choice;
+        height: @height-button-choice;
+        line-height: @height-button-choice;
+        border-top: @size-line-thin solid darken(@color-background, @darken-border);
+        .gradient-background();
+        .shadow-none();
+        .ellipsis();
+        
+        // Text
+        .word i {
+            font-style: normal;
+            color: darken(@color-star, @darken-star);
+            background: fade(@color-star, 50%);
+            .round-all();
+        }
+        
+        // Wort-Stufe
+        .word-level {
+            display: inline-block;
+            font-weight: normal;
+            vertical-align: middle;
+            font-size: @font-small;
+            margin-bottom: @size-line-bold;
+            margin-right: @size-margin-half;
+            .quiz-level-status(false);
+            
+            // Stufe
+            .level {
+                display: inline;
+                letter-spacing: 0;
+            }
+        }
+        
+        // Icon
+        &:after {
+            width: auto;
+            display: block;
+            text-align: center;
+            position: absolute;
+            font-style: normal;
+            font-weight: normal;
+            top: 0;
+            right: 0;
+            height: @height-button-choice;
+            line-height: @height-button-choice + @size-line-bold;
+            padding: 0 @size-margin;
+            color: @color-text-pale;
+            font-size: @font-medium;
+            content: @fa-var-chevron-right;
+            .transition(color);
+            .font-icon();
+        }
+        
+        // Variante: Versteckt
+        &.hidden { display: none; }
+    }
 }

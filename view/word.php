@@ -10,15 +10,15 @@
 ?>
 
 <!--Wort: <?php echo $word["word"]; ?>-->
-<div id="word">
+<article id="word">
     <?php if (file_exists("../img/content/$selected.jpg")) { ?>
     <div class="quiz-image big">
         <img src="img/content/<?php echo $selected; ?>.jpg" />
     </div>
     <?php } ?>
-    <h2 class="quiz-title">
+    <h1 class="quiz-title">
         <b><?php echo $word["word"]; ?></b>
-    </h2>
+    </h1>
     <div class="quiz-info static">
         <span class="quiz-info-difficulty">
             Fortschritt:
@@ -28,17 +28,19 @@
             <i class="level level-2"></i>
             <i class="level level-3"></i>
         </span>
+        <?php if (file_exists("../audio/$selected.mp3")) { ?>
         <span class="quiz-info-audio-play">
             <i class="fa fa-volume-up"></i>
         </span>
         <audio preload="none" class="quiz-info-audio">
             <source src="audio/<?php echo $selected; ?>.mp3" type="audio/mpeg">
         </audio>
+        <?php } ?>
     </div>
     <div class="word-text">
-        <p class="label"><span class="text">Übersetzung</span></p>
+        <h4 class="subtitle"><span class="text">Übersetzung</span></h4>
         <p class="word translation">„<?php echo $word["translate"]; ?>“</p>
-        <p class="label"><span class="text">Beschreibung</span></p>
+        <h4 class="subtitle"><span class="text">Beschreibung</span></h4>
         <p class="word description"><?php echo trim($word["info"]); ?></p>
     </div>
-</div>
+</article>

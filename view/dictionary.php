@@ -83,7 +83,7 @@
 ?>
 
 <!--Wörterbuch-Slider-->
-<div id="dictionary-slider" class="slide-0">
+<article id="dictionary-slider" class="slide-0">
     
     <!--Sortierung-->
     <ul id="dictionary-sort" class="hidden sort-<?php echo $sort; ?>-<?php echo $dir; ?>">
@@ -106,28 +106,29 @@
     </ul>
     
     <!--Übersicht-->
-    <div class="dictionary-slide slide-0 scroll current">
+    <section class="dictionary-slide slide-0 scroll current">
         
         <!--Wörter-->
-        <div class="dictionary-words">
+        <ul class="dictionary-words">
             
             <?php foreach ($words as $id => $word) { ?>
-            <!--Wort: <?php echo $word["word"]; ?>-->
-            <a href="#<?php echo $id; ?>" class="quiz-title standalone dictionary-word">
-                <span class="word-level level-<?php echo $word["level"]; ?>">
-                    <i class="level level-1"></i>
-                    <i class="level level-2"></i>
-                    <i class="level level-3"></i>
-                </span>
-                <span class="word"><?php echo $word["word"]; ?></span>
-            </a>        
+            <li>
+                <a class="dictionary-word" href="#<?php echo $id; ?>">
+                    <span class="word-level level-<?php echo $word["level"]; ?>">
+                        <i class="level level-1"></i>
+                        <i class="level level-2"></i>
+                        <i class="level level-3"></i>
+                    </span>
+                    <span class="word"><?php echo $word["word"]; ?></span>
+                </a>
+            </li>
             <?php } ?>
             
-        </div>
+        </ul>
         
         <!--Fehler-->
         <div class="error">
-            <p class="label"><span class="text">Nichts gefunden</span></p>
+            <h4 class="subtitle"><span class="text">Nichts gefunden</span></h4>
             <p class="word description error">
                 Es konnten keine Wörter gefunden werden, die zu dem eingegebenen
                 Suchbegriff passen.
@@ -135,17 +136,19 @@
         </div>
         
         <!--Hinweis-->
-        <p class="label"><span class="text">Hinweis</span></p>
-        <p class="word description info">
-            Dein persönliches <b>Wörterbuch</b> füllt sich automatisch
-            mit allen Wörtern, die Du schon erraten hast.
-        </p>
+        <div class="hint">
+            <h4 class="subtitle"><span class="text">Hinweis</span></h4>
+            <p class="word description info">
+                Dein persönliches <b>Wörterbuch</b> füllt sich automatisch
+                mit allen Wörtern, die Du schon erraten hast.
+            </p>
+        </div>
         
-    </div>
+    </section>
     
     <!--Details-->
-    <div class="dictionary-slide slide-1">
+    <section class="dictionary-slide slide-1">
         <div id="content-dictionary"></div>
-    </div>
+    </section>
     
-</div>
+</article>

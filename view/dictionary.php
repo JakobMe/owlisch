@@ -125,9 +125,9 @@
             <li>
                 <a class="dictionary-word" href="#<?php echo $id; ?>">
                     <span class="word-level level-<?php echo $word[$iLevel]; ?>">
-                        <i class="level level-1"></i>
-                        <i class="level level-2"></i>
-                        <i class="level level-3"></i>
+                        <i class="level no-animation level-1"></i>
+                        <i class="level no-animation level-2"></i>
+                        <i class="level no-animation level-3"></i>
                     </span>
                     <span class="word"><?php echo $word[$iWord]; ?></span>
                 </a>

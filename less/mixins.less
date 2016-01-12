@@ -197,12 +197,9 @@
 }
 
 // Quiz-Level: Stufe erreicht
-.quiz-level-achieved(@animation: true) {
+.quiz-level-achieved() {
     content: @fa-var-star;
     color: @color-star;
-    & when (@animation) {
-        .animation(quiz-level-up);
-    }
 }
 
 // Quiz-Level: Stufe nicht erreicht
@@ -212,7 +209,7 @@
 }
 
 // Quiz-Level: Status
-.quiz-level-status(@animation: true) {
+.quiz-level-status() {
     
     // Levels
     .level {
@@ -238,20 +235,31 @@
     
     // Stufe 1
     &.level-1 {
-        .level-1           { &:after { .quiz-level-achieved(@animation); } }
-        .level-2, .level-3 { &:after { .quiz-level-not-achieved();       } }
+        .level-1 {
+            &:after { .quiz-level-achieved(); }
+            &:not(.no-animation):after { .animation(quiz-level-up); }
+        }
+        .level-2, .level-3 {
+            &:after { .quiz-level-not-achieved(); }
+        }
     }
     
     // Stufe 2
     &.level-2 {
-        .level-1, .level-2 { &:after { .quiz-level-achieved(@animation); } }
-        .level-3           { &:after { .quiz-level-not-achieved();       } }
+        .level-1, .level-2 {
+            &:after { .quiz-level-achieved(); }
+            &:not(.no-animation):after { .animation(quiz-level-up); }
+        }
+        .level-3 {
+            &:after { .quiz-level-not-achieved(); }
+        }
     }
     
     // Stufe 3
     &.level-3 {
         .level-1, .level-2, .level-3 {
-            &:after { .quiz-level-achieved(@animation); }
+            &:after { .quiz-level-achieved(); }
+            &:not(.no-animation):after { .animation(quiz-level-up); }
         }
     }
 }

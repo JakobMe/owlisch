@@ -47,8 +47,8 @@
 
 // Quiz Stufenaufstieg
 @keyframes quiz-level-up {
-    0%   { .textshadow-glow(@color-star); }
-    100% { .textshadow-glow(fade(@color-star, 0%)); }
+    0%   { color: @color-success; .textshadow-glow(@color-success); }
+    100% { color: @color-star; .textshadow-glow(fade(@color-star, 0%)); }
 }
 
 // Animations-Mixin

@@ -150,6 +150,7 @@
         $word      = $words[$id]["word"];
         $level     = $words[$id]["level"];
         $translate = $words[$id]["translate"];
+        $index     = $slide + 1;
 
         // Zustände definieren
         $aOptions  = (empty($options)         ? false : $options);
@@ -212,7 +213,7 @@
         if ($qGerman) { $text = $translate; }
         
     ?>
-    <section class="quiz-slide slide-<?php echo ($slide + 1); echo ($aInput ? $clsFocus : $clsEmpty); ?>">
+    <section class="quiz-slide slide-<?php echo $index; echo ($aInput ? $clsFocus : $clsEmpty); ?>">
         <h1 class="quiz-title">Was bedeutet <b><?php echo $text; ?></b>?</h1>
         <?php if ($qImage && $fImage) { ?>
         <div class="quiz-image"><img src="<?php echo $fImage; ?>" /></div>
@@ -282,7 +283,7 @@
         <form class="quiz-input-text quiz-solution"
              data-solution="<?php echo $word; ?>">
              <input spellcheck="false" autocomplete="off" autocorrect="off"
-                    class="input-text" type="text" />
+                    class="input-text" type="text" tabindex="-<?php echo $index; ?>" />
              <input class="input-submit" type="submit" />
         </form>
         <div class="content-padding center quiz-solution-reveal">

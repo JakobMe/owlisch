@@ -39,6 +39,7 @@ $(document).ready(function() {
     var ID_RESULT_BAR           = "#result-bar";
     var ID_RESULT_RIGHT         = "#result-right";
     var ID_RESULT_TOTAL         = "#result-total";
+    var ID_RESULT_EMOTICON      = "#result-emoticon";
     var ID_TITLE_BAR            = "#bar-title";
     var ID_TITLE                = "#bar-title-text";
     var ID_TITLE_RIGHT          = "#bar-title-right";
@@ -97,6 +98,7 @@ $(document).ready(function() {
     var CLASS_CURRENT           = "current";
     var CLASS_SUCCESS           = "success";
     var CLASS_ERROR             = "error";
+    var CLASS_SKIPPED           = "skipped";
     var CLASS_SOLVED            = "solved";
     var CLASS_RIGHT             = "right";
     var CLASS_FULL              = "full";
@@ -116,6 +118,8 @@ $(document).ready(function() {
     var CLASS_ICON_SEARCH       = "fa-search";
     var CLASS_ICON_SORT         = "fa-sort";
     var CLASS_ICON_CLOSE        = "fa-close";
+    var CLASS_ICON_FROWN        = "fa-frown-o";
+    var CLASS_ICON_SKIP         = "fa-long-arrow-right";
     
     // Konstanten: AJAX-Werte
     var AJAX_PATH               = "view/";
@@ -128,11 +132,12 @@ $(document).ready(function() {
     var STR_SPACE               = " ";
     var STR_HASH                = "#";
     var STR_PERCENT             = "%";
+    var STR_STR                 = "string";
     var STR_UNDEFINED           = "undefined";
     var STR_BOOLEAN             = "boolean";
     var STR_END                 = "beenden";
-    var STR_I_START             = "<i>";
-    var STR_I_END               = "</i>";
+    var STR_B_START             = "<b>";
+    var STR_B_END               = "</b>";
     
     // Konstanten: Views
     var VIEW_QUIZ               = "#quiz";
@@ -142,6 +147,7 @@ $(document).ready(function() {
     var VIEW_SORT               = "#sort";
     var VIEW_WORD               = "#word";
     var VIEW_SEARCH             = "#search";
+    var VIEW_SKIP               = "#skip";
 
     // Konstanten: Zeiten
     var TIME_ANIMATION          = 300;
@@ -220,6 +226,12 @@ $(document).ready(function() {
             $(SEL_QUIZ_SOLUTION).addClass(
                 answerRight ? CLASS_SUCCESS : CLASS_ERROR
             );
+        
+        // Wenn Antwort ein String ist
+        } else if (typeof answer === STR_STR) {
+            
+            // Antwort nicht definieren
+            answerRight = null;
             
         // Wenn Antwort ein Button ist
         } else {
@@ -244,15 +256,23 @@ $(document).ready(function() {
         }
 
         // Weiter-Button anzeigen
-        $(SEL_BUTTON_NEXT).removeClass(CLASS_HIDDEN);
+        if (answerRight !== null) {
+            $(SEL_BUTTON_NEXT).removeClass(CLASS_HIDDEN);
+        }
         
         // Aktuellen und nächsten Schritt ermitteln
         var stepCurrent = $(ID_QUIZ_STEPS).children(SEL_QUIZ_STEP_CURRENT);
         var stepNextNumber = stepCurrent.next(SEL_QUIZ_STEP)
                                         .attr(ATTR_DATA_STEP);
         
-        // Wenn die Antwort richtig ist
-        if (answerRight) {
+        // Wenn die Antwort nicht definieren ist
+        if (answerRight === null) {
+            
+            // Übersprungen setzen
+            stepCurrent.addClass(CLASS_SKIPPED);
+            
+        // Wenn die Antwort richtig ist 
+        } else if (answerRight) {
             
             // Erfolg setzen
             stepCurrent.addClass(CLASS_SUCCESS);
@@ -278,6 +298,9 @@ $(document).ready(function() {
             // Quiz abschließen
             $(ID_QUIZ_STEPS).addClass(CLASS_FINISHED);            
         }
+        
+        // Überspringen-Button ausblenden
+        resetTitleButtonRight();
     }
     
     /**
@@ -317,6 +340,7 @@ $(document).ready(function() {
                 // Nächsten Schritt aktivieren, Quiz-Slider verschieben
                 stepNext.addClass(CLASS_CURRENT);
                 moveQuizSlider(stepNextNumber);
+                setTitleButtonRight(VIEW_SKIP, CLASS_ICON_SKIP, STR_EMPTY);
             
             // Falls Quiz am Ende ist
             } else {
@@ -334,6 +358,13 @@ $(document).ready(function() {
                 // Zahlen setzen
                 $(ID_RESULT_RIGHT).text(stepsRight);
                 $(ID_RESULT_TOTAL).text(stepsTotal);
+                
+                // Emoticon setzen (wenn nur 10% richtig ist)
+                if (percentRight <= 10) {
+                    $(ID_RESULT_EMOTICON)
+                        .removeClass().addClass(CLASS_FA)
+                        .addClass(CLASS_ICON_FROWN);
+                }
                 
                 // Wenn keine richtige Antwort, Leiste ausblenden        
                 if (stepsRight === 0) {
@@ -354,8 +385,9 @@ $(document).ready(function() {
                     $(ID_RESULT_BAR).addClass(CLASS_GROW);
                 }, TIME_ANIMATION_LONGER);
                 
-                // "Beenden"-Button zurücksetzen
+                // Titel-Buttons zurücksetzen
                 resetTitleButtonRight();
+                resetTitleButtonLeft();
             }
         }
     }
@@ -409,6 +441,9 @@ $(document).ready(function() {
         
         // Warten
         setTimeout(function() {
+            
+            // Inhalt leeren
+            contentInner.html(STR_EMPTY);
             
             // Wenn View bereits im Cache ist
             if (typeof cacheView[view] !== STR_UNDEFINED) {
@@ -530,7 +565,8 @@ $(document).ready(function() {
         
         // Starten, "Beenden"-Button setzen
         progressQuiz();
-        setTitleButtonRight(VIEW_QUIZ, STR_EMPTY, STR_END);
+        setTitleButtonRight(VIEW_SKIP, CLASS_ICON_SKIP, STR_EMPTY);
+        setTitleButtonLeft(VIEW_QUIZ, STR_EMPTY, STR_END);
     }
     
     /**
@@ -657,8 +693,8 @@ $(document).ready(function() {
                 if (pos >= 0) {
 
                     // Markiertes Wort zusammensetzen
-                    var output = text.substr(0, pos) + STR_I_START +
-                                 text.substr(pos, len) + STR_I_END +
+                    var output = text.substr(0, pos) + STR_B_START +
+                                 text.substr(pos, len) + STR_B_END +
                                  text.substr(pos + len);
                     
                     // Wort einblenden und markieren
@@ -898,13 +934,10 @@ $(document).ready(function() {
                 // View ändern
                 changeView(view.substring(1));
                 
-                // Button zurücksetzen
-                resetTitleButtonRight();
-                
                 // Viewport Quiz-Modus deaktivieren
                 setTimeout(function() {
                     viewport.removeClass(CLASS_QUIZ);
-                }, TIME_ANIMATION_HALF);
+                }, TIME_ANIMATION);
                 
             // Wenn View "#dictionary" ist
             } else if (view === VIEW_DICTIONARY) {
@@ -968,6 +1001,13 @@ $(document).ready(function() {
                     setTitleButtonLeft(VIEW_SEARCH, CLASS_ICON_SEARCH);
                     filterDictionaryWords(true);
                 }
+            
+            // Wenn View "Überspringen" ist
+            } else if (view === VIEW_SKIP) {
+                
+                // Ergebnis als "Übersprungen" festlegen, nächste Frage zeigen
+                revealResult(VIEW_SKIP);
+                progressQuiz();
             }
         }
     });

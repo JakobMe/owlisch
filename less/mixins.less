@@ -71,6 +71,15 @@
             box-shadow: @x @y @blur @spread @color;
 }
 
+// Schatten Innen
+.shadow-inner(@x, @y, @blur, @spread, @color) {
+    -webkit-box-shadow: inset @x @y @blur @spread @color;
+       -moz-box-shadow: inset @x @y @blur @spread @color;
+        -ms-box-shadow: inset @x @y @blur @spread @color;
+         -o-box-shadow: inset @x @y @blur @spread @color;
+            box-shadow: inset @x @y @blur @spread @color;
+}
+
 // Schatten: Linie
 .shadow-line(@y, @color) {
     .shadow(0, @y, 0, 0, @color);

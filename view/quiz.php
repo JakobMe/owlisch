@@ -21,7 +21,7 @@
             "word"     => "dittken",
             "question" => "foreign",
             "answer"   => "german",
-            "options"  => "Das läuft langsam,Das läuft schlecht,Das läuft schnell"
+            "options"  => "das läuft langsam,das läuft schlecht,das läuft schnell"
         ),
         
         // Frage 2:
@@ -37,7 +37,7 @@
             "word"     => "anneeckeliegen",
             "question" => "german",
             "answer"   => "foreign",
-            "options"  => "Bedötscht,Drömmeligkeit,Patt"
+            "options"  => "bedötscht,drömmelig,patt"
         ),
         
         // Frage 4:
@@ -61,7 +61,7 @@
             "word"     => "noenkern",
             "question" => "german",
             "answer"   => "foreign",
-            "options"  => "Nöhlen,Baseln,Dölmern"
+            "options"  => "nöhlen,baseln,dölmern"
         ),
         
         // Frage 7:
@@ -69,7 +69,7 @@
             "word"     => "fickerig",
             "question" => "foreign",
             "answer"   => "german",
-            "options"  => "Erregt,Wütend,Fröhlich"
+            "options"  => "erregt,wütend,fröhlich"
         ),
         
         // Frage 8:
@@ -340,7 +340,7 @@
                 Du hast <b><span id="result-right">0</span> von
                 <span id="result-total"><?php echo sizeof($questions); ?></span></b>
                 Fragen richtig beantwortet!
-                <i class="fa fa-smile-o"></i>
+                <i id="result-emoticon" class="fa fa-smile-o"></i>
             </p>
             <p class="info">
                 Willst du noch einmal spielen?

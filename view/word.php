@@ -14,6 +14,10 @@
     $fImage = "$selected.jpg";
     $fAudio = "$selected.mp3";
     
+    // Artikel ermitteln
+    $oArticle = $word[$iArticle];
+    if ($oArticle == "") { $oArticle = false; }
+    
 ?>
 
 <!--Wort: <?php echo $word["word"]; ?>-->
@@ -24,7 +28,8 @@
     </div>
     <?php } ?>
     <h1 class="quiz-title">
-        <b><?php echo $word[$iWord]; ?></b>
+        <b><?php echo $word[$iWord]; ?></b><?php if ($oArticle) { ?>,
+        <?php echo $oArticle; } ?>
     </h1>
     <div class="quiz-info static">
         <span class="quiz-info-difficulty">

@@ -92,6 +92,12 @@
                     color: @color-error;
                     .animation(step-error);
                 }
+                
+                // Übersprungen
+                &.skipped:after {
+                    background: transparent;
+                    .shadow-inner(0, 0, 0, @size-line-medium, @color-white);
+                }
             }
         }
     }

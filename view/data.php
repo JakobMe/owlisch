@@ -5,6 +5,7 @@
     $iLevel     = "level";
     $iTranslate = "translate";
     $iInfo      = "info";
+    $iArticle   = "article";
     
     // Liste der Wörter
     $words = array(
@@ -14,6 +15,7 @@
             $iLevel      => "3",
             $iWord       => "Pinneken",
             $iTranslate  => "Schnapsglas",
+            $iArticle    => "das",
             $iInfo       => "
                 <b>Das Schnapsglas</b>: Ein genormtes Schnapsglas, Pinneken,
                 Pinnchen oder auch Stamperl genannt, fasst in Deutschland
@@ -24,8 +26,9 @@
         // Anne Ecke liegen
         "anneeckeliegen" => array(
             $iLevel      => "1",
-            $iWord       => "Anne Ecke liegen",
-            $iTranslate  => "Krank sein",
+            $iWord       => "anne Ecke liegen",
+            $iTranslate  => "krank sein",
+            $iArticle    => "",
             $iInfo       => "
                 <b>Krankheit</b> (mittelhochdeutsch krancheit, krankeit,
                 synonym zu Schwäche, Leiden, Not) ist die Störung der Funktion
@@ -37,7 +40,8 @@
         "buetterken"     => array(
             $iLevel      => "1",
             $iWord       => "Bütterken",
-            $iTranslate  => "Kleines Butterbrot",
+            $iTranslate  => "kleines Butterbrot",
+            $iArticle    => "das",
             $iInfo       => "
                 <b>Ein Butterbrot</b> ist eine mit Butter bestrichene Scheibe
                 Brot. In Teilen Norddeutschlands bezeichnet das Wort Butterbrot
@@ -50,8 +54,9 @@
         // Dölmern
         "doelmern"       => array(
             $iLevel      => "2",
-            $iWord       => "Dölmern",
-            $iTranslate  => "Spielen",
+            $iWord       => "dölmern",
+            $iTranslate  => "spielen",
+            $iArticle    => "",
             $iInfo       => "
                 Zweckungebundenes (nicht sinnloses!), gedankenverlorenes
                 <b>Vor-sich-hin-spielen</b> von Kindern, „rumdameln“.
@@ -63,6 +68,7 @@
             $iLevel      => "3",
             $iWord       => "Dönekens",
             $iTranslate  => "Anekdoten",
+            $iArticle    => "die",
             $iInfo       => "
                 <b>Anekdoten</b>, heitere Kurzgeschichten, oft von
                 zweifelhaftem Wahrheitsgehalt.
@@ -72,8 +78,9 @@
         // Fickerig
         "fickerig"       => array(
             $iLevel      => "1",
-            $iWord       => "Fickerig",
-            $iTranslate  => "Nervös",
+            $iWord       => "fickerig",
+            $iTranslate  => "nervös",
+            $iArticle    => "",
             $iInfo       => "
                 <b>Nervös</b>, aufgeregt, zappelig — jemand, der nicht still
                 halten kann.
@@ -85,6 +92,7 @@
             $iLevel      => "1",
             $iWord       => "Latüchte",
             $iTranslate  => "Lampe",
+            $iArticle    => "die",
             $iInfo       => "
                 Die <b>„Latüchte“</b> ist ein eigentümlicher Vokabelmix aus der
                 lateinischen „laterna“ und der plattdeutschen „Lüchte“,
@@ -96,8 +104,9 @@
         // Nönkern
         "noenkern"       => array(
             $iLevel      => "1",
-            $iWord       => "Nönkern",
-            $iTranslate  => "Mittagsschlag halten",
+            $iWord       => "nönkern",
+            $iTranslate  => "Mittagsschlaf halten",
+            $iArticle    => "",
             $iInfo       => "
                 Zeitlich ist <b>nönkern</b> recht eingegrenzt: Wie der Name
                 schon sagt, <b>nönkert</b> man in der Mittagszeit, so zwischen
@@ -112,7 +121,8 @@
         "pluedden"       => array(
             $iLevel      => "2",
             $iWord       => "Plüdden",
-            $iTranslate  => "Alte Klamotten",
+            $iTranslate  => "alte Klamotten",
+            $iArticle    => "die",
             $iInfo       => "
                 Alte, unmoderne, unordentliche Kleidung, <b>Klamotten</b>,
                 Klamottenhaufen. Die ostwestfälische Ausdruck <b>„Plüdden“</b>
@@ -125,8 +135,9 @@
         // Vermackeln
         "vermackeln"     => array(
             $iLevel      => "3",
-            $iWord       => "Vermackeln",
-            $iTranslate  => "Beschädigen",
+            $iWord       => "vermackeln",
+            $iTranslate  => "beschädigen",
+            $iArticle    => "",
             $iInfo       => "
                 Etwas <b>beschädigen</b>, ankratzen, lädieren, ramponieren
                 oder vertrimmen.
@@ -136,8 +147,9 @@
         // Nöhlen
         "noehlen"        => array(
             $iLevel      => "2",
-            $iWord       => "Nöhlen",
-            $iTranslate  => "Meckern",
+            $iWord       => "nöhlen",
+            $iTranslate  => "meckern",
+            $iArticle    => "",
             $iInfo       => "
                 <b>Meckern</b>, nörgeln, klagen — „Ihr seid auch nur am
                 Nöhlen“, „Der geht einem mit seinem ständigen Genöhle ganz
@@ -148,8 +160,9 @@
         // Angeschickert
         "angeschickert"  => array(
             $iLevel      => "2",
-            $iWord       => "Angeschickert",
-            $iTranslate  => "Angetrunken",
+            $iWord       => "angeschickert",
+            $iTranslate  => "angetrunken",
+            $iArticle    => "",
             $iInfo       => "
                 <b>Angetrunken</b>, beschwipst, leicht betrunken — Ist man,
                 nachdem die ersten „verkasematuckelten Pinneken“ oder
@@ -160,8 +173,9 @@
         // Beömmeln
         "beoemmeln"      => array(
             $iLevel      => "2",
-            $iWord       => "Beömmeln",
-            $iTranslate  => "Sich totlachen",
+            $iWord       => "beömmeln",
+            $iTranslate  => "sich totlachen",
+            $iArticle    => "",
             $iInfo       => "
                 Das tun sich die Leute dann, wenn jemand „son dummet Tüch
                 labert“, dass sich die Balken vor <b>Lachen</b> biegen.
@@ -171,8 +185,9 @@
         // Dittken
         "dittken"        => array(
             $iLevel      => "1",
-            $iWord       => "Das läuft wie'n Dittken",
-            $iTranslate  => "Das läuft rund",
+            $iWord       => "das läuft wie'n Dittken",
+            $iTranslate  => "das läuft rund",
+            $iArticle    => "",
             $iInfo       => "
                 <b>„Dittken“</b> bezeichnet ein 10-Pfennig-Stück. Weil man
                 10-Pfennig-Stücke eigentlich immer nur wahrgenommen hat,
@@ -189,6 +204,7 @@
             $iLevel      => "1",
             $iWord       => "Knüpp",
             $iTranslate  => "Knoten",
+            $iArticle    => "der",
             $iInfo       => "
                 Eine besonders schöne Wortsippe ist die Gruppe germanischer
                 Wörter, die mit „kn“ anfangen. Ihnen ist gemein, dass sie

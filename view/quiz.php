@@ -295,7 +295,7 @@
         <div class="quiz-solution-info center">
             <h4 class="subtitle"><span class="text">Hinweis</span></h4>
             <p class="word description info">
-                Benutze die <b>Tastatur</b>, um die Lösung einzugeben.
+                <b>Groß-/Kleinschreibung</b> wird <b>nicht</b> beachtet.
             </p>
         </div>
         <?php } ?>

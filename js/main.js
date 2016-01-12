@@ -119,7 +119,7 @@ $(document).ready(function() {
     var CLASS_ICON_SORT         = "fa-sort";
     var CLASS_ICON_CLOSE        = "fa-close";
     var CLASS_ICON_FROWN        = "fa-frown-o";
-    var CLASS_ICON_SKIP         = "fa-long-arrow-right";
+    var CLASS_ICON_SKIP         = "fa-step-forward";
     
     // Konstanten: AJAX-Werte
     var AJAX_PATH               = "view/";
@@ -135,7 +135,6 @@ $(document).ready(function() {
     var STR_STR                 = "string";
     var STR_UNDEFINED           = "undefined";
     var STR_BOOLEAN             = "boolean";
-    var STR_END                 = "beenden";
     var STR_B_START             = "<b>";
     var STR_B_END               = "</b>";
     
@@ -340,7 +339,7 @@ $(document).ready(function() {
                 // Nächsten Schritt aktivieren, Quiz-Slider verschieben
                 stepNext.addClass(CLASS_CURRENT);
                 moveQuizSlider(stepNextNumber);
-                setTitleButtonRight(VIEW_SKIP, CLASS_ICON_SKIP, STR_EMPTY);
+                setTitleButtonRight(VIEW_SKIP, CLASS_ICON_SKIP);
             
             // Falls Quiz am Ende ist
             } else {
@@ -570,8 +569,8 @@ $(document).ready(function() {
         
         // Starten, "Beenden"-Button setzen
         progressQuiz();
-        setTitleButtonRight(VIEW_SKIP, CLASS_ICON_SKIP, STR_EMPTY);
-        setTitleButtonLeft(VIEW_QUIZ, STR_EMPTY, STR_END);
+        setTitleButtonRight(VIEW_SKIP, CLASS_ICON_SKIP);
+        setTitleButtonLeft(VIEW_QUIZ, CLASS_ICON_CLOSE);
     }
     
     /**

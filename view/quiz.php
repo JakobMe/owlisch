@@ -127,8 +127,9 @@
         </div>
         <h4 class="subtitle"><span class="text">Hinweis</span></h4>
         <p class="word description margin-bottom info">
-            Je häufiger du ein Wort <b>richtig</b> errätst,
-            desto <b>schwieriger</b> werden die Fragen.
+            Du kannst das <b>Quiz</b> jederzeit <b>abbrechen</b>.<br/>
+            Wenn du eine Antwort <b>nicht weißt</b>, kannst du die Frage
+            auch <b>überspringen</b>.
         </p>
         <div class="content-padding">
             <a class="button round action" id="quiz-start">

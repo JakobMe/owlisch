@@ -150,7 +150,7 @@
             <h4 class="subtitle"><span class="text">Hinweis</span></h4>
             <p class="word description info">
                 Dein persönliches <b>Wörterbuch</b> füllt sich automatisch
-                mit allen Wörtern, die du schon erraten hast.
+                mit allen Wörtern, die du <b>schon erraten</b> hast.
             </p>
         </div>
         

@@ -151,7 +151,7 @@ $(document).ready(function() {
 
     // Konstanten: Zeiten
     var TIME_ANIMATION          = 300;
-    var TIME_ANIMATION_MEDIUM   = TIME_ANIMATION + 50;
+    var TIME_ANIMATION_MEDIUM   = TIME_ANIMATION + 75;
     var TIME_ANIMATION_HALF     = TIME_ANIMATION / 2;
     var TIME_ANIMATION_LONG     = TIME_ANIMATION * 1.5;
     var TIME_ANIMATION_LONGER   = TIME_ANIMATION * 2;
@@ -491,8 +491,8 @@ $(document).ready(function() {
      */
     function setTitleButton(button, text, href, icon, locked) {
         
-        // Button ausblenden
-        button.addClass(CLASS_LOCKED);
+        // Button ausblenden, Titelleiste sperren
+        button.add(titleBar).addClass(CLASS_LOCKED);
         
         // Auf Animation warten
         setTimeout(function() {
@@ -506,6 +506,11 @@ $(document).ready(function() {
             if (locked === false) { button.removeClass(CLASS_LOCKED); }
             
         }, TIME_ANIMATION_HALF);
+        
+        // Titelleiste entsperren
+        setTimeout(function() {
+            titleBar.removeClass(CLASS_LOCKED);
+        }, TIME_ANIMATION_LONG);
     }
     
     /**
@@ -922,8 +927,9 @@ $(document).ready(function() {
         // Event aufhalten
         event.preventDefault();
         
-        // Wenn Button nicht gesperrt ist
-        if (!$(this).hasClass(CLASS_LOCKED)) {
+        // Wenn Button und Titelleiste nicht gesperrt sind
+        if (!titleBar.hasClass(CLASS_LOCKED) &&
+            !$(this).hasClass(CLASS_LOCKED)) {
             
             // View ermitteln
             var view = $(this).attr(ATTR_HREF);

@@ -66,7 +66,7 @@
         
         // Frage 7:
         array(
-            "word"     => "fickerig",
+            "word"     => "fickerich",
             "question" => "foreign",
             "answer"   => "german",
             "options"  => "erregt,wütend,fröhlich"

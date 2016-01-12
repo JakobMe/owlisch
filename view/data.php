@@ -76,9 +76,9 @@
         ),
         
         // Fickerig
-        "fickerig"       => array(
+        "fickerich"       => array(
             $iLevel      => "1",
-            $iWord       => "fickerig",
+            $iWord       => "fickerich",
             $iTranslate  => "nervös",
             $iArticle    => "",
             $iInfo       => "

@@ -97,7 +97,6 @@
                 font-weight: bold;
                 position: absolute;
                 text-align: center;
-                font-style: italic;
                 left: 0;
                 width: 100%;
                 height: (@size-margin + @size-margin-half);
@@ -124,7 +123,7 @@
     overflow: hidden;
     position: relative;
     padding: 0 @size-margin;
-    padding-right: (@size-margin-double * 3);
+    padding-right: (@size-margin-double * 4);
     border-top: @size-line-thin solid darken(@color-background, @darken-border);
     border-bottom: @size-line-thin solid darken(@color-background, @darken-border-background);
     .gradient-background();
@@ -134,6 +133,9 @@
         position: relative;
         width: 100%;
         height: ((@number-levels * @height-bar-progress) + @size-margin);
+        
+        // Variante: Ein Balken
+        &.single { height: (@height-bar-progress + @size-margin); }
     }
     
     // Stufe
@@ -171,6 +173,9 @@
             .transition();
             .borderbox();
             
+            // Variante: Einzelner Balken
+            &.single { height: 100%; }
+            
             // Balken
             .bar {
                 position: absolute;
@@ -190,23 +195,32 @@
             // Label
             .bar-label {
                 display: block;
+                font-weight: bold;
                 position: absolute;
-                font-style: italic;
                 top: 0;
                 height: 100%;
-                padding: 0 @size-margin-half;
+                padding: 0 @size-margin;
                 font-size: @font-small;
-                padding-right: @size-margin;
+                color: @color-text-pale;
                 line-height: @height-bar-progress;
-                right: -(@size-margin-double * 3);
-                width: (@size-margin-double * 3);
+                right: -(@size-margin-double * 4);
+                width: (@size-margin-double * 4);
                 .quiz-level-status();
                 .borderbox();
                 
-                // Prozent
-                .percent {
-                    float: right;
-                    font-weight: bold;
+                // Texte
+                b { color: @color-text-dark; }
+                .level { font-weight: normal; }
+                .percent { float: right; }
+                
+                // Prozentangabe
+                i:not(.level) {
+                    display: inline-block;
+                    font-style: italic;
+                    font-size: @font-tiny;
+                    margin-left: @size-padding-half;
+                    line-height: @height-bar-progress;
+                    vertical-align: @size-line-thin;
                 }
             }
         }

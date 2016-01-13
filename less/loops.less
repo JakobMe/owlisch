@@ -35,7 +35,7 @@
 }
 
 // Loop: Quiz-Ergebnis Linien
-.loop-result-line(@n: @number-quiz, @i: 1) when (@i < @n) {
+.loop-result-line(@n: @number-quiz, @i: 1) when (@i <= @n) {
     &.line-@{i} { left: (10% * @i); }
     .loop-result-line(@n, (@i + 1));
 }

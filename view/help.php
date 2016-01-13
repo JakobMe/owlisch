@@ -52,9 +52,9 @@
     <p class="text">
         Im <b>Fortschrittsmenü</b> kann der Nutzer einsehen, wie viele richtige
         Antworten er in den letzten <b>zehn</b> Durchgängen im Quiz gegeben hat. 
-        Weiterhin wird noch angezeigt, wie viele Wörter der drei unterschiedlichen
-        <b>Schwierigkeitsstufen</b> sich im Wörterbuch befinden (<i>prozentual
-        an der Gesamtzahl der verfügbaren Wörter gemessen</i>).
+        Weiterhin wird noch angezeigt, wie viele der <b>vorhandenen Wörter</b>
+        bereits gelernt wurden und wie viele Wörter der drei unterschiedlichen
+        <b>Schwierigkeitsstufen</b> sich im Wörterbuch befinden.
     </p>
 
 </article>

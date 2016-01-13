@@ -51,6 +51,12 @@
     100% { color: @color-star; .textshadow-glow(fade(@color-star, 0%)); }
 }
 
+// Suche Hervorhebung
+@keyframes search-highlight {
+    0%   { background: @color-star; .shadow(0, 0, @size-line-medium, @size-line-thin, @color-star); }
+    100% { background: fade(@color-star, 50%); .shadow-none(); }
+}
+
 // Animations-Mixin
 .animation(@animation, @time: @time-animation) {
     animation: @animation @time normal forwards;

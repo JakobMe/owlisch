@@ -1,5 +1,10 @@
-/*jslint browser:true, node:true*/
-/*global define, Event, Node*/
+/*
+ * @preserve FastClick: polyfill to remove click delays on browsers with touch UIs.
+ *
+ * @codingstandard ftlabs-jsv2
+ * @copyright The Financial Times Limited [All Rights Reserved]
+ * @license MIT License (see LICENSE.txt)
+ */
 
 /**
  * Windows Phone 8.1 fakes user agent string to look like Android and iPhone.
@@ -812,17 +817,3 @@ FastClick.notNeeded = function(layer) {
 FastClick.attach = function(layer, options) {
 	return new FastClick(layer, options);
 };
-
-
-if (typeof define === 'function' && typeof define.amd === 'object' && define.amd) {
-
-	// AMD. Register as an anonymous module.
-	define(function() {
-		return FastClick;
-	});
-} else if (typeof module !== 'undefined' && module.exports) {
-	module.exports = FastClick.attach;
-	module.exports.FastClick = FastClick;
-} else {
-	window.FastClick = FastClick;
-}

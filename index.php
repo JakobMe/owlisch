@@ -19,6 +19,9 @@
         <title><?php echo $app; ?></title>
         <meta charset="utf-8">
         
+        <!--Favicons: Desktop-->
+        <link rel="shortcut icon" href="<?php echo $favicon; ?>/favicon.ico?v=<?php echo $version; ?>">
+        
         <!--Favicons: Apple-->
         <link rel="apple-touch-icon" type="image/png" sizes="57x57"   href="<?php echo $favicon; ?>/apple-touch-icon-57x57.png?v=<?php echo $version; ?>">
         <link rel="apple-touch-icon" type="image/png" sizes="60x60"   href="<?php echo $favicon; ?>/apple-touch-icon-60x60.png?v=<?php echo $version; ?>">
@@ -38,9 +41,6 @@
         <link rel="icon"             type="image/png" sizes="194x194" href="<?php echo $favicon; ?>/favicon-194x194.png?v=<?php echo $version; ?>">
         <link rel="manifest"                                          href="<?php echo $favicon; ?>/manifest.json?v=<?php echo $version; ?>">
         
-        <!--Favicons: Desktop-->
-        <link rel="shortcut icon" href="<?php echo $favicon; ?>/favicon.ico?v=<?php echo $version; ?>">
-        
         <!--Webapp-Einstellungen-->
         <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
         <meta name="apple-mobile-web-app-capable"          content="yes">
@@ -49,6 +49,7 @@
         <meta name="theme-color"                           content="<?php echo $color; ?>">
         <meta name="msapplication-TileColor"               content="<?php echo $color; ?>">
         <meta name="msapplication-TileImage"               content="<?php echo $favicon; ?>/mstile-144x144.png?v=<?php echo $version; ?>">
+        <meta name="msapplication-config"                  content="<?php echo $favicon; ?>/browserconfig.xml?v=<?php echo $version; ?>">
         <meta name="viewport"                              content="width=device-width, initial-scale=1,
                                                                     minimum-scale=1, maximum-scale=1,
                                                                     user-scalable=0">

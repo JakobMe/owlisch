@@ -1,5 +1,8 @@
 <?php
     
+    // Version
+    $version = "0.0.1";
+    
     // Wort-Indizes definieren
     $iWord      = "word";
     $iLevel     = "level";

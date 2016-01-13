@@ -222,7 +222,7 @@
     <section class="quiz-slide slide-<?php echo $index; echo ($aInput ? $clsFocus : $clsEmpty); ?>">
         <h1 class="quiz-title">Was bedeutet <b><?php echo $text; ?></b>?</h1>
         <?php if ($qImage && $fImage) { ?>
-        <div class="quiz-image"><img src="<?php echo $fImage; ?>" /></div>
+        <div class="quiz-image"><img src="<?php echo $fImage; ?>?v=<?php echo $version; ?>" /></div>
         <?php } ?>
         <div class="quiz-info">
             <span class="quiz-info-difficulty"><?php echo $diff; ?></span>
@@ -237,7 +237,7 @@
                 <i class="fa fa-volume-up"></i>
             </span>
             <audio preload="none" class="quiz-info-audio">
-                <source src="<?php echo $fAudio; ?>" type="audio/mpeg">
+                <source src="<?php echo $fAudio; ?>?v=<?php echo $version; ?>" type="audio/mpeg">
             </audio>
             <?php } ?>
         </div>
@@ -248,7 +248,7 @@
                 <a class="button choice<?php echo $opt[1]; ?>">
                    <?php if ($aImage) { ?>
                     <span class="button-image">
-                        <img src="img/content/<?php echo $opt[0]; ?>.jpg" />
+                        <img src="img/content/<?php echo $opt[0]; ?>.jpg?v=<?php echo $version; ?>" />
                     </span>
                    <?php } else { ?>
                    <span><?php echo $opt[0]; ?></span>

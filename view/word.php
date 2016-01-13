@@ -24,7 +24,7 @@
 <article id="word">
     <?php if (file_exists($pBack . $pImage . $fImage)) { ?>
     <div class="quiz-image big">
-        <img src="<?php echo ($pImage . $fImage); ?>" />
+        <img src="<?php echo ($pImage . $fImage); ?>?v=<?php echo $version; ?>" />
     </div>
     <?php } ?>
     <h1 class="quiz-title">
@@ -45,7 +45,7 @@
             <i class="fa fa-volume-up"></i>
         </span>
         <audio preload="none" class="quiz-info-audio">
-            <source src="<?php echo ($pAudio . $fAudio); ?>" type="audio/mpeg">
+            <source src="<?php echo ($pAudio . $fAudio); ?>?v=<?php echo $version; ?>" type="audio/mpeg">
         </audio>
         <?php } ?>
     </div>

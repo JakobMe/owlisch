@@ -88,7 +88,7 @@
             Hinweis
         </span>
     </h4>
-    <p class="word description info margin-bottom">
+    <p class="text info margin-bottom">
         Hier siehst du, wie viele Fragen du in deinen <b>10 letzten
         Spielen</b> richtig beantwortet hast und wie viele der
         <b>vorhandenen Wörter</b> du bereits auf welcher <b>Stufe</b>

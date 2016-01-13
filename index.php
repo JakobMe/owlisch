@@ -70,7 +70,7 @@
                                     Fehler!
                                 </span>
                             </h4>
-                            <p class="word description error">
+                            <p class="text error">
                                 Es ist ein Fehler aufgetreten.<br/>Versuche es bitte erneut
                                 (vermutlich wurde die Internetverbindung unterbrochen).
                             </p>

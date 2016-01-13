@@ -131,7 +131,7 @@
                 Hinweis
             </span>
         </h4>
-        <p class="word description margin-bottom info">
+        <p class="text margin-bottom info">
             Du kannst das <b>Quiz</b> jederzeit <b>abbrechen</b>.<br/>
             Wenn du eine Antwort <b>nicht weißt</b>, kannst du die Frage
             auch <b>überspringen</b>.
@@ -305,7 +305,7 @@
                     Hinweis
                 </span>
             </h4>
-            <p class="word description info">
+            <p class="text info">
                 <b>Groß-/Kleinschreibung</b> wird <b>nicht</b> beachtet.
             </p>
         </div>

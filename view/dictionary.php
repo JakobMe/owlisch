@@ -144,7 +144,7 @@
                     Nichts gefunden!
                 </span>
             </h4>
-            <p class="word description error">
+            <p class="text error">
                 Es konnten keine Wörter gefunden werden, die zu dem eingegebenen
                 Suchbegriff passen.
             </p>
@@ -158,7 +158,7 @@
                     Hinweis
                 </span>
             </h4>
-            <p class="word description info">
+            <p class="text info">
                 Dein persönliches <b>Wörterbuch</b> füllt sich automatisch
                 mit allen Wörtern, die du <b>schon erraten</b> hast.
             </p>

@@ -108,13 +108,30 @@
             color: @color-text-pale;
         }
         
-        // Variante: Wort
-        &.word {
+        // Variante: Wort & Text
+        &.word, &.text {
             margin: 0;
             padding: 0 @size-margin;
             
             // Letzter Absatz
             &:last-child { padding-bottom: @size-margin; }
+
+            // Varianten: Abstand Unten, Info & Fehler
+            &.margin-bottom { margin-bottom: @size-margin; }
+            &.info { text-align: center; color: @color-text-pale; }
+            &.error { text-align: center; font-weight: bold; }
+            
+            // Icons
+            .fa {
+                color: @color-white;
+                background: @color-text-pale;
+                padding: @size-padding-half @size-padding;
+                .round-all();
+            }
+        }
+        
+        // Variante: Wort
+        &.word {
             
             // Variante: Übersetzung
             &.translation {
@@ -123,19 +140,17 @@
                 line-height: 1.2;
                 font-size: @font-large;
             }
-            
-            // Variante: Beschreibung
-            &.description {
-                text-align: justify;
-                font-size: @font-small;
-                .hyphens();
-                
-                // Variante: Abstand Unten
-                &.margin-bottom { margin-bottom: @size-margin; }
-                &.info { text-align: center; color: @color-text-pale; }
-                &.error { text-align: center; font-weight: bold; }
-            }
         }
+        
+        // Variante: Text
+        &.text { padding-bottom: @size-margin-half; }
+        
+        // Variante: Text & Wort-Beschreibung
+        &.text, &.word.description {
+            text-align: justify;
+            font-size: @font-small;
+            .hyphens();
+        } 
     }
     
     // Untertitel
@@ -156,6 +171,20 @@
         // Varianten
         &:first-child, &:first-of-type { margin-top: @size-margin; }
         &.uniform { margin: @size-margin-half @size-margin; }
+        
+        // Variante: Groß
+        &.big {
+            height: (@size-margin + @size-padding);
+            line-height: (@size-margin + @size-padding);
+            font-size: @font-medium;
+            margin-bottom: @size-margin;
+            
+            // Linien
+            &:after, &:before {
+                opacity: @opacity-full;
+                top: ((@size-margin + @size-padding) / 2);
+            }
+        }
         
         // Linien
         &:after, &:before {
@@ -186,6 +215,9 @@
             .fa { margin-right: @size-padding-half; }
         }
     }
+    
+    // Ausnahme Untertitel
+    p.text + .subtitle { margin-top: (@size-margin-double - @size-margin); }
     
     // Quiz-Titel
     .quiz-title {

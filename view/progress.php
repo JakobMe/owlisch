@@ -82,7 +82,12 @@
     </div>
     
     <!--Erklärung-->    
-    <h4 class="subtitle"><span class="text">Hinweis</span></h4>
+    <h4 class="subtitle">
+        <span class="text">
+            <i class="fa fa-info-circle"></i>
+            Hinweis
+        </span>
+    </h4>
     <p class="word description info margin-bottom">
         Hier siehst du, wie viele Fragen du in deinen <b>10 letzten
         Spielen</b> richtig beantwortet hast und wie viele der

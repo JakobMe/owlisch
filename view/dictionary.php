@@ -138,7 +138,12 @@
         
         <!--Fehler-->
         <div class="error">
-            <h4 class="subtitle"><span class="text">Nichts gefunden</span></h4>
+            <h4 class="subtitle">
+                <span class="text">
+                    <i class="fa fa-ban"></i>
+                    Nichts gefunden!
+                </span>
+            </h4>
             <p class="word description error">
                 Es konnten keine Wörter gefunden werden, die zu dem eingegebenen
                 Suchbegriff passen.
@@ -147,7 +152,12 @@
         
         <!--Hinweis-->
         <div class="hint">
-            <h4 class="subtitle"><span class="text">Hinweis</span></h4>
+            <h4 class="subtitle">
+                <span class="text">
+                    <i class="fa fa-info-circle"></i>
+                    Hinweis
+                </span>
+            </h4>
             <p class="word description info">
                 Dein persönliches <b>Wörterbuch</b> füllt sich automatisch
                 mit allen Wörtern, die du <b>schon erraten</b> hast.

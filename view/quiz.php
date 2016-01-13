@@ -125,7 +125,12 @@
                 Teste dein <b>Wissen</b>!
             </p>
         </div>
-        <h4 class="subtitle"><span class="text">Hinweis</span></h4>
+        <h4 class="subtitle">
+            <span class="text">
+                <i class="fa fa-info-circle"></i>
+                Hinweis
+            </span>
+        </h4>
         <p class="word description margin-bottom info">
             Du kannst das <b>Quiz</b> jederzeit <b>abbrechen</b>.<br/>
             Wenn du eine Antwort <b>nicht weißt</b>, kannst du die Frage
@@ -294,7 +299,12 @@
             </p>
         </div>
         <div class="quiz-solution-info center">
-            <h4 class="subtitle"><span class="text">Hinweis</span></h4>
+            <h4 class="subtitle">
+                <span class="text">
+                    <i class="fa fa-info-circle"></i>
+                    Hinweis
+                </span>
+            </h4>
             <p class="word description info">
                 <b>Groß-/Kleinschreibung</b> wird <b>nicht</b> beachtet.
             </p>

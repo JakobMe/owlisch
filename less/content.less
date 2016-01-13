@@ -23,14 +23,31 @@
     &.hidden { opacity: @opacity-invisible; }
     
     // Inhalt Innen
-    #content-inner {
+    #content-inner, #error {
         -webkit-backface-visibility: hidden;
         position: relative;
+        overflow: hidden;
         height: 100%;
         line-height: 1.4;
         color: @color-text-dark;
         font-size: @font-medium;
         .borderbox();
+    }
+    
+    // Fehler-Container
+    #error {
+        
+        // Variante: Versteckt
+        &.hidden { display: none; }
+        
+        // Fehler
+        & > .error {
+            overflow: hidden;
+            position: relative;
+            top: 50%;
+            padding: 0 @size-margin;
+            .translate(0, -50%);
+        }
     }
     
     // Innenabstand
@@ -136,8 +153,9 @@
         font-size: @font-small;
         color: @color-text-pale;
         
-        // Erstes Label
+        // Varianten
         &:first-child, &:first-of-type { margin-top: @size-margin; }
+        &.uniform { margin: @size-margin-half @size-margin; }
         
         // Linien
         &:after, &:before {
@@ -163,6 +181,9 @@
             padding: 0 @size-padding;
             background: @color-background;
             .shadow(0, 0, @size-margin, @size-margin, @color-background);
+            
+            // Icon
+            .fa { margin-right: @size-padding-half; }
         }
     }
     

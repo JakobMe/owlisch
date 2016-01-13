@@ -62,6 +62,21 @@
                 
                 <!--Inhalt-->
                 <main id="content">
+                    <div id="error" class="hidden">
+                        <div class="error">
+                            <h4 class="subtitle uniform">
+                                <span class="text">
+                                    <i class="fa fa-warning"></i>
+                                    Fehler!
+                                </span>
+                            </h4>
+                            <p class="word description error">
+                                Es ist ein Fehler aufgetreten.<br/>Versuche es bitte erneut
+                                (vermutlich wurde die Internetverbindung unterbrochen).
+                            </p>
+                            <h4 class="subtitle uniform"></h4>
+                        </div>
+                    </div>
                     <div id="content-inner"></div>
                 </main>
                 

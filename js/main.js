@@ -50,6 +50,7 @@ $(document).ready(function() {
     var ID_CONTENT_DICTIONARY   = "#content-dictionary";
     var ID_CONTENT_INNER        = "#content-inner";
     var ID_CONTENT              = "#content";
+    var ID_ERROR                = "#error";
     var ID_VIEWPORT             = "#viewport-inner";
     var ID_SEARCH_INPUT         = "#dictionary-search-input";
     
@@ -135,6 +136,7 @@ $(document).ready(function() {
     var STR_STR                 = "string";
     var STR_UNDEFINED           = "undefined";
     var STR_BOOLEAN             = "boolean";
+    var STR_ERROR               = "error";
     var STR_B_START             = "<b>";
     var STR_B_END               = "</b>";
     
@@ -167,6 +169,7 @@ $(document).ready(function() {
     var contentInner            = $(ID_CONTENT_INNER);
     var tab                     = $(SEL_TAB);
     var searchInput             = $(ID_SEARCH_INPUT);
+    var error                   = $(ID_ERROR);
     
     // Chaches initialisieren
     var cacheView               = [];
@@ -449,10 +452,11 @@ $(document).ready(function() {
 
                 // Inhalt laden
                 contentInner.html(cacheView[view])
-                                   .promise().done(function() {
+                            .promise().done(function() {
                                    
-                    // Inhalt einblenden, Callback
+                    // Inhalt einblenden, Fehler ausblenden, Callback
                     content.removeClass(CLASS_HIDDEN);
+                    error.addClass(CLASS_HIDDEN);
                     if ($.isFunction(callback)) { callback(); }
                 });
                 
@@ -463,15 +467,26 @@ $(document).ready(function() {
                 var file = AJAX_PATH + view + AJAX_PHP;
         
                 // Inhalt laden
-                contentInner.load(file, params, function(response) {
-
-                    // Inhalt einblenden, Callback
-                    content.removeClass(CLASS_HIDDEN);
-                    if ($.isFunction(callback)) { callback(); }
+                contentInner.load(file, params, function(response, status) {
                     
-                    // Falls Datei noch nicht gecached ist, cachen
-                    if (typeof cacheView[view] === STR_UNDEFINED) {
-                        cacheView[view] = response;
+                    // Falls ein Fehler aufgetreten ist
+                    if (status === STR_ERROR) {
+                        
+                        // Fehler und Inhalt einblenden
+                        error.add(content).removeClass(CLASS_HIDDEN);
+                        
+                    // Falls kein Fehler aufgetreten ist
+                    } else {
+                        
+                        // Inhalt einblenden, Fehler ausblenden, Callback
+                        content.removeClass(CLASS_HIDDEN);
+                        error.addClass(CLASS_HIDDEN);
+                        if ($.isFunction(callback)) { callback(); }
+                        
+                        // Falls Datei noch nicht gecached ist, cachen
+                        if (typeof cacheView[view] === STR_UNDEFINED) {
+                            cacheView[view] = response;
+                        }
                     }
                 });
             }
@@ -947,6 +962,9 @@ $(document).ready(function() {
             // Wenn View "#dictionary" ist
             } else if (view === VIEW_DICTIONARY) {
                 
+                // Fehler ausblenden
+                error.addClass(CLASS_HIDDEN);
+                
                 // Wenn Suche aktiv ist
                 if (titleBar.hasClass(CLASS_SEARCH_BACK)) {
                     
@@ -1082,8 +1100,9 @@ $(document).ready(function() {
                     $(ID_CONTENT_DICTIONARY).html(cacheDictionary[word])
                                             .promise().done(function() {
                         
-                        // Inhalt einblenden
+                        // Inhalt einblenden, Fehler ausblenden
                         content.removeClass(CLASS_HIDDEN);
+                        error.addClass(CLASS_HIDDEN);
                     });
                 
                 // Wenn das Wort zum ersten Mal geladen wird
@@ -1091,15 +1110,26 @@ $(document).ready(function() {
                     
                     // Wort laden
                     $(ID_CONTENT_DICTIONARY).load(
-                        file, { word: word }, function(response) {
+                        file, { word: word }, function(response, status) {
                         
-                        // Falls Datei noch nicht gecached ist
-                        if (typeof cacheDictionary[word] === STR_UNDEFINED) {
-                            cacheDictionary[word] = response;
+                        // Wenn ein Fehler aufgetreten ist
+                        if (status === STR_ERROR) {
+                            
+                            // Fehler und Inhalt einblenden
+                            error.add(content).removeClass(CLASS_HIDDEN);
+                            
+                        // Wenn kein Fehler aufgetreten ist
+                        } else {
+                            
+                            // Falls Datei noch nicht gecached ist
+                            if (typeof cacheDictionary[word] === STR_UNDEFINED) {
+                                cacheDictionary[word] = response;
+                            }
+                            
+                            // Inhalt einblenden
+                            error.addClass(CLASS_HIDDEN);
+                            content.removeClass(CLASS_HIDDEN);
                         }
-                        
-                        // Inhalt einblenden
-                        content.removeClass(CLASS_HIDDEN);
                     });
                 }
             }, TIME_ANIMATION_HALF);

@@ -58,7 +58,7 @@
         
         <!--Viewport-->
         <div id="viewport">
-            <div id="viewport-inner">
+            <div id="viewport-inner" class="hidden">
                 
                 <!--Inhalt-->
                 <main id="content">

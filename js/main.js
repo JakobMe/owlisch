@@ -473,7 +473,8 @@ $(document).ready(function() {
                     if (status === STR_ERROR) {
                         
                         // Fehler und Inhalt einblenden
-                        error.add(content).removeClass(CLASS_HIDDEN);
+                        error.add(content).add(viewport)
+                             .removeClass(CLASS_HIDDEN);
                         
                     // Falls kein Fehler aufgetreten ist
                     } else {
@@ -1198,7 +1199,11 @@ $(document).ready(function() {
         }
         
         // Startseite laden
-        changeView(VIEW_HOME);
+        changeView(VIEW_HOME, function() {
+            setTimeout(function() {
+                viewport.removeClass(CLASS_HIDDEN);
+            }, TIME_ANIMATION_LONGER);
+        });
     });
     
 });

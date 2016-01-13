@@ -47,23 +47,37 @@ body {
 }
 
 // Viewport
-#viewport #viewport-inner {
-    overflow: hidden;
-    position: absolute;
-    background-repeat: no-repeat;
-    background-position: center center;
-    background-image: url("../img/layout/spinner.gif");
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: @color-background;
-    background-size: @height-spinner @height-spinner;
+#viewport {
+    background-image: url("../img/layout/spinner-viewport.gif?v=@{version}");
+    background-color: @color-white;
     
-    // Variante: Quiz
-    &.quiz {
-        #content { padding-bottom: 0; }
-        #bar-tabs { .translate(0, (@height-titlebar + @size-line-thin)); }
+    // Hintergrund
+    &, #viewport-inner {
+        width: 100%;
+        height: 100%;
+        background-repeat: no-repeat;
+        background-position: center center;
+        background-size: @height-spinner @height-spinner;
+    }
+    
+    // Innen
+    #viewport-inner {
+        overflow: hidden;
+        position: absolute;
+        top: 0;
+        left: 0;
+        background-image: url("../img/layout/spinner.gif?v=@{version}");
+        background-color: @color-background;
+        .transition(opacity);
+        
+        // Variante: Quiz
+        &.quiz {
+            #content { padding-bottom: 0; }
+            #bar-tabs { .translate(0, (@height-titlebar + @size-line-thin)); }
+        }
+        
+        // Variante: Versteckt
+        &.hidden { opacity: @opacity-invisible; }
     }
 }
 
@@ -80,7 +94,7 @@ body {
         background-repeat: repeat;
         background-attachment: fixed;
         background-position: left top;
-        background-image: url("../img/layout/background.png");
+        background-image: url("../img/layout/background.png?v=@{version}");
         background-color: lighten(@color-background, (@darken-background * 2));
         background-size: @size-background @size-background;
         
@@ -97,10 +111,11 @@ body {
     
     // Viewport
     #viewport {
+        background-color: transparent;
         background-repeat: no-repeat;
         background-position: center center;
         margin: 0 auto;
-        background-image: url("../img/layout/iphone.png");
+        background-image: url("../img/layout/iphone.png?v=@{version}");
         width: @width-mobile;
         height: @height-mobile;
         margin-top: (@size-gap-mobile-bottom - @size-gap-mobile-top);
@@ -124,6 +139,6 @@ body {
               and (min-resolution: 144dpi) {
     
     // Hintergrundbilder
-    body { background-image: url("../img/layout/background-retina.png"); }
-    #viewport { background-image: url("../img/layout/iphone-retina.png"); }
+    body { background-image: url("../img/layout/background-retina.png?v=@{version}"); }
+    #viewport { background-image: url("../img/layout/iphone-retina.png?v=@{version}"); }
 }

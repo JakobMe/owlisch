@@ -1,5 +1,6 @@
 /*
  * Main-Javascript.
+ * @version 0.1
  * @author Jakob Metzger <jakob.me@gmail.com>
  * @copyright 2016 Jakob Metzger
  */

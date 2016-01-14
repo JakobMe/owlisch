@@ -1,7 +1,7 @@
 <?php
     
     // Daten inkludieren
-    include("data.php");
+    include("view/data.php");
     
     // Einstellungen
     $app     = "OWLisch";

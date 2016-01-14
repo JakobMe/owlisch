@@ -79,6 +79,9 @@ body {
         // Variante: Versteckt
         &.hidden { opacity: @opacity-invisible; }
     }
+    
+    // GitHub-Link ausblenden
+    #github { display: none; }
 }
 
 // Clearfix
@@ -111,6 +114,7 @@ body {
     
     // Viewport
     #viewport {
+        position: relative;
         background-color: transparent;
         background-repeat: no-repeat;
         background-position: center center;
@@ -128,6 +132,40 @@ body {
             position: relative;
             width: @width-mobile;
             height: @height-mobile;
+        }
+        
+        // GitHub-Link
+        #github {
+            display: block;
+            font-weight: bold;
+            text-align: center;
+            position: absolute;
+            font-style: italic;
+            left: 0;
+            width: 100%;
+            padding: 0 @size-gap-mobile-sides;
+            line-height: @size-margin-double;
+            height: @size-margin-double;
+            bottom: @size-margin-double;
+            color: @color-text-pale;
+            font-size: @font-small;
+            .borderbox();
+            
+            // Link
+            a {
+                display: inline-block;
+                text-decoration: none;
+                padding: 0 @size-margin;
+                color: @color-text-pale;
+                .textshadow-glow(lighten(@color-background, (@darken-background * 2)));
+                .transition();
+                
+                // Icon
+                .fa { margin-right: @size-padding-half; }
+                
+                // Hover
+                &:hover { color: @color-text-dark; }
+            }
         }
     }
 }

@@ -69,6 +69,8 @@
         
         <!--Viewport-->
         <div id="viewport">
+            
+            <!--Viewport Innen-->
             <div id="viewport-inner" class="hidden">
                 
                 <!--Inhalt-->
@@ -155,6 +157,16 @@
                 </nav>
             
             </div>
+            
+            <!--Github-->
+            <aside id="github">
+                <a href="https://github.com/jakobme/owlisch"
+                   target="_blank" title="GitHub">
+                   <i class="fa fa-github"></i>
+                   <span>github.com/jakobme/owlisch</span>
+                </a>
+            </aside>
+            
         </div>
         
     </body>

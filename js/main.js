@@ -515,7 +515,8 @@ $(document).ready(function() {
             // Button Link, Text und Icon setzen
             button.attr(ATTR_HREF, href);
             button.children(SEL_TITLE_BUTTON).text(text);
-            button.children(SEL_I).removeClass().addClass(CLASS_FA).addClass(icon);
+            button.children(SEL_I).removeClass()
+                  .addClass(CLASS_FA).addClass(icon);
             
             // Button entsperren/einblenden
             if (locked === false) { button.removeClass(CLASS_LOCKED); }
@@ -1123,7 +1124,8 @@ $(document).ready(function() {
                         } else {
                             
                             // Falls Datei noch nicht gecached ist
-                            if (typeof cacheDictionary[word] === STR_UNDEFINED) {
+                            if (typeof cacheDictionary[word] ===
+                                STR_UNDEFINED) {
                                 cacheDictionary[word] = response;
                             }
                             

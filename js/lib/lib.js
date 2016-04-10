@@ -5,3 +5,4 @@
 
 // @codekit-prepend "_jquery.js";
 // @codekit-prepend "_bemhelpers.js";
+// @codekit-prepend "_fastclick.js";

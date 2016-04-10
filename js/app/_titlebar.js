@@ -61,7 +61,7 @@ var TitleBar = (function() {
      * Bindet Funktionen an Events und Elemente des Moduls.
      */
     function _bindEvents() {
-        _$titlebar.on(GLOBAL.EVENT.CLICK, _SEL_BUTTONS, _buttonAction);
+        _$titlebar.on(GLOBALS.EVENT.CLICK, _SEL_BUTTONS, _buttonAction);
     }
     
     /**
@@ -184,12 +184,12 @@ var TitleBar = (function() {
         setTimeout(function() {
             
             // Falls Icon oder Aktion nicht gesetzt sind
-            if ((icon === null) || (icon === GLOBAL.STR.EMPTY) ||
-                (action === null) || (action === GLOBAL.STR.EMPTY)) {
+            if ((icon === null) || (icon === GLOBALS.STR.EMPTY) ||
+                (action === null) || (action === GLOBALS.STR.EMPTY)) {
                 
                 // Button deaktivieren
                 $button.setMod(_B, _E_BUTTON, _M_ICON, ICON.NONE);
-                $button.attr(GLOBAL.ATTR.DATA_ACTION, GLOBAL.STR.EMPTY);
+                $button.attr(GLOBALS.ATTR.DATA_ACTION, GLOBALS.STR.EMPTY);
                 
             // Falls beides korrekt gesetzt ist
             } else {
@@ -197,15 +197,15 @@ var TitleBar = (function() {
                 // Icon und Aktion setzen, Button einblenden
                 $button.setMod(_B, _E_BUTTON, _M_DISABLED, false);
                 $button.setMod(_B, _E_BUTTON, _M_ICON, icon);
-                $button.attr(GLOBAL.ATTR.DATA_ACTION, action);
+                $button.attr(GLOBALS.ATTR.DATA_ACTION, action);
             }
             
             // Buttons wieder aktivieren
             setTimeout(function() {
                 _buttonsDisabled = false;
-            }, GLOBAL.TIME.STANDARD);
+            }, GLOBALS.TIME.STANDARD);
             
-        }, GLOBAL.TIME.SHORT);
+        }, GLOBALS.TIME.SHORT);
     }
     
     /**
@@ -225,7 +225,7 @@ var TitleBar = (function() {
             _$title.text(_title);
             _$title.setMod(_B, _E_TITLE, _M_HIDDEN, false);
             
-        }, GLOBAL.TIME.SHORT);
+        }, GLOBALS.TIME.SHORT);
     }
     
     /**
@@ -244,7 +244,7 @@ var TitleBar = (function() {
             if (_isSearch) {
                 setTimeout(function() {
                     _$search.focus();
-                }, GLOBAL.TIME.MEDIUM);
+                }, GLOBALS.TIME.MEDIUM);
             }
         }
     }
@@ -315,7 +315,7 @@ var TitleBar = (function() {
      * @returns {Object} Modul-Objekt
      */
     function setTitle(title) {
-        if ((title !== null) && (title !== GLOBAL.STR.EMPTY)) {
+        if ((title !== null) && (title !== GLOBALS.STR.EMPTY)) {
             _title = title;
             _renderTitle();
         }

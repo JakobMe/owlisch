@@ -7,10 +7,13 @@ $(document).ready(function() {
     
     // BEM-Syntax anpassen
     $.BEMsyntax({
-        elem:      GLOBAL.BEM.ELEMDIV,
-        modBefore: GLOBAL.BEM.MODDIV,
-        modKeyVal: GLOBAL.BEM.MODKEY
+        elem:      GLOBALS.BEM.ELEMDIV,
+        modBefore: GLOBALS.BEM.MODDIV,
+        modKeyVal: GLOBALS.BEM.MODKEY
     });
+    
+    // FastClick initialisieren
+    FastClick.attach(document.body);
     
     // Module initialisieren
     TabBar.init();
@@ -20,6 +23,6 @@ $(document).ready(function() {
     // Viewport initialisieren
     setTimeout(function() {
         Viewport.show();
-    }, GLOBAL.TIME.LONGER);
+    }, GLOBALS.TIME.LONGER);
     
 });

@@ -8,6 +8,11 @@ var GLOBAL = (function() {
     // Öffentliches Interface
     return {
         
+        // Strings
+        STR: {
+            EMPTY:          ""
+        },
+        
         // Events
         EVENT: {
             CLICK:          "click",
@@ -24,9 +29,15 @@ var GLOBAL = (function() {
             OBJECT:         "object"
         },
         
+        // HTML-Attribute
+        ATTR: {
+            DATA_ACTION:    "data-action"
+        },
+        
         // Data-Attribute
         DATA: {
-            VIEW:           "view"
+            VIEW:           "view",
+            ACTION:         "action"
         },
         
         // BEM-Syntax
@@ -34,6 +45,15 @@ var GLOBAL = (function() {
             ELEMDIV:        "__",
             MODDIV:         "--",
             MODKEY:         "-"
+        },
+        
+        // Zeiten
+        TIME: {
+            STANDARD:       300,
+            MEDIUM:         375,
+            SHORT:          150,
+            LONG:           450,
+            LONGER:         600
         }
     };
     

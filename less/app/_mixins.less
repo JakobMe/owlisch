@@ -15,6 +15,14 @@
     content: "";
 }
 
+// FontAwesome-Icon
+.fa-icon(@icon) {
+    &:after {
+        content: @icon;
+        .font-icon();
+    }
+}
+
 // Ellipse
 .ellipsis() {
     overflow: hidden;

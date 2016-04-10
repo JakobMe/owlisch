@@ -14,5 +14,6 @@ $(document).ready(function() {
     
     // TabBar initialisieren
     TabBar.init();
+    TitleBar.init();
     
 });

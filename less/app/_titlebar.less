@@ -1,0 +1,144 @@
+/*
+ * Modul: TitleBar.
+ * Definiert die TitleBar der App.
+ * @author Jakob Metzger <jakob.me@gmail.com>
+ * @copyright 2016 Jakob Metzger
+ */
+
+// Modul-Variablen
+@_titlebar-size-height:           44px;
+@_titlebar-size-height-status:    20px;
+@_titlebar-fontsize-icon:         19px;
+@_titlebar-fontsize-title:        17px;
+ 
+// Block: TitleBar
+.titlebar {
+    position: fixed;
+    overflow: hidden;
+    text-align: center;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background: @global-color-main;
+    color: @global-color-white;
+    height: @_titlebar-size-height;
+    .shadow-line(@global-size-line-thin, darken(@global-color-main, @global-darken-border));
+    .textshadow();
+    
+    // Mod: Suche & Suchfeld
+    &--search &__search {
+        opacity: @global-opacity-full;
+        .translate();
+    }
+    
+    // Mod: Suche & Titel
+    &--search &__title {
+        opacity: @global-opacity-invisible;
+        .translate(0, 100%);
+    }
+    
+    // Element: Titel
+    &__title {
+        font-weight: bold;
+        display: inline-block;
+        text-transform: uppercase;
+        margin: 0;
+        width: 100%;
+        padding: 0 @_titlebar-size-height;
+        height: @_titlebar-size-height;
+        line-height: @_titlebar-size-height;
+        font-size: @_titlebar-fontsize-title;
+        .transition(all, @global-time-animation-half);
+        .borderbox();
+        .ellipsis();
+        
+        // Mod: Versteckt
+        &--hidden {
+            opacity: @global-opacity-invisible;
+        }
+    }
+    
+    // Element: Button
+    &__button {
+        display: block;
+        cursor: pointer;
+        position: absolute;
+        text-align: center;
+        font-style: normal;
+        text-decoration: none;
+        top: 0;
+        margin: 0;
+        padding: 0;
+        font-size: @_titlebar-fontsize-icon;
+        height: @_titlebar-size-height;
+        line-height: @_titlebar-size-height;
+        width: @_titlebar-size-height;
+        .transition(all, @global-time-animation-half);
+        
+        // Mod: Links/Deaktiviert
+        &--left { left: 0; }
+        &--left&--disabled { .translate(-100%); }
+        
+        // Mod: Rechts/Deaktiviert
+        &--right { right: 0; }
+        &--right&--disabled { .translate(100%); }
+        
+        // Mod: Deaktiviert
+        &--disabled { opacity: @global-opacity-invisible; }
+        
+        // Mod: Icons
+        &--icon-cancel { .fa-icon(@fa-var-close); }
+        &--icon-skip { .fa-icon(@fa-var-step-forward); }
+        &--icon-back { .fa-icon(@fa-var-chevron-left); }
+        &--icon-search { .fa-icon(@fa-var-search); }
+        &--icon-sort { .fa-icon(@fa-var-sort); }
+    }
+    
+    // Element: Suche
+    &__search {
+        overflow: hidden;
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        padding: @global-size-margin-half @_titlebar-size-height;
+        opacity: @global-opacity-invisible;
+        .translate(0, 100%);
+        .transition(opacity);
+        .borderbox();
+    }
+    
+    // Element: Input
+    &__input {
+        -webkit-appearance: none;
+        border: none;
+        outline: none;
+        display: block;
+        font-weight: bold;
+        text-transform: uppercase;
+        width: 100%;
+        color: @global-color-white;
+        font-size: @global-fontsize-small;
+        background: darken(@global-color-main, @global-darken-main);
+        padding: @global-size-padding @global-size-padding-double;
+        height: (@_titlebar-size-height - @global-size-margin);
+        .textshadow();
+        .font-main();
+        .borderbox();
+        .round-all();
+        .gradient-vertical(
+            darken(@global-color-main, @global-darken-main-dark),
+            darken(@global-color-main, @global-darken-main)
+        );
+    }
+}
+
+// Responsive
+@media screen and (min-width: @global-width-iphone) {
+    
+    // Block: TitleBar
+    .titlebar {
+        position: absolute;
+    }
+}

@@ -46,8 +46,7 @@ var TabBar = (function() {
               .siblings().setMod(_B, _E, _M_ACTIVE, false);
         
         // TabBar ein-/ausblenden
-        if (_isHidden) { _$tabbar.setMod(_B, _M_HIDDEN, true); }
-        else { _$tabbar.setMod(_B, _M_HIDDEN, false); }
+        _$tabbar.setMod(_B, _M_HIDDEN, _isHidden);
         
         // Aktiven Tab notieren (Statusleiste bewegen)
         _$tabbar.setMod(_B, _M_TAB, _tabActive);

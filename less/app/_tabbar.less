@@ -28,7 +28,7 @@
     bottom: 0;
     width: 100%;
     height: @_tabbar-size-height;
-    border-top: @global-size-line-thin solid fade(@global-color-black, 20%);
+    border-top: @app-size-line-thin solid fade(@app-color-black, 20%);
     .transition(transform);
     ._tabbar-loop-status();
     
@@ -56,20 +56,20 @@
         text-decoration: none;
         padding: @_tabbar-size-padding;
         width: (100% / @_tabbar-number-tabs);
-        color: @global-color-text-pale;
+        color: @app-color-text-pale;
         height: @_tabbar-size-height;
         .transition(color);
         .borderbox();
         
         // Hover
         &:hover {
-            color: @global-color-text-dark;
+            color: @app-color-text-dark;
         }
         
         // Mod: Aktiv
         &--active {
             &, &:hover {
-                color: @global-color-main;
+                color: @app-color-main;
             }
         }
     }
@@ -106,8 +106,8 @@
         left: 0;
         width: (100% / @_tabbar-number-tabs);
         padding: 0 @_tabbar-size-padding-status;
-        top: -(@global-size-line-thin);
-        height: @global-size-line-bold;
+        top: -(@app-size-line-thin);
+        height: @app-size-line-bold;
         .transition();
         .borderbox();
         
@@ -115,9 +115,9 @@
         &:after {
             width: 100%;
             height: 100%;
-            background: @global-color-main;
-            border-top: @global-size-line-thin solid darken(@global-color-main, @global-darken-main);
-            .round-all(@global-size-line-thin);
+            background: @app-color-main;
+            border-top: @app-size-line-thin solid darken(@app-color-main, @app-darken-main);
+            .round-all(@app-size-line-thin);
             .after-block();
             .borderbox();
         }
@@ -125,7 +125,7 @@
 }
 
 // Responsive
-@media screen and (min-width: @global-size-responsive) {
+@media screen and (min-width: @app-size-responsive) {
     
     // Block: Tabbar
     .tabbar {

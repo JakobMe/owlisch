@@ -22,8 +22,8 @@
     height: 100%;
     background-repeat: no-repeat;
     background-position: center center;
-    background-image: url("@{global-path-layout}/spinner-viewport.gif?v=@{global-version}");
-    background-color: @global-color-white;
+    background-image: url("@{app-path-layout}/spinner-viewport.gif?v=@{app-version}");
+    background-color: @app-color-white;
     background-size: @_viewport-size-spinner @_viewport-size-spinner;
 
     // Element: App
@@ -36,21 +36,21 @@
         left: 0;
         width: 100%;
         height: 100%;
-        opacity: @global-opacity-invisible;
-        background-image: url("@{global-path-layout}/spinner.gif?v=@{global-version}");
+        opacity: @app-opacity-invisible;
+        background-image: url("@{app-path-layout}/spinner.gif?v=@{app-version}");
         background-size: @_viewport-size-spinner @_viewport-size-spinner;
-        background-color: @global-color-background;
+        background-color: @app-color-background;
         .transition(opacity);
         
         // Mod: Sichtbar
         &--visible {
-            opacity: @global-opacity-full;
+            opacity: @app-opacity-full;
         }
     }
 }
 
 // Responsive
-@media screen and (min-width: @global-size-responsive) {
+@media screen and (min-width: @app-size-responsive) {
     
     // Block: Viewport
     .viewport {
@@ -59,7 +59,7 @@
         background-repeat: no-repeat;
         background-position: center center;
         margin: 0 auto;
-        background-image: url("@{global-path-layout}/iphone.png?v=@{global-version}");
+        background-image: url("@{app-path-layout}/iphone.png?v=@{app-version}");
         width: @_viewport-size-width;
         height: @_viewport-size-height;
         margin-top: (@_viewport-size-gap-bottom - @_viewport-size-gap-top);
@@ -73,11 +73,11 @@
 }
 
 // Responsive Retina
-@media screen and (min-width: @global-size-responsive)
+@media screen and (min-width: @app-size-responsive)
               and (-webkit-min-device-pixel-ratio: 1.5),
-       screen and (min-width: @global-size-responsive)
+       screen and (min-width: @app-size-responsive)
               and (min-resolution: 144dpi) {
     
     // Block: Viewport
-    .viewport { background-image: url("@{global-path-layout}/iphone-retina.png?v=@{global-version}"); }
+    .viewport { background-image: url("@{app-path-layout}/iphone-retina.png?v=@{app-version}"); }
 }

@@ -6,7 +6,7 @@
  */
 
 // Modul-Variablen
-@_body-size-background: 24px;
+@_body-size-background:         24px;
 
 // Webkit Sonderregeln
 * { -webkit-tap-highlight-color: rgba(0, 0, 0, 0) !important; }
@@ -23,12 +23,12 @@
     padding: 0;
     width: 100vw;
     height: 100vh;
-    background: @global-color-white;
+    background: @app-color-white;
     .font-main();
 }
 
 // Responsive
-@media screen and (min-width: @global-size-responsive) {
+@media screen and (min-width: @app-size-responsive) {
     
     // Block: Body
     .body {
@@ -37,18 +37,18 @@
         background-repeat: repeat;
         background-attachment: fixed;
         background-position: left top;
-        background-image: url("@{global-path-layout}/background.png?v=@{global-version}");
-        background-color: lighten(@global-color-background, (@global-darken-background * 2));
+        background-image: url("@{app-path-layout}/background.png?v=@{app-version}");
+        background-color: lighten(@app-color-background, (@app-darken-background * 2));
         background-size: @_body-size-background @_body-size-background;
     }
 }
 
 // Retina
-@media screen and (min-width: @global-size-responsive)
+@media screen and (min-width: @app-size-responsive)
               and (-webkit-min-device-pixel-ratio: 1.5),
-       screen and (min-width: @global-size-responsive)
+       screen and (min-width: @app-size-responsive)
               and (min-resolution: 144dpi) {
     
     // Block: Body
-    .body { background-image: url("@{global-path-layout}/background-retina.png?v=@{global-version}"); }
+    .body { background-image: url("@{app-path-layout}/background-retina.png?v=@{app-version}"); }
 }

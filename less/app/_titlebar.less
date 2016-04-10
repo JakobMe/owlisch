@@ -9,8 +9,9 @@
 @_titlebar-size-height:         44px;
 @_titlebar-size-height-status:  20px;
 @_titlebar-size-width-status:   320px;
-@_titlebar-fontsize-icon:       19px;
 @_titlebar-fontsize-title:      17px;
+@_titlebar-fontsize-icon:       19px;
+@_titlebar-fontsize-icon-sm:    16px;
  
 // Block: TitleBar
 .titlebar {
@@ -20,10 +21,10 @@
     top: 0;
     left: 0;
     width: 100%;
-    background: @global-color-main;
-    color: @global-color-white;
+    background: @app-color-main;
+    color: @app-color-white;
     height: @_titlebar-size-height;
-    .shadow-line(@global-size-line-thin, darken(@global-color-main, @global-darken-border));
+    .shadow-line(@app-size-line-thin, darken(@app-color-main, @app-darken-border));
     .textshadow();
     
     // Mod: Webapp
@@ -33,13 +34,13 @@
     
     // Mod: Suche & Suchfeld
     &--search &__search {
-        opacity: @global-opacity-full;
+        opacity: @app-opacity-full;
         .translate();
     }
     
     // Mod: Suche & Titel
     &--search &__title {
-        opacity: @global-opacity-invisible;
+        opacity: @app-opacity-invisible;
         .translate(0, 100%);
     }
     
@@ -59,13 +60,13 @@
         height: @_titlebar-size-height;
         line-height: @_titlebar-size-height;
         font-size: @_titlebar-fontsize-title;
-        .transition(all, @global-time-animation-half);
+        .transition(all, @app-time-animation-half);
         .borderbox();
         .ellipsis();
         
         // Mod: Versteckt
         &--hidden {
-            opacity: @global-opacity-invisible;
+            opacity: @app-opacity-invisible;
         }
     }
     
@@ -84,7 +85,7 @@
         height: @_titlebar-size-height;
         line-height: @_titlebar-size-height;
         width: @_titlebar-size-height;
-        .transition(all, @global-time-animation-half);
+        .transition(all, @app-time-animation-half);
         
         // Mod: Links/Deaktiviert
         &--left { left: 0; }
@@ -95,14 +96,37 @@
         &--right&--disabled { .translate(100%); }
         
         // Mod: Deaktiviert
-        &--disabled { opacity: @global-opacity-invisible; }
+        &--disabled {
+            opacity: @app-opacity-invisible;
+        }
         
-        // Mod: Icons
-        &--icon-cancel { .fa-icon(@fa-var-close); }
-        &--icon-skip { .fa-icon(@fa-var-step-forward); }
-        &--icon-back { .fa-icon(@fa-var-chevron-left); }
-        &--icon-search { .fa-icon(@fa-var-search); }
-        &--icon-sort { .fa-icon(@fa-var-sort); }
+        // Mod: Icon Abbrechen
+        &--icon-cancel {
+            line-height: (@_titlebar-size-height - @app-size-line-medium);
+            .fa-icon(@fa-var-close);
+        }
+        
+        // Mod: Icon Überspringen
+        &--icon-skip {
+            font-size: @_titlebar-fontsize-icon-sm;
+            .fa-icon(@fa-var-step-forward);
+        }
+        
+        // Mod: Icon Zurück
+        &--icon-back {
+            .fa-icon(@fa-var-chevron-left);
+        }
+        
+        // Mod: Icon Suche
+        &--icon-search {
+            line-height: (@_titlebar-size-height - @app-size-line-medium);
+            .fa-icon(@fa-var-search);
+        }
+        
+        // Mod: Icon Sortieren
+        &--icon-sort {
+            .fa-icon(@fa-var-sort);
+        }
     }
     
     // Element: Suche
@@ -113,8 +137,8 @@
         left: 0;
         width: 100%;
         height: 100%;
-        padding: @global-size-margin-half @_titlebar-size-height;
-        opacity: @global-opacity-invisible;
+        padding: @app-size-margin-half @_titlebar-size-height;
+        opacity: @app-opacity-invisible;
         .translate(0, 100%);
         .transition(opacity);
         .borderbox();
@@ -129,29 +153,29 @@
         font-weight: bold;
         text-transform: uppercase;
         width: 100%;
-        color: @global-color-white;
-        font-size: @global-font-size-small;
-        background: darken(@global-color-main, @global-darken-main);
-        padding: @global-size-padding @global-size-padding-double;
-        height: (@_titlebar-size-height - @global-size-margin);
+        color: @app-color-white;
+        font-size: @app-font-size-small;
+        background: darken(@app-color-main, @app-darken-main);
+        padding: @app-size-padding @app-size-padding-double;
+        height: (@_titlebar-size-height - @app-size-margin);
         .textshadow();
         .font-main();
         .borderbox();
         .round-all();
         .gradient-vertical(
-            darken(@global-color-main, @global-darken-main-dark),
-            darken(@global-color-main, @global-darken-main)
+            darken(@app-color-main, @app-darken-main-dark),
+            darken(@app-color-main, @app-darken-main)
         );
     }
 }
 
 // Responsive
-@media screen and (min-width: @global-size-responsive) {
+@media screen and (min-width: @app-size-responsive) {
     
     // Block: TitleBar
     .titlebar {
         position: absolute;
-        background-image: url("@{global-path-layout}/statusbar.png?v=@{global-version}");
+        background-image: url("@{app-path-layout}/statusbar.png?v=@{app-version}");
         background-repeat: no-repeat;
         background-position: top center;
         padding-top: @_titlebar-size-height-status;
@@ -160,13 +184,13 @@
 }
 
 // Responsive Retina
-@media screen and (min-width: @global-size-responsive)
+@media screen and (min-width: @app-size-responsive)
               and (-webkit-min-device-pixel-ratio: 1.5),
-       screen and (min-width: @global-size-responsive)
+       screen and (min-width: @app-size-responsive)
               and (min-resolution: 144dpi) {
     
     // Block: TitleBar
     .titlebar {
-        background-image: url("@{global-path-layout}/statusbar-retina.png?v=@{global-version}");
+        background-image: url("@{app-path-layout}/statusbar-retina.png?v=@{app-version}");
     }
 }

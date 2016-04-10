@@ -53,23 +53,25 @@
         
         <!--Viewport-->
         <div class="viewport">
-            <div class="viewport__app">
+            <div class="viewport__app" role="application">
                 
                 <!--TitleBar-->
                 <header class="titlebar" role="navigation">
-                    <h1 class="titlebar__title" role="heading">OWLisch</h1>
-                    <div class="titlebar__search">
-                        <input class="titlebar__input" type="text"
-                               spellcheck="false" autocomplete="off"
-                               autocorrect="off" autocapitalize="none"
-                               tabindex="-100" role="search" />
+                    <div class="titlebar__wrapper">
+                        <h1 class="titlebar__title" role="heading">OWLisch</h1>
+                        <div class="titlebar__search">
+                            <input class="titlebar__input" type="text"
+                                   spellcheck="false" autocomplete="off"
+                                   autocorrect="off" autocapitalize="none"
+                                   tabindex="-100" role="search" />
+                        </div>
+                        <i class="titlebar__button titlebar__button--left"
+                           role="button" data-action="none">
+                        </i>
+                        <i class="titlebar__button titlebar__button--right"
+                           role="button" data-action="none">
+                        </i>
                     </div>
-                    <i class="titlebar__button titlebar__button--left"
-                       role="button" data-action="none">
-                    </i>
-                    <i class="titlebar__button titlebar__button--right"
-                       role="button" data-action="none">
-                    </i>
                 </header>
                 
                 <!--TabBar-->

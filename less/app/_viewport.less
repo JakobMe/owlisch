@@ -5,7 +5,17 @@
  * @author Jakob Metzger <jakob.me@gmail.com>
  * @copyright 2016 Jakob Metzger
  */
- 
+
+// Modul-Variablen
+@_viewport-size-height:         568px;
+@_viewport-size-width:          320px;
+@_viewport-size-height-bg:      900px;
+@_viewport-size-width-bg:       520px;
+@_viewport-size-spinner:        48px;
+@_viewport-size-gap-bottom:     205px;
+@_viewport-size-gap-top:        125px;
+@_viewport-size-gap-sides:      94px;
+
 // Block: Viewport
 .viewport {
     width: 100%;
@@ -14,7 +24,7 @@
     background-position: center center;
     background-image: url("@{global-path-layout}/spinner-viewport.gif?v=@{global-version}");
     background-color: @global-color-white;
-    background-size: @global-height-spinner @global-height-spinner;
+    background-size: @_viewport-size-spinner @_viewport-size-spinner;
 
     // Element: App
     &__app {
@@ -24,15 +34,23 @@
         background-position: center center;
         top: 0;
         left: 0;
+        width: 100%;
+        height: 100%;
+        opacity: @global-opacity-invisible;
         background-image: url("@{global-path-layout}/spinner.gif?v=@{global-version}");
-        background-size: @global-height-spinner @global-height-spinner;
+        background-size: @_viewport-size-spinner @_viewport-size-spinner;
         background-color: @global-color-background;
         .transition(opacity);
+        
+        // Mod: Sichtbar
+        &--visible {
+            opacity: @global-opacity-full;
+        }
     }
 }
 
 // Responsive
-@media screen and (min-width: @global-width-iphone) {
+@media screen and (min-width: @global-size-responsive) {
     
     // Block: Viewport
     .viewport {
@@ -42,26 +60,22 @@
         background-position: center center;
         margin: 0 auto;
         background-image: url("@{global-path-layout}/iphone.png?v=@{global-version}");
-        width: @global-width-mobile;
-        height: @global-height-mobile;
-        margin-top: (@global-size-gap-mobile-bottom - @global-size-gap-mobile-top);
-        padding: @global-size-gap-mobile-top @global-size-gap-mobile-sides;
-        padding-bottom: @global-size-gap-mobile-bottom;
-        background-size: @global-width-iphone @global-height-iphone;
+        width: @_viewport-size-width;
+        height: @_viewport-size-height;
+        margin-top: (@_viewport-size-gap-bottom - @_viewport-size-gap-top);
+        padding: @_viewport-size-gap-top @_viewport-size-gap-sides;
+        padding-bottom: @_viewport-size-gap-bottom;
+        background-size: @_viewport-size-width-bg @_viewport-size-height-bg;
         
         // Element: App
-        &__app {
-            position: relative;
-            width: @global-width-mobile;
-            height: @global-height-mobile;
-        }
+        &__app { position: relative; }
     }
 }
 
 // Responsive Retina
-@media screen and (min-width: @global-width-iphone)
+@media screen and (min-width: @global-size-responsive)
               and (-webkit-min-device-pixel-ratio: 1.5),
-       screen and (min-width: @global-width-iphone)
+       screen and (min-width: @global-size-responsive)
               and (min-resolution: 144dpi) {
     
     // Block: Viewport

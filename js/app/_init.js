@@ -12,8 +12,14 @@ $(document).ready(function() {
         modKeyVal: GLOBAL.BEM.MODKEY
     });
     
-    // TabBar initialisieren
+    // Module initialisieren
     TabBar.init();
-    TitleBar.init();
+    TitleBar.init({ title: "OWLisch" });
+    Viewport.init();
+    
+    // Viewport initialisieren
+    setTimeout(function() {
+        Viewport.show();
+    }, GLOBAL.TIME.LONGER);
     
 });

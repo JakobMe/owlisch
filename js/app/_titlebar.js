@@ -18,6 +18,7 @@ var TitleBar = (function() {
     var _M_HIDDEN           = "hidden";
     var _M_DISABLED         = "disabled";
     var _M_SEARCH           = "search";
+    var _M_WEBAPP           = "webapp";
     var _M_ICON             = "icon";
     
     // Icon-Konstanten
@@ -46,6 +47,7 @@ var TitleBar = (function() {
     var _rightIcon;
     var _rightAction;
     var _isSearch;
+    var _buttonsDisabled;
     
     // DOM-Elemente
     var _$titlebar;
@@ -78,7 +80,8 @@ var TitleBar = (function() {
             leftAction: null,
             rightIcon: null,
             rightAction: null,
-            isSearch: false
+            isSearch: false,
+            buttonsDisabled: false
         };
         
         // Standard-Optionen ergänzen/überschreiben
@@ -98,6 +101,12 @@ var TitleBar = (function() {
         _rightIcon = defaults.rightIcon;
         _rightAction = defaults.rightAction;
         _isSearch = defaults.isSearch;
+        _buttonsDisabled = defaults.buttonsDisabled;
+        
+        // Webapp erkennen
+        if (window.navigator.standalone) {
+            _$titlebar.setMod(_B, _M_WEBAPP, true);
+        }
         
         // Events binden und rendern
         _bindEvents();
@@ -114,30 +123,32 @@ var TitleBar = (function() {
      * @param {Object} $button Gewählter Button (Links/Rechts)
      */
     function _buttonAction(event) {
-        
-        // Button und Aktion initialisieren
-        var action;
-        var $button = $(event.target).closest(_SEL_BUTTONS);
-        
-        // Aktion bestimmen
-        if ($button.is(_$buttonLeft)) { action = _leftAction; }
-        else if ($button.is(_$buttonRight)) { action = _rightAction; }
-        
-        // Aktion Switch
-        switch (action) {
+        if (!_buttonsDisabled) {
             
-            // Aktion: Suche
-            case ACTION.SEARCH:
+            // Button und Aktion initialisieren
+            var action;
+            var $button = $(event.target).closest(_SEL_BUTTONS);
+            
+            // Aktion bestimmen
+            if ($button.is(_$buttonLeft)) { action = _leftAction; }
+            else if ($button.is(_$buttonRight)) { action = _rightAction; }
+            
+            // Aktion Switch
+            switch (action) {
                 
-                // Suche aktivieren/deaktivieren
-                if (_isSearch) { disableSearch(); }
-                else { enableSearch(); }
-                break;
-                
-            // Default
-            default:
-                window.console.log(action);
-                break;
+                // Aktion: Suche
+                case ACTION.SEARCH:
+                    
+                    // Suche aktivieren/deaktivieren
+                    if (_isSearch) { disableSearch(); }
+                    else { enableSearch(); }
+                    break;
+                    
+                // Default
+                default:
+                    window.console.log(action);
+                    break;
+            }
         }
     }
     
@@ -165,7 +176,8 @@ var TitleBar = (function() {
             return false;
         }
         
-        // Button ausblenden
+        // Button ausblenden/deaktivieren
+        _buttonsDisabled = true;
         $button.setMod(_B, _E_BUTTON, _M_DISABLED, true);
         
         // Auf Animation warten
@@ -187,6 +199,12 @@ var TitleBar = (function() {
                 $button.setMod(_B, _E_BUTTON, _M_ICON, icon);
                 $button.attr(GLOBAL.ATTR.DATA_ACTION, action);
             }
+            
+            // Buttons wieder aktivieren
+            setTimeout(function() {
+                _buttonsDisabled = false;
+            }, GLOBAL.TIME.STANDARD);
+            
         }, GLOBAL.TIME.SHORT);
     }
     

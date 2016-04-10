@@ -1,0 +1,50 @@
+/*
+ * Modul: Font.
+ * Definiert alle Font-Faces für den App-Font.
+ * @author Jakob Metzger <jakob.me@gmail.com>
+ * @copyright 2016 Jakob Metzger
+ */
+
+// Lato Regular
+@font-face {
+    font-family: @global-font-name;
+    font-style: normal;
+    font-weight: 400;
+    src: /*local("Lato Regular"),*/
+         /*local("Lato-Regular"),*/
+         url("@{global-font-path}/lato-regular.woff") format("woff"),
+         url("@{global-font-path}/lato-regular.ttf") format("truetype");
+}
+
+// Lato Bold
+@font-face {
+    font-family: @global-font-name;
+    font-style: normal;
+    font-weight: 700;
+    src: /*local("Lato Bold"),*/
+         /*local("Lato-Bold"),*/
+         url("@{global-font-path}/lato-bold.woff") format("woff"),
+         url("@{global-font-path}/lato-bold.ttf") format("truetype");
+}
+
+// Lato Italic
+@font-face {
+    font-family: @global-font-name;
+    font-style: italic;
+    font-weight: 400;
+    src: /*local("Lato Italic"),*/
+         /*local("Lato-Italic"),*/
+         url("@{global-font-path}/lato-italic.woff") format("woff"),
+         url("@{global-font-path}/lato-italic.ttf") format("truetype");
+}
+
+// Lato Bold Italic
+@font-face {
+    font-family: @global-font-name;
+    font-style: italic;
+    font-weight: 700;
+    src: /*local("Lato Bold Italic"),*/
+         /*local("Lato-BoldItalic"),*/
+         url("@{global-font-path}/lato-bolditalic.woff") format("woff"),
+         url("@{global-font-path}/lato-bolditalic.ttf") format("truetype");
+}

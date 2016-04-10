@@ -1,0 +1,133 @@
+/*
+ * Modul: Tabbar.
+ * Definiert die Tabbar der App.
+ * @author Jakob Metzger <jakob.me@gmail.com>
+ * @copyright 2016 Jakob Metzger
+ */
+
+// Modul-Variablen
+@_tabbar-number-tabs:           5;
+@_tabbar-size-height:           49px;
+@_tabbar-size-icon:             24px;
+@_tabbar-size-padding:          6px;
+@_tabbar-size-padding-status:   3%;
+@_tabbar-fontsize-icon:         21px;
+@_tabbar-fontsize-icon-text:    24px;
+@_tabbar-fontsize-label:        9px;
+
+// Loop: Status-Position für Tabbar-Modfikation
+._tabbar-loop-status(@n: @_tabbar-number-tabs, @i: 0) when (@i < @n) {
+    &--tab-@{i} &__status { .translate(100% * @i); }
+    ._tabbar-loop-status(@n, (@i + 1));
+}
+ 
+// Block: Tabbar
+.tabbar {
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    height: @_tabbar-size-height;
+    border-top: @global-size-line-thin solid fade(@global-color-black, 20%);
+    .transition(transform);
+    ._tabbar-loop-status();
+    
+    // Mod: Versteckt
+    &--hidden {
+        .translate(0, 100%);
+    }
+
+    // Element: Liste
+    &__list {
+        overflow: hidden;
+        margin: 0;
+        padding: 0;
+        height: @_tabbar-size-height;
+        .gradient-background();
+    }
+    
+    // Element: Tab
+    &__tab {
+        float: left;
+        display: block;
+        cursor: pointer;
+        position: relative;
+        text-align: center;
+        text-decoration: none;
+        padding: @_tabbar-size-padding;
+        width: (100% / @_tabbar-number-tabs);
+        color: @global-color-text-pale;
+        height: @_tabbar-size-height;
+        .transition(color);
+        .borderbox();
+        
+        // Hover
+        &:hover {
+            color: @global-color-text-dark;
+        }
+        
+        // Mod: Aktiv
+        &--active {
+            &, &:hover {
+                color: @global-color-main;
+            }
+        }
+    }
+    
+    // Element: Icon
+    &__icon {
+        display: block;
+        font-size: @_tabbar-fontsize-icon;
+        line-height: @_tabbar-size-icon;
+        
+        // Mod: Text
+        &--text {
+            font-weight: bold;
+            font-style: normal;
+            font-size: @_tabbar-fontsize-icon-text;
+            .font-icon();
+        }
+    }
+    
+    // Element: Label
+    &__label {
+        display: block;
+        font-weight: bold;
+        font-size: @_tabbar-fontsize-label;
+        line-height: (@_tabbar-size-height - @_tabbar-size-icon - (2 * @_tabbar-size-padding));
+        .font-main();
+    }
+    
+    // Element: Status
+    &__status {
+        display: block;
+        position: absolute;
+        left: 0;
+        width: (100% / @_tabbar-number-tabs);
+        padding: 0 @_tabbar-size-padding-status;
+        top: -(@global-size-line-thin);
+        height: @global-size-line-bold;
+        .transition();
+        .borderbox();
+        
+        // 
+        &:after {
+            width: 100%;
+            height: 100%;
+            background: @global-color-main;
+            border-top: @global-size-line-thin solid darken(@global-color-main, @global-darken-main);
+            .round-all(@global-size-line-thin);
+            .after-block();
+            .borderbox();
+        }
+    }
+}
+
+// Responsive
+@media screen and (min-width: @global-width-iphone) {
+    
+    // Block: Tabbar
+    .tabbar {
+        position: absolute;
+    }
+}

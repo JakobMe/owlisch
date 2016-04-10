@@ -1,0 +1,51 @@
+/*
+ * Modul: Core.
+ * Definiert grundlegende Styles für den Body und sonstige Kleinigkeiten.
+ * @author Jakob Metzger <jakob.me@gmail.com>
+ * @copyright 2016 Jakob Metzger
+ */
+
+// Webkit Sonderregeln
+* { -webkit-tap-highlight-color: rgba(0, 0, 0, 0) !important; }
+:not(input) { -webkit-touch-callout: none; user-select: none; }
+
+// Block: Body
+.body {
+    -webkit-font-smoothing: antialiased;
+    position: fixed;
+    overflow: hidden;
+    top: 0;
+    left: 0;
+    margin: 0;
+    padding: 0;
+    width: 100vw;
+    height: 100vh;
+    background: @global-color-white;
+    .font-main();
+}
+
+// Responsive
+@media screen and (min-width: @global-width-iphone) {
+    
+    // Block: Body
+    .body {
+        overflow: auto;
+        position: static;
+        background-repeat: repeat;
+        background-attachment: fixed;
+        background-position: left top;
+        background-image: url("@{global-path-layout}/background.png?v=@{global-version}");
+        background-color: lighten(@global-color-background, (@global-darken-background * 2));
+        background-size: @global-size-background @global-size-background;
+    }
+}
+
+// Retina
+@media screen and (min-width: @global-width-iphone)
+              and (-webkit-min-device-pixel-ratio: 1.5),
+       screen and (min-width: @global-width-iphone)
+              and (min-resolution: 144dpi) {
+    
+    // Block: Body
+    .body { background-image: url("@{global-path-layout}/background-retina.png?v=@{global-version}"); }
+}

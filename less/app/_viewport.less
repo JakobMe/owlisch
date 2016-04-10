@@ -1,0 +1,69 @@
+/*
+ * Modul: Viewport.
+ * Definiert das Verhalten des Viewports, insbesondere
+ * für die Anwendung in Desktop-Browsern.
+ * @author Jakob Metzger <jakob.me@gmail.com>
+ * @copyright 2016 Jakob Metzger
+ */
+ 
+// Block: Viewport
+.viewport {
+    width: 100%;
+    height: 100%;
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-image: url("@{global-path-layout}/spinner-viewport.gif?v=@{global-version}");
+    background-color: @global-color-white;
+    background-size: @global-height-spinner @global-height-spinner;
+
+    // Element: App
+    &__app {
+        overflow: hidden;
+        position: absolute;
+        background-repeat: no-repeat;
+        background-position: center center;
+        top: 0;
+        left: 0;
+        background-image: url("@{global-path-layout}/spinner.gif?v=@{global-version}");
+        background-size: @global-height-spinner @global-height-spinner;
+        background-color: @global-color-background;
+        .transition(opacity);
+    }
+}
+
+// Responsive
+@media screen and (min-width: @global-width-iphone) {
+    
+    // Block: Viewport
+    .viewport {
+        position: relative;
+        background-color: transparent;
+        background-repeat: no-repeat;
+        background-position: center center;
+        margin: 0 auto;
+        background-image: url("@{global-path-layout}/iphone.png?v=@{global-version}");
+        width: @global-width-mobile;
+        height: @global-height-mobile;
+        margin-top: (@global-size-gap-mobile-bottom - @global-size-gap-mobile-top);
+        padding: @global-size-gap-mobile-top @global-size-gap-mobile-sides;
+        padding-bottom: @global-size-gap-mobile-bottom;
+        background-size: @global-width-iphone @global-height-iphone;
+        
+        // Element: App
+        &__app {
+            position: relative;
+            width: @global-width-mobile;
+            height: @global-height-mobile;
+        }
+    }
+}
+
+// Responsive Retina
+@media screen and (min-width: @global-width-iphone)
+              and (-webkit-min-device-pixel-ratio: 1.5),
+       screen and (min-width: @global-width-iphone)
+              and (min-resolution: 144dpi) {
+    
+    // Block: Viewport
+    .viewport { background-image: url("@{global-path-layout}/iphone-retina.png?v=@{global-version}"); }
+}

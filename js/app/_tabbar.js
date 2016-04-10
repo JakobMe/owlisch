@@ -20,6 +20,7 @@ var TabBar = (function() {
     var _tabActive;
     var _tabNumber;
     var _isHidden;
+    var _viewFunction;
     
     // DOM-Elemente
     var _$tabbar;
@@ -56,9 +57,20 @@ var TabBar = (function() {
      * Modul initialisieren.
      * Setzt die Standard-Anfangswerte des Moduls, bindet alle Events,
      * sucht nach den benötigten DOM-Elementen und rendert das Modul.
-     * @param {Number} tab Index des aktiven Tabs.
+     * @param {Object} options Optionale Einstellungen beim Initialisieren
+     * @returns {Object} Modul-Objekt
      */
-    function init(tab) {
+    function init(options) {
+        
+        // Standard-Optionen definieren
+        var defaults = {
+            isHidden: false,
+            initialTab: 0,
+            viewFunction: function(view) { window.console.log(view); }
+        };
+        
+        // Standard-Optionen ergänzen/überschreiben
+        $.extend(defaults, options || {});
         
         // DOM-Elemente initialisieren
         _$tabbar = $(_SEL_TABBAR);
@@ -66,14 +78,21 @@ var TabBar = (function() {
         
         // Startwerte setzen
         _tabNumber = _$tabs.length - 1;
-        _isHidden = false;
+        _isHidden = defaults.isHidden;
+        
+        // View-Funktion setzen
+        if ($.isFunction(defaults.viewFunction)) {
+            _viewFunction = defaults.viewFunction;
+        }
         
         // Ersten aktiven Tab setzen
-        if (typeof tab === GLOBAL.TYPE.UNDEF) { tab = 0; }
-        setTab(tab);
+        setTab(defaults.initialTab);
         
         // Events binden
         _bindEvents();
+        
+        // Modul Return
+        return this;
     }
     
     /**
@@ -82,55 +101,85 @@ var TabBar = (function() {
      * übergebenen Tab-Indexes; falls der Index gültig ist, wird dieser
      * als aktiver Index gesetzt und die Tabbar wird gerendert.
      * @param {Object|Number} tab Klick-Event vom Tab oder Tab-Index
-     * @returns {Boolean} Erfolg/Misserfolg der Aktion 
+     * @returns {Object} Modul-Objekt
      */
     function setTab(tab) {
         
         // Variablen initialisieren
-        var i;
-        var success = false;
+        var i = -1;
+        var view = null;
         
-        // Tab-Index ermitteln
-        if (typeof tab === GLOBAL.TYPE.NUMBER) { i = tab; }
-        else { i = $(tab.target).closest(_SEL_TABS).index(); }
+        // Tab-Index und View ermitteln
+        if (typeof tab === GLOBAL.TYPE.NUMBER) {
+            i = tab;
+        } else if (typeof tab === GLOBAL.TYPE.OBJECT) {
+            var $tab = $(tab.target).closest(_SEL_TABS);
+            i = $tab.index();
+            view = $tab.data(GLOBAL.DATA.VIEW);
+        }
         
         // Tab-Index prüfen und setzen
         if ((i >= 0) && (i <= _tabNumber)) {
             _tabActive = i;
-            success = true;
+            
+            // View prüfen und Funktion auslösen
+            if ((view !== null) &&
+                (view.length > 0) &&
+                ($.isFunction(_viewFunction))) {
+                _viewFunction(view);
+            }
         }
         
         // Rendern
         _render();
         
-        // Return
-        return success;
+        // Modul Return
+        return this;
     }
     
     /**
      * Modul verbergen.
      * Blendet das Modul aus und rendert es neu.
+     * @returns {Object} Modul-Objekt
      */
     function hide() {
         _isHidden = true;
         _render();
+        return this;
     }
     
     /**
      * Modul zeigen.
      * Blendet das Modul ein und rendert es neu.
+     * @returns {Object} Modul-Objekt
      */
     function show() {
         _isHidden = false;
         _render();
+        return this;
+    }
+    
+    /**
+     * View-Funktion setzen.
+     * Setzt die Funktion, die beim Aktivieren eines Tabs
+     * ausgelöst werden soll.
+     * @param {Object} func Funktion
+     * @returns {Object} Modul-Objekt
+     */
+    function setFunction(func) {
+        if ($.isFunction(func)) {
+            _viewFunction = func;
+        }
+        return this;
     }
     
     // Öffentliches Interface
     return {
-        init:   init,
-        setTab: setTab,
-        hide:   hide,
-        show:   show
+        init:           init,
+        hide:           hide,
+        show:           show,
+        setTab:         setTab,
+        setFunction:    setFunction
     };
     
 })();

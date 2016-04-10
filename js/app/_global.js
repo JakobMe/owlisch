@@ -20,7 +20,13 @@ var GLOBAL = (function() {
         TYPE: {
             NUMBER:         "number",
             BOOL:           "boolean",
-            UNDEF:          "undefined"
+            UNDEF:          "undefined",
+            OBJECT:         "object"
+        },
+        
+        // Data-Attribute
+        DATA: {
+            VIEW:           "view"
         },
         
         // BEM-Syntax

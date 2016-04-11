@@ -59,7 +59,7 @@ var View = (function() {
         _$content = _$view.find(_SEL_ARTICLE);
         _isVisible = defaults.isVisible;
         _isFullscreen = defaults.isFullscreen;
-        _isWebapp = (window.navigator.standalone || false);
+        _isWebapp = (GLOBALS.WEBAPP.IOS || GLOBALS.WEBAPP.CORDOVA);
         
         // Rendern
         _render();

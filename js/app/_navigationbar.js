@@ -103,7 +103,7 @@ var NavigationBar = (function() {
         _rightAction = defaults.rightAction;
         _isSearch = defaults.isSearch;
         _buttonsDisabled = defaults.buttonsDisabled;
-        _isWebapp = (window.navigator.standalone || false);
+        _isWebapp = (GLOBALS.WEBAPP.IOS || GLOBALS.WEBAPP.CORDOVA);
         
         // Events binden und rendern
         _bindEvents();

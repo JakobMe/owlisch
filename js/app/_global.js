@@ -5,8 +5,14 @@
  */
 var GLOBALS = (function() {
     
-    // Öffentliches Interface
+    // Konstanten
     return {
+        
+        // Webapp
+        WEBAPP: {
+            IOS:            (window.navigator.standalone || false),
+            CORDOVA:        (typeof window.cordova !== "undefined")
+        },
         
         // Strings
         STR: {
@@ -18,7 +24,8 @@ var GLOBALS = (function() {
             CLICK:          "click",
             ENDED:          "ended",
             FOCUS:          "focus",
-            SUBMIT:         "submit"
+            SUBMIT:         "submit",
+            DEVREADY:       "deviceready"
         },
         
         // Datentypen

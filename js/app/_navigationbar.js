@@ -47,6 +47,7 @@ var NavigationBar = (function() {
     var _rightIcon;
     var _rightAction;
     var _isSearch;
+    var _isWebapp;
     var _buttonsDisabled;
     
     // DOM-Elemente
@@ -102,11 +103,7 @@ var NavigationBar = (function() {
         _rightAction = defaults.rightAction;
         _isSearch = defaults.isSearch;
         _buttonsDisabled = defaults.buttonsDisabled;
-        
-        // Webapp erkennen
-        if (window.navigator.standalone) {
-            _$navbar.setMod(_B, _M_WEBAPP, true);
-        }
+        _isWebapp = (window.navigator.standalone || false);
         
         // Events binden und rendern
         _bindEvents();
@@ -255,6 +252,11 @@ var NavigationBar = (function() {
      * gesetzten aktuellen Variablen.
      */
     function _render() {
+        
+        // Webapp setzen
+        _$navbar.setMod(_B, _M_WEBAPP, _isWebapp);
+        
+        // Elemente rendern
         _renderButton(_$buttonLeft);
         _renderButton(_$buttonRight);
         _renderSearch();

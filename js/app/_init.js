@@ -16,13 +16,15 @@ $(document).ready(function() {
     FastClick.attach(document.body);
     
     // Module initialisieren
-    TabBar.init();
-    NavigationBar.init({ title: "OWLisch" });
     Viewport.init();
+    View.init();
+    TabBar.init();
+    NavigationBar.init();
     
     // Viewport initialisieren
     setTimeout(function() {
         Viewport.show();
+        View.show();
     }, GLOBALS.TIME.LONGER);
     
 });

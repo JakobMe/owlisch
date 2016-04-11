@@ -1,0 +1,61 @@
+/*
+ * Modul: View.
+ * Definiert das Verhalten der View.
+ * @author Jakob Metzger <jakob.me@gmail.com>
+ * @copyright 2016 Jakob Metzger
+ */
+
+// Modul-Variablen
+//@_view-size-height:             100px;
+
+// Block: View
+.view {
+    position: fixed;
+    top: 0;
+    left: 0;
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+    padding-top: @_navigation-bar-size-height;
+    padding-bottom: @_tab-bar-size-height;
+    .borderbox();
+    
+    // Mod: Webapp
+    &--webapp {
+        padding-top: (@_navigation-bar-size-height + @_navigation-bar-size-height-status);
+    }
+    
+    // Mod: Volle Höhe
+    &--fullscreen {
+        padding-bottom: 0;
+    }
+    
+    // Element: Content
+    &__content {
+        position: relative;
+        overflow: hidden;
+        height: 100%;
+        opacity: @app-opacity-invisible;
+        color: @app-color-text-dark;
+        font-size: @app-font-size-medium;
+        background: @app-color-background;
+        .transition(opacity);
+        .borderbox();
+        
+        // Mod: Sichtbar
+        &--visible {
+            opacity: @app-opacity-full;
+        }
+    }
+}
+
+// Responsive
+@media screen and (min-width: @app-size-responsive) {
+    
+    // Block: View
+    .view {
+        position: absolute;
+        padding-top: (@_navigation-bar-size-height + @_navigation-bar-size-height-status);
+    }
+}

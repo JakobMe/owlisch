@@ -29,7 +29,7 @@
     // Element: App
     &__app {
         overflow: hidden;
-        position: absolute;
+        position: relative;
         background-repeat: no-repeat;
         background-position: center center;
         top: 0;
@@ -60,15 +60,12 @@
         background-position: center center;
         margin: 0 auto;
         background-image: url("@{app-path-layout}/iphone.png?v=@{app-version}");
-        width: @_viewport-size-width;
-        height: @_viewport-size-height;
+        background-size: @_viewport-size-width-bg @_viewport-size-height-bg;
         margin-top: (@_viewport-size-gap-bottom - @_viewport-size-gap-top);
         padding: @_viewport-size-gap-top @_viewport-size-gap-sides;
         padding-bottom: @_viewport-size-gap-bottom;
-        background-size: @_viewport-size-width-bg @_viewport-size-height-bg;
-        
-        // Element: App
-        &__app { position: relative; }
+        height: @_viewport-size-height;
+        width: @_viewport-size-width;
     }
 }
 
@@ -79,5 +76,7 @@
               and (min-resolution: 144dpi) {
     
     // Block: Viewport
-    .viewport { background-image: url("@{app-path-layout}/iphone-retina.png?v=@{app-version}"); }
+    .viewport {
+        background-image: url("@{app-path-layout}/iphone-retina.png?v=@{app-version}");
+    }
 }

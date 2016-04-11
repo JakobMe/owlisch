@@ -29,7 +29,12 @@ var App = {
         Viewport.init();
         View.init();
         TabBar.init();
-        NavigationBar.init().enableSearch();
+        
+        // Navigation-Bar initialisieren
+        NavigationBar
+            .init().setTitle("OWLisch")
+            .setButtonLeft(NavigationBar.ACTION.SEARCH,
+                           NavigationBar.ICON.SEARCH);
         
         // Viewport initialisieren
         setTimeout(function() {

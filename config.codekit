@@ -119,7 +119,7 @@
 		"outputAbbreviatedPath": "\/img\/favicon\/android-chrome-144x144.png",
 		"outputPathIsOutsideProject": 0,
 		"outputPathIsSetByUser": 0,
-		"processed": 0
+		"processed": 1
 		},
 	"\/img\/favicon\/android-chrome-192x192.png": {
 		"fileType": 32768,
@@ -130,7 +130,7 @@
 		"outputAbbreviatedPath": "\/img\/favicon\/android-chrome-192x192.png",
 		"outputPathIsOutsideProject": 0,
 		"outputPathIsSetByUser": 0,
-		"processed": 0
+		"processed": 1
 		},
 	"\/img\/favicon\/android-chrome-36x36.png": {
 		"fileType": 32768,
@@ -141,7 +141,7 @@
 		"outputAbbreviatedPath": "\/img\/favicon\/android-chrome-36x36.png",
 		"outputPathIsOutsideProject": 0,
 		"outputPathIsSetByUser": 0,
-		"processed": 0
+		"processed": 1
 		},
 	"\/img\/favicon\/android-chrome-48x48.png": {
 		"fileType": 32768,
@@ -152,7 +152,7 @@
 		"outputAbbreviatedPath": "\/img\/favicon\/android-chrome-48x48.png",
 		"outputPathIsOutsideProject": 0,
 		"outputPathIsSetByUser": 0,
-		"processed": 0
+		"processed": 1
 		},
 	"\/img\/favicon\/android-chrome-72x72.png": {
 		"fileType": 32768,
@@ -163,7 +163,7 @@
 		"outputAbbreviatedPath": "\/img\/favicon\/android-chrome-72x72.png",
 		"outputPathIsOutsideProject": 0,
 		"outputPathIsSetByUser": 0,
-		"processed": 0
+		"processed": 1
 		},
 	"\/img\/favicon\/android-chrome-96x96.png": {
 		"fileType": 32768,
@@ -174,7 +174,18 @@
 		"outputAbbreviatedPath": "\/img\/favicon\/android-chrome-96x96.png",
 		"outputPathIsOutsideProject": 0,
 		"outputPathIsSetByUser": 0,
-		"processed": 0
+		"processed": 1
+		},
+	"\/img\/favicon\/apple-touch-icon-100x100.png": {
+		"fileType": 32768,
+		"ignore": 0,
+		"ignoreWasSetByUser": 0,
+		"initialSize": 6238,
+		"inputAbbreviatedPath": "\/img\/favicon\/apple-touch-icon-100x100.png",
+		"outputAbbreviatedPath": "\/img\/favicon\/apple-touch-icon-100x100.png",
+		"outputPathIsOutsideProject": 0,
+		"outputPathIsSetByUser": 0,
+		"processed": 1
 		},
 	"\/img\/favicon\/apple-touch-icon-114x114.png": {
 		"fileType": 32768,
@@ -185,7 +196,7 @@
 		"outputAbbreviatedPath": "\/img\/favicon\/apple-touch-icon-114x114.png",
 		"outputPathIsOutsideProject": 0,
 		"outputPathIsSetByUser": 0,
-		"processed": 0
+		"processed": 1
 		},
 	"\/img\/favicon\/apple-touch-icon-120x120.png": {
 		"fileType": 32768,
@@ -196,7 +207,7 @@
 		"outputAbbreviatedPath": "\/img\/favicon\/apple-touch-icon-120x120.png",
 		"outputPathIsOutsideProject": 0,
 		"outputPathIsSetByUser": 0,
-		"processed": 0
+		"processed": 1
 		},
 	"\/img\/favicon\/apple-touch-icon-144x144.png": {
 		"fileType": 32768,
@@ -207,7 +218,7 @@
 		"outputAbbreviatedPath": "\/img\/favicon\/apple-touch-icon-144x144.png",
 		"outputPathIsOutsideProject": 0,
 		"outputPathIsSetByUser": 0,
-		"processed": 0
+		"processed": 1
 		},
 	"\/img\/favicon\/apple-touch-icon-152x152.png": {
 		"fileType": 32768,
@@ -218,7 +229,18 @@
 		"outputAbbreviatedPath": "\/img\/favicon\/apple-touch-icon-152x152.png",
 		"outputPathIsOutsideProject": 0,
 		"outputPathIsSetByUser": 0,
-		"processed": 0
+		"processed": 1
+		},
+	"\/img\/favicon\/apple-touch-icon-167x167.png": {
+		"fileType": 32768,
+		"ignore": 0,
+		"ignoreWasSetByUser": 0,
+		"initialSize": 10383,
+		"inputAbbreviatedPath": "\/img\/favicon\/apple-touch-icon-167x167.png",
+		"outputAbbreviatedPath": "\/img\/favicon\/apple-touch-icon-167x167.png",
+		"outputPathIsOutsideProject": 0,
+		"outputPathIsSetByUser": 0,
+		"processed": 1
 		},
 	"\/img\/favicon\/apple-touch-icon-180x180.png": {
 		"fileType": 32768,
@@ -229,7 +251,40 @@
 		"outputAbbreviatedPath": "\/img\/favicon\/apple-touch-icon-180x180.png",
 		"outputPathIsOutsideProject": 0,
 		"outputPathIsSetByUser": 0,
-		"processed": 0
+		"processed": 1
+		},
+	"\/img\/favicon\/apple-touch-icon-29x29.png": {
+		"fileType": 32768,
+		"ignore": 0,
+		"ignoreWasSetByUser": 0,
+		"initialSize": 2063,
+		"inputAbbreviatedPath": "\/img\/favicon\/apple-touch-icon-29x29.png",
+		"outputAbbreviatedPath": "\/img\/favicon\/apple-touch-icon-29x29.png",
+		"outputPathIsOutsideProject": 0,
+		"outputPathIsSetByUser": 0,
+		"processed": 1
+		},
+	"\/img\/favicon\/apple-touch-icon-40x40.png": {
+		"fileType": 32768,
+		"ignore": 0,
+		"ignoreWasSetByUser": 0,
+		"initialSize": 2545,
+		"inputAbbreviatedPath": "\/img\/favicon\/apple-touch-icon-40x40.png",
+		"outputAbbreviatedPath": "\/img\/favicon\/apple-touch-icon-40x40.png",
+		"outputPathIsOutsideProject": 0,
+		"outputPathIsSetByUser": 0,
+		"processed": 1
+		},
+	"\/img\/favicon\/apple-touch-icon-50x50.png": {
+		"fileType": 32768,
+		"ignore": 0,
+		"ignoreWasSetByUser": 0,
+		"initialSize": 0,
+		"inputAbbreviatedPath": "\/img\/favicon\/apple-touch-icon-50x50.png",
+		"outputAbbreviatedPath": "\/img\/favicon\/apple-touch-icon-50x50.png",
+		"outputPathIsOutsideProject": 0,
+		"outputPathIsSetByUser": 0,
+		"processed": 1
 		},
 	"\/img\/favicon\/apple-touch-icon-57x57.png": {
 		"fileType": 32768,
@@ -240,7 +295,18 @@
 		"outputAbbreviatedPath": "\/img\/favicon\/apple-touch-icon-57x57.png",
 		"outputPathIsOutsideProject": 0,
 		"outputPathIsSetByUser": 0,
-		"processed": 0
+		"processed": 1
+		},
+	"\/img\/favicon\/apple-touch-icon-58x58.png": {
+		"fileType": 32768,
+		"ignore": 0,
+		"ignoreWasSetByUser": 0,
+		"initialSize": 3657,
+		"inputAbbreviatedPath": "\/img\/favicon\/apple-touch-icon-58x58.png",
+		"outputAbbreviatedPath": "\/img\/favicon\/apple-touch-icon-58x58.png",
+		"outputPathIsOutsideProject": 0,
+		"outputPathIsSetByUser": 0,
+		"processed": 1
 		},
 	"\/img\/favicon\/apple-touch-icon-60x60.png": {
 		"fileType": 32768,
@@ -251,7 +317,7 @@
 		"outputAbbreviatedPath": "\/img\/favicon\/apple-touch-icon-60x60.png",
 		"outputPathIsOutsideProject": 0,
 		"outputPathIsSetByUser": 0,
-		"processed": 0
+		"processed": 1
 		},
 	"\/img\/favicon\/apple-touch-icon-72x72.png": {
 		"fileType": 32768,
@@ -262,7 +328,7 @@
 		"outputAbbreviatedPath": "\/img\/favicon\/apple-touch-icon-72x72.png",
 		"outputPathIsOutsideProject": 0,
 		"outputPathIsSetByUser": 0,
-		"processed": 0
+		"processed": 1
 		},
 	"\/img\/favicon\/apple-touch-icon-76x76.png": {
 		"fileType": 32768,
@@ -273,7 +339,29 @@
 		"outputAbbreviatedPath": "\/img\/favicon\/apple-touch-icon-76x76.png",
 		"outputPathIsOutsideProject": 0,
 		"outputPathIsSetByUser": 0,
-		"processed": 0
+		"processed": 1
+		},
+	"\/img\/favicon\/apple-touch-icon-80x80.png": {
+		"fileType": 32768,
+		"ignore": 0,
+		"ignoreWasSetByUser": 0,
+		"initialSize": 4994,
+		"inputAbbreviatedPath": "\/img\/favicon\/apple-touch-icon-80x80.png",
+		"outputAbbreviatedPath": "\/img\/favicon\/apple-touch-icon-80x80.png",
+		"outputPathIsOutsideProject": 0,
+		"outputPathIsSetByUser": 0,
+		"processed": 1
+		},
+	"\/img\/favicon\/apple-touch-icon-87x87.png": {
+		"fileType": 32768,
+		"ignore": 0,
+		"ignoreWasSetByUser": 0,
+		"initialSize": 5415,
+		"inputAbbreviatedPath": "\/img\/favicon\/apple-touch-icon-87x87.png",
+		"outputAbbreviatedPath": "\/img\/favicon\/apple-touch-icon-87x87.png",
+		"outputPathIsOutsideProject": 0,
+		"outputPathIsSetByUser": 0,
+		"processed": 1
 		},
 	"\/img\/favicon\/apple-touch-icon-precomposed.png": {
 		"fileType": 32768,
@@ -284,7 +372,7 @@
 		"outputAbbreviatedPath": "\/img\/favicon\/apple-touch-icon-precomposed.png",
 		"outputPathIsOutsideProject": 0,
 		"outputPathIsSetByUser": 0,
-		"processed": 0
+		"processed": 1
 		},
 	"\/img\/favicon\/apple-touch-icon.png": {
 		"fileType": 32768,
@@ -295,7 +383,7 @@
 		"outputAbbreviatedPath": "\/img\/favicon\/apple-touch-icon.png",
 		"outputPathIsOutsideProject": 0,
 		"outputPathIsSetByUser": 0,
-		"processed": 0
+		"processed": 1
 		},
 	"\/img\/favicon\/favicon-16x16.png": {
 		"fileType": 32768,
@@ -306,7 +394,7 @@
 		"outputAbbreviatedPath": "\/img\/favicon\/favicon-16x16.png",
 		"outputPathIsOutsideProject": 0,
 		"outputPathIsSetByUser": 0,
-		"processed": 0
+		"processed": 1
 		},
 	"\/img\/favicon\/favicon-194x194.png": {
 		"fileType": 32768,
@@ -317,7 +405,7 @@
 		"outputAbbreviatedPath": "\/img\/favicon\/favicon-194x194.png",
 		"outputPathIsOutsideProject": 0,
 		"outputPathIsSetByUser": 0,
-		"processed": 0
+		"processed": 1
 		},
 	"\/img\/favicon\/favicon-32x32.png": {
 		"fileType": 32768,
@@ -328,7 +416,7 @@
 		"outputAbbreviatedPath": "\/img\/favicon\/favicon-32x32.png",
 		"outputPathIsOutsideProject": 0,
 		"outputPathIsSetByUser": 0,
-		"processed": 0
+		"processed": 1
 		},
 	"\/img\/favicon\/favicon-96x96.png": {
 		"fileType": 32768,
@@ -339,7 +427,7 @@
 		"outputAbbreviatedPath": "\/img\/favicon\/favicon-96x96.png",
 		"outputPathIsOutsideProject": 0,
 		"outputPathIsSetByUser": 0,
-		"processed": 0
+		"processed": 1
 		},
 	"\/img\/favicon\/manifest.json": {
 		"fileType": 524288,

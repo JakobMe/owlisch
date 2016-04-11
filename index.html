@@ -1,17 +1,18 @@
 <!DOCTYPE html>
 <html lang="de">
     
-    <!--Head-->
+    
+    <!-- Head -->
     <head>
         
-        <!--Meta-->
+        <!-- Meta -->
         <title>OWLisch</title>
         <meta charset="utf-8">
         
-        <!--Favicons: Desktop-->
+        <!-- Favicons: Desktop -->
         <link rel="shortcut icon" href="img/favicon/favicon.ico">
         
-        <!--Favicons: Apple-->
+        <!-- Favicons: Apple -->
         <link rel="apple-touch-icon" type="image/png" sizes="57x57"   href="img/favicon/apple-touch-icon-57x57.png">
         <link rel="apple-touch-icon" type="image/png" sizes="60x60"   href="img/favicon/apple-touch-icon-60x60.png">
         <link rel="apple-touch-icon" type="image/png" sizes="72x72"   href="img/favicon/apple-touch-icon-72x72.png">
@@ -22,7 +23,7 @@
         <link rel="apple-touch-icon" type="image/png" sizes="152x152" href="img/favicon/apple-touch-icon-152x152.png">
         <link rel="apple-touch-icon" type="image/png" sizes="180x180" href="img/favicon/apple-touch-icon-180x180.png">
         
-        <!--Favicons: Android-->
+        <!-- Favicons: Android -->
         <link rel="icon"             type="image/png" sizes="16x16"   href="img/favicon/favicon-16x16.png">
         <link rel="icon"             type="image/png" sizes="32x32"   href="img/favicon/favicon-32x32.png">
         <link rel="icon"             type="image/png" sizes="96x96"   href="img/favicon/favicon-96x96.png">
@@ -30,7 +31,7 @@
         <link rel="icon"             type="image/png" sizes="194x194" href="img/favicon/favicon-194x194.png">
         <link rel="manifest"                                          href="img/favicon/manifest.json">
         
-        <!--Webapp-Einstellungen-->
+        <!-- Webapp-Einstellungen -->
         <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
         <meta name="apple-mobile-web-app-capable"          content="yes">
         <meta name="apple-mobile-web-app-title"            content="OWLisch">
@@ -43,69 +44,84 @@
                                                                     minimum-scale=1, maximum-scale=1,
                                                                     user-scalable=0">
         
-        <!--CSS-->
+        <!-- CSS -->
         <link rel="stylesheet" href="css/main.min.css" type="text/css">
         
     </head>
     
-    <!--Body-->
+    <!-- Body -->
     <body class="body">
         
-        <!--Viewport-->
+        
+        <!-- Viewport -->
         <div class="viewport">
             <div class="viewport__app" role="application">
                 
-                <!--TitleBar-->
-                <header class="titlebar" role="navigation">
-                    <div class="titlebar__wrapper">
-                        <h1 class="titlebar__title" role="heading">OWLisch</h1>
-                        <div class="titlebar__search">
-                            <input class="titlebar__input" type="text"
+                
+                <!-- View -->
+                <main class="view">
+                    <article class="view__content" role="main">
+
+                    </article>
+                </main>
+                
+                <!-- Navigation-Bar -->
+                <header class="navigation-bar" role="navigation">
+                    <div class="navigation-bar__wrapper">
+                        <h1 class="navigation-bar__title" role="heading"></h1>
+                        <div class="navigation-bar__search">
+                            <input class="navigation-bar__input" type="text"
                                    spellcheck="false" autocomplete="off"
                                    autocorrect="off" autocapitalize="none"
                                    tabindex="-100" role="search" />
                         </div>
-                        <i class="titlebar__button titlebar__button--left"
-                           role="button" data-action="none">
+                        <i class="navigation-bar__button navigation-bar__button--left"
+                           role="button" data-action="">
                         </i>
-                        <i class="titlebar__button titlebar__button--right"
-                           role="button" data-action="none">
+                        <i class="navigation-bar__button navigation-bar__button--right"
+                           role="button" data-action="">
                         </i>
                     </div>
                 </header>
                 
-                <!--TabBar-->
-                <nav class="tabbar" role="tablist">
-                    <ul class="tabbar__list">
-                        <li class="tabbar__tab" role="tab" data-view="start">
-                            <i class="tabbar__icon fa fa--home"></i>
-                            <span class="tabbar__label">Start</span>
+                <!-- Tab-Bar -->
+                <nav class="tab-bar" role="tablist">
+                    <ul class="tab-bar__list">
+                        <li class="tab-bar__tab" role="tab" data-view="start">
+                            <i class="tab-bar__icon fa fa--home"></i>
+                            <span class="tab-bar__label">Start</span>
                         </li>
-                        <li class="tabbar__tab" role="tab" data-view="dictionary">
-                            <i class="tabbar__icon fa fa--book"></i>
-                            <span class="tabbar__label">Wörterbuch</span>
+                        <li class="tab-bar__tab" role="tab" data-view="dictionary">
+                            <i class="tab-bar__icon fa fa--book"></i>
+                            <span class="tab-bar__label">Wörterbuch</span>
                         </li>
-                        <li class="tabbar__tab" role="tab" data-view="quiz">
-                            <i class="tabbar__icon tabbar__icon--text">Q</i>
-                            <span class="tabbar__label">Quiz</span>
+                        <li class="tab-bar__tab" role="tab" data-view="quiz">
+                            <i class="tab-bar__icon tab-bar__icon--text">Q</i>
+                            <span class="tab-bar__label">Quiz</span>
                         </li>
-                        <li class="tabbar__tab" role="tab" data-view="progress">
-                            <i class="tabbar__icon fa fa--bar-chart"></i>
-                            <span class="tabbar__label">Fortschritt</span>
+                        <li class="tab-bar__tab" role="tab" data-view="progress">
+                            <i class="tab-bar__icon fa fa--bar-chart"></i>
+                            <span class="tab-bar__label">Fortschritt</span>
                         </li>
-                        <li class="tabbar__tab" role="tab" data-view="help">
-                            <i class="tabbar__icon fa fa--question-circle"></i>
-                            <span class="tabbar__label">Hilfe</span>
+                        <li class="tab-bar__tab" role="tab" data-view="help">
+                            <i class="tab-bar__icon fa fa--question-circle"></i>
+                            <span class="tab-bar__label">Hilfe</span>
                         </li>
                     </ul>
-                    <div class="tabbar__status"></div>
+                    <div class="tab-bar__status"></div>
                 </nav>
-            
+                
             </div>
         </div>
         
-        <!--Javascript-->
+        <!-- Javascript -->
         <script type="text/javascript" src="js/main.min.js"></script>
+        
+                
+        <!-- Template: Test -->
+        <script id="tmpl-test" type="text/template">
+            <h1>{{name}}</h1>
+        </script>
         
     </body>
     

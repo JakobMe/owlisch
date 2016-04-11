@@ -1,6 +1,6 @@
 /**
- * TabBar-Modul.
- * Steuert die TabBar der App.
+ * Tab-Bar-Modul.
+ * Steuert die Tab-Bar der App.
  * @author Jakob Metzger
  */
 var TabBar = (function() {
@@ -10,7 +10,7 @@ var TabBar = (function() {
     var _SEL_TABS           = "[role='tab']";
     
     // BEM-Konstanten
-    var _B                  = "tabbar";
+    var _B                  = "tab-bar";
     var _E                  = "tab";
     var _M_ACTIVE           = "active";
     var _M_HIDDEN           = "hidden";

@@ -475,7 +475,7 @@
 		},
 	"\/index.html": {
 		"fileType": 8192,
-		"ignore": 0,
+		"ignore": 1,
 		"ignoreWasSetByUser": 0,
 		"inputAbbreviatedPath": "\/index.html",
 		"outputAbbreviatedPath": "No Output Path",
@@ -504,23 +504,23 @@
 		"outputStyle": 1,
 		"syntaxCheckerStyle": 1
 		},
+	"\/js\/app\/_navigationbar.js": {
+		"fileType": 64,
+		"ignore": 1,
+		"ignoreWasSetByUser": 0,
+		"inputAbbreviatedPath": "\/js\/app\/_navigationbar.js",
+		"outputAbbreviatedPath": "\/js\/app\/min\/_navigationbar-min.js",
+		"outputPathIsOutsideProject": 0,
+		"outputPathIsSetByUser": 0,
+		"outputStyle": 1,
+		"syntaxCheckerStyle": 1
+		},
 	"\/js\/app\/_tabbar.js": {
 		"fileType": 64,
 		"ignore": 1,
 		"ignoreWasSetByUser": 0,
 		"inputAbbreviatedPath": "\/js\/app\/_tabbar.js",
 		"outputAbbreviatedPath": "\/js\/app\/min\/_tabbar-min.js",
-		"outputPathIsOutsideProject": 0,
-		"outputPathIsSetByUser": 0,
-		"outputStyle": 1,
-		"syntaxCheckerStyle": 1
-		},
-	"\/js\/app\/_titlebar.js": {
-		"fileType": 64,
-		"ignore": 1,
-		"ignoreWasSetByUser": 0,
-		"inputAbbreviatedPath": "\/js\/app\/_titlebar.js",
-		"outputAbbreviatedPath": "\/js\/app\/min\/_titlebar-min.js",
 		"outputPathIsOutsideProject": 0,
 		"outputPathIsSetByUser": 0,
 		"outputStyle": 1,
@@ -581,6 +581,17 @@
 		"outputStyle": 1,
 		"syntaxCheckerStyle": 1
 		},
+	"\/js\/lib\/_mustache.js": {
+		"fileType": 64,
+		"ignore": 1,
+		"ignoreWasSetByUser": 0,
+		"inputAbbreviatedPath": "\/js\/lib\/_mustache.js",
+		"outputAbbreviatedPath": "\/js\/lib\/min\/_mustache-min.js",
+		"outputPathIsOutsideProject": 0,
+		"outputPathIsSetByUser": 0,
+		"outputStyle": 1,
+		"syntaxCheckerStyle": 1
+		},
 	"\/js\/lib\/lib.js": {
 		"fileType": 64,
 		"ignore": 1,
@@ -613,6 +624,78 @@
 		"outputPathIsSetByUser": 0,
 		"outputStyle": 1,
 		"syntaxCheckerStyle": 1
+		},
+	"\/kit\/app\/_navigationbar.kit": {
+		"fileType": 2048,
+		"ignore": 1,
+		"ignoreWasSetByUser": 0,
+		"inputAbbreviatedPath": "\/kit\/app\/_navigationbar.kit",
+		"outputAbbreviatedPath": "\/kit\/app\/_navigationbar.html",
+		"outputPathIsOutsideProject": 0,
+		"outputPathIsSetByUser": 0
+		},
+	"\/kit\/app\/_tabbar.kit": {
+		"fileType": 2048,
+		"ignore": 1,
+		"ignoreWasSetByUser": 0,
+		"inputAbbreviatedPath": "\/kit\/app\/_tabbar.kit",
+		"outputAbbreviatedPath": "\/kit\/app\/_tabbar.html",
+		"outputPathIsOutsideProject": 0,
+		"outputPathIsSetByUser": 0
+		},
+	"\/kit\/app\/_view.kit": {
+		"fileType": 2048,
+		"ignore": 1,
+		"ignoreWasSetByUser": 0,
+		"inputAbbreviatedPath": "\/kit\/app\/_view.kit",
+		"outputAbbreviatedPath": "\/kit\/app\/_view.html",
+		"outputPathIsOutsideProject": 0,
+		"outputPathIsSetByUser": 0
+		},
+	"\/kit\/app\/app.kit": {
+		"fileType": 2048,
+		"ignore": 1,
+		"ignoreWasSetByUser": 0,
+		"inputAbbreviatedPath": "\/kit\/app\/app.kit",
+		"outputAbbreviatedPath": "\/kit\/app\/app.html",
+		"outputPathIsOutsideProject": 0,
+		"outputPathIsSetByUser": 0
+		},
+	"\/kit\/app\/head.kit": {
+		"fileType": 2048,
+		"ignore": 1,
+		"ignoreWasSetByUser": 0,
+		"inputAbbreviatedPath": "\/kit\/app\/head.kit",
+		"outputAbbreviatedPath": "\/kit\/app\/head.html",
+		"outputPathIsOutsideProject": 0,
+		"outputPathIsSetByUser": 0
+		},
+	"\/kit\/index.kit": {
+		"fileType": 2048,
+		"ignore": 0,
+		"ignoreWasSetByUser": 1,
+		"inputAbbreviatedPath": "\/kit\/index.kit",
+		"outputAbbreviatedPath": "\/index.html",
+		"outputPathIsOutsideProject": 0,
+		"outputPathIsSetByUser": 1
+		},
+	"\/kit\/templates\/_test.kit": {
+		"fileType": 2048,
+		"ignore": 1,
+		"ignoreWasSetByUser": 0,
+		"inputAbbreviatedPath": "\/kit\/templates\/_test.kit",
+		"outputAbbreviatedPath": "\/kit\/templates\/_test.html",
+		"outputPathIsOutsideProject": 0,
+		"outputPathIsSetByUser": 0
+		},
+	"\/kit\/templates\/templates.kit": {
+		"fileType": 2048,
+		"ignore": 1,
+		"ignoreWasSetByUser": 0,
+		"inputAbbreviatedPath": "\/kit\/templates\/templates.kit",
+		"outputAbbreviatedPath": "\/kit\/templates\/templates.html",
+		"outputPathIsOutsideProject": 0,
+		"outputPathIsSetByUser": 0
 		},
 	"\/less\/app\/_core.less": {
 		"allowInsecureImports": 0,
@@ -674,7 +757,7 @@
 		"strictMath": 0,
 		"strictUnits": 0
 		},
-	"\/less\/app\/_tabbar.less": {
+	"\/less\/app\/_navigationbar.less": {
 		"allowInsecureImports": 0,
 		"createSourceMap": 0,
 		"disableJavascript": 0,
@@ -682,8 +765,8 @@
 		"ieCompatibility": 1,
 		"ignore": 1,
 		"ignoreWasSetByUser": 0,
-		"inputAbbreviatedPath": "\/less\/app\/_tabbar.less",
-		"outputAbbreviatedPath": "\/less\/css\/_tabbar.css",
+		"inputAbbreviatedPath": "\/less\/app\/_navigationbar.less",
+		"outputAbbreviatedPath": "\/less\/css\/_navigationbar.css",
 		"outputPathIsOutsideProject": 0,
 		"outputPathIsSetByUser": 0,
 		"outputStyle": 0,
@@ -694,7 +777,7 @@
 		"strictMath": 0,
 		"strictUnits": 0
 		},
-	"\/less\/app\/_titlebar.less": {
+	"\/less\/app\/_tabbar.less": {
 		"allowInsecureImports": 0,
 		"createSourceMap": 0,
 		"disableJavascript": 0,
@@ -702,8 +785,8 @@
 		"ieCompatibility": 1,
 		"ignore": 1,
 		"ignoreWasSetByUser": 0,
-		"inputAbbreviatedPath": "\/less\/app\/_titlebar.less",
-		"outputAbbreviatedPath": "\/less\/css\/_titlebar.css",
+		"inputAbbreviatedPath": "\/less\/app\/_tabbar.less",
+		"outputAbbreviatedPath": "\/less\/css\/_tabbar.css",
 		"outputPathIsOutsideProject": 0,
 		"outputPathIsSetByUser": 0,
 		"outputStyle": 0,

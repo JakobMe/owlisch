@@ -1,33 +1,33 @@
 /*
- * Modul: TabBar.
- * Definiert die TabBar der App.
+ * Modul: Tab-Bar.
+ * Definiert die Tab-Bar der App.
  * @author Jakob Metzger <jakob.me@gmail.com>
  * @copyright 2016 Jakob Metzger
  */
 
 // Modul-Variablen
-@_tabbar-number-tabs:           5;
-@_tabbar-size-height:           49px;
-@_tabbar-size-icon:             24px;
-@_tabbar-size-padding:          6px;
-@_tabbar-size-padding-status:   3%;
-@_tabbar-fontsize-icon:         21px;
-@_tabbar-fontsize-icon-text:    24px;
-@_tabbar-fontsize-label:        9px;
+@_tab-bar-number-tabs:           5;
+@_tab-bar-size-height:           49px;
+@_tab-bar-size-icon:             24px;
+@_tab-bar-size-padding:          6px;
+@_tab-bar-size-padding-status:   3%;
+@_tab-bar-fontsize-icon:         21px;
+@_tab-bar-fontsize-icon-text:    24px;
+@_tab-bar-fontsize-label:        9px;
 
-// Loop: Status-Position für Tabbar-Modfikation
-._tabbar-loop-status(@n: @_tabbar-number-tabs, @i: 0) when (@i < @n) {
+// Loop: Status-Position für Tab-Bar-Modfikation
+._tabbar-loop-status(@n: @_tab-bar-number-tabs, @i: 0) when (@i < @n) {
     &--tab-@{i} &__status { .translate(100% * @i); }
     ._tabbar-loop-status(@n, (@i + 1));
 }
  
-// Block: Tabbar
-.tabbar {
+// Block: Tab-Bar
+.tab-bar {
     position: fixed;
     left: 0;
     bottom: 0;
     width: 100%;
-    height: @_tabbar-size-height;
+    height: @_tab-bar-size-height;
     border-top: @app-size-line-thin solid fade(@app-color-black, 20%);
     .transition(transform);
     ._tabbar-loop-status();
@@ -42,7 +42,7 @@
         overflow: hidden;
         margin: 0;
         padding: 0;
-        height: @_tabbar-size-height;
+        height: @_tab-bar-size-height;
         .gradient-background();
     }
     
@@ -54,10 +54,10 @@
         position: relative;
         text-align: center;
         text-decoration: none;
-        padding: @_tabbar-size-padding;
-        width: (100% / @_tabbar-number-tabs);
+        padding: @_tab-bar-size-padding;
+        width: (100% / @_tab-bar-number-tabs);
         color: @app-color-text-pale;
-        height: @_tabbar-size-height;
+        height: @_tab-bar-size-height;
         .transition(color);
         .borderbox();
         
@@ -77,15 +77,15 @@
     // Element: Icon
     &__icon {
         display: block;
-        font-size: @_tabbar-fontsize-icon;
-        height: @_tabbar-size-icon;
-        line-height: @_tabbar-size-icon;
+        font-size: @_tab-bar-fontsize-icon;
+        height: @_tab-bar-size-icon;
+        line-height: @_tab-bar-size-icon;
         
         // Mod: Text
         &--text {
             font-weight: bold;
             font-style: normal;
-            font-size: @_tabbar-fontsize-icon-text;
+            font-size: @_tab-bar-fontsize-icon-text;
             .font-icon();
         }
     }
@@ -94,8 +94,8 @@
     &__label {
         display: block;
         font-weight: bold;
-        font-size: @_tabbar-fontsize-label;
-        line-height: (@_tabbar-size-height - @_tabbar-size-icon - (2 * @_tabbar-size-padding));
+        font-size: @_tab-bar-fontsize-label;
+        line-height: (@_tab-bar-size-height - @_tab-bar-size-icon - (2 * @_tab-bar-size-padding));
         .font-main();
     }
     
@@ -104,8 +104,8 @@
         display: block;
         position: absolute;
         left: 0;
-        width: (100% / @_tabbar-number-tabs);
-        padding: 0 @_tabbar-size-padding-status;
+        width: (100% / @_tab-bar-number-tabs);
+        padding: 0 @_tab-bar-size-padding-status;
         top: -(@app-size-line-thin);
         height: @app-size-line-bold;
         .transition();
@@ -127,8 +127,8 @@
 // Responsive
 @media screen and (min-width: @app-size-responsive) {
     
-    // Block: Tabbar
-    .tabbar {
+    // Block: Tab-Bar
+    .tab-bar {
         position: absolute;
     }
 }

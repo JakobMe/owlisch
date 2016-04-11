@@ -1,9 +1,9 @@
 /**
- * TitleBar-Modul.
- * Steuert die TitleBar der App.
+ * Navigation-Bar-Modul.
+ * Steuert die Navigation-Bar der App.
  * @author Jakob Metzger
  */
-var TitleBar = (function() {
+var NavigationBar = (function() {
     
     // Selektor-Konstanten
     var _SEL_TITLEBAR       = "[role='navigation']";
@@ -12,7 +12,7 @@ var TitleBar = (function() {
     var _SEL_SEARCH         = "[role='search']";
     
     // BEM-Konstanten
-    var _B                  = "titlebar";
+    var _B                  = "navigation-bar";
     var _E_TITLE            = "title";
     var _E_BUTTON           = "button";
     var _M_HIDDEN           = "hidden";
@@ -50,7 +50,7 @@ var TitleBar = (function() {
     var _buttonsDisabled;
     
     // DOM-Elemente
-    var _$titlebar;
+    var _$navbar;
     var _$title;
     var _$buttonLeft;
     var _$buttonRight;
@@ -61,7 +61,7 @@ var TitleBar = (function() {
      * Bindet Funktionen an Events und Elemente des Moduls.
      */
     function _bindEvents() {
-        _$titlebar.on(GLOBALS.EVENT.CLICK, _SEL_BUTTONS, _buttonAction);
+        _$navbar.on(GLOBALS.EVENT.CLICK, _SEL_BUTTONS, _buttonAction);
     }
     
     /**
@@ -88,11 +88,11 @@ var TitleBar = (function() {
         $.extend(defaults, options || {});
         
         // DOM-Elemente initialisieren
-        _$titlebar = $(_SEL_TITLEBAR);
-        _$buttonLeft = _$titlebar.find(_SEL_BUTTONS).first();
-        _$buttonRight = _$titlebar.find(_SEL_BUTTONS).last();
-        _$title = _$titlebar.find(_SEL_TITLE);
-        _$search = _$titlebar.find(_SEL_SEARCH);
+        _$navbar = $(_SEL_TITLEBAR);
+        _$buttonLeft = _$navbar.find(_SEL_BUTTONS).first();
+        _$buttonRight = _$navbar.find(_SEL_BUTTONS).last();
+        _$title = _$navbar.find(_SEL_TITLE);
+        _$search = _$navbar.find(_SEL_SEARCH);
         
         // Startwerte setzen
         _title = defaults.title;
@@ -105,7 +105,7 @@ var TitleBar = (function() {
         
         // Webapp erkennen
         if (window.navigator.standalone) {
-            _$titlebar.setMod(_B, _M_WEBAPP, true);
+            _$navbar.setMod(_B, _M_WEBAPP, true);
         }
         
         // Events binden und rendern
@@ -238,7 +238,7 @@ var TitleBar = (function() {
             // Suche ein-/ausblenden, Button anpassen
             var icon = (_isSearch) ? ICON.CANCEL : ICON.SEARCH;
             setButtonLeft(ACTION.SEARCH, icon);
-            _$titlebar.setMod(_B, _M_SEARCH, _isSearch);
+            _$navbar.setMod(_B, _M_SEARCH, _isSearch);
             
             // Suche fokussieren
             if (_isSearch) {

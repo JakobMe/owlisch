@@ -17,7 +17,7 @@ $(document).ready(function() {
     
     // Module initialisieren
     TabBar.init();
-    TitleBar.init({ title: "OWLisch" });
+    NavigationBar.init({ title: "OWLisch" });
     Viewport.init();
     
     // Viewport initialisieren

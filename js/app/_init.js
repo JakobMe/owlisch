@@ -12,9 +12,6 @@ $(document).ready(function() {
         modKeyVal: GLOBALS.BEM.MODKEY
     });
     
-    // FastClick initialisieren
-    FastClick.attach(document.body);
-    
     // Module initialisieren
     Viewport.init();
     View.init();

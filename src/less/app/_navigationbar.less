@@ -6,15 +6,13 @@
  */
 
 // Modul-Variablen
-@_navigation-bar-size-height:         44px;
-@_navigation-bar-size-height-status:  20px;
-@_navigation-bar-size-width-status:   320px;
-@_navigation-bar-fontsize-title:      17px;
-@_navigation-bar-fontsize-icon:       19px;
-@_navigation-bar-fontsize-icon-sm:    16px;
+@_navigation-bar:                   navigation-bar;
+@_navigation-bar-fontsize-title:    17px;
+@_navigation-bar-fontsize-icon:     19px;
+@_navigation-bar-fontsize-icon-sm:  16px;
  
 // Block: Navigation-Bar
-.navigation-bar {
+.@{_navigation-bar} {
     position: absolute;
     overflow: hidden;
     text-align: center;
@@ -23,13 +21,13 @@
     width: 100%;
     background: @app-color-main;
     color: @app-color-text-light;
-    height: @_navigation-bar-size-height;
+    height: @app-size-height-navigationbar;
     .shadow-line(@app-size-line-thin, darken(@app-color-main, @app-darken-border));
     .textshadow();
     
     // Mod: Webapp
     &--webapp {
-        padding-top: @_navigation-bar-size-height-status;
+        padding-top: @app-size-height-statusbar;
     }
     
     // Mod: Suche & Suchfeld
@@ -56,9 +54,9 @@
         text-transform: uppercase;
         margin: 0;
         width: 100%;
-        padding: 0 @_navigation-bar-size-height;
-        height: @_navigation-bar-size-height;
-        line-height: @_navigation-bar-size-height;
+        padding: 0 @app-size-height-navigationbar;
+        height: @app-size-height-navigationbar;
+        line-height: @app-size-height-navigationbar;
         font-size: @_navigation-bar-fontsize-title;
         .transition(all, @app-time-animation-half);
         .borderbox();
@@ -82,9 +80,9 @@
         margin: 0;
         padding: 0;
         font-size: @_navigation-bar-fontsize-icon;
-        height: @_navigation-bar-size-height;
-        line-height: @_navigation-bar-size-height;
-        width: @_navigation-bar-size-height;
+        height: @app-size-height-navigationbar;
+        line-height: @app-size-height-navigationbar;
+        width: @app-size-height-navigationbar;
         .transition(all, @app-time-animation-half);
         
         // Mod: Links/Deaktiviert
@@ -102,7 +100,7 @@
         
         // Mod: Icon Abbrechen
         &--icon-cancel {
-            line-height: (@_navigation-bar-size-height - @app-size-line-medium);
+            line-height: (@app-size-height-navigationbar - @app-size-line-medium);
             .fa-icon(@fa-var-close);
         }
         
@@ -119,7 +117,7 @@
         
         // Mod: Icon Suche
         &--icon-search {
-            line-height: (@_navigation-bar-size-height - @app-size-line-medium);
+            line-height: (@app-size-height-navigationbar - @app-size-line-medium);
             .fa-icon(@fa-var-search);
         }
         
@@ -137,7 +135,7 @@
         left: 0;
         width: 100%;
         height: 100%;
-        padding: @app-size-margin-half @_navigation-bar-size-height;
+        padding: @app-size-margin-half @app-size-height-navigationbar;
         opacity: @app-opacity-invisible;
         .translate(0, 100%);
         .transition(opacity);
@@ -157,7 +155,7 @@
         font-size: @app-font-size-small;
         background: darken(@app-color-main, @app-darken-main);
         padding: @app-size-padding @app-size-padding-double;
-        height: (@_navigation-bar-size-height - @app-size-margin);
+        height: (@app-size-height-navigationbar - @app-size-margin);
         .textshadow();
         .font-main();
         .borderbox();
@@ -173,12 +171,12 @@
 @media screen and (min-width: @app-size-responsive) {
     
     // Block: Navigation-Bar
-    .navigation-bar {
+    .@{_navigation-bar} {
         background-image: url("@{app-path-layout}/statusbar.png?v=@{app-version}");
         background-repeat: no-repeat;
         background-position: top center;
-        padding-top: @_navigation-bar-size-height-status;
-        background-size: @_navigation-bar-size-width-status @_navigation-bar-size-height-status;
+        padding-top: @app-size-height-statusbar;
+        background-size: @app-size-width-iphone @app-size-height-statusbar;
     }
 }
 
@@ -189,7 +187,7 @@
               and (min-resolution: 144dpi) {
     
     // Block: Navigation-Bar
-    .navigation-bar {
+    .@{_navigation-bar} {
         background-image: url("@{app-path-layout}/statusbar-retina.png?v=@{app-version}");
     }
 }

@@ -5,8 +5,11 @@
  * @copyright 2016 Jakob Metzger
  */
 
+// Modul-Variablen
+@_view: view;
+
 // Block: View
-.view {
+.@{_view} {
     position: absolute;
     top: 0;
     left: 0;
@@ -14,13 +17,13 @@
     padding: 0;
     width: 100%;
     height: 100%;
-    padding-top: @_navigation-bar-size-height;
-    padding-bottom: @_tab-bar-size-height;
+    padding-top: @app-size-height-navigationbar;
+    padding-bottom: @app-size-height-tabbar;
     .borderbox();
     
     // Mod: Webapp
     &--webapp {
-        padding-top: (@_navigation-bar-size-height + @_navigation-bar-size-height-status);
+        padding-top: (@app-size-height-navigationbar + @app-size-height-statusbar);
     }
     
     // Mod: Volle Höhe
@@ -65,7 +68,7 @@
 @media screen and (min-width: @app-size-responsive) {
     
     // Block: View
-    .view {
-        padding-top: (@_navigation-bar-size-height + @_navigation-bar-size-height-status);
+    .@{_view} {
+        padding-top: (@app-size-height-navigationbar + @app-size-height-statusbar);
     }
 }

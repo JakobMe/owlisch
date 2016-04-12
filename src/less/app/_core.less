@@ -6,6 +6,7 @@
  */
 
 // Modul-Variablen
+@_body:                         body;
 @_body-size-background:         24px;
 
 // Webkit Sonderregeln
@@ -13,7 +14,7 @@
 :not(input) { -webkit-touch-callout: none; user-select: none; }
 
 // Block: Body
-.body {
+.@{_body} {
     -webkit-font-smoothing: antialiased;
     position: absolute;
     overflow: hidden;
@@ -31,7 +32,7 @@
 @media screen and (min-width: @app-size-responsive) {
     
     // Block: Body
-    .body {
+    .@{_body} {
         overflow: auto;
         position: static;
         background-repeat: repeat;
@@ -50,7 +51,7 @@
               and (min-resolution: 144dpi) {
     
     // Block: Body
-    .body {
+    .@{_body} {
         background-image: url("@{app-path-layout}/background-retina.png?v=@{app-version}");
     }
 }

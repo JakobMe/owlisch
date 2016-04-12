@@ -6,31 +6,31 @@
  */
 
 // Modul-Variablen
-@_tab-bar-number-tabs:           5;
-@_tab-bar-size-height:           49px;
-@_tab-bar-size-icon:             24px;
-@_tab-bar-size-padding:          6px;
-@_tab-bar-size-padding-status:   3%;
-@_tab-bar-fontsize-icon:         21px;
-@_tab-bar-fontsize-icon-text:    24px;
-@_tab-bar-fontsize-label:        9px;
+@_tab-bar:                      tab-bar;
+@_tab-bar-number-tabs:          5;
+@_tab-bar-size-icon:            24px;
+@_tab-bar-size-padding:         6px;
+@_tab-bar-size-padding-status:  3%;
+@_tab-bar-fontsize-icon:        21px;
+@_tab-bar-fontsize-icon-text:   24px;
+@_tab-bar-fontsize-label:       9px;
 
 // Loop: Status-Position für Tab-Bar-Modfikation
-._tabbar-loop-status(@n: @_tab-bar-number-tabs, @i: 0) when (@i < @n) {
+._block-loop-status(@n: @_tab-bar-number-tabs, @i: 0) when (@i < @n) {
     &--tab-@{i} &__status { .translate(100% * @i); }
-    ._tabbar-loop-status(@n, (@i + 1));
+    ._block-loop-status(@n, (@i + 1));
 }
  
 // Block: Tab-Bar
-.tab-bar {
+.@{_tab-bar} {
     position: absolute;
     left: 0;
     bottom: 0;
     width: 100%;
-    height: @_tab-bar-size-height;
+    height: @app-size-height-tabbar;
     border-top: @app-size-line-thin solid fade(@app-color-black, 20%);
     .transition(transform);
-    ._tabbar-loop-status();
+    ._block-loop-status();
     
     // Mod: Versteckt
     &--hidden {
@@ -42,7 +42,7 @@
         overflow: hidden;
         margin: 0;
         padding: 0;
-        height: @_tab-bar-size-height;
+        height: @app-size-height-tabbar;
         .gradient-background();
     }
     
@@ -57,7 +57,7 @@
         padding: @_tab-bar-size-padding;
         width: (100% / @_tab-bar-number-tabs);
         color: @app-color-text-pale;
-        height: @_tab-bar-size-height;
+        height: @app-size-height-tabbar;
         .transition(color);
         .borderbox();
         
@@ -95,7 +95,7 @@
         display: block;
         font-weight: bold;
         font-size: @_tab-bar-fontsize-label;
-        line-height: (@_tab-bar-size-height - @_tab-bar-size-icon - (2 * @_tab-bar-size-padding));
+        line-height: (@app-size-height-tabbar - @_tab-bar-size-icon - (2 * @_tab-bar-size-padding));
         .font-main();
     }
     

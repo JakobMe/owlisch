@@ -1,0 +1,55 @@
+<?xml version='1.0' encoding='utf-8'?>
+<widget id="com.jakobmetzger.owlisch" version="0.0.1">
+    <name>OWLisch</name>
+    <description>
+        Eine Lern-App für Dialektwörter aus Ostwestfalen-Lippe.
+    </description>
+    <author email="jakob.me@gmail.com" href="http://jmportfolio.de">
+        Jakob Metzger
+    </author>
+    <content src="index.html" />
+    <preference name="WebViewBounce" value="false" />
+    <preference name="target-device" value="handset" />
+    <preference name="Orientation" value="portrait" />
+    <preference name="DisallowOverscroll" value="true" />
+    <preference name="HideKeyboardFormAccessoryBar" value="true" />
+    <preference name="KeyboardDisplayRequiresUserAction" value="false" />
+    <preference name="EnableViewPortScale" value="false" />
+    <preference name="KeyboardShrinksView" value="false" />
+    <preference name="SuppressesIncrementalRendering" value="true" />
+    <preference name="StatusBarStyle" value="lightcontent" />
+    <access origin="*" />
+    <allow-intent href="http://*/*" />
+    <allow-intent href="https://*/*" />
+    <platform name="android">
+        <allow-intent href="market:*" />
+        <icon density="ldpi" src="www/img/favicon/android-chrome-36x36.png" />
+        <icon density="mdpi" src="www/img/favicon/android-chrome-48x48.png" />
+        <icon density="hdpi" src="www/img/favicon/android-chrome-72x72.png" />
+        <icon density="xhdpi" src="www/img/favicon/android-chrome-96x96.png" />
+        <icon density="xxhdpi" src="www/img/favicon/android-chrome-144x144.png" />
+        <icon density="xxxhdpi" src="www/img/favicon/android-chrome-192x192.png" />
+    </platform>
+    <platform name="ios">
+        <allow-intent href="itms:*" />
+        <allow-intent href="itms-apps:*" />
+        <icon height="87" src="www/img/favicon/apple-touch-icon-87x87.png" width="87" />
+        <icon height="167" src="www/img/favicon/apple-touch-icon-167x167.png" width="167" />
+        <icon height="180" src="www/img/favicon/apple-touch-icon-180x180.png" width="180" />
+        <icon height="120" src="www/img/favicon/apple-touch-icon-120x120.png" width="120" />
+        <icon height="76" src="www/img/favicon/apple-touch-icon-76x76.png" width="76" />
+        <icon height="152" src="www/img/favicon/apple-touch-icon-152x152.png" width="152" />
+        <icon height="40" src="www/img/favicon/apple-touch-icon-40x40.png" width="40" />
+        <icon height="80" src="www/img/favicon/apple-touch-icon-80x80.png" width="80" />
+        <icon height="57" src="www/img/favicon/apple-touch-icon-57x57.png" width="57" />
+        <icon height="114" src="www/img/favicon/apple-touch-icon-114x114.png" width="114" />
+        <icon height="72" src="www/img/favicon/apple-touch-icon-72x72.png" width="72" />
+        <icon height="144" src="www/img/favicon/apple-touch-icon-144x144.png" width="144" />
+        <icon height="29" src="www/img/favicon/apple-touch-icon-29x29.png" width="29" />
+        <icon height="58" src="www/img/favicon/apple-touch-icon-58x58.png" width="58" />
+        <icon height="50" src="www/img/favicon/apple-touch-icon-50x50.png" width="50" />
+        <icon height="100" src="www/img/favicon/apple-touch-icon-100x100.png" width="100" />
+    </platform>
+    <plugin name="cordova-plugin-keyboard" spec="~1.1.4" />
+    <plugin name="cordova-plugin-statusbar" spec="~2.1.2" />
+</widget>

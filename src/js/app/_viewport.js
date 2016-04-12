@@ -16,15 +16,6 @@ var Viewport = (function() {
     var _$viewport;
     
     /**
-     * Modul rendern.
-     * Rendert alle Elemente des Moduls anhand der intern
-     * gesetzten aktuellen Variablen.
-     */
-    function _render() {
-        _$viewport.setMod(_B, _E, _M, _isVisible);
-    }
-    
-    /**
      * Modul initialisieren.
      * Setzt die Standard-Anfangswerte des Moduls, bindet alle Events,
      * sucht nach den benötigten DOM-Elementen und rendert das Modul.
@@ -37,15 +28,24 @@ var Viewport = (function() {
         var defaults = { isVisible: false };
         $.extend(defaults, options || {});
         
-        // DOM-Elemente und Startwerte initialisieren
+        // Modulvariablen initialisieren
         _$viewport = $(_SEL_VIEWPORT);
         _isVisible = defaults.isVisible;
         
-        // Rendern
+        // Funktionen ausführen
         _render();
         
         // Modul Return
         return this;
+    }
+    
+    /**
+     * Modul rendern.
+     * Rendert alle Elemente des Moduls anhand der intern
+     * gesetzten aktuellen Variablen.
+     */
+    function _render() {
+        _$viewport.setMod(_B, _E, _M, _isVisible);
     }
     
     /**
@@ -72,9 +72,9 @@ var Viewport = (function() {
     
     // Öffentliches Interface
     return {
-        init: init,
-        hide: hide,
-        show: show
+        init : init,
+        hide : hide,
+        show : show
     };
     
 })();

@@ -28,7 +28,9 @@ var App = {
         // Module initialisieren
         Viewport.init();
         View.init();
-        TabBar.init();
+        TabBar.init({
+            viewFunction: View.setView
+        });
         
         // Navigation-Bar initialisieren
         NavigationBar

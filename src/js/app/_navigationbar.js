@@ -58,14 +58,6 @@ var NavigationBar = (function() {
     var _$search;
     
     /**
-     * Events binden.
-     * Bindet Funktionen an Events und Elemente des Moduls.
-     */
-    function _bindEvents() {
-        _$navbar.on(GLOBALS.EVENT.CLICK, _SEL_BUTTONS, _buttonAction);
-    }
-    
-    /**
      * Modul initialisieren.
      * Setzt die Standard-Anfangswerte des Moduls, bindet alle Events,
      * sucht nach den benötigten DOM-Elementen und rendert das Modul.
@@ -76,36 +68,34 @@ var NavigationBar = (function() {
         
         // Standard-Optionen definieren
         var defaults = {
-            title: null,
-            leftIcon: null,
-            leftAction: null,
-            rightIcon: null,
-            rightAction: null,
-            isSearch: false,
-            buttonsDisabled: false
+            title           : null,
+            leftIcon        : null,
+            leftAction      : null,
+            rightIcon       : null,
+            rightAction     : null,
+            isSearch        : false,
+            buttonsDisabled : false
         };
         
         // Standard-Optionen ergänzen/überschreiben
         $.extend(defaults, options || {});
         
-        // DOM-Elemente initialisieren
-        _$navbar = $(_SEL_TITLEBAR);
-        _$buttonLeft = _$navbar.find(_SEL_BUTTONS).first();
-        _$buttonRight = _$navbar.find(_SEL_BUTTONS).last();
-        _$title = _$navbar.find(_SEL_TITLE);
-        _$search = _$navbar.find(_SEL_SEARCH);
+        // Modulvariablen initialisieren
+        _$navbar            = $(_SEL_TITLEBAR);
+        _$buttonLeft        = _$navbar.find(_SEL_BUTTONS).first();
+        _$buttonRight       = _$navbar.find(_SEL_BUTTONS).last();
+        _$title             = _$navbar.find(_SEL_TITLE);
+        _$search            = _$navbar.find(_SEL_SEARCH);
+        _title              = defaults.title;
+        _leftIcon           = defaults.leftIcon;
+        _leftAction         = defaults.leftAction;
+        _rightIcon          = defaults.rightIcon;
+        _rightAction        = defaults.rightAction;
+        _isSearch           = defaults.isSearch;
+        _buttonsDisabled    = defaults.buttonsDisabled;
+        _isWebapp           = (GLOBALS.WEBAPP.IOS || GLOBALS.WEBAPP.CORDOVA);
         
-        // Startwerte setzen
-        _title = defaults.title;
-        _leftIcon = defaults.leftIcon;
-        _leftAction = defaults.leftAction;
-        _rightIcon = defaults.rightIcon;
-        _rightAction = defaults.rightAction;
-        _isSearch = defaults.isSearch;
-        _buttonsDisabled = defaults.buttonsDisabled;
-        _isWebapp = (GLOBALS.WEBAPP.IOS || GLOBALS.WEBAPP.CORDOVA);
-        
-        // Events binden und rendern
+        // Funktionen ausführen
         _bindEvents();
         _render();
         
@@ -114,39 +104,11 @@ var NavigationBar = (function() {
     }
     
     /**
-     * Button-Aktion ausführen.
-     * Führt anhand des gewählten Buttons und der dazu gesetzten
-     * Aktion eine bestimmte Funktion aus.
-     * @param {Object} $button Gewählter Button (Links/Rechts)
+     * Events binden.
+     * Bindet Funktionen an Events und Elemente des Moduls.
      */
-    function _buttonAction(event) {
-        if (!_buttonsDisabled) {
-            
-            // Button und Aktion initialisieren
-            var action;
-            var $button = $(event.target).closest(_SEL_BUTTONS);
-            
-            // Aktion bestimmen
-            if ($button.is(_$buttonLeft)) { action = _leftAction; }
-            else if ($button.is(_$buttonRight)) { action = _rightAction; }
-            
-            // Aktion Switch
-            switch (action) {
-                
-                // Aktion: Suche
-                case ACTION.SEARCH:
-                    
-                    // Suche aktivieren/deaktivieren
-                    if (_isSearch) { disableSearch(); }
-                    else { enableSearch(); }
-                    break;
-                    
-                // Default
-                default:
-                    window.console.log(action);
-                    break;
-            }
-        }
+    function _bindEvents() {
+        _$navbar.on(GLOBALS.EVENT.CLICK, _SEL_BUTTONS, _buttonAction);
     }
     
     /**
@@ -264,32 +226,86 @@ var NavigationBar = (function() {
     }
     
     /**
+     * Button-Aktion ausführen.
+     * Führt anhand des gewählten Buttons und der dazu gesetzten
+     * Aktion eine bestimmte Funktion aus.
+     * @param {Object} $button Gewählter Button (Links/Rechts)
+     */
+    function _buttonAction(event) {
+        if (!_buttonsDisabled) {
+            
+            // Button und Aktion initialisieren
+            var action;
+            var $button = $(event.target).closest(_SEL_BUTTONS);
+            
+            // Aktion bestimmen
+            if ($button.is(_$buttonLeft)) { action = _leftAction; }
+            else if ($button.is(_$buttonRight)) { action = _rightAction; }
+            
+            // Aktion Switch
+            switch (action) {
+                
+                // Aktion: Suche
+                case ACTION.SEARCH:
+                    
+                    // Suche aktivieren/deaktivieren
+                    if (_isSearch) { disableSearch(); }
+                    else { enableSearch(); }
+                    break;
+                    
+                // Default
+                default:
+                    window.console.log(action);
+                    break;
+            }
+        }
+    }
+    
+    /**
      * Button-Eigenschaften setzen.
      * Setzt die Aktion und das Icon eines gegebenen Buttons.
      * @param {Object} $button Ziel-Button
-     * @param {String} action Name der Button-Aktion
-     * @param {String} icon Name des Button-Icons
-     * @returns {Object} Modul-Objekt
+     * @param {string} action Name der Button-Aktion
+     * @param {string} icon Name des Button-Icons
      */
     function _setButton($button, action, icon) {
-        if ($button === _$buttonLeft) {
-            _leftAction = action;
-            _leftIcon = icon;
-        } else if ($button === _$buttonRight) {
-            _rightAction = action;
-            _rightIcon = icon;
-        } else {
-            return false;
+        
+        // Validität initialisieren
+        var validAction = false;
+        var validIcon = false;
+        
+        // Aktion überprüfen
+        $.each(ACTION, function(index, value) {
+            if (action === value) { validAction = true; return false; }
+        });
+        
+        // Icon überprüfen
+        $.each(ICON, function(index, value) {
+            if (icon === value) { validIcon = true; return false; }
+        });
+        
+        // Falls Icon und Aktion valide sind
+        if (validAction && validIcon) {
+            
+            // Aktion und Icon anhand des Buttons setzen, rendern
+            if ($button === _$buttonLeft) {
+                _leftAction = action;
+                _leftIcon = icon;
+            } else if ($button === _$buttonRight) {
+                _rightAction = action;
+                _rightIcon = icon;
+            } else {
+                return false;
+            }
+            _renderButton($button);
         }
-        _renderButton($button);
-        return this;
     }
     
     /**
      * Button-Eigenschaften Links setzen.
      * Setzt die Aktion und das Icon des linken Titel-Buttons.
-     * @param {String} action Name der Button-Aktion
-     * @param {String} icon Name des Button-Icons
+     * @param {string} action Name der Button-Aktion
+     * @param {string} icon Name des Button-Icons
      * @returns {Object} Modul-Objekt
      */
     function setButtonLeft(action, icon) {
@@ -300,8 +316,8 @@ var NavigationBar = (function() {
     /**
      * Button-Eigenschaften Rechts setzen.
      * Setzt die Aktion und das Icon des rechten Titel-Buttons.
-     * @param {String} action Name der Button-Aktion
-     * @param {String} icon Name des Button-Icons
+     * @param {string} action Name der Button-Aktion
+     * @param {string} icon Name des Button-Icons
      * @returns {Object} Modul-Objekt
      */
     function setButtonRight(action, icon) {
@@ -313,7 +329,7 @@ var NavigationBar = (function() {
      * Titel setzen.
      * Setzt den Titel der Titelleiste, falls er nicht leer ist,
      * und rendert ihn gegebenenfalls neu.
-     * @param {String} title Neuer Titel
+     * @param {string} title Neuer Titel
      * @returns {Object} Modul-Objekt
      */
     function setTitle(title) {
@@ -348,14 +364,14 @@ var NavigationBar = (function() {
     
     // Öffentliches Interface
     return {
-        init:           init,
-        setTitle:       setTitle,
-        setButtonLeft:  setButtonLeft,
-        setButtonRight: setButtonRight,
-        enableSearch:   enableSearch,
-        disableSearch:  disableSearch,
-        ICON:           ICON,
-        ACTION:         ACTION
+        init            : init,
+        setTitle        : setTitle,
+        setButtonLeft   : setButtonLeft,
+        setButtonRight  : setButtonRight,
+        enableSearch    : enableSearch,
+        disableSearch   : disableSearch,
+        ICON            : ICON,
+        ACTION          : ACTION
     };
     
 })();

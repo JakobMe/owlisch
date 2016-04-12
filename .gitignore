@@ -1,0 +1,7 @@
+# Mac
+.DS_Store
+
+# Cordova
+platforms
+hooks
+plugins

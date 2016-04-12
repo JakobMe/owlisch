@@ -4,47 +4,51 @@
 var App = {
 
     // App-Konstruktor
-    initialize: function() {
+    init: function() {
         if (navigator.userAgent.match(/(iPhone|iPod|iPad|Android)/)) {
             document.addEventListener(
-                GLOBALS.EVENT.DEVREADY,
-                this.onReady, false
+                GLOBALS.EVENT.DEVICEREADY,
+                this.onDeviceReady, false
             );
         } else {
-            this.onReady();
+            this.onDeviceReady();
         }
     },
     
     // Initialisieren
-    onReady: function() {
+    onDeviceReady: function() {
         
         // BEM-Syntax anpassen
         $.BEMsyntax({
-            elem:      GLOBALS.BEM.ELEMDIV,
-            modBefore: GLOBALS.BEM.MODDIV,
-            modKeyVal: GLOBALS.BEM.MODKEY
+            elem            : GLOBALS.BEM.ELEMDIV,
+            modBefore       : GLOBALS.BEM.MODDIV,
+            modKeyVal       : GLOBALS.BEM.MODKEY
         });
         
-        // Module initialisieren
+        // Viewport
         Viewport.init();
+        
+        // View
         View.init();
+        
+        // Tab-Bar
         TabBar.init({
-            viewFunction: View.setView
+            viewFunction    : View.setView
         });
         
-        // Navigation-Bar initialisieren
-        NavigationBar
-            .init().setTitle("OWLisch")
-            .setButtonLeft(NavigationBar.ACTION.SEARCH,
-                           NavigationBar.ICON.SEARCH);
+        // Navigation-Bar
+        NavigationBar.init({
+            title           : "OWLisch",
+            leftIcon        : NavigationBar.ICON.SEARCH,
+            leftAction      : NavigationBar.ACTION.SEARCH
+        });
         
         // Viewport initialisieren
         setTimeout(function() {
             Viewport.show();
-            View.show();
         }, GLOBALS.TIME.LONGER);
     }
 };
 
 // App initialisieren
-App.initialize();
+App.init();

@@ -53,6 +53,292 @@
 		"randomFootnoteNumbers": 0,
 		"useCompatibilityMode": 0
 		},
+	"\/res\/ios\/icon-100x100.png": {
+		"fileType": 32768,
+		"ignore": 0,
+		"ignoreWasSetByUser": 0,
+		"initialSize": 5799,
+		"inputAbbreviatedPath": "\/res\/ios\/icon-100x100.png",
+		"outputAbbreviatedPath": "\/res\/ios\/icon-100x100.png",
+		"outputPathIsOutsideProject": 0,
+		"outputPathIsSetByUser": 0,
+		"processed": 1
+		},
+	"\/res\/ios\/icon-114x114.png": {
+		"fileType": 32768,
+		"ignore": 0,
+		"ignoreWasSetByUser": 0,
+		"initialSize": 5692,
+		"inputAbbreviatedPath": "\/res\/ios\/icon-114x114.png",
+		"outputAbbreviatedPath": "\/res\/ios\/icon-114x114.png",
+		"outputPathIsOutsideProject": 0,
+		"outputPathIsSetByUser": 0,
+		"processed": 1
+		},
+	"\/res\/ios\/icon-120x120.png": {
+		"fileType": 32768,
+		"ignore": 0,
+		"ignoreWasSetByUser": 0,
+		"initialSize": 6108,
+		"inputAbbreviatedPath": "\/res\/ios\/icon-120x120.png",
+		"outputAbbreviatedPath": "\/res\/ios\/icon-120x120.png",
+		"outputPathIsOutsideProject": 0,
+		"outputPathIsSetByUser": 0,
+		"processed": 1
+		},
+	"\/res\/ios\/icon-144x144.png": {
+		"fileType": 32768,
+		"ignore": 0,
+		"ignoreWasSetByUser": 0,
+		"initialSize": 7650,
+		"inputAbbreviatedPath": "\/res\/ios\/icon-144x144.png",
+		"outputAbbreviatedPath": "\/res\/ios\/icon-144x144.png",
+		"outputPathIsOutsideProject": 0,
+		"outputPathIsSetByUser": 0,
+		"processed": 1
+		},
+	"\/res\/ios\/icon-152x152.png": {
+		"fileType": 32768,
+		"ignore": 0,
+		"ignoreWasSetByUser": 0,
+		"initialSize": 8013,
+		"inputAbbreviatedPath": "\/res\/ios\/icon-152x152.png",
+		"outputAbbreviatedPath": "\/res\/ios\/icon-152x152.png",
+		"outputPathIsOutsideProject": 0,
+		"outputPathIsSetByUser": 0,
+		"processed": 1
+		},
+	"\/res\/ios\/icon-167x167.png": {
+		"fileType": 32768,
+		"ignore": 0,
+		"ignoreWasSetByUser": 0,
+		"initialSize": 9867,
+		"inputAbbreviatedPath": "\/res\/ios\/icon-167x167.png",
+		"outputAbbreviatedPath": "\/res\/ios\/icon-167x167.png",
+		"outputPathIsOutsideProject": 0,
+		"outputPathIsSetByUser": 0,
+		"processed": 1
+		},
+	"\/res\/ios\/icon-180x180.png": {
+		"fileType": 32768,
+		"ignore": 0,
+		"ignoreWasSetByUser": 0,
+		"initialSize": 10056,
+		"inputAbbreviatedPath": "\/res\/ios\/icon-180x180.png",
+		"outputAbbreviatedPath": "\/res\/ios\/icon-180x180.png",
+		"outputPathIsOutsideProject": 0,
+		"outputPathIsSetByUser": 0,
+		"processed": 1
+		},
+	"\/res\/ios\/icon-29x29.png": {
+		"fileType": 32768,
+		"ignore": 0,
+		"ignoreWasSetByUser": 0,
+		"initialSize": 1964,
+		"inputAbbreviatedPath": "\/res\/ios\/icon-29x29.png",
+		"outputAbbreviatedPath": "\/res\/ios\/icon-29x29.png",
+		"outputPathIsOutsideProject": 0,
+		"outputPathIsSetByUser": 0,
+		"processed": 1
+		},
+	"\/res\/ios\/icon-40x40.png": {
+		"fileType": 32768,
+		"ignore": 0,
+		"ignoreWasSetByUser": 0,
+		"initialSize": 2517,
+		"inputAbbreviatedPath": "\/res\/ios\/icon-40x40.png",
+		"outputAbbreviatedPath": "\/res\/ios\/icon-40x40.png",
+		"outputPathIsOutsideProject": 0,
+		"outputPathIsSetByUser": 0,
+		"processed": 1
+		},
+	"\/res\/ios\/icon-50x50.png": {
+		"fileType": 32768,
+		"ignore": 0,
+		"ignoreWasSetByUser": 0,
+		"initialSize": 3091,
+		"inputAbbreviatedPath": "\/res\/ios\/icon-50x50.png",
+		"outputAbbreviatedPath": "\/res\/ios\/icon-50x50.png",
+		"outputPathIsOutsideProject": 0,
+		"outputPathIsSetByUser": 0,
+		"processed": 1
+		},
+	"\/res\/ios\/icon-57x57.png": {
+		"fileType": 32768,
+		"ignore": 0,
+		"ignoreWasSetByUser": 0,
+		"initialSize": 2581,
+		"inputAbbreviatedPath": "\/res\/ios\/icon-57x57.png",
+		"outputAbbreviatedPath": "\/res\/ios\/icon-57x57.png",
+		"outputPathIsOutsideProject": 0,
+		"outputPathIsSetByUser": 0,
+		"processed": 1
+		},
+	"\/res\/ios\/icon-58x58.png": {
+		"fileType": 32768,
+		"ignore": 0,
+		"ignoreWasSetByUser": 0,
+		"initialSize": 3509,
+		"inputAbbreviatedPath": "\/res\/ios\/icon-58x58.png",
+		"outputAbbreviatedPath": "\/res\/ios\/icon-58x58.png",
+		"outputPathIsOutsideProject": 0,
+		"outputPathIsSetByUser": 0,
+		"processed": 1
+		},
+	"\/res\/ios\/icon-72x72.png": {
+		"fileType": 32768,
+		"ignore": 0,
+		"ignoreWasSetByUser": 0,
+		"initialSize": 3450,
+		"inputAbbreviatedPath": "\/res\/ios\/icon-72x72.png",
+		"outputAbbreviatedPath": "\/res\/ios\/icon-72x72.png",
+		"outputPathIsOutsideProject": 0,
+		"outputPathIsSetByUser": 0,
+		"processed": 1
+		},
+	"\/res\/ios\/icon-76x76.png": {
+		"fileType": 32768,
+		"ignore": 0,
+		"ignoreWasSetByUser": 0,
+		"initialSize": 3629,
+		"inputAbbreviatedPath": "\/res\/ios\/icon-76x76.png",
+		"outputAbbreviatedPath": "\/res\/ios\/icon-76x76.png",
+		"outputPathIsOutsideProject": 0,
+		"outputPathIsSetByUser": 0,
+		"processed": 1
+		},
+	"\/res\/ios\/icon-80x80.png": {
+		"fileType": 32768,
+		"ignore": 0,
+		"ignoreWasSetByUser": 0,
+		"initialSize": 4766,
+		"inputAbbreviatedPath": "\/res\/ios\/icon-80x80.png",
+		"outputAbbreviatedPath": "\/res\/ios\/icon-80x80.png",
+		"outputPathIsOutsideProject": 0,
+		"outputPathIsSetByUser": 0,
+		"processed": 1
+		},
+	"\/res\/ios\/icon-87x87.png": {
+		"fileType": 32768,
+		"ignore": 0,
+		"ignoreWasSetByUser": 0,
+		"initialSize": 5146,
+		"inputAbbreviatedPath": "\/res\/ios\/icon-87x87.png",
+		"outputAbbreviatedPath": "\/res\/ios\/icon-87x87.png",
+		"outputPathIsOutsideProject": 0,
+		"outputPathIsSetByUser": 0,
+		"processed": 1
+		},
+	"\/res\/ios\/splash-1024x768.png": {
+		"fileType": 32768,
+		"ignore": 0,
+		"ignoreWasSetByUser": 0,
+		"initialSize": 21063,
+		"inputAbbreviatedPath": "\/res\/ios\/splash-1024x768.png",
+		"outputAbbreviatedPath": "\/res\/ios\/splash-1024x768.png",
+		"outputPathIsOutsideProject": 0,
+		"outputPathIsSetByUser": 0,
+		"processed": 0
+		},
+	"\/res\/ios\/splash-1242x2208.png": {
+		"fileType": 32768,
+		"ignore": 0,
+		"ignoreWasSetByUser": 0,
+		"initialSize": 45903,
+		"inputAbbreviatedPath": "\/res\/ios\/splash-1242x2208.png",
+		"outputAbbreviatedPath": "\/res\/ios\/splash-1242x2208.png",
+		"outputPathIsOutsideProject": 0,
+		"outputPathIsSetByUser": 0,
+		"processed": 0
+		},
+	"\/res\/ios\/splash-1536x2048.png": {
+		"fileType": 32768,
+		"ignore": 0,
+		"ignoreWasSetByUser": 0,
+		"initialSize": 51537,
+		"inputAbbreviatedPath": "\/res\/ios\/splash-1536x2048.png",
+		"outputAbbreviatedPath": "\/res\/ios\/splash-1536x2048.png",
+		"outputPathIsOutsideProject": 0,
+		"outputPathIsSetByUser": 0,
+		"processed": 0
+		},
+	"\/res\/ios\/splash-2048x1536.png": {
+		"fileType": 32768,
+		"ignore": 0,
+		"ignoreWasSetByUser": 0,
+		"initialSize": 51794,
+		"inputAbbreviatedPath": "\/res\/ios\/splash-2048x1536.png",
+		"outputAbbreviatedPath": "\/res\/ios\/splash-2048x1536.png",
+		"outputPathIsOutsideProject": 0,
+		"outputPathIsSetByUser": 0,
+		"processed": 0
+		},
+	"\/res\/ios\/splash-2208x1242.png": {
+		"fileType": 32768,
+		"ignore": 0,
+		"ignoreWasSetByUser": 0,
+		"initialSize": 50437,
+		"inputAbbreviatedPath": "\/res\/ios\/splash-2208x1242.png",
+		"outputAbbreviatedPath": "\/res\/ios\/splash-2208x1242.png",
+		"outputPathIsOutsideProject": 0,
+		"outputPathIsSetByUser": 0,
+		"processed": 0
+		},
+	"\/res\/ios\/splash-320x480.png": {
+		"fileType": 32768,
+		"ignore": 0,
+		"ignoreWasSetByUser": 0,
+		"initialSize": 9745,
+		"inputAbbreviatedPath": "\/res\/ios\/splash-320x480.png",
+		"outputAbbreviatedPath": "\/res\/ios\/splash-320x480.png",
+		"outputPathIsOutsideProject": 0,
+		"outputPathIsSetByUser": 0,
+		"processed": 0
+		},
+	"\/res\/ios\/splash-640x1136.png": {
+		"fileType": 32768,
+		"ignore": 0,
+		"ignoreWasSetByUser": 0,
+		"initialSize": 20100,
+		"inputAbbreviatedPath": "\/res\/ios\/splash-640x1136.png",
+		"outputAbbreviatedPath": "\/res\/ios\/splash-640x1136.png",
+		"outputPathIsOutsideProject": 0,
+		"outputPathIsSetByUser": 0,
+		"processed": 0
+		},
+	"\/res\/ios\/splash-640x960.png": {
+		"fileType": 32768,
+		"ignore": 0,
+		"ignoreWasSetByUser": 0,
+		"initialSize": 19518,
+		"inputAbbreviatedPath": "\/res\/ios\/splash-640x960.png",
+		"outputAbbreviatedPath": "\/res\/ios\/splash-640x960.png",
+		"outputPathIsOutsideProject": 0,
+		"outputPathIsSetByUser": 0,
+		"processed": 0
+		},
+	"\/res\/ios\/splash-750x1334.png": {
+		"fileType": 32768,
+		"ignore": 0,
+		"ignoreWasSetByUser": 0,
+		"initialSize": 21653,
+		"inputAbbreviatedPath": "\/res\/ios\/splash-750x1334.png",
+		"outputAbbreviatedPath": "\/res\/ios\/splash-750x1334.png",
+		"outputPathIsOutsideProject": 0,
+		"outputPathIsSetByUser": 0,
+		"processed": 0
+		},
+	"\/res\/ios\/splash-768x1024.png": {
+		"fileType": 32768,
+		"ignore": 0,
+		"ignoreWasSetByUser": 0,
+		"initialSize": 20559,
+		"inputAbbreviatedPath": "\/res\/ios\/splash-768x1024.png",
+		"outputAbbreviatedPath": "\/res\/ios\/splash-768x1024.png",
+		"outputPathIsOutsideProject": 0,
+		"outputPathIsSetByUser": 0,
+		"processed": 1
+		},
 	"\/src\/js\/app\/_global.js": {
 		"fileType": 64,
 		"ignore": 1,
@@ -586,7 +872,7 @@
 		"outputAbbreviatedPath": "\/www\/img\/content\/beoemmeln.jpg",
 		"outputPathIsOutsideProject": 0,
 		"outputPathIsSetByUser": 0,
-		"processed": 0
+		"processed": 1
 		},
 	"\/www\/img\/content\/blume.jpg": {
 		"fileType": 16384,
@@ -608,7 +894,7 @@
 		"outputAbbreviatedPath": "\/www\/img\/content\/buetterken.jpg",
 		"outputPathIsOutsideProject": 0,
 		"outputPathIsSetByUser": 0,
-		"processed": 0
+		"processed": 1
 		},
 	"\/www\/img\/content\/knuepp.jpg": {
 		"fileType": 16384,
@@ -619,7 +905,7 @@
 		"outputAbbreviatedPath": "\/www\/img\/content\/knuepp.jpg",
 		"outputPathIsOutsideProject": 0,
 		"outputPathIsSetByUser": 0,
-		"processed": 0
+		"processed": 1
 		},
 	"\/www\/img\/content\/latuechte.jpg": {
 		"fileType": 16384,
@@ -630,7 +916,7 @@
 		"outputAbbreviatedPath": "\/www\/img\/content\/latuechte.jpg",
 		"outputPathIsOutsideProject": 0,
 		"outputPathIsSetByUser": 0,
-		"processed": 0
+		"processed": 1
 		},
 	"\/www\/img\/content\/noenkern.jpg": {
 		"fileType": 16384,
@@ -641,7 +927,7 @@
 		"outputAbbreviatedPath": "\/www\/img\/content\/noenkern.jpg",
 		"outputPathIsOutsideProject": 0,
 		"outputPathIsSetByUser": 0,
-		"processed": 0
+		"processed": 1
 		},
 	"\/www\/img\/content\/pinienzapfen.jpg": {
 		"fileType": 16384,
@@ -663,7 +949,7 @@
 		"outputAbbreviatedPath": "\/www\/img\/content\/pinneken.jpg",
 		"outputPathIsOutsideProject": 0,
 		"outputPathIsSetByUser": 0,
-		"processed": 0
+		"processed": 1
 		},
 	"\/www\/img\/content\/schraube.jpg": {
 		"fileType": 16384,
@@ -674,7 +960,7 @@
 		"outputAbbreviatedPath": "\/www\/img\/content\/schraube.jpg",
 		"outputPathIsOutsideProject": 0,
 		"outputPathIsSetByUser": 0,
-		"processed": 0
+		"processed": 1
 		},
 	"\/www\/img\/favicon\/android-chrome-144x144.png": {
 		"fileType": 32768,
@@ -1079,7 +1365,7 @@
 		"outputAbbreviatedPath": "\/www\/img\/layout\/background-retina.png",
 		"outputPathIsOutsideProject": 0,
 		"outputPathIsSetByUser": 0,
-		"processed": 0
+		"processed": 1
 		},
 	"\/www\/img\/layout\/background.png": {
 		"fileType": 32768,
@@ -1090,7 +1376,7 @@
 		"outputAbbreviatedPath": "\/www\/img\/layout\/background.png",
 		"outputPathIsOutsideProject": 0,
 		"outputPathIsSetByUser": 0,
-		"processed": 0
+		"processed": 1
 		},
 	"\/www\/img\/layout\/iphone-retina.png": {
 		"fileType": 32768,
@@ -1101,7 +1387,7 @@
 		"outputAbbreviatedPath": "\/www\/img\/layout\/iphone-retina.png",
 		"outputPathIsOutsideProject": 0,
 		"outputPathIsSetByUser": 0,
-		"processed": 0
+		"processed": 1
 		},
 	"\/www\/img\/layout\/iphone.png": {
 		"fileType": 32768,
@@ -1123,7 +1409,7 @@
 		"outputAbbreviatedPath": "\/www\/img\/layout\/statusbar-retina.png",
 		"outputPathIsOutsideProject": 0,
 		"outputPathIsSetByUser": 0,
-		"processed": 0
+		"processed": 1
 		},
 	"\/www\/img\/layout\/statusbar.png": {
 		"fileType": 32768,
@@ -1134,7 +1420,7 @@
 		"outputAbbreviatedPath": "\/www\/img\/layout\/statusbar.png",
 		"outputPathIsOutsideProject": 0,
 		"outputPathIsSetByUser": 0,
-		"processed": 0
+		"processed": 1
 		},
 	"\/www\/index.html": {
 		"fileType": 8192,

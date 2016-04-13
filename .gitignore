@@ -1,6 +1,9 @@
 # Mac
 .DS_Store
 
+# Codekit
+.codekit-cache
+
 # Cordova
 platforms
 hooks

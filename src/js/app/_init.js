@@ -7,6 +7,11 @@ var App = {
     // Initialisieren
     init: function() {
         
+        // FastClick initialisieren
+        /* jshint ignore:start */
+        FastClick.attach(document.body);
+        /* jshint ignore:end */
+
         // BEM-Syntax anpassen
         $.BEMsyntax({
             elem      : C.BEM.ELEMDIV,

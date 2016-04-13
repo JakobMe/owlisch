@@ -141,6 +141,17 @@
 		"outputStyle": 1,
 		"syntaxCheckerStyle": 1
 		},
+	"\/src\/js\/lib\/_fastclick.js": {
+		"fileType": 64,
+		"ignore": 1,
+		"ignoreWasSetByUser": 0,
+		"inputAbbreviatedPath": "\/src\/js\/lib\/_fastclick.js",
+		"outputAbbreviatedPath": "\/src\/js\/lib\/min\/_fastclick-min.js",
+		"outputPathIsOutsideProject": 0,
+		"outputPathIsSetByUser": 0,
+		"outputStyle": 1,
+		"syntaxCheckerStyle": 1
+		},
 	"\/src\/js\/lib\/_jquery.js": {
 		"fileType": 64,
 		"ignore": 1,
@@ -1444,7 +1455,7 @@
 			"flagValue": -1
 			},
 		"indent": {
-			"active": 0,
+			"active": 1,
 			"flagValue": 4
 			},
 		"iterator": {
@@ -1488,8 +1499,8 @@
 			"flagValue": 3
 			},
 		"maxlen": {
-			"active": 0,
-			"flagValue": 150
+			"active": 1,
+			"flagValue": 80
 			},
 		"maxparams": {
 			"active": 0,

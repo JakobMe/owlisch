@@ -1,54 +1,28 @@
 /**
  * App initialisieren.
+ * Initialisiert alle Komponenten/Module der App.
  */
 var App = {
 
-    // App-Konstruktor
-    init: function() {
-        if (navigator.userAgent.match(/(iPhone|iPod|iPad|Android)/)) {
-            document.addEventListener(
-                GLOBALS.EVENT.DEVICEREADY,
-                this.onDeviceReady, false
-            );
-        } else {
-            this.onDeviceReady();
-        }
-    },
-    
     // Initialisieren
-    onDeviceReady: function() {
+    init: function() {
         
         // BEM-Syntax anpassen
         $.BEMsyntax({
-            elem            : GLOBALS.BEM.ELEMDIV,
-            modBefore       : GLOBALS.BEM.MODDIV,
-            modKeyVal       : GLOBALS.BEM.MODKEY
+            elem      : GLOBALS.BEM.ELEMDIV,
+            modBefore : GLOBALS.BEM.MODDIV,
+            modKeyVal : GLOBALS.BEM.MODKEY
         });
         
-        // Viewport
+        // Komponenten initialisieren
+        NavigationBar.init();
+        View.init({ navbar: NavigationBar });
+        TabBar.init({ view: View });
         Viewport.init();
-        
-        // View
-        View.init();
-        
-        // Tab-Bar
-        TabBar.init({
-            viewFunction    : View.setView
-        });
-        
-        // Navigation-Bar
-        NavigationBar.init({
-            title           : "OWLisch",
-            leftIcon        : NavigationBar.ICON.SEARCH,
-            leftAction      : NavigationBar.ACTION.SEARCH
-        });
-        
-        // Viewport initialisieren
-        setTimeout(function() {
-            Viewport.show();
-        }, GLOBALS.TIME.LONGER);
     }
 };
 
 // App initialisieren
-App.init();
+$(document).ready(function() {
+    App.init();
+});

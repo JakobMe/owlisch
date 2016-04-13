@@ -20,7 +20,7 @@ var TabBar = (function() {
     var _tabActive;
     var _tabNumber;
     var _isHidden;
-    var _viewFunction;
+    var _view;
     
     // DOM-Elemente
     var _$tabbar;
@@ -37,9 +37,9 @@ var TabBar = (function() {
         
         // Standard-Optionen definieren
         var defaults = {
+            view            : null,
             isHidden        : false,
-            initialTab      : 0,
-            viewFunction    : function(view) { window.console.log(view); }
+            initialTab      : 0
         };
         
         // Standard-Optionen ergänzen/überschreiben
@@ -50,9 +50,9 @@ var TabBar = (function() {
         _$tabs              = _$tabbar.find(_SEL_TABS);
         _tabNumber          = _$tabs.length - 1;
         _isHidden           = defaults.isHidden;
+        _view               = defaults.view;
         
         // Funktionen ausführen
-        _setFunction(defaults.viewFunction);
         _bindEvents();
         _setTab(defaults.initialTab);
         
@@ -97,7 +97,7 @@ var TabBar = (function() {
         
         // Variablen initialisieren
         var i = -1;
-        var view = null;
+        var panel = null;
         
         // Tab-Index ermitteln
         if (typeof tab === GLOBALS.TYPE.NUMBER) {
@@ -107,34 +107,22 @@ var TabBar = (function() {
         }
         
         // Ziel-View ermitteln
-        view = _$tabs.eq(i).data(GLOBALS.DATA.VIEW);
+        panel = _$tabs.eq(i).data(GLOBALS.DATA.PANEL);
         
         // Tab-Index prüfen und setzen
         if ((i >= 0) && (i <= _tabNumber)) {
             _tabActive = i;
             
             // View prüfen und Funktion auslösen
-            if ((view !== null) &&
-                (view.length > 0) &&
-                ($.isFunction(_viewFunction))) {
-                _viewFunction(view);
+            if ((panel !== null) &&
+                (panel.length > 0) &&
+                ($.isFunction(_view.setPanel))) {
+                _view.setPanel(panel);
             }
         }
         
         // Rendern
         _render();
-    }
-    
-    /**
-     * View-Funktion setzen.
-     * Setzt die Funktion, die beim Aktivieren
-     * eines Tabs ausgelöst werden soll.
-     * @param {Object} func Funktion
-     */
-    function _setFunction(func) {
-        if ($.isFunction(func)) {
-            _viewFunction = func;
-        }
     }
     
     /**

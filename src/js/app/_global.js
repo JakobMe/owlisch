@@ -39,13 +39,13 @@ var GLOBALS = (function() {
         // HTML-Attribute
         ATTR: {
             DATA_ACTION     : "data-action",
-            DATA_VIEW       : "data-view",
+            DATA_PANEL      : "data-panel",
             DATA_TITLE      : "data-title"
         },
         
         // Data-Attribute
         DATA: {
-            VIEW            : "view",
+            PANEL           : "panel",
             ACTION          : "action",
             TITLE           : "title"
         },

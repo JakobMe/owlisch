@@ -33,7 +33,7 @@ var Viewport = (function() {
         _isVisible = defaults.isVisible;
         
         // Funktionen ausführen
-        _render();
+        setTimeout(function() { _show(); }, GLOBALS.TIME.LONGER);
         
         // Modul Return
         return this;
@@ -49,32 +49,15 @@ var Viewport = (function() {
     }
     
     /**
-     * Modul verbergen.
-     * Blendet das Modul aus und rendert es neu.
-     * @returns {Object} Modul-Objekt
-     */
-    function hide() {
-        _isVisible = false;
-        _render();
-        return this;
-    }
-    
-    /**
      * Modul zeigen.
      * Blendet das Modul ein und rendert es neu.
-     * @returns {Object} Modul-Objekt
      */
-    function show() {
+    function _show() {
         _isVisible = true;
         _render();
-        return this;
     }
     
     // Öffentliches Interface
-    return {
-        init : init,
-        hide : hide,
-        show : show
-    };
+    return { init: init };
     
 })();

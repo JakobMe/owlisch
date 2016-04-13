@@ -252,11 +252,6 @@ var NavigationBar = (function() {
                     if (_isSearch) { disableSearch(); }
                     else { enableSearch(); }
                     break;
-                    
-                // Default
-                default:
-                    window.console.log(action);
-                    break;
             }
         }
     }
@@ -274,15 +269,26 @@ var NavigationBar = (function() {
         var validAction = false;
         var validIcon = false;
         
-        // Aktion überprüfen
-        $.each(ACTION, function(index, value) {
-            if (action === value) { validAction = true; return false; }
-        });
-        
-        // Icon überprüfen
-        $.each(ICON, function(index, value) {
-            if (icon === value) { validIcon = true; return false; }
-        });
+        // Falls Icon oder Aktion null sind
+        if ((action === null) || (icon === null)) {
+            
+            // Deaktivieren und validieren
+            action = null;
+            icon = null;
+            validAction = true;
+            validIcon = true;
+            
+        // Ansonsten Icon und Aktion überprüfen
+        } else {
+            
+            // Anhand der vordefinierten Konstanten prüfen
+            $.each(ACTION, function(index, value) {
+                if (action === value) { validAction = true; return false; }
+            });
+            $.each(ICON, function(index, value) {
+                if (icon === value) { validIcon = true; return false; }
+            });
+        }
         
         // Falls Icon und Aktion valide sind
         if (validAction && validIcon) {

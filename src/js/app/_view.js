@@ -19,12 +19,22 @@ var View = (function() {
     var _M_WEBAPP           = "webapp";
     var _M_CURRENT          = "current";
     
-    // Private Variablen und DOM-Elemente
+    // Panel-Konstanten
+    var _PANELS = {
+        START               : "start",
+        DICTIONARY          : "dictionary",
+        QUIZ                : "quiz",
+        PROGRESS            : "progress",
+        HELP                : "help"
+    };
+    
+    // Private Variablen
     var _isVisible;
     var _isWebapp;
     var _isFullscreen;
-    var _currentView;
-    var _views;
+    var _currentPanel;
+    var _panels;
+    var _navbar;
     
     // DOM-Elemente
     var _$view;
@@ -42,7 +52,8 @@ var View = (function() {
         // Standard-Optionen definieren
         var defaults = {
             isVisible       : false,
-            isFullscreen    : false
+            isFullscreen    : false,
+            navbar          : null
         };
         
         // Optionen ergänzen
@@ -51,14 +62,15 @@ var View = (function() {
         // Modulvariablen initialisieren
         _$view              = $(_SEL_VIEW);
         _$content           = _$view.find(_SEL_CONTENT);
+        _navbar             = defaults.navbar;
         _isVisible          = defaults.isVisible;
         _isFullscreen       = defaults.isFullscreen;
         _isWebapp           = (GLOBALS.WEBAPP.IOS || GLOBALS.WEBAPP.CORDOVA);
-        _currentView        = null;
-        _views              = {};
+        _currentPanel       = null;
+        _panels             = {};
         
         // Funktionen ausführen
-        _initViews();
+        _initPanels();
         _render();
         
         // Modul Return
@@ -77,43 +89,91 @@ var View = (function() {
         _$view.setMod(_B, _M_FULLSCREEN, _isFullscreen);
         _$content.setMod(_B, _E_CONTENT, _M_VISIBLE, _isVisible);
         
-        // Panels (de-)aktivieren
-        $.each(_views, function(name, $panel) {
-            $panel.setMod(_B, _E_PANEL, _M_CURRENT, (name === _currentView));
+        // View-Panels (de-)aktivieren
+        $.each(_panels, function(name, $panel) {
+            $panel.setMod(_B, _E_PANEL, _M_CURRENT, (name === _currentPanel));
         });
     }
     
     /**
-     * Views initialisieren.
+     * View-Panels initialisieren.
      * Durchsucht den DOM nach View-Panels und fügt sie
-     * der internen View-Liste hinzu.
+     * der internen View-Liste hinzu, wenn sie mit den intern
+     * definierten Views übereinstimmen.
      */
-    function _initViews() {
+    function _initPanels() {
         _$view.find(_SEL_PANELS).each(function() {
-            _views[$(this).data(GLOBALS.DATA.VIEW)] = $(this);
+            
+            // Gefundenes View-Panel initialisieren
+            var $panel = $(this);
+            var panelName = $panel.data(GLOBALS.DATA.PANEL);
+            
+            // Prüfen, ob das View-Panel valide ist und setzen
+            for (var name in _PANELS) {
+                if (_PANELS.hasOwnProperty(name)) {
+                    if (_PANELS[name] === panelName) {
+                        _panels[panelName] = $panel;
+                        break;
+                    }
+                }
+            }
         });
+    }
+    
+    /**
+     * Navigation-Bar der View setzen.
+     * Setzt die verknüpfte Navigation-Bar anhand des übergebenen
+     * Panel-Namens; setzt Titel und Buttons.
+     */
+    function _setNavbar() {
+        if ((_navbar !== null) && (typeof _navbar !== GLOBALS.TYPE.UNDEF)) {
+            
+            // Suche deaktivieren
+            _navbar.disableSearch();
+            
+            // Neue Werte initialisieren
+            var newTitle = GLOBALS.STR.EMPTY;
+            var newIconLeft = null;
+            var newIconRight = null;
+            var newActionLeft = null;
+            var newActionRight = null;
+            
+            // Sonderfall: Wörterbuch
+            if (_currentPanel === _PANELS.DICTIONARY) {
+                newIconLeft = _navbar.ICON.SEARCH;
+                newIconRight = _navbar.ICON.SORT;
+                newActionLeft = _navbar.ACTION.SEARCH;
+                newActionRight = _navbar.ACTION.SORT;
+            }
+            
+            // Neuen Titel setzen
+            if (_panels[_currentPanel] instanceof jQuery) {
+                newTitle = _panels[_currentPanel].data(GLOBALS.DATA.TITLE);
+            }
+            
+            // Navigation-Bar setzen
+            _navbar.setButtonLeft(newActionLeft, newIconLeft)
+                   .setButtonRight(newActionRight, newIconRight)
+                   .setTitle(newTitle);
+        }
     }
     
     /**
      * Modul verbergen.
      * Blendet das Modul aus und rendert es neu.
-     * @returns {Object} Modul-Objekt
      */
-    function hide() {
+    function _hide() {
         _isVisible = false;
         _render();
-        return this;
     }
     
     /**
      * Modul zeigen.
      * Blendet das Modul ein und rendert es neu.
-     * @returns {Object} Modul-Objekt
      */
-    function show() {
+    function _show() {
         _isVisible = true;
         _render();
-        return this;
     }
     
     /**
@@ -139,21 +199,19 @@ var View = (function() {
     }
     
     /**
-     * Aktuelle View setzen.
-     * Wenn der übergebene View-Name gültig ist, wird die View
-     * erst ausgeblendet, dann wird das Tab-Panel gewechselt und
-     * die View wieder eingeblendet.
-     * @param {string} view Name der neuen View
+     * Aktuelles View-Panel setzen.
+     * Wenn der übergebene Panel-Name gültig ist, wird die View
+     * erst ausgeblendet, dann wird das Tab-Panel gewechselt,
+     * die Navigation-Bar eingestellt und die View wieder eingeblendet.
+     * @param {string} panel Name des neuen View-Panels
      * @returns {Object} Modul-Objekt
      */
-    function setView(view) {
-        if (typeof _views[view] !== GLOBALS.TYPE.UNDEF) {
-            hide();
-            setTimeout(function() {
-                _currentView = view;
-                _isVisible = true;
-                _render();
-            }, GLOBALS.TIME.STANDARD);
+    function setPanel(panel) {
+        if (typeof _panels[panel] !== GLOBALS.TYPE.UNDEF) {
+            _currentPanel = panel;
+            _hide();
+            _setNavbar();
+            setTimeout(_show(), GLOBALS.TIME.STANDARD);
         }
         return this;
     }
@@ -161,11 +219,9 @@ var View = (function() {
     // Öffentliches Interface
     return {
         init                : init,
-        hide                : hide,
-        show                : show,
         enableFullscreen    : enableFullscreen,
         disableFullscreen   : disableFullscreen,
-        setView             : setView
+        setPanel            : setPanel
     };
     
 })();

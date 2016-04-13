@@ -9,9 +9,9 @@ var App = {
         
         // BEM-Syntax anpassen
         $.BEMsyntax({
-            elem      : GLOBALS.BEM.ELEMDIV,
-            modBefore : GLOBALS.BEM.MODDIV,
-            modKeyVal : GLOBALS.BEM.MODKEY
+            elem      : C.BEM.ELEMDIV,
+            modBefore : C.BEM.MODDIV,
+            modKeyVal : C.BEM.MODKEY
         });
         
         // Komponenten initialisieren
@@ -23,6 +23,4 @@ var App = {
 };
 
 // App initialisieren
-$(document).ready(function() {
-    App.init();
-});
+$(document).ready(function() { App.init(); });

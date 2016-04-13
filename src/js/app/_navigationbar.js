@@ -93,7 +93,7 @@ var NavigationBar = (function() {
         _rightAction        = defaults.rightAction;
         _isSearch           = defaults.isSearch;
         _buttonsDisabled    = defaults.buttonsDisabled;
-        _isWebapp           = (GLOBALS.WEBAPP.IOS || GLOBALS.WEBAPP.CORDOVA);
+        _isWebapp           = (C.WEBAPP.IOS || C.WEBAPP.CORDOVA);
         
         // Funktionen ausführen
         _bindEvents();
@@ -108,7 +108,7 @@ var NavigationBar = (function() {
      * Bindet Funktionen an Events und Elemente des Moduls.
      */
     function _bindEvents() {
-        _$navbar.on(GLOBALS.EVENT.CLICK, _SEL_BUTTONS, _buttonAction);
+        _$navbar.on(C.EVENT.CLICK, _SEL_BUTTONS, _buttonAction);
     }
     
     /**
@@ -143,12 +143,12 @@ var NavigationBar = (function() {
         setTimeout(function() {
             
             // Falls Icon oder Aktion nicht gesetzt sind
-            if ((icon === null) || (icon === GLOBALS.STR.EMPTY) ||
-                (action === null) || (action === GLOBALS.STR.EMPTY)) {
+            if ((icon === null) || (icon === C.STR.EMPTY) ||
+                (action === null) || (action === C.STR.EMPTY)) {
                 
                 // Button deaktivieren
                 $button.setMod(_B, _E_BUTTON, _M_ICON, ICON.NONE);
-                $button.attr(GLOBALS.ATTR.DATA_ACTION, GLOBALS.STR.EMPTY);
+                $button.attr(C.ATTR.DATA_ACTION, C.STR.EMPTY);
                 
             // Falls beides korrekt gesetzt ist
             } else {
@@ -156,15 +156,15 @@ var NavigationBar = (function() {
                 // Icon und Aktion setzen, Button einblenden
                 $button.setMod(_B, _E_BUTTON, _M_DISABLED, false);
                 $button.setMod(_B, _E_BUTTON, _M_ICON, icon);
-                $button.attr(GLOBALS.ATTR.DATA_ACTION, action);
+                $button.attr(C.ATTR.DATA_ACTION, action);
             }
             
             // Buttons wieder aktivieren
             setTimeout(function() {
                 _buttonsDisabled = false;
-            }, GLOBALS.TIME.STANDARD);
+            }, C.TIME.STANDARD);
             
-        }, GLOBALS.TIME.SHORT);
+        }, C.TIME.SHORT);
     }
     
     /**
@@ -184,7 +184,7 @@ var NavigationBar = (function() {
             _$title.text(_title);
             _$title.setMod(_B, _E_TITLE, _M_HIDDEN, false);
             
-        }, GLOBALS.TIME.SHORT);
+        }, C.TIME.SHORT);
     }
     
     /**
@@ -203,7 +203,7 @@ var NavigationBar = (function() {
             if (_isSearch) {
                 setTimeout(function() {
                     _$search.focus();
-                }, GLOBALS.TIME.MEDIUM);
+                }, C.TIME.MEDIUM);
             }
         }
     }
@@ -339,7 +339,7 @@ var NavigationBar = (function() {
      * @returns {Object} Modul-Objekt
      */
     function setTitle(title) {
-        if ((title !== null) && (title !== GLOBALS.STR.EMPTY)) {
+        if ((title !== null) && (title !== C.STR.EMPTY)) {
             _title = title;
             _renderTitle();
         }

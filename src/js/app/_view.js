@@ -65,7 +65,7 @@ var View = (function() {
         _navbar             = defaults.navbar;
         _isVisible          = defaults.isVisible;
         _isFullscreen       = defaults.isFullscreen;
-        _isWebapp           = (GLOBALS.WEBAPP.IOS || GLOBALS.WEBAPP.CORDOVA);
+        _isWebapp           = (C.WEBAPP.IOS || C.WEBAPP.CORDOVA);
         _currentPanel       = null;
         _panels             = {};
         
@@ -106,7 +106,7 @@ var View = (function() {
             
             // Gefundenes View-Panel initialisieren
             var $panel = $(this);
-            var panelName = $panel.data(GLOBALS.DATA.PANEL);
+            var panelName = $panel.data(C.DATA.PANEL);
             
             // Prüfen, ob das View-Panel valide ist und setzen
             for (var name in _PANELS) {
@@ -126,13 +126,13 @@ var View = (function() {
      * Panel-Namens; setzt Titel und Buttons.
      */
     function _setNavbar() {
-        if ((_navbar !== null) && (typeof _navbar !== GLOBALS.TYPE.UNDEF)) {
+        if ((_navbar !== null) && (typeof _navbar !== C.TYPE.UNDEF)) {
             
             // Suche deaktivieren
             _navbar.disableSearch();
             
             // Neue Werte initialisieren
-            var newTitle = GLOBALS.STR.EMPTY;
+            var newTitle = C.STR.EMPTY;
             var newIconLeft = null;
             var newIconRight = null;
             var newActionLeft = null;
@@ -148,7 +148,7 @@ var View = (function() {
             
             // Neuen Titel setzen
             if (_panels[_currentPanel] instanceof jQuery) {
-                newTitle = _panels[_currentPanel].data(GLOBALS.DATA.TITLE);
+                newTitle = _panels[_currentPanel].data(C.DATA.TITLE);
             }
             
             // Navigation-Bar setzen
@@ -207,11 +207,11 @@ var View = (function() {
      * @returns {Object} Modul-Objekt
      */
     function setPanel(panel) {
-        if (typeof _panels[panel] !== GLOBALS.TYPE.UNDEF) {
+        if (typeof _panels[panel] !== C.TYPE.UNDEF) {
             _currentPanel = panel;
             _hide();
             _setNavbar();
-            setTimeout(_show(), GLOBALS.TIME.STANDARD);
+            setTimeout(function() { _show(); }, C.TIME.STANDARD);
         }
         return this;
     }

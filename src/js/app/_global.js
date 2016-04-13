@@ -3,7 +3,7 @@
  * Definiert globale Konstanten für alle Module.
  * @author Jakob Metzger
  */
-var GLOBALS = (function() {
+var C = (function() {
     
     // Konstanten
     return {

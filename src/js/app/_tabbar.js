@@ -20,7 +20,7 @@ var TabBar = (function() {
     var _tabActive;
     var _tabNumber;
     var _isHidden;
-    var _view;
+    var _View;
     
     // DOM-Elemente
     var _$tabbar;
@@ -50,7 +50,7 @@ var TabBar = (function() {
         _$tabs              = _$tabbar.find(_SEL_TABS);
         _tabNumber          = _$tabs.length - 1;
         _isHidden           = defaults.isHidden;
-        _view               = defaults.view;
+        _View               = defaults.view;
         
         // Funktionen ausführen
         _bindEvents();
@@ -100,24 +100,20 @@ var TabBar = (function() {
         var panel = null;
         
         // Tab-Index ermitteln
-        if (typeof tab === C.TYPE.NUMBER) {
-            i = tab;
-        } else if (tab.target) {
-            i = $(tab.target).closest(_SEL_TABS).index();
-        }
-        
-        // Ziel-View ermitteln
-        panel = _$tabs.eq(i).data(C.DATA.PANEL);
-        
+        if (typeof tab === C.TYPE.NUMBER) { i = tab; }
+        else if (tab.target) { i = $(tab.target).closest(_SEL_TABS).index(); }
+
         // Tab-Index prüfen und setzen
         if ((i >= 0) && (i <= _tabNumber)) {
+            
+            // Aktiven Tab und Ziel-Panel setzen
             _tabActive = i;
+            panel = _$tabs.eq(i).data(C.DATA.PANEL);
             
             // View prüfen und Funktion auslösen
-            if ((panel !== null) &&
-                (panel.length > 0) &&
-                ($.isFunction(_view.setPanel))) {
-                _view.setPanel(panel);
+            if ((panel !== null) && (panel.length > 0) &&
+                ($.isFunction(_View.setPanel))) {
+                _View.setPanel(panel);
             }
         }
         

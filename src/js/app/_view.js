@@ -33,12 +33,12 @@ var View = (function() {
     var _isWebapp;
     var _isFullscreen;
     var _currentPanel;
-    var _panels;
-    var _navbar;
+    var _NavigationBar;
     
     // DOM-Elemente
     var _$view;
     var _$content;
+    var _$panels;
     
     /**
      * Modul initialisieren.
@@ -53,21 +53,21 @@ var View = (function() {
         var defaults = {
             isVisible       : false,
             isFullscreen    : false,
-            navbar          : null
+            navigationBar   : null
         };
         
         // Optionen ergänzen
         $.extend(defaults, options || {});
         
         // Modulvariablen initialisieren
+        _$panels            = {};
         _$view              = $(_SEL_VIEW);
         _$content           = _$view.find(_SEL_CONTENT);
-        _navbar             = defaults.navbar;
+        _NavigationBar      = defaults.navigationBar;
         _isVisible          = defaults.isVisible;
         _isFullscreen       = defaults.isFullscreen;
         _isWebapp           = (C.WEBAPP.IOS || C.WEBAPP.CORDOVA);
         _currentPanel       = null;
-        _panels             = {};
         
         // Funktionen ausführen
         _initPanels();
@@ -90,7 +90,7 @@ var View = (function() {
         _$content.setMod(_B, _E_CONTENT, _M_VISIBLE, _isVisible);
         
         // View-Panels (de-)aktivieren
-        $.each(_panels, function(name, $panel) {
+        $.each(_$panels, function(name, $panel) {
             $panel.setMod(_B, _E_PANEL, _M_CURRENT, (name === _currentPanel));
         });
     }
@@ -112,7 +112,7 @@ var View = (function() {
             for (var name in _PANELS) {
                 if (_PANELS.hasOwnProperty(name)) {
                     if (_PANELS[name] === panelName) {
-                        _panels[panelName] = $panel;
+                        _$panels[panelName] = $panel;
                         break;
                     }
                 }
@@ -126,10 +126,11 @@ var View = (function() {
      * Panel-Namens; setzt Titel und Buttons.
      */
     function _setNavbar() {
-        if ((_navbar !== null) && (typeof _navbar !== C.TYPE.UNDEF)) {
+        if ((typeof _NavigationBar !== C.TYPE.UNDEF) &&
+            (_NavigationBar !== null)) {
             
             // Suche deaktivieren
-            _navbar.disableSearch();
+            _NavigationBar.disableSearch();
             
             // Neue Werte initialisieren
             var newTitle = C.STR.EMPTY;
@@ -140,19 +141,19 @@ var View = (function() {
             
             // Sonderfall: Wörterbuch
             if (_currentPanel === _PANELS.DICTIONARY) {
-                newIconLeft = _navbar.ICON.SEARCH;
-                newIconRight = _navbar.ICON.SORT;
-                newActionLeft = _navbar.ACTION.SEARCH;
-                newActionRight = _navbar.ACTION.SORT;
+                newIconLeft = _NavigationBar.ICON.SEARCH;
+                newIconRight = _NavigationBar.ICON.SORT;
+                newActionLeft = _NavigationBar.ACTION.SEARCH;
+                newActionRight = _NavigationBar.ACTION.SORT;
             }
             
             // Neuen Titel setzen
-            if (_panels[_currentPanel] instanceof jQuery) {
-                newTitle = _panels[_currentPanel].data(C.DATA.TITLE);
+            if (_$panels[_currentPanel] instanceof jQuery) {
+                newTitle = _$panels[_currentPanel].data(C.DATA.TITLE);
             }
             
             // Navigation-Bar setzen
-            _navbar.setButtonLeft(newActionLeft, newIconLeft)
+            _NavigationBar.setButtonLeft(newActionLeft, newIconLeft)
                    .setButtonRight(newActionRight, newIconRight)
                    .setTitle(newTitle);
         }
@@ -207,7 +208,7 @@ var View = (function() {
      * @returns {Object} Modul-Objekt
      */
     function setPanel(panel) {
-        if (typeof _panels[panel] !== C.TYPE.UNDEF) {
+        if (typeof _$panels[panel] !== C.TYPE.UNDEF) {
             _currentPanel = panel;
             _hide();
             _setNavbar();

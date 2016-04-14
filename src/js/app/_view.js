@@ -81,8 +81,9 @@ var View = (function() {
      * Modul rendern.
      * Rendert alle Elemente des Moduls anhand der intern
      * gesetzten aktuellen Variablen.
+     * @param {boolean} hide Ausblenden ja/nein
      */
-    function _render() {
+    function _render(hide) {
         
         // View und Content rendern
         _$view.setMod(_B, _M_WEBAPP, _isWebapp);
@@ -90,9 +91,14 @@ var View = (function() {
         _$content.setMod(_B, _E_CONTENT, _M_VISIBLE, _isVisible);
         
         // View-Panels (de-)aktivieren
-        $.each(_$panels, function(name, $panel) {
-            $panel.setMod(_B, _E_PANEL, _M_CURRENT, (name === _currentPanel));
-        });
+        if (hide !== true) {
+            $.each(_$panels, function(name, $panel) {
+                $panel.setMod(
+                    _B, _E_PANEL, _M_CURRENT,
+                    (name === _currentPanel)
+                );
+            });
+        }
     }
     
     /**
@@ -154,8 +160,8 @@ var View = (function() {
             
             // Navigation-Bar setzen
             _NavigationBar.setButtonLeft(newActionLeft, newIconLeft)
-                   .setButtonRight(newActionRight, newIconRight)
-                   .setTitle(newTitle);
+                          .setButtonRight(newActionRight, newIconRight)
+                          .setTitle(newTitle);
         }
     }
     
@@ -165,7 +171,7 @@ var View = (function() {
      */
     function _hide() {
         _isVisible = false;
-        _render();
+        _render(true);
     }
     
     /**
@@ -210,9 +216,9 @@ var View = (function() {
     function setPanel(panel) {
         if (typeof _$panels[panel] !== C.TYPE.UNDEF) {
             _currentPanel = panel;
-            _hide();
             _setNavbar();
-            setTimeout(function() { _show(); }, C.TIME.STANDARD);
+            _hide();
+            setTimeout(function() { _show(); }, C.TIME.SHORT);
         }
         return this;
     }

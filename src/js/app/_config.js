@@ -8,6 +8,13 @@ var C = (function() {
     // Konstanten
     return {
         
+        // Konfiguration
+        CONFIG: {
+            DATA_FILE       : "owl",
+            DATA_TYPE       : ".min.json",
+            DATA_PATH       : "data/dictionary/"
+        },
+        
         // Webapp
         WEBAPP: {
             IOS             : (window.navigator.standalone || false),
@@ -38,8 +45,8 @@ var C = (function() {
         
         // HTML-Attribute
         ATTR: {
-            DATA_ACTION     : "data-action",
             DATA_PANEL      : "data-panel",
+            DATA_ACTION     : "data-action",
             DATA_TITLE      : "data-title"
         },
         

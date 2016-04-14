@@ -8,6 +8,7 @@
         Jakob Metzger
     </author>
     <content src="index.html" />
+    <preference name="BackupWebStorage" value="cloud" />
     <preference name="WebViewBounce" value="false" />
     <preference name="target-device" value="handset" />
     <preference name="Orientation" value="portrait" />

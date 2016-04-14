@@ -34,6 +34,7 @@ var View = (function() {
     var _isFullscreen;
     var _currentPanel;
     var _NavigationBar;
+    var _panelCache;
     
     // DOM-Elemente
     var _$view;
@@ -68,6 +69,7 @@ var View = (function() {
         _isFullscreen       = defaults.isFullscreen;
         _isWebapp           = (C.WEBAPP.IOS || C.WEBAPP.CORDOVA);
         _currentPanel       = null;
+        _panelCache         = {};
         
         // Funktionen ausführen
         _initPanels();
@@ -119,6 +121,7 @@ var View = (function() {
                 if (_PANELS.hasOwnProperty(name)) {
                     if (_PANELS[name] === panelName) {
                         _$panels[panelName] = $panel;
+                        _panelCache[panelName] = undefined;
                         break;
                     }
                 }

@@ -33,7 +33,6 @@ var View = (function() {
     var _isWebapp;
     var _isFullscreen;
     var _currentPanel;
-    var _NavigationBar;
     var _panelIsExpired;
     
     // DOM-Elemente
@@ -53,8 +52,7 @@ var View = (function() {
         // Standard-Optionen definieren
         var defaults = {
             isVisible       : false,
-            isFullscreen    : false,
-            navigationBar   : null
+            isFullscreen    : false
         };
         
         // Optionen ergänzen
@@ -64,7 +62,6 @@ var View = (function() {
         _$panels            = {};
         _$view              = $(_SEL_VIEW);
         _$content           = _$view.find(_SEL_CONTENT);
-        _NavigationBar      = defaults.navigationBar;
         _isVisible          = defaults.isVisible;
         _isFullscreen       = defaults.isFullscreen;
         _isWebapp           = (C.WEBAPP.IOS || C.WEBAPP.CORDOVA);
@@ -135,8 +132,8 @@ var View = (function() {
      * Panel-Namens; setzt Titel, Buttons und Suche.
      */
     function _setNavbar() {
-        if ((typeof _NavigationBar !== C.TYPE.UNDEF) &&
-            (_NavigationBar !== null)) {
+        if ((typeof NavigationBar !== C.TYPE.UNDEF) &&
+            (NavigationBar !== null)) {
             
             // Neue Werte initialisieren
             var newTitle = C.STR.EMPTY;
@@ -149,10 +146,10 @@ var View = (function() {
             // Sonderfall: Wörterbuch
             if (_currentPanel === _PANELS.DICTIONARY) {
                 newSearch = true;
-                newIconLeft = _NavigationBar.ICON.SEARCH;
-                newIconRight = _NavigationBar.ICON.SORT;
-                newActionLeft = _NavigationBar.ACTION.SEARCH;
-                newActionRight = _NavigationBar.ACTION.SORT;
+                newIconLeft = NavigationBar.ICON.SEARCH;
+                newIconRight = NavigationBar.ICON.SORT;
+                newActionLeft = NavigationBar.ACTION.SEARCH;
+                newActionRight = NavigationBar.ACTION.SORT;
             }
             
             // Neuen Titel setzen
@@ -161,10 +158,11 @@ var View = (function() {
             }
             
             // Navigation-Bar setzen
-            _NavigationBar.setButtonLeft(newActionLeft, newIconLeft)
-                          .setButtonRight(newActionRight, newIconRight)
-                          .setTitle(newTitle)
-                          .setSearch(newSearch);
+            NavigationBar.setAll(
+                newTitle, newActionLeft,
+                newIconLeft, newActionRight,
+                newIconRight, newSearch
+            );
         }
     }
     

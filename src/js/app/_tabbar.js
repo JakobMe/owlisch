@@ -20,7 +20,6 @@ var TabBar = (function() {
     var _tabActive;
     var _tabNumber;
     var _isHidden;
-    var _View;
     
     // DOM-Elemente
     var _$tabbar;
@@ -37,7 +36,6 @@ var TabBar = (function() {
         
         // Standard-Optionen definieren
         var defaults = {
-            view            : null,
             isHidden        : false,
             initialTab      : 0
         };
@@ -50,7 +48,6 @@ var TabBar = (function() {
         _$tabs              = _$tabbar.find(_SEL_TABS);
         _tabNumber          = _$tabs.length - 1;
         _isHidden           = defaults.isHidden;
-        _View               = defaults.view;
         
         // Funktionen ausführen
         _bindEvents();
@@ -112,8 +109,8 @@ var TabBar = (function() {
             
             // View prüfen und Funktion auslösen
             if ((panel !== null) && (panel.length > 0) &&
-                ($.isFunction(_View.setPanel))) {
-                _View.setPanel(panel);
+                ($.isFunction(View.setPanel))) {
+                View.setPanel(panel);
             }
         }
         

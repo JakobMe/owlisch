@@ -198,7 +198,7 @@ var NavigationBar = (function() {
             
             // Suche ein-/ausblenden, Button anpassen
             var icon = (_searchIsActive) ? ICON.CANCEL : ICON.SEARCH;
-            setButtonLeft(ACTION.SEARCH, icon);
+            _setButtonLeft(ACTION.SEARCH, icon);
             _$navbar.setMod(_B, _M_SEARCH, _searchIsActive);
             
             // Suche fokussieren
@@ -273,23 +273,19 @@ var NavigationBar = (function() {
     /**
      * Suche aktivieren.
      * Setzt die Suche auf aktiviert und blendet sie ein.
-     * @returns {Object} Modul-Objekt
      */
     function _enableSearch() {
         _searchIsActive = true;
         _renderSearch();
-        return this;
     }
     
     /**
      * Suche deaktivieren.
      * Setzt die Suche auf deaktiviert und blendet sie aus.
-     * @returns {Object} Modul-Objekt
      */
     function _disableSearch() {
         _searchIsActive = false;
         _renderSearch();
-        return this;
     }
     
     /**
@@ -350,11 +346,9 @@ var NavigationBar = (function() {
      * Setzt die Aktion und das Icon des linken Titel-Buttons.
      * @param {string} action Name der Button-Aktion
      * @param {string} icon Name des Button-Icons
-     * @returns {Object} Modul-Objekt
      */
-    function setButtonLeft(action, icon) {
+    function _setButtonLeft(action, icon) {
         _setButton(_$buttonLeft, action, icon);
-        return this;
     }
     
     /**
@@ -362,11 +356,9 @@ var NavigationBar = (function() {
      * Setzt die Aktion und das Icon des rechten Titel-Buttons.
      * @param {string} action Name der Button-Aktion
      * @param {string} icon Name des Button-Icons
-     * @returns {Object} Modul-Objekt
      */
-    function setButtonRight(action, icon) {
+    function _setButtonRight(action, icon) {
         _setButton(_$buttonRight, action, icon);
-        return this;
     }
     
     /**
@@ -374,24 +366,21 @@ var NavigationBar = (function() {
      * Setzt den Titel der Titelleiste, falls er nicht leer ist,
      * und rendert ihn gegebenenfalls neu.
      * @param {string} title Neuer Titel
-     * @returns {Object} Modul-Objekt
      */
-    function setTitle(title) {
+    function _setTitle(title) {
         if ((title !== null) && (title !== C.STR.EMPTY)) {
             _title = title;
             _renderTitle();
         }
-        return this;
     }
     
     /**
      * Such-Status setzen.
      * Deaktiviert oder aktiviert die Suche in Abhängigkeit vom
      * aktuellen und vergangenen Status der Suche.
-     * @param {boolean} checkPast Vergangenen Such-Status prüfen ja/nein
-     * @returns {Object} Modul-Objekt
+     * @param {boolean} checkPast Letzten Such-Status berücksichtigen
      */
-    function setSearch(checkPast) {
+    function _setSearch(checkPast) {
         if (checkPast === true) {
             if (_searchWasActive) {
                 _enableSearch();
@@ -403,16 +392,35 @@ var NavigationBar = (function() {
             if (_searchIsActive) { _searchWasActive = true; }
             _disableSearch();
         }
+    }
+    
+    /**
+     * Alle Eigenschaften der Navigation-Bar setzen.
+     * Setzte das Icon und die Aktion der Buttons, den Titel
+     * und den Such-Status der Navigation-Bar.
+     * @param {string} title Neuer Titel
+     * @param {string} iconLeft Neues Icon links
+     * @param {string} actionLeft Neue Aktion links
+     * @param {string} iconRight Neues Icon rechts
+     * @param {string} actionRight Neue Aktion rechts
+     * @param {boolean} checkPast Letzten Such-Status berücksichtigen
+     * @returns {Object} Modul-Objekt
+     */
+    function setAll(title, iconLeft, actionLeft,
+                    iconRight, actionRight, checkPast) {
+        
+        // Alle Komponenten setzen
+        _setTitle(title);
+        _setButtonLeft(actionLeft, iconLeft);
+        _setButtonRight(actionRight, iconRight);
+        _setSearch(checkPast);
         return this;
     }
     
     // Öffentliches Interface
     return {
         init            : init,
-        setTitle        : setTitle,
-        setButtonLeft   : setButtonLeft,
-        setButtonRight  : setButtonRight,
-        setSearch       : setSearch,
+        setAll          : setAll,
         ICON            : ICON,
         ACTION          : ACTION
     };

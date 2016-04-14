@@ -21,8 +21,8 @@ var App = {
         
         // Komponenten initialisieren
         NavigationBar.init();
-        View.init({ navigationBar: NavigationBar });
-        TabBar.init({ view: View });
+        View.init();
+        TabBar.init();
         Viewport.init();
     }
 };

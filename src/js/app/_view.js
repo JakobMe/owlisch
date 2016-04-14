@@ -34,7 +34,7 @@ var View = (function() {
     var _isFullscreen;
     var _currentPanel;
     var _NavigationBar;
-    var _panelCache;
+    var _panelIsExpired;
     
     // DOM-Elemente
     var _$view;
@@ -69,7 +69,7 @@ var View = (function() {
         _isFullscreen       = defaults.isFullscreen;
         _isWebapp           = (C.WEBAPP.IOS || C.WEBAPP.CORDOVA);
         _currentPanel       = null;
-        _panelCache         = {};
+        _panelIsExpired     = {};
         
         // Funktionen ausführen
         _initPanels();
@@ -121,7 +121,7 @@ var View = (function() {
                 if (_PANELS.hasOwnProperty(name)) {
                     if (_PANELS[name] === panelName) {
                         _$panels[panelName] = $panel;
-                        _panelCache[panelName] = undefined;
+                        _panelIsExpired[panelName] = true;
                         break;
                     }
                 }
@@ -131,18 +131,16 @@ var View = (function() {
     
     /**
      * Navigation-Bar der View setzen.
-     * Setzt die verknüpfte Navigation-Bar anhand des übergebenen
-     * Panel-Namens; setzt Titel und Buttons.
+     * Setzt die verknüpfte Navigation-Bar anhand des aktuellen
+     * Panel-Namens; setzt Titel, Buttons und Suche.
      */
     function _setNavbar() {
         if ((typeof _NavigationBar !== C.TYPE.UNDEF) &&
             (_NavigationBar !== null)) {
             
-            // Suche deaktivieren
-            _NavigationBar.disableSearch();
-            
             // Neue Werte initialisieren
             var newTitle = C.STR.EMPTY;
+            var newSearch = false;
             var newIconLeft = null;
             var newIconRight = null;
             var newActionLeft = null;
@@ -150,6 +148,7 @@ var View = (function() {
             
             // Sonderfall: Wörterbuch
             if (_currentPanel === _PANELS.DICTIONARY) {
+                newSearch = true;
                 newIconLeft = _NavigationBar.ICON.SEARCH;
                 newIconRight = _NavigationBar.ICON.SORT;
                 newActionLeft = _NavigationBar.ACTION.SEARCH;
@@ -164,7 +163,8 @@ var View = (function() {
             // Navigation-Bar setzen
             _NavigationBar.setButtonLeft(newActionLeft, newIconLeft)
                           .setButtonRight(newActionRight, newIconRight)
-                          .setTitle(newTitle);
+                          .setTitle(newTitle)
+                          .setSearch(newSearch);
         }
     }
     

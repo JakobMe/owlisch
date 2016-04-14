@@ -47,6 +47,7 @@ var NavigationBar = (function() {
     var _actionLeft;
     var _actionRight;
     var _searchIsActive;
+    var _searchWasActive;
     var _buttonsAreDisabled;
     var _isWebapp;
     
@@ -91,6 +92,7 @@ var NavigationBar = (function() {
         _actionRight        = defaults.actionRight;
         _isWebapp           = (C.WEBAPP.IOS || C.WEBAPP.CORDOVA);
         _searchIsActive     = false;
+        _searchWasActive    = false;
         _buttonsAreDisabled = false;
         
         // Funktionen ausführen
@@ -190,6 +192,8 @@ var NavigationBar = (function() {
      * Rendert die Suche anhand der gesetzten Eigenschaften des Moduls.
      */
     function _renderSearch() {
+        
+        // Wenn Suche aktiv ist oder abgebrochen wird
         if ((_actionLeft === ACTION.SEARCH) || _searchIsActive) {
             
             // Suche ein-/ausblenden, Button anpassen
@@ -198,11 +202,17 @@ var NavigationBar = (function() {
             _$navbar.setMod(_B, _M_SEARCH, _searchIsActive);
             
             // Suche fokussieren
-            if (_searchIsActive) {
+            if (_searchIsActive && !_searchWasActive) {
                 setTimeout(function() {
                     _$search.focus();
                 }, C.TIME.MEDIUM);
             }
+            
+        // Ansonsten
+        } else {
+            
+            // Suche ausblenden
+            _$navbar.setMod(_B, _M_SEARCH, false);
         }
     }
     
@@ -247,13 +257,39 @@ var NavigationBar = (function() {
                 case ACTION.SEARCH:
                     
                     // Suche aktivieren/deaktivieren
-                    if (_searchIsActive) { disableSearch(); }
-                    else { enableSearch(); }
+                    if (_searchIsActive) {
+                        _searchWasActive = false;
+                        _disableSearch();
+                    } else {
+                        _enableSearch();
+                    }
                     break;
                 
                 // TODO: Aktionen für andere Buttons
             }
         }
+    }
+    
+    /**
+     * Suche aktivieren.
+     * Setzt die Suche auf aktiviert und blendet sie ein.
+     * @returns {Object} Modul-Objekt
+     */
+    function _enableSearch() {
+        _searchIsActive = true;
+        _renderSearch();
+        return this;
+    }
+    
+    /**
+     * Suche deaktivieren.
+     * Setzt die Suche auf deaktiviert und blendet sie aus.
+     * @returns {Object} Modul-Objekt
+     */
+    function _disableSearch() {
+        _searchIsActive = false;
+        _renderSearch();
+        return this;
     }
     
     /**
@@ -349,24 +385,24 @@ var NavigationBar = (function() {
     }
     
     /**
-     * Suche aktivieren.
-     * Setzt die Suche auf aktiviert und blendet sie ein.
+     * Such-Status setzen.
+     * Deaktiviert oder aktiviert die Suche in Abhängigkeit vom
+     * aktuellen und vergangenen Status der Suche.
+     * @param {boolean} checkPast Vergangenen Such-Status prüfen ja/nein
      * @returns {Object} Modul-Objekt
      */
-    function enableSearch() {
-        _searchIsActive = true;
-        _renderSearch();
-        return this;
-    }
-    
-    /**
-     * Suche deaktivieren.
-     * Setzt die Suche auf deaktiviert und blendet sie aus.
-     * @returns {Object} Modul-Objekt
-     */
-    function disableSearch() {
-        _searchIsActive = false;
-        _renderSearch();
+    function setSearch(checkPast) {
+        if (checkPast === true) {
+            if (_searchWasActive) {
+                _enableSearch();
+                _searchWasActive = false;
+            } else {
+                _disableSearch();
+            }
+        } else {
+            if (_searchIsActive) { _searchWasActive = true; }
+            _disableSearch();
+        }
         return this;
     }
     
@@ -376,8 +412,7 @@ var NavigationBar = (function() {
         setTitle        : setTitle,
         setButtonLeft   : setButtonLeft,
         setButtonRight  : setButtonRight,
-        enableSearch    : enableSearch,
-        disableSearch   : disableSearch,
+        setSearch       : setSearch,
         ICON            : ICON,
         ACTION          : ACTION
     };

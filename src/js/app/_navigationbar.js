@@ -90,7 +90,7 @@ var NavigationBar = (function() {
         _iconRight          = defaults.iconRight;
         _actionLeft         = defaults.actionLeft;
         _actionRight        = defaults.actionRight;
-        _isWebapp           = (C.WEBAPP.IOS || C.WEBAPP.CORDOVA);
+        _isWebapp           = (CONF.WEBAPP.IOS || CONF.WEBAPP.CORDOVA);
         _searchIsActive     = false;
         _searchWasActive    = false;
         _buttonsAreDisabled = false;
@@ -108,7 +108,7 @@ var NavigationBar = (function() {
      * Bindet Funktionen an Events und Elemente des Moduls.
      */
     function _bindEvents() {
-        _$navbar.on(C.EVENT.CLICK, _SEL_BUTTONS, _buttonAction);
+        _$navbar.on(CONF.EVENT.CLICK, _SEL_BUTTONS, _buttonAction);
     }
     
     /**
@@ -143,12 +143,12 @@ var NavigationBar = (function() {
         setTimeout(function() {
             
             // Falls Icon oder Aktion nicht gesetzt sind
-            if ((icon === null) || (icon === C.STR.EMPTY) ||
-                (action === null) || (action === C.STR.EMPTY)) {
+            if ((icon === null) || (icon === CONF.STR.EMPTY) ||
+                (action === null) || (action === CONF.STR.EMPTY)) {
                 
                 // Button deaktivieren
                 $button.setMod(_B, _E_BUTTON, _M_ICON, ICON.NONE);
-                $button.attr(C.ATTR.DATA_ACTION, C.STR.EMPTY);
+                $button.attr(CONF.ATTR.DATA_ACTION, CONF.STR.EMPTY);
                 
             // Falls beides korrekt gesetzt ist
             } else {
@@ -156,15 +156,15 @@ var NavigationBar = (function() {
                 // Icon und Aktion setzen, Button einblenden
                 $button.setMod(_B, _E_BUTTON, _M_DISABLED, false);
                 $button.setMod(_B, _E_BUTTON, _M_ICON, icon);
-                $button.attr(C.ATTR.DATA_ACTION, action);
+                $button.attr(CONF.ATTR.DATA_ACTION, action);
             }
             
             // Buttons wieder aktivieren
             setTimeout(function() {
                 _buttonsAreDisabled = false;
-            }, C.TIME.STANDARD);
+            }, CONF.TIME.STANDARD);
             
-        }, C.TIME.SHORT);
+        }, CONF.TIME.SHORT);
     }
     
     /**
@@ -184,7 +184,7 @@ var NavigationBar = (function() {
             _$title.text(_title);
             _$title.setMod(_B, _E_TITLE, _M_HIDDEN, false);
             
-        }, C.TIME.SHORT);
+        }, CONF.TIME.SHORT);
     }
     
     /**
@@ -205,7 +205,7 @@ var NavigationBar = (function() {
             if (_searchIsActive && !_searchWasActive) {
                 setTimeout(function() {
                     _$search.focus();
-                }, C.TIME.MEDIUM);
+                }, CONF.TIME.MEDIUM);
             }
             
         // Ansonsten
@@ -368,7 +368,7 @@ var NavigationBar = (function() {
      * @param {string} title Neuer Titel
      */
     function _setTitle(title) {
-        if ((title !== null) && (title !== C.STR.EMPTY)) {
+        if ((title !== null) && (title !== CONF.STR.EMPTY)) {
             _title = title;
             _renderTitle();
         }

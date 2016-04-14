@@ -33,7 +33,7 @@ var Viewport = (function() {
         _isVisible = defaults.isVisible;
         
         // Funktionen ausführen
-        setTimeout(function() { _show(); }, C.TIME.LONGER);
+        setTimeout(function() { _show(); }, CONF.TIME.LONGER);
         
         // Modul Return
         return this;

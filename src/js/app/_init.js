@@ -14,9 +14,9 @@ var App = {
 
         // BEM-Syntax anpassen
         $.BEMsyntax({
-            elem      : C.BEM.ELEMDIV,
-            modBefore : C.BEM.MODDIV,
-            modKeyVal : C.BEM.MODKEY
+            elem      : CONF.BEM.ELEMDIV,
+            modBefore : CONF.BEM.MODDIV,
+            modKeyVal : CONF.BEM.MODKEY
         });
         
         // Komponenten initialisieren

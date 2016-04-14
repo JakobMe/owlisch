@@ -1,18 +1,22 @@
 /**
- * Globale Konstanten.
- * Definiert globale Konstanten für alle Module.
+ * Globale Konfiguration.
+ * Definiert globale Konstanten und Konfigurationen für alle Module.
  * @author Jakob Metzger
  */
-var C = (function() {
+var CONF = (function() {
     
-    // Konstanten
+    // Öffentliches Interface
     return {
         
         // Konfiguration
         CONFIG: {
-            DATA_FILE       : "owl",
-            DATA_TYPE       : ".min.json",
-            DATA_PATH       : "data/dictionary/"
+            FILE_DATA       : "owl",
+            TYPE_DATA       : ".min.json",
+            TYPE_IMG        : ".jpg",
+            TYPE_AUDIO      : ".mp3",
+            PATH_DATA       : "data/dictionary/",
+            PATH_IMG        : "data/images",
+            PATH_AUDIO      : "data/audio"
         },
         
         // Webapp

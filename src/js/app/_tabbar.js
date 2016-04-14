@@ -62,7 +62,7 @@ var TabBar = (function() {
      * Bindet Funktionen an Events und Elemente des Moduls.
      */
     function _bindEvents() {
-        _$tabbar.on(C.EVENT.CLICK, _SEL_TABS, _setTab);
+        _$tabbar.on(CONF.EVENT.CLICK, _SEL_TABS, _setTab);
     }
     
     /**
@@ -97,7 +97,7 @@ var TabBar = (function() {
         var panel = null;
         
         // Tab-Index ermitteln
-        if (typeof tab === C.TYPE.NUMBER) { i = tab; }
+        if (typeof tab === CONF.TYPE.NUMBER) { i = tab; }
         else if (tab.target) { i = $(tab.target).closest(_SEL_TABS).index(); }
 
         // Tab-Index prüfen und setzen
@@ -105,7 +105,7 @@ var TabBar = (function() {
             
             // Aktiven Tab und Ziel-Panel setzen
             _tabActive = i;
-            panel = _$tabs.eq(i).data(C.DATA.PANEL);
+            panel = _$tabs.eq(i).data(CONF.DATA.PANEL);
             
             // View prüfen und Funktion auslösen
             if ((panel !== null) && (panel.length > 0) &&

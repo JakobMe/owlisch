@@ -64,7 +64,7 @@ var View = (function() {
         _$content           = _$view.find(_SEL_CONTENT);
         _isVisible          = defaults.isVisible;
         _isFullscreen       = defaults.isFullscreen;
-        _isWebapp           = (C.WEBAPP.IOS || C.WEBAPP.CORDOVA);
+        _isWebapp           = (CONF.WEBAPP.IOS || CONF.WEBAPP.CORDOVA);
         _currentPanel       = null;
         _panelIsExpired     = {};
         
@@ -111,7 +111,7 @@ var View = (function() {
             
             // Gefundenes View-Panel initialisieren
             var $panel = $(this);
-            var panelName = $panel.data(C.DATA.PANEL);
+            var panelName = $panel.data(CONF.DATA.PANEL);
             
             // Prüfen, ob das View-Panel valide ist und setzen
             for (var name in _PANELS) {
@@ -132,11 +132,11 @@ var View = (function() {
      * Panel-Namens; setzt Titel, Buttons und Suche.
      */
     function _setNavbar() {
-        if ((typeof NavigationBar !== C.TYPE.UNDEF) &&
+        if ((typeof NavigationBar !== CONF.TYPE.UNDEF) &&
             (NavigationBar !== null)) {
             
             // Neue Werte initialisieren
-            var newTitle = C.STR.EMPTY;
+            var newTitle = CONF.STR.EMPTY;
             var newSearch = false;
             var newIconLeft = null;
             var newIconRight = null;
@@ -154,7 +154,7 @@ var View = (function() {
             
             // Neuen Titel setzen
             if (_$panels[_currentPanel] instanceof jQuery) {
-                newTitle = _$panels[_currentPanel].data(C.DATA.TITLE);
+                newTitle = _$panels[_currentPanel].data(CONF.DATA.TITLE);
             }
             
             // Navigation-Bar setzen
@@ -215,11 +215,11 @@ var View = (function() {
      * @returns {Object} Modul-Objekt
      */
     function setPanel(panel) {
-        if (typeof _$panels[panel] !== C.TYPE.UNDEF) {
+        if (typeof _$panels[panel] !== CONF.TYPE.UNDEF) {
             _currentPanel = panel;
             _setNavbar();
             _hide();
-            setTimeout(function() { _show(); }, C.TIME.SHORT);
+            setTimeout(function() { _show(); }, CONF.TIME.SHORT);
         }
         return this;
     }

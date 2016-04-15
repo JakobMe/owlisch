@@ -12,7 +12,6 @@
 @_tab-bar-size-padding:         6px;
 @_tab-bar-size-padding-status:  3%;
 @_tab-bar-fontsize-icon:        21px;
-@_tab-bar-fontsize-icon-text:   24px;
 @_tab-bar-fontsize-label:       9px;
 
 // Loop: Status-Position für Tab-Bar-Modfikation
@@ -80,14 +79,6 @@
         font-size: @_tab-bar-fontsize-icon;
         height: @_tab-bar-size-icon;
         line-height: @_tab-bar-size-icon;
-        
-        // Mod: Text
-        &--text {
-            font-weight: bold;
-            font-style: normal;
-            font-size: @_tab-bar-fontsize-icon-text;
-            .font-icon();
-        }
     }
     
     // Element: Label

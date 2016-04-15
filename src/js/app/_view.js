@@ -93,6 +93,7 @@ var View = (function() {
         _isFullscreen       = defaults.isFullscreen;
         _isWebapp           = (CONF.WEBAPP.IOS || CONF.WEBAPP.CORDOVA);
         _currentPanel       = null;
+        _panelList          = [];
         _panelIsExpired     = {};
         
         // Funktionen ausführen

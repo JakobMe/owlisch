@@ -105,6 +105,43 @@
             </ul>
             <div class="tab-bar__status"></div>
         </script>
+                
+        <!-- Template: Wörterbuch -->
+        <script id="tmpl-dictionary" type="text/template">
+            <div class="slider" role="directory">
+                <div class="slider__slide" role="listbox">
+                    <ul class="dropdown" role="menu">
+                        {{#.}}
+                        <li class="dropdown__item" role="menuitem"
+                            data-sort="{{optionSort}}" data-order="{{optionOrder}}">
+                            <i class="dropdown__icon fa fa--sort-{{optionSort}}-{{optionOrder}}"></i>
+                            <span class="dropdown__label">
+                                {{labelSort}} sortieren ({{labelOrder}})
+                            </span>
+                        </li>
+                        {{/.}}  
+                    </ul>
+                    <ul class="list" role="list">
+                    </ul>
+                </div>
+                <div class="slider__slide" role="complementary">
+                </div>
+            </div>
+        </script>
+                
+        <!-- Template: Wortliste -->
+        <script id="tmpl-wordlist" type="text/template">
+            {{#words}}
+            <li class="list__item list__item--clickable" role="listitem" data-word="{{id}}">
+                <span class="stars stars--{{level}}">
+                    {{#levels}}
+                    <i class="stars__star stars__star--{{.}}"></i>
+                    {{/levels}}
+                </span>
+                <span class="list__label">{{name}}</span>
+            </li>
+            {{/words}}
+        </script>
         
     </body>
     

@@ -92,10 +92,10 @@ var TabBar = (function() {
      */
     function _createTabs() {
         
-        // Template laden und Tabs rendern
-        var template = $(_SEL_TMPL).html();
-        var rendered = Mustache.render(template, View.getPanelList());
-        _$tabbar.html(rendered);
+        // Template füllen und in Tab-Bar laden
+        _$tabbar.html(
+            Mustache.render($(_SEL_TMPL).html(), View.getPanelList())
+        );
     }
     
     /**

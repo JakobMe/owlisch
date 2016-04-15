@@ -22,14 +22,10 @@
     .borderbox();
     
     // Mod: Webapp
-    &--webapp {
-        padding-top: (@app-size-height-navigationbar + @app-size-height-statusbar);
-    }
+    &--webapp { padding-top: (@app-size-height-navigationbar + @app-size-height-statusbar); }
     
     // Mod: Volle Höhe
-    &--fullscreen {
-        padding-bottom: 0;
-    }
+    &--fullscreen { padding-bottom: 0; }
     
     // Element: Content
     &__content {
@@ -44,9 +40,7 @@
         .borderbox();
         
         // Mod: Sichtbar
-        &--visible {
-            opacity: @app-opacity-full;
-        }
+        &--visible { opacity: @app-opacity-full; }
     }
     
     // Element: Panel
@@ -68,7 +62,5 @@
 @media screen and (min-width: @app-size-responsive) {
     
     // Block: View
-    .@{_view} {
-        padding-top: (@app-size-height-navigationbar + @app-size-height-statusbar);
-    }
+    .@{_view} { padding-top: (@app-size-height-navigationbar + @app-size-height-statusbar); }
 }

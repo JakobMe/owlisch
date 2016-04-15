@@ -1,6 +1,6 @@
 /**
  * Viewport-Modul.
- * Steuert die TabBar der App.
+ * Steuert den Viewport der App.
  * @author Jakob Metzger
  */
 var Viewport = (function() {

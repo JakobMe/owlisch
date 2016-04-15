@@ -1,0 +1,100 @@
+/*
+ * Modul: Liste.
+ * Definiert das Verhalten einer Liste.
+ * @author Jakob Metzger <jakob.me@gmail.com>
+ * @copyright 2016 Jakob Metzger
+ */
+
+// Modul-Variablen
+@_list:                     list;
+@_list-size-height:         44px;
+
+// Animation: Highlight
+@keyframes list-highlight {
+    0% {
+        background: @app-color-star;
+        .shadow(0, 0, @app-size-line-medium, @app-size-line-thin, @app-color-star);
+    }
+    100% {
+        background: fade(@app-color-star, 50%);
+        .shadow-none();
+    }
+}
+
+// Block: Liste
+.@{_list} {
+    display: block;
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    border-bottom: @app-size-line-thin solid darken(@app-color-background, @app-darken-border-background);
+    
+    // Element: Item
+    &__item {
+        display: block;
+        overflow: hidden;
+        text-align: left;
+        font-style: normal;
+        position: relative;
+        text-decoration: none;
+        margin: 0;
+        padding: 0 @app-size-margin;
+        height: @_list-size-height;
+        line-height: @_list-size-height;
+        border-top: @app-size-line-thin solid darken(@app-color-background, @app-darken-border);
+        .gradient-background();
+        .ellipsis();
+        
+        // Mod: Klickbar
+        &--clickable {
+            cursor: pointer;
+            padding-right: @_list-size-height;
+            .transition(background);
+            
+            // Icon
+            &:after {
+                display: block;
+                position: absolute;
+                text-align: center;
+                font-style: normal;
+                font-weight: normal;
+                top: 0;
+                right: 0;
+                content: @fa-var-chevron-right;
+                font-size: @app-font-size-medium;
+                color: @app-color-text-pale;
+                width: @_list-size-height;
+                height: @_list-size-height;
+                line-height: (@_list-size-height + @app-size-line-thin);
+                .transition(color);
+                .font-icon();
+            }
+            
+            // Hover
+            &:hover {
+                background-position: left @app-size-margin;
+                
+                // Icon
+                &:after { color: @app-color-text-dark; }
+            }
+        }
+        
+        // Mod: Gefiltert
+        &--filtered { display: none; }
+    }
+    
+    // Element: Label
+    &__label {
+        font-weight: bold;
+        color: @app-color-text-dark;
+        font-size: @app-font-size-medium;
+    }
+    
+    // Element: Highlight
+    &__highlight {
+        color: darken(@app-color-star, @app-darken-star);
+        background: fade(@app-color-star, 50%);
+        .animation(list-highlight);
+        .round-all();
+    }
+}

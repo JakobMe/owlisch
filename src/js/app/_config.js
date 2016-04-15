@@ -21,7 +21,7 @@ var CONF = (function() {
         
         // Quiz
         QUIZ: {
-            LVL_MIN         : 0,
+            LVL_MIN         : 1,
             LVL_MAX         : 3,
             NUM_STEPS       : 10,
             NUM_PROGRESS    : 10

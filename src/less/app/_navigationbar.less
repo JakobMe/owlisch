@@ -26,9 +26,7 @@
     .textshadow();
     
     // Mod: Webapp
-    &--webapp {
-        padding-top: @app-size-height-statusbar;
-    }
+    &--webapp { padding-top: @app-size-height-statusbar; }
     
     // Mod: Suche & Suchfeld
     &--search &__search {
@@ -43,9 +41,7 @@
     }
     
     // Element: Wrapper
-    &__wrapper {
-        position: relative;
-    }
+    &__wrapper { position: relative; }
     
     // Element: Titel
     &__title {
@@ -63,9 +59,7 @@
         .ellipsis();
         
         // Mod: Versteckt
-        &--hidden {
-            opacity: @app-opacity-invisible;
-        }
+        &--hidden { opacity: @app-opacity-invisible; }
     }
     
     // Element: Button
@@ -94,9 +88,7 @@
         &--right&--disabled { .translate(100%); }
         
         // Mod: Deaktiviert
-        &--disabled {
-            opacity: @app-opacity-invisible;
-        }
+        &--disabled { opacity: @app-opacity-invisible; }
         
         // Mod: Icon Abbrechen
         &--icon-cancel {
@@ -111,9 +103,7 @@
         }
         
         // Mod: Icon Zurück
-        &--icon-back {
-            .fa-icon(@fa-var-chevron-left);
-        }
+        &--icon-back { .fa-icon(@fa-var-chevron-left); }
         
         // Mod: Icon Suche
         &--icon-search {
@@ -122,9 +112,7 @@
         }
         
         // Mod: Icon Sortieren
-        &--icon-sort {
-            .fa-icon(@fa-var-sort);
-        }
+        &--icon-sort { .fa-icon(@fa-var-sort); }
     }
     
     // Element: Suche
@@ -187,7 +175,5 @@
               and (min-resolution: 144dpi) {
     
     // Block: Navigation-Bar
-    .@{_navigation-bar} {
-        background-image: url("@{app-path-layout}/statusbar-retina.png?v=@{app-version}");
-    }
+    .@{_navigation-bar} { background-image: url("@{app-path-layout}/statusbar-retina.png?v=@{app-version}"); }
 }

@@ -1,0 +1,23 @@
+        
+        <!-- Template: Wörterbuch -->
+        <script id="tmpl-dictionary" type="text/template">
+            <div class="slider" role="directory">
+                <div class="slider__slide" role="listbox">
+                    <ul class="dropdown" role="menu">
+                        {{#.}}
+                        <li class="dropdown__item" role="menuitem"
+                            data-sort="{{optionSort}}" data-order="{{optionOrder}}">
+                            <i class="dropdown__icon fa fa--sort-{{optionSort}}-{{optionOrder}}"></i>
+                            <span class="dropdown__label">
+                                {{labelSort}} sortieren ({{labelOrder}})
+                            </span>
+                        </li>
+                        {{/.}}  
+                    </ul>
+                    <ul class="list" role="list">
+                    </ul>
+                </div>
+                <div class="slider__slide" role="complementary">
+                </div>
+            </div>
+        </script>

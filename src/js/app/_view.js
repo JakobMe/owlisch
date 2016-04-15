@@ -1,6 +1,6 @@
 /**
  * View-Modul.
- * Steuert die TabBar der App.
+ * Steuert die View der App.
  * @author Jakob Metzger
  */
 var View = (function() {
@@ -60,6 +60,7 @@ var View = (function() {
     var _isFullscreen;
     var _currentPanel;
     var _panelIsExpired;
+    var _panelHasContent;
     var _panelList;
     
     // DOM-Elemente
@@ -95,6 +96,7 @@ var View = (function() {
         _currentPanel       = null;
         _panelList          = [];
         _panelIsExpired     = {};
+        _panelHasContent    = {};
         
         // Funktionen ausführen
         _initPanels();
@@ -151,12 +153,8 @@ var View = (function() {
             }
         }
         
-        // Template laden und Panels rendern
-        var template = $(_SEL_TMPL).html();
-        var rendered = Mustache.render(template, panels);
-        _$content.html(rendered);
-        
-        // Panel-Liste speichern
+        // Template füllen und in Content laden, Liste speichern
+        _$content.html(Mustache.render($(_SEL_TMPL).html(), panels));
         _panelList = panels;
     }
     
@@ -179,6 +177,7 @@ var View = (function() {
             // Panel zur Panel-Liste hinzufügen
             _$panels[panelName] = $panel;
             _panelIsExpired[panelName] = true;
+            _panelHasContent[panelName] = false;
         });
     }
     
@@ -187,7 +186,7 @@ var View = (function() {
      * Setzt die verknüpfte Navigation-Bar anhand des aktuellen
      * Panel-Namens; setzt Titel, Buttons und Suche.
      */
-    function _setNavbar() {
+    function _setNavigationBar() {
         if ((typeof NavigationBar !== CONF.TYPE.UNDEF) &&
             (NavigationBar !== null)) {
             
@@ -263,6 +262,44 @@ var View = (function() {
     }
     
     /**
+     * Panel-Inhalt erstellen.
+     * Erstellt den Inhalt des angegebenen Panels in
+     * Abhängigkeit des Panels.
+     * @param {string} panel Name des Panels
+     */
+    function _createPanelContent(panel) {
+        
+        // Panel-Validität und Funktion initialisieren
+        var panelValid = false;
+        
+        // Anhand des Panels entscheiden
+        switch (panel) {
+            
+            // Wörterbuch
+            case _PANELS.DICTIONARY.NAME:
+                Dictionary.init({ $target: _$panels[panel] });
+                panelValid = true;
+                break;
+            
+            // TODO: Andere Panels konfigurieren
+        }
+        
+        // Panel-Inhalt erzeugen und wahr setzen
+        _panelHasContent[panel] = panelValid;
+    }
+    
+    /**
+     * Panel-Inhalt aktualisieren.
+     * Aktualisiert den Inhalt des angegebenen Panels in
+     * Abhänigkeit des Panels.
+     * @param {string} panel Name des Panels
+     */
+    function _updatePanelContent(panel) {
+        panel = null;
+        // TODO: Update-Logik schreiben
+    }
+    
+    /**
      * Aktuelles View-Panel setzen.
      * Wenn der übergebene Panel-Name gültig ist, wird die View
      * erst ausgeblendet, dann wird das Tab-Panel gewechselt,
@@ -272,10 +309,26 @@ var View = (function() {
      */
     function setPanel(panel) {
         if (typeof _$panels[panel] !== CONF.TYPE.UNDEF) {
+            
+            // Panel setzen, Navigation-Bar setzen und View ausblenden
             _currentPanel = panel;
-            _setNavbar();
+            _setNavigationBar();
             _hide();
-            setTimeout(function() { _show(); }, CONF.TIME.SHORT);
+            
+            // Warten bis ausgeblendet
+            setTimeout(function() {
+                
+                // Falls Panel-Inhalt erstellt/aktualisiert werden muss
+                if (!_panelHasContent[_currentPanel]) {
+                    _createPanelContent(_currentPanel);
+                } else if (_panelIsExpired[_currentPanel]) {
+                    _updatePanelContent(_currentPanel);
+                }
+                
+                // View einblenden
+                _show();
+                
+            }, CONF.TIME.SHORT);
         }
         return this;
     }

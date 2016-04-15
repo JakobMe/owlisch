@@ -350,6 +350,17 @@
 		"outputStyle": 1,
 		"syntaxCheckerStyle": 1
 		},
+	"\/src\/js\/app\/_dictionary.js": {
+		"fileType": 64,
+		"ignore": 1,
+		"ignoreWasSetByUser": 0,
+		"inputAbbreviatedPath": "\/src\/js\/app\/_dictionary.js",
+		"outputAbbreviatedPath": "\/src\/js\/app\/min\/_dictionary-min.js",
+		"outputPathIsOutsideProject": 0,
+		"outputPathIsSetByUser": 0,
+		"outputStyle": 1,
+		"syntaxCheckerStyle": 1
+		},
 	"\/src\/js\/app\/_init.js": {
 		"fileType": 64,
 		"ignore": 1,
@@ -502,6 +513,15 @@
 		"outputPathIsOutsideProject": 0,
 		"outputPathIsSetByUser": 1
 		},
+	"\/src\/kit\/templates\/_dictionary.kit": {
+		"fileType": 2048,
+		"ignore": 1,
+		"ignoreWasSetByUser": 0,
+		"inputAbbreviatedPath": "\/src\/kit\/templates\/_dictionary.kit",
+		"outputAbbreviatedPath": "\/src\/kit\/templates\/_dictionary.html",
+		"outputPathIsOutsideProject": 0,
+		"outputPathIsSetByUser": 0
+		},
 	"\/src\/kit\/templates\/_tablist.kit": {
 		"fileType": 2048,
 		"ignore": 1,
@@ -517,6 +537,15 @@
 		"ignoreWasSetByUser": 0,
 		"inputAbbreviatedPath": "\/src\/kit\/templates\/_viewpanels.kit",
 		"outputAbbreviatedPath": "\/src\/kit\/templates\/_viewpanels.html",
+		"outputPathIsOutsideProject": 0,
+		"outputPathIsSetByUser": 0
+		},
+	"\/src\/kit\/templates\/_wordlist.kit": {
+		"fileType": 2048,
+		"ignore": 1,
+		"ignoreWasSetByUser": 0,
+		"inputAbbreviatedPath": "\/src\/kit\/templates\/_wordlist.kit",
+		"outputAbbreviatedPath": "\/src\/kit\/templates\/_wordlist.html",
 		"outputPathIsOutsideProject": 0,
 		"outputPathIsSetByUser": 0
 		},
@@ -559,6 +588,26 @@
 		"ignoreWasSetByUser": 0,
 		"inputAbbreviatedPath": "\/src\/less\/app\/_font.less",
 		"outputAbbreviatedPath": "\/src\/less\/css\/_font.css",
+		"outputPathIsOutsideProject": 0,
+		"outputPathIsSetByUser": 0,
+		"outputStyle": 0,
+		"relativeURLS": 0,
+		"shouldRunAutoprefixer": 0,
+		"shouldRunBless": 0,
+		"strictImports": 0,
+		"strictMath": 0,
+		"strictUnits": 0
+		},
+	"\/src\/less\/app\/_list.less": {
+		"allowInsecureImports": 0,
+		"createSourceMap": 0,
+		"disableJavascript": 0,
+		"fileType": 1,
+		"ieCompatibility": 1,
+		"ignore": 1,
+		"ignoreWasSetByUser": 0,
+		"inputAbbreviatedPath": "\/src\/less\/app\/_list.less",
+		"outputAbbreviatedPath": "\/src\/less\/css\/_list.css",
 		"outputPathIsOutsideProject": 0,
 		"outputPathIsSetByUser": 0,
 		"outputStyle": 0,

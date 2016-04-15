@@ -43,9 +43,7 @@
         .transition(opacity);
         
         // Mod: Sichtbar
-        &--visible {
-            opacity: @app-opacity-full;
-        }
+        &--visible { opacity: @app-opacity-full; }
     }
 }
 
@@ -76,7 +74,5 @@
               and (min-resolution: 144dpi) {
     
     // Block: Viewport
-    .@{_viewport} {
-        background-image: url("@{app-path-layout}/iphone-retina.png?v=@{app-version}");
-    }
+    .@{_viewport} { background-image: url("@{app-path-layout}/iphone-retina.png?v=@{app-version}"); }
 }

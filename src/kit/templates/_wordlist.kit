@@ -1,0 +1,14 @@
+        
+        <!-- Template: Wortliste -->
+        <script id="tmpl-wordlist" type="text/template">
+            {{#words}}
+            <li class="list__item list__item--clickable" role="listitem" data-word="{{id}}">
+                <span class="stars stars--{{level}}">
+                    {{#levels}}
+                    <i class="stars__star stars__star--{{.}}"></i>
+                    {{/levels}}
+                </span>
+                <span class="list__label">{{name}}</span>
+            </li>
+            {{/words}}
+        </script>

@@ -8,15 +8,15 @@ var CONF = (function() {
     // Öffentliches Interface
     return {
         
-        // Konfiguration
-        CONFIG: {
-            FILE_DATA       : "owl",
-            TYPE_DATA       : ".min.json",
-            TYPE_IMG        : ".jpg",
+        // Wörterbuch
+        DICTIONARY: {
+            ID              : "owl",
+            PATH_DATA       : "data/",
+            PATH_AUDIO      : "/audio/",
+            PATH_IMAGES     : "/images/",
+            TYPE_DATA       : ".json",
             TYPE_AUDIO      : ".mp3",
-            PATH_DATA       : "data/dictionary/",
-            PATH_IMG        : "data/images",
-            PATH_AUDIO      : "data/audio"
+            TYPE_IMAGES     : ".jpg"
         },
         
         // Webapp

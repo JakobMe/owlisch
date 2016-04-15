@@ -1,13 +1,13 @@
 {
-    "id"    : "owl",
-    "name"  : "Ostwestfalen-Lippe",
-    "words" : {
+    "id": "owl",
+    "name": "Ostwestfalen-Lippe",
+    "version": "0.0.1",
+    "words": {
         "latuechte": {
             "article"       : "die",
             "name"          : "Latüchte",
             "translation"   : "Laterne",
-            "info"          : "Die „Latüchte“ ist ein eigentümlicher Vokabelmix aus der lateinischen „laterna“ und der plattdeutschen „Lüchte“, also quasi Römisches Platt bzw. plattdeutsches Latein. Verschiedene Lichtquellen können gemeint sein.",
-            "image"         : true
+            "info"          : "Die „Latüchte“ ist ein eigentümlicher Vokabelmix aus der lateinischen „laterna“ und der plattdeutschen „Lüchte“, also quasi Römisches Platt bzw. plattdeutsches Latein. Verschiedene Lichtquellen können gemeint sein."
         }
     }
 }

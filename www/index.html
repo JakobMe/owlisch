@@ -108,8 +108,8 @@
                 
         <!-- Template: Wörterbuch -->
         <script id="tmpl-dictionary" type="text/template">
-            <div class="slider" role="directory">
-                <div class="slider__slide" role="listbox">
+            <div class="slider slider--has-2 slider--is-1" role="directory">
+                <div class="slider__slide" role="listbox" data-slide="1">
                     <ul class="dropdown" role="menu">
                         {{#.}}
                         <li class="dropdown__item" role="menuitem"
@@ -119,12 +119,12 @@
                                 {{labelSort}} sortieren ({{labelOrder}})
                             </span>
                         </li>
-                        {{/.}}  
+                        {{/.}}
                     </ul>
                     <ul class="list" role="list">
                     </ul>
                 </div>
-                <div class="slider__slide" role="complementary">
+                <div class="slider__slide" role="complementary" data-slide="2">
                 </div>
             </div>
         </script>

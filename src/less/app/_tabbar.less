@@ -15,9 +15,9 @@
 @_tab-bar-fontsize-label:       9px;
 
 // Loop: Status-Position für Tab-Bar-Modfikation
-._block-loop-status(@n: @_tab-bar-number-tabs, @i: 0) when (@i < @n) {
+._tab-bar-loop(@n: @_tab-bar-number-tabs, @i: 0) when (@i < @n) {
     &--tab-@{i} &__status { .translate(100% * @i); }
-    ._block-loop-status(@n, (@i + 1));
+    ._tab-bar-loop(@n, (@i + 1));
 }
  
 // Block: Tab-Bar
@@ -29,7 +29,7 @@
     height: @app-size-height-tabbar;
     border-top: @app-size-line-thin solid fade(@app-color-black, 20%);
     .transition(transform);
-    ._block-loop-status();
+    ._tab-bar-loop();
     
     // Mod: Versteckt
     &--hidden { .translate(0, 100%); }

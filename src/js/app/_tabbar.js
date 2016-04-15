@@ -21,6 +21,7 @@ var TabBar = (function() {
     var _tabActive;
     var _tabNumber;
     var _isHidden;
+    var _tmplTablist;
     
     // DOM-Elemente
     var _$tabbar;
@@ -49,9 +50,13 @@ var TabBar = (function() {
         _$tabs              = null;
         _tabNumber          = -1;
         _isHidden           = defaults.isHidden;
+        _tmplTablist        = $(_SEL_TMPL).html();
+        
+        // Templates parsen
+        Mustache.parse(_tmplTablist);
         
         // Funktionen ausführen
-        _initTabs();
+        _createTablist();
         _bindEvents();
         _setTab(defaults.initialTab);
         
@@ -86,29 +91,14 @@ var TabBar = (function() {
     }
     
     /**
-     * Tabs generieren.
+     * Tabliste generieren.
      * Generiert für jedes in der View definierte Panel einen
      * entsprechenden Tab in der Tab-Bar.
      */
-    function _createTabs() {
+    function _createTablist() {
         
-        // Template füllen und in Tab-Bar laden
-        _$tabbar.html(
-            Mustache.render($(_SEL_TMPL).html(), View.getPanelList())
-        );
-    }
-    
-    /**
-     * Tabs initialisieren.
-     * Generiert die Tabs und ermittelt die entsprechenden
-     * jQuery-Objekte und die Anzahl.
-     */
-    function _initTabs() {
-        
-        // Tabs generieren
-        _createTabs();
-        
-        // Tabs finden und zählen
+        // Template füllen und in Tab-Bar laden, Tabs initialisieren
+        _$tabbar.html(Mustache.render(_tmplTablist, View.getPanelList()));
         _$tabs = _$tabbar.find(_SEL_TABS);
         _tabNumber = _$tabs.length - 1;
     }

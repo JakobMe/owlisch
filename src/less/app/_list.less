@@ -55,11 +55,12 @@
             &:after {
                 display: block;
                 position: absolute;
-                text-align: center;
+                text-align: right;
                 font-style: normal;
                 font-weight: normal;
                 top: 0;
                 right: 0;
+                padding-right: @app-size-margin;
                 content: @fa-var-chevron-right;
                 font-size: @app-font-size-medium;
                 color: @app-color-text-pale;
@@ -67,6 +68,7 @@
                 height: @_list-size-height;
                 line-height: (@_list-size-height + @app-size-line-thin);
                 .transition(color);
+                .borderbox();
                 .font-icon();
             }
             

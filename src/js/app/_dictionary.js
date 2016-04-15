@@ -95,7 +95,6 @@ var Dictionary = (function() {
             
             // Wort-Liste aktualisieren
             _updateList();
-            
         });
 
         // Modul Return

@@ -658,6 +658,26 @@
 		"strictMath": 0,
 		"strictUnits": 0
 		},
+	"\/src\/less\/app\/_slider.less": {
+		"allowInsecureImports": 0,
+		"createSourceMap": 0,
+		"disableJavascript": 0,
+		"fileType": 1,
+		"ieCompatibility": 1,
+		"ignore": 1,
+		"ignoreWasSetByUser": 0,
+		"inputAbbreviatedPath": "\/src\/less\/app\/_slider.less",
+		"outputAbbreviatedPath": "\/src\/less\/css\/_slider.css",
+		"outputPathIsOutsideProject": 0,
+		"outputPathIsSetByUser": 0,
+		"outputStyle": 0,
+		"relativeURLS": 0,
+		"shouldRunAutoprefixer": 0,
+		"shouldRunBless": 0,
+		"strictImports": 0,
+		"strictMath": 0,
+		"strictUnits": 0
+		},
 	"\/src\/less\/app\/_tabbar.less": {
 		"allowInsecureImports": 0,
 		"createSourceMap": 0,
@@ -860,7 +880,7 @@
 		},
 	"\/src\/less\/main.less": {
 		"allowInsecureImports": 0,
-		"createSourceMap": 0,
+		"createSourceMap": 1,
 		"disableJavascript": 0,
 		"fileType": 1,
 		"ieCompatibility": 0,

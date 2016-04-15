@@ -62,6 +62,7 @@ var View = (function() {
     var _panelIsExpired;
     var _panelHasContent;
     var _panelList;
+    var _tmplViewpanels;
     
     // DOM-Elemente
     var _$view;
@@ -93,10 +94,14 @@ var View = (function() {
         _isVisible          = defaults.isVisible;
         _isFullscreen       = defaults.isFullscreen;
         _isWebapp           = (CONF.WEBAPP.IOS || CONF.WEBAPP.CORDOVA);
+        _tmplViewpanels     = $(_SEL_TMPL).html();
         _currentPanel       = null;
         _panelList          = [];
         _panelIsExpired     = {};
         _panelHasContent    = {};
+        
+        // Templates parsen
+        Mustache.parse(_tmplViewpanels);
         
         // Funktionen ausführen
         _initPanels();
@@ -154,7 +159,7 @@ var View = (function() {
         }
         
         // Template füllen und in Content laden, Liste speichern
-        _$content.html(Mustache.render($(_SEL_TMPL).html(), panels));
+        _$content.html(Mustache.render(_tmplViewpanels, panels));
         _panelList = panels;
     }
     

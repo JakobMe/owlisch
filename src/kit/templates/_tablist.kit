@@ -1,0 +1,13 @@
+        
+        <!-- Template: Tab-List -->
+        <script id="tmpl-tablist" type="text/template">
+            <ul class="tab-bar__list">
+                {{#.}}
+                <li class="tab-bar__tab" role="tab" data-panel="{{name}}">
+                    <i class="tab-bar__icon fa fa--{{icon}}"></i>
+                    <span class="tab-bar__label">{{label}}</span>
+                </li>
+                {{/.}}
+            </ul>
+            <div class="tab-bar__status"></div>
+        </script>

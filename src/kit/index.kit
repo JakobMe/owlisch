@@ -1,12 +1,88 @@
 <!DOCTYPE html>
 <html lang="de">
     
-    <!-- @import app/head.kit -->
+    <!-- Head -->
+    <head>
+        
+        <!-- Meta -->
+        <title>OWLisch</title>
+        <meta charset="utf-8">
+        
+        <!-- Favicons: Desktop -->
+        <link rel="shortcut icon" href="img/icons/favicon.ico">
+        
+        <!-- Favicons: Apple -->
+        <link rel="apple-touch-icon" type="image/png" sizes="57x57"   href="img/icons/apple-touch-icon-57x57.png">
+        <link rel="apple-touch-icon" type="image/png" sizes="60x60"   href="img/icons/apple-touch-icon-60x60.png">
+        <link rel="apple-touch-icon" type="image/png" sizes="72x72"   href="img/icons/apple-touch-icon-72x72.png">
+        <link rel="apple-touch-icon" type="image/png" sizes="76x76"   href="img/icons/apple-touch-icon-76x76.png">
+        <link rel="apple-touch-icon" type="image/png" sizes="114x114" href="img/icons/apple-touch-icon-114x114.png">
+        <link rel="apple-touch-icon" type="image/png" sizes="120x120" href="img/icons/apple-touch-icon-120x120.png">
+        <link rel="apple-touch-icon" type="image/png" sizes="144x144" href="img/icons/apple-touch-icon-144x144.png">
+        <link rel="apple-touch-icon" type="image/png" sizes="152x152" href="img/icons/apple-touch-icon-152x152.png">
+        <link rel="apple-touch-icon" type="image/png" sizes="180x180" href="img/icons/apple-touch-icon-180x180.png">
+        
+        <!-- Favicons: Android -->
+        <link rel="icon"             type="image/png" sizes="16x16"   href="img/icons/favicon-16x16.png">
+        <link rel="icon"             type="image/png" sizes="32x32"   href="img/icons/favicon-32x32.png">
+        <link rel="icon"             type="image/png" sizes="96x96"   href="img/icons/favicon-96x96.png">
+        <link rel="icon"             type="image/png" sizes="192x192" href="img/icons/android-chrome-192x192.png">
+        <link rel="icon"             type="image/png" sizes="194x194" href="img/icons/favicon-194x194.png">
+        <link rel="manifest"                                          href="img/icons/manifest.json">
+        
+        <!-- Webapp-Einstellungen -->
+        <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+        <meta name="apple-mobile-web-app-capable"          content="yes">
+        <meta name="apple-mobile-web-app-title"            content="OWLisch">
+        <meta name="application-name"                      content="OWLisch">
+        <meta name="theme-color"                           content="#3bbb77">
+        <meta name="viewport"                              content="width=device-width, height=device-height,
+                                                                    initial-scale=1, user-scalable=no,
+                                                                    minimum-scale=1, maximum-scale=1">
+        
+        <!-- CSS -->
+        <link rel="stylesheet" href="css/main.min.css" type="text/css">
+        
+    </head>
     
     <!-- Body -->
     <body class="body">
         
-        <!-- @import app/app.kit -->
+        <!-- Viewport -->
+        <div class="viewport">
+            <div class="viewport__app" role="application">
+                
+                <!-- View -->
+                <main class="view" role="main">
+                    <article class="view__content" role="article"></article>
+                </main>
+                
+                <!-- Navigation-Bar -->
+                <header class="navigation-bar" role="navigation">
+                    <div class="navigation-bar__wrapper">
+                        <h1 class="navigation-bar__title" role="heading"></h1>
+                        <div class="navigation-bar__search">
+                            <input class="navigation-bar__input" type="text"
+                                   spellcheck="false" autocomplete="off"
+                                   autocorrect="off" autocapitalize="none"
+                                   tabindex="-100" role="search" />
+                        </div>
+                        <i class="navigation-bar__button navigation-bar__button--left"
+                           role="button" data-action="none"></i>
+                        <i class="navigation-bar__button navigation-bar__button--right"
+                           role="button" data-action="none"></i>
+                    </div>
+                </header>
+                
+                <!-- Tab-Bar -->
+                <nav class="tab-bar" role="tablist"></nav>
+                
+            </div>
+        </div>
+        
+        <!-- Javascript -->
+        <script type="text/javascript" src="cordova.js"></script>
+        <script type="text/javascript" src="js/main.min.js"></script>
         <!-- @import templates/templates.kit -->
         
     </body>

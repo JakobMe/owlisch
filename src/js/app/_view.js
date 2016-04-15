@@ -9,6 +9,7 @@ var View = (function() {
     var _SEL_VIEW           = "[role='main']";
     var _SEL_CONTENT        = "[role='article']";
     var _SEL_PANELS         = "[role='tabpanel']";
+    var _SEL_TMPL           = "#tmpl-viewpanels";
     
     // BEM-Konstanten
     var _B                  = "view";
@@ -21,11 +22,36 @@ var View = (function() {
     
     // Panel-Konstanten
     var _PANELS = {
-        START               : "start",
-        DICTIONARY          : "dictionary",
-        QUIZ                : "quiz",
-        PROGRESS            : "progress",
-        HELP                : "help"
+        START: {
+            NAME            : "start",
+            LABEL           : "Start",
+            TITLE           : "Wort der Woche",
+            ICON            : "home"
+        },
+        DICTIONARY: {
+            NAME            : "dictionary",
+            LABEL           : "Wörterbuch",
+            TITLE           : "Wörterbuch",
+            ICON            : "book"
+        },
+        QUIZ: {
+            NAME            : "quiz",
+            LABEL           : "Quiz",
+            TITLE           : "Quiz",
+            ICON            : "lightbulb-o"
+        },
+        PROGRESS: {
+            NAME            : "progress",
+            LABEL           : "Fortschritt",
+            TITLE           : "Fortschritt",
+            ICON            : "bar-chart"
+        },
+        HELP: {
+            NAME            : "help",
+            LABEL           : "Hilfe",
+            TITLE           : "Hilfe",
+            ICON            : "question-circle"
+        }
     };
     
     // Private Variablen
@@ -34,6 +60,7 @@ var View = (function() {
     var _isFullscreen;
     var _currentPanel;
     var _panelIsExpired;
+    var _panelList;
     
     // DOM-Elemente
     var _$view;
@@ -101,28 +128,56 @@ var View = (function() {
     }
     
     /**
+     * View-Panels generieren.
+     * Generiert für jedes definierte Panel anhand des gesetzten
+     * Mustache-Templates ein HTML-Panel im Content-Bereich.
+     */
+    function _createPanels() {
+        
+        // Panel-Array initialisieren
+        var panels = [];
+        
+        // Aus definierten Panels eine Liste für Mustache generieren
+        for (var panel in _PANELS) {
+            if (_PANELS.hasOwnProperty(panel)) {
+                var props = {};
+                for (var prop in _PANELS[panel]) {
+                    if (_PANELS[panel].hasOwnProperty(prop)) {
+                        props[prop.toLowerCase()] = _PANELS[panel][prop];
+                    }
+                }
+                panels.push(props);
+            }
+        }
+        
+        // Template laden und Panels rendern
+        var template = $(_SEL_TMPL).html();
+        var rendered = Mustache.render(template, panels);
+        _$content.html(rendered);
+        
+        // Panel-Liste speichern
+        _panelList = panels;
+    }
+    
+    /**
      * View-Panels initialisieren.
-     * Durchsucht den DOM nach View-Panels und fügt sie
-     * der internen View-Liste hinzu, wenn sie mit den intern
-     * definierten Views übereinstimmen.
+     * Rendert die View-Panels und setzt anschließend
      */
     function _initPanels() {
+        
+        // Zunächst Panels erzeugen
+        _createPanels();
+        
+        // Alle Panels iterieren
         _$view.find(_SEL_PANELS).each(function() {
             
             // Gefundenes View-Panel initialisieren
             var $panel = $(this);
             var panelName = $panel.data(CONF.DATA.PANEL);
             
-            // Prüfen, ob das View-Panel valide ist und setzen
-            for (var name in _PANELS) {
-                if (_PANELS.hasOwnProperty(name)) {
-                    if (_PANELS[name] === panelName) {
-                        _$panels[panelName] = $panel;
-                        _panelIsExpired[panelName] = true;
-                        break;
-                    }
-                }
-            }
+            // Panel zur Panel-Liste hinzufügen
+            _$panels[panelName] = $panel;
+            _panelIsExpired[panelName] = true;
         });
     }
     
@@ -144,7 +199,7 @@ var View = (function() {
             var newActionRight = null;
             
             // Sonderfall: Wörterbuch
-            if (_currentPanel === _PANELS.DICTIONARY) {
+            if (_currentPanel === _PANELS.DICTIONARY.NAME) {
                 newSearch = true;
                 newIconLeft = NavigationBar.ICON.SEARCH;
                 newIconRight = NavigationBar.ICON.SORT;
@@ -224,12 +279,21 @@ var View = (function() {
         return this;
     }
     
+    /**
+     * Panel-Liste zurückgeben.
+     * Gibt die intern zusammengestellte Panel-Liste nach außen.
+     */
+    function getPanelList() {
+        return _panelList;
+    }
+    
     // Öffentliches Interface
     return {
         init                : init,
         enableFullscreen    : enableFullscreen,
         disableFullscreen   : disableFullscreen,
-        setPanel            : setPanel
+        setPanel            : setPanel,
+        getPanelList        : getPanelList
     };
     
 })();

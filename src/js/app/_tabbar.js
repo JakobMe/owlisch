@@ -8,6 +8,7 @@ var TabBar = (function() {
     // Selektor-Konstanten
     var _SEL_TABBAR         = "[role='tablist']";
     var _SEL_TABS           = "[role='tab']";
+    var _SEL_TMPL           = "#tmpl-tablist";
     
     // BEM-Konstanten
     var _B                  = "tab-bar";
@@ -45,11 +46,12 @@ var TabBar = (function() {
         
         // Modulvariablen initialisieren
         _$tabbar            = $(_SEL_TABBAR);
-        _$tabs              = _$tabbar.find(_SEL_TABS);
-        _tabNumber          = _$tabs.length - 1;
+        _$tabs              = null;
+        _tabNumber          = -1;
         _isHidden           = defaults.isHidden;
         
         // Funktionen ausführen
+        _initTabs();
         _bindEvents();
         _setTab(defaults.initialTab);
         
@@ -81,6 +83,34 @@ var TabBar = (function() {
         
         // Aktiven Tab notieren (Statusleiste bewegen)
         _$tabbar.setMod(_B, _M_TAB, _tabActive);
+    }
+    
+    /**
+     * Tabs generieren.
+     * Generiert für jedes in der View definierte Panel einen
+     * entsprechenden Tab in der Tab-Bar.
+     */
+    function _createTabs() {
+        
+        // Template laden und Tabs rendern
+        var template = $(_SEL_TMPL).html();
+        var rendered = Mustache.render(template, View.getPanelList());
+        _$tabbar.html(rendered);
+    }
+    
+    /**
+     * Tabs initialisieren.
+     * Generiert die Tabs und ermittelt die entsprechenden
+     * jQuery-Objekte und die Anzahl.
+     */
+    function _initTabs() {
+        
+        // Tabs generieren
+        _createTabs();
+        
+        // Tabs finden und zählen
+        _$tabs = _$tabbar.find(_SEL_TABS);
+        _tabNumber = _$tabs.length - 1;
     }
     
     /**

@@ -493,51 +493,6 @@
 		"outputPathIsSetByUser": 1,
 		"outputStyle": 1
 		},
-	"\/src\/kit\/app\/_navigationbar.kit": {
-		"fileType": 2048,
-		"ignore": 1,
-		"ignoreWasSetByUser": 0,
-		"inputAbbreviatedPath": "\/src\/kit\/app\/_navigationbar.kit",
-		"outputAbbreviatedPath": "\/src\/kit\/app\/_navigationbar.html",
-		"outputPathIsOutsideProject": 0,
-		"outputPathIsSetByUser": 0
-		},
-	"\/src\/kit\/app\/_tabbar.kit": {
-		"fileType": 2048,
-		"ignore": 1,
-		"ignoreWasSetByUser": 0,
-		"inputAbbreviatedPath": "\/src\/kit\/app\/_tabbar.kit",
-		"outputAbbreviatedPath": "\/src\/kit\/app\/_tabbar.html",
-		"outputPathIsOutsideProject": 0,
-		"outputPathIsSetByUser": 0
-		},
-	"\/src\/kit\/app\/_view.kit": {
-		"fileType": 2048,
-		"ignore": 1,
-		"ignoreWasSetByUser": 0,
-		"inputAbbreviatedPath": "\/src\/kit\/app\/_view.kit",
-		"outputAbbreviatedPath": "\/src\/kit\/app\/_view.html",
-		"outputPathIsOutsideProject": 0,
-		"outputPathIsSetByUser": 0
-		},
-	"\/src\/kit\/app\/app.kit": {
-		"fileType": 2048,
-		"ignore": 1,
-		"ignoreWasSetByUser": 0,
-		"inputAbbreviatedPath": "\/src\/kit\/app\/app.kit",
-		"outputAbbreviatedPath": "\/src\/kit\/app\/app.html",
-		"outputPathIsOutsideProject": 0,
-		"outputPathIsSetByUser": 0
-		},
-	"\/src\/kit\/app\/head.kit": {
-		"fileType": 2048,
-		"ignore": 1,
-		"ignoreWasSetByUser": 0,
-		"inputAbbreviatedPath": "\/src\/kit\/app\/head.kit",
-		"outputAbbreviatedPath": "\/src\/kit\/app\/head.html",
-		"outputPathIsOutsideProject": 0,
-		"outputPathIsSetByUser": 0
-		},
 	"\/src\/kit\/index.kit": {
 		"fileType": 2048,
 		"ignore": 0,
@@ -547,12 +502,21 @@
 		"outputPathIsOutsideProject": 0,
 		"outputPathIsSetByUser": 1
 		},
-	"\/src\/kit\/templates\/_test.kit": {
+	"\/src\/kit\/templates\/_tablist.kit": {
 		"fileType": 2048,
 		"ignore": 1,
 		"ignoreWasSetByUser": 0,
-		"inputAbbreviatedPath": "\/src\/kit\/templates\/_test.kit",
-		"outputAbbreviatedPath": "\/src\/kit\/templates\/_test.html",
+		"inputAbbreviatedPath": "\/src\/kit\/templates\/_tablist.kit",
+		"outputAbbreviatedPath": "\/src\/kit\/templates\/_tablist.html",
+		"outputPathIsOutsideProject": 0,
+		"outputPathIsSetByUser": 0
+		},
+	"\/src\/kit\/templates\/_viewpanels.kit": {
+		"fileType": 2048,
+		"ignore": 1,
+		"ignoreWasSetByUser": 0,
+		"inputAbbreviatedPath": "\/src\/kit\/templates\/_viewpanels.kit",
+		"outputAbbreviatedPath": "\/src\/kit\/templates\/_viewpanels.html",
 		"outputPathIsOutsideProject": 0,
 		"outputPathIsSetByUser": 0
 		},

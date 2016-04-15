@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html lang="de">
     
-    
     <!-- Head -->
     <head>
         
@@ -49,31 +48,13 @@
     <!-- Body -->
     <body class="body">
         
-        
         <!-- Viewport -->
         <div class="viewport">
             <div class="viewport__app" role="application">
                 
-                
                 <!-- View -->
                 <main class="view" role="main">
-                    <article class="view__content" role="article">
-                        <section class="view__panel" role="tabpanel"
-                                 data-panel="start" data-title="Wort des Tages">
-                        </section>
-                        <section class="view__panel" role="tabpanel"
-                                 data-panel="dictionary" data-title="Wörterbuch">
-                        </section>
-                        <section class="view__panel" role="tabpanel"
-                                 data-panel="quiz" data-title="Quiz">
-                        </section>
-                        <section class="view__panel" role="tabpanel"
-                                 data-panel="progress" data-title="Fortschritt">
-                        </section>
-                        <section class="view__panel" role="tabpanel"
-                                 data-panel="help" data-title="Hilfe">
-                        </section>
-                    </article>
+                    <article class="view__content" role="article"></article>
                 </main>
                 
                 <!-- Navigation-Bar -->
@@ -87,40 +68,14 @@
                                    tabindex="-100" role="search" />
                         </div>
                         <i class="navigation-bar__button navigation-bar__button--left"
-                           role="button" data-action="">
-                        </i>
+                           role="button" data-action="none"></i>
                         <i class="navigation-bar__button navigation-bar__button--right"
-                           role="button" data-action="">
-                        </i>
+                           role="button" data-action="none"></i>
                     </div>
                 </header>
                 
                 <!-- Tab-Bar -->
-                <nav class="tab-bar" role="tablist">
-                    <ul class="tab-bar__list">
-                        <li class="tab-bar__tab" role="tab" data-panel="start">
-                            <i class="tab-bar__icon fa fa--home"></i>
-                            <span class="tab-bar__label">Start</span>
-                        </li>
-                        <li class="tab-bar__tab" role="tab" data-panel="dictionary">
-                            <i class="tab-bar__icon fa fa--book"></i>
-                            <span class="tab-bar__label">Wörterbuch</span>
-                        </li>
-                        <li class="tab-bar__tab" role="tab" data-panel="quiz">
-                            <i class="tab-bar__icon tab-bar__icon--text">Q</i>
-                            <span class="tab-bar__label">Quiz</span>
-                        </li>
-                        <li class="tab-bar__tab" role="tab" data-panel="progress">
-                            <i class="tab-bar__icon fa fa--bar-chart"></i>
-                            <span class="tab-bar__label">Fortschritt</span>
-                        </li>
-                        <li class="tab-bar__tab" role="tab" data-panel="help">
-                            <i class="tab-bar__icon fa fa--question-circle"></i>
-                            <span class="tab-bar__label">Hilfe</span>
-                        </li>
-                    </ul>
-                    <div class="tab-bar__status"></div>
-                </nav>
+                <nav class="tab-bar" role="tablist"></nav>
                 
             </div>
         </div>
@@ -128,11 +83,27 @@
         <!-- Javascript -->
         <script type="text/javascript" src="cordova.js"></script>
         <script type="text/javascript" src="js/main.min.js"></script>
-        
+                        
+        <!-- Template: View-Panels -->
+        <script id="tmpl-viewpanels" type="text/template">
+            {{#.}}
+            <section class="view__panel" role="tabpanel"
+                     data-panel="{{name}}" data-title="{{title}}">
+            </section>
+            {{/.}}
+        </script>
                 
-        <!-- Template: Test -->
-        <script id="tmpl-test" type="text/template">
-            <h1>{{name}}</h1>
+        <!-- Template: Tab-List -->
+        <script id="tmpl-tablist" type="text/template">
+            <ul class="tab-bar__list">
+                {{#.}}
+                <li class="tab-bar__tab" role="tab" data-panel="{{name}}">
+                    <i class="tab-bar__icon fa fa--{{icon}}"></i>
+                    <span class="tab-bar__label">{{label}}</span>
+                </li>
+                {{/.}}
+            </ul>
+            <div class="tab-bar__status"></div>
         </script>
         
     </body>

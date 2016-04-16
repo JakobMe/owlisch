@@ -121,10 +121,10 @@
                         </li>
                         {{/.}}
                     </ul>
-                    <ul class="list" role="list">
-                    </ul>
+                    <ul class="list" role="list"></ul>
                 </div>
-                <div class="slider__slide" role="complementary" data-slide="2">
+                <div class="slider__slide slider__slide--scrollable"
+                     role="complementary" data-slide="2">
                 </div>
             </div>
         </script>
@@ -133,7 +133,7 @@
         <script id="tmpl-wordlist" type="text/template">
             {{#words}}
             <li class="list__item list__item--clickable" role="listitem" data-word="{{id}}">
-                <span class="stars stars--{{level}}">
+                <span class="stars stars--is-{{level}}">
                     {{#levels}}
                     <i class="stars__star stars__star--{{.}}"></i>
                     {{/levels}}

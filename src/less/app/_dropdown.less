@@ -1,0 +1,94 @@
+/*
+ * Modul: Dropdown.
+ * Definiert das Verhalten eines Dropdowns.
+ * @author Jakob Metzger <jakob.me@gmail.com>
+ * @copyright 2016 Jakob Metzger
+ */
+
+// Modul-Variablen
+@_dropdown:                     dropdown;
+@_dropdown-size-height:         44px;
+
+// Block: Dropdown
+.@{_dropdown} {
+    display: block;
+    position: absolute;
+    list-style-type: none;
+    top: 0;
+    left: 0;
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    z-index: 500;
+    border-bottom: @app-size-line-thin solid fade(@app-color-black, 25%);
+    opacity: @app-opacity-invisible;
+    .translate(0, -100%);
+    .transition();
+    .shadow-big();
+    
+    // Mod: Offen
+    &--opened {
+        opacity: @app-opacity-full;
+        .translate(0);
+    }
+    
+    // Element: Listenpunkt
+    &__item {
+        display: block;
+        cursor: pointer;
+        position: relative;
+        margin: 0;
+        padding: 0 @app-size-margin;
+        padding-right: @_dropdown-size-height;
+        height: @_dropdown-size-height;
+        line-height: @_dropdown-size-height;
+        background: @app-color-white;
+        font-size: @app-font-size-small;
+        color: @app-color-text-pale;
+        .transition(color);
+        .ellipsis();
+        
+        // Icon
+        &:after {
+            display: block;
+            position: absolute;
+            text-align: center;
+            top: 0;
+            right: 0;
+            //font-size: @app-font-size-medium;
+            color: @app-color-background;
+            height: @_dropdown-size-height;
+            width: @_dropdown-size-height;
+            content: @fa-var-check-square;
+            .transition();
+            .font-icon();
+        }
+        
+        // Ausnahme: Letztes Element
+        &:not(:last-child) { border-bottom: @app-size-line-thin solid darken(@app-color-background, @app-darken-border); }
+        
+        // Hover & Mod: Ausgewählt
+        &:hover {
+            color: @app-color-text-dark;
+            
+            // Icon
+            &:after { color: @app-color-text-pale; }
+        }
+        
+        // Mod: Ausgewählt
+        &--selected {
+            cursor: default;
+            color: @app-color-text-dark;
+            background: lighten(@app-color-background, @app-darken-main);
+            
+            // Icon
+            &:after { color: @app-color-main; }
+        }
+    }
+    
+    // Element: Icon
+    &__icon { margin-right: @app-size-margin-half; }
+    
+    // Element: Label
+    &__label { font-weight: bold; }
+}

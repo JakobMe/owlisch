@@ -174,16 +174,11 @@ var NavigationBar = (function() {
      */
     function _renderTitle() {
         
-        // Titel ausblenden
+        // Titel ausblenden, setzen, einblenden
         _$title.setMod(_B, _E_TITLE, _M_HIDDEN, true);
-        
-        // Auf Animation warten
         setTimeout(function() {
-            
-            // Titel setzen, einblenden
             _$title.text(_title);
             _$title.setMod(_B, _E_TITLE, _M_HIDDEN, false);
-            
         }, CONF.TIME.SHORT);
     }
     
@@ -263,6 +258,14 @@ var NavigationBar = (function() {
                     } else {
                         _enableSearch();
                     }
+                    Dictionary.toggleDropdown(true);
+                    break;
+                
+                // Aktion: Sortieren
+                case ACTION.SORT:
+                
+                    // Wörterbuch-Dropdown ein-/ausblenden
+                    Dictionary.toggleDropdown();
                     break;
                 
                 // TODO: Aktionen für andere Buttons

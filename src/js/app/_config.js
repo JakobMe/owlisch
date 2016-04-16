@@ -23,6 +23,7 @@ var CONF = (function() {
         QUIZ: {
             LVL_MIN         : 1,
             LVL_MAX         : 3,
+            LEVELS          : [1,2,3],
             NUM_STEPS       : 10,
             NUM_PROGRESS    : 10
         },
@@ -65,7 +66,9 @@ var CONF = (function() {
         DATA: {
             PANEL           : "panel",
             ACTION          : "action",
-            TITLE           : "title"
+            TITLE           : "title",
+            SORT            : "sort",
+            ORDER           : "order"
         },
         
         // BEM-Syntax

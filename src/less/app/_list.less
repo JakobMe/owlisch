@@ -24,10 +24,12 @@
 // Block: Liste
 .@{_list} {
     display: block;
+    overflow-y: auto;
+    overflow-x: hidden;
     list-style-type: none;
     margin: 0;
     padding: 0;
-    border-bottom: @app-size-line-thin solid darken(@app-color-background, @app-darken-border-background);
+    max-height: 100%;
     
     // Element: Item
     &__item {
@@ -44,6 +46,15 @@
         border-top: @app-size-line-thin solid darken(@app-color-background, @app-darken-border);
         .gradient-background();
         .ellipsis();
+        
+        // Ausnahme: Erstes Element
+        &:first-child { margin-top: (@_list-size-height / 2); }
+        
+        // Ausnahme: Letztes Element
+        &:last-child {
+            margin-bottom: (@_list-size-height / 2);
+            border-bottom: @app-size-line-thin solid darken(@app-color-background, @app-darken-border-background);
+        }
         
         // Mod: Klickbar
         &--clickable {
@@ -90,6 +101,9 @@
         font-weight: bold;
         color: @app-color-text-dark;
         font-size: @app-font-size-medium;
+        
+        // Ausnahme: Erstes Element
+        &:not(:first-child) { margin-left: @app-size-margin-half; }
     }
     
     // Element: Highlight

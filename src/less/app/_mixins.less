@@ -146,7 +146,7 @@
 .gradient-horizontal(@color-left, @color-right, @pos-left: 0%, @pos-right: 100%) {
     background-repeat: repeat-y;
     background-position: right top;
-    background-image: linear-gradient(left, @color-left @pos-left, @color-right @pos-right);
+    background-image: linear-gradient(to right, @color-left @pos-left, @color-right @pos-right);
     background-color: @color-left;
 }
 
@@ -154,7 +154,7 @@
 .gradient-vertical(@color-top, @color-bottom, @pos-top: 0%, @pos-bottom: 100%) {
     background-repeat: repeat-x;
     background-position: left bottom;
-    background-image: linear-gradient(top, @color-top @pos-top, @color-bottom @pos-bottom);
+    background-image: linear-gradient(to bottom, @color-top @pos-top, @color-bottom @pos-bottom);
     background-color: @color-top;
 }
 

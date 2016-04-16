@@ -272,7 +272,7 @@ var View = (function() {
      * Abhängigkeit des Panels.
      * @param {string} panel Name des Panels
      */
-    function _createPanelContent(panel) {
+    function _createPanelContent(panel, callback) {
         
         // Panel-Validität und Funktion initialisieren
         var panelValid = false;
@@ -291,6 +291,9 @@ var View = (function() {
         
         // Panel-Inhalt erzeugen und wahr setzen
         _panelHasContent[panel] = panelValid;
+        
+        // Callback
+        if ($.isFunction(callback)) { callback(); }
     }
     
     /**
@@ -299,9 +302,12 @@ var View = (function() {
      * Abhänigkeit des Panels.
      * @param {string} panel Name des Panels
      */
-    function _updatePanelContent(panel) {
+    function _updatePanelContent(panel, callback) {
         panel = null;
         // TODO: Update-Logik schreiben
+        
+        // Callback
+        if ($.isFunction(callback)) { callback(); }
     }
     
     /**
@@ -313,26 +319,22 @@ var View = (function() {
      * @returns {Object} Modul-Objekt
      */
     function setPanel(panel) {
-        if (typeof _$panels[panel] !== CONF.TYPE.UNDEF) {
+        if (_$panels[panel] instanceof jQuery) {
             
             // Panel setzen, Navigation-Bar setzen und View ausblenden
             _currentPanel = panel;
             _setNavigationBar();
             _hide();
             
-            // Warten bis ausgeblendet
+            // Panel gegebenenfalls aktualisieren, View einblenden
             setTimeout(function() {
-                
-                // Falls Panel-Inhalt erstellt/aktualisiert werden muss
                 if (!_panelHasContent[_currentPanel]) {
-                    _createPanelContent(_currentPanel);
+                    _createPanelContent(_currentPanel, _show);
                 } else if (_panelIsExpired[_currentPanel]) {
-                    _updatePanelContent(_currentPanel);
+                    _updatePanelContent(_currentPanel, _show);
+                } else {
+                    _show();
                 }
-                
-                // View einblenden
-                _show();
-                
             }, CONF.TIME.SHORT);
         }
         return this;

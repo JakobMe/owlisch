@@ -28,11 +28,13 @@
     width: 100%;
     height: @app-size-height-tabbar;
     border-top: @app-size-line-thin solid fade(@app-color-black, 20%);
-    .transition(transform);
     ._tab-bar-loop();
     
     // Mod: Versteckt
-    &--hidden { .translate(0, 100%); }
+    &--hidden {
+        //.transition(transform);
+        .translate(0, 100%);
+    }
 
     // Element: Liste
     &__list {
@@ -58,8 +60,8 @@
         .transition(color);
         .borderbox();
         
-        // Hover
-        &:hover { color: @app-color-text-dark; }
+        /* Hover
+        &:hover { color: @app-color-text-dark; }*/
         
         // Mod: Aktiv
         &--active {

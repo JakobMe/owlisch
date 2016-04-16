@@ -22,7 +22,10 @@
     .borderbox();
     
     // Mod: Webapp
-    &--webapp { padding-top: (@app-size-height-navigationbar + @app-size-height-statusbar); }
+    &--webapp {
+        //.transition(padding);
+        padding-top: (@app-size-height-navigationbar + @app-size-height-statusbar);
+    }
     
     // Mod: Volle Höhe
     &--fullscreen { padding-bottom: 0; }

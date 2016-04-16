@@ -44,7 +44,9 @@ var CONF = (function() {
             CLICK           : "click",
             ENDED           : "ended",
             FOCUS           : "focus",
-            SUBMIT          : "submit"
+            SUBMIT          : "submit",
+            KEYBOARD_HIDE   : "keyboardWillHide",
+            KEYBOARD_SHOW   : "keyboardWillShow"
         },
         
         // Datentypen

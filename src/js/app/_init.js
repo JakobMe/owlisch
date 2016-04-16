@@ -22,6 +22,18 @@ var App = {
         View.init();
         TabBar.init();
         Viewport.init();
+        
+        // Wenn iOS-Keyboard geöffnet wird
+        window.addEventListener(CONF.EVENT.KEYBOARD_SHOW, function() {
+            TabBar.hide();
+            View.enableFullscreen();
+        });
+        
+        // Wenn iOS-Keyboard geschlossen wird
+        window.addEventListener(CONF.EVENT.KEYBOARD_HIDE, function() {
+            TabBar.show();
+            View.disableFullscreen();
+        });
     }
 };
 

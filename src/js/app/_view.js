@@ -290,7 +290,7 @@ var View = (function() {
                 else {       Dictionary.updateList(); }
                 break;
             
-            // TODO: Andere Panels konfigurieren
+            // !TODO: _updatePanelContent Switch
         }
         
         // Panel-Status aktualisieren

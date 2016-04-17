@@ -74,7 +74,7 @@ var SaveGame = (function() {
             "noenkern"          : { lvl: 3, fail: 0 }
         };
         
-        // TODO: Fortschritt-Daten aus dem LocalStorage laden
+        // !TODO: _loadProgress() LocalStorage
     }
     
     /**
@@ -134,7 +134,7 @@ var SaveGame = (function() {
      */
     function _saveProgress() {
         
-        // TODO: Fortschritt in LocalStorage speichern
+        // !TODO: _saveProgress() LocalStorage
         
     }
     

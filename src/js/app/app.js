@@ -1,6 +1,10 @@
 /*
  * App Master-Datei.
  * Importiert alle App-Module.
+ * @author Jakob Metzger <jakob.me@gmail.com>
+ * @copyright 2016 Jakob Metzger
+ * @licence https://opensource.org/licenses/MIT MIT
+ * @link http://jmportfolio.de
  */
 
 // @codekit-prepend "_config.js";

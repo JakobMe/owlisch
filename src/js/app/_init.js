@@ -1,6 +1,10 @@
 /**
  * App initialisieren.
  * Initialisiert alle Komponenten/Module der App.
+ * @author Jakob Metzger <jakob.me@gmail.com>
+ * @copyright 2016 Jakob Metzger
+ * @licence https://opensource.org/licenses/MIT MIT
+ * @link http://jmportfolio.de
  */
 var App = {
 

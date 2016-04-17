@@ -1,7 +1,10 @@
 /**
  * Navigation-Bar-Modul.
  * Steuert die Navigation-Bar der App.
- * @author Jakob Metzger
+ * @author Jakob Metzger <jakob.me@gmail.com>
+ * @copyright 2016 Jakob Metzger
+ * @licence https://opensource.org/licenses/MIT MIT
+ * @link http://jmportfolio.de
  */
 var NavigationBar = (function() {
     

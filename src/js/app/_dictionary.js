@@ -140,24 +140,6 @@ var Dictionary = (function() {
     }
     
     /**
-     * Dropdown-Menü rendern.
-     * Rendert das Dropdown-Menü anhand der aktuell gesetzte Eigenschaften
-     * des Menüs (offen/geschlossen, aktiver Menüpunkt).
-     */
-    function _renderDropdown() {
-        _$dropdown.setMod(_B_DROPDOWN, _M_OPENED, _dropdownIsOpened);
-        _$sort.each(function() {
-            var sortItem = $(this);
-            var isCurrent = false;
-            if ((sortItem.data(_DATA_SORT) === _currentSort) &&
-                (sortItem.data(_DATA_ORDER) === _currentOrder)) {
-                isCurrent = true;
-            }
-            sortItem.setMod(_B_DROPDOWN, _E_ITEM, _M_SELECTED, isCurrent);
-        });
-    }
-    
-    /**
      * Wörterbuch erzeugen.
      * Erzeugt das Wörterbuch mit Mustache in dem übergebenen
      * jQuery-Container und initialisiert das Wörterbuch danach.
@@ -216,8 +198,7 @@ var Dictionary = (function() {
      * Liste sortieren.
      * Sortiert die Liste der Wörter anhand der gegebenen Sortierung
      * und Ordnung oder eines Klick-Events.
-     * @param {Object|string} sort Sortierung (Klick-Event oder String)
-     * @param {string} order Ordnung (aufsteigend/absteigend)
+     * @param {Object} event Klick-Event eines Sortier-Buttons
      */
     function _sortList(event) {
 
@@ -246,20 +227,37 @@ var Dictionary = (function() {
     }
     
     /**
-     *
-     *
+     * Liste rendern.
+     * Rendert die Liste des Wörterbuches.
      */
     function _renderList() {
         
-        //
+        // Aktuelle Liste mit Mustache-Template einfügen
         if (_$list instanceof jQuery) {
             _$list.html(
                 Mustache.render(_tmplWordlist, {
-                    words: _list,
-                    levels: CONF.QUIZ.LEVELS
+                    words: _list, levels: CONF.QUIZ.LEVELS
                 })
             );
         }
+    }
+    
+    /**
+     * Dropdown-Menü rendern.
+     * Rendert das Dropdown-Menü anhand der aktuell gesetzte Eigenschaften
+     * des Menüs (offen/geschlossen, aktiver Menüpunkt).
+     */
+    function _renderDropdown() {
+        _$dropdown.setMod(_B_DROPDOWN, _M_OPENED, _dropdownIsOpened);
+        _$sort.each(function() {
+            var sortItem = $(this);
+            var isCurrent = false;
+            if ((sortItem.data(_DATA_SORT) === _currentSort) &&
+                (sortItem.data(_DATA_ORDER) === _currentOrder)) {
+                isCurrent = true;
+            }
+            sortItem.setMod(_B_DROPDOWN, _E_ITEM, _M_SELECTED, isCurrent);
+        });
     }
     
     /**

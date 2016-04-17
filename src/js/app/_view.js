@@ -9,6 +9,7 @@
 var View = (function() {
     
     /*global CONF: true*/
+    /*global NavigationBar: true*/
     /*global Dictionary: true*/
     
     // Selektor-Konstanten
@@ -211,6 +212,9 @@ var View = (function() {
                 newIconRight = NavigationBar.ICON.SORT;
                 newActionLeft = NavigationBar.ACTION.SEARCH;
                 newActionRight = NavigationBar.ACTION.SORT;
+                if (Dictionary.dropdownIsOpened()) {
+                    newIconRight = NavigationBar.ICON.CANCEL;
+                }
             }
             
             // Neuen Titel setzen

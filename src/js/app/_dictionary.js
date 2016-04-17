@@ -27,6 +27,11 @@ var Dictionary = (function() {
     var _M_OPENED               = "opened";
     var _M_SELECTED             = "selected";
     
+    // Data-Attibut-Konstanten
+    var _DATA_SORT              = "sort";
+    var _DATA_ORDER             = "order";
+    //var _DATA_WORD              = "word";
+    
     // DOM-Elemente
     var _$slider;
     var _$dropdown;
@@ -141,8 +146,8 @@ var Dictionary = (function() {
         _$sort.each(function() {
             var sortItem = $(this);
             var isCurrent = false;
-            if ((sortItem.data(CONF.DATA.SORT) === _currentSort) &&
-                (sortItem.data(CONF.DATA.ORDER) === _currentOrder)) {
+            if ((sortItem.data(_DATA_SORT) === _currentSort) &&
+                (sortItem.data(_DATA_ORDER) === _currentOrder)) {
                 isCurrent = true;
             }
             sortItem.setMod(_B_DROPDOWN, _E_ITEM, _M_SELECTED, isCurrent);
@@ -192,8 +197,8 @@ var Dictionary = (function() {
             
             // Sortierung und Ordnung ermitteln und setzen
             var sortButton = $(sort.target).closest(_SEL_SORT);
-            _currentSort = sortButton.data(CONF.DATA.SORT);
-            _currentOrder = sortButton.data(CONF.DATA.ORDER);
+            _currentSort = sortButton.data(_DATA_SORT);
+            _currentOrder = sortButton.data(_DATA_ORDER);
             
         // Wenn Sortierung und Ordnung Strings sind
         } else if ((typeof sort === CONF.TYPE.STRING) &&

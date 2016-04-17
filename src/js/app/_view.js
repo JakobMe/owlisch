@@ -26,6 +26,10 @@ var View = (function() {
     var _M_WEBAPP           = "webapp";
     var _M_CURRENT          = "current";
     
+    // Data-Attibut-Konstanten
+    var _DATA_PANEL         = "panel";
+    var _DATA_TITLE         = "title";
+    
     // Panel-Konstanten
     var _PANELS = {
         START: {
@@ -174,7 +178,7 @@ var View = (function() {
             
             // Gefundenes View-Panel initialisieren
             var $panel = $(this);
-            var panelName = $panel.data(CONF.DATA.PANEL);
+            var panelName = $panel.data(_DATA_PANEL);
             
             // Panel zur Panel-Liste hinzufügen
             _$panels[panelName] = $panel;
@@ -211,7 +215,7 @@ var View = (function() {
             
             // Neuen Titel setzen
             if (_$panels[_currentPanel] instanceof jQuery) {
-                newTitle = _$panels[_currentPanel].data(CONF.DATA.TITLE);
+                newTitle = _$panels[_currentPanel].data(_DATA_TITLE);
             }
             
             // Navigation-Bar setzen

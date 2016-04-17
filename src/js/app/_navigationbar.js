@@ -27,6 +27,9 @@ var NavigationBar = (function() {
     var _M_WEBAPP           = "webapp";
     var _M_ICON             = "icon";
     
+    // Data-Attibut-Konstanten
+    var _DATA_ACTION        = "data-action";
+    
     // Icon-Konstanten
     var ICON = {
         NONE                : "none",
@@ -177,7 +180,7 @@ var NavigationBar = (function() {
                 
                 // Button deaktivieren
                 $button.setMod(_B, _E_BUTTON, _M_ICON, ICON.NONE);
-                $button.attr(CONF.ATTR.DATA_ACTION, CONF.STR.EMPTY);
+                $button.attr(_DATA_ACTION, CONF.STR.EMPTY);
                 
             // Falls beides korrekt gesetzt ist
             } else {
@@ -185,7 +188,7 @@ var NavigationBar = (function() {
                 // Icon und Aktion setzen, Button einblenden
                 $button.setMod(_B, _E_BUTTON, _M_DISABLED, false);
                 $button.setMod(_B, _E_BUTTON, _M_ICON, icon);
-                $button.attr(CONF.ATTR.DATA_ACTION, action);
+                $button.attr(_DATA_ACTION, action);
             }
             
             // Buttons wieder aktivieren

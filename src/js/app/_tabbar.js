@@ -23,6 +23,9 @@ var TabBar = (function() {
     var _M_HIDDEN           = "hidden";
     var _M_TAB              = "tab";
     
+    // Data-Attibut-Konstanten
+    var _DATA_PANEL         = "panel";
+    
     // Private Variablen
     var _tabActive;
     var _tabNumber;
@@ -131,7 +134,7 @@ var TabBar = (function() {
             
             // Aktiven Tab und Ziel-Panel setzen
             _tabActive = i;
-            panel = _$tabs.eq(i).data(CONF.DATA.PANEL);
+            panel = _$tabs.eq(i).data(_DATA_PANEL);
             
             // View prüfen und Funktion auslösen
             if ((panel !== null) && (panel.length > 0) &&

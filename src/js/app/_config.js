@@ -61,22 +61,6 @@ var CONF = (function() {
             STRING          : "string"
         },
         
-        // HTML-Attribute
-        ATTR: {
-            DATA_PANEL      : "data-panel",
-            DATA_ACTION     : "data-action",
-            DATA_TITLE      : "data-title"
-        },
-        
-        // Data-Attribute
-        DATA: {
-            PANEL           : "panel",
-            ACTION          : "action",
-            TITLE           : "title",
-            SORT            : "sort",
-            ORDER           : "order"
-        },
-        
         // BEM-Syntax
         BEM: {
             ELEMDIV         : "__",

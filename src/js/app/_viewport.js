@@ -8,6 +8,8 @@
  */
 var Viewport = (function() {
     
+    /*global CONF: true*/
+    
     // Konstanten
     var _SEL_VIEWPORT       = "[role='application']";
     var _B                  = "viewport";

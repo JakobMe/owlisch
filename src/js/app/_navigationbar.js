@@ -8,6 +8,9 @@
  */
 var NavigationBar = (function() {
     
+    /*global CONF: true*/
+    /*global Dictionary: true*/
+    
     // Selektor-Konstanten
     var _SEL_TITLEBAR       = "[role='navigation']";
     var _SEL_BUTTONS        = "[role='button']";
@@ -27,11 +30,11 @@ var NavigationBar = (function() {
     // Icon-Konstanten
     var ICON = {
         NONE                : "none",
-        CANCEL              : "cancel",
-        SKIP                : "skip",
-        BACK                : "back",
         SEARCH              : "search",
-        SORT                : "sort"
+        SORT                : "sort",
+        BACK                : "back",
+        CANCEL              : "cancel",
+        SKIP                : "skip"
     };
     
     // Action-Konstanten
@@ -52,6 +55,8 @@ var NavigationBar = (function() {
     var _searchIsActive;
     var _searchWasActive;
     var _buttonsAreDisabled;
+    var _availableActions;
+    var _availableIcons;
     var _isWebapp;
     
     // DOM-Elemente
@@ -97,13 +102,34 @@ var NavigationBar = (function() {
         _searchIsActive     = false;
         _searchWasActive    = false;
         _buttonsAreDisabled = false;
+        _availableActions   = [];
+        _availableIcons     = [];
         
         // Funktionen ausführen
+        _initActionsIcons();
         _bindEvents();
         _render();
         
         // Modul Return
         return this;
+    }
+    
+    /**
+     * Aktionen und Icons initialisieren.
+     * Iteriert alle definierten Icons und Aktionen und fügt
+     * sie zu den entsprechenden Modul-Variablen hinzu.
+     */
+    function _initActionsIcons() {
+        
+        // Verfügbare Aktionen setzen
+        $.each(ACTION, function(index, action) {
+            _availableActions.push(action);
+        });
+        
+        // Verfügbare Icons setzen
+        $.each(ICON, function(index, icon) {
+            _availableIcons.push(icon);
+        });
     }
     
     /**
@@ -196,7 +222,7 @@ var NavigationBar = (function() {
             
             // Suche ein-/ausblenden, Button anpassen
             var icon = (_searchIsActive) ? ICON.CANCEL : ICON.SEARCH;
-            _setButtonLeft(ACTION.SEARCH, icon);
+            setButtonLeft(ACTION.SEARCH, icon);
             _$navbar.setMod(_B, _M_SEARCH, _searchIsActive);
             
             // Suche fokussieren
@@ -206,12 +232,8 @@ var NavigationBar = (function() {
                 }, CONF.TIME.MEDIUM);
             }
             
-        // Ansonsten
-        } else {
-            
-            // Suche ausblenden
-            _$navbar.setMod(_B, _M_SEARCH, false);
-        }
+        // Ansonsten Suche ausblenden
+        } else { _$navbar.setMod(_B, _M_SEARCH, false); }
     }
     
     /**
@@ -232,13 +254,50 @@ var NavigationBar = (function() {
     }
     
     /**
+     * Button-Aktion: Suche.
+     * Suche (de-)aktivieren, Wörterbuch-Dropdown ausblenden.
+     */
+    function _buttonActionSearch() {
+        
+        // Suche aktivieren/deaktivieren
+        if (_searchIsActive) {
+            _searchWasActive = false;
+            _disableSearch();
+        } else {
+            _enableSearch();
+        }
+        
+        // Wörterbuch-Dropdown gegebenenfalls ausblenden
+        if (Dictionary.dropdownIsOpened()) {
+            setButtonRight(ACTION.SORT, ICON.SORT);
+            Dictionary.hideDropdown();
+        }
+    }
+    
+    /**
+     * Button-Aktion: Sortieren.
+     * Blendet das Wörterbuch-Dropdown ein/aus.
+     */
+    function _buttonActionSort() {
+        
+        // Wörterbuch-Dropdown ein-/ausblenden
+        if (Dictionary.dropdownIsOpened()) {
+            setButtonRight(ACTION.SORT, ICON.SORT);
+            Dictionary.hideDropdown();
+        } else {
+            setButtonRight(ACTION.SORT, ICON.CANCEL);
+            Dictionary.showDropdown();
+        }
+    }
+    
+    /**
      * Button-Aktion ausführen.
-     * Führt anhand des gewählten Buttons und der dazu gesetzten
-     * Aktion eine bestimmte Funktion aus.
-     * @param {Object} $button Gewählter Button (Links/Rechts)
+     * Führt anhand des Events des geklickten Buttons und
+     * der dazu gesetzten Aktion eine bestimmte Funktion aus.
+     * @param {Object} event Event des geklickten Buttons
      */
     function _buttonAction(event) {
-        if (!_buttonsAreDisabled) {
+        if (!_buttonsAreDisabled && event.target) {
             
             // Button und Aktion initialisieren
             var action;
@@ -248,30 +307,13 @@ var NavigationBar = (function() {
             if ($button.is(_$buttonLeft)) { action = _actionLeft; }
             else if ($button.is(_$buttonRight)) { action = _actionRight; }
             
-            // Aktion Switch
+            // Funktion entsprechend der Aktion ausführen
             switch (action) {
-                
-                // Aktion: Suche
-                case ACTION.SEARCH:
-                    
-                    // Suche aktivieren/deaktivieren
-                    if (_searchIsActive) {
-                        _searchWasActive = false;
-                        _disableSearch();
-                    } else {
-                        _enableSearch();
-                    }
-                    Dictionary.toggleDropdown(true);
-                    break;
-                
-                // Aktion: Sortieren
-                case ACTION.SORT:
-                
-                    // Wörterbuch-Dropdown ein-/ausblenden
-                    Dictionary.toggleDropdown();
-                    break;
-                
-                // TODO: Aktionen für andere Buttons
+                case ACTION.SEARCH:     _buttonActionSearch();  break;
+                case ACTION.SORT:       _buttonActionSort();    break;
+                case ACTION.SKIP:                               break;
+                case ACTION.CANCEL:                             break;
+                case ACTION.BACK:                               break;
             }
         }
     }
@@ -302,36 +344,17 @@ var NavigationBar = (function() {
      * @param {string} icon Name des Button-Icons
      */
     function _setButton($button, action, icon) {
-        
-        // Validität initialisieren
-        var validAction = false;
-        var validIcon = false;
-        
-        // Falls Icon oder Aktion null sind
-        if ((action === null) || (icon === null)) {
-            
-            // Deaktivieren und validieren
+
+        // Falls Icon oder Aktion null sind, beide null setzen
+        if (action === null || icon === null) {
             action = null;
             icon = null;
-            validAction = true;
-            validIcon = true;
-            
-        // Ansonsten Icon und Aktion überprüfen
-        } else {
-            
-            // Aktion überprüfen
-            $.each(ACTION, function(index, value) {
-                if (action === value) { validAction = true; return false; }
-            });
-            
-            // Icon überprüfen
-            $.each(ICON, function(index, value) {
-                if (icon === value) { validIcon = true; return false; }
-            });
         }
         
-        // Falls Icon und Aktion valide sind
-        if (validAction && validIcon) {
+        // Falls Aktion und Icon valide sind, setzen
+        if ((action === null && icon === null) ||
+            (($.inArray(action, _availableActions) >= 0) &&
+             ($.inArray(icon, _availableIcons) >= 0))) {
             
             // Aktion und Icon anhand des Buttons setzen, rendern
             if ($button === _$buttonLeft) {
@@ -353,7 +376,7 @@ var NavigationBar = (function() {
      * @param {string} action Name der Button-Aktion
      * @param {string} icon Name des Button-Icons
      */
-    function _setButtonLeft(action, icon) {
+    function setButtonLeft(action, icon) {
         _setButton(_$buttonLeft, action, icon);
     }
     
@@ -363,7 +386,7 @@ var NavigationBar = (function() {
      * @param {string} action Name der Button-Aktion
      * @param {string} icon Name des Button-Icons
      */
-    function _setButtonRight(action, icon) {
+    function setButtonRight(action, icon) {
         _setButton(_$buttonRight, action, icon);
     }
     
@@ -412,13 +435,13 @@ var NavigationBar = (function() {
      * @param {boolean} checkPast Letzten Such-Status berücksichtigen
      * @returns {Object} Modul-Objekt
      */
-    function setAll(title, iconLeft, actionLeft,
-                    iconRight, actionRight, checkPast) {
+    function setAll(title, actionLeft, iconLeft,
+                    actionRight, iconRight, checkPast) {
         
         // Alle Komponenten setzen
         _setTitle(title);
-        _setButtonLeft(actionLeft, iconLeft);
-        _setButtonRight(actionRight, iconRight);
+        setButtonLeft(actionLeft, iconLeft);
+        setButtonRight(actionRight, iconRight);
         _setSearch(checkPast);
         return this;
     }
@@ -427,6 +450,8 @@ var NavigationBar = (function() {
     return {
         init            : init,
         setAll          : setAll,
+        setButtonLeft   : setButtonLeft,
+        setButtonRight  : setButtonRight,
         ICON            : ICON,
         ACTION          : ACTION
     };

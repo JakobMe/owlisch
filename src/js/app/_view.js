@@ -8,6 +8,9 @@
  */
 var View = (function() {
     
+    /*global CONF: true*/
+    /*global Dictionary: true*/
+    
     // Selektor-Konstanten
     var _SEL_VIEW           = "[role='main']";
     var _SEL_CONTENT        = "[role='article']";
@@ -143,18 +146,14 @@ var View = (function() {
         // Panel-Array initialisieren
         var panels = [];
         
-        // Aus definierten Panels eine Liste für Mustache generieren
-        for (var panel in _PANELS) {
-            if (_PANELS.hasOwnProperty(panel)) {
-                var props = {};
-                for (var prop in _PANELS[panel]) {
-                    if (_PANELS[panel].hasOwnProperty(prop)) {
-                        props[prop.toLowerCase()] = _PANELS[panel][prop];
-                    }
-                }
-                panels.push(props);
-            }
-        }
+        // Verfügbare Aktionen setzen
+        $.each(_PANELS, function(panel, props) {
+            var panelProps = [];
+            $.each(props, function(prop, value) {
+                panelProps[prop.toLowerCase()] = value;
+            });
+            panels.push(panelProps);
+        });
         
         // Template füllen und in Content laden, Liste speichern
         _$content.html(Mustache.render(_tmplViewpanels, panels));

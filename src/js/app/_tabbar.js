@@ -8,6 +8,9 @@
  */
 var TabBar = (function() {
     
+    /*global CONF: true*/
+    /*global View: true*/
+    
     // Selektor-Konstanten
     var _SEL_TABBAR         = "[role='tablist']";
     var _SEL_TABS           = "[role='tab']";

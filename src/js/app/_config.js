@@ -57,7 +57,8 @@ var CONF = (function() {
             NUMBER          : "number",
             BOOL            : "boolean",
             UNDEF           : "undefined",
-            OBJECT          : "object"
+            OBJECT          : "object",
+            STRING          : "string"
         },
         
         // HTML-Attribute

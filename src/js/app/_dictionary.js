@@ -8,6 +8,9 @@
  */
 var Dictionary = (function() {
     
+    /*global CONF: true*/
+    /*global NavigationBar: true*/
+    
     // Selektor-Konstanten
     var _SEL_SLIDER             = "[role='directory']";
     var _SEL_DROPDOWN           = "[role='menu']";
@@ -35,6 +38,8 @@ var Dictionary = (function() {
     // Private Variablen
     var _currentSort;
     var _currentOrder;
+    var _availableSorts;
+    var _availableOrders;
     var _dropdownIsOpened;
     var _tmplDictionary;
     var _tmplWordlist;
@@ -90,6 +95,10 @@ var Dictionary = (function() {
         Mustache.parse(_tmplDictionary);
         Mustache.parse(_tmplWordlist);
         
+        // Interne Arrays initialisieren
+        _availableSorts      = [];
+        _availableOrders     = [];
+        
         // Wörterbuch erzeugen
         _createDictionary(defaults.$target, function() {
 
@@ -104,13 +113,22 @@ var Dictionary = (function() {
             _currentOrder       = defaults.initialOrder;
             _dropdownIsOpened   = false;
             
-            // Wort-Liste aktualisieren
+            // Funktionen ausführen
+            _bindEvents();
             _updateList();
             _renderDropdown();
         });
 
         // Modul Return
         return this;
+    }
+    
+    /**
+     * Events binden.
+     * Bindet Funktionen an Events und Elemente des Moduls.
+     */
+    function _bindEvents() {
+        _$sort.on(CONF.EVENT.CLICK, _sortList);
     }
     
     /**
@@ -143,29 +161,61 @@ var Dictionary = (function() {
         // Sortier-Optionen initialisieren
         var sorting = [];
         
-        // Alle Sortierungen und Reihenfolgen iterieren
-        for (var sort in _SORTING.SORT) {
-            if (_SORTING.SORT.hasOwnProperty(sort)) {    
-                for (var order in _SORTING.ORDER) {
-                    if (_SORTING.ORDER.hasOwnProperty(order)) {
-                        
-                        // Sortierung hinzufügen
-                        sorting.push({
-                            optionSort  : _SORTING.SORT[sort].NAME,
-                            optionOrder : _SORTING.ORDER[order].NAME,
-                            labelSort   : _SORTING.SORT[sort].LABEL,
-                            labelOrder  : _SORTING.ORDER[order].LABEL
-                        });
-                    }
-                }
-            }
-        }
+        // Verfügbare Aktionen setzen
+        $.each(_SORTING.SORT, function(sort, sortProps) {
+            _availableSorts.push(sortProps.NAME);
+            $.each(_SORTING.ORDER, function(order, orderProps) {
+                _availableOrders.push(orderProps.NAME);
+                sorting.push({
+                    optionSort  : sortProps.NAME,
+                    optionOrder : orderProps.NAME,
+                    labelSort   : sortProps.LABEL,
+                    labelOrder  : orderProps.LABEL
+                });
+            });
+        });
         
         // Template füllen, Callback ausführen
         if (($target instanceof jQuery) && $.isFunction(callback)) {
             $target.html(Mustache.render(_tmplDictionary, sorting))
                    .promise().done(function() { callback(); });
         }
+    }
+    
+    /**
+     *
+     */
+    function _sortList(sort, order) {
+        
+        // Wenn Sortierung ein Button ist
+        if (sort.target) {
+            
+            // Sortierung und Ordnung ermitteln und setzen
+            var sortButton = $(sort.target).closest(_SEL_SORT);
+            _currentSort = sortButton.data(CONF.DATA.SORT);
+            _currentOrder = sortButton.data(CONF.DATA.ORDER);
+            
+        // Wenn Sortierung und Ordnung Strings sind
+        } else if ((typeof sort === CONF.TYPE.STRING) &&
+                   (typeof order === CONF.TYPE.STRING)) {
+            
+            // Wenn Sortierung und Ordnung valide sind
+            if (($.inArray(sort, _availableSorts) >= 0) &&
+                ($.inArray(order, _availableOrders)  >= 0)) {
+                _currentSort = sort;
+                _currentOrder = order;
+            }
+        }
+        
+        // Navigation-Bar setzen
+        NavigationBar.setButtonRight(
+            NavigationBar.ACTION.SORT,
+            NavigationBar.ICON.SORT
+        );
+        
+        // Dropdown ausblenden, Liste aktualisieren
+        hideDropdown();
+        _updateList();
     }
     
     /**
@@ -248,22 +298,43 @@ var Dictionary = (function() {
     }
     
     /**
-     * Dropdown-Menü ein-/ausblenden.
-     * Wechselt die Sichtbarkeit des Dropdown-Menüs.
-     * @param {boolean} hide Dropdown ausblenden ja/nein
+     * Dropdown-Menü einblenden.
+     * Blendet das Dropdown-Menü des Wörterbuchs ein.
      * @returns {Object} Modul-Objekt
      */
-    function toggleDropdown(hide) {
-        if (hide === true) { _dropdownIsOpened = false; }
-        else { _dropdownIsOpened = !_dropdownIsOpened; }
+    function showDropdown() {
+        _dropdownIsOpened = true;
         _renderDropdown();
         return this;
     }
     
+    /**
+     * Dropdown-Menü ausblenden.
+     * Blendet das Dropdown-Menü des Wörterbuchs aus.
+     * @returns {Object} Modul-Objekt
+     */
+    function hideDropdown() {
+        _dropdownIsOpened = false;
+        _renderDropdown();
+        return this;
+    }
+    
+    /**
+     * Ermitteln, ob Dropdown geöffnet ist.
+     * Gibt zurück, ob das Dropdown-Menü des Wörterbuchs
+     * aktuell geöffnet ist.
+     * @returns {boolean} Dropdown ist geöffnet/geschlossen
+     */
+    function dropdownIsOpened() {
+        return _dropdownIsOpened;
+    }
+    
     // Öffentliches Interface
     return {
-        init            : init,
-        toggleDropdown  : toggleDropdown
+        init                : init,
+        showDropdown        : showDropdown,
+        hideDropdown        : hideDropdown,
+        dropdownIsOpened    : dropdownIsOpened
     };
     
 })();

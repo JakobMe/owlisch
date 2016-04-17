@@ -7,7 +7,13 @@
  * @link http://jmportfolio.de
  */
 var App = {
-
+    
+    /*global CONF: true*/
+    /*global NavigationBar: true*/
+    /*global View: true*/
+    /*global TabBar: true*/
+    /*global Viewport: true*/
+    
     // Initialisieren
     init: function() {
         

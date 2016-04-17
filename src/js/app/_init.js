@@ -9,6 +9,7 @@
 var App = {
     
     /*global CONF: true*/
+    /*global SaveGame: true*/
     /*global NavigationBar: true*/
     /*global View: true*/
     /*global TabBar: true*/
@@ -28,6 +29,7 @@ var App = {
         });
         
         // Komponenten initialisieren
+        SaveGame.init();
         NavigationBar.init();
         View.init();
         TabBar.init();

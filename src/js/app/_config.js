@@ -39,7 +39,8 @@ var CONF = (function() {
         
         // Strings
         STR: {
-            EMPTY           : ""
+            EMPTY           : "",
+            SLASH           : "/"
         },
         
         // Events

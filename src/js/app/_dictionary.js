@@ -9,6 +9,7 @@
 var Dictionary = (function() {
     
     /*global CONF: true*/
+    /*global SaveGame: true*/
     /*global NavigationBar: true*/
     
     // Selektor-Konstanten
@@ -31,23 +32,6 @@ var Dictionary = (function() {
     var _DATA_SORT              = "sort";
     var _DATA_ORDER             = "order";
     //var _DATA_WORD              = "word";
-    
-    // DOM-Elemente
-    var _$slider;
-    var _$dropdown;
-    var _$sort;
-    var _$list;
-    var _$items;
-    var _$details;
-    
-    // Private Variablen
-    var _currentSort;
-    var _currentOrder;
-    var _availableSorts;
-    var _availableOrders;
-    var _dropdownIsOpened;
-    var _tmplDictionary;
-    var _tmplWordlist;
     
     // Sortier-Konstanten
     var _SORTING = {
@@ -72,6 +56,24 @@ var Dictionary = (function() {
             }
         }
     };
+    
+    // DOM-Elemente
+    var _$slider;
+    var _$dropdown;
+    var _$sort;
+    var _$list;
+    var _$items;
+    var _$details;
+    
+    // Private Variablen
+    var _list;
+    var _currentSort;
+    var _currentOrder;
+    var _availableSorts;
+    var _availableOrders;
+    var _dropdownIsOpened;
+    var _tmplDictionary;
+    var _tmplWordlist;
     
     /**
      * Modul initialisieren.
@@ -117,10 +119,11 @@ var Dictionary = (function() {
             _currentSort        = defaults.initialSort;
             _currentOrder       = defaults.initialOrder;
             _dropdownIsOpened   = false;
+            _list               = SaveGame.getListUser();
             
             // Funktionen ausführen
             _bindEvents();
-            _updateList();
+            _sortList();
             _renderDropdown();
         });
 
@@ -188,27 +191,42 @@ var Dictionary = (function() {
     }
     
     /**
-     *
+     * Listen-Element miteinander vergleichen.
+     * Eine Vergleichs-Funktion für Elemente der Wortliste;
+     * wird von der JavaScript-Funktion "sort" verwendet.
+     * @param {Objekt} a Erstes zu vergleichende Listen-Objekt
+     * @param {Objekt} b Zweites zu vergleichende Listen-Objekt
+     * @returns {integer} Ergebnis des Vergleichs
      */
-    function _sortList(sort, order) {
+    function _compareListItems(a, b) {
         
-        // Wenn Sortierung ein Button ist
-        if (sort.target) {
+        // Sortierung: Numerisch
+        if (_currentSort === _SORTING.SORT.NUMERIC.NAME) {
+            if (parseInt(a.level) < parseInt(b.level)) { return -1; }
+            else if (parseInt(a.level) > parseInt(b.level)) { return 1; }
+            else { return a.name.localeCompare(b.name); }
             
-            // Sortierung und Ordnung ermitteln und setzen
-            var sortButton = $(sort.target).closest(_SEL_SORT);
-            _currentSort = sortButton.data(_DATA_SORT);
-            _currentOrder = sortButton.data(_DATA_ORDER);
-            
-        // Wenn Sortierung und Ordnung Strings sind
-        } else if ((typeof sort === CONF.TYPE.STRING) &&
-                   (typeof order === CONF.TYPE.STRING)) {
-            
-            // Wenn Sortierung und Ordnung valide sind
-            if (($.inArray(sort, _availableSorts) >= 0) &&
-                ($.inArray(order, _availableOrders)  >= 0)) {
-                _currentSort = sort;
-                _currentOrder = order;
+        // Standard-Sortierung: Alphabetisch
+        } else {
+            return a.name.localeCompare(b.name);
+        }
+    }
+    
+    /**
+     * Liste sortieren.
+     * Sortiert die Liste der Wörter anhand der gegebenen Sortierung
+     * und Ordnung oder eines Klick-Events.
+     * @param {Object|string} sort Sortierung (Klick-Event oder String)
+     * @param {string} order Ordnung (aufsteigend/absteigend)
+     */
+    function _sortList(event) {
+
+        // Wenn ein Event übergeben wurde, dessen Daten setzen
+        if (typeof event !== CONF.TYPE.UNDEF) {
+            if (event.target) {
+                var sortButton = $(event.target).closest(_SEL_SORT);
+                _currentSort = sortButton.data(_DATA_SORT);
+                _currentOrder = sortButton.data(_DATA_ORDER);
             }
         }
         
@@ -218,87 +236,29 @@ var Dictionary = (function() {
             NavigationBar.ICON.SORT
         );
         
+        // Liste sortieren
+        _list.sort(_compareListItems);
+        if (_currentOrder === _SORTING.ORDER.DESC.NAME) { _list.reverse(); }
+        
         // Dropdown ausblenden, Liste aktualisieren
         hideDropdown();
-        _updateList();
+        _renderList();
     }
     
     /**
      *
      *
      */
-    function _updateList() {
-        
-        //
-        var _test = {
-            levels: CONF.QUIZ.LEVELS,
-            words: [
-                {
-                    id      : "pinneken",
-                    name    : "Pinneken",
-                    level   : "3"
-                },
-                {
-                    id      : "latuechte",
-                    name    : "Latüchte",
-                    level   : "0"
-                },
-                {
-                    id      : "noenkern",
-                    name    : "Nönkern",
-                    level   : "1"
-                },
-                {
-                    id      : "fickerich",
-                    name    : "Fickerich",
-                    level   : "2"
-                },
-                {
-                    id      : "buetterken",
-                    name    : "Bütterken",
-                    level   : "0"
-                },
-                {
-                    id      : "knuepp",
-                    name    : "Knüpp",
-                    level   : "3"
-                },
-                {
-                    id      : "pinneken",
-                    name    : "Pinneken",
-                    level   : "3"
-                },
-                {
-                    id      : "latuechte",
-                    name    : "Latüchte",
-                    level   : "0"
-                },
-                {
-                    id      : "noenkern",
-                    name    : "Nönkern",
-                    level   : "1"
-                },
-                {
-                    id      : "fickerich",
-                    name    : "Fickerich",
-                    level   : "2"
-                },
-                {
-                    id      : "buetterken",
-                    name    : "Bütterken",
-                    level   : "0"
-                },
-                {
-                    id      : "knuepp",
-                    name    : "Knüpp",
-                    level   : "3"
-                }
-            ]
-        };
+    function _renderList() {
         
         //
         if (_$list instanceof jQuery) {
-            _$list.html(Mustache.render(_tmplWordlist, _test));
+            _$list.html(
+                Mustache.render(_tmplWordlist, {
+                    words: _list,
+                    levels: CONF.QUIZ.LEVELS
+                })
+            );
         }
     }
     

@@ -8,6 +8,7 @@
  */
 
 // @codekit-prepend "_config.js";
+// @codekit-prepend "_savegame.js";
 // @codekit-prepend "_viewport.js";
 // @codekit-prepend "_dictionary.js";
 // @codekit-prepend "_navigationbar.js";

@@ -349,10 +349,7 @@ var NavigationBar = (function() {
     function _setButton($button, action, icon) {
 
         // Falls Icon oder Aktion null sind, beide null setzen
-        if (action === null || icon === null) {
-            action = null;
-            icon = null;
-        }
+        if (action === null || icon === null) { action = null; icon = null; }
         
         // Falls Aktion und Icon valide sind, setzen
         if ((action === null && icon === null) ||

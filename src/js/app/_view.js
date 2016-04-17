@@ -66,7 +66,7 @@ var View = (function() {
     var _isFullscreen;
     var _currentPanel;
     var _panelIsExpired;
-    var _panelHasContent;
+    var _panelIsEmpty;
     var _panelList;
     var _tmplViewpanels;
     
@@ -104,7 +104,7 @@ var View = (function() {
         _currentPanel       = null;
         _panelList          = [];
         _panelIsExpired     = {};
-        _panelHasContent    = {};
+        _panelIsEmpty       = {};
         
         // Templates parsen
         Mustache.parse(_tmplViewpanels);
@@ -184,7 +184,7 @@ var View = (function() {
             // Panel zur Panel-Liste hinzufügen
             _$panels[panelName] = $panel;
             _panelIsExpired[panelName] = true;
-            _panelHasContent[panelName] = false;
+            _panelIsEmpty[panelName] = true;
         });
     }
     
@@ -272,44 +272,31 @@ var View = (function() {
     }
     
     /**
-     * Panel-Inhalt erstellen.
-     * Erstellt den Inhalt des angegebenen Panels in
-     * Abhängigkeit des Panels.
+     * Panel-Inhalt aktualisieren.
+     * Aktualisiert oder erstellt den Inhalt des angegebenen
+     * Panels in Abhänigkeit des Panels.
      * @param {string} panel Name des Panels
+     * @param {boolean} empty Inhalt des Panels ist leer
+     * @param {Object} callback Funktion, die anschließend ausgeführt wird
      */
-    function _createPanelContent(panel, callback) {
-        
-        // Panel-Validität und Funktion initialisieren
-        var panelValid = false;
-        
+    function _updatePanelContent(panel, empty, callback) {
+
         // Anhand des Panels entscheiden
         switch (panel) {
             
             // Wörterbuch
             case _PANELS.DICTIONARY.NAME:
-                Dictionary.init({ $target: _$panels[panel] });
-                panelValid = true;
+                if (empty) { Dictionary.init({ $target: _$panels[panel] }); }
+                else {       Dictionary.updateList(); }
                 break;
             
             // TODO: Andere Panels konfigurieren
         }
         
-        // Panel-Inhalt erzeugen und wahr setzen
-        _panelHasContent[panel] = panelValid;
-        
-        // Callback
-        if ($.isFunction(callback)) { callback(); }
-    }
-    
-    /**
-     * Panel-Inhalt aktualisieren.
-     * Aktualisiert den Inhalt des angegebenen Panels in
-     * Abhänigkeit des Panels.
-     * @param {string} panel Name des Panels
-     */
-    function _updatePanelContent(panel, callback) {
-        panel = null;
-        // TODO: Update-Logik schreiben
+        // Panel-Status aktualisieren
+        var panelValid = (_$panels[panel] instanceof jQuery);
+        _panelIsEmpty[panel] = !panelValid;
+        _panelIsExpired[panel] = !panelValid;
         
         // Callback
         if ($.isFunction(callback)) { callback(); }
@@ -333,10 +320,10 @@ var View = (function() {
             
             // Panel gegebenenfalls aktualisieren, View einblenden
             setTimeout(function() {
-                if (!_panelHasContent[_currentPanel]) {
-                    _createPanelContent(_currentPanel, _show);
-                } else if (_panelIsExpired[_currentPanel]) {
-                    _updatePanelContent(_currentPanel, _show);
+                var empty = _panelIsEmpty[panel];
+                var expired = _panelIsExpired[panel];
+                if (expired || empty) {
+                    _updatePanelContent(panel, empty, _show);
                 } else {
                     _show();
                 }

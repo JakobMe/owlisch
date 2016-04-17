@@ -119,7 +119,7 @@ var Dictionary = (function() {
             _currentSort        = defaults.initialSort;
             _currentOrder       = defaults.initialOrder;
             _dropdownIsOpened   = false;
-            _list               = SaveGame.getListUser();
+            _list               = SaveGame.getProgressList();
             
             // Funktionen ausführen
             _bindEvents();
@@ -184,8 +184,8 @@ var Dictionary = (function() {
         
         // Sortierung: Numerisch
         if (_currentSort === _SORTING.SORT.NUMERIC.NAME) {
-            if (parseInt(a.level) < parseInt(b.level)) { return -1; }
-            else if (parseInt(a.level) > parseInt(b.level)) { return 1; }
+            if (parseInt(a.lvl) < parseInt(b.lvl)) { return -1; }
+            else if (parseInt(a.lvl) > parseInt(b.lvl)) { return 1; }
             else { return a.name.localeCompare(b.name); }
             
         // Standard-Sortierung: Alphabetisch
@@ -211,19 +211,33 @@ var Dictionary = (function() {
             }
         }
         
-        // Navigation-Bar setzen
-        NavigationBar.setButtonRight(
-            NavigationBar.ACTION.SORT,
-            NavigationBar.ICON.SORT
-        );
-        
         // Liste sortieren
         _list.sort(_compareListItems);
         if (_currentOrder === _SORTING.ORDER.DESC.NAME) { _list.reverse(); }
         
+        // Navigation-Bar setzen
+        if (_dropdownIsOpened) {
+            NavigationBar.setButtonRight(
+                NavigationBar.ACTION.SORT,
+                NavigationBar.ICON.SORT
+            );
+        }
+        
         // Dropdown ausblenden, Liste aktualisieren
         hideDropdown();
         _renderList();
+    }
+    
+    /**
+     * Liste aktualisieren.
+     * Aktuelle Fortschritt-Liste vom SaveGame-Modul besorgen
+     * und die Liste neu sortieren:
+     * @returns {Object} Modul-Objekt
+     */
+    function updateList() {
+        _list = SaveGame.getProgressList();
+        _sortList();
+        return this;
     }
     
     /**
@@ -297,7 +311,8 @@ var Dictionary = (function() {
         init                : init,
         showDropdown        : showDropdown,
         hideDropdown        : hideDropdown,
-        dropdownIsOpened    : dropdownIsOpened
+        dropdownIsOpened    : dropdownIsOpened,
+        updateList          : updateList
     };
     
 })();

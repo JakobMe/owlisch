@@ -5,9 +5,9 @@
  * @copyright 2016 Jakob Metzger
  */
  
-// Haupt-Font
+// Font-Mixins
 .font-main() { font-family: @app-font-name, sans-serif; }
-.font-icon() { font-family: @fa-font-name, sans-serif; }
+.font-icon() { font-family: @fontello-font-name, sans-serif; }
 
 // After-Block
 .after-block() {
@@ -15,8 +15,8 @@
     content: "";
 }
 
-// FontAwesome-Icon
-.fa-icon(@icon) {
+// Fontello-Icon
+.fontello-icon(@icon) {
     &:after {
         content: @icon;
         .font-icon();

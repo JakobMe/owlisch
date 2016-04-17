@@ -25,32 +25,27 @@ var View = (function() {
         START: {
             NAME            : "start",
             LABEL           : "Start",
-            TITLE           : "Wort der Woche",
-            ICON            : "home"
+            TITLE           : "Wort der Woche"
         },
         DICTIONARY: {
             NAME            : "dictionary",
             LABEL           : "Wörterbuch",
-            TITLE           : "Wörterbuch",
-            ICON            : "book"
+            TITLE           : "Wörterbuch"
         },
         QUIZ: {
             NAME            : "quiz",
             LABEL           : "Quiz",
-            TITLE           : "Quiz",
-            ICON            : "lightbulb-o"
+            TITLE           : "Quiz"
         },
         PROGRESS: {
             NAME            : "progress",
             LABEL           : "Fortschritt",
-            TITLE           : "Fortschritt",
-            ICON            : "bar-chart"
+            TITLE           : "Fortschritt"
         },
         HELP: {
             NAME            : "help",
             LABEL           : "Hilfe",
-            TITLE           : "Hilfe",
-            ICON            : "question-circle"
+            TITLE           : "Hilfe"
         }
     };
     

@@ -98,7 +98,7 @@
             <ul class="tab-bar__list">
                 {{#.}}
                 <li class="tab-bar__tab" role="tab" data-panel="{{name}}">
-                    <i class="tab-bar__icon fa fa--{{icon}}"></i>
+                    <i class="tab-bar__icon icon icon--{{name}}"></i>
                     <span class="tab-bar__label">{{label}}</span>
                 </li>
                 {{/.}}
@@ -114,7 +114,7 @@
                         {{#.}}
                         <li class="dropdown__item" role="menuitem"
                             data-sort="{{optionSort}}" data-order="{{optionOrder}}">
-                            <i class="dropdown__icon fa fa--sort-{{optionSort}}-{{optionOrder}}"></i>
+                            <i class="dropdown__icon icon icon--{{optionOrder}}"></i>
                             <span class="dropdown__label">
                                 {{labelSort}} sortieren ({{labelOrder}})
                             </span>

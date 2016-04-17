@@ -6,31 +6,27 @@
  */
 
 // Modul-Variablen
-@_stars: stars;
+@_stars:            stars;
+@_stars-font-size:  14px;
 
 // Block: Sterne
 .@{_stars} {
     vertical-align: top;
     display: inline-block;
-    font-size: @app-font-size-small;
+    font-size: @_stars-font-size;
     
     // Mod: Sterne-Zustand und enthaltene Sterne
     &--is-1 &__star--1,
     &--is-2 &__star--1, &--is-2 &__star--2,
     &--is-3 &__star--1, &--is-3 &__star--2, &--is-3 &__star--3 {
         color: @app-color-star;
-        &:after { content: @fa-var-star; }
+        &:after { content: @fontello-icon-star; }
     }
     
     // Element: Stern
     &__star {
         font-style: normal;
         color: @app-color-text-pale;
-        
-        // Icon
-        &:after {
-            content: @fa-var-star-o;
-            .font-icon();
-        }
+        .fontello-icon(@fontello-icon-star-empty);
     }
 }

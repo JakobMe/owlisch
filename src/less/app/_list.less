@@ -60,6 +60,7 @@
         &--clickable {
             cursor: pointer;
             padding-right: @_list-size-height;
+            .fontello-icon(@fontello-icon-forward);
             .transition(background);
             
             // Icon
@@ -72,24 +73,14 @@
                 top: 0;
                 right: 0;
                 padding-right: @app-size-margin;
-                content: @fa-var-chevron-right;
-                font-size: @app-font-size-medium;
+                font-size: @app-font-size-large;
                 color: @app-color-text-pale;
                 width: @_list-size-height;
                 height: @_list-size-height;
                 line-height: (@_list-size-height + @app-size-line-thin);
                 .transition(color);
                 .borderbox();
-                .font-icon();
             }
-            
-            /* Hover
-            &:hover {
-                background-position: left @app-size-margin;
-                
-                // Icon
-                &:after { color: @app-color-text-dark; }
-            }*/
         }
         
         // Mod: Gefiltert

@@ -8,8 +8,7 @@
 // Modul-Variablen
 @_navigation-bar:                   navigation-bar;
 @_navigation-bar-fontsize-title:    17px;
-@_navigation-bar-fontsize-icon:     19px;
-@_navigation-bar-fontsize-icon-sm:  16px;
+@_navigation-bar-fontsize-icon:     22px;
  
 // Block: Navigation-Bar
 .@{_navigation-bar} {
@@ -54,7 +53,7 @@
         height: @app-size-height-navigationbar;
         line-height: @app-size-height-navigationbar;
         font-size: @_navigation-bar-fontsize-title;
-        .transition(all, @app-time-animation-half);
+        .transition();
         .borderbox();
         .ellipsis();
         
@@ -90,29 +89,12 @@
         // Mod: Deaktiviert
         &--disabled { opacity: @app-opacity-invisible; }
         
-        // Mod: Icon Abbrechen
-        &--icon-cancel {
-            line-height: (@app-size-height-navigationbar - @app-size-line-medium);
-            .fa-icon(@fa-var-close);
-        }
-        
-        // Mod: Icon Überspringen
-        &--icon-skip {
-            font-size: @_navigation-bar-fontsize-icon-sm;
-            .fa-icon(@fa-var-step-forward);
-        }
-        
-        // Mod: Icon Zurück
-        &--icon-back { .fa-icon(@fa-var-chevron-left); }
-        
-        // Mod: Icon Suche
-        &--icon-search {
-            line-height: (@app-size-height-navigationbar - @app-size-line-medium);
-            .fa-icon(@fa-var-search);
-        }
-        
-        // Mod: Icon Sortieren
-        &--icon-sort { .fa-icon(@fa-var-sort); }
+        // Mod: Icons
+        &--icon-cancel { .fontello-icon(@fontello-icon-cancel); }
+        &--icon-skip { .fontello-icon(@fontello-icon-skip); }
+        &--icon-back { .fontello-icon(@fontello-icon-back); }
+        &--icon-search { .fontello-icon(@fontello-icon-search); }
+        &--icon-sort { .fontello-icon(@fontello-icon-sort); }
     }
     
     // Element: Suche
@@ -126,7 +108,7 @@
         padding: @app-size-margin-half @app-size-height-navigationbar;
         opacity: @app-opacity-invisible;
         .translate(0, 100%);
-        .transition(opacity);
+        .transition();
         .borderbox();
     }
     

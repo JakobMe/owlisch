@@ -46,6 +46,7 @@
         font-size: @app-font-size-small;
         color: @app-color-text-pale;
         .transition(color);
+        .fontello-icon(@fontello-icon-check);
         .ellipsis();
         
         // Icon
@@ -55,26 +56,16 @@
             text-align: center;
             top: 0;
             right: 0;
-            //font-size: @app-font-size-medium;
+            font-size: @app-font-size-medium;
             color: @app-color-background;
             height: @_dropdown-size-height;
             width: @_dropdown-size-height;
-            content: @fa-var-check;
             .transition();
-            .font-icon();
         }
         
         // Ausnahme: Letztes Element
         &:not(:last-child) { border-bottom: @app-size-line-thin solid darken(@app-color-background, @app-darken-border); }
-        
-        /* Hover & Mod: Ausgewählt
-        &:hover {
-            color: @app-color-text-dark;
-            
-            // Icon
-            &:after { color: @app-color-text-pale; }
-        }*/
-        
+
         // Mod: Ausgewählt
         &--selected {
             cursor: default;
@@ -87,7 +78,10 @@
     }
     
     // Element: Icon
-    &__icon { margin-right: @app-size-margin-half; }
+    &__icon {
+        margin-right: @app-size-margin-half;
+        font-size: @app-font-size-medium;
+    }
     
     // Element: Label
     &__label { font-weight: bold; }

@@ -71,6 +71,7 @@ var View = (function() {
     function _bindEvents() {
         $(window).on(_C.EVT.SET_PANEL, _setPanel);
         $(window).on(_C.EVT.SHOW_VIEW, _show);
+        $(window).on(_C.EVT.HIDE_VIEW, _hide);
         window.addEventListener(_C.EVT.KEYBOARD_SHOW, _setFullscreen);
         window.addEventListener(_C.EVT.KEYBOARD_HIDE, _unsetFullscreen);
     }
@@ -157,7 +158,7 @@ var View = (function() {
                     // Inhalt laden
                     setTimeout(function() {
                         _loadPanelContent();
-                    }, _C.TIME.SHORT);
+                    }, _C.TIME.DEFAULT);
                 }
             }
         }

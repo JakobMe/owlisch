@@ -239,16 +239,18 @@ var Dictionary = (function() {
      * des Menüs (offen/geschlossen, aktiver Menüpunkt).
      */
     function _renderDropdown() {
-        _$dropdown.setMod(_B_DROPDOWN, _M_OPENED, _dropdownIsOpened);
-        _$sort.each(function() {
-            var sortItem = $(this);
-            var isCurrent = false;
-            if ((sortItem.data(_DATA_SORT) === _currentSort) &&
-                (sortItem.data(_DATA_ORDER) === _currentOrder)) {
-                isCurrent = true;
-            }
-            sortItem.setMod(_B_DROPDOWN, _E_ITEM, _M_SELECTED, isCurrent);
-        });
+        if (_$dropdown instanceof jQuery) {
+            _$dropdown.setMod(_B_DROPDOWN, _M_OPENED, _dropdownIsOpened);
+            _$sort.each(function() {
+                var sortItem = $(this);
+                var isCurrent = false;
+                if ((sortItem.data(_DATA_SORT) === _currentSort) &&
+                    (sortItem.data(_DATA_ORDER) === _currentOrder)) {
+                    isCurrent = true;
+                }
+                sortItem.setMod(_B_DROPDOWN, _E_ITEM, _M_SELECTED, isCurrent);
+            });
+        }
     }
     
     /**

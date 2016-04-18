@@ -79,6 +79,7 @@ var _C = (function() {
             LOAD_PANEL_CONTENT  : "loadedPanelContent",
             CREATE_PANELS       : "createdPanelContainers",
             SET_PANEL           : "setCurrentPanel",
+            HIDE_VIEW           : "hideView",
             SHOW_VIEW           : "showView",
             SHOW_VIEWPORT       : "showViewport",
             PRESSED_BUTTON      : "pressedNavigationBarButton",

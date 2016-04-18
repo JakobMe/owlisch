@@ -155,7 +155,7 @@ var NavigationBar = (function() {
      * Rendert die Suche anhand der gesetzten Eigenschaften des Moduls.
      */
     function _renderSearch() {
-        if (_searchIsActive || _searchWasActive) {
+        if (_searchIsActive) {
             
             // Aktion und Icon initialisieren
             var icon   = (_searchIsActive) ? _C.ICON.CANCEL : _C.ICON.SEARCH;
@@ -211,6 +211,7 @@ var NavigationBar = (function() {
                     
                     // Suche ausblenden
                     case _C.ACT.SEARCH_HIDE:
+                        _searchIsActive = false;
                         _disableSearch();
                         break;
                     
@@ -281,14 +282,17 @@ var NavigationBar = (function() {
      */
     function _enableSearch(updateButtons) {
         _searchIsActive = true;
-        _searchWasActive = false;
         if (updateButtons !== false) {
             _setButton(_buttonLeft, _C.ACT.SEARCH_HIDE, _C.ICON.CANCEL);
             if (_buttonRight.action !== _C.ACT.SORT_SHOW) {
-                _setButton(_buttonRight, _C.ACT.SORT_SHOW, _C.ICON.SORT);
+                $(window).trigger(
+                    _C.EVT.PRESSED_BUTTON,
+                    { action: _C.ACT.SORT_HIDE }
+                );
             }
         }
         _renderSearch();
+        _searchWasActive = false;
     }
     
     /**
@@ -302,7 +306,10 @@ var NavigationBar = (function() {
         if (updateButtons !== false) {
             _setButton(_buttonLeft, _C.ACT.SEARCH_SHOW, _C.ICON.SEARCH);
             if (_buttonRight.action !== _C.ACT.SORT_SHOW) {
-                _setButton(_buttonRight, _C.ACT.SORT_SHOW, _C.ICON.SORT);
+                $(window).trigger(
+                    _C.EVT.PRESSED_BUTTON,
+                    { action: _C.ACT.SORT_HIDE }
+                );
             }
         }
         _renderSearch();
@@ -323,8 +330,18 @@ var NavigationBar = (function() {
 
                         // Sonderfall: Wörterbuch
                         if (panel.NAME === _C.VIEW.DICTIONARY.NAME) {
-                            if (_searchWasActive) { _enableSearch(); }
-                            else { _disableSearch(); }
+                            if (_searchIsActive) {
+                                _disableSearch();
+                                _searchWasActive = false;
+                            } else if (_searchWasActive) {
+                                _enableSearch();
+                            } else {
+                                _disableSearch();
+                            }
+                            $(window).trigger(
+                                _C.EVT.PRESSED_BUTTON,
+                                { action: _C.ACT.SORT_HIDE }
+                            );
                         
                         // Standard
                         } else {

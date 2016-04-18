@@ -2137,7 +2137,7 @@
 			"flagValue": -1
 			},
 		"comments": {
-			"active": 1,
+			"active": 0,
 			"flagValue": -1
 			},
 		"comparisons": {
@@ -2153,7 +2153,7 @@
 			"flagValue": -1
 			},
 		"dead_code": {
-			"active": 0,
+			"active": 1,
 			"flagValue": -1
 			},
 		"drop_console": {
@@ -2229,7 +2229,7 @@
 			"flagValue": -1
 			},
 		"pure_getters": {
-			"active": 0,
+			"active": 1,
 			"flagValue": -1
 			},
 		"quote-keys": {
@@ -2237,7 +2237,7 @@
 			"flagValue": -1
 			},
 		"screw-ie8": {
-			"active": 0,
+			"active": 1,
 			"flagValue": -1
 			},
 		"semicolons": {
@@ -2249,7 +2249,7 @@
 			"flagValue": -1
 			},
 		"sort": {
-			"active": 0,
+			"active": 1,
 			"flagValue": -1
 			},
 		"space-colon": {
@@ -2265,7 +2265,7 @@
 			"flagValue": -1
 			},
 		"unused": {
-			"active": 0,
+			"active": 1,
 			"flagValue": -1
 			},
 		"warnings": {

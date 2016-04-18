@@ -8,10 +8,6 @@
  */
 var View = (function() {
     
-    /*global CONF: true*/
-    /*global NavigationBar: true*/
-    /*global Dictionary: true*/
-    
     // Selektor-Konstanten
     var _SEL_VIEW           = "[role='main']";
     var _SEL_CONTENT        = "[role='article']";
@@ -27,47 +23,14 @@ var View = (function() {
     var _M_WEBAPP           = "webapp";
     var _M_CURRENT          = "current";
     
-    // Data-Attibut-Konstanten
+    // Data-Konstanten
     var _DATA_PANEL         = "panel";
-    var _DATA_TITLE         = "title";
-    
-    // Panel-Konstanten
-    var _PANELS = {
-        START: {
-            NAME            : "start",
-            LABEL           : "Start",
-            TITLE           : "Wort der Woche"
-        },
-        DICTIONARY: {
-            NAME            : "dictionary",
-            LABEL           : "Wörterbuch",
-            TITLE           : "Wörterbuch"
-        },
-        QUIZ: {
-            NAME            : "quiz",
-            LABEL           : "Quiz",
-            TITLE           : "Quiz"
-        },
-        PROGRESS: {
-            NAME            : "progress",
-            LABEL           : "Fortschritt",
-            TITLE           : "Fortschritt"
-        },
-        HELP: {
-            NAME            : "help",
-            LABEL           : "Hilfe",
-            TITLE           : "Hilfe"
-        }
-    };
     
     // Private Variablen
     var _isVisible;
     var _isWebapp;
     var _isFullscreen;
     var _currentPanel;
-    var _panelIsExpired;
-    var _panelIsEmpty;
-    var _panelList;
     var _tmplViewpanels;
     
     // DOM-Elemente
@@ -79,42 +42,37 @@ var View = (function() {
      * Modul initialisieren.
      * Setzt die Standard-Anfangswerte des Moduls, bindet alle Events,
      * sucht nach den benötigten DOM-Elementen und rendert das Modul.
-     * @param {Object} options Optionale Einstellungen beim Initialisieren
-     * @returns {Object} Modul-Objekt
      */
-    function init(options) {
-        
-        // Standard-Optionen definieren
-        var defaults = {
-            isVisible       : false,
-            isFullscreen    : false
-        };
-        
-        // Optionen ergänzen
-        $.extend(defaults, options || {});
+    function init() {
         
         // Modulvariablen initialisieren
-        _$panels            = {};
         _$view              = $(_SEL_VIEW);
         _$content           = _$view.find(_SEL_CONTENT);
-        _isVisible          = defaults.isVisible;
-        _isFullscreen       = defaults.isFullscreen;
-        _isWebapp           = (CONF.WEBAPP.IOS || CONF.WEBAPP.CORDOVA);
+        _$panels            = {};
+        _isVisible          = false;
+        _isFullscreen       = false;
+        _isWebapp           = (_C.WEBAPP.IOS || _C.WEBAPP.CORDOVA);
         _tmplViewpanels     = $(_SEL_TMPL).html();
         _currentPanel       = null;
-        _panelList          = [];
-        _panelIsExpired     = {};
-        _panelIsEmpty       = {};
         
         // Templates parsen
         Mustache.parse(_tmplViewpanels);
         
         // Funktionen ausführen
+        _bindEvents();
         _initPanels();
         _render();
-        
-        // Modul Return
-        return this;
+    }
+    
+    /**
+     * Events binden.
+     * Bindet Funktionen an Events und Elemente des Moduls.
+     */
+    function _bindEvents() {
+        $(window).on(_C.EVT.SET_PANEL, _setPanel);
+        $(window).on(_C.EVT.SHOW_VIEW, _show);
+        window.addEventListener(_C.EVT.KEYBOARD_SHOW, _setFullscreen);
+        window.addEventListener(_C.EVT.KEYBOARD_HIDE, _unsetFullscreen);
     }
     
     /**
@@ -144,15 +102,14 @@ var View = (function() {
     /**
      * View-Panels generieren.
      * Generiert für jedes definierte Panel anhand des gesetzten
-     * Mustache-Templates ein HTML-Panel im Content-Bereich.
+     * Mustache-Templates ein HTML-Panel im Content-Bereich und
+     * löst anschließend ein Event mit den Panel-Daten aus.
      */
     function _createPanels() {
         
-        // Panel-Array initialisieren
+        // Panel-Array erzeugen
         var panels = [];
-        
-        // Verfügbare Aktionen setzen
-        $.each(_PANELS, function(panel, props) {
+        $.each(_C.VIEW, function(panel, props) {
             var panelProps = [];
             $.each(props, function(prop, value) {
                 panelProps[prop.toLowerCase()] = value;
@@ -160,75 +117,70 @@ var View = (function() {
             panels.push(panelProps);
         });
         
-        // Template füllen und in Content laden, Liste speichern
+        // Template füllen und in Content laden, Event auslösen
         _$content.html(Mustache.render(_tmplViewpanels, panels));
-        _panelList = panels;
+        $(window).trigger(_C.EVT.CREATE_PANELS, { panels: panels });
     }
     
     /**
      * View-Panels initialisieren.
-     * Rendert die View-Panels und setzt anschließend
+     * Generiert zunächst die Panels und speichert die
+     * entsprechenden jQuery-Objekt lokal.
      */
     function _initPanels() {
         
-        // Zunächst Panels erzeugen
+        // Panels generieren
         _createPanels();
         
-        // Alle Panels iterieren
+        // Panels initialisieren
         _$view.find(_SEL_PANELS).each(function() {
-            
-            // Gefundenes View-Panel initialisieren
-            var $panel = $(this);
-            var panelName = $panel.data(_DATA_PANEL);
-            
-            // Panel zur Panel-Liste hinzufügen
-            _$panels[panelName] = $panel;
-            _panelIsExpired[panelName] = true;
-            _panelIsEmpty[panelName] = true;
+            _$panels[$(this).data(_DATA_PANEL)] = $(this);
         });
     }
     
     /**
-     * Navigation-Bar der View setzen.
-     * Setzt die verknüpfte Navigation-Bar anhand des aktuellen
-     * Panel-Namens; setzt Titel, Buttons und Suche.
+     * Aktuelles View-Panel setzen.
+     * Setzt das aktuelle View-Panel anhand eines Events;
+     * blendet die View erst aus und lädt anschließen den Panel-Inhalt.
+     * @param {Object} event Ausgelöstes Event
+     * @param {Object} data Daten des Events
      */
-    function _setNavigationBar() {
-        if ((typeof NavigationBar !== CONF.TYPE.UNDEF) &&
-            (NavigationBar !== null)) {
-            
-            // Neue Werte initialisieren
-            var newTitle = CONF.STR.EMPTY;
-            var newSearch = false;
-            var newIconLeft = null;
-            var newIconRight = null;
-            var newActionLeft = null;
-            var newActionRight = null;
-            
-            // Sonderfall: Wörterbuch
-            if (_currentPanel === _PANELS.DICTIONARY.NAME) {
-                newSearch = true;
-                newIconLeft = NavigationBar.ICON.SEARCH;
-                newIconRight = NavigationBar.ICON.SORT;
-                newActionLeft = NavigationBar.ACTION.SEARCH;
-                newActionRight = NavigationBar.ACTION.SORT;
-                if (Dictionary.dropdownIsOpened()) {
-                    newIconRight = NavigationBar.ICON.CANCEL;
+    function _setPanel(event, data) {
+        if (typeof data !== _C.TYPE.UNDEF) {
+            if (typeof data.panel === _C.TYPE.STR) {
+                if (_$panels[data.panel] instanceof jQuery) {
+                    
+                    // Aktuelles Panel setzen, ausblenden
+                    _currentPanel = data.panel;
+                    _hide();
+                    
+                    // Inhalt laden
+                    setTimeout(function() {
+                        _loadPanelContent();
+                    }, _C.TIME.SHORT);
                 }
             }
-            
-            // Neuen Titel setzen
-            if (_$panels[_currentPanel] instanceof jQuery) {
-                newTitle = _$panels[_currentPanel].data(_DATA_TITLE);
-            }
-            
-            // Navigation-Bar setzen
-            NavigationBar.setAll(
-                newTitle, newActionLeft,
-                newIconLeft, newActionRight,
-                newIconRight, newSearch
-            );
         }
+    }
+    
+    /**
+     * Panel-Inhalt laden.
+     * Löst ein Event aus, um den Inhalt des aktuellen Panels
+     * in das entsprechende jQuery-Objekt zu laden, falls es leer ist.
+     */
+    function _loadPanelContent() {
+        
+        // Wenn Panel leer ist, Inhalt mit Event laden
+        if (_$panels[_currentPanel].children().length === 0 ) {
+            $(window).trigger(
+                _C.EVT.LOAD_PANEL_CONTENT, {
+                    panel: _currentPanel,
+                    target: _$panels[_currentPanel]
+                }
+            );
+        
+        // Ansonsten einblenden
+        } else { _show(); }
     }
     
     /**
@@ -252,101 +204,22 @@ var View = (function() {
     /**
      * Fullscreen aktivieren.
      * Aktiviert die volle Höhe für das Modul.
-     * @returns {Object} Modul-Objekt
      */
-    function enableFullscreen() {
+    function _setFullscreen() {
         _isFullscreen = true;
         _render();
-        return this;
     }
     
     /**
      * Fullscreen deaktivieren.
      * Deaktiviert die volle Höhe für das Modul.
-     * @returns {Object} Modul-Objekt
      */
-    function disableFullscreen() {
+    function _unsetFullscreen() {
         _isFullscreen = false;
         _render();
-        return this;
-    }
-    
-    /**
-     * Panel-Inhalt aktualisieren.
-     * Aktualisiert oder erstellt den Inhalt des angegebenen
-     * Panels in Abhänigkeit des Panels.
-     * @param {string} panel Name des Panels
-     * @param {boolean} empty Inhalt des Panels ist leer
-     * @param {Object} callback Funktion, die anschließend ausgeführt wird
-     */
-    function _updatePanelContent(panel, empty, callback) {
-
-        // Anhand des Panels entscheiden
-        switch (panel) {
-            
-            // Wörterbuch
-            case _PANELS.DICTIONARY.NAME:
-                if (empty) { Dictionary.init({ $target: _$panels[panel] }); }
-                else {       Dictionary.updateList(); }
-                break;
-            
-            // !TODO: _updatePanelContent Switch
-        }
-        
-        // Panel-Status aktualisieren
-        var panelValid = (_$panels[panel] instanceof jQuery);
-        _panelIsEmpty[panel] = !panelValid;
-        _panelIsExpired[panel] = !panelValid;
-        
-        // Callback
-        if ($.isFunction(callback)) { callback(); }
-    }
-    
-    /**
-     * Aktuelles View-Panel setzen.
-     * Wenn der übergebene Panel-Name gültig ist, wird die View
-     * erst ausgeblendet, dann wird das Tab-Panel gewechselt,
-     * die Navigation-Bar eingestellt und die View wieder eingeblendet.
-     * @param {string} panel Name des neuen View-Panels
-     * @returns {Object} Modul-Objekt
-     */
-    function setPanel(panel) {
-        if (_$panels[panel] instanceof jQuery) {
-            
-            // Panel setzen, Navigation-Bar setzen und View ausblenden
-            _currentPanel = panel;
-            _setNavigationBar();
-            _hide();
-            
-            // Panel gegebenenfalls aktualisieren, View einblenden
-            setTimeout(function() {
-                var empty = _panelIsEmpty[panel];
-                var expired = _panelIsExpired[panel];
-                if (expired || empty) {
-                    _updatePanelContent(panel, empty, _show);
-                } else {
-                    _show();
-                }
-            }, CONF.TIME.SHORT);
-        }
-        return this;
-    }
-    
-    /**
-     * Panel-Liste zurückgeben.
-     * Gibt die intern zusammengestellte Panel-Liste nach außen.
-     */
-    function getPanelList() {
-        return _panelList;
     }
     
     // Öffentliches Interface
-    return {
-        init                : init,
-        enableFullscreen    : enableFullscreen,
-        disableFullscreen   : disableFullscreen,
-        setPanel            : setPanel,
-        getPanelList        : getPanelList
-    };
+    return { init: init };
     
 })();

@@ -7,10 +7,7 @@
  * @link http://jmportfolio.de
  */
 var NavigationBar = (function() {
-    
-    /*global CONF: true*/
-    /*global Dictionary: true*/
-    
+
     // Selektor-Konstanten
     var _SEL_TITLEBAR       = "[role='navigation']";
     var _SEL_BUTTONS        = "[role='button']";
@@ -27,112 +24,53 @@ var NavigationBar = (function() {
     var _M_WEBAPP           = "webapp";
     var _M_ICON             = "icon";
     
-    // Data-Attibut-Konstanten
-    var _DATA_ACTION        = "data-action";
-    
-    // Icon-Konstanten
-    var ICON = {
-        NONE                : "none",
-        SEARCH              : "search",
-        SORT                : "sort",
-        BACK                : "back",
-        CANCEL              : "cancel",
-        SKIP                : "skip"
-    };
-    
-    // Action-Konstanten
-    var ACTION = {
-        SEARCH              : "search",
-        SORT                : "sort",
-        BACK                : "back",
-        CANCEL              : "cancel",
-        SKIP                : "skip"
-    };
-    
     // Private Variablen    
     var _title;
-    var _iconLeft;
-    var _iconRight;
-    var _actionLeft;
-    var _actionRight;
+    var _buttonLeft;
+    var _buttonRight;
     var _searchIsActive;
     var _searchWasActive;
     var _buttonsAreDisabled;
-    var _availableActions;
-    var _availableIcons;
     var _isWebapp;
     
     // DOM-Elemente
     var _$navbar;
-    var _$title;
-    var _$buttonLeft;
-    var _$buttonRight;
     var _$search;
     
     /**
      * Modul initialisieren.
      * Setzt die Standard-Anfangswerte des Moduls, bindet alle Events,
      * sucht nach den benötigten DOM-Elementen und rendert das Modul.
-     * @param {Object} options Optionale Einstellungen beim Initialisieren
-     * @returns {Object} Modul-Objekt
      */
-    function init(options) {
-        
-        // Standard-Optionen definieren
-        var defaults = {
-            title           : null,
-            actionLeft      : null,
-            actionRight     : null,
-            iconLeft        : null,
-            iconRight       : null
-        };
-        
-        // Standard-Optionen ergänzen/überschreiben
-        $.extend(defaults, options || {});
+    function init() {
         
         // Modulvariablen initialisieren
         _$navbar            = $(_SEL_TITLEBAR);
-        _$buttonLeft        = _$navbar.find(_SEL_BUTTONS).first();
-        _$buttonRight       = _$navbar.find(_SEL_BUTTONS).last();
-        _$title             = _$navbar.find(_SEL_TITLE);
         _$search            = _$navbar.find(_SEL_SEARCH);
-        _title              = defaults.title;
-        _iconLeft           = defaults.iconLeft;
-        _iconRight          = defaults.iconRight;
-        _actionLeft         = defaults.actionLeft;
-        _actionRight        = defaults.actionRight;
-        _isWebapp           = (CONF.WEBAPP.IOS || CONF.WEBAPP.CORDOVA);
+        _isWebapp           = (_C.WEBAPP.IOS || _C.WEBAPP.CORDOVA);
+        _title              = {};
+        _buttonLeft         = {};
+        _buttonRight        = {};
         _searchIsActive     = false;
         _searchWasActive    = false;
         _buttonsAreDisabled = false;
-        _availableActions   = [];
-        _availableIcons     = [];
         
         // Funktionen ausführen
-        _initActionsIcons();
+        _initButtonsAndTitle();
         _bindEvents();
         _render();
-        
-        // Modul Return
-        return this;
     }
     
     /**
-     * Aktionen und Icons initialisieren.
-     * Iteriert alle definierten Icons und Aktionen und fügt
-     * sie zu den entsprechenden Modul-Variablen hinzu.
+     * Buttons initialisieren.
+     * Setzt die DOM-Elemente des Titels und des linken und rechten Buttons,
+     * initialisiert die Aktionen und Icons auf null, den Titel auf leer.
      */
-    function _initActionsIcons() {
-        
-        // Verfügbare Aktionen setzen
-        $.each(ACTION, function(index, action) {
-            _availableActions.push(action);
-        });
-        
-        // Verfügbare Icons setzen
-        $.each(ICON, function(index, icon) {
-            _availableIcons.push(icon);
-        });
+    function _initButtonsAndTitle() {
+        var $buttons = _$navbar.find(_SEL_BUTTONS);
+        _buttonLeft = { $button: $buttons.first(), action: null, icon: null };
+        _buttonRight = { $button: $buttons.last(), action: null, icon: null };
+        _title = { $title: _$navbar.find(_SEL_TITLE), str: _C.STR.EMPTY };
     }
     
     /**
@@ -140,103 +78,9 @@ var NavigationBar = (function() {
      * Bindet Funktionen an Events und Elemente des Moduls.
      */
     function _bindEvents() {
-        _$navbar.on(CONF.EVENT.CLICK, _SEL_BUTTONS, _buttonAction);
-    }
-    
-    /**
-     * Button rendern.
-     * Rendert einen gewählten Button (Links/Rechts) anhand seiner
-     * gesetzten Eigenschaften (Aktion/Icon).
-     * @param {Object} $button Button-Objekt
-     * @returns {Object} Modul-Objekt
-     */
-    function _renderButton($button) {
-        
-        // Aktion und Icon initialisieren
-        var action;
-        var icon;
-        
-        // Aktion und Icon ermitteln
-        if ($button === _$buttonLeft) {
-            icon = _iconLeft;
-            action = _actionLeft;
-        } else if ($button === _$buttonRight) {
-            icon = _iconRight;
-            action = _actionRight;
-        } else {
-            return false;
-        }
-        
-        // Button ausblenden/deaktivieren
-        _buttonsAreDisabled = true;
-        $button.setMod(_B, _E_BUTTON, _M_DISABLED, true);
-        
-        // Auf Animation warten
-        setTimeout(function() {
-            
-            // Falls Icon oder Aktion nicht gesetzt sind
-            if ((icon === null) || (icon === CONF.STR.EMPTY) ||
-                (action === null) || (action === CONF.STR.EMPTY)) {
-                
-                // Button deaktivieren
-                $button.setMod(_B, _E_BUTTON, _M_ICON, ICON.NONE);
-                $button.attr(_DATA_ACTION, CONF.STR.EMPTY);
-                
-            // Falls beides korrekt gesetzt ist
-            } else {
-                
-                // Icon und Aktion setzen, Button einblenden
-                $button.setMod(_B, _E_BUTTON, _M_DISABLED, false);
-                $button.setMod(_B, _E_BUTTON, _M_ICON, icon);
-                $button.attr(_DATA_ACTION, action);
-            }
-            
-            // Buttons wieder aktivieren
-            setTimeout(function() {
-                _buttonsAreDisabled = false;
-            }, CONF.TIME.STANDARD);
-            
-        }, CONF.TIME.SHORT);
-    }
-    
-    /**
-     * Titel rendern.
-     * Rendert den Titel der Titelleiste anhand des
-     * aktuell gesetzten Titels neu.
-     */
-    function _renderTitle() {
-        
-        // Titel ausblenden, setzen, einblenden
-        _$title.setMod(_B, _E_TITLE, _M_HIDDEN, true);
-        setTimeout(function() {
-            _$title.text(_title);
-            _$title.setMod(_B, _E_TITLE, _M_HIDDEN, false);
-        }, CONF.TIME.SHORT);
-    }
-    
-    /**
-     * Suche rendern.
-     * Rendert die Suche anhand der gesetzten Eigenschaften des Moduls.
-     */
-    function _renderSearch() {
-        
-        // Wenn Suche aktiv ist oder abgebrochen wird
-        if ((_actionLeft === ACTION.SEARCH) || _searchIsActive) {
-            
-            // Suche ein-/ausblenden, Button anpassen
-            var icon = (_searchIsActive) ? ICON.CANCEL : ICON.SEARCH;
-            setButtonLeft(ACTION.SEARCH, icon);
-            _$navbar.setMod(_B, _M_SEARCH, _searchIsActive);
-            
-            // Suche fokussieren
-            if (_searchIsActive && !_searchWasActive) {
-                setTimeout(function() {
-                    _$search.focus();
-                }, CONF.TIME.MEDIUM);
-            }
-            
-        // Ansonsten Suche ausblenden
-        } else { _$navbar.setMod(_B, _M_SEARCH, false); }
+        _$navbar.on(_C.EVT.CLICK, _SEL_BUTTONS, _buttonAction);
+        $(window).on(_C.EVT.SET_PANEL, _setNavigationBar);
+        $(window).on(_C.EVT.PRESSED_BUTTON, _buttonPressed);
     }
     
     /**
@@ -245,51 +89,134 @@ var NavigationBar = (function() {
      * gesetzten aktuellen Variablen.
      */
     function _render() {
-        
-        // Webapp setzen
         _$navbar.setMod(_B, _M_WEBAPP, _isWebapp);
-        
-        // Elemente rendern
-        _renderButton(_$buttonLeft);
-        _renderButton(_$buttonRight);
+        _renderButton(_buttonLeft);
+        _renderButton(_buttonRight);
         _renderSearch();
         _renderTitle();
     }
     
     /**
-     * Button-Aktion: Suche.
-     * Suche (de-)aktivieren, Wörterbuch-Dropdown ausblenden.
+     * Button rendern.
+     * Rendert einen gewählten Button (Links/Rechts) anhand seiner
+     * gesetzten Eigenschaften (Aktion/Icon).
+     * @param {Object} button Button-Objekt
      */
-    function _buttonActionSearch() {
+    function _renderButton(button) {
         
-        // Suche aktivieren/deaktivieren
-        if (_searchIsActive) {
-            _searchWasActive = false;
-            _disableSearch();
-        } else {
-            _enableSearch();
-        }
+        // Button-Werte initialisieren
+        var $button = (button.$button || null);
+        var icon = (button.icon || null);
+        var action = (button.action || null);
         
-        // Wörterbuch-Dropdown gegebenenfalls ausblenden
-        if (Dictionary.dropdownIsOpened()) {
-            setButtonRight(ACTION.SORT, ICON.SORT);
-            Dictionary.hideDropdown();
+        // Falls Button vorhanden ist
+        if ($button instanceof jQuery) {
+            
+            // Button ausblenden/deaktivieren
+            _buttonsAreDisabled = true;
+            $button.setMod(_B, _E_BUTTON, _M_DISABLED, true);
+            
+            // Button aktualisieren
+            setTimeout(function() {
+                if ((icon === null) || (action === null)) {
+                    $button.setMod(_B, _E_BUTTON, _M_ICON, _C.ICON.NONE);
+                } else {
+                    $button.setMod(_B, _E_BUTTON, _M_DISABLED, false);
+                    $button.setMod(_B, _E_BUTTON, _M_ICON, icon);
+                }
+                setTimeout(function() {
+                    _buttonsAreDisabled = false;
+                }, _C.TIME.DOUBLE);
+            }, _C.TIME.DEFAULT);
         }
     }
     
     /**
-     * Button-Aktion: Sortieren.
-     * Blendet das Wörterbuch-Dropdown ein/aus.
+     * Titel rendern.
+     * Rendert den Titel der Titelleiste anhand des
+     * aktuell gesetzten Titels neu.
      */
-    function _buttonActionSort() {
-        
-        // Wörterbuch-Dropdown ein-/ausblenden
-        if (Dictionary.dropdownIsOpened()) {
-            setButtonRight(ACTION.SORT, ICON.SORT);
-            Dictionary.hideDropdown();
-        } else {
-            setButtonRight(ACTION.SORT, ICON.CANCEL);
-            Dictionary.showDropdown();
+    function _renderTitle() {
+        if (_title.$title instanceof jQuery) {
+            
+            // Titel ausblenden
+            _title.$title.setMod(_B, _E_TITLE, _M_HIDDEN, true);
+            
+            // Titel setzen, einblenden
+            setTimeout(function() {
+                _title.$title.text(_title.str || _C.STR.EMPTY);
+                _title.$title.setMod(_B, _E_TITLE, _M_HIDDEN, false);
+            }, _C.TIME.DEFAULT);
+        }
+    }
+    
+    /**
+     * Suche rendern.
+     * Rendert die Suche anhand der gesetzten Eigenschaften des Moduls.
+     */
+    function _renderSearch() {
+        if (_searchIsActive || _searchWasActive) {
+            
+            // Aktion und Icon initialisieren
+            var icon   = (_searchIsActive) ? _C.ICON.CANCEL : _C.ICON.SEARCH;
+            var action = (_searchIsActive) ? _C.ACT.SEARCH_HIDE :
+                                             _C.ACT.SEARCH_SHOW;
+            
+            // Linken Button setzen, Suche ein-/ausblenden
+            _setButton(_buttonLeft, action, icon);
+            _$navbar.setMod(_B, _M_SEARCH, _searchIsActive);
+            
+            // Gegebenenfalls Suchfeld fokussieren
+            if (_searchIsActive && !_searchWasActive) {
+                setTimeout(
+                    function() { _$search.focus(); },
+                    _C.TIME.DOUBLE
+                );
+            }
+        } else { _$navbar.setMod(_B, _M_SEARCH, false); }
+    }
+    
+    /**
+     * Klick auf Navigations-Button.
+     * Führt bei einem Event auf einem der Navigation-Bar Buttons
+     * Funktionen entsprechend der gesetzt Aktion für diesen Button aus.
+     * @param {Object} event Ausgelöstes Event
+     * @param {Object} data Daten des Events
+     */
+    function _buttonPressed(event, data) {
+        if (typeof data !== _C.TYPE.UNDEF) {
+            if (typeof data.action !== _C.TYPE.UNDEF) {
+                switch (data.action) {
+                    
+                    // Sortierung einblenden
+                    case _C.ACT.SORT_SHOW:
+                        _setButton(
+                            _buttonRight,
+                            _C.ACT.SORT_HIDE, _C.ICON.CANCEL
+                        );
+                        break;
+                    
+                    // Sortierung ausblenden
+                    case _C.ACT.SORT_HIDE:
+                        _setButton(
+                            _buttonRight,
+                            _C.ACT.SORT_SHOW, _C.ICON.SORT
+                        );
+                        break;
+                    
+                    // Suche einblenden
+                    case _C.ACT.SEARCH_SHOW:
+                        _enableSearch();
+                        break;
+                    
+                    // Suche ausblenden
+                    case _C.ACT.SEARCH_HIDE:
+                        _disableSearch();
+                        break;
+                    
+                    // !TODO: Switch Button-Aktionen
+                }
+            }
         }
     }
     
@@ -302,94 +229,36 @@ var NavigationBar = (function() {
     function _buttonAction(event) {
         if (!_buttonsAreDisabled && event.target) {
             
-            // Button und Aktion initialisieren
+            // Button und Aktion initialisieren/bestimmen
             var action;
             var $button = $(event.target).closest(_SEL_BUTTONS);
-            
-            // Aktion bestimmen
-            if ($button.is(_$buttonLeft)) { action = _actionLeft; }
-            else if ($button.is(_$buttonRight)) { action = _actionRight; }
-            
-            // Funktion entsprechend der Aktion ausführen
-            switch (action) {
-                case ACTION.SEARCH:     _buttonActionSearch();  break;
-                case ACTION.SORT:       _buttonActionSort();    break;
-                case ACTION.SKIP:                               break;
-                case ACTION.CANCEL:                             break;
-                case ACTION.BACK:                               break;
+            if ($button.is(_buttonLeft.$button)) {
+                action = _buttonLeft.action;
+            } else if ($button.is(_buttonRight.$button)) {
+                action = _buttonRight.action;
             }
             
-            // !TODO: _buttonAction() Switch
+            // Event auslösen, wenn Aktion gültig ist
+            $(window).trigger(
+                _C.EVT.PRESSED_BUTTON,
+                { action: action }
+            );
         }
-    }
-    
-    /**
-     * Suche aktivieren.
-     * Setzt die Suche auf aktiviert und blendet sie ein.
-     */
-    function _enableSearch() {
-        _searchIsActive = true;
-        _renderSearch();
-    }
-    
-    /**
-     * Suche deaktivieren.
-     * Setzt die Suche auf deaktiviert und blendet sie aus.
-     */
-    function _disableSearch() {
-        _searchIsActive = false;
-        _renderSearch();
     }
     
     /**
      * Button-Eigenschaften setzen.
      * Setzt die Aktion und das Icon eines gegebenen Buttons.
-     * @param {Object} $button Ziel-Button
+     * @param {Object} button Button-Objekt
      * @param {string} action Name der Button-Aktion
      * @param {string} icon Name des Button-Icons
      */
-    function _setButton($button, action, icon) {
-
-        // Falls Icon oder Aktion null sind, beide null setzen
-        if (action === null || icon === null) { action = null; icon = null; }
-        
-        // Falls Aktion und Icon valide sind, setzen
-        if ((action === null && icon === null) ||
-            (($.inArray(action, _availableActions) >= 0) &&
-             ($.inArray(icon, _availableIcons) >= 0))) {
-            
-            // Aktion und Icon anhand des Buttons setzen, rendern
-            if ($button === _$buttonLeft) {
-                _actionLeft = action;
-                _iconLeft = icon;
-            } else if ($button === _$buttonRight) {
-                _actionRight = action;
-                _iconRight = icon;
-            } else {
-                return false;
-            }
-            _renderButton($button);
+    function _setButton(button, action, icon) {
+        if (button.$button instanceof jQuery) {
+            button.action = (action || null);
+            button.icon = (icon || null);
+            _renderButton(button);
         }
-    }
-    
-    /**
-     * Button-Eigenschaften Links setzen.
-     * Setzt die Aktion und das Icon des linken Titel-Buttons.
-     * @param {string} action Name der Button-Aktion
-     * @param {string} icon Name des Button-Icons
-     */
-    function setButtonLeft(action, icon) {
-        _setButton(_$buttonLeft, action, icon);
-    }
-    
-    /**
-     * Button-Eigenschaften Rechts setzen.
-     * Setzt die Aktion und das Icon des rechten Titel-Buttons.
-     * @param {string} action Name der Button-Aktion
-     * @param {string} icon Name des Button-Icons
-     */
-    function setButtonRight(action, icon) {
-        _setButton(_$buttonRight, action, icon);
     }
     
     /**
@@ -399,63 +268,79 @@ var NavigationBar = (function() {
      * @param {string} title Neuer Titel
      */
     function _setTitle(title) {
-        if ((title !== null) && (title !== CONF.STR.EMPTY)) {
-            _title = title;
+        if ((title !== null) && (title !== _C.STR.EMPTY)) {
+            _title.str = title;
             _renderTitle();
         }
     }
     
     /**
-     * Such-Status setzen.
-     * Deaktiviert oder aktiviert die Suche in Abhängigkeit vom
-     * aktuellen und vergangenen Status der Suche.
-     * @param {boolean} checkPast Letzten Such-Status berücksichtigen
+     * Suche aktivieren.
+     * Setzt die Suche auf aktiviert und blendet sie ein.
+     * @param {boolean} updateButtons Buttons entsprechend aktualisieren.
      */
-    function _setSearch(checkPast) {
-        if (checkPast === true) {
-            if (_searchWasActive) {
-                _enableSearch();
-                _searchWasActive = false;
-            } else {
-                _disableSearch();
+    function _enableSearch(updateButtons) {
+        _searchIsActive = true;
+        _searchWasActive = false;
+        if (updateButtons !== false) {
+            _setButton(_buttonLeft, _C.ACT.SEARCH_HIDE, _C.ICON.CANCEL);
+            if (_buttonRight.action !== _C.ACT.SORT_SHOW) {
+                _setButton(_buttonRight, _C.ACT.SORT_SHOW, _C.ICON.SORT);
             }
-        } else {
-            if (_searchIsActive) { _searchWasActive = true; }
-            _disableSearch();
         }
+        _renderSearch();
     }
     
     /**
-     * Alle Eigenschaften der Navigation-Bar setzen.
-     * Setzte das Icon und die Aktion der Buttons, den Titel
-     * und den Such-Status der Navigation-Bar.
-     * @param {string} title Neuer Titel
-     * @param {string} iconLeft Neues Icon links
-     * @param {string} actionLeft Neue Aktion links
-     * @param {string} iconRight Neues Icon rechts
-     * @param {string} actionRight Neue Aktion rechts
-     * @param {boolean} checkPast Letzten Such-Status berücksichtigen
-     * @returns {Object} Modul-Objekt
+     * Suche deaktivieren.
+     * Setzt die Suche auf deaktiviert und blendet sie aus.
+     * @param {boolean} updateButtons Buttons entsprechend aktualisieren.
      */
-    function setAll(title, actionLeft, iconLeft,
-                    actionRight, iconRight, checkPast) {
-        
-        // Alle Komponenten setzen
-        _setTitle(title);
-        setButtonLeft(actionLeft, iconLeft);
-        setButtonRight(actionRight, iconRight);
-        _setSearch(checkPast);
-        return this;
+    function _disableSearch(updateButtons) {
+        _searchWasActive = _searchIsActive;
+        _searchIsActive = false;
+        if (updateButtons !== false) {
+            _setButton(_buttonLeft, _C.ACT.SEARCH_SHOW, _C.ICON.SEARCH);
+            if (_buttonRight.action !== _C.ACT.SORT_SHOW) {
+                _setButton(_buttonRight, _C.ACT.SORT_SHOW, _C.ICON.SORT);
+            }
+        }
+        _renderSearch();
+    }
+    
+    /**
+     * Navigation-Bar Gesamt-Zustand setzen.
+     * Setzt anhand eines Events den Gesamt-Zustand der Navigation-Bar;
+     * verschiedene Sonderfälle führen zu einem anderen Status.
+     * @param {Object} event Ausgelöstes Event
+     * @param {Object} data Daten des Events
+     */
+    function _setNavigationBar(event, data) {
+        if (typeof data !== _C.TYPE.UNDEF) {
+            if (typeof data.panel === _C.TYPE.STR) {
+                $.each(_C.VIEW, function(index, panel) {
+                    if (panel.NAME === data.panel) {
+
+                        // Sonderfall: Wörterbuch
+                        if (panel.NAME === _C.VIEW.DICTIONARY.NAME) {
+                            if (_searchWasActive) { _enableSearch(); }
+                            else { _disableSearch(); }
+                        
+                        // Standard
+                        } else {
+                            _disableSearch(false);
+                            _setButton(_buttonLeft, null, null);
+                            _setButton(_buttonRight, null, null);
+                        }
+                        _setTitle(panel.TITLE);
+                        return false;
+                    }
+                });
+            }
+        }
     }
     
     // Öffentliches Interface
-    return {
-        init            : init,
-        setAll          : setAll,
-        setButtonLeft   : setButtonLeft,
-        setButtonRight  : setButtonRight,
-        ICON            : ICON,
-        ACTION          : ACTION
-    };
+    return { init: init };
     
 })();

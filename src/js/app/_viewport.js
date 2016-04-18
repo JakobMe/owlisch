@@ -8,8 +8,6 @@
  */
 var Viewport = (function() {
     
-    /*global CONF: true*/
-    
     // Konstanten
     var _SEL_VIEWPORT       = "[role='application']";
     var _B                  = "viewport";
@@ -24,24 +22,23 @@ var Viewport = (function() {
      * Modul initialisieren.
      * Setzt die Standard-Anfangswerte des Moduls, bindet alle Events,
      * sucht nach den benötigten DOM-Elementen und rendert das Modul.
-     * @param {Object} options Optionale Einstellungen beim Initialisieren
-     * @returns {Object} Modul-Objekt
      */
-    function init(options) {
-        
-        // Standard-Optionen definieren und ergänzen
-        var defaults = { isVisible: false };
-        $.extend(defaults, options || {});
+    function init() {
         
         // Modulvariablen initialisieren
         _$viewport = $(_SEL_VIEWPORT);
-        _isVisible = defaults.isVisible;
+        _isVisible = false;
         
         // Funktionen ausführen
-        setTimeout(function() { _show(); }, CONF.TIME.LONGER);
-        
-        // Modul Return
-        return this;
+        _bindEvents();
+    }
+    
+    /**
+     * Events binden.
+     * Bindet Funktionen an Events und Elemente des Moduls.
+     */
+    function _bindEvents() {
+        $(window).on(_C.EVT.SHOW_VIEWPORT, _show);
     }
     
     /**
@@ -59,7 +56,7 @@ var Viewport = (function() {
      */
     function _show() {
         _isVisible = true;
-        _render();
+        setTimeout(function() { _render(); }, _C.TIME.DOUBLE);
     }
     
     // Öffentliches Interface

@@ -8,13 +8,6 @@
  */
 var App = {
     
-    /*global CONF: true*/
-    /*global SaveGame: true*/
-    /*global NavigationBar: true*/
-    /*global View: true*/
-    /*global TabBar: true*/
-    /*global Viewport: true*/
-    
     // Initialisieren
     init: function() {
         
@@ -26,29 +19,18 @@ var App = {
         
         // BEM-Syntax anpassen
         $.BEMsyntax({
-            elem      : CONF.BEM.ELEMDIV,
-            modBefore : CONF.BEM.MODDIV,
-            modKeyVal : CONF.BEM.MODKEY
+            elem      : _C.BEM.ELEMDIV,
+            modBefore : _C.BEM.MODDIV,
+            modKeyVal : _C.BEM.MODKEY
         });
         
         // Komponenten initialisieren
-        SaveGame.init();
-        NavigationBar.init();
-        View.init();
-        TabBar.init();
         Viewport.init();
-        
-        // Wenn iOS-Keyboard geöffnet wird
-        window.addEventListener(CONF.EVENT.KEYBOARD_SHOW, function() {
-            TabBar.hide();
-            View.enableFullscreen();
-        });
-        
-        // Wenn iOS-Keyboard geschlossen wird
-        window.addEventListener(CONF.EVENT.KEYBOARD_HIDE, function() {
-            TabBar.show();
-            View.disableFullscreen();
-        });
+        SaveGame.init();
+        Dictionary.init();
+        NavigationBar.init();
+        TabBar.init();
+        View.init();
     }
 };
 

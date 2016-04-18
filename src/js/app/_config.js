@@ -6,77 +6,132 @@
  * @licence https://opensource.org/licenses/MIT MIT
  * @link http://jmportfolio.de
  */
-var CONF = (function() {
-    
-    // Öffentliches Interface
+var _C = (function() {
     return {
-        
-        // Wörterbuch
         DICTIONARY: {
-            ID              : "owl",
-            PATH_DATA       : "data/",
-            PATH_AUDIO      : "/audio/",
-            PATH_IMAGES     : "/images/",
-            TYPE_DATA       : ".json",
-            TYPE_AUDIO      : ".mp3",
-            TYPE_IMAGES     : ".jpg"
+            ID                  : "owl",
+            PATH_DATA           : "data/",
+            PATH_AUDIO          : "/audio/",
+            PATH_IMAGES         : "/images/",
+            TYPE_DATA           : ".json",
+            TYPE_AUDIO          : ".mp3",
+            TYPE_IMAGES         : ".jpg"
         },
-        
-        // Quiz
         QUIZ: {
-            LVL_MIN         : 1,
-            LVL_MAX         : 3,
-            LEVELS          : [1,2,3],
-            NUM_STEPS       : 10,
-            NUM_PROGRESS    : 10
+            LVL_MIN             : 1,
+            LVL_MAX             : 3,
+            LEVELS              : [1,2,3],
+            NUM_STEPS           : 10,
+            NUM_PROGRESS        : 10
         },
-        
-        // Webapp
-        WEBAPP: {
-            IOS             : (window.navigator.standalone || false),
-            CORDOVA         : (typeof window.cordova !== "undefined")
+        VIEW: {
+            START: {
+                NAME            : "start",
+                LABEL           : "Start",
+                TITLE           : "Wort der Woche"
+            },
+            DICTIONARY: {
+                NAME            : "dictionary",
+                LABEL           : "Wörterbuch",
+                TITLE           : "Wörterbuch"
+            },
+            QUIZ: {
+                NAME            : "quiz",
+                LABEL           : "Quiz",
+                TITLE           : "Quiz"
+            },
+            PROGRESS: {
+                NAME            : "progress",
+                LABEL           : "Fortschritt",
+                TITLE           : "Fortschritt"
+            },
+            HELP: {
+                NAME            : "help",
+                LABEL           : "Hilfe",
+                TITLE           : "Hilfe"
+            }
         },
-        
-        // Strings
-        STR: {
-            EMPTY           : "",
-            SLASH           : "/"
+        ACT: {
+            NONE                : "none",
+            SEARCH_SHOW         : "search-show",
+            SEARCH_HIDE         : "search-hide",
+            SORT_SHOW           : "sort-show",
+            SORT_HIDE           : "sort-hide",
+            DICTIONARY_BACK     : "dictionary-back",
+            QUIZ_SKIP           : "quiz-skip",
+            QUIZ_CANCEL         : "quiz-cancel"
         },
-        
-        // Events
-        EVENT: {
-            CLICK           : "click",
-            ENDED           : "ended",
-            FOCUS           : "focus",
-            SUBMIT          : "submit",
-            KEYBOARD_HIDE   : "keyboardWillHide",
-            KEYBOARD_SHOW   : "keyboardWillShow"
+        ICON: {
+            NONE                : "none",
+            SEARCH              : "search",
+            SORT                : "sort",
+            BACK                : "back",
+            CANCEL              : "cancel",
+            SKIP                : "skip"
         },
-        
-        // Datentypen
+        EVT: {
+            CLICK               : "click",
+            ENDED               : "ended",
+            FOCUS               : "focus",
+            SUBMIT              : "submit",
+            KEYBOARD_HIDE       : "keyboardWillHide",
+            KEYBOARD_SHOW       : "keyboardWillShow",
+            LOAD_PANEL_CONTENT  : "loadedPanelContent",
+            CREATE_PANELS       : "createdPanelContainers",
+            SET_PANEL           : "setCurrentPanel",
+            SHOW_VIEW           : "showView",
+            SHOW_VIEWPORT       : "showViewport",
+            PRESSED_BUTTON      : "pressedNavigationBarButton",
+            REQUEST_DICTIONARY  : "requestedDictionary",
+            REQUEST_PROGRESS    : "requestedProgress",
+            SERVE_DICTIONARY    : "servedDictionary",
+            SERVE_PROGRESS      : "servedProgress",
+            UPDATE_PROGRESS     : "updatedProgress",
+        },
+        SORTING: {
+            SORT: {
+                ALPHA: {
+                    NAME        : "alpha",
+                    LABEL       : "Alphabetisch"
+                },
+                NUMERIC: {
+                    NAME        : "numeric",
+                    LABEL       : "Nach Stufe"
+                }
+            },
+            ORDER: {
+                ASC: {
+                    NAME        : "asc",
+                    LABEL       : "aufsteigend"
+                },
+                DESC: {
+                    NAME        : "desc",
+                    LABEL       : "absteigend"
+                }
+            }
+        },
         TYPE: {
-            NUMBER          : "number",
-            BOOL            : "boolean",
-            UNDEF           : "undefined",
-            OBJECT          : "object",
-            STRING          : "string"
+            NUM                 : "number",
+            BOOL                : "boolean",
+            UNDEF               : "undefined",
+            STR                 : "string"
         },
-        
-        // BEM-Syntax
         BEM: {
-            ELEMDIV         : "__",
-            MODDIV          : "--",
-            MODKEY          : "-"
+            ELEMDIV             : "__",
+            MODDIV              : "--",
+            MODKEY              : "-"
         },
-        
-        // Zeiten
+        STR: {
+            EMPTY               : "",
+            SLASH               : "/"
+        },
         TIME: {
-            STANDARD        : 300,
-            MEDIUM          : 375,
-            SHORT           : 150,
-            LONG            : 450,
-            LONGER          : 600
+            DEFAULT             : 150,
+            DOUBLE              : 300
+        },
+        WEBAPP: {
+            IOS                 : (window.navigator.standalone || false),
+            CORDOVA             : (typeof window.cordova !== "undefined")
         }
     };
-    
 })();

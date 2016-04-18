@@ -8,8 +8,6 @@
  */
 var SaveGame = (function() {
     
-    /*global CONF: true*/
-    
     // Private Variablen
     var _dictionaryId;
     var _dictionaryData;
@@ -23,17 +21,11 @@ var SaveGame = (function() {
      * Modul initialisieren.
      * Setzt die Standard-Anfangswerte des Moduls, bindet alle Events,
      * sucht nach den benötigten DOM-Elementen und rendert das Modul.
-     * @param {Object} options Optionale Einstellungen beim Initialisieren
-     * @returns {Object} Modul-Objekt
      */
-    function init(options) {
-        
-        // Standard-Optionen definieren und ergänzen
-        var defaults = { dictionary: CONF.DICTIONARY.ID };
-        $.extend(defaults, options || {});
+    function init() {
         
         // Modulvariablen initialisieren
-        _dictionaryId       = defaults.dictionary;
+        _dictionaryId       = _C.DICTIONARY.ID;
         _dictionaryData     = [];
         _dictionaryList     = [];
         _dictionarySize     = 0;
@@ -42,11 +34,19 @@ var SaveGame = (function() {
         _progressSize       = 0;
         
         // Funktionen ausführen
+        _bindEvents();
         _loadProgress();
         _loadDictionary();
-        
-        // Modul Return
-        return this;
+    }
+    
+    /**
+     * Events binden.
+     * Bindet Funktionen an Events und Elemente des Moduls.
+     */
+    function _bindEvents() {
+        $(window).on(_C.EVT.REQUEST_DICTIONARY, _serveDictionary);
+        $(window).on(_C.EVT.REQUEST_PROGRESS, _serveProgress);
+        $(window).on(_C.EVT.UPDATE_PROGRESS, _updateProgress);
     }
     
     /**
@@ -85,9 +85,9 @@ var SaveGame = (function() {
     function _loadDictionary() {
         
         // Pfad zur Wörterbuch-Datei zusammensetzen
-        var dictionaryPath = CONF.DICTIONARY.PATH_DATA + _dictionaryId +
-                             CONF.STR.SLASH + _dictionaryId +
-                             CONF.DICTIONARY.TYPE_DATA;
+        var dictionaryPath = _C.DICTIONARY.PATH_DATA + _dictionaryId +
+                             _C.STR.SLASH + _dictionaryId +
+                             _C.DICTIONARY.TYPE_DATA;
         
         // AJAX Get-Anfrage zur Datei
         $.getJSON(dictionaryPath, function(data) {
@@ -114,7 +114,7 @@ var SaveGame = (function() {
             
             // Level und Fehlschläge ermitteln
             var progress = (_progressData[word.id] || { lvl: 0, fail: 0 });
-            var lvl = Math.min(Math.max(progress.lvl, 0), CONF.QUIZ.LVL_MAX);
+            var lvl = Math.min(Math.max(progress.lvl, 0), _C.QUIZ.LVL_MAX);
             var fail = Math.max(progress.fail, 0);
             
             // Wort um Werte erweitern und zu Listen hinzufügen
@@ -125,6 +125,10 @@ var SaveGame = (function() {
         
         // Fortschritt-Größe aktualisieren
         _progressSize = Object.keys(_progressData).length;
+        
+        // Updates bereitstellen
+        _serveDictionary();
+        _serveProgress();
     }
     
     /**
@@ -135,69 +139,53 @@ var SaveGame = (function() {
     function _saveProgress() {
         
         // !TODO: _saveProgress() LocalStorage
-        
     }
     
     /**
      * Fortschitt aktualisieren.
      * Setzt das neue Level und die Anzahl der Fehlschläge
-     * für die gegebene Wort-ID.
-     * @param {string} id ID des Wortes
-     * @param {integer} lvl Neues Level des Wortes
-     * @param {integer} fail Neue Anzahl der Fehlschläge des Wortes
-     * @returns {Object} Modul-Objekt  
+     * beim entsprechenden Event.
+     * @param {Object} event Ausgelöstes Event
+     * @param {Object} data Daten des Events
      */
-    function updateProgress(id, lvl, fail) {
-        _progressData[id] = { lvl: lvl, fail: fail };
-        _saveProgress();
-        _updateLists();
-        return this;
+    function _updateProgress(event, data) {
+        if (typeof data !== _C.TYPE.UNDEF) {
+            if ((typeof data.id !== _C.TYPE.UNDEF) &&
+                (typeof data.lvl !== _C.TYPE.UNDEF) &&
+                (typeof data.fail !== _C.TYPE.UNDEF)) {
+                _progressData[data.id] = {
+                    lvl: data.lvl,
+                    fail: data.fail
+                };
+                _saveProgress();
+                _updateLists();
+            }
+        }
     }
     
     /**
-     * Fortschritt-Liste holen.
-     * Gibt die Liste der Wörter des Benutzers zurück.
-     * @returns {Array} Liste der Wörter
+     * Fortschritt-Liste bereitstellen.
+     * Liefert die Fortschritt-Liste in einem Event.
      */
-    function getProgressList() {
-        return _progressList;
+    function _serveProgress() {
+        $(window).trigger(_C.EVT.SERVE_PROGRESS, {
+            list: _progressList,
+            size: _progressSize
+        });
     }
     
     /**
-     * Größe der Fortschritt-Liste holen.
-     * Gibt die Größe der Benutzer-Liste zurück.
-     * @returns {integer} Größe der Liste
+     * Wörterbuch-Liste bereitstellen.
+     * Liefert die Wörterbuch-Liste in einem Event.
      */
-    function getProgressSize() {
-        return _progressSize;
-    }
-    
-    /**
-     * Wörterbuch-Liste holen.
-     * Gibt die Liste der Wörter des Wörterbuchs zurück.
-     * @returns {Array} Liste der Wörter
-     */
-    function getDictionaryList() {
-        return _dictionaryList;
-    }
-    
-    /**
-     * Größe der Wörterbuch-Liste holen.
-     * Gibt die Größe der Gesamt-Liste zurück.
-     * @returns {integer} Größe der Liste
-     */
-    function getDictionarySize() {
-        return _dictionarySize;
+    function _serveDictionary() {
+        $(window).trigger(_C.EVT.SERVE_DICTIONARY, {
+            list: _dictionaryList,
+            size: _dictionarySize
+        });
     }
     
     // Öffentliches Interface
-    return {
-        init                : init,
-        getProgressList     : getProgressList,
-        getProgressSize     : getProgressSize,
-        getDictionaryList   : getDictionaryList,
-        getDictionarySize   : getDictionarySize,
-        updateProgress      : updateProgress
-    };
+    return { init: init };
     
 })();

@@ -8,10 +8,6 @@
  */
 var Dictionary = (function() {
     
-    /*global CONF: true*/
-    /*global SaveGame: true*/
-    /*global NavigationBar: true*/
-    
     // Selektor-Konstanten
     var _SEL_SLIDER             = "[role='directory']";
     var _SEL_DROPDOWN           = "[role='menu']";
@@ -31,31 +27,6 @@ var Dictionary = (function() {
     // Data-Attibut-Konstanten
     var _DATA_SORT              = "sort";
     var _DATA_ORDER             = "order";
-    //var _DATA_WORD              = "word";
-    
-    // Sortier-Konstanten
-    var _SORTING = {
-        SORT: {
-            ALPHA: {
-                NAME            : "alpha",
-                LABEL           : "Alphabetisch"
-            },
-            NUMERIC: {
-                NAME            : "numeric",
-                LABEL           : "Nach Stufe"
-            }
-        },
-        ORDER: {
-            ASC: {
-                NAME            : "asc",
-                LABEL           : "aufsteigend"
-            },
-            DESC: {
-                NAME            : "desc",
-                LABEL           : "absteigend"
-            }
-        }
-    };
     
     // DOM-Elemente
     var _$slider;
@@ -79,21 +50,9 @@ var Dictionary = (function() {
      * Modul initialisieren.
      * Setzt die Standard-Anfangswerte des Moduls, bindet alle Events,
      * sucht nach den benötigten DOM-Elementen und rendert das Modul.
-     * @param {Object} options Optionale Einstellungen beim Initialisieren
-     * @returns {Object} Modul-Objekt
      */
-    function init(options) {
-        
-        // Standard-Optionen definieren und ergänzen
-        var defaults = {
-            $target         : null,
-            initialSort     : _SORTING.SORT.ALPHA.NAME,
-            initialOrder    : _SORTING.ORDER.ASC.NAME
-        };
-        
-        // Optionen ergänzen
-        $.extend(defaults, options || {});
-        
+    function init() {
+
         // Templates suchen und setzen
         _tmplDictionary     = $(_SEL_TMPL_DICTIONARY).html();
         _tmplWordlist       = $(_SEL_TMPL_WORDLIST).html();
@@ -102,73 +61,92 @@ var Dictionary = (function() {
         Mustache.parse(_tmplDictionary);
         Mustache.parse(_tmplWordlist);
         
-        // Interne Arrays initialisieren
-        _availableSorts      = [];
-        _availableOrders     = [];
+        // Interne Variablen initialisieren
+        _$slider            = null;
+        _$dropdown          = null;
+        _$list              = null;
+        _$details           = null;
+        _$sort              = null;
+        _$items             = null;
+        _list               = [];
+        _availableSorts     = [];
+        _availableOrders    = [];
+        _dropdownIsOpened   = false;
+        _currentSort        = _C.SORTING.SORT.ALPHA.NAME;
+        _currentOrder       = _C.SORTING.ORDER.ASC.NAME;
         
-        // Wörterbuch erzeugen
-        _createDictionary(defaults.$target, function() {
-
-            // Modulvariablen initialisieren
-            _$slider            = $(_SEL_SLIDER);
-            _$dropdown          = _$slider.find(_SEL_DROPDOWN);
-            _$list              = _$slider.find(_SEL_LIST);
-            _$details           = _$slider.find(_SEL_DETAILS);
-            _$sort              = _$dropdown.find(_SEL_SORT);
-            _$items             = _$list.find(_SEL_ITEM);
-            _currentSort        = defaults.initialSort;
-            _currentOrder       = defaults.initialOrder;
-            _dropdownIsOpened   = false;
-            _list               = SaveGame.getProgressList();
-            
-            // Funktionen ausführen
-            _bindEvents();
-            _sortList();
-            _renderDropdown();
-        });
-
-        // Modul Return
-        return this;
+        // Funktionen ausführen
+        _bindEvents(false);
+    }
+    
+    /**
+     * Wörterbuch initialisieren.
+     * Initialisiert die DOM-Elemente und internen Variablen
+     * des Wörterbuch-Moduls, sobald sie bereitstehen.
+     */
+    function _initDictionary() {
+        
+        // Modulvariablen initialisieren
+        _$slider            = $(_SEL_SLIDER);
+        _$dropdown          = _$slider.find(_SEL_DROPDOWN);
+        _$list              = _$slider.find(_SEL_LIST);
+        _$details           = _$slider.find(_SEL_DETAILS);
+        _$sort              = _$dropdown.find(_SEL_SORT);
+        _$items             = _$list.find(_SEL_ITEM);
+        
+        // Funktionen ausführen
+        _bindEvents(true);
+        
+        // Fortschritt-Liste anfragen
+        $(window).trigger(_C.EVT.REQUEST_PROGRESS);
+        $(window).trigger(_C.EVT.SHOW_VIEW);
     }
     
     /**
      * Events binden.
      * Bindet Funktionen an Events und Elemente des Moduls.
+     * @param {boolean} domElements Nur DOM-Elemente binden oder andere
      */
-    function _bindEvents() {
-        _$sort.on(CONF.EVENT.CLICK, _sortList);
+    function _bindEvents(domElements) {
+        if (domElements) { _$sort.on(_C.EVT.CLICK, _sortList); }
+        else {
+            $(window).on(_C.EVT.LOAD_PANEL_CONTENT, _createDictionary);
+            $(window).on(_C.EVT.SERVE_PROGRESS, _updateList);
+            $(window).on(_C.EVT.PRESSED_BUTTON, _setDropdown);
+        }
     }
     
     /**
      * Wörterbuch erzeugen.
      * Erzeugt das Wörterbuch mit Mustache in dem übergebenen
      * jQuery-Container und initialisiert das Wörterbuch danach.
-     * @param {Object} $target jQuery-Zielobjekt
-     * @param {Object} callback Funktion, die anschließend ausgeführt wird
+     * @param {Object} event Ausgelöstes Event
+     * @param {Object} data Daten des Events
      */
-    function _createDictionary($target, callback) {
-        
-        // Sortier-Optionen initialisieren
-        var sorting = [];
-        
-        // Verfügbare Aktionen setzen
-        $.each(_SORTING.SORT, function(sort, sortProps) {
-            _availableSorts.push(sortProps.NAME);
-            $.each(_SORTING.ORDER, function(order, orderProps) {
-                _availableOrders.push(orderProps.NAME);
-                sorting.push({
-                    optionSort  : sortProps.NAME,
-                    optionOrder : orderProps.NAME,
-                    labelSort   : sortProps.LABEL,
-                    labelOrder  : orderProps.LABEL
+    function _createDictionary(event, data) {
+        if (typeof data !== _C.TYPE.UNDEF) {
+            if ((data.panel === _C.VIEW.DICTIONARY.NAME) &&
+                (data.target instanceof jQuery)) {
+
+                // Verfügbare Aktionen setzen
+                var sorting = [];
+                $.each(_C.SORTING.SORT, function(sort, sortProps) {
+                    _availableSorts.push(sortProps.NAME);
+                    $.each(_C.SORTING.ORDER, function(order, orderProps) {
+                        _availableOrders.push(orderProps.NAME);
+                        sorting.push({
+                            optionSort  : sortProps.NAME,
+                            optionOrder : orderProps.NAME,
+                            labelSort   : sortProps.LABEL,
+                            labelOrder  : orderProps.LABEL
+                        });
+                    });
                 });
-            });
-        });
-        
-        // Template füllen, Callback ausführen
-        if (($target instanceof jQuery) && $.isFunction(callback)) {
-            $target.html(Mustache.render(_tmplDictionary, sorting))
-                   .promise().done(function() { callback(); });
+                
+                // Template füllen, Callback ausführen
+                data.target.html(Mustache.render(_tmplDictionary, sorting))
+                    .promise().done(function() { _initDictionary(); });
+            }
         }
     }
     
@@ -183,15 +161,13 @@ var Dictionary = (function() {
     function _compareListItems(a, b) {
         
         // Sortierung: Numerisch
-        if (_currentSort === _SORTING.SORT.NUMERIC.NAME) {
+        if (_currentSort === _C.SORTING.SORT.NUMERIC.NAME) {
             if (parseInt(a.lvl) < parseInt(b.lvl)) { return -1; }
             else if (parseInt(a.lvl) > parseInt(b.lvl)) { return 1; }
             else { return a.name.localeCompare(b.name); }
             
         // Standard-Sortierung: Alphabetisch
-        } else {
-            return a.name.localeCompare(b.name);
-        }
+        } else { return a.name.localeCompare(b.name); }
     }
     
     /**
@@ -203,7 +179,7 @@ var Dictionary = (function() {
     function _sortList(event) {
 
         // Wenn ein Event übergeben wurde, dessen Daten setzen
-        if (typeof event !== CONF.TYPE.UNDEF) {
+        if (typeof event !== _C.TYPE.UNDEF) {
             if (event.target) {
                 var sortButton = $(event.target).closest(_SEL_SORT);
                 _currentSort = sortButton.data(_DATA_SORT);
@@ -213,30 +189,33 @@ var Dictionary = (function() {
         
         // Liste sortieren
         _list.sort(_compareListItems);
-        if (_currentOrder === _SORTING.ORDER.DESC.NAME) { _list.reverse(); }
+        if (_currentOrder === _C.SORTING.ORDER.DESC.NAME) { _list.reverse(); }
         
-        // Navigation-Bar setzen
+        // Dropdown ausblenden, wenn geöffnet
         if (_dropdownIsOpened) {
-            NavigationBar.setButtonRight(
-                NavigationBar.ACTION.SORT,
-                NavigationBar.ICON.SORT
+            $(window).trigger(
+                _C.EVT.PRESSED_BUTTON,
+                { action: _C.ACT.SORT_HIDE }
             );
         }
         
-        // Dropdown ausblenden, Liste aktualisieren
-        hideDropdown();
+        // Liste rendern
         _renderList();
     }
     
     /**
      * Liste aktualisieren.
-     * Aktuelle Fortschritt-Liste vom SaveGame-Modul besorgen
-     * und die Liste neu sortieren:
+     * Aktualisiert die Wörterbuch-Liste, sobald ein entsprechendes
+     * Event mit den erforderlichen Daten ausgelöst wird.
+     * @param {Object} event Ausgelöstes Event
+     * @param {Object} data Daten des Events
      * @returns {Object} Modul-Objekt
      */
-    function updateList() {
-        _list = SaveGame.getProgressList();
-        _sortList();
+    function _updateList(event, data) {
+        if (typeof data.list !== _C.TYPE.UNDEF) {
+            _list = data.list;
+            _sortList();
+        }
         return this;
     }
     
@@ -245,12 +224,10 @@ var Dictionary = (function() {
      * Rendert die Liste des Wörterbuches.
      */
     function _renderList() {
-        
-        // Aktuelle Liste mit Mustache-Template einfügen
         if (_$list instanceof jQuery) {
             _$list.html(
                 Mustache.render(_tmplWordlist, {
-                    words: _list, levels: CONF.QUIZ.LEVELS
+                    words: _list, levels: _C.QUIZ.LEVELS
                 })
             );
         }
@@ -275,44 +252,46 @@ var Dictionary = (function() {
     }
     
     /**
+     * Dropdown aktualisieren.
+     * Setzt das Dropdown anhand eines übergebenen Button-Events;
+     * blendet es entweder ein oder aus.
+     * @param {Object} event Ausgelöstes Event
+     * @param {Object} data Daten des Events
+     */
+    function _setDropdown(event, data) {
+        if (typeof data !== _C.TYPE.UNDEF) {
+            if (typeof data.action !== _C.TYPE.UNDEF) {
+                if (data.action === _C.ACT.SORT_SHOW) {
+                    _showDropdown();
+                }
+                if ((data.action === _C.ACT.SORT_HIDE) ||
+                    (data.action === _C.ACT.SEARCH_HIDE) ||
+                    (data.action === _C.ACT.SEARCH_SHOW)) {
+                    _hideDropdown();
+                }
+            }
+        }
+    }
+    
+    /**
      * Dropdown-Menü einblenden.
      * Blendet das Dropdown-Menü des Wörterbuchs ein.
-     * @returns {Object} Modul-Objekt
      */
-    function showDropdown() {
+    function _showDropdown() {
         _dropdownIsOpened = true;
         _renderDropdown();
-        return this;
     }
     
     /**
      * Dropdown-Menü ausblenden.
      * Blendet das Dropdown-Menü des Wörterbuchs aus.
-     * @returns {Object} Modul-Objekt
      */
-    function hideDropdown() {
+    function _hideDropdown() {
         _dropdownIsOpened = false;
         _renderDropdown();
-        return this;
-    }
-    
-    /**
-     * Ermitteln, ob Dropdown geöffnet ist.
-     * Gibt zurück, ob das Dropdown-Menü des Wörterbuchs
-     * aktuell geöffnet ist.
-     * @returns {boolean} Dropdown ist geöffnet/geschlossen
-     */
-    function dropdownIsOpened() {
-        return _dropdownIsOpened;
     }
     
     // Öffentliches Interface
-    return {
-        init                : init,
-        showDropdown        : showDropdown,
-        hideDropdown        : hideDropdown,
-        dropdownIsOpened    : dropdownIsOpened,
-        updateList          : updateList
-    };
+    return { init: init };
     
 })();

@@ -8,9 +8,6 @@
  */
 var TabBar = (function() {
     
-    /*global CONF: true*/
-    /*global View: true*/
-    
     // Selektor-Konstanten
     var _SEL_TABBAR         = "[role='tablist']";
     var _SEL_TABS           = "[role='tab']";
@@ -40,37 +37,22 @@ var TabBar = (function() {
      * Modul initialisieren.
      * Setzt die Standard-Anfangswerte des Moduls, bindet alle Events,
      * sucht nach den benötigten DOM-Elementen und rendert das Modul.
-     * @param {Object} options Optionale Einstellungen beim Initialisieren
-     * @returns {Object} Modul-Objekt
      */
-    function init(options) {
-        
-        // Standard-Optionen definieren
-        var defaults = {
-            isHidden        : false,
-            initialTab      : 0
-        };
-        
-        // Standard-Optionen ergänzen/überschreiben
-        $.extend(defaults, options || {});
+    function init() {
         
         // Modulvariablen initialisieren
         _$tabbar            = $(_SEL_TABBAR);
-        _$tabs              = null;
-        _tabNumber          = -1;
-        _isHidden           = defaults.isHidden;
         _tmplTablist        = $(_SEL_TMPL).html();
+        _$tabs              = null;
+        _isHidden           = false;
+        _tabNumber          = -1;
+        _tabActive          = 0;
         
         // Templates parsen
         Mustache.parse(_tmplTablist);
         
         // Funktionen ausführen
-        _createTablist();
         _bindEvents();
-        _setTab(defaults.initialTab);
-        
-        // Modul Return
-        return this;
     }
     
     /**
@@ -78,7 +60,10 @@ var TabBar = (function() {
      * Bindet Funktionen an Events und Elemente des Moduls.
      */
     function _bindEvents() {
-        _$tabbar.on(CONF.EVENT.CLICK, _SEL_TABS, _setTab);
+        _$tabbar.on(_C.EVT.CLICK, _SEL_TABS, _setTab);
+        $(window).on(_C.EVT.CREATE_PANELS, _createTablist);
+        window.addEventListener(_C.EVT.KEYBOARD_SHOW, _hide);
+        window.addEventListener(_C.EVT.KEYBOARD_HIDE, _show);
     }
     
     /**
@@ -87,29 +72,30 @@ var TabBar = (function() {
      * gesetzten aktuellen Variablen.
      */
     function _render() {
-        
-        // Aktiven Tab setzen
+        _$tabbar.setMod(_B, _M_HIDDEN, _isHidden);
+        _$tabbar.setMod(_B, _M_TAB, _tabActive);
         _$tabs.eq(_tabActive).setMod(_B, _E, _M_ACTIVE, true)
               .siblings().setMod(_B, _E, _M_ACTIVE, false);
-        
-        // TabBar ein-/ausblenden
-        _$tabbar.setMod(_B, _M_HIDDEN, _isHidden);
-        
-        // Aktiven Tab notieren (Statusleiste bewegen)
-        _$tabbar.setMod(_B, _M_TAB, _tabActive);
     }
     
     /**
      * Tabliste generieren.
-     * Generiert für jedes in der View definierte Panel einen
-     * entsprechenden Tab in der Tab-Bar.
+     * Generiert für jedes im Event übergebene Panel einen
+     * entsprechenden Tab in der Tab-Bar und aktiviert den ersten Tab.
      */
-    function _createTablist() {
-        
-        // Template füllen und in Tab-Bar laden, Tabs initialisieren
-        _$tabbar.html(Mustache.render(_tmplTablist, View.getPanelList()));
-        _$tabs = _$tabbar.find(_SEL_TABS);
-        _tabNumber = _$tabs.length - 1;
+    function _createTablist(event, data) {
+        if (typeof data !== _C.TYPE.UNDEF) {
+            if (typeof data.panels !== _C.TYPE.UNDEF) {
+                _$tabbar.html(Mustache.render(_tmplTablist, data.panels))
+                    .promise().done(function() {
+                        _$tabs = _$tabbar.find(_SEL_TABS);
+                        _tabNumber = _$tabs.length - 1;
+                        _setTab(_tabActive);
+                        $(window).trigger(_C.EVT.SHOW_VIEWPORT);
+                    }
+                );
+            }
+        }
     }
     
     /**
@@ -120,60 +106,43 @@ var TabBar = (function() {
      * @param {Object|number} tab Klick-Event vom Tab oder Tab-Index
      */
     function _setTab(tab) {
-        
-        // Variablen initialisieren
+
+        // Variablen initialisieren, Tab-Index ermitteln
         var i = -1;
         var panel = null;
-        
-        // Tab-Index ermitteln
-        if (typeof tab === CONF.TYPE.NUMBER) { i = tab; }
+        if (typeof tab === _C.TYPE.NUM) { i = tab; }
         else if (tab.target) { i = $(tab.target).closest(_SEL_TABS).index(); }
 
-        // Tab-Index prüfen und setzen
+        // Tab-Index prüfen, setzen und Event auslösen
         if ((i >= 0) && (i <= _tabNumber)) {
-            
-            // Aktiven Tab und Ziel-Panel setzen
             _tabActive = i;
             panel = _$tabs.eq(i).data(_DATA_PANEL);
-            
-            // View prüfen und Funktion auslösen
-            if ((panel !== null) && (panel.length > 0) &&
-                ($.isFunction(View.setPanel))) {
-                View.setPanel(panel);
+            if ((panel !== null) && (panel.length > 0)) {
+                $(window).trigger(_C.EVT.SET_PANEL, { panel: panel });
             }
         }
-        
-        // Rendern
         _render();
     }
     
     /**
      * Modul verbergen.
      * Blendet das Modul aus und rendert es neu.
-     * @returns {Object} Modul-Objekt
      */
-    function hide() {
+    function _hide() {
         _isHidden = true;
         _render();
-        return this;
     }
     
     /**
      * Modul zeigen.
      * Blendet das Modul ein und rendert es neu.
-     * @returns {Object} Modul-Objekt
      */
-    function show() {
+    function _show() {
         _isHidden = false;
         _render();
-        return this;
     }
     
     // Öffentliches Interface
-    return {
-        init : init,
-        hide : hide,
-        show : show
-    };
+    return { init: init };
     
 })();

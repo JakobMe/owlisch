@@ -82,7 +82,7 @@
         height: @app-size-height-navigationbar;
         line-height: @app-size-height-navigationbar;
         width: @app-size-height-navigationbar;
-        .transition(all, @app-time-animation-half);
+        .transition();
         
         // Mod: Links/Deaktiviert
         &--left { left: 0; }
@@ -114,7 +114,7 @@
         padding: @app-size-margin-half @app-size-height-navigationbar;
         opacity: @app-opacity-invisible;
         .translate(0, 100%);
-        .transition();
+        .transition(opacity);
         .borderbox();
     }
     

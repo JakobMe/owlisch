@@ -15,19 +15,13 @@
 // Block: Navigation-Bar
 .@{_navigation-bar} {
     position: absolute;
-    overflow: hidden;
-    text-align: center;
+    height: auto;
     top: 0;
     left: 0;
     width: 100%;
-    background: @app-color-main;
-    color: @app-color-text-light;
-    height: @app-size-height-navigationbar;
-    .shadow-line(@app-size-line-thin, darken(@app-color-main, @app-darken-border));
-    .textshadow();
     
     // Mod: Webapp
-    &--webapp { padding-top: @app-size-height-statusbar; }
+    &--webapp &__wrapper { padding-top: @app-size-height-statusbar; }
     
     // Mod: Suche & Suchfeld
     &--search &__search {
@@ -42,7 +36,17 @@
     }
     
     // Element: Wrapper
-    &__wrapper { position: relative; }
+    &__wrapper {
+        overflow: hidden;
+        position: relative;
+        text-align: center;
+        z-index: 1000;
+        color: @app-color-text-light;
+        background: @app-color-main;
+        height: @app-size-height-navigationbar;
+        .shadow-line(@app-size-line-thin, darken(@app-color-main, @app-darken-border));
+        .textshadow();
+    }
     
     // Element: Titel
     &__title {
@@ -71,7 +75,7 @@
         text-align: center;
         font-style: normal;
         text-decoration: none;
-        top: 0;
+        bottom: 0;
         margin: 0;
         padding: 0;
         font-size: @_navigation-bar-fontsize-icon;
@@ -103,10 +107,10 @@
     &__search {
         overflow: hidden;
         position: absolute;
-        top: 0;
         left: 0;
+        bottom: 0;
         width: 100%;
-        height: 100%;
+        height: @app-size-height-navigationbar;
         padding: @app-size-margin-half @app-size-height-navigationbar;
         opacity: @app-opacity-invisible;
         .translate(0, 100%);
@@ -142,13 +146,13 @@
 // Responsive
 @media screen and (min-width: @app-size-responsive) {
     
-    // Block: Navigation-Bar
-    .@{_navigation-bar} {
+    // Block: Navigation-Bar & Element: Wrapper
+    .@{_navigation-bar}__wrapper {
         background-image: url("@{app-path-layout}/statusbar.png?v=@{app-version}");
         background-repeat: no-repeat;
         background-position: top center;
-        padding-top: @app-size-height-statusbar;
         background-size: @app-size-width-iphone @app-size-height-statusbar;
+        padding-top: @app-size-height-statusbar;
     }
 }
 
@@ -158,6 +162,8 @@
        screen and (min-width: @app-size-responsive)
               and (min-resolution: 144dpi) {
     
-    // Block: Navigation-Bar
-    .@{_navigation-bar} { background-image: url("@{app-path-layout}/statusbar-retina.png?v=@{app-version}"); }
+    // Block: Navigation-Bar & Element: Wrapper
+    .@{_navigation-bar}__wrapper {
+        background-image: url("@{app-path-layout}/statusbar-retina.png?v=@{app-version}");
+    }
 }

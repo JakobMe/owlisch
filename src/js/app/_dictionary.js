@@ -10,28 +10,14 @@ var Dictionary = (function() {
     
     // Selektor-Konstanten
     var _SEL_SLIDER             = "[role='directory']";
-    var _SEL_DROPDOWN           = "[role='menu']";
-    var _SEL_SORT               = "[role='menuitem']";
     var _SEL_LIST               = "[role='list']";
     var _SEL_ITEM               = "[role='listitem']";
     var _SEL_DETAILS            = "[role='complementary']";
     var _SEL_TMPL_DICTIONARY    = "#tmpl-dictionary";
     var _SEL_TMPL_WORDLIST      = "#tmpl-wordlist";
     
-    // BEM-Konstanten
-    var _B_DROPDOWN             = "dropdown";
-    var _E_ITEM                 = "item";
-    var _M_OPENED               = "opened";
-    var _M_SELECTED             = "selected";
-    
-    // Data-Attibut-Konstanten
-    var _DATA_SORT              = "sort";
-    var _DATA_ORDER             = "order";
-    
     // DOM-Elemente
     var _$slider;
-    var _$dropdown;
-    var _$sort;
     var _$list;
     var _$items;
     var _$details;
@@ -40,9 +26,6 @@ var Dictionary = (function() {
     var _list;
     var _currentSort;
     var _currentOrder;
-    var _availableSorts;
-    var _availableOrders;
-    var _dropdownIsOpened;
     var _tmplDictionary;
     var _tmplWordlist;
     
@@ -63,15 +46,10 @@ var Dictionary = (function() {
         
         // Interne Variablen initialisieren
         _$slider            = null;
-        _$dropdown          = null;
         _$list              = null;
         _$details           = null;
-        _$sort              = null;
         _$items             = null;
         _list               = [];
-        _availableSorts     = [];
-        _availableOrders    = [];
-        _dropdownIsOpened   = false;
         _currentSort        = _C.SORTING.SORT.ALPHA.NAME;
         _currentOrder       = _C.SORTING.ORDER.ASC.NAME;
         
@@ -88,14 +66,12 @@ var Dictionary = (function() {
         
         // Modulvariablen initialisieren
         _$slider            = $(_SEL_SLIDER);
-        _$dropdown          = _$slider.find(_SEL_DROPDOWN);
         _$list              = _$slider.find(_SEL_LIST);
         _$details           = _$slider.find(_SEL_DETAILS);
-        _$sort              = _$dropdown.find(_SEL_SORT);
         _$items             = _$list.find(_SEL_ITEM);
         
         // Funktionen ausführen
-        _bindEvents(true);
+        _bindEvents();
         
         // Fortschritt-Liste anfragen
         $(window).trigger(_C.EVT.REQUEST_PROGRESS);
@@ -107,13 +83,10 @@ var Dictionary = (function() {
      * Bindet Funktionen an Events und Elemente des Moduls.
      * @param {boolean} domElements Nur DOM-Elemente binden oder andere
      */
-    function _bindEvents(domElements) {
-        if (domElements) { _$sort.on(_C.EVT.CLICK, _sortList); }
-        else {
-            $(window).on(_C.EVT.LOAD_PANEL_CONTENT, _createDictionary);
-            $(window).on(_C.EVT.SERVE_PROGRESS, _updateList);
-            $(window).on(_C.EVT.PRESSED_BUTTON, _setDropdown);
-        }
+    function _bindEvents() {
+        $(window).on(_C.EVT.LOAD_PANEL_CONTENT, _createDictionary);
+        $(window).on(_C.EVT.SERVE_PROGRESS, _updateList);
+        $(window).on(_C.EVT.SORTED_LIST, _sortList);
     }
     
     /**
@@ -128,23 +101,8 @@ var Dictionary = (function() {
             if ((data.panel === _C.VIEW.DICTIONARY.NAME) &&
                 (data.target instanceof jQuery)) {
 
-                // Verfügbare Aktionen setzen
-                var sorting = [];
-                $.each(_C.SORTING.SORT, function(sort, sortProps) {
-                    _availableSorts.push(sortProps.NAME);
-                    $.each(_C.SORTING.ORDER, function(order, orderProps) {
-                        _availableOrders.push(orderProps.NAME);
-                        sorting.push({
-                            optionSort  : sortProps.NAME,
-                            optionOrder : orderProps.NAME,
-                            labelSort   : sortProps.LABEL,
-                            labelOrder  : orderProps.LABEL
-                        });
-                    });
-                });
-                
                 // Template füllen, Callback ausführen
-                data.target.html(Mustache.render(_tmplDictionary, sorting))
+                data.target.html(Mustache.render(_tmplDictionary))
                     .promise().done(function() { _initDictionary(); });
             }
         }
@@ -172,34 +130,24 @@ var Dictionary = (function() {
     
     /**
      * Liste sortieren.
-     * Sortiert die Liste der Wörter anhand der gegebenen Sortierung
-     * und Ordnung oder eines Klick-Events.
-     * @param {Object} event Klick-Event eines Sortier-Buttons
+     * Sortiert die Liste der Wörter anhand der von einem Event
+     * übergenen Sortierung und Ordnung; rendert die Liste anschließend.
+     * @param {Object} event Ausgelöstes Event
+     * @param {Object} data Daten des Events
      */
-    function _sortList(event) {
+    function _sortList(event, data) {
 
         // Wenn ein Event übergeben wurde, dessen Daten setzen
-        if (typeof event !== _C.TYPE.UNDEF) {
-            if (event.target) {
-                var sortButton = $(event.target).closest(_SEL_SORT);
-                _currentSort = sortButton.data(_DATA_SORT);
-                _currentOrder = sortButton.data(_DATA_ORDER);
-            }
+        if ((typeof data !== _C.TYPE.UNDEF) &&
+            (typeof data.sort !== _C.TYPE.UNDEF) &&
+            (typeof data.order !== _C.TYPE.UNDEF)) {
+            _currentSort = data.sort;
+            _currentOrder = data.order;
         }
         
-        // Liste sortieren
+        // Liste sortieren und rendern
         _list.sort(_compareListItems);
         if (_currentOrder === _C.SORTING.ORDER.DESC.NAME) { _list.reverse(); }
-        
-        // Dropdown ausblenden, wenn geöffnet
-        if (_dropdownIsOpened) {
-            $(window).trigger(
-                _C.EVT.PRESSED_BUTTON,
-                { action: _C.ACT.SORT_HIDE }
-            );
-        }
-        
-        // Liste rendern
         _renderList();
     }
     
@@ -212,7 +160,8 @@ var Dictionary = (function() {
      * @returns {Object} Modul-Objekt
      */
     function _updateList(event, data) {
-        if (typeof data.list !== _C.TYPE.UNDEF) {
+        if ((typeof data !== _C.TYPE.UNDEF) &&
+            (typeof data.list !== _C.TYPE.UNDEF)) {
             _list = data.list;
             _sortList();
         }
@@ -231,66 +180,6 @@ var Dictionary = (function() {
                 })
             );
         }
-    }
-    
-    /**
-     * Dropdown-Menü rendern.
-     * Rendert das Dropdown-Menü anhand der aktuell gesetzte Eigenschaften
-     * des Menüs (offen/geschlossen, aktiver Menüpunkt).
-     */
-    function _renderDropdown() {
-        if (_$dropdown instanceof jQuery) {
-            _$dropdown.setMod(_B_DROPDOWN, _M_OPENED, _dropdownIsOpened);
-            _$sort.each(function() {
-                var sortItem = $(this);
-                var isCurrent = false;
-                if ((sortItem.data(_DATA_SORT) === _currentSort) &&
-                    (sortItem.data(_DATA_ORDER) === _currentOrder)) {
-                    isCurrent = true;
-                }
-                sortItem.setMod(_B_DROPDOWN, _E_ITEM, _M_SELECTED, isCurrent);
-            });
-        }
-    }
-    
-    /**
-     * Dropdown aktualisieren.
-     * Setzt das Dropdown anhand eines übergebenen Button-Events;
-     * blendet es entweder ein oder aus.
-     * @param {Object} event Ausgelöstes Event
-     * @param {Object} data Daten des Events
-     */
-    function _setDropdown(event, data) {
-        if (typeof data !== _C.TYPE.UNDEF) {
-            if (typeof data.action !== _C.TYPE.UNDEF) {
-                if (data.action === _C.ACT.SORT_SHOW) {
-                    _showDropdown();
-                }
-                if ((data.action === _C.ACT.SORT_HIDE) ||
-                    (data.action === _C.ACT.SEARCH_HIDE) ||
-                    (data.action === _C.ACT.SEARCH_SHOW)) {
-                    _hideDropdown();
-                }
-            }
-        }
-    }
-    
-    /**
-     * Dropdown-Menü einblenden.
-     * Blendet das Dropdown-Menü des Wörterbuchs ein.
-     */
-    function _showDropdown() {
-        _dropdownIsOpened = true;
-        _renderDropdown();
-    }
-    
-    /**
-     * Dropdown-Menü ausblenden.
-     * Blendet das Dropdown-Menü des Wörterbuchs aus.
-     */
-    function _hideDropdown() {
-        _dropdownIsOpened = false;
-        _renderDropdown();
     }
     
     // Öffentliches Interface

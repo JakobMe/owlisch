@@ -3,17 +3,6 @@
         <script id="tmpl-dictionary" type="text/template">
             <div class="slider slider--has-2 slider--is-1" role="directory">
                 <div class="slider__slide" role="listbox" data-slide="1">
-                    <ul class="dropdown" role="menu">
-                        {{#.}}
-                        <li class="dropdown__item" role="menuitem"
-                            data-sort="{{optionSort}}" data-order="{{optionOrder}}">
-                            <i class="dropdown__icon icon icon--{{optionOrder}}"></i>
-                            <span class="dropdown__label">
-                                {{labelSort}} sortieren ({{labelOrder}})
-                            </span>
-                        </li>
-                        {{/.}}
-                    </ul>
                     <ul class="list" role="list"></ul>
                 </div>
                 <div class="slider__slide slider__slide--scrollable"

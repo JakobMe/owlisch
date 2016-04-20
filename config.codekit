@@ -533,6 +533,15 @@
 		"outputPathIsOutsideProject": 0,
 		"outputPathIsSetByUser": 0
 		},
+	"\/src\/kit\/templates\/_dropdown.kit": {
+		"fileType": 2048,
+		"ignore": 1,
+		"ignoreWasSetByUser": 0,
+		"inputAbbreviatedPath": "\/src\/kit\/templates\/_dropdown.kit",
+		"outputAbbreviatedPath": "\/src\/kit\/templates\/_dropdown.html",
+		"outputPathIsOutsideProject": 0,
+		"outputPathIsSetByUser": 0
+		},
 	"\/src\/kit\/templates\/_tablist.kit": {
 		"fileType": 2048,
 		"ignore": 1,
@@ -2153,7 +2162,7 @@
 			"flagValue": -1
 			},
 		"dead_code": {
-			"active": 1,
+			"active": 0,
 			"flagValue": -1
 			},
 		"drop_console": {
@@ -2229,7 +2238,7 @@
 			"flagValue": -1
 			},
 		"pure_getters": {
-			"active": 1,
+			"active": 0,
 			"flagValue": -1
 			},
 		"quote-keys": {

@@ -1,0 +1,13 @@
+        
+        <!-- Template: Dropdown -->
+        <script id="tmpl-dropdown" type="text/template">
+            {{#.}}
+            <li class="dropdown__item" role="menuitem"
+                data-sort="{{optionSort}}" data-order="{{optionOrder}}">
+                <i class="dropdown__icon icon icon--{{optionOrder}}"></i>
+                <span class="dropdown__label">
+                    {{labelSort}} sortieren ({{labelOrder}})
+                </span>
+            </li>
+            {{/.}}
+        </script>

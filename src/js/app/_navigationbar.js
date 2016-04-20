@@ -13,29 +13,44 @@ var NavigationBar = (function() {
     var _SEL_BUTTONS        = "[role='button']";
     var _SEL_TITLE          = "[role='heading']";
     var _SEL_SEARCH         = "[role='search']";
+    var _SEL_DROPDOWN       = "[role='menu']";
+    var _SEL_SORT           = "[role='menuitem']";
+    var _SEL_TMPL_DROPDOWN  = "#tmpl-dropdown";
     
     // BEM-Konstanten
-    var _B                  = "navigation-bar";
+    var _B_BAR              = "navigation-bar";
+    var _B_DROPDOWN         = "dropdown";
+    var _E_ITEM             = "item";
     var _E_TITLE            = "title";
     var _E_BUTTON           = "button";
     var _M_HIDDEN           = "hidden";
     var _M_DISABLED         = "disabled";
     var _M_SEARCH           = "search";
     var _M_WEBAPP           = "webapp";
-    var _M_ICON             = "icon";
+    var _M_ICON             = "icon";    
+    var _M_OPENED           = "opened";
+    var _M_SELECTED         = "selected";
+    
+    // Data-Attibut-Konstanten
+    var _DATA_SORT          = "sort";
+    var _DATA_ORDER         = "order";
     
     // Private Variablen    
     var _title;
     var _buttonLeft;
     var _buttonRight;
     var _searchIsActive;
-    var _searchWasActive;
     var _buttonsAreDisabled;
+    var _dropdownIsOpened;
+    var _tmplDropdown;
     var _isWebapp;
+    var _cache;
     
     // DOM-Elemente
     var _$navbar;
     var _$search;
+    var _$dropdown;
+    var _$sort;
     
     /**
      * Modul initialisieren.
@@ -44,21 +59,58 @@ var NavigationBar = (function() {
      */
     function init() {
         
+        // Templates laden
+        _tmplDropdown = $(_SEL_TMPL_DROPDOWN).html();
+        Mustache.parse(_tmplDropdown);
+        
         // Modulvariablen initialisieren
         _$navbar            = $(_SEL_TITLEBAR);
         _$search            = _$navbar.find(_SEL_SEARCH);
+        _$dropdown          = _$navbar.find(_SEL_DROPDOWN);
         _isWebapp           = (_C.WEBAPP.IOS || _C.WEBAPP.CORDOVA);
+        _cache              = {};
         _title              = {};
         _buttonLeft         = {};
         _buttonRight        = {};
         _searchIsActive     = false;
-        _searchWasActive    = false;
         _buttonsAreDisabled = false;
+        _dropdownIsOpened   = false;
         
         // Funktionen ausführen
-        _initButtonsAndTitle();
-        _bindEvents();
+        _initNavigationBar();
         _render();
+    }
+    
+    /**
+     * Navigation-Bar initialisieren.
+     * Ermittelt alle verfügbaren Sortier-Optionen, füllt das Dropdown-Menü
+     * per Mustache-Template mit diesen Optionen und löst dann alle
+     * weiteren Initialisierungs-Funktionen aus.
+     */
+    function _initNavigationBar() {
+        
+        // Verfügbare Sortierungen ermitteln
+        var sorting = [];
+        $.each(_C.SORTING.SORT, function(sort, sortProps) {
+            $.each(_C.SORTING.ORDER, function(order, orderProps) {
+                sorting.push({
+                    optionSort  : sortProps.NAME,
+                    optionOrder : orderProps.NAME,
+                    labelSort   : sortProps.LABEL,
+                    labelOrder  : orderProps.LABEL
+                });
+            });
+        });
+        
+        // Template füllen, Callback ausführen
+        _$dropdown.html(Mustache.render(_tmplDropdown, sorting))
+            .promise().done(function() {
+                _initComponents();
+                _setDefaultCache();
+                _bindEvents();
+                _$sort.first().click();
+            }
+        );
     }
     
     /**
@@ -66,11 +118,50 @@ var NavigationBar = (function() {
      * Setzt die DOM-Elemente des Titels und des linken und rechten Buttons,
      * initialisiert die Aktionen und Icons auf null, den Titel auf leer.
      */
-    function _initButtonsAndTitle() {
+    function _initComponents() {
         var $buttons = _$navbar.find(_SEL_BUTTONS);
         _buttonLeft = { $button: $buttons.first(), action: null, icon: null };
         _buttonRight = { $button: $buttons.last(), action: null, icon: null };
         _title = { $title: _$navbar.find(_SEL_TITLE), str: _C.STR.EMPTY };
+        _$sort = _$dropdown.find(_SEL_SORT);
+    }
+    
+    /**
+     * Standard-Konfiguration im Cache speichern.
+     * Legt für jedes vorhandene View-Panel die Standard-Konfiguration
+     * der Navigation-Bar im Cache fest.
+     */
+    function _setDefaultCache() {
+        $.each(_C.VIEW, function(index, panel) {
+            
+            // Name und Titel des Panels ermitteln
+            var name = panel.NAME;
+            var title = panel.TITLE;
+            
+            // Cache für Panel setzen
+            _cache[name] = {
+                title               : $.extend({}, _title),
+                buttonLeft          : $.extend({}, _buttonLeft),
+                buttonRight         : $.extend({}, _buttonRight),
+                dropdownIsOpened    : _dropdownIsOpened,
+                searchIsActive      : _searchIsActive
+            };
+            
+            // Titel setzen
+            _cache[name].title.str = title;
+            
+            // Sonderfall: Wörterbuch
+            if (name === _C.VIEW.DICTIONARY.NAME) {
+                $.extend(_cache[name].buttonLeft, {
+                    action  : _C.ACT.SEARCH_SHOW,
+                    icon    : _C.ICON.SEARCH
+                });
+                $.extend(_cache[name].buttonRight, {
+                    action  : _C.ACT.SORT_SHOW,
+                    icon    : _C.ICON.SORT
+                });
+            }            
+        });
     }
     
     /**
@@ -78,8 +169,9 @@ var NavigationBar = (function() {
      * Bindet Funktionen an Events und Elemente des Moduls.
      */
     function _bindEvents() {
+        _$sort.on(_C.EVT.CLICK, _renderDropdown);
         _$navbar.on(_C.EVT.CLICK, _SEL_BUTTONS, _buttonAction);
-        $(window).on(_C.EVT.SET_PANEL, _setNavigationBar);
+        $(window).on(_C.EVT.UPDATE_NAVBAR, _updateCache);
         $(window).on(_C.EVT.PRESSED_BUTTON, _buttonPressed);
     }
     
@@ -89,9 +181,10 @@ var NavigationBar = (function() {
      * gesetzten aktuellen Variablen.
      */
     function _render() {
-        _$navbar.setMod(_B, _M_WEBAPP, _isWebapp);
+        _$navbar.setMod(_B_BAR, _M_WEBAPP, _isWebapp);
         _renderButton(_buttonLeft);
         _renderButton(_buttonRight);
+        _renderDropdown();
         _renderSearch();
         _renderTitle();
     }
@@ -114,15 +207,15 @@ var NavigationBar = (function() {
             
             // Button ausblenden/deaktivieren
             _buttonsAreDisabled = true;
-            $button.setMod(_B, _E_BUTTON, _M_DISABLED, true);
+            $button.setMod(_B_BAR, _E_BUTTON, _M_DISABLED, true);
             
             // Button aktualisieren
             setTimeout(function() {
                 if ((icon === null) || (action === null)) {
-                    $button.setMod(_B, _E_BUTTON, _M_ICON, _C.ICON.NONE);
+                    $button.setMod(_B_BAR, _E_BUTTON, _M_ICON, _C.ICON.NONE);
                 } else {
-                    $button.setMod(_B, _E_BUTTON, _M_DISABLED, false);
-                    $button.setMod(_B, _E_BUTTON, _M_ICON, icon);
+                    $button.setMod(_B_BAR, _E_BUTTON, _M_DISABLED, false);
+                    $button.setMod(_B_BAR, _E_BUTTON, _M_ICON, icon);
                 }
                 setTimeout(function() {
                     _buttonsAreDisabled = false;
@@ -138,14 +231,10 @@ var NavigationBar = (function() {
      */
     function _renderTitle() {
         if (_title.$title instanceof jQuery) {
-            
-            // Titel ausblenden
-            _title.$title.setMod(_B, _E_TITLE, _M_HIDDEN, true);
-            
-            // Titel setzen, einblenden
+            _title.$title.setMod(_B_BAR, _E_TITLE, _M_HIDDEN, true);
             setTimeout(function() {
                 _title.$title.text(_title.str || _C.STR.EMPTY);
-                _title.$title.setMod(_B, _E_TITLE, _M_HIDDEN, false);
+                _title.$title.setMod(_B_BAR, _E_TITLE, _M_HIDDEN, false);
             }, _C.TIME.DEFAULT);
         }
     }
@@ -155,25 +244,40 @@ var NavigationBar = (function() {
      * Rendert die Suche anhand der gesetzten Eigenschaften des Moduls.
      */
     function _renderSearch() {
-        if (_searchIsActive) {
+        _$navbar.setMod(_B_BAR, _M_SEARCH, _searchIsActive);
+    }
+    
+    /**
+     * Dropdown-Menü rendern.
+     * Rendert das Dropdown-Menü anhand der aktuell gesetzte Eigenschaften
+     * des Menüs (offen/geschlossen, aktiver Menüpunkt).
+     */
+    function _renderDropdown(event) {
+        
+        // Falls Funktion durch Klick-Event ausgelöst wurde
+        if ((typeof event !== _C.TYPE.UNDEF) &&
+            (event.target)) {
             
-            // Aktion und Icon initialisieren
-            var icon   = (_searchIsActive) ? _C.ICON.CANCEL : _C.ICON.SEARCH;
-            var action = (_searchIsActive) ? _C.ACT.SEARCH_HIDE :
-                                             _C.ACT.SEARCH_SHOW;
+            // Geklickten Button aktivieren, Geschwister deaktivieren
+            var $sort = $(event.target).closest(_SEL_SORT);
+            var sort = $sort.data(_DATA_SORT);
+            var order = $sort.data(_DATA_ORDER);
+            $sort.setMod(_B_DROPDOWN, _E_ITEM, _M_SELECTED, true)
+                .siblings().setMod(_B_DROPDOWN, _E_ITEM, _M_SELECTED, false);
             
-            // Linken Button setzen, Suche ein-/ausblenden
-            _setButton(_buttonLeft, action, icon);
-            _$navbar.setMod(_B, _M_SEARCH, _searchIsActive);
+            // Event auslösen
+            $(window).trigger(
+                _C.EVT.SORTED_LIST,
+                { sort: sort, order: order }
+            );
             
-            // Gegebenenfalls Suchfeld fokussieren
-            if (_searchIsActive && !_searchWasActive) {
-                setTimeout(
-                    function() { _$search.focus(); },
-                    _C.TIME.DOUBLE
-                );
-            }
-        } else { _$navbar.setMod(_B, _M_SEARCH, false); }
+            // Dropdown ausblenden
+            _hideDropdown();
+        
+        // Ansonsten Dropdown ein-/ausblenden
+        } else {
+            _$dropdown.setMod(_B_DROPDOWN, _M_OPENED, _dropdownIsOpened);
+        }        
     }
     
     /**
@@ -184,39 +288,36 @@ var NavigationBar = (function() {
      * @param {Object} data Daten des Events
      */
     function _buttonPressed(event, data) {
-        if (typeof data !== _C.TYPE.UNDEF) {
-            if (typeof data.action !== _C.TYPE.UNDEF) {
-                switch (data.action) {
-                    
-                    // Sortierung einblenden
-                    case _C.ACT.SORT_SHOW:
-                        _setButton(
-                            _buttonRight,
-                            _C.ACT.SORT_HIDE, _C.ICON.CANCEL
-                        );
-                        break;
-                    
-                    // Sortierung ausblenden
-                    case _C.ACT.SORT_HIDE:
-                        _setButton(
-                            _buttonRight,
-                            _C.ACT.SORT_SHOW, _C.ICON.SORT
-                        );
-                        break;
-                    
-                    // Suche einblenden
-                    case _C.ACT.SEARCH_SHOW:
-                        _enableSearch();
-                        break;
-                    
-                    // Suche ausblenden
-                    case _C.ACT.SEARCH_HIDE:
-                        _searchIsActive = false;
-                        _disableSearch();
-                        break;
-                    
-                    // !TODO: Switch Button-Aktionen
-                }
+        if ((typeof data !== _C.TYPE.UNDEF) &&
+            (typeof data.action !== _C.TYPE.UNDEF)) {
+            switch (data.action) {
+                
+                // Sortierung einblenden
+                case _C.ACT.SORT_SHOW:
+                    _showDropdown();
+                    break;
+                
+                // Sortierung ausblenden
+                case _C.ACT.SORT_HIDE:
+                    _hideDropdown();
+                    break;
+                
+                // Suche einblenden
+                case _C.ACT.SEARCH_SHOW:
+                    setTimeout(function() {
+                        _$search.focus();
+                    }, _C.TIME.DOUBLE);
+                    _hideDropdown();
+                    _enableSearch();
+                    break;
+                
+                // Suche ausblenden
+                case _C.ACT.SEARCH_HIDE:
+                    _hideDropdown();
+                    _disableSearch();
+                    break;
+                
+                // !TODO: Switch Button-Aktionen
             }
         }
     }
@@ -240,10 +341,7 @@ var NavigationBar = (function() {
             }
             
             // Event auslösen, wenn Aktion gültig ist
-            $(window).trigger(
-                _C.EVT.PRESSED_BUTTON,
-                { action: action }
-            );
+            $(window).trigger(_C.EVT.PRESSED_BUTTON, { action: action });
         }
     }
     
@@ -263,97 +361,105 @@ var NavigationBar = (function() {
     }
     
     /**
-     * Titel setzen.
-     * Setzt den Titel der Titelleiste, falls er nicht leer ist,
-     * und rendert ihn gegebenenfalls neu.
-     * @param {string} title Neuer Titel
+     * Button Links setzen.
+     * Setzt Aktion und Icon des linken Buttons.
+     * @param {string} action Neue Aktion
+     * @param {string} icon Neues Icon
      */
-    function _setTitle(title) {
-        if ((title !== null) && (title !== _C.STR.EMPTY)) {
-            _title.str = title;
-            _renderTitle();
-        }
+    function _setButtonLeft(action, icon) {
+        _setButton(_buttonLeft, action, icon);
+    }
+    
+    /**
+     * Button Rechts setzen.
+     * Setzt Aktion und Icon des rechten Buttons.
+     * @param {string} action Neue Aktion
+     * @param {string} icon Neues Icon
+     */
+    function _setButtonRight(action, icon) {
+        _setButton(_buttonRight, action, icon);
     }
     
     /**
      * Suche aktivieren.
      * Setzt die Suche auf aktiviert und blendet sie ein.
-     * @param {boolean} updateButtons Buttons entsprechend aktualisieren.
      */
-    function _enableSearch(updateButtons) {
-        _searchIsActive = true;
-        if (updateButtons !== false) {
-            _setButton(_buttonLeft, _C.ACT.SEARCH_HIDE, _C.ICON.CANCEL);
-            if (_buttonRight.action !== _C.ACT.SORT_SHOW) {
-                $(window).trigger(
-                    _C.EVT.PRESSED_BUTTON,
-                    { action: _C.ACT.SORT_HIDE }
-                );
-            }
+    function _enableSearch() {
+        if (_searchIsActive === false) {
+            _searchIsActive = true;
+            _setButtonLeft(_C.ACT.SEARCH_HIDE, _C.ICON.CANCEL);
+            _renderSearch();
         }
-        _renderSearch();
-        _searchWasActive = false;
     }
     
     /**
      * Suche deaktivieren.
      * Setzt die Suche auf deaktiviert und blendet sie aus.
-     * @param {boolean} updateButtons Buttons entsprechend aktualisieren.
      */
-    function _disableSearch(updateButtons) {
-        _searchWasActive = _searchIsActive;
-        _searchIsActive = false;
-        if (updateButtons !== false) {
-            _setButton(_buttonLeft, _C.ACT.SEARCH_SHOW, _C.ICON.SEARCH);
-            if (_buttonRight.action !== _C.ACT.SORT_SHOW) {
-                $(window).trigger(
-                    _C.EVT.PRESSED_BUTTON,
-                    { action: _C.ACT.SORT_HIDE }
-                );
-            }
+    function _disableSearch() {
+        if (_searchIsActive === true) {
+            _searchIsActive = false;
+            _setButtonLeft(_C.ACT.SEARCH_SHOW, _C.ICON.SEARCH);
+            _renderSearch();
         }
-        _renderSearch();
     }
     
     /**
-     * Navigation-Bar Gesamt-Zustand setzen.
-     * Setzt anhand eines Events den Gesamt-Zustand der Navigation-Bar;
-     * verschiedene Sonderfälle führen zu einem anderen Status.
+     * Dropdown-Menü einblenden.
+     * Blendet das Dropdown-Menü des Wörterbuchs ein.
+     */
+    function _showDropdown() {
+        if (_dropdownIsOpened === false) {
+            _dropdownIsOpened = true;
+            _setButtonRight(_C.ACT.SORT_HIDE, _C.ICON.CANCEL);
+            _renderDropdown();
+        }
+    }
+    
+    /**
+     * Dropdown-Menü ausblenden.
+     * Blendet das Dropdown-Menü des Wörterbuchs aus.
+     */
+    function _hideDropdown() {
+        if (_dropdownIsOpened === true) {
+            _dropdownIsOpened = false;
+            _setButtonRight(_C.ACT.SORT_SHOW, _C.ICON.SORT);
+            _renderDropdown();
+        }
+    }
+    
+    /**
+     * Zustands-Cache aktualisieren.
+     * Aktualisiert anhand eines ausgelösten Events den Zustands-Cache
+     * der Navigation-Bar; speichert den Zustand für das vorige View-Panel
+     * und lädt den Zustand für das neue View-Panel aus dem Cache.
      * @param {Object} event Ausgelöstes Event
      * @param {Object} data Daten des Events
      */
-    function _setNavigationBar(event, data) {
-        if (typeof data !== _C.TYPE.UNDEF) {
-            if (typeof data.panel === _C.TYPE.STR) {
-                $.each(_C.VIEW, function(index, panel) {
-                    if (panel.NAME === data.panel) {
+    function _updateCache(event, data) {
+        if ((typeof data !== _C.TYPE.UNDEF) &&
+            (typeof data.panelOld !== _C.TYPE.UNDEF) &&
+            (typeof data.panelNew !== _C.TYPE.UNDEF)) {
 
-                        // Sonderfall: Wörterbuch
-                        if (panel.NAME === _C.VIEW.DICTIONARY.NAME) {
-                            if (_searchIsActive) {
-                                _disableSearch();
-                                _searchWasActive = false;
-                            } else if (_searchWasActive) {
-                                _enableSearch();
-                            } else {
-                                _disableSearch();
-                            }
-                            $(window).trigger(
-                                _C.EVT.PRESSED_BUTTON,
-                                { action: _C.ACT.SORT_HIDE }
-                            );
-                        
-                        // Standard
-                        } else {
-                            _disableSearch(false);
-                            _setButton(_buttonLeft, null, null);
-                            _setButton(_buttonRight, null, null);
-                        }
-                        _setTitle(panel.TITLE);
-                        return false;
-                    }
-                });
+            // Aktuellen Status speichern
+            if (data.panelOld !== null) {
+                _cache[data.panelOld] = {
+                    title               : $.extend({}, _title),
+                    buttonLeft          : $.extend({}, _buttonLeft),
+                    buttonRight         : $.extend({}, _buttonRight),
+                    dropdownIsOpened    : _dropdownIsOpened,
+                    searchIsActive      : _searchIsActive
+                };
             }
+
+            // Neuen Status laden
+            var cached = _cache[data.panelNew];
+            $.extend(_title, cached.title);
+            $.extend(_buttonLeft, cached.buttonLeft);
+            $.extend(_buttonRight, cached.buttonRight);
+            _dropdownIsOpened = cached.dropdownIsOpened;
+            _searchIsActive = cached.searchIsActive;
+            _render();
         }
     }
     

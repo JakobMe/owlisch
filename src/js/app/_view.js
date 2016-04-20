@@ -106,7 +106,7 @@ var View = (function() {
      * Mustache-Templates ein HTML-Panel im Content-Bereich und
      * löst anschließend ein Event mit den Panel-Daten aus.
      */
-    function _createPanels() {
+    function _createPanels(callback) {
         
         // Panel-Array erzeugen
         var panels = [];
@@ -119,8 +119,11 @@ var View = (function() {
         });
         
         // Template füllen und in Content laden, Event auslösen
-        _$content.html(Mustache.render(_tmplViewpanels, panels));
-        $(window).trigger(_C.EVT.CREATE_PANELS, { panels: panels });
+        _$content.html(Mustache.render(_tmplViewpanels, panels))
+            .promise().done(function() {
+                if ($.isFunction(callback)) { callback(panels); }
+            }
+        );
     }
     
     /**
@@ -131,11 +134,18 @@ var View = (function() {
     function _initPanels() {
         
         // Panels generieren
-        _createPanels();
-        
-        // Panels initialisieren
-        _$view.find(_SEL_PANELS).each(function() {
-            _$panels[$(this).data(_DATA_PANEL)] = $(this);
+        _createPanels(function(panels) {
+            
+            // Panels initialisieren
+            _$view.find(_SEL_PANELS).each(function() {
+                _$panels[$(this).data(_DATA_PANEL)] = $(this);
+            });
+            
+            // Event auslösen
+            $(window).trigger(
+                _C.EVT.CREATE_PANELS,
+                { panels: panels }
+            );
         });
     }
     
@@ -151,10 +161,16 @@ var View = (function() {
             if (typeof data.panel === _C.TYPE.STR) {
                 if (_$panels[data.panel] instanceof jQuery) {
                     
+                    // Navigation-Bar aktualisieren
+                    $(window).trigger(
+                        _C.EVT.UPDATE_NAVBAR,
+                        { panelOld: _currentPanel, panelNew: data.panel }
+                    );
+                    
                     // Aktuelles Panel setzen, ausblenden
                     _currentPanel = data.panel;
                     _hide();
-                    
+
                     // Inhalt laden
                     setTimeout(function() {
                         _loadPanelContent();

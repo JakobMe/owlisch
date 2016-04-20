@@ -78,6 +78,8 @@ var _C = (function() {
             KEYBOARD_SHOW       : "keyboardWillShow",
             LOAD_PANEL_CONTENT  : "loadedPanelContent",
             CREATE_PANELS       : "createdPanelContainers",
+            UPDATE_NAVBAR       : "updateNavigationBar",
+            SORTED_LIST         : "sortedDictionaryList",
             SET_PANEL           : "setCurrentPanel",
             HIDE_VIEW           : "hideView",
             SHOW_VIEW           : "showView",

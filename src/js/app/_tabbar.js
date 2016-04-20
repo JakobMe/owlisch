@@ -106,7 +106,7 @@ var TabBar = (function() {
      * @param {Object|number} tab Klick-Event vom Tab oder Tab-Index
      */
     function _setTab(tab) {
-
+        
         // Variablen initialisieren, Tab-Index ermitteln
         var i = -1;
         var panel = null;

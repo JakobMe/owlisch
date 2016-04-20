@@ -54,7 +54,7 @@ var Dictionary = (function() {
         _currentOrder       = _C.SORTING.ORDER.ASC.NAME;
         
         // Funktionen ausführen
-        _bindEvents(false);
+        _bindEvents();
     }
     
     /**
@@ -81,7 +81,6 @@ var Dictionary = (function() {
     /**
      * Events binden.
      * Bindet Funktionen an Events und Elemente des Moduls.
-     * @param {boolean} domElements Nur DOM-Elemente binden oder andere
      */
     function _bindEvents() {
         $(window).on(_C.EVT.LOAD_PANEL_CONTENT, _createDictionary);
@@ -157,7 +156,6 @@ var Dictionary = (function() {
      * Event mit den erforderlichen Daten ausgelöst wird.
      * @param {Object} event Ausgelöstes Event
      * @param {Object} data Daten des Events
-     * @returns {Object} Modul-Objekt
      */
     function _updateList(event, data) {
         if ((typeof data !== _C.TYPE.UNDEF) &&
@@ -165,7 +163,6 @@ var Dictionary = (function() {
             _list = data.list;
             _sortList();
         }
-        return this;
     }
     
     /**

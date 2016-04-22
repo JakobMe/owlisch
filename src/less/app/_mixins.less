@@ -11,6 +11,11 @@
 .font-main() { font-family: @app-font-name, sans-serif; }
 .font-icon() { font-family: @fontello-font-name, sans-serif; }
 
+// Rahmen
+.border(@location, @color, @darken: @app-darken-border) {
+    border-@{location}: @app-size-line-thin solid darken(@color, @darken);
+}
+
 // After-Block
 .after-block() {
     display: block;
@@ -50,11 +55,6 @@
 // Border-Box
 .borderbox() {
     box-sizing: border-box;
-}
-
-// Textschatten
-.textshadow(@color: @app-color-black, @fade: 10%) {
-    text-shadow: 0 @app-size-line-thin 0 fade(@color, @fade);
 }
 
 // Textschatten: Glühen
@@ -149,7 +149,6 @@
     background-repeat: repeat-y;
     background-position: right top;
     background-image: linear-gradient(to right, @color-left @pos-left, @color-right @pos-right);
-    background-color: @color-left;
 }
 
 // Verlauf Vertikal
@@ -157,7 +156,6 @@
     background-repeat: repeat-x;
     background-position: left bottom;
     background-image: linear-gradient(to bottom, @color-top @pos-top, @color-bottom @pos-bottom);
-    background-color: @color-top;
 }
 
 // Verlauf Main

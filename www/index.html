@@ -61,13 +61,17 @@
                 <header class="navigation-bar" role="navigation">
                     <ul class="dropdown" role="menu"></ul>
                     <div class="navigation-bar__wrapper">
-                        <h1 class="navigation-bar__title" role="heading"></h1>
                         <div class="navigation-bar__search">
-                            <input class="navigation-bar__input" type="text"
+                            <input class="navigation-bar__search-input" type="text"
                                    spellcheck="false" autocomplete="off"
                                    autocorrect="off" autocapitalize="none"
-                                   tabindex="-100" role="search" />
+                                   tabindex="-100" placeholder="Suche"
+                                   role="search" />
+                            <i class="navigation-bar__search-clear
+                               navigation-bar__search-clear--hidden"
+                               role="option"></i>
                         </div>
+                        <h1 class="navigation-bar__title" role="heading"></h1>
                         <i class="navigation-bar__button navigation-bar__button--left"
                            role="button"></i>
                         <i class="navigation-bar__button navigation-bar__button--right"
@@ -81,9 +85,6 @@
             </div>
         </div>
         
-        <!-- Javascript -->
-        <script type="text/javascript" src="cordova.js"></script>
-        <script type="text/javascript" src="js/main.min.js"></script>
                         
         <!-- Template: View-Panels -->
         <script id="tmpl-viewpanels" type="text/template">
@@ -112,8 +113,18 @@
             <div class="slider slider--has-2 slider--is-1" role="directory">
                 <div class="slider__slide" role="listbox" data-slide="1">
                     <ul class="list" role="list"></ul>
+                    <p class="notice">
+                        <span class="notice__title">
+                            <span class="notice__title-text">Hinweis</span>
+                        </span>
+                        <span class="notice__text">
+                            Dein persönliches <b>Wörterbuch</b> füllt sich
+                            automatisch mit allen Wörtern, die du schon
+                            <b>erraten</b> hast.
+                        </span>
+                    </p>
                 </div>
-                <div class="slider__slide slider__slide--scrollable"
+                <div class="slider__slide"
                      role="complementary" data-slide="2">
                 </div>
             </div>
@@ -121,15 +132,39 @@
                 
         <!-- Template: Wortliste -->
         <script id="tmpl-wordlist" type="text/template">
+            <li class="list__title">
+                <span class="list__title-text">
+                    Mein Wörterbuch
+                    <span class="badge">{{size}} Einträge</span>
+                </span>
+                {{#filtered}}
+                <span class="list__title-filter">
+                    Gefiltert nach <b class="list__title-keyword">„{{filter}}“</b>
+                </span>
+                {{/filtered}}
+            </li>
             {{#words}}
-            <li class="list__item list__item--clickable" role="listitem" data-word="{{id}}">
+            <li class="list__item" role="listitem" data-word="{{alias}}">
                 <span class="stars stars--is-{{lvl}}">
                     {{#levels}}
                     <i class="stars__star stars__star--{{.}}"></i>
                     {{/levels}}
                 </span>
-                <span class="list__label">{{name}}</span>
+                <span class="list__item-label">{{term}}</span>
             </li>
+            {{/words}}
+            {{^words}}
+            {{#filtered}}
+            <li class="list__title notice notice--error notice--background-light">
+                <span class="notice__title">
+                    <span class="notice__title-text">Nichts gefunden!</span>
+                </span>
+                <span class="notice__text">
+                    Es konnten keine Wörter gefunden werden, die zu dem
+                    eingegebenen Suchbegriff passen.
+                </span>
+            </li>
+            {{/filtered}}
             {{/words}}
         </script>
                 
@@ -138,13 +173,17 @@
             {{#.}}
             <li class="dropdown__item" role="menuitem"
                 data-sort="{{optionSort}}" data-order="{{optionOrder}}">
-                <i class="dropdown__icon icon icon--{{optionOrder}}"></i>
+                <i class="dropdown__icon icon icon--sort-{{optionSort}}-{{optionOrder}}"></i>
                 <span class="dropdown__label">
                     {{labelSort}} sortieren ({{labelOrder}})
                 </span>
             </li>
             {{/.}}
         </script>
+        
+        <!-- Javascript -->
+        <script type="text/javascript" src="cordova.js"></script>
+        <script type="text/javascript" src="js/main.min.js"></script>
         
     </body>
     

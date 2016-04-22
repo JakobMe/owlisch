@@ -1,110 +1,110 @@
 {
-    "id": "owl",
-    "name": "Ostwestfalen-Lippe",
+    "alias": "owl",
+    "title": "Ostwestfalen-Lippe",
     "version": "0.0.1",
     "words": [
         {
-            "id"            : "latuechte",
+            "alias"         : "latuechte",
             "article"       : "die",
-            "name"          : "Latüchte",
+            "term"          : "Latüchte",
             "translation"   : "Laterne",
             "info"          : "Die „Latüchte“ ist ein eigentümlicher Vokabelmix aus der lateinischen „laterna“ und der plattdeutschen „Lüchte“, also quasi Römisches Platt bzw. plattdeutsches Latein. Verschiedene Lichtquellen können gemeint sein."
         },
         {
-            "id"            : "pinneken",
+            "alias"         : "pinneken",
             "article"       : "das",
-            "name"          : "Pinneken",
+            "term"          : "Pinneken",
             "translation"   : "Schnapsglas",
             "info"          : "Das Schnapsglas: Ein genormtes Schnapsglas, Pinneken, Pinnchen oder auch Stamperl genannt, fasst in Deutschland 2 cl (20 ml) oder 4 cl bei „doppelten“."
         },
         {
-            "id"            : "anneeckeliegen",
+            "alias"         : "anneeckeliegen",
             "article"       : "",
-            "name"          : "anne Ecke liegen",
+            "term"          : "anne Ecke liegen",
             "translation"   : "krank sein",
             "info"          : "Krankheit (mittelhochdeutsch krancheit, krankeit, synonym zu Schwäche, Leiden, Not) ist die Störung der Funktion eines Organs, der Psyche oder des gesamten Organismus."
         },
         {
-            "id"            : "buetterken",
+            "alias"         : "buetterken",
             "article"       : "das",
-            "name"          : "Bütterken",
+            "term"          : "Bütterken",
             "translation"   : "kleines Butterbrot",
             "info"          : "Ein Butterbrot ist eine mit Butter bestrichene Scheibe Brot. In Teilen Norddeutschlands bezeichnet das Wort Butterbrot eine belegte Scheibe Brot, wobei Butter nicht zum Belag gehören muss. Ein Hamburger Butterbrot ist die Bezeichnung für ein Schwarzbrot mit einem halben Brötchen."
         },
         {
-            "id"            : "doelmern",
+            "alias"         : "doelmern",
             "article"       : "",
-            "name"          : "dölmern",
+            "term"          : "dölmern",
             "translation"   : "spielen",
             "info"          : "Zweckungebundenes (nicht sinnloses!), gedankenverlorenes Vor-sich-hin-spielen von Kindern, „rumdameln“."
         },
         {
-            "id"            : "doenekens",
+            "alias"         : "doenekens",
             "article"       : "die",
-            "name"          : "Dönekens",
+            "term"          : "Dönekens",
             "translation"   : "Anekdoten",
             "info"          : "Anekdoten, heitere Kurzgeschichten, oft von zweifelhaftem Wahrheitsgehalt."
         },
         {
-            "id"            : "fickerich",
+            "alias"         : "fickerich",
             "article"       : "",
-            "name"          : "fickerich",
+            "term"          : "fickerich",
             "translation"   : "nervös",
             "info"          : "Nervös, aufgeregt, zappelig — jemand, der nicht still halten kann."
         },
         {
-            "id"            : "noenkern",
+            "alias"         : "noenkern",
             "article"       : "",
-            "name"          : "nönkern",
+            "term"          : "nönkern",
             "translation"   : "Mittagsschlaf halten",
             "info"          : "Zeitlich ist nönkern recht eingegrenzt: Wie der Name schon sagt, nönkert man in der Mittagszeit, so zwischen 12 und 15 Uhr. Denn „nönkern“ kommt von „None“, und die None bezeichnet seit dem Mittelalter eine Gebetszeit im klösterlichen Tagesablauf, nämlich die neunte Stunde nach Anbruch des Tages."
         },
         {
-            "id"            : "pluedden",
+            "alias"         : "pluedden",
             "article"       : "doe",
-            "name"          : "Plüdden",
+            "term"          : "Plüdden",
             "translation"   : "alte Klamotten",
             "info"          : "Alte, unmoderne, unordentliche Kleidung, Klamotten, Klamottenhaufen. Die ostwestfälische Ausdruck „Plüdden“ (auch „Plünnten“ oder „Plünnen“) für Textilien stammt vom Wort „Plunder“, das schon im Mittelalter für gebrauchten Hausrat, Bettzeug und Kleidung verwendet wurde."
         },
         {
-            "id"            : "vermackeln",
+            "alias"         : "vermackeln",
             "article"       : "",
-            "name"          : "vermackeln",
+            "term"          : "vermackeln",
             "translation"   : "beschädigen",
             "info"          : "Etwas beschädigen, ankratzen, lädieren, ramponieren oder vertrimmen."
         },
         {
-            "id"            : "noehlen",
+            "alias"         : "noehlen",
             "article"       : "",
-            "name"          : "nöhlen",
+            "term"          : "nöhlen",
             "translation"   : "meckern",
             "info"          : "Meckern, nörgeln, klagen — „Ihr seid auch nur am Nöhlen“, „Der geht einem mit seinem ständigen Genöhle ganz schön auf den Sack“."
         },
         {
-            "id"            : "angeschickert",
+            "alias"         : "angeschickert",
             "article"       : "",
-            "name"          : "angeschickert",
+            "term"          : "angeschickert",
             "translation"   : "angetrunken",
             "info"          : "Angetrunken, beschwipst, leicht betrunken — Ist man, nachdem die ersten „verkasematuckelten Pinneken“ oder „Pülleken“ ihre Wirkung entfalten."
         },
         {
-            "id"            : "beoemmeln",
+            "alias"         : "beoemmeln",
             "article"       : "",
-            "name"          : "beömmeln",
+            "term"          : "beömmeln",
             "translation"   : "sich totlachen",
             "info"          : "Das tun sich die Leute dann, wenn jemand „son dummet Tüch labert“, dass sich die Balken vor Lachen biegen."
         },
         {
-            "id"            : "dittken",
+            "alias"         : "dittken",
             "article"       : "",
-            "name"          : "das läuft wie'n Dittken",
+            "term"          : "das läuft wie'n Dittken",
             "translation"   : "das läuft rund",
             "info"          : "„Dittken“ bezeichnet ein 10-Pfennig-Stück. Weil man 10-Pfennig-Stücke eigentlich immer nur wahrgenommen hat, wenn sie uns an der Kasse aus dem Portemonnaie fielen und über den Boden rollten, bekam das Dittken den Ruf des besonders bewegungsfreudigen Zahlungsmittels. Wenn eine Sache so glatt geht wie ein davonrollender Groschen, dann läuft sie also wie ein Dittken."
         },
         {
-            "id"            : "knuepp",
+            "alias"         : "knuepp",
             "article"       : "der",
-            "name"          : "Knüpp",
+            "term"          : "Knüpp",
             "translation"   : "Knoten",
             "info"          : "Eine besonders schöne Wortsippe ist die Gruppe germanischer  Wörter, die mit „kn“ anfangen. Ihnen ist gemein, dass sie etwas mit „zusammendrücken, pressen, klemmen, ballen“ zu tun haben (z.B. Knödel, Knospe, Knorpel, Knauf und Knopf). So auch der Knoten. Und weil man mit einem Knoten zwei Seilenden verknüpfen kann,  heißt der Knoten in Westfalen „Knüpp“."
         }

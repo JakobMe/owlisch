@@ -1,14 +1,38 @@
         
         <!-- Template: Wortliste -->
         <script id="tmpl-wordlist" type="text/template">
+            <li class="list__title">
+                <span class="list__title-text">
+                    Mein Wörterbuch
+                    <span class="badge">{{size}} Einträge</span>
+                </span>
+                {{#filtered}}
+                <span class="list__title-filter">
+                    Gefiltert nach <b class="list__title-keyword">„{{filter}}“</b>
+                </span>
+                {{/filtered}}
+            </li>
             {{#words}}
-            <li class="list__item list__item--clickable" role="listitem" data-word="{{id}}">
+            <li class="list__item" role="listitem" data-word="{{alias}}">
                 <span class="stars stars--is-{{lvl}}">
                     {{#levels}}
                     <i class="stars__star stars__star--{{.}}"></i>
                     {{/levels}}
                 </span>
-                <span class="list__label">{{name}}</span>
+                <span class="list__item-label">{{term}}</span>
             </li>
+            {{/words}}
+            {{^words}}
+            {{#filtered}}
+            <li class="list__title notice notice--error notice--background-light">
+                <span class="notice__title">
+                    <span class="notice__title-text">Nichts gefunden!</span>
+                </span>
+                <span class="notice__text">
+                    Es konnten keine Wörter gefunden werden, die zu dem
+                    eingegebenen Suchbegriff passen.
+                </span>
+            </li>
+            {{/filtered}}
             {{/words}}
         </script>

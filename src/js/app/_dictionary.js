@@ -16,44 +16,31 @@ var Dictionary = (function() {
     var _SEL_TMPL_DICTIONARY    = "#tmpl-dictionary";
     var _SEL_TMPL_WORDLIST      = "#tmpl-wordlist";
     
-    // DOM-Elemente
-    var _$slider;
-    var _$list;
-    var _$items;
-    var _$details;
-    
     // Private Variablen
-    var _list;
-    var _currentSort;
-    var _currentOrder;
-    var _tmplDictionary;
-    var _tmplWordlist;
+    var _listOriginal           = [];
+    var _listFiltered           = [];
+    var _currentFilter          = _C.STR.EMPTY;
+    var _currentSort            = _C.SORTING.SORT.ALPHA.NAME;
+    var _currentOrder           = _C.SORTING.ORDER.ASC.NAME;
+    var _tmplDictionary         = $(_SEL_TMPL_DICTIONARY).html();
+    var _tmplWordlist           = $(_SEL_TMPL_WORDLIST).html();
+    
+    // DOM-Elemente
+    var _$slider                = null;
+    var _$list                  = null;
+    var _$items                 = null;
+    var _$details               = null;
     
     /**
-     * Modul initialisieren.
-     * Setzt die Standard-Anfangswerte des Moduls, bindet alle Events,
-     * sucht nach den benötigten DOM-Elementen und rendert das Modul.
+     * Wörterbuch initialisieren.
+     * Parst alle benötigten Templates und startet Funktionen,
+     * um den Anfangszustand des Wörterbuches herzustellen.
      */
     function init() {
 
-        // Templates suchen und setzen
-        _tmplDictionary     = $(_SEL_TMPL_DICTIONARY).html();
-        _tmplWordlist       = $(_SEL_TMPL_WORDLIST).html();
-        
-        // Templates parsen
+        // Templates parsen, Funktionen ausführen
         Mustache.parse(_tmplDictionary);
         Mustache.parse(_tmplWordlist);
-        
-        // Interne Variablen initialisieren
-        _$slider            = null;
-        _$list              = null;
-        _$details           = null;
-        _$items             = null;
-        _list               = [];
-        _currentSort        = _C.SORTING.SORT.ALPHA.NAME;
-        _currentOrder       = _C.SORTING.ORDER.ASC.NAME;
-        
-        // Funktionen ausführen
         _bindEvents();
     }
     
@@ -70,9 +57,6 @@ var Dictionary = (function() {
         _$details           = _$slider.find(_SEL_DETAILS);
         _$items             = _$list.find(_SEL_ITEM);
         
-        // Funktionen ausführen
-        _bindEvents();
-        
         // Fortschritt-Liste anfragen
         $(window).trigger(_C.EVT.REQUEST_PROGRESS);
         $(window).trigger(_C.EVT.SHOW_VIEW);
@@ -86,6 +70,7 @@ var Dictionary = (function() {
         $(window).on(_C.EVT.LOAD_PANEL_CONTENT, _createDictionary);
         $(window).on(_C.EVT.SERVE_PROGRESS, _updateList);
         $(window).on(_C.EVT.SORTED_LIST, _sortList);
+        $(window).on(_C.EVT.SEARCHED_LIST, _filterList);
     }
     
     /**
@@ -96,14 +81,13 @@ var Dictionary = (function() {
      * @param {Object} data Daten des Events
      */
     function _createDictionary(event, data) {
-        if (typeof data !== _C.TYPE.UNDEF) {
-            if ((data.panel === _C.VIEW.DICTIONARY.NAME) &&
-                (data.target instanceof jQuery)) {
+        if ((typeof data !== typeof undefined) &&
+            (data.panel === _C.VIEW.DICTIONARY.NAME) &&
+            (data.target instanceof jQuery)) {
 
-                // Template füllen, Callback ausführen
-                data.target.html(Mustache.render(_tmplDictionary))
-                    .promise().done(function() { _initDictionary(); });
-            }
+            // Template füllen, Callback ausführen
+            data.target.html(Mustache.render(_tmplDictionary))
+                .promise().done(function() { _initDictionary(); });
         }
     }
     
@@ -121,10 +105,10 @@ var Dictionary = (function() {
         if (_currentSort === _C.SORTING.SORT.NUMERIC.NAME) {
             if (parseInt(a.lvl) < parseInt(b.lvl)) { return -1; }
             else if (parseInt(a.lvl) > parseInt(b.lvl)) { return 1; }
-            else { return a.name.localeCompare(b.name); }
+            else { return a.term.localeCompare(b.term); }
             
         // Standard-Sortierung: Alphabetisch
-        } else { return a.name.localeCompare(b.name); }
+        } else { return a.term.localeCompare(b.term); }
     }
     
     /**
@@ -137,17 +121,54 @@ var Dictionary = (function() {
     function _sortList(event, data) {
 
         // Wenn ein Event übergeben wurde, dessen Daten setzen
-        if ((typeof data !== _C.TYPE.UNDEF) &&
-            (typeof data.sort !== _C.TYPE.UNDEF) &&
-            (typeof data.order !== _C.TYPE.UNDEF)) {
+        if ((typeof data !== typeof undefined) &&
+            (typeof data.sort !== typeof undefined) &&
+            (typeof data.order !== typeof undefined)) {
             _currentSort = data.sort;
             _currentOrder = data.order;
         }
         
         // Liste sortieren und rendern
-        _list.sort(_compareListItems);
-        if (_currentOrder === _C.SORTING.ORDER.DESC.NAME) { _list.reverse(); }
+        _listFiltered.sort(_compareListItems);
+        if (_currentOrder === _C.SORTING.ORDER.DESC.NAME) {
+            _listFiltered.reverse();
+        }
         _renderList();
+    }
+    
+    /**
+     * Liste filtern.
+     * Filtert die Liste anhand des aktuell gesetzten Suchbegriffes
+     * oder einem durch ein Event übergebenen Suchbegriff; filtert die
+     * Original-Liste und kopiert übereinstimmende Einträge in die
+     * Filter-Liste; sortiert die Liste anschließend.
+     * @param {Object} event Ausgelöstes Event
+     * @param {Object} data Daten des Events
+     */
+    function _filterList(event, data) {
+        
+        // Filter-Wort gegebenenfalls aktualisieren
+        if ((typeof data !== typeof undefined) &&
+            (typeof data.search === typeof _C.STR.EMPTY)) {
+            _currentFilter = data.search.toLowerCase();
+        }
+        
+        // Wenn Suchbegriff leer ist, Original-Liste setzen
+        if (_currentFilter === _C.STR.EMPTY) {
+            _listFiltered = _listOriginal.slice(0);
+        
+        // Ansonsten Filter-Liste neu erzeugen
+        } else {
+            _listFiltered = [];
+            $.each(_listOriginal, function(index, word) {
+                if (word.term.toLowerCase().indexOf(_currentFilter) > -1) {
+                    _listFiltered.push(word);
+                }
+            });
+        }
+        
+        // Liste sortieren
+        _sortList();
     }
     
     /**
@@ -158,10 +179,10 @@ var Dictionary = (function() {
      * @param {Object} data Daten des Events
      */
     function _updateList(event, data) {
-        if ((typeof data !== _C.TYPE.UNDEF) &&
-            (typeof data.list !== _C.TYPE.UNDEF)) {
-            _list = data.list;
-            _sortList();
+        if ((typeof data !== typeof undefined) &&
+            (typeof data.list !== typeof undefined)) {
+            _listOriginal = data.list;
+            _filterList();
         }
     }
     
@@ -173,7 +194,11 @@ var Dictionary = (function() {
         if (_$list instanceof jQuery) {
             _$list.html(
                 Mustache.render(_tmplWordlist, {
-                    words: _list, levels: _C.QUIZ.LEVELS
+                    words       : _listFiltered,
+                    levels      : _C.QUIZ.LEVELS,
+                    size        : _listFiltered.length,
+                    filtered    : (_currentFilter.length > 0),
+                    filter      : _currentFilter
                 })
             );
         }

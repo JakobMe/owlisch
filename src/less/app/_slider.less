@@ -36,7 +36,8 @@
     &__slide {
         float: left;
         display: block;
-        overflow: hidden;
+        overflow-y: auto;
+        overflow-x: hidden;
         position: relative;
         width: 100%;
         height: 100%;
@@ -44,11 +45,5 @@
         
         // Mod: Versteckt
         &--hidden { opacity: @app-opacity-invisible; }
-        
-        // Mod: Scrollbar
-        &--scrollable {
-            overflow-y: auto;
-            overflow-x: hidden;
-        }
     }
 }

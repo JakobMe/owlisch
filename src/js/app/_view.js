@@ -9,56 +9,44 @@
 var View = (function() {
     
     // Selektor-Konstanten
-    var _SEL_VIEW           = "[role='main']";
-    var _SEL_CONTENT        = "[role='article']";
-    var _SEL_PANELS         = "[role='tabpanel']";
-    var _SEL_TMPL           = "#tmpl-viewpanels";
+    var _SEL_VIEW               = "[role='main']";
+    var _SEL_CONTENT            = "[role='article']";
+    var _SEL_PANELS             = "[role='tabpanel']";
+    var _SEL_TMPL               = "#tmpl-viewpanels";
     
     // BEM-Konstanten
-    var _B                  = "view";
-    var _E_CONTENT          = "content";
-    var _E_PANEL            = "panel";
-    var _M_VISIBLE          = "visible";
-    var _M_FULLSCREEN       = "fullscreen";
-    var _M_WEBAPP           = "webapp";
-    var _M_CURRENT          = "current";
+    var _B                      = "view";
+    var _E_CONTENT              = "content";
+    var _E_PANEL                = "panel";
+    var _M_VISIBLE              = "visible";
+    var _M_FULLSCREEN           = "fullscreen";
+    var _M_WEBAPP               = "webapp";
+    var _M_CURRENT              = "current";
     
     // Data-Konstanten
-    var _DATA_PANEL         = "panel";
+    var _DATA_PANEL             = "panel";
     
     // Private Variablen
-    var _isVisible;
-    var _isWebapp;
-    var _isFullscreen;
-    var _currentPanel;
-    var _tmplViewpanels;
+    var _currentPanel           = null;
+    var _isVisible              = false;
+    var _isFullscreen           = false;
+    var _isWebapp               = (_C.WEBAPP.IOS || _C.WEBAPP.CORDOVA);
+    var _tmplViewpanels         = $(_SEL_TMPL).html();
     
     // DOM-Elemente
-    var _$view;
-    var _$content;
-    var _$panels;
+    var _$view                  = $(_SEL_VIEW);
+    var _$content               = _$view.find(_SEL_CONTENT);
+    var _$panels                = {};
     
     /**
-     * Modul initialisieren.
-     * Setzt die Standard-Anfangswerte des Moduls, bindet alle Events,
-     * sucht nach den benötigten DOM-Elementen und rendert das Modul.
+     * View initialisieren.
+     * Parst alle benötigten Templates und startet Funktionen,
+     * um den Anfangszustand der View herzustellen.
      */
     function init() {
         
-        // Modulvariablen initialisieren
-        _$view              = $(_SEL_VIEW);
-        _$content           = _$view.find(_SEL_CONTENT);
-        _$panels            = {};
-        _isVisible          = false;
-        _isFullscreen       = false;
-        _isWebapp           = (_C.WEBAPP.IOS || _C.WEBAPP.CORDOVA);
-        _tmplViewpanels     = $(_SEL_TMPL).html();
-        _currentPanel       = null;
-        
-        // Templates parsen
+        // Templates parsen, Funktionen ausführen
         Mustache.parse(_tmplViewpanels);
-        
-        // Funktionen ausführen
         _bindEvents();
         _initPanels();
         _render();
@@ -77,8 +65,8 @@ var View = (function() {
     }
     
     /**
-     * Modul rendern.
-     * Rendert alle Elemente des Moduls anhand der intern
+     * View rendern.
+     * Rendert alle Elemente der View anhand der intern
      * gesetzten aktuellen Variablen.
      * @param {boolean} hide Ausblenden ja/nein
      */
@@ -105,6 +93,7 @@ var View = (function() {
      * Generiert für jedes definierte Panel anhand des gesetzten
      * Mustache-Templates ein HTML-Panel im Content-Bereich und
      * löst anschließend ein Event mit den Panel-Daten aus.
+     * @param {Function} callback Funktion, die im Anschluss ausgeführt wird
      */
     function _createPanels(callback) {
         
@@ -157,26 +146,24 @@ var View = (function() {
      * @param {Object} data Daten des Events
      */
     function _setPanel(event, data) {
-        if (typeof data !== _C.TYPE.UNDEF) {
-            if (typeof data.panel === _C.TYPE.STR) {
-                if (_$panels[data.panel] instanceof jQuery) {
+        if ((typeof data !== typeof undefined) &&
+            (typeof data.panel !== typeof undefined) &&
+            (_$panels[data.panel] instanceof jQuery)) {
                     
-                    // Navigation-Bar aktualisieren
-                    $(window).trigger(
-                        _C.EVT.UPDATE_NAVBAR,
-                        { panelOld: _currentPanel, panelNew: data.panel }
-                    );
-                    
-                    // Aktuelles Panel setzen, ausblenden
-                    _currentPanel = data.panel;
-                    _hide();
+            // Navigation-Bar aktualisieren
+            $(window).trigger(
+                _C.EVT.UPDATE_NAVBAR,
+                { panelOld: _currentPanel, panelNew: data.panel }
+            );
+            
+            // Aktuelles Panel setzen, ausblenden
+            _currentPanel = data.panel;
+            _hide();
 
-                    // Inhalt laden
-                    setTimeout(function() {
-                        _loadPanelContent();
-                    }, _C.TIME.DEFAULT);
-                }
-            }
+            // Inhalt laden
+            setTimeout(function() {
+                _loadPanelContent();
+            }, _C.TIME.ANIMATION);
         }
     }
     

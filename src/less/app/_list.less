@@ -26,84 +26,103 @@
 // Block: Liste
 .@{_list} {
     display: block;
-    overflow-y: auto;
-    overflow-x: hidden;
     list-style-type: none;
     margin: 0;
     padding: 0;
-    max-height: 100%;
+    .border(bottom, @app-color-background);
     
     // Element: Item
     &__item {
         display: block;
+        cursor: pointer;
         overflow: hidden;
         text-align: left;
         font-style: normal;
         position: relative;
         text-decoration: none;
         margin: 0;
+        background: @app-color-white;
         padding: 0 @app-size-margin;
+        padding-right: @_list-size-height;
         height: @_list-size-height;
         line-height: @_list-size-height;
-        border-top: @app-size-line-thin solid darken(@app-color-background, @app-darken-border);
+        .border(top, @app-color-background);
         .gradient-background();
         .ellipsis();
         
-        // Ausnahme: Erstes Element
-        &:first-child { margin-top: (@_list-size-height / 2); }
+        // Icon
+        &:after {
+            display: block;
+            position: absolute;
+            text-align: right;
+            font-style: normal;
+            font-weight: normal;
+            top: 0;
+            right: 0;
+            content: @fontello-icon-forward;
+            padding-right: @app-size-margin;
+            font-size: @app-font-size-medium;
+            color: @app-color-text-pale;
+            width: @_list-size-height;
+            height: @_list-size-height;
+            line-height: (@_list-size-height + @app-size-line-thin);
+            .font-icon();
+            .borderbox();
+        }
+        
+        // Sub-Element: Label
+        &-label {
+            font-weight: bold;
+            color: @app-color-text-dark;
+            font-size: @app-font-size-medium;
+            
+            // Ausnahme: Erstes Element
+            &:not(:first-child) { margin-left: @app-size-margin-half; }
+        }
+        
+        // Sub-Element: Highlight
+        &-highlight {
+            color: darken(@app-color-star, @app-darken-star);
+            background: fade(@app-color-star, 50%);
+            .animation(list-highlight);
+            .round-all();
+        }
+    }
+    
+    // Element: Titel
+    &__title {
+        display: block;
+        font-weight: bold;
+        position: relative;
+        padding: @app-size-margin;
+        font-size: @app-font-size-small;
+        background: @app-color-white;
+        margin-bottom: @app-size-margin-half;
+        .border(bottom, @app-color-background);
+        .border(top, @app-color-background);
         
         // Ausnahme: Letztes Element
         &:last-child {
-            margin-bottom: (@_list-size-height / 2);
-            border-bottom: @app-size-line-thin solid darken(@app-color-background, @app-darken-border-background);
+            border-bottom: none;
+            margin-bottom: 0;
         }
         
-        // Mod: Klickbar
-        &--clickable {
-            cursor: pointer;
-            padding-right: @_list-size-height;
-            .fontello-icon(@fontello-icon-forward);
-            .transition(background);
-            
-            // Icon
-            &:after {
-                display: block;
-                position: absolute;
-                text-align: right;
-                font-style: normal;
-                font-weight: normal;
-                top: 0;
-                right: 0;
-                padding-right: @app-size-margin;
-                font-size: @app-font-size-large;
-                color: @app-color-text-pale;
-                width: @_list-size-height;
-                height: @_list-size-height;
-                line-height: (@_list-size-height + @app-size-line-thin);
-                .transition(color);
-                .borderbox();
-            }
+        // Sub-Element: Titel-Text
+        &-text {
+            display: block;
+            text-transform: uppercase;
+            color: @app-color-text-pale;
         }
         
-        // Mod: Gefiltert
-        &--filtered { display: none; }
-    }
-    
-    // Element: Label
-    &__label {
-        font-weight: bold;
-        color: @app-color-text-dark;
-        font-size: @app-font-size-medium;
+        // Sub-Element: Titel-Filter
+        &-filter {
+            display: block;
+            font-style: italic;
+            color: @app-color-text-dark;
+            font-size: @app-font-size-tiny;
+        }
         
-        // Ausnahme: Erstes Element
-        &:not(:first-child) { margin-left: @app-size-margin-half; }
-    }
-    
-    // Element: Highlight
-    &__highlight {
-        color: darken(@app-color-star, @app-darken-star);
-        background: fade(@app-color-star, 50%);
-        .animation(list-highlight);
-        .round-all();
+        // Sub-Element: Suchbegriff
+        &-keyword { color: @app-color-main; }
     }
 }

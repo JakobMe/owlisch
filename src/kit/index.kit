@@ -61,13 +61,17 @@
                 <header class="navigation-bar" role="navigation">
                     <ul class="dropdown" role="menu"></ul>
                     <div class="navigation-bar__wrapper">
-                        <h1 class="navigation-bar__title" role="heading"></h1>
                         <div class="navigation-bar__search">
-                            <input class="navigation-bar__input" type="text"
+                            <input class="navigation-bar__search-input" type="text"
                                    spellcheck="false" autocomplete="off"
                                    autocorrect="off" autocapitalize="none"
-                                   tabindex="-100" role="search" />
+                                   tabindex="-100" placeholder="Suche"
+                                   role="search" />
+                            <i class="navigation-bar__search-clear
+                               navigation-bar__search-clear--hidden"
+                               role="option"></i>
                         </div>
+                        <h1 class="navigation-bar__title" role="heading"></h1>
                         <i class="navigation-bar__button navigation-bar__button--left"
                            role="button"></i>
                         <i class="navigation-bar__button navigation-bar__button--right"
@@ -81,10 +85,11 @@
             </div>
         </div>
         
+        <!-- @import templates/templates.kit -->
+        
         <!-- Javascript -->
         <script type="text/javascript" src="cordova.js"></script>
         <script type="text/javascript" src="js/main.min.js"></script>
-        <!-- @import templates/templates.kit -->
         
     </body>
     

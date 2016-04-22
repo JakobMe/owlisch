@@ -9,29 +9,19 @@
 var SaveGame = (function() {
     
     // Private Variablen
-    var _dictionaryId;
-    var _dictionaryData;
-    var _dictionarySize;
-    var _dictionaryList;
-    var _progressData;
-    var _progressSize;
-    var _progressList;
+    var _dictionaryAlias        = _C.DICTIONARY.ALIAS;
+    var _dictionaryData         = [];
+    var _dictionaryList         = [];
+    var _dictionarySize         = 0;
+    var _progressData           = [];
+    var _progressList           = [];
+    var _progressSize           = 0;
     
     /**
-     * Modul initialisieren.
-     * Setzt die Standard-Anfangswerte des Moduls, bindet alle Events,
-     * sucht nach den benötigten DOM-Elementen und rendert das Modul.
+     * SaveGame initialisieren.
+     * Startet Funktionen, um den Anfangszustand des SaveGames herzustellen.
      */
     function init() {
-        
-        // Modulvariablen initialisieren
-        _dictionaryId       = _C.DICTIONARY.ID;
-        _dictionaryData     = [];
-        _dictionaryList     = [];
-        _dictionarySize     = 0;
-        _progressData       = [];
-        _progressList       = [];
-        _progressSize       = 0;
         
         // Funktionen ausführen
         _bindEvents();
@@ -85,8 +75,8 @@ var SaveGame = (function() {
     function _loadDictionary() {
         
         // Pfad zur Wörterbuch-Datei zusammensetzen
-        var dictionaryPath = _C.DICTIONARY.PATH_DATA + _dictionaryId +
-                             _C.STR.SLASH + _dictionaryId +
+        var dictionaryPath = _C.DICTIONARY.PATH_DATA + _dictionaryAlias +
+                             _C.STR.SLASH + _dictionaryAlias +
                              _C.DICTIONARY.TYPE_DATA;
         
         // AJAX Get-Anfrage zur Datei
@@ -109,11 +99,15 @@ var SaveGame = (function() {
      */
     function _updateLists() {
         
+        // Listen zurücksetzen
+        _dictionaryList = [];
+        _progressList   = [];
+        
         // Alle Wörter des Wörterbuches iterieren
         $.each(_dictionaryData, function(index, word) {
             
             // Level und Fehlschläge ermitteln
-            var progress = (_progressData[word.id] || { lvl: 0, fail: 0 });
+            var progress = (_progressData[word.alias] || { lvl: 0, fail: 0 });
             var lvl = Math.min(Math.max(progress.lvl, 0), _C.QUIZ.LVL_MAX);
             var fail = Math.max(progress.fail, 0);
             
@@ -149,17 +143,16 @@ var SaveGame = (function() {
      * @param {Object} data Daten des Events
      */
     function _updateProgress(event, data) {
-        if (typeof data !== _C.TYPE.UNDEF) {
-            if ((typeof data.id !== _C.TYPE.UNDEF) &&
-                (typeof data.lvl !== _C.TYPE.UNDEF) &&
-                (typeof data.fail !== _C.TYPE.UNDEF)) {
-                _progressData[data.id] = {
-                    lvl: data.lvl,
-                    fail: data.fail
-                };
-                _saveProgress();
-                _updateLists();
-            }
+        if ((typeof data !== typeof undefined) &&
+            (typeof data.alias !== typeof undefined) &&
+            (typeof data.lvl !== typeof undefined) &&
+            (typeof data.fail !== typeof undefined)) {
+            _progressData[data.alias] = {
+                lvl: data.lvl,
+                fail: data.fail
+            };
+            _saveProgress();
+            _updateLists();
         }
     }
     

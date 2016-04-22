@@ -9,49 +9,39 @@
 var TabBar = (function() {
     
     // Selektor-Konstanten
-    var _SEL_TABBAR         = "[role='tablist']";
-    var _SEL_TABS           = "[role='tab']";
-    var _SEL_TMPL           = "#tmpl-tablist";
+    var _SEL_TABBAR             = "[role='tablist']";
+    var _SEL_TABS               = "[role='tab']";
+    var _SEL_TMPL               = "#tmpl-tablist";
     
     // BEM-Konstanten
-    var _B                  = "tab-bar";
-    var _E                  = "tab";
-    var _M_ACTIVE           = "active";
-    var _M_HIDDEN           = "hidden";
-    var _M_TAB              = "tab";
+    var _B                      = "tab-bar";
+    var _E                      = "tab";
+    var _M_ACTIVE               = "active";
+    var _M_HIDDEN               = "hidden";
+    var _M_TAB                  = "tab";
     
     // Data-Attibut-Konstanten
-    var _DATA_PANEL         = "panel";
+    var _DATA_PANEL             = "panel";
     
     // Private Variablen
-    var _tabActive;
-    var _tabNumber;
-    var _isHidden;
-    var _tmplTablist;
+    var _tabActive              = 0;
+    var _tabNumber              = -1;
+    var _isHidden               = false;
+    var _tmplTablist            = $(_SEL_TMPL).html();
     
     // DOM-Elemente
-    var _$tabbar;
-    var _$tabs;
+    var _$tabbar                = $(_SEL_TABBAR);
+    var _$tabs                  = null;
     
     /**
-     * Modul initialisieren.
-     * Setzt die Standard-Anfangswerte des Moduls, bindet alle Events,
-     * sucht nach den benötigten DOM-Elementen und rendert das Modul.
+     * Tab-Bar initialisieren.
+     * Parst alle benötigten Templates und startet Funktionen,
+     * um den Anfangszustand der Tab-Bar herzustellen.
      */
     function init() {
         
-        // Modulvariablen initialisieren
-        _$tabbar            = $(_SEL_TABBAR);
-        _tmplTablist        = $(_SEL_TMPL).html();
-        _$tabs              = null;
-        _isHidden           = false;
-        _tabNumber          = -1;
-        _tabActive          = 0;
-        
-        // Templates parsen
+        // Templates parsen, Funktionen ausführen
         Mustache.parse(_tmplTablist);
-        
-        // Funktionen ausführen
         _bindEvents();
     }
     
@@ -79,22 +69,23 @@ var TabBar = (function() {
     }
     
     /**
-     * Tabliste generieren.
+     * Tab-Liste generieren.
      * Generiert für jedes im Event übergebene Panel einen
      * entsprechenden Tab in der Tab-Bar und aktiviert den ersten Tab.
+     * @param {Object} event Ausgelöstes Event
+     * @param {Object} data Daten des Events
      */
     function _createTablist(event, data) {
-        if (typeof data !== _C.TYPE.UNDEF) {
-            if (typeof data.panels !== _C.TYPE.UNDEF) {
-                _$tabbar.html(Mustache.render(_tmplTablist, data.panels))
-                    .promise().done(function() {
-                        _$tabs = _$tabbar.find(_SEL_TABS);
-                        _tabNumber = _$tabs.length - 1;
-                        _setTab(_tabActive);
-                        $(window).trigger(_C.EVT.SHOW_VIEWPORT);
-                    }
-                );
-            }
+        if ((typeof data !== typeof undefined) &&
+            (typeof data.panels !== typeof undefined)) {
+            _$tabbar.html(Mustache.render(_tmplTablist, data.panels))
+                .promise().done(function() {
+                    _$tabs = _$tabbar.find(_SEL_TABS);
+                    _tabNumber = _$tabs.length - 1;
+                    _setTab(_tabActive);
+                    $(window).trigger(_C.EVT.SHOW_VIEWPORT);
+                }
+            );
         }
     }
     
@@ -103,15 +94,15 @@ var TabBar = (function() {
      * Setzt den aktiven Tab anhand eines (Klick)-Events oder eines
      * übergebenen Tab-Indexes; falls der Index gültig ist, wird dieser
      * als aktiver Index gesetzt und die Tabbar wird gerendert.
-     * @param {Object|number} tab Klick-Event vom Tab oder Tab-Index
+     * @param {(Object|number)} tab Klick-Event vom Tab oder Tab-Index
      */
     function _setTab(tab) {
         
         // Variablen initialisieren, Tab-Index ermitteln
         var i = -1;
         var panel = null;
-        if (typeof tab === _C.TYPE.NUM) { i = tab; }
-        else if (tab.target) { i = $(tab.target).closest(_SEL_TABS).index(); }
+        if (tab.target) { i = $(tab.target).closest(_SEL_TABS).index(); }
+        else { i = parseInt(tab); }
 
         // Tab-Index prüfen, setzen und Event auslösen
         if ((i >= 0) && (i <= _tabNumber)) {

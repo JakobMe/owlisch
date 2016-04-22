@@ -1,0 +1,33 @@
+/*
+ * Modul: Badge.
+ * Definiert das Verhalten von Badges.
+ * @author Jakob Metzger <jakob.me@gmail.com>
+ * @copyright 2016 Jakob Metzger
+ * @licence https://opensource.org/licenses/MIT MIT
+ * @link http://jmportfolio.de
+ */
+
+// Modul-Variablen
+@_badge:                    badge;
+@_badge-size-height:        20px;
+@_badge-size-padding:       10px;
+@_badge-font-size:          11px;
+
+// Block: Badge
+.@{_badge} {
+    font-weight: bold;
+    text-align: center;
+    display: inline-block;
+    position: absolute;
+    top: 50%;
+    right: @app-size-margin;
+    font-size: @_badge-font-size;
+    padding: 0 @_badge-size-padding;
+    background: @app-color-background;
+    color: @app-color-text-dark;
+    height: @_badge-size-height;
+    line-height: @_badge-size-height;
+    .round-all(@_badge-size-height / 2);
+    .translate(0, -50%);
+    .transition();
+}

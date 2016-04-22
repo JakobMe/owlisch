@@ -1,0 +1,102 @@
+/*
+ * Modul: Notice.
+ * Definiert das Verhalten von Hinweisen.
+ * @author Jakob Metzger <jakob.me@gmail.com>
+ * @copyright 2016 Jakob Metzger
+ * @licence https://opensource.org/licenses/MIT MIT
+ * @link http://jmportfolio.de
+ */
+
+// Modul-Variablen
+@_notice:                       notice;
+@_notice-size-height-title:     16px;
+
+// Block: Notice
+.@{_notice} {
+    display: block;
+    text-align: center;
+    margin: 0;
+    padding: @app-size-margin;
+    color: @app-color-text-pale;
+    font-size: @app-font-size-small;
+    
+    // Mod: Heller Hintergrund & Element: Titel-Text
+    &--background-light &__title-text {
+        background: @app-color-white;
+        .shadow(0, 0, @app-size-margin, @app-size-margin, @app-color-white);
+    }
+    
+    // Mod: Fehler
+    &--error &__title-text:before { content: @fontello-icon-error; }
+    &--error &__text { font-weight: bold; color: @app-color-text-dark; }
+    
+    // Element: Titel
+    &__title {
+        display: block;
+        overflow: hidden;
+        font-weight: bold;
+        position: relative;
+        height: @_notice-size-height-title;
+        line-height: @_notice-size-height-title;
+        margin-bottom: @app-size-margin-half;
+        .ellipsis();
+        
+        // Sub-Element: Text
+        &-text {
+            position: relative;
+            display: inline-block;
+            z-index: 100;
+            padding: 0 @app-size-padding;
+            background: @app-color-background;
+            .shadow(0, 0, @app-size-margin, @app-size-margin, @app-color-background);
+            
+            // Icon
+            &:before {
+                font-weight: normal;
+                margin-right: @app-size-padding;
+                content: @fontello-icon-info;
+                .icon();
+            }
+        }
+        
+        // Linien
+        &:before, &:after {
+            display: block;
+            position: absolute;
+            background: transparent;
+            top: 50%;
+            width: 50%;
+            z-index: 50;
+            content: "";
+            height: @app-size-line-thin;
+            opacity: @app-opacity-half;
+        }
+        
+        // Linie Links
+        &:before {
+            left: 0;
+            .gradient-horizontal(
+                fade(@app-color-text-pale, 0%),
+                fade(@app-color-text-pale, 100%),
+                0%, 25%
+            );
+        }
+        
+        // Linie Rechts
+        &:after {
+            right: 0;
+            .gradient-horizontal(
+                fade(@app-color-text-pale, 100%),
+                fade(@app-color-text-pale, 0%),
+                75%, 100%
+            );
+        }
+    }
+    
+    // Element: Text
+    &__text {
+        display: block;
+        font-style: italic;
+        color: @app-color-text-pale;
+    }
+}

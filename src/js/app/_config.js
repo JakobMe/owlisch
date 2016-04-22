@@ -9,7 +9,7 @@
 var _C = (function() {
     return {
         DICTIONARY: {
-            ID                  : "owl",
+            ALIAS               : "owl",
             PATH_DATA           : "data/",
             PATH_AUDIO          : "/audio/",
             PATH_IMAGES         : "/images/",
@@ -74,11 +74,13 @@ var _C = (function() {
             ENDED               : "ended",
             FOCUS               : "focus",
             SUBMIT              : "submit",
+            INPUT               : "input",
             KEYBOARD_HIDE       : "keyboardWillHide",
             KEYBOARD_SHOW       : "keyboardWillShow",
             LOAD_PANEL_CONTENT  : "loadedPanelContent",
             CREATE_PANELS       : "createdPanelContainers",
             UPDATE_NAVBAR       : "updateNavigationBar",
+            SEARCHED_LIST       : "searchedDictionaryList",
             SORTED_LIST         : "sortedDictionaryList",
             SET_PANEL           : "setCurrentPanel",
             HIDE_VIEW           : "hideView",
@@ -113,12 +115,6 @@ var _C = (function() {
                 }
             }
         },
-        TYPE: {
-            NUM                 : "number",
-            BOOL                : "boolean",
-            UNDEF               : "undefined",
-            STR                 : "string"
-        },
         BEM: {
             ELEMDIV             : "__",
             MODDIV              : "--",
@@ -129,8 +125,8 @@ var _C = (function() {
             SLASH               : "/"
         },
         TIME: {
-            DEFAULT             : 150,
-            DOUBLE              : 300
+            ANIMATION           : 150,
+            DELAY               : 300
         },
         WEBAPP: {
             IOS                 : (window.navigator.standalone || false),

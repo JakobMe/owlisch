@@ -9,27 +9,20 @@
 var Viewport = (function() {
     
     // Konstanten
-    var _SEL_VIEWPORT       = "[role='application']";
-    var _B                  = "viewport";
-    var _E                  = "app";
-    var _M                  = "visible";
+    var _SEL_VIEWPORT           = "[role='application']";
+    var _B                      = "viewport";
+    var _E                      = "app";
+    var _M                      = "visible";
     
-    // Private Variablen und DOM-Elemente
-    var _isVisible;
-    var _$viewport;
+    // Private Variablen
+    var _isVisible              = false;
+    var _$viewport              = $(_SEL_VIEWPORT);
     
     /**
-     * Modul initialisieren.
-     * Setzt die Standard-Anfangswerte des Moduls, bindet alle Events,
-     * sucht nach den benötigten DOM-Elementen und rendert das Modul.
+     * Viewport initialisieren.
+     * Startet Funktionen, um den Anfangszustand des Viewports herzustellen.
      */
     function init() {
-        
-        // Modulvariablen initialisieren
-        _$viewport = $(_SEL_VIEWPORT);
-        _isVisible = false;
-        
-        // Funktionen ausführen
         _bindEvents();
     }
     
@@ -56,7 +49,7 @@ var Viewport = (function() {
      */
     function _show() {
         _isVisible = true;
-        setTimeout(function() { _render(); }, _C.TIME.DOUBLE);
+        setTimeout(function() { _render(); }, _C.TIME.DELAY);
     }
     
     // Öffentliches Interface

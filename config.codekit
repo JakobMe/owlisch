@@ -438,6 +438,17 @@
 		"outputStyle": 1,
 		"syntaxCheckerStyle": 1
 		},
+	"\/src\/js\/index.js": {
+		"fileType": 64,
+		"ignore": 0,
+		"ignoreWasSetByUser": 0,
+		"inputAbbreviatedPath": "\/src\/js\/index.js",
+		"outputAbbreviatedPath": "\/www\/js\/index.min.js",
+		"outputPathIsOutsideProject": 0,
+		"outputPathIsSetByUser": 1,
+		"outputStyle": 2,
+		"syntaxCheckerStyle": 1
+		},
 	"\/src\/js\/lib\/_bemhelpers.js": {
 		"fileType": 64,
 		"ignore": 1,
@@ -493,17 +504,6 @@
 		"outputStyle": 1,
 		"syntaxCheckerStyle": 1
 		},
-	"\/src\/js\/main.js": {
-		"fileType": 64,
-		"ignore": 0,
-		"ignoreWasSetByUser": 0,
-		"inputAbbreviatedPath": "\/src\/js\/main.js",
-		"outputAbbreviatedPath": "\/www\/js\/main.min.js",
-		"outputPathIsOutsideProject": 0,
-		"outputPathIsSetByUser": 1,
-		"outputStyle": 2,
-		"syntaxCheckerStyle": 1
-		},
 	"\/src\/json\/owl.json": {
 		"fileType": 524288,
 		"ignore": 0,
@@ -524,57 +524,48 @@
 		"outputPathIsOutsideProject": 0,
 		"outputPathIsSetByUser": 1
 		},
-	"\/src\/kit\/templates\/_dictionary.kit": {
+	"\/src\/kit\/tmpl\/_dictionary.kit": {
 		"fileType": 2048,
 		"ignore": 1,
 		"ignoreWasSetByUser": 0,
-		"inputAbbreviatedPath": "\/src\/kit\/templates\/_dictionary.kit",
-		"outputAbbreviatedPath": "\/src\/kit\/templates\/_dictionary.html",
+		"inputAbbreviatedPath": "\/src\/kit\/tmpl\/_dictionary.kit",
+		"outputAbbreviatedPath": "\/src\/kit\/tmpl\/_dictionary.html",
 		"outputPathIsOutsideProject": 0,
 		"outputPathIsSetByUser": 0
 		},
-	"\/src\/kit\/templates\/_dropdown.kit": {
+	"\/src\/kit\/tmpl\/_dropdown.kit": {
 		"fileType": 2048,
 		"ignore": 1,
 		"ignoreWasSetByUser": 0,
-		"inputAbbreviatedPath": "\/src\/kit\/templates\/_dropdown.kit",
-		"outputAbbreviatedPath": "\/src\/kit\/templates\/_dropdown.html",
+		"inputAbbreviatedPath": "\/src\/kit\/tmpl\/_dropdown.kit",
+		"outputAbbreviatedPath": "\/src\/kit\/tmpl\/_dropdown.html",
 		"outputPathIsOutsideProject": 0,
 		"outputPathIsSetByUser": 0
 		},
-	"\/src\/kit\/templates\/_tablist.kit": {
+	"\/src\/kit\/tmpl\/_tablist.kit": {
 		"fileType": 2048,
 		"ignore": 1,
 		"ignoreWasSetByUser": 0,
-		"inputAbbreviatedPath": "\/src\/kit\/templates\/_tablist.kit",
-		"outputAbbreviatedPath": "\/src\/kit\/templates\/_tablist.html",
+		"inputAbbreviatedPath": "\/src\/kit\/tmpl\/_tablist.kit",
+		"outputAbbreviatedPath": "\/src\/kit\/tmpl\/_tablist.html",
 		"outputPathIsOutsideProject": 0,
 		"outputPathIsSetByUser": 0
 		},
-	"\/src\/kit\/templates\/_viewpanels.kit": {
+	"\/src\/kit\/tmpl\/_viewpanels.kit": {
 		"fileType": 2048,
 		"ignore": 1,
 		"ignoreWasSetByUser": 0,
-		"inputAbbreviatedPath": "\/src\/kit\/templates\/_viewpanels.kit",
-		"outputAbbreviatedPath": "\/src\/kit\/templates\/_viewpanels.html",
+		"inputAbbreviatedPath": "\/src\/kit\/tmpl\/_viewpanels.kit",
+		"outputAbbreviatedPath": "\/src\/kit\/tmpl\/_viewpanels.html",
 		"outputPathIsOutsideProject": 0,
 		"outputPathIsSetByUser": 0
 		},
-	"\/src\/kit\/templates\/_wordlist.kit": {
+	"\/src\/kit\/tmpl\/_wordlist.kit": {
 		"fileType": 2048,
 		"ignore": 1,
 		"ignoreWasSetByUser": 0,
-		"inputAbbreviatedPath": "\/src\/kit\/templates\/_wordlist.kit",
-		"outputAbbreviatedPath": "\/src\/kit\/templates\/_wordlist.html",
-		"outputPathIsOutsideProject": 0,
-		"outputPathIsSetByUser": 0
-		},
-	"\/src\/kit\/templates\/templates.kit": {
-		"fileType": 2048,
-		"ignore": 1,
-		"ignoreWasSetByUser": 0,
-		"inputAbbreviatedPath": "\/src\/kit\/templates\/templates.kit",
-		"outputAbbreviatedPath": "\/src\/kit\/templates\/templates.html",
+		"inputAbbreviatedPath": "\/src\/kit\/tmpl\/_wordlist.kit",
+		"outputAbbreviatedPath": "\/src\/kit\/tmpl\/_wordlist.html",
 		"outputPathIsOutsideProject": 0,
 		"outputPathIsSetByUser": 0
 		},
@@ -958,7 +949,7 @@
 		"strictMath": 0,
 		"strictUnits": 0
 		},
-	"\/src\/less\/main.less": {
+	"\/src\/less\/index.less": {
 		"allowInsecureImports": 0,
 		"createSourceMap": 1,
 		"disableJavascript": 0,
@@ -966,8 +957,8 @@
 		"ieCompatibility": 0,
 		"ignore": 0,
 		"ignoreWasSetByUser": 0,
-		"inputAbbreviatedPath": "\/src\/less\/main.less",
-		"outputAbbreviatedPath": "\/www\/css\/main.min.css",
+		"inputAbbreviatedPath": "\/src\/less\/index.less",
+		"outputAbbreviatedPath": "\/www\/css\/index.min.css",
 		"outputPathIsOutsideProject": 0,
 		"outputPathIsSetByUser": 1,
 		"outputStyle": 1,
@@ -978,11 +969,11 @@
 		"strictMath": 0,
 		"strictUnits": 0
 		},
-	"\/www\/css\/main.min.css": {
+	"\/www\/css\/index.min.css": {
 		"fileType": 16,
 		"ignore": 1,
 		"ignoreWasSetByUser": 0,
-		"inputAbbreviatedPath": "\/www\/css\/main.min.css",
+		"inputAbbreviatedPath": "\/www\/css\/index.min.css",
 		"outputAbbreviatedPath": "No Output Path",
 		"outputPathIsOutsideProject": 0,
 		"outputPathIsSetByUser": 0
@@ -1502,12 +1493,12 @@
 		"outputPathIsOutsideProject": 0,
 		"outputPathIsSetByUser": 0
 		},
-	"\/www\/js\/main.min.js": {
+	"\/www\/js\/index.min.js": {
 		"fileType": 64,
 		"ignore": 1,
 		"ignoreWasSetByUser": 0,
-		"inputAbbreviatedPath": "\/www\/js\/main.min.js",
-		"outputAbbreviatedPath": "\/www\/js\/min\/main.min-min.js",
+		"inputAbbreviatedPath": "\/www\/js\/index.min.js",
+		"outputAbbreviatedPath": "\/www\/js\/min\/index.min-min.js",
 		"outputPathIsOutsideProject": 0,
 		"outputPathIsSetByUser": 0,
 		"outputStyle": 1,

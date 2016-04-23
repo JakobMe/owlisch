@@ -12,6 +12,7 @@
 @_badge-size-height:        20px;
 @_badge-size-padding:       10px;
 @_badge-font-size:          11px;
+@_badge-font-size-icon:     9px;
 
 // Block: Badge
 .@{_badge} {
@@ -19,6 +20,7 @@
     text-align: center;
     display: inline-block;
     position: absolute;
+    text-transform: uppercase;
     top: 50%;
     right: @app-size-margin;
     font-size: @_badge-font-size;
@@ -30,4 +32,20 @@
     .round-all(@_badge-size-height / 2);
     .translate(0, -50%);
     .transition();
+    
+    // Mod: Filter
+    &--filter {
+        color: darken(@app-color-star, @app-darken-star);
+        background: fade(@app-color-star, @app-fade-highlight-opaque);
+        
+        // Icon
+        &:before {
+            font-weight: 100;
+            content: @fontello-icon-search;
+            margin-right: @app-size-padding;
+            vertical-align: @app-size-line-thin;
+            font-size: @_badge-font-size-icon;
+            .font-icon();
+        }
+    }
 }

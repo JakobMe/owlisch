@@ -10,7 +10,7 @@
 // Modul-Variablen
 @_navigation-bar:                   navigation-bar;
 @_navigation-bar-fontsize-title:    17px;
-@_navigation-bar-fontsize-search:   13px;
+@_navigation-bar-fontsize-search:   14px;
 @_navigation-bar-fontsize-clear:    17px;
 @_navigation-bar-fontsize-icon:     20px;
 @_navigation-bar-size-search:       28px; 
@@ -137,7 +137,7 @@
             color: fade(@app-color-text-light, @_navigation-bar-fade);
             width: @_navigation-bar-size-search;
             height: @_navigation-bar-size-search;
-            line-height: @_navigation-bar-size-search;
+            line-height: (@_navigation-bar-size-search - @app-size-line-thin);
             content: @fontello-icon-search;
             .font-icon();
         }

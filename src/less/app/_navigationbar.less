@@ -10,9 +10,11 @@
 // Modul-Variablen
 @_navigation-bar:                   navigation-bar;
 @_navigation-bar-fontsize-title:    17px;
-@_navigation-bar-fontsize-icon:     19px;
+@_navigation-bar-fontsize-search:   13px;
+@_navigation-bar-fontsize-clear:    17px;
+@_navigation-bar-fontsize-icon:     20px;
 @_navigation-bar-size-search:       28px; 
-@_navigation-bar-fade:              50%;
+@_navigation-bar-fade:              60%;
  
 // Block: Navigation-Bar
 .@{_navigation-bar} {
@@ -82,7 +84,7 @@
         z-index: 1500;
         font-size: @_navigation-bar-fontsize-icon;
         height: @app-size-height-navigationbar;
-        line-height: @app-size-height-navigationbar;
+        line-height: (@app-size-height-navigationbar - @app-size-line-thin);
         width: @app-size-height-navigationbar;
         .transition();
         
@@ -131,7 +133,7 @@
             left: 0;
             bottom: 0;
             z-index: 2000;
-            font-size: @app-font-size-medium;
+            font-size: @_navigation-bar-fontsize-search;
             color: fade(@app-color-text-light, @_navigation-bar-fade);
             width: @_navigation-bar-size-search;
             height: @_navigation-bar-size-search;
@@ -156,6 +158,7 @@
             color: @app-color-text-light;
             font-size: @app-font-size-small;
             padding: @app-size-padding @_navigation-bar-size-search;
+            padding-left: (@_navigation-bar-size-search + @app-size-padding);
             background: darken(@app-color-main, @app-darken-main);
             .transition(background);
             .font-main();
@@ -177,23 +180,21 @@
             display: block;
             cursor: pointer;
             position: absolute;
-            background-repeat: no-repeat;
-            background-position: center center;
+            text-align: center;
+            font-style: normal;
+            font-weight: normal;
             right: 0;
             bottom: 0;
-            opacity: @app-opacity-full;
             width: @_navigation-bar-size-search;
             height: @_navigation-bar-size-search;
-            background-size: (@_navigation-bar-size-search / 2);
-            background-image: url("@{app-path-layout}/clear.png?v=@{app-version}");
+            line-height: @_navigation-bar-size-search;
+            font-size: @_navigation-bar-fontsize-clear;
+            color: fade(@app-color-text-light, @_navigation-bar-fade);
+            .fontello-icon(@fontello-icon-clear);
             .translate();
-            .transition();
             
             // Mod: Versteckt
-            &--hidden {
-                opacity: @app-opacity-invisible;
-                .translate(100%);
-            }
+            &--hidden { .translate(100%); }
         }
     }
 }

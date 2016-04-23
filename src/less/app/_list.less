@@ -90,6 +90,9 @@
             background: fade(@app-color-star, @app-fade-highlight);
             .animation(list-highlight);
             .round-all();
+            
+            // Leer
+            &:empty { display: none; }
         }
     }
     
@@ -115,23 +118,6 @@
         &-text {
             display: block;
             color: @app-color-text-pale;
-        }
-        
-        // Sub-Element: Titel-Filter
-        &-filter {
-            display: block;
-            font-style: italic;
-            margin-top: @app-size-padding-half;
-            color: @app-color-text-dark;
-            font-size: @app-font-size-tiny;
-        }
-        
-        // Sub-Element: Suchbegriff
-        &-keyword {
-            padding: 0 @app-size-padding-half;
-            color: darken(@app-color-star, @app-darken-star);
-            background: fade(@app-color-star, @app-fade-highlight);
-            .round-all();
         }
     }
 }

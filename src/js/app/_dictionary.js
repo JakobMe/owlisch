@@ -161,9 +161,16 @@ var Dictionary = (function() {
         // Ansonsten Filter-Liste neu erzeugen
         } else {
             _listFiltered = [];
-            $.each(_listOriginal, function(index, word) {
-                if (word.term.toLowerCase().indexOf(_currentFilter) > -1) {
-                    _listFiltered.push(word);
+            var len = _currentFilter.length;
+            $.each(_listOriginal, function(index, item) {
+                var word = $.extend({}, item);
+                var found = item.term.toLowerCase().indexOf(_currentFilter);
+                if (found > -1) {
+                    _listFiltered.push($.extend(word, {
+                        start: item.term.substring(0, found),
+                        highlight: item.term.substr(found, len),
+                        tail: item.term.substr(found + len)
+                    }));
                 }
             });
         }
@@ -184,6 +191,13 @@ var Dictionary = (function() {
             (typeof data.list !== typeof undefined)) {
             _listCaption = data.caption;
             _listOriginal = data.list;
+            $.each(_listOriginal, function(index, word) {
+                $.extend(this, {
+                    start: word.term,
+                    highlight: CFG.STR.EMPTY,
+                    tail: CFG.STR.EMPTY
+                });
+            });
             _filterList();
         }
     }

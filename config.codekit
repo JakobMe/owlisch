@@ -1449,17 +1449,6 @@
 		"outputPathIsSetByUser": 0,
 		"processed": 1
 		},
-	"\/www\/img\/layout\/clear.png": {
-		"fileType": 32768,
-		"ignore": 0,
-		"ignoreWasSetByUser": 0,
-		"initialSize": 1471,
-		"inputAbbreviatedPath": "\/www\/img\/layout\/clear.png",
-		"outputAbbreviatedPath": "\/www\/img\/layout\/clear.png",
-		"outputPathIsOutsideProject": 0,
-		"outputPathIsSetByUser": 0,
-		"processed": 1
-		},
 	"\/www\/img\/layout\/iphone-retina.png": {
 		"fileType": 32768,
 		"ignore": 0,

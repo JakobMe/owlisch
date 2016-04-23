@@ -138,11 +138,6 @@
                         {{size}} {{#single}}Eintrag{{/single}}{{^single}}Einträge{{/single}}
                     </span>
                 </span>
-                {{#filtered}}
-                <span class="list__title-filter">
-                    Gefiltert nach <b class="list__title-keyword">{{filter}}</b>
-                </span>
-                {{/filtered}}
             </li>
             {{#words}}
             <li class="list__item" role="listitem" data-word="{{alias}}">
@@ -151,7 +146,9 @@
                     <i class="stars__star stars__star--{{.}}"></i>
                     {{/levels}}
                 </span>
-                <span class="list__item-label">{{term}}</span>
+                <span class="list__item-label">
+                    {{start}}<b class="list__item-highlight">{{highlight}}</b>{{tail}}
+                </span>
             </li>
             {{/words}}
             {{^words}}

@@ -28,7 +28,7 @@
     padding: 0;
     width: 100%;
     height: 100%;
-    background: @app-color-background;
+    background: @app-color-white;
     .font-main();
 }
 
@@ -39,21 +39,8 @@
     .@{_body} {
         overflow: auto;
         position: static;
-        background-repeat: repeat;
-        background-attachment: fixed;
-        background-position: left top;
-        background-image: url("@{app-path-layout}/background.png?v=@{app-version}");
-        background-color: lighten(@app-color-background, (@app-darken-background * 2));
-        background-size: @_body-size-background @_body-size-background;
+        width: 100vw;
+        height: 100vh;
+        background: @app-color-text-dark;
     }
-}
-
-// Responsive Retina
-@media screen and (min-width: @app-size-responsive)
-              and (-webkit-min-device-pixel-ratio: 1.5),
-       screen and (min-width: @app-size-responsive)
-              and (min-resolution: 144dpi) {
-    
-    // Block: Body
-    .@{_body} { background-image: url("@{app-path-layout}/background-retina.png?v=@{app-version}"); }
 }

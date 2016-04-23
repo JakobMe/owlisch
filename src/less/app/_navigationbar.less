@@ -210,22 +210,18 @@
     
     // Block: Navigation-Bar & Element: Wrapper
     .@{_navigation-bar}__wrapper {
-        background-image: url("@{app-path-layout}/statusbar.png?v=@{app-version}");
-        background-repeat: no-repeat;
-        background-position: top center;
-        background-size: @app-size-width-iphone @app-size-height-statusbar;
         padding-top: @app-size-height-statusbar;
-    }
-}
-
-// Responsive Retina
-@media screen and (min-width: @app-size-responsive)
-              and (-webkit-min-device-pixel-ratio: 1.5),
-       screen and (min-width: @app-size-responsive)
-              and (min-resolution: 144dpi) {
-    
-    // Block: Navigation-Bar & Element: Wrapper
-    .@{_navigation-bar}__wrapper {
-        background-image: url("@{app-path-layout}/statusbar-retina.png?v=@{app-version}");
+        
+        // Statusbar-Overlay
+        &:after {
+            display: block;
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            content: "";
+            height: @app-size-height-statusbar;
+            background: fade(@app-color-black, 10%);
+        }
     }
 }

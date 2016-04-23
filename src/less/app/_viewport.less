@@ -11,12 +11,8 @@
 // Modul-Variablen
 @_viewport:                     viewport;
 @_viewport-size-height:         568px;
-@_viewport-size-height-bg:      900px;
-@_viewport-size-width-bg:       520px;
+@_viewport-size-width:          320px;
 @_viewport-size-spinner:        48px;
-@_viewport-size-gap-bottom:     205px;
-@_viewport-size-gap-top:        127px;
-@_viewport-size-gap-sides:      94px;
 
 // Block: Viewport
 .@{_viewport} {
@@ -24,7 +20,7 @@
     height: 100%;
     background-repeat: no-repeat;
     background-position: center center;
-    background-image: url("@{app-path-layout}/spinner-viewport.gif?v=@{app-version}");
+    background-image: url("@{app-path-img}/spinner-viewport.gif?v=@{app-version}");
     background-color: @app-color-white;
     background-size: @_viewport-size-spinner @_viewport-size-spinner;
 
@@ -39,7 +35,7 @@
         width: 100%;
         height: 100%;
         opacity: @app-opacity-invisible;
-        background-image: url("@{app-path-layout}/spinner.gif?v=@{app-version}");
+        background-image: url("@{app-path-img}/spinner-panel.gif?v=@{app-version}");
         background-size: @_viewport-size-spinner @_viewport-size-spinner;
         background-color: @app-color-background;
         .transition(opacity);
@@ -54,27 +50,16 @@
     
     // Block: Viewport
     .@{_viewport} {
-        position: relative;
-        background-color: transparent;
-        background-repeat: no-repeat;
-        background-position: center center;
-        margin: 0 auto;
-        background-image: url("@{app-path-layout}/iphone.png?v=@{app-version}");
-        background-size: @_viewport-size-width-bg @_viewport-size-height-bg;
-        margin-top: (@_viewport-size-gap-bottom - @_viewport-size-gap-top);
-        padding: @_viewport-size-gap-top @_viewport-size-gap-sides;
-        padding-bottom: @_viewport-size-gap-bottom;
+        -webkit-backface-visibility: hidden;
+        -webkit-transform-style: preserve-3d;
+        overflow: hidden;
+        position: absolute;
+        top: 50%;
+        left: 50%;
         height: @_viewport-size-height;
-        width: @app-size-width-iphone;
+        width: @_viewport-size-width;
+        .translate(-50%, -50%);
+        .shadow-big();
+        .round-all();
     }
-}
-
-// Responsive Retina
-@media screen and (min-width: @app-size-responsive)
-              and (-webkit-min-device-pixel-ratio: 1.5),
-       screen and (min-width: @app-size-responsive)
-              and (min-resolution: 144dpi) {
-    
-    // Block: Viewport
-    .@{_viewport} { background-image: url("@{app-path-layout}/iphone-retina.png?v=@{app-version}"); }
 }

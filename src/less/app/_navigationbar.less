@@ -13,8 +13,11 @@
 @_navigation-bar-fontsize-search:   14px;
 @_navigation-bar-fontsize-clear:    17px;
 @_navigation-bar-fontsize-icon:     20px;
-@_navigation-bar-size-search:       28px; 
-@_navigation-bar-fade:              60%;
+@_navigation-bar-size-search:       28px;
+@_navigation-bar-size-padding:      6px;
+@_navigation-bar-fade-input:        60%;
+@_navigation-bar-fade-shadow:       80%;
+@_navigation-bar-darken-shadow:     14%;
  
 // Block: Navigation-Bar
 .@{_navigation-bar} {
@@ -45,7 +48,10 @@
         color: @app-color-text-light;
         background: @app-color-main;
         height: @app-size-height-navigationbar;
-        .shadow-line(@app-size-line-thin, darken(@app-color-main, @app-darken-border));
+        .shadow-line(
+            @app-size-line-thin,
+            fade(darken(@app-color-main, @_navigation-bar-darken-shadow),
+                 @_navigation-bar-fade-shadow));
     }
     
     // Element: Titel
@@ -89,7 +95,7 @@
         .transition();
         
         // Aktiv
-        &:active { color: fade(@app-color-text-light, @_navigation-bar-fade); }
+        &:active { color: fade(@app-color-text-light, @_navigation-bar-fade-input); }
         
         // Mod: Links/Rechts
         &--left { left: 0; }
@@ -134,7 +140,7 @@
             bottom: 0;
             z-index: 2000;
             font-size: @_navigation-bar-fontsize-search;
-            color: fade(@app-color-text-light, @_navigation-bar-fade);
+            color: fade(@app-color-text-light, @_navigation-bar-fade-input);
             width: @_navigation-bar-size-search;
             height: @_navigation-bar-size-search;
             line-height: (@_navigation-bar-size-search - @app-size-line-thin);
@@ -154,11 +160,11 @@
             box-sizing: border-box;
             text-transform: uppercase;
             width: 100%;
-            height: 100%;
             color: @app-color-text-light;
             font-size: @app-font-size-small;
-            padding: @app-size-padding @_navigation-bar-size-search;
-            padding-left: (@_navigation-bar-size-search + @app-size-padding);
+            height: @_navigation-bar-size-search;
+            padding: @_navigation-bar-size-padding (@_navigation-bar-size-search + @_navigation-bar-size-padding);
+            line-height: (@_navigation-bar-size-search - (@_navigation-bar-size-padding * 2));
             background: darken(@app-color-main, @app-darken-main);
             .transition(background);
             .font-main();
@@ -171,7 +177,7 @@
             
             // Webkit-Platzhalter
             &::-webkit-input-placeholder {
-                color: fade(@app-color-text-light, @_navigation-bar-fade);
+                color: fade(@app-color-text-light, @_navigation-bar-fade-input);
             }
         }
         
@@ -189,7 +195,7 @@
             height: @_navigation-bar-size-search;
             line-height: @_navigation-bar-size-search;
             font-size: @_navigation-bar-fontsize-clear;
-            color: fade(@app-color-text-light, @_navigation-bar-fade);
+            color: fade(@app-color-text-light, @_navigation-bar-fade-input);
             .fontello-icon(@fontello-icon-clear);
             .translate();
             

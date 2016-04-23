@@ -1,15 +1,16 @@
 /**
- * SaveGame-Modul.
- * Steuer den Spielstand und die Wörterbuch-Daten.
+ * Data-Modul.
+ * Steuert den Spielstand und die Wörterbuch-Daten.
  * @author Jakob Metzger <jakob.me@gmail.com>
  * @copyright 2016 Jakob Metzger
  * @licence https://opensource.org/licenses/MIT MIT
  * @link http://jmportfolio.de
  */
-var SaveGame = (function() {
+var Data = (function() {
     
     // Private Variablen
-    var _dictionaryAlias        = _C.DICTIONARY.ALIAS;
+    var _dictionaryAlias        = CFG.DICTIONARY.ALIAS;
+    var _dictionaryCaption      = CFG.STR.EMPTY;
     var _dictionaryData         = [];
     var _dictionaryList         = [];
     var _dictionarySize         = 0;
@@ -34,9 +35,9 @@ var SaveGame = (function() {
      * Bindet Funktionen an Events und Elemente des Moduls.
      */
     function _bindEvents() {
-        $(window).on(_C.EVT.REQUEST_DICTIONARY, _serveDictionary);
-        $(window).on(_C.EVT.REQUEST_PROGRESS, _serveProgress);
-        $(window).on(_C.EVT.UPDATE_PROGRESS, _updateProgress);
+        $(window).on(CFG.EVT.REQUEST_DICTIONARY, _serveDictionary);
+        $(window).on(CFG.EVT.REQUEST_PROGRESS, _serveProgress);
+        $(window).on(CFG.EVT.UPDATE_PROGRESS, _updateProgress);
     }
     
     /**
@@ -75,13 +76,15 @@ var SaveGame = (function() {
     function _loadDictionary() {
         
         // Pfad zur Wörterbuch-Datei zusammensetzen
-        var dictionaryPath = _C.DICTIONARY.PATH_DATA + _dictionaryAlias +
-                             _C.STR.SLASH + _dictionaryAlias +
-                             _C.DICTIONARY.TYPE_DATA;
+        var dictionaryPath = CFG.DICTIONARY.PATH_DATA + _dictionaryAlias +
+                             CFG.STR.SLASH + _dictionaryAlias +
+                             CFG.DICTIONARY.TYPE_DATA;
         
         // AJAX Get-Anfrage zur Datei
         $.getJSON(dictionaryPath, function(data) {
-            if ($.isArray(data.words)) {
+            if ((typeof data.caption === typeof CFG.STR.EMPTY) &&
+                $.isArray(data.words)) {
+                _dictionaryCaption = data.caption;
                 _dictionaryData = data.words;
                 _dictionarySize = data.words.length;
             }
@@ -108,7 +111,7 @@ var SaveGame = (function() {
             
             // Level und Fehlschläge ermitteln
             var progress = (_progressData[word.alias] || { lvl: 0, fail: 0 });
-            var lvl = Math.min(Math.max(progress.lvl, 0), _C.QUIZ.LVL_MAX);
+            var lvl = Math.min(Math.max(progress.lvl, 0), CFG.QUIZ.LVL_MAX);
             var fail = Math.max(progress.fail, 0);
             
             // Wort um Werte erweitern und zu Listen hinzufügen
@@ -161,7 +164,8 @@ var SaveGame = (function() {
      * Liefert die Fortschritt-Liste in einem Event.
      */
     function _serveProgress() {
-        $(window).trigger(_C.EVT.SERVE_PROGRESS, {
+        $(window).trigger(CFG.EVT.SERVE_PROGRESS, {
+            caption: _dictionaryCaption,
             list: _progressList,
             size: _progressSize
         });
@@ -172,7 +176,8 @@ var SaveGame = (function() {
      * Liefert die Wörterbuch-Liste in einem Event.
      */
     function _serveDictionary() {
-        $(window).trigger(_C.EVT.SERVE_DICTIONARY, {
+        $(window).trigger(CFG.EVT.SERVE_DICTIONARY, {
+            caption : _dictionaryCaption,
             list: _dictionaryList,
             size: _dictionarySize
         });

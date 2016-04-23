@@ -3,12 +3,14 @@
         <script id="tmpl-wordlist" type="text/template">
             <li class="list__title">
                 <span class="list__title-text">
-                    Mein Wörterbuch
-                    <span class="badge">{{size}} Einträge</span>
+                    {{caption}}
+                    <span class="badge">
+                        {{size}} {{#single}}Eintrag{{/single}}{{^single}}Einträge{{/single}}
+                    </span>
                 </span>
                 {{#filtered}}
                 <span class="list__title-filter">
-                    Gefiltert nach <b class="list__title-keyword">„{{filter}}“</b>
+                    Gefiltert nach <b class="list__title-keyword">{{filter}}</b>
                 </span>
                 {{/filtered}}
             </li>

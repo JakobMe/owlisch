@@ -18,7 +18,7 @@
         .shadow(0, 0, @app-size-line-medium, @app-size-line-thin, @app-color-star);
     }
     100% {
-        background: fade(@app-color-star, 50%);
+        background: fade(@app-color-star, @app-fade-highlight);
         .shadow-none();
     }
 }
@@ -57,6 +57,7 @@
             text-align: right;
             font-style: normal;
             font-weight: normal;
+            box-sizing: border-box;
             top: 0;
             right: 0;
             content: @fontello-icon-forward;
@@ -67,7 +68,6 @@
             height: @_list-size-height;
             line-height: (@_list-size-height + @app-size-line-thin);
             .font-icon();
-            .borderbox();
         }
         
         // Sub-Element: Label
@@ -83,7 +83,7 @@
         // Sub-Element: Highlight
         &-highlight {
             color: darken(@app-color-star, @app-darken-star);
-            background: fade(@app-color-star, 50%);
+            background: fade(@app-color-star, @app-fade-highlight);
             .animation(list-highlight);
             .round-all();
         }
@@ -110,7 +110,6 @@
         // Sub-Element: Titel-Text
         &-text {
             display: block;
-            text-transform: uppercase;
             color: @app-color-text-pale;
         }
         
@@ -118,11 +117,17 @@
         &-filter {
             display: block;
             font-style: italic;
+            margin-top: @app-size-padding-half;
             color: @app-color-text-dark;
             font-size: @app-font-size-tiny;
         }
         
         // Sub-Element: Suchbegriff
-        &-keyword { color: @app-color-main; }
+        &-keyword {
+            padding: 0 @app-size-padding-half;
+            color: darken(@app-color-star, @app-darken-star);
+            background: fade(@app-color-star, @app-fade-highlight);
+            .round-all();
+        }
     }
 }

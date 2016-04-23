@@ -90,7 +90,7 @@
         <script id="tmpl-viewpanels" type="text/template">
             {{#.}}
             <section class="view__panel" role="tabpanel"
-                     data-panel="{{name}}" data-title="{{title}}">
+                     data-panel="{{alias}}" data-title="{{title}}">
             </section>
             {{/.}}
         </script>
@@ -99,8 +99,8 @@
         <script id="tmpl-tablist" type="text/template">
             <ul class="tab-bar__list">
                 {{#.}}
-                <li class="tab-bar__tab" role="tab" data-panel="{{name}}">
-                    <i class="tab-bar__icon icon icon--{{name}}"></i>
+                <li class="tab-bar__tab" role="tab" data-panel="{{alias}}">
+                    <i class="tab-bar__icon icon icon--{{icon}}"></i>
                     <span class="tab-bar__label">{{label}}</span>
                 </li>
                 {{/.}}
@@ -120,12 +120,11 @@
                         <span class="notice__text">
                             Dein persönliches <b>Wörterbuch</b> füllt sich
                             automatisch mit allen Wörtern, die du schon
-                            <b>erraten</b> hast.
+                            im <b>Quiz</b> erraten hast.
                         </span>
                     </p>
                 </div>
-                <div class="slider__slide"
-                     role="complementary" data-slide="2">
+                <div class="slider__slide" role="complementary" data-slide="2">
                 </div>
             </div>
         </script>
@@ -134,12 +133,14 @@
         <script id="tmpl-wordlist" type="text/template">
             <li class="list__title">
                 <span class="list__title-text">
-                    Mein Wörterbuch
-                    <span class="badge">{{size}} Einträge</span>
+                    {{caption}}
+                    <span class="badge">
+                        {{size}} {{#single}}Eintrag{{/single}}{{^single}}Einträge{{/single}}
+                    </span>
                 </span>
                 {{#filtered}}
                 <span class="list__title-filter">
-                    Gefiltert nach <b class="list__title-keyword">„{{filter}}“</b>
+                    Gefiltert nach <b class="list__title-keyword">{{filter}}</b>
                 </span>
                 {{/filtered}}
             </li>
@@ -175,7 +176,7 @@
                 data-sort="{{optionSort}}" data-order="{{optionOrder}}">
                 <i class="dropdown__icon icon icon--sort-{{optionSort}}-{{optionOrder}}"></i>
                 <span class="dropdown__label">
-                    {{labelSort}} sortieren ({{labelOrder}})
+                    {{labelSort}} {{labelOrder}} sortieren
                 </span>
             </li>
             {{/.}}

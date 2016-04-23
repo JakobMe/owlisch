@@ -30,7 +30,7 @@ var View = (function() {
     var _currentPanel           = null;
     var _isVisible              = false;
     var _isFullscreen           = false;
-    var _isWebapp               = (_C.WEBAPP.IOS || _C.WEBAPP.CORDOVA);
+    var _isWebapp               = (CFG.WEBAPP.IOS || CFG.WEBAPP.CORDOVA);
     var _tmplViewpanels         = $(_SEL_TMPL).html();
     
     // DOM-Elemente
@@ -57,11 +57,11 @@ var View = (function() {
      * Bindet Funktionen an Events und Elemente des Moduls.
      */
     function _bindEvents() {
-        $(window).on(_C.EVT.SET_PANEL, _setPanel);
-        $(window).on(_C.EVT.SHOW_VIEW, _show);
-        $(window).on(_C.EVT.HIDE_VIEW, _hide);
-        window.addEventListener(_C.EVT.KEYBOARD_SHOW, _setFullscreen);
-        window.addEventListener(_C.EVT.KEYBOARD_HIDE, _unsetFullscreen);
+        $(window).on(CFG.EVT.SET_PANEL, _setPanel);
+        $(window).on(CFG.EVT.SHOW_VIEW, _show);
+        $(window).on(CFG.EVT.HIDE_VIEW, _hide);
+        window.addEventListener(CFG.EVT.KEYBOARD_SHOW, _setFullscreen);
+        window.addEventListener(CFG.EVT.KEYBOARD_HIDE, _unsetFullscreen);
     }
     
     /**
@@ -99,8 +99,8 @@ var View = (function() {
         
         // Panel-Array erzeugen
         var panels = [];
-        $.each(_C.VIEW, function(panel, props) {
-            var panelProps = [];
+        $.each(CFG.VIEW, function(alias, props) {
+            var panelProps = { alias: alias, icon: alias.toLowerCase() };
             $.each(props, function(prop, value) {
                 panelProps[prop.toLowerCase()] = value;
             });
@@ -132,7 +132,7 @@ var View = (function() {
             
             // Event auslösen
             $(window).trigger(
-                _C.EVT.CREATE_PANELS,
+                CFG.EVT.CREATE_PANELS,
                 { panels: panels }
             );
         });
@@ -152,7 +152,7 @@ var View = (function() {
                     
             // Navigation-Bar aktualisieren
             $(window).trigger(
-                _C.EVT.UPDATE_NAVBAR,
+                CFG.EVT.UPDATE_NAVBAR,
                 { panelOld: _currentPanel, panelNew: data.panel }
             );
             
@@ -163,7 +163,7 @@ var View = (function() {
             // Inhalt laden
             setTimeout(function() {
                 _loadPanelContent();
-            }, _C.TIME.ANIMATION);
+            }, CFG.TIME.ANIMATION);
         }
     }
     
@@ -177,7 +177,7 @@ var View = (function() {
         // Wenn Panel leer ist, Inhalt mit Event laden
         if (_$panels[_currentPanel].children().length === 0 ) {
             $(window).trigger(
-                _C.EVT.LOAD_PANEL_CONTENT, {
+                CFG.EVT.LOAD_PANEL_CONTENT, {
                     panel: _currentPanel,
                     target: _$panels[_currentPanel]
                 }

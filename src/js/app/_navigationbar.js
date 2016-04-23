@@ -46,7 +46,7 @@ var NavigationBar = (function() {
     var _buttonsAreDisabled     = false;
     var _dropdownIsOpened       = false;
     var _tmplDropdown           = $(_SEL_TMPL_DROPDOWN).html();
-    var _isWebapp               = (_C.WEBAPP.IOS || _C.WEBAPP.CORDOVA);
+    var _isWebapp               = (CFG.WEBAPP.IOS || CFG.WEBAPP.CORDOVA);
     
     // DOM-Elemente
     var _$navbar                = $(_SEL_TITLEBAR);
@@ -78,13 +78,13 @@ var NavigationBar = (function() {
         
         // Verfügbare Sortierungen ermitteln
         var sorting = [];
-        $.each(_C.SORTING.SORT, function(sort, sortProps) {
-            $.each(_C.SORTING.ORDER, function(order, orderProps) {
+        $.each(CFG.SORTING.SORT, function(optionSort, labelSort) {
+            $.each(CFG.SORTING.ORDER, function(optionOrder, labelOrder) {
                 sorting.push({
-                    optionSort  : sortProps.NAME,
-                    optionOrder : orderProps.NAME,
-                    labelSort   : sortProps.LABEL,
-                    labelOrder  : orderProps.LABEL
+                    optionSort  : optionSort,
+                    optionOrder : optionOrder,
+                    labelSort   : labelSort,
+                    labelOrder  : labelOrder
                 });
             });
         });
@@ -109,7 +109,7 @@ var NavigationBar = (function() {
         var $buttons = _$navbar.find(_SEL_BUTTONS);
         _buttonLeft = { $button: $buttons.first(), action: null, icon: null };
         _buttonRight = { $button: $buttons.last(), action: null, icon: null };
-        _title = { $title: _$navbar.find(_SEL_TITLE), str: _C.STR.EMPTY };
+        _title = { $title: _$navbar.find(_SEL_TITLE), str: CFG.STR.EMPTY };
         _$sort = _$dropdown.find(_SEL_SORT);
     }
     
@@ -119,14 +119,14 @@ var NavigationBar = (function() {
      * der Navigation-Bar im Cache fest.
      */
     function _setDefaultCache() {
-        $.each(_C.VIEW, function(index, panel) {
+        $.each(CFG.VIEW, function(alias, panel) {
             
             // Name und Titel des Panels ermitteln
-            var name = panel.NAME;
-            var title = panel.TITLE;
+            var panelAlias = alias;
+            var panelTitle = panel.TITLE;
             
             // Cache für Panel setzen
-            _cache[name] = {
+            _cache[panelAlias] = {
                 title               : $.extend({}, _title),
                 buttonLeft          : $.extend({}, _buttonLeft),
                 buttonRight         : $.extend({}, _buttonRight),
@@ -135,17 +135,17 @@ var NavigationBar = (function() {
             };
             
             // Titel setzen
-            _cache[name].title.str = title;
+            _cache[panelAlias].title.str = panelTitle;
             
             // Sonderfall: Wörterbuch
-            if (name === _C.VIEW.DICTIONARY.NAME) {
-                $.extend(_cache[name].buttonLeft, {
-                    action  : _C.ACT.SEARCH_SHOW,
-                    icon    : _C.ICON.SEARCH
+            if (panel === CFG.VIEW.DICTIONARY) {
+                $.extend(_cache[panelAlias].buttonLeft, {
+                    action  : CFG.ACT.SEARCH_SHOW,
+                    icon    : CFG.ICON.SEARCH
                 });
-                $.extend(_cache[name].buttonRight, {
-                    action  : _C.ACT.SORT_SHOW,
-                    icon    : _C.ICON.SORT
+                $.extend(_cache[panelAlias].buttonRight, {
+                    action  : CFG.ACT.SORT_SHOW,
+                    icon    : CFG.ICON.SORT
                 });
             }            
         });
@@ -156,12 +156,12 @@ var NavigationBar = (function() {
      * Bindet Funktionen an Events und Elemente des Moduls.
      */
     function _bindEvents() {
-        _$sort.on(_C.EVT.CLICK, _renderDropdown);
-        _$navbar.on(_C.EVT.CLICK, _SEL_BUTTONS, _buttonAction);
-        _$search.on(_C.EVT.INPUT, _searchAction);
-        _$clear.on(_C.EVT.CLICK, _clearSearch);
-        $(window).on(_C.EVT.UPDATE_NAVBAR, _updateCache);
-        $(window).on(_C.EVT.PRESSED_BUTTON, _buttonPressed);
+        _$sort.on(CFG.EVT.CLICK, _renderDropdown);
+        _$navbar.on(CFG.EVT.CLICK, _SEL_BUTTONS, _buttonAction);
+        _$search.on(CFG.EVT.INPUT, _searchAction);
+        _$clear.on(CFG.EVT.CLICK, _clearSearch);
+        $(window).on(CFG.EVT.UPDATE_NAVBAR, _updateCache);
+        $(window).on(CFG.EVT.PRESSED_BUTTON, _buttonPressed);
     }
     
     /**
@@ -201,15 +201,15 @@ var NavigationBar = (function() {
             // Button aktualisieren
             setTimeout(function() {
                 if ((icon === null) || (action === null)) {
-                    $button.setMod(_B_BAR, _E_BUTTON, _M_ICON, _C.ICON.NONE);
+                    $button.setMod(_B_BAR, _E_BUTTON, _M_ICON, CFG.ICON.NONE);
                 } else {
                     $button.setMod(_B_BAR, _E_BUTTON, _M_DISABLED, false);
                     $button.setMod(_B_BAR, _E_BUTTON, _M_ICON, icon);
                 }
                 setTimeout(function() {
                     _buttonsAreDisabled = false;
-                }, _C.TIME.DELAY);
-            }, _C.TIME.ANIMATION);
+                }, CFG.TIME.DELAY);
+            }, CFG.TIME.ANIMATION);
         }
     }
     
@@ -222,9 +222,9 @@ var NavigationBar = (function() {
         if (_title.$title instanceof jQuery) {
             _title.$title.setMod(_B_BAR, _E_TITLE, _M_HIDDEN, true);
             setTimeout(function() {
-                _title.$title.text(_title.str || _C.STR.EMPTY);
+                _title.$title.text(_title.str || CFG.STR.EMPTY);
                 _title.$title.setMod(_B_BAR, _E_TITLE, _M_HIDDEN, false);
-            }, _C.TIME.ANIMATION);
+            }, CFG.TIME.ANIMATION);
         }
     }
     
@@ -236,7 +236,7 @@ var NavigationBar = (function() {
         _$navbar.setMod(_B_BAR, _M_SEARCH, false);
         setTimeout(function() {
             _$navbar.setMod(_B_BAR, _M_SEARCH, _searchIsActive);
-        }, _C.TIME.ANIMATION);
+        }, CFG.TIME.ANIMATION);
     }
     
     /**
@@ -253,14 +253,14 @@ var NavigationBar = (function() {
             
             // Geklickten Button aktivieren, Geschwister deaktivieren
             var $sort = $(event.target).closest(_SEL_SORT);
-            var sort = $sort.data(_DATA_SORT);
-            var order = $sort.data(_DATA_ORDER);
+            var sort = CFG.SORTING.SORT[$sort.data(_DATA_SORT)];
+            var order = CFG.SORTING.ORDER[$sort.data(_DATA_ORDER)];
             $sort.setMod(_B_DROPDOWN, _E_ITEM, _M_SELECTED, true)
                 .siblings().setMod(_B_DROPDOWN, _E_ITEM, _M_SELECTED, false);
             
             // Event auslösen
             $(window).trigger(
-                _C.EVT.SORTED_LIST,
+                CFG.EVT.SORTED_LIST,
                 { sort: sort, order: order }
             );
             
@@ -286,26 +286,26 @@ var NavigationBar = (function() {
             switch (data.action) {
                 
                 // Sortierung einblenden
-                case _C.ACT.SORT_SHOW:
+                case CFG.ACT.SORT_SHOW:
                     _setDropdown(true);
                     break;
                 
                 // Sortierung ausblenden
-                case _C.ACT.SORT_HIDE:
+                case CFG.ACT.SORT_HIDE:
                     _setDropdown(false);
                     break;
                 
                 // Suche einblenden
-                case _C.ACT.SEARCH_SHOW:
+                case CFG.ACT.SEARCH_SHOW:
                     setTimeout(function() {
                         _$search.focus();
-                    }, _C.TIME.DELAY);
+                    }, CFG.TIME.DELAY);
                     _setDropdown(false);
                     _setSearch(true);
                     break;
                 
                 // Suche ausblenden
-                case _C.ACT.SEARCH_HIDE:
+                case CFG.ACT.SEARCH_HIDE:
                     _setDropdown(false);
                     _setSearch(false);
                     break;
@@ -334,7 +334,7 @@ var NavigationBar = (function() {
             }
             
             // Event auslösen, wenn Aktion gültig ist
-            $(window).trigger(_C.EVT.PRESSED_BUTTON, { action: action });
+            $(window).trigger(CFG.EVT.PRESSED_BUTTON, { action: action });
         }
     }
     
@@ -346,7 +346,7 @@ var NavigationBar = (function() {
     function _searchAction() {
         var search = _$search.val();
         _$clear.setMod(_B_BAR, _E_CLEAR, _M_HIDDEN, (search.length === 0));
-        $(window).trigger(_C.EVT.SEARCHED_LIST, { search: search });
+        $(window).trigger(CFG.EVT.SEARCHED_LIST, { search: search });
     }
     
     /**
@@ -355,7 +355,7 @@ var NavigationBar = (function() {
      * und fokussiert das Suchfeld.
      */
     function _clearSearch() {
-        _$search.val(_C.STR.EMPTY).trigger(_C.EVT.INPUT);
+        _$search.val(CFG.STR.EMPTY).trigger(CFG.EVT.INPUT);
         _$search.focus();
     }
     
@@ -404,12 +404,12 @@ var NavigationBar = (function() {
         if (_searchIsActive !== willBeActive) {
             _searchIsActive = willBeActive;
             _setButtonLeft(
-                (willBeActive ? _C.ACT.SEARCH_HIDE : _C.ACT.SEARCH_SHOW),
-                (willBeActive ? _C.ICON.CANCEL : _C.ICON.SEARCH)
+                (willBeActive ? CFG.ACT.SEARCH_HIDE : CFG.ACT.SEARCH_SHOW),
+                (willBeActive ? CFG.ICON.CANCEL : CFG.ICON.SEARCH)
             );
             $(window).trigger(
-                _C.EVT.SEARCHED_LIST,
-                { search: (willBeActive ? _$search.val() : _C.STR.EMPTY) }
+                CFG.EVT.SEARCHED_LIST,
+                { search: (willBeActive ? _$search.val() : CFG.STR.EMPTY) }
             );
             _renderSearch();
         }
@@ -426,8 +426,8 @@ var NavigationBar = (function() {
         if (_dropdownIsOpened !== willBeOpened) {
             _dropdownIsOpened = willBeOpened;
             _setButtonRight(
-                (willBeOpened ? _C.ACT.SORT_HIDE : _C.ACT.SORT_SHOW),
-                (willBeOpened ? _C.ICON.CANCEL : _C.ICON.SORT) 
+                (willBeOpened ? CFG.ACT.SORT_HIDE : CFG.ACT.SORT_SHOW),
+                (willBeOpened ? CFG.ICON.CANCEL : CFG.ICON.SORT) 
             );
             _renderDropdown();
         }

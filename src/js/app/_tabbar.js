@@ -50,10 +50,10 @@ var TabBar = (function() {
      * Bindet Funktionen an Events und Elemente des Moduls.
      */
     function _bindEvents() {
-        _$tabbar.on(_C.EVT.CLICK, _SEL_TABS, _setTab);
-        $(window).on(_C.EVT.CREATE_PANELS, _createTablist);
-        window.addEventListener(_C.EVT.KEYBOARD_SHOW, _hide);
-        window.addEventListener(_C.EVT.KEYBOARD_HIDE, _show);
+        _$tabbar.on(CFG.EVT.CLICK, _SEL_TABS, _setTab);
+        $(window).on(CFG.EVT.CREATE_PANELS, _createTablist);
+        window.addEventListener(CFG.EVT.KEYBOARD_SHOW, _hide);
+        window.addEventListener(CFG.EVT.KEYBOARD_HIDE, _show);
     }
     
     /**
@@ -83,7 +83,7 @@ var TabBar = (function() {
                     _$tabs = _$tabbar.find(_SEL_TABS);
                     _tabNumber = _$tabs.length - 1;
                     _setTab(_tabActive);
-                    $(window).trigger(_C.EVT.SHOW_VIEWPORT);
+                    $(window).trigger(CFG.EVT.SHOW_VIEWPORT);
                 }
             );
         }
@@ -109,7 +109,7 @@ var TabBar = (function() {
             _tabActive = i;
             panel = _$tabs.eq(i).data(_DATA_PANEL);
             if ((panel !== null) && (panel.length > 0)) {
-                $(window).trigger(_C.EVT.SET_PANEL, { panel: panel });
+                $(window).trigger(CFG.EVT.SET_PANEL, { panel: panel });
             }
         }
         _render();

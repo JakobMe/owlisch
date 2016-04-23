@@ -55,12 +55,12 @@
         position: relative;
         text-align: center;
         text-decoration: none;
+        box-sizing: border-box;
         padding: @_tab-bar-size-padding;
         width: (100% / @_tab-bar-number-tabs);
         color: @app-color-text-pale;
         height: @app-size-height-tabbar;
         .transition(color);
-        .borderbox();
         
         // Mod: Aktiv
         &--active {
@@ -89,23 +89,25 @@
     &__status {
         display: block;
         position: absolute;
+        box-sizing: border-box;
         left: 0;
         width: (100% / @_tab-bar-number-tabs);
         padding: 0 @_tab-bar-size-padding-status;
         top: -(@app-size-line-thin);
         height: @app-size-line-bold;
         .transition(transform);
-        .borderbox();
+        
         
         // Status-Balken
         &:after {
+            display: block;
+            box-sizing: border-box;
             width: 100%;
             height: 100%;
+            content: "";
             background: @app-color-main;
             border-top: @app-size-line-thin solid darken(@app-color-main, @app-darken-main);
             .round-all(@app-size-line-thin);
-            .after-block();
-            .borderbox();
         }
     }
 }

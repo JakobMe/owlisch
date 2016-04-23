@@ -19,9 +19,10 @@ var Dictionary = (function() {
     // Private Variablen
     var _listOriginal           = [];
     var _listFiltered           = [];
-    var _currentFilter          = _C.STR.EMPTY;
-    var _currentSort            = _C.SORTING.SORT.ALPHA.NAME;
-    var _currentOrder           = _C.SORTING.ORDER.ASC.NAME;
+    var _listCaption            = CFG.STR.EMPTY;
+    var _currentFilter          = CFG.STR.EMPTY;
+    var _currentSort            = CFG.SORTING.SORT.ALPHA;
+    var _currentOrder           = CFG.SORTING.ORDER.ASC;
     var _tmplDictionary         = $(_SEL_TMPL_DICTIONARY).html();
     var _tmplWordlist           = $(_SEL_TMPL_WORDLIST).html();
     
@@ -58,8 +59,8 @@ var Dictionary = (function() {
         _$items             = _$list.find(_SEL_ITEM);
         
         // Fortschritt-Liste anfragen
-        $(window).trigger(_C.EVT.REQUEST_PROGRESS);
-        $(window).trigger(_C.EVT.SHOW_VIEW);
+        $(window).trigger(CFG.EVT.REQUEST_PROGRESS);
+        $(window).trigger(CFG.EVT.SHOW_VIEW);
     }
     
     /**
@@ -67,10 +68,10 @@ var Dictionary = (function() {
      * Bindet Funktionen an Events und Elemente des Moduls.
      */
     function _bindEvents() {
-        $(window).on(_C.EVT.LOAD_PANEL_CONTENT, _createDictionary);
-        $(window).on(_C.EVT.SERVE_PROGRESS, _updateList);
-        $(window).on(_C.EVT.SORTED_LIST, _sortList);
-        $(window).on(_C.EVT.SEARCHED_LIST, _filterList);
+        $(window).on(CFG.EVT.LOAD_PANEL_CONTENT, _createDictionary);
+        $(window).on(CFG.EVT.SERVE_PROGRESS, _updateList);
+        $(window).on(CFG.EVT.SORTED_LIST, _sortList);
+        $(window).on(CFG.EVT.SEARCHED_LIST, _filterList);
     }
     
     /**
@@ -82,7 +83,7 @@ var Dictionary = (function() {
      */
     function _createDictionary(event, data) {
         if ((typeof data !== typeof undefined) &&
-            (data.panel === _C.VIEW.DICTIONARY.NAME) &&
+            (CFG.VIEW[data.panel] === CFG.VIEW.DICTIONARY) &&
             (data.target instanceof jQuery)) {
 
             // Template füllen, Callback ausführen
@@ -102,7 +103,7 @@ var Dictionary = (function() {
     function _compareListItems(a, b) {
         
         // Sortierung: Numerisch
-        if (_currentSort === _C.SORTING.SORT.NUMERIC.NAME) {
+        if (_currentSort === CFG.SORTING.SORT.NUMERIC) {
             if (parseInt(a.lvl) < parseInt(b.lvl)) { return -1; }
             else if (parseInt(a.lvl) > parseInt(b.lvl)) { return 1; }
             else { return a.term.localeCompare(b.term); }
@@ -130,7 +131,7 @@ var Dictionary = (function() {
         
         // Liste sortieren und rendern
         _listFiltered.sort(_compareListItems);
-        if (_currentOrder === _C.SORTING.ORDER.DESC.NAME) {
+        if (_currentOrder === CFG.SORTING.ORDER.DESC) {
             _listFiltered.reverse();
         }
         _renderList();
@@ -149,12 +150,12 @@ var Dictionary = (function() {
         
         // Filter-Wort gegebenenfalls aktualisieren
         if ((typeof data !== typeof undefined) &&
-            (typeof data.search === typeof _C.STR.EMPTY)) {
+            (typeof data.search === typeof CFG.STR.EMPTY)) {
             _currentFilter = data.search.toLowerCase();
         }
         
         // Wenn Suchbegriff leer ist, Original-Liste setzen
-        if (_currentFilter === _C.STR.EMPTY) {
+        if (_currentFilter === CFG.STR.EMPTY) {
             _listFiltered = _listOriginal.slice(0);
         
         // Ansonsten Filter-Liste neu erzeugen
@@ -181,6 +182,7 @@ var Dictionary = (function() {
     function _updateList(event, data) {
         if ((typeof data !== typeof undefined) &&
             (typeof data.list !== typeof undefined)) {
+            _listCaption = data.caption;
             _listOriginal = data.list;
             _filterList();
         }
@@ -194,9 +196,11 @@ var Dictionary = (function() {
         if (_$list instanceof jQuery) {
             _$list.html(
                 Mustache.render(_tmplWordlist, {
+                    caption     : _listCaption,
                     words       : _listFiltered,
-                    levels      : _C.QUIZ.LEVELS,
+                    levels      : CFG.QUIZ.LEVELS,
                     size        : _listFiltered.length,
+                    single      : (_listFiltered.length === 1),
                     filtered    : (_currentFilter.length > 0),
                     filter      : _currentFilter
                 })

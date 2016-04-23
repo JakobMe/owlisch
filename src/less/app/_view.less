@@ -13,6 +13,7 @@
 // Block: View
 .@{_view} {
     position: absolute;
+    box-sizing: border-box;
     top: 0;
     left: 0;
     margin: 0;
@@ -21,7 +22,6 @@
     height: 100%;
     padding-top: @app-size-height-navigationbar;
     padding-bottom: @app-size-height-tabbar;
-    .borderbox();
     
     // Mod: Webapp
     &--webapp {
@@ -34,15 +34,16 @@
     
     // Element: Content
     &__content {
-        position: relative;
         overflow: hidden;
+        position: relative;
+        box-sizing: border-box;
         height: 100%;
         opacity: @app-opacity-invisible;
         color: @app-color-text-dark;
         font-size: @app-font-size-medium;
         background: @app-color-background;
         .transition(opacity);
-        .borderbox();
+        
         
         // Mod: Sichtbar
         &--visible { opacity: @app-opacity-full; }

@@ -6,7 +6,7 @@
  * @licence https://opensource.org/licenses/MIT MIT
  * @link http://jmportfolio.de
  */
-var _C = (function() {
+var CFG = (function() {
     return {
         DICTIONARY: {
             ALIAS               : "owl",
@@ -26,29 +26,24 @@ var _C = (function() {
         },
         VIEW: {
             START: {
-                NAME            : "start",
                 LABEL           : "Start",
                 TITLE           : "Wort der Woche"
             },
             DICTIONARY: {
-                NAME            : "dictionary",
                 LABEL           : "Wörterbuch",
-                TITLE           : "Wörterbuch"
+                TITLE           : "Mein Wörterbuch"
             },
             QUIZ: {
-                NAME            : "quiz",
                 LABEL           : "Quiz",
-                TITLE           : "Quiz"
+                TITLE           : "OWL-Quiz"
             },
             PROGRESS: {
-                NAME            : "progress",
                 LABEL           : "Fortschritt",
-                TITLE           : "Fortschritt"
+                TITLE           : "Mein Fortschritt"
             },
-            HELP: {
-                NAME            : "help",
-                LABEL           : "Hilfe",
-                TITLE           : "Hilfe"
+            MORE: {
+                LABEL           : "Mehr",
+                TITLE           : "Mehr Optionen"
             }
         },
         ACT: {
@@ -95,24 +90,12 @@ var _C = (function() {
         },
         SORTING: {
             SORT: {
-                ALPHA: {
-                    NAME        : "alpha",
-                    LABEL       : "Alphabetisch"
-                },
-                NUMERIC: {
-                    NAME        : "numeric",
-                    LABEL       : "Nach Stufe"
-                }
+                ALPHA           : "Alphabetisch",
+                NUMERIC         : "Nach Stufe"
             },
             ORDER: {
-                ASC: {
-                    NAME        : "asc",
-                    LABEL       : "aufsteigend"
-                },
-                DESC: {
-                    NAME        : "desc",
-                    LABEL       : "absteigend"
-                }
+                ASC             : "aufsteigend",
+                DESC            : "absteigend"
             }
         },
         BEM: {

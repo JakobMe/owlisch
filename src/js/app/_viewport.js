@@ -31,7 +31,7 @@ var Viewport = (function() {
      * Bindet Funktionen an Events und Elemente des Moduls.
      */
     function _bindEvents() {
-        $(window).on(_C.EVT.SHOW_VIEWPORT, _show);
+        $(window).on(CFG.EVT.SHOW_VIEWPORT, _show);
     }
     
     /**
@@ -49,7 +49,7 @@ var Viewport = (function() {
      */
     function _show() {
         _isVisible = true;
-        setTimeout(function() { _render(); }, _C.TIME.DELAY);
+        setTimeout(function() { _render(); }, CFG.TIME.DELAY);
     }
     
     // Öffentliches Interface

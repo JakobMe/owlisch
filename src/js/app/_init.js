@@ -19,14 +19,14 @@ var App = {
         
         // BEM-Syntax anpassen
         $.BEMsyntax({
-            elem      : _C.BEM.ELEMDIV,
-            modBefore : _C.BEM.MODDIV,
-            modKeyVal : _C.BEM.MODKEY
+            elem      : CFG.BEM.ELEMDIV,
+            modBefore : CFG.BEM.MODDIV,
+            modKeyVal : CFG.BEM.MODKEY
         });
         
         // Komponenten initialisieren
+        Data.init();
         Viewport.init();
-        SaveGame.init();
         Dictionary.init();
         NavigationBar.init();
         TabBar.init();

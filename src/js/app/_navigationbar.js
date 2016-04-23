@@ -81,6 +81,8 @@ var NavigationBar = (function() {
         $.each(CFG.SORTING.SORT, function(optionSort, labelSort) {
             $.each(CFG.SORTING.ORDER, function(optionOrder, labelOrder) {
                 sorting.push({
+                    iconSort    : optionSort.toLowerCase(),
+                    iconOrder   : optionOrder.toLowerCase(),
                     optionSort  : optionSort,
                     optionOrder : optionOrder,
                     labelSort   : labelSort,

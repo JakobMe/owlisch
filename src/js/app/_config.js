@@ -86,7 +86,7 @@ var CFG = (function() {
             REQUEST_PROGRESS    : "requestedProgress",
             SERVE_DICTIONARY    : "servedDictionary",
             SERVE_PROGRESS      : "servedProgress",
-            UPDATE_PROGRESS     : "updatedProgress",
+            UPDATE_PROGRESS     : "updatedProgress"
         },
         SORTING: {
             SORT: {

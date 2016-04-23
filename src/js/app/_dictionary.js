@@ -202,7 +202,7 @@ var Dictionary = (function() {
                     size        : _listFiltered.length,
                     single      : (_listFiltered.length === 1),
                     filtered    : (_currentFilter.length > 0),
-                    filter      : _currentFilter
+                    filter      : _currentFilter.toUpperCase()
                 })
             );
         }

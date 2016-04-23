@@ -50,6 +50,9 @@
         .gradient-background();
         .ellipsis();
         
+        // Aktiv
+        &:active:after { color: @app-color-text-dark; }
+        
         // Icon
         &:after {
             display: block;
@@ -67,6 +70,7 @@
             width: @_list-size-height;
             height: @_list-size-height;
             line-height: (@_list-size-height + @app-size-line-thin);
+            .transition(color);
             .font-icon();
         }
         

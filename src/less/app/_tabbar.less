@@ -62,10 +62,11 @@
         height: @app-size-height-tabbar;
         .transition(color);
         
+        // Aktiv
+        &:active { color: @app-color-text-dark; }
+        
         // Mod: Aktiv
-        &--active {
-            &, &:hover { color: @app-color-main; }
-        }
+        &--active { &, &:active { color: @app-color-main; } }
     }
     
     // Element: Icon

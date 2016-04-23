@@ -62,20 +62,27 @@
             color: @app-color-background;
             height: @_dropdown-size-height;
             width: @_dropdown-size-height;
-            .transition();
+            .transition(color);
         }
         
+        // Aktiv
+        &:active { &, &:after { color: @app-color-text-dark; } }
+        
         // Ausnahme: Letztes Element
-        &:not(:last-child) { border-bottom: @app-size-line-thin solid darken(@app-color-background, @app-darken-border); }
+        &:not(:last-child) {
+            border-bottom: @app-size-line-thin solid darken(@app-color-background, @app-darken-border);
+        }
 
         // Mod: Ausgewählt
         &--selected {
-            cursor: default;
-            color: @app-color-text-dark;
-            background: lighten(@app-color-background, @app-darken-main);
-            
-            // Icon
-            &:after { color: @app-color-main; }
+            &, &:active {
+                cursor: default;
+                color: @app-color-text-dark;
+                background: lighten(@app-color-background, @app-darken-main);
+                
+                // Icon
+                &:after { color: @app-color-main; }
+            }
         }
     }
     

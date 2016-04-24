@@ -61,15 +61,11 @@
         // Sub-Element: Label
         &-label {
             font-weight: bold;
-            display: inline-block;
-            vertical-align: top;
-            margin-top: -(@app-size-line-thin);
             &:not(:first-child) { margin-left: @app-size-gap-small; }
         }
         
         // Sub-Element: Highlight
         &-highlight {
-            .animation(highlight);
             .colored-highlight();
             .border-radius();
             .transition();

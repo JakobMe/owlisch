@@ -8,11 +8,10 @@
  */
 
 // Modul-Variablen
-@_stars:            stars;
-@_stars-font-size:  14px;
+@_stars-font-size: 14px;
 
 // Block: Sterne
-.@{_stars} {
+.stars {
     vertical-align: top;
     display: inline-block;
     font-size: @_stars-font-size;
@@ -28,7 +27,7 @@
     // Element: Stern
     &__star {
         font-style: normal;
-        color: @app-color-text-pale;
+        color: @app-color-text-dark-pale;
         .fontello-icon(@fontello-icon-star-empty);
     }
 }

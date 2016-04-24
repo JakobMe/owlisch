@@ -569,7 +569,7 @@
 		"outputPathIsOutsideProject": 0,
 		"outputPathIsSetByUser": 0
 		},
-	"\/src\/less\/app\/_badge.less": {
+	"\/src\/less\/app\/_block-badge.less": {
 		"allowInsecureImports": 0,
 		"createSourceMap": 0,
 		"disableJavascript": 0,
@@ -577,8 +577,8 @@
 		"ieCompatibility": 1,
 		"ignore": 1,
 		"ignoreWasSetByUser": 0,
-		"inputAbbreviatedPath": "\/src\/less\/app\/_badge.less",
-		"outputAbbreviatedPath": "\/src\/less\/css\/_badge.css",
+		"inputAbbreviatedPath": "\/src\/less\/app\/_block-badge.less",
+		"outputAbbreviatedPath": "\/src\/less\/css\/_block-badge.css",
 		"outputPathIsOutsideProject": 0,
 		"outputPathIsSetByUser": 0,
 		"outputStyle": 0,
@@ -589,7 +589,7 @@
 		"strictMath": 0,
 		"strictUnits": 0
 		},
-	"\/src\/less\/app\/_body.less": {
+	"\/src\/less\/app\/_block-body.less": {
 		"allowInsecureImports": 0,
 		"createSourceMap": 0,
 		"disableJavascript": 0,
@@ -597,8 +597,8 @@
 		"ieCompatibility": 1,
 		"ignore": 1,
 		"ignoreWasSetByUser": 0,
-		"inputAbbreviatedPath": "\/src\/less\/app\/_body.less",
-		"outputAbbreviatedPath": "\/src\/less\/css\/_body.css",
+		"inputAbbreviatedPath": "\/src\/less\/app\/_block-body.less",
+		"outputAbbreviatedPath": "\/src\/less\/css\/_block-body.css",
 		"outputPathIsOutsideProject": 0,
 		"outputPathIsSetByUser": 0,
 		"outputStyle": 0,
@@ -609,7 +609,7 @@
 		"strictMath": 0,
 		"strictUnits": 0
 		},
-	"\/src\/less\/app\/_dropdown.less": {
+	"\/src\/less\/app\/_block-dropdown.less": {
 		"allowInsecureImports": 0,
 		"createSourceMap": 0,
 		"disableJavascript": 0,
@@ -617,8 +617,8 @@
 		"ieCompatibility": 1,
 		"ignore": 1,
 		"ignoreWasSetByUser": 0,
-		"inputAbbreviatedPath": "\/src\/less\/app\/_dropdown.less",
-		"outputAbbreviatedPath": "\/src\/less\/css\/_dropdown.css",
+		"inputAbbreviatedPath": "\/src\/less\/app\/_block-dropdown.less",
+		"outputAbbreviatedPath": "\/src\/less\/css\/_block-dropdown.css",
 		"outputPathIsOutsideProject": 0,
 		"outputPathIsSetByUser": 0,
 		"outputStyle": 0,
@@ -629,7 +629,7 @@
 		"strictMath": 0,
 		"strictUnits": 0
 		},
-	"\/src\/less\/app\/_font.less": {
+	"\/src\/less\/app\/_block-list.less": {
 		"allowInsecureImports": 0,
 		"createSourceMap": 0,
 		"disableJavascript": 0,
@@ -637,8 +637,8 @@
 		"ieCompatibility": 1,
 		"ignore": 1,
 		"ignoreWasSetByUser": 0,
-		"inputAbbreviatedPath": "\/src\/less\/app\/_font.less",
-		"outputAbbreviatedPath": "\/src\/less\/css\/_font.css",
+		"inputAbbreviatedPath": "\/src\/less\/app\/_block-list.less",
+		"outputAbbreviatedPath": "\/src\/less\/css\/_block-list.css",
 		"outputPathIsOutsideProject": 0,
 		"outputPathIsSetByUser": 0,
 		"outputStyle": 0,
@@ -649,7 +649,7 @@
 		"strictMath": 0,
 		"strictUnits": 0
 		},
-	"\/src\/less\/app\/_list.less": {
+	"\/src\/less\/app\/_block-navigationbar.less": {
 		"allowInsecureImports": 0,
 		"createSourceMap": 0,
 		"disableJavascript": 0,
@@ -657,8 +657,8 @@
 		"ieCompatibility": 1,
 		"ignore": 1,
 		"ignoreWasSetByUser": 0,
-		"inputAbbreviatedPath": "\/src\/less\/app\/_list.less",
-		"outputAbbreviatedPath": "\/src\/less\/css\/_list.css",
+		"inputAbbreviatedPath": "\/src\/less\/app\/_block-navigationbar.less",
+		"outputAbbreviatedPath": "\/src\/less\/css\/_block-navigationbar.css",
 		"outputPathIsOutsideProject": 0,
 		"outputPathIsSetByUser": 0,
 		"outputStyle": 0,
@@ -669,7 +669,7 @@
 		"strictMath": 0,
 		"strictUnits": 0
 		},
-	"\/src\/less\/app\/_mixins.less": {
+	"\/src\/less\/app\/_block-notice.less": {
 		"allowInsecureImports": 0,
 		"createSourceMap": 0,
 		"disableJavascript": 0,
@@ -677,8 +677,8 @@
 		"ieCompatibility": 1,
 		"ignore": 1,
 		"ignoreWasSetByUser": 0,
-		"inputAbbreviatedPath": "\/src\/less\/app\/_mixins.less",
-		"outputAbbreviatedPath": "\/src\/less\/css\/_mixins.css",
+		"inputAbbreviatedPath": "\/src\/less\/app\/_block-notice.less",
+		"outputAbbreviatedPath": "\/src\/less\/css\/_block-notice.css",
 		"outputPathIsOutsideProject": 0,
 		"outputPathIsSetByUser": 0,
 		"outputStyle": 0,
@@ -689,7 +689,7 @@
 		"strictMath": 0,
 		"strictUnits": 0
 		},
-	"\/src\/less\/app\/_navigationbar.less": {
+	"\/src\/less\/app\/_block-slider.less": {
 		"allowInsecureImports": 0,
 		"createSourceMap": 0,
 		"disableJavascript": 0,
@@ -697,8 +697,8 @@
 		"ieCompatibility": 1,
 		"ignore": 1,
 		"ignoreWasSetByUser": 0,
-		"inputAbbreviatedPath": "\/src\/less\/app\/_navigationbar.less",
-		"outputAbbreviatedPath": "\/src\/less\/css\/_navigationbar.css",
+		"inputAbbreviatedPath": "\/src\/less\/app\/_block-slider.less",
+		"outputAbbreviatedPath": "\/src\/less\/css\/_block-slider.css",
 		"outputPathIsOutsideProject": 0,
 		"outputPathIsSetByUser": 0,
 		"outputStyle": 0,
@@ -709,7 +709,7 @@
 		"strictMath": 0,
 		"strictUnits": 0
 		},
-	"\/src\/less\/app\/_notice.less": {
+	"\/src\/less\/app\/_block-stars.less": {
 		"allowInsecureImports": 0,
 		"createSourceMap": 0,
 		"disableJavascript": 0,
@@ -717,8 +717,8 @@
 		"ieCompatibility": 1,
 		"ignore": 1,
 		"ignoreWasSetByUser": 0,
-		"inputAbbreviatedPath": "\/src\/less\/app\/_notice.less",
-		"outputAbbreviatedPath": "\/src\/less\/css\/_notice.css",
+		"inputAbbreviatedPath": "\/src\/less\/app\/_block-stars.less",
+		"outputAbbreviatedPath": "\/src\/less\/css\/_block-stars.css",
 		"outputPathIsOutsideProject": 0,
 		"outputPathIsSetByUser": 0,
 		"outputStyle": 0,
@@ -729,7 +729,7 @@
 		"strictMath": 0,
 		"strictUnits": 0
 		},
-	"\/src\/less\/app\/_slider.less": {
+	"\/src\/less\/app\/_block-tabbar.less": {
 		"allowInsecureImports": 0,
 		"createSourceMap": 0,
 		"disableJavascript": 0,
@@ -737,8 +737,8 @@
 		"ieCompatibility": 1,
 		"ignore": 1,
 		"ignoreWasSetByUser": 0,
-		"inputAbbreviatedPath": "\/src\/less\/app\/_slider.less",
-		"outputAbbreviatedPath": "\/src\/less\/css\/_slider.css",
+		"inputAbbreviatedPath": "\/src\/less\/app\/_block-tabbar.less",
+		"outputAbbreviatedPath": "\/src\/less\/css\/_block-tabbar.css",
 		"outputPathIsOutsideProject": 0,
 		"outputPathIsSetByUser": 0,
 		"outputStyle": 0,
@@ -749,7 +749,7 @@
 		"strictMath": 0,
 		"strictUnits": 0
 		},
-	"\/src\/less\/app\/_stars.less": {
+	"\/src\/less\/app\/_block-view.less": {
 		"allowInsecureImports": 0,
 		"createSourceMap": 0,
 		"disableJavascript": 0,
@@ -757,8 +757,8 @@
 		"ieCompatibility": 1,
 		"ignore": 1,
 		"ignoreWasSetByUser": 0,
-		"inputAbbreviatedPath": "\/src\/less\/app\/_stars.less",
-		"outputAbbreviatedPath": "\/src\/less\/css\/_stars.css",
+		"inputAbbreviatedPath": "\/src\/less\/app\/_block-view.less",
+		"outputAbbreviatedPath": "\/src\/less\/css\/_block-view.css",
 		"outputPathIsOutsideProject": 0,
 		"outputPathIsSetByUser": 0,
 		"outputStyle": 0,
@@ -769,7 +769,7 @@
 		"strictMath": 0,
 		"strictUnits": 0
 		},
-	"\/src\/less\/app\/_tabbar.less": {
+	"\/src\/less\/app\/_block-viewport.less": {
 		"allowInsecureImports": 0,
 		"createSourceMap": 0,
 		"disableJavascript": 0,
@@ -777,8 +777,8 @@
 		"ieCompatibility": 1,
 		"ignore": 1,
 		"ignoreWasSetByUser": 0,
-		"inputAbbreviatedPath": "\/src\/less\/app\/_tabbar.less",
-		"outputAbbreviatedPath": "\/src\/less\/css\/_tabbar.css",
+		"inputAbbreviatedPath": "\/src\/less\/app\/_block-viewport.less",
+		"outputAbbreviatedPath": "\/src\/less\/css\/_block-viewport.css",
 		"outputPathIsOutsideProject": 0,
 		"outputPathIsSetByUser": 0,
 		"outputStyle": 0,
@@ -789,7 +789,7 @@
 		"strictMath": 0,
 		"strictUnits": 0
 		},
-	"\/src\/less\/app\/_variables.less": {
+	"\/src\/less\/app\/_config-animations.less": {
 		"allowInsecureImports": 0,
 		"createSourceMap": 0,
 		"disableJavascript": 0,
@@ -797,8 +797,8 @@
 		"ieCompatibility": 1,
 		"ignore": 1,
 		"ignoreWasSetByUser": 0,
-		"inputAbbreviatedPath": "\/src\/less\/app\/_variables.less",
-		"outputAbbreviatedPath": "\/src\/less\/css\/_variables.css",
+		"inputAbbreviatedPath": "\/src\/less\/app\/_config-animations.less",
+		"outputAbbreviatedPath": "\/src\/less\/css\/_config-animations.css",
 		"outputPathIsOutsideProject": 0,
 		"outputPathIsSetByUser": 0,
 		"outputStyle": 0,
@@ -809,7 +809,7 @@
 		"strictMath": 0,
 		"strictUnits": 0
 		},
-	"\/src\/less\/app\/_view.less": {
+	"\/src\/less\/app\/_config-colors.less": {
 		"allowInsecureImports": 0,
 		"createSourceMap": 0,
 		"disableJavascript": 0,
@@ -817,8 +817,8 @@
 		"ieCompatibility": 1,
 		"ignore": 1,
 		"ignoreWasSetByUser": 0,
-		"inputAbbreviatedPath": "\/src\/less\/app\/_view.less",
-		"outputAbbreviatedPath": "\/src\/less\/css\/_view.css",
+		"inputAbbreviatedPath": "\/src\/less\/app\/_config-colors.less",
+		"outputAbbreviatedPath": "\/src\/less\/css\/_config-colors.css",
 		"outputPathIsOutsideProject": 0,
 		"outputPathIsSetByUser": 0,
 		"outputStyle": 0,
@@ -829,7 +829,7 @@
 		"strictMath": 0,
 		"strictUnits": 0
 		},
-	"\/src\/less\/app\/_viewport.less": {
+	"\/src\/less\/app\/_config-font.less": {
 		"allowInsecureImports": 0,
 		"createSourceMap": 0,
 		"disableJavascript": 0,
@@ -837,8 +837,48 @@
 		"ieCompatibility": 1,
 		"ignore": 1,
 		"ignoreWasSetByUser": 0,
-		"inputAbbreviatedPath": "\/src\/less\/app\/_viewport.less",
-		"outputAbbreviatedPath": "\/src\/less\/css\/_viewport.css",
+		"inputAbbreviatedPath": "\/src\/less\/app\/_config-font.less",
+		"outputAbbreviatedPath": "\/src\/less\/css\/_config-font.css",
+		"outputPathIsOutsideProject": 0,
+		"outputPathIsSetByUser": 0,
+		"outputStyle": 0,
+		"relativeURLS": 0,
+		"shouldRunAutoprefixer": 0,
+		"shouldRunBless": 0,
+		"strictImports": 0,
+		"strictMath": 0,
+		"strictUnits": 0
+		},
+	"\/src\/less\/app\/_config-mixins.less": {
+		"allowInsecureImports": 0,
+		"createSourceMap": 0,
+		"disableJavascript": 0,
+		"fileType": 1,
+		"ieCompatibility": 1,
+		"ignore": 1,
+		"ignoreWasSetByUser": 0,
+		"inputAbbreviatedPath": "\/src\/less\/app\/_config-mixins.less",
+		"outputAbbreviatedPath": "\/src\/less\/css\/_config-mixins.css",
+		"outputPathIsOutsideProject": 0,
+		"outputPathIsSetByUser": 0,
+		"outputStyle": 0,
+		"relativeURLS": 0,
+		"shouldRunAutoprefixer": 0,
+		"shouldRunBless": 0,
+		"strictImports": 0,
+		"strictMath": 0,
+		"strictUnits": 0
+		},
+	"\/src\/less\/app\/_config-variables.less": {
+		"allowInsecureImports": 0,
+		"createSourceMap": 0,
+		"disableJavascript": 0,
+		"fileType": 1,
+		"ieCompatibility": 1,
+		"ignore": 1,
+		"ignoreWasSetByUser": 0,
+		"inputAbbreviatedPath": "\/src\/less\/app\/_config-variables.less",
+		"outputAbbreviatedPath": "\/src\/less\/css\/_config-variables.css",
 		"outputPathIsOutsideProject": 0,
 		"outputPathIsSetByUser": 0,
 		"outputStyle": 0,

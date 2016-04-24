@@ -9,20 +9,19 @@
  */
 
 // Modul-Variablen
-@_viewport:                     viewport;
 @_viewport-size-height:         568px;
 @_viewport-size-width:          320px;
 @_viewport-size-spinner:        48px;
 
 // Block: Viewport
-.@{_viewport} {
+.viewport {
     width: 100%;
     height: 100%;
     background-repeat: no-repeat;
     background-position: center center;
     background-image: url("@{app-path-img}/spinner-viewport.gif?v=@{app-version}");
-    background-color: @app-color-white;
     background-size: @_viewport-size-spinner @_viewport-size-spinner;
+    .colored(@app-color-light);
 
     // Element: App
     &__app {
@@ -34,10 +33,10 @@
         left: 0;
         width: 100%;
         height: 100%;
-        opacity: @app-opacity-invisible;
         background-image: url("@{app-path-img}/spinner-panel.gif?v=@{app-version}");
         background-size: @_viewport-size-spinner @_viewport-size-spinner;
-        background-color: @app-color-background;
+        opacity: @app-opacity-invisible;
+        .colored(@app-color-background);
         .transition(opacity);
         
         // Mod: Sichtbar
@@ -46,10 +45,10 @@
 }
 
 // Responsive
-@media screen and (min-width: @app-size-responsive) {
+@media screen and (min-width: @app-size-max) {
     
     // Block: Viewport
-    .@{_viewport} {
+    .viewport {
         -webkit-backface-visibility: hidden;
         -webkit-transform-style: preserve-3d;
         overflow: hidden;
@@ -59,7 +58,7 @@
         height: @_viewport-size-height;
         width: @_viewport-size-width;
         .translate(-50%, -50%);
+        .border-radius();
         .shadow-big();
-        .round-all();
     }
 }

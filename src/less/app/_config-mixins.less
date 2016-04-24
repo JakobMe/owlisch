@@ -1,0 +1,208 @@
+/*
+ * Modul: Mixins.
+ * Definiert globale LESS-Mixins.
+ * @author Jakob Metzger <jakob.me@gmail.com>
+ * @copyright 2016 Jakob Metzger
+ * @licence https://opensource.org/licenses/MIT MIT
+ * @link http://jmportfolio.de
+ */
+ 
+/**
+ * Mixins: Font-Familien.
+ * Setzt die Font-Familie.
+ */
+.font-main() { font-family: @app-font-name, sans-serif; }
+.font-icon() { font-family: @fontello-font-name, sans-serif; }
+
+/**
+ * Mixin: Fontello-Icon.
+ * Setzt ein Icon ins :after-Element.
+ * @param {"\e.."} icon - Character-Code des Fontello-Icons
+ * @param {after|before} pos - Icon davor oder danach
+ */
+.fontello-icon(@icon, @pos: after) {
+    &:@{pos} {
+        content: @icon;
+        .font-icon();
+    }
+}
+
+/**
+ * Mixin: Ellipse.
+ * Schneidet einen zu langen Text ab und setzt drei Punkte.
+ */
+.ellipsis() {
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+/**
+ * Mixin: Rahmen.
+ * Setzt einen gewöhnlichen Rahmen.
+ * @param {top|right|bottom|left} location - Position des Rahmens
+ * @param {#color} color - Farbe des Rahmens
+ */
+.border(@location, @color: @app-color-background-dark) {
+    border-@{location}: @app-size-line-thin solid @color;
+}
+
+/**
+ * Mixin: Transition.
+ * Setzt eine Transition-Eigenschaft.
+ * @param {all|opacity|...} property - CSS-Eigenschaft, die betroffen ist
+ * @param {*s} time - Animations-Zeit in Sekunden
+ * @param {ease|...} ease - Animations-Funktion
+ * @param {*s} delay - Verzögerungs-Zeit in Sekunden
+ */
+.transition(@property: all, @time: @app-time-animation, @ease: ease, @delay: @app-time-delay) {
+    transition: @arguments;
+}
+
+/**
+ * Mixin: Translate.
+ * Setzt einen 3D-Transform/Translate.
+ * @param {*px|*%} x - Verschiebung horizintal
+ * @param {*px|*%} y - Verschiebung vertikal
+ */
+.translate(@x: 0, @y: 0) {
+    transform: translate3d(@x, @y, 0);
+}
+
+/**
+ * Mixin: Animation.
+ * Setzte eine CSS-Animation.
+ * @param {*} animation - Name der Keyframe-Animation
+ * @param {*s} time - Animations-Zeit
+ * @param {normal|...} direction - Richtung der Animation
+ * @param {forwards|...} fill - Fill-Mode der Animation
+ */
+.animation(@animation, @time: @app-time-animation, @direction: normal, @fill: forwards) {
+    animation: @animation @time @direction @fill;
+}
+
+/**
+ * Mixin: Schatten.
+ * Setzt einen Box-Shadow.
+ * @param {*px} x - Position links
+ * @param {*px} y - Position oben
+ * @param {*px} blur - Weichzeichner-Größe
+ * @param {*px} spread - Schatten-Größe
+ * @param {#color} color - Schatten-Farbe
+ */
+.shadow(@x, @y, @blur, @spread, @color) {
+    box-shadow: @arguments;
+}
+
+/**
+ * Mixin: Schatten Groß.
+ * Setzt einen großen Box-Shadow.
+ * @param {#color} color - Farbe des Schattens
+ */
+.shadow-big(@color: @app-color-shadow-light) {
+    .shadow(0, 8px, 16px, 0, @color);
+}
+
+/**
+ * Mixin: Schatten Glühen.
+ * @param {#color} color - Farbe des Schattens.
+ */
+.shadow-glow(@color: @app-color-highlight) {
+    .shadow(0, 0, 2px, 2px, @color);
+}
+
+/**
+ * Mixin: Kein Schatten.
+ * Deaktiviert alle Box-Shadows.
+ */
+.shadow-none() {
+    box-shadow: none;
+}
+
+/**
+ * Mixin: Abgerundete Ecken.
+ * Setzt an der angegebenen Seite abgerundete Ecken.
+ * @param {all|left|top|right|bottom} position - Position der Ecken
+ * @param {*px|*%} r - Radius der Ecken
+ */
+.border-radius(@r: @app-size-radius, @position: all) {
+    & when (@position = all) { border-radius: @r @r @r @r; }
+    & when (@position = top) { border-radius: @r @r 0 0; }
+    & when (@position = left) { border-radius: @r 0 0 @r; }
+    & when (@position = bottom) { border-radius: 0 0 @r @r; }
+    & when (@position = right) { border-radius: 0 @r @r 0; }
+}
+
+/**
+ * Mixin: Verlauf.
+ * Setzt einen Verlauf als Hintergrundbild.
+ * @param {top|right|bottom|left} pos - Ausgangspunkt des Verlaufes
+ * @param {#color} color-start - Startfarbe
+ * @param {#color} color-end - Endfarbe
+ * @param {*px|*%} start - Startposition des Verlaufes
+ * @param {*px|*%} end - Endposition des Verlaufes
+ */
+.gradient(@pos, @color-start, @color-end, @start: 0%, @end: 100%) {
+    background-image: linear-gradient(@pos, @color-start @start, @color-end @end);
+}
+
+/**
+ * Mixin: Schriftfarbe auf Farbe.
+ * Setzt die Schriftfarbe mit den größten Kontrast zur angegebenen Farbe.
+ * @param {#color} color - Hintergrundfarbe
+ * @param {true|false} pale - Blasse Schriftfarben verwenden
+ */
+.color-on(@color, @pale: false) {
+    & when not(@pale = true) {
+        color: contrast(
+            @color,
+            @app-color-text-dark,
+            @app-color-text-light
+        );
+    }
+    & when (@pale = true) {
+        color: contrast(
+            @color,
+            @app-color-text-dark-pale,
+            @app-color-text-light-pale
+        );
+    }
+}
+
+/**
+ * Mixin: Hintergrund und Schriftfarbe.
+ * Setzt die Hintergrundfarbe und die dazu passende Schriftfarbe.
+ * @param {#color} color - Hintergrundfarbe
+ * @param {true|false} pale - Blasse Schriftfarben verwenden
+ */
+.colored(@color, @pale: false) {
+    background-color: @color;
+    .color-on(@color, @pale);
+}
+
+/**
+ * Mixin: Hintergrund und Schriftfarbe Highlight.
+ * Setzt die Highlight-Farbe als Hintergrund und
+ * die dazu passende Schriftfarbe.
+ */
+.colored-highlight() {
+    background-color: @app-color-highlight;
+    color: contrast(
+        @app-color-highlight,
+        @app-color-highlight-dark,
+        @app-color-text-light
+    );
+}
+
+/**
+ * Mixin: Hintergrund-Verlauf und Schriftfarbe.
+ * Setzt einen Verlauf als Hintergrundbild und
+ * die dazu passende Schriftfarbe.
+ * @param {#color} color - Hintergrundfarbe unten
+ * @param {true|false} pale - Blasse Schriftfarben verwenden
+ * @param {0%-100%} tint - Aufhellungswert der Farbe oben
+ */
+.colored-gradient(@color: @app-color-background-light, @pale: false, @tint: 100%) {
+    .colored(@color, @pale);
+    .gradient(top, tint(@color, @tint), @color);
+}

@@ -8,36 +8,25 @@
  */
 
 // Modul-Variablen
-@_navigation-bar:                   navigation-bar;
-@_navigation-bar-fontsize-title:    17px;
-@_navigation-bar-fontsize-search:   14px;
-@_navigation-bar-fontsize-clear:    17px;
-@_navigation-bar-fontsize-icon:     20px;
-@_navigation-bar-size-search:       28px;
-@_navigation-bar-size-padding:      6px;
-@_navigation-bar-fade-input:        60%;
-@_navigation-bar-fade-shadow:       80%;
-@_navigation-bar-darken-shadow:     14%;
+@_navigation-bar-font-size-title:       17px;
+@_navigation-bar-font-size-search:      14px;
+@_navigation-bar-font-size-clear:       17px;
+@_navigation-bar-font-size-icon:        20px;
+@_navigation-bar-size-search:           28px;
+@_navigation-bar-size-padding:          6px;
  
 // Block: Navigation-Bar
-.@{_navigation-bar} {
+.navigation-bar {
     position: absolute;
     height: auto;
     top: 0;
     left: 0;
     width: 100%;
     
-    // Mod: Webapp
+    // Mods
     &--webapp &__wrapper { padding-top: @app-size-height-statusbar; }
-    
-    // Mod: Suche & Suchfeld
     &--search &__search { opacity: @app-opacity-full; }
-    
-    // Mod: Suche & Titel
-    &--search &__title {
-        opacity: @app-opacity-invisible;
-        .translate(0, 100%);
-    }
+    &--search &__title { opacity: @app-opacity-invisible; .translate(0, 100%); }
     
     // Element: Wrapper
     &__wrapper {
@@ -45,13 +34,9 @@
         position: relative;
         text-align: center;
         z-index: 1000;
-        color: @app-color-text-light;
-        background: @app-color-main;
         height: @app-size-height-navigationbar;
-        .shadow-line(
-            @app-size-line-thin,
-            fade(darken(@app-color-main, @_navigation-bar-darken-shadow),
-                 @_navigation-bar-fade-shadow));
+        .border(bottom, @app-color-main-dark);
+        .colored(@app-color-main);
     }
     
     // Element: Titel
@@ -67,7 +52,7 @@
         padding: 0 @app-size-height-navigationbar;
         height: @app-size-height-navigationbar;
         line-height: @app-size-height-navigationbar;
-        font-size: @_navigation-bar-fontsize-title;
+        font-size: @_navigation-bar-font-size-title;
         .transition();
         .ellipsis();
         
@@ -88,14 +73,11 @@
         margin: 0;
         padding: 0;
         z-index: 1500;
-        font-size: @_navigation-bar-fontsize-icon;
+        font-size: @_navigation-bar-font-size-icon;
         height: @app-size-height-navigationbar;
         line-height: (@app-size-height-navigationbar - @app-size-line-thin);
         width: @app-size-height-navigationbar;
         .transition();
-        
-        // Aktiv
-        &:active { color: fade(@app-color-text-light, @_navigation-bar-fade-input); }
         
         // Mod: Links/Rechts
         &--left { left: 0; }
@@ -139,12 +121,12 @@
             left: 0;
             bottom: 0;
             z-index: 2000;
-            font-size: @_navigation-bar-fontsize-search;
-            color: fade(@app-color-text-light, @_navigation-bar-fade-input);
             width: @_navigation-bar-size-search;
             height: @_navigation-bar-size-search;
             line-height: (@_navigation-bar-size-search - @app-size-line-thin);
+            font-size: @_navigation-bar-font-size-search;
             content: @fontello-icon-search;
+            .color-on(@app-color-main, true);
             .font-icon();
         }
         
@@ -160,24 +142,17 @@
             box-sizing: border-box;
             text-transform: uppercase;
             width: 100%;
-            color: @app-color-text-light;
             font-size: @app-font-size-small;
             height: @_navigation-bar-size-search;
             padding: @_navigation-bar-size-padding (@_navigation-bar-size-search + @_navigation-bar-size-padding);
             line-height: (@_navigation-bar-size-search - (@_navigation-bar-size-padding * 2));
-            background: darken(@app-color-main, @app-darken-main);
-            .transition(background);
+            .colored(@app-color-main-dark);
+            .border-radius();
             .font-main();
-            .round-all();
-            
-            // Aktiv
-            &:active {
-                background: darken(@app-color-main, @app-darken-main-dark);
-            }
-            
+
             // Webkit-Platzhalter
             &::-webkit-input-placeholder {
-                color: fade(@app-color-text-light, @_navigation-bar-fade-input);
+                .color-on(@app-color-main-dark, true);
             }
         }
         
@@ -194,9 +169,9 @@
             width: @_navigation-bar-size-search;
             height: @_navigation-bar-size-search;
             line-height: @_navigation-bar-size-search;
-            font-size: @_navigation-bar-fontsize-clear;
-            color: fade(@app-color-text-light, @_navigation-bar-fade-input);
+            font-size: @_navigation-bar-font-size-clear;
             .fontello-icon(@fontello-icon-clear);
+            .color-on(@app-color-main-dark, true);
             .translate();
             
             // Mod: Versteckt
@@ -206,10 +181,10 @@
 }
 
 // Responsive
-@media screen and (min-width: @app-size-responsive) {
+@media screen and (min-width: @app-size-max) {
     
     // Block: Navigation-Bar & Element: Wrapper
-    .@{_navigation-bar}__wrapper {
+    .navigation-bar__wrapper {
         padding-top: @app-size-height-statusbar;
         
         // Statusbar-Overlay
@@ -221,7 +196,7 @@
             width: 100%;
             content: "";
             height: @app-size-height-statusbar;
-            background: fade(@app-color-black, 10%);
+            background: @app-color-main-dark;
         }
     }
 }

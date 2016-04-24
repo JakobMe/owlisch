@@ -7,11 +7,8 @@
  * @link http://jmportfolio.de
  */
 
-// Modul-Variablen
-@_view: view;
-
 // Block: View
-.@{_view} {
+.view {
     position: absolute;
     box-sizing: border-box;
     top: 0;
@@ -25,7 +22,6 @@
     
     // Mod: Webapp
     &--webapp {
-        //.transition(padding);
         padding-top: (@app-size-height-navigationbar + @app-size-height-statusbar);
     }
     
@@ -39,9 +35,8 @@
         box-sizing: border-box;
         height: 100%;
         opacity: @app-opacity-invisible;
-        color: @app-color-text-dark;
         font-size: @app-font-size-medium;
-        background: @app-color-background;
+        .colored(@app-color-background);
         .transition(opacity);
         
         
@@ -65,10 +60,10 @@
 }
 
 // Responsive
-@media screen and (min-width: @app-size-responsive) {
+@media screen and (min-width: @app-size-max) {
     
     // Block: View
-    .@{_view} {
+    .view {
         padding-top: (@app-size-height-navigationbar + @app-size-height-statusbar);
     }
 }

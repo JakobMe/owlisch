@@ -8,11 +8,10 @@
  */
 
 // Modul-Variablen
-@_dropdown:                     dropdown;
-@_dropdown-size-height:         44px;
+@_dropdown-size-height: 44px;
 
 // Block: Dropdown
-.@{_dropdown} {
+.dropdown {
     display: block;
     position: absolute;
     list-style-type: none;
@@ -22,8 +21,8 @@
     padding: 0;
     width: 100%;
     z-index: 500;
-    border-bottom: @app-size-line-thin solid fade(@app-color-black, 25%);
     opacity: @app-opacity-invisible;
+    .border(bottom, @app-color-shadow-dark);
     .translate(0, -150%);
     .transition();
     .shadow-big();
@@ -31,7 +30,7 @@
     // Mod: Offen
     &--opened {
         opacity: @app-opacity-full;
-        .translate(0);
+        .translate();
     }
     
     // Element: Listenpunkt
@@ -40,15 +39,14 @@
         cursor: pointer;
         position: relative;
         margin: 0;
-        padding: 0 @app-size-margin;
+        padding: 0 @app-size-gap;
         padding-right: @_dropdown-size-height;
         height: @_dropdown-size-height;
         line-height: @_dropdown-size-height;
-        background: @app-color-white;
         font-size: @app-font-size-small;
-        color: @app-color-text-pale;
-        .transition(color);
         .fontello-icon(@fontello-icon-check);
+        .colored(@app-color-light, true);
+        .transition(color);
         .ellipsis();
         
         // Icon
@@ -56,39 +54,29 @@
             display: block;
             position: absolute;
             text-align: center;
+            color: transparent;
             top: 0;
             right: 0;
             font-size: @app-font-size-medium;
-            color: @app-color-background;
             height: @_dropdown-size-height;
             width: @_dropdown-size-height;
             .transition(color);
         }
         
-        // Aktiv
-        &:active { &, &:after { color: @app-color-text-dark; } }
-        
         // Ausnahme: Letztes Element
-        &:not(:last-child) {
-            border-bottom: @app-size-line-thin solid darken(@app-color-background, @app-darken-border);
-        }
+        &:not(:last-child) { .border(bottom); }
 
         // Mod: Ausgewählt
         &--selected {
-            &, &:active {
-                cursor: default;
-                color: @app-color-text-dark;
-                background: lighten(@app-color-background, @app-darken-main);
-                
-                // Icon
-                &:after { color: @app-color-main; }
-            }
+            cursor: default;
+            .colored(@app-color-background-light);
+            &:after { color: @app-color-main; }
         }
     }
     
     // Element: Icon
     &__icon {
-        margin-right: @app-size-margin-half;
+        margin-right: @app-size-gap-small;
         font-size: @app-font-size-medium;
     }
     

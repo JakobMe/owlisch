@@ -3,8 +3,8 @@
         <script id="tmpl-termlist" type="text/template">
             <li class="list__title">
                 <span class="list__title-text">
-                    {{caption}}
-                    <span class="badge{{#filtered}} badge--filter{{/filtered}}">
+                    <i class="icon icon--dictionary list__title-icon"></i> {{caption}}
+                    <span class="badge{{#filtered}} badge--highlight{{/filtered}}">
                         {{size}} {{#single}}Begriff{{/single}}{{^single}}Begriffe{{/single}}
                     </span>
                 </span>
@@ -23,7 +23,7 @@
             {{/terms}}
             {{^terms}}
             {{#filtered}}
-            <li class="list__title notice notice--error notice--background-light">
+            <li class="list__title notice notice--error">
                 <span class="notice__title">
                     <span class="notice__title-text">Nichts gefunden!</span>
                 </span>

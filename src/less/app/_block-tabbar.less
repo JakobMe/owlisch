@@ -8,14 +8,12 @@
  */
 
 // Modul-Variablen
-@_tab-bar:                      tab-bar;
-@_tab-bar-number-tabs:          5;
-@_tab-bar-size-icon:            24px;
-@_tab-bar-size-padding:         6px;
-@_tab-bar-size-padding-status:  3%;
-@_tab-bar-fontsize-icon:        21px;
-@_tab-bar-fontsize-label:       10px;
-@_tab-bar-fade-shadow:          20%;
+@_tab-bar-number-tabs:              5;
+@_tab-bar-size-icon:                24px;
+@_tab-bar-size-padding:             6px;
+@_tab-bar-size-padding-status:      3%;
+@_tab-bar-fontsize-icon:            21px;
+@_tab-bar-fontsize-label:           10px;
 
 // Loop: Status-Position für Tab-Bar-Modfikation
 ._tab-bar-loop(@n: @_tab-bar-number-tabs, @i: 0) when (@i < @n) {
@@ -24,20 +22,17 @@
 }
  
 // Block: Tab-Bar
-.@{_tab-bar} {
+.tab-bar {
     position: absolute;
     left: 0;
     bottom: 0;
     width: 100%;
     height: @app-size-height-tabbar;
-    border-top: @app-size-line-thin solid fade(@app-color-black, @_tab-bar-fade-shadow);
+    .border(top, @app-color-shadow-dark);
     ._tab-bar-loop();
     
     // Mod: Versteckt
-    &--hidden {
-        //.transition(transform);
-        .translate(0, 100%);
-    }
+    &--hidden { .translate(0, 100%); }
 
     // Element: Liste
     &__list {
@@ -45,7 +40,7 @@
         margin: 0;
         padding: 0;
         height: @app-size-height-tabbar;
-        .gradient-background();
+        .colored-gradient(@app-color-background-light, true);
     }
     
     // Element: Tab
@@ -57,17 +52,13 @@
         text-align: center;
         text-decoration: none;
         box-sizing: border-box;
-        padding: @_tab-bar-size-padding;
+        padding: @_tab-bar-size-padding 0;
         width: (100% / @_tab-bar-number-tabs);
-        color: @app-color-text-pale;
         height: @app-size-height-tabbar;
         .transition(color);
         
-        // Aktiv
-        &:active { color: @app-color-text-dark; }
-        
         // Mod: Aktiv
-        &--active { &, &:active { color: @app-color-main; } }
+        &--active { color: @app-color-main; }
     }
     
     // Element: Icon
@@ -84,7 +75,6 @@
         font-weight: bold;
         font-size: @_tab-bar-fontsize-label;
         line-height: (@app-size-height-tabbar - @_tab-bar-size-icon - (2 * @_tab-bar-size-padding));
-        .font-main();
     }
     
     // Element: Status
@@ -96,9 +86,8 @@
         width: (100% / @_tab-bar-number-tabs);
         padding: 0 @_tab-bar-size-padding-status;
         top: -(@app-size-line-thin);
-        height: @app-size-line-bold;
+        height: @app-size-line-medium;
         .transition(transform);
-        
         
         // Status-Balken
         &:after {
@@ -108,8 +97,8 @@
             height: 100%;
             content: "";
             background: @app-color-main;
-            border-top: @app-size-line-thin solid darken(@app-color-main, @app-darken-main);
-            .round-all(@app-size-line-thin);
+            .border(top, @app-color-shadow-light);
+            .border-radius(@app-size-line-thin);
         }
     }
 }

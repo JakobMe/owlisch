@@ -8,27 +8,16 @@
  */
 
 // Modul-Variablen
-@_notice:                       notice;
-@_notice-size-height-title:     16px;
+@_notice-size-title: 16px;
 
 // Block: Notice
-.@{_notice} {
+.notice {
     display: block;
     text-align: center;
     margin: 0;
-    padding: @app-size-margin;
-    color: @app-color-text-pale;
+    padding: @app-size-gap;
     font-size: @app-font-size-small;
-    
-    // Mod: Heller Hintergrund & Element: Titel-Text
-    &--background-light &__title-text {
-        background: @app-color-white;
-        .shadow(0, 0, @app-size-margin, @app-size-margin, @app-color-white);
-    }
-    
-    // Mod: Fehler
-    &--error &__title-text:before { content: @fontello-icon-error; }
-    &--error &__text { font-weight: bold; color: @app-color-text-dark; }
+    .colored(@app-color-background, true);
     
     // Element: Titel
     &__title {
@@ -36,9 +25,9 @@
         overflow: hidden;
         font-weight: bold;
         position: relative;
-        height: @_notice-size-height-title;
-        line-height: @_notice-size-height-title;
-        margin-bottom: @app-size-margin-half;
+        height: @_notice-size-title;
+        line-height: @_notice-size-title;
+        margin-bottom: @app-size-gap-small;
         .ellipsis();
         
         // Sub-Element: Text
@@ -46,16 +35,15 @@
             position: relative;
             display: inline-block;
             z-index: 100;
-            padding: 0 @app-size-padding;
-            background: @app-color-background;
-            .shadow(0, 0, @app-size-margin, @app-size-margin, @app-color-background);
+            padding: 0 (@_notice-size-title / 2);
+            .colored(@app-color-background, true);
+            .shadow(0, 0, @_notice-size-title, (@_notice-size-title / 2), @app-color-background);
+            .fontello-icon(@fontello-icon-info, before);
             
             // Icon
             &:before {
                 font-weight: normal;
-                margin-right: @app-size-padding;
-                content: @fontello-icon-info;
-                .icon();
+                margin-right: @app-size-gap-tiny;
             }
         }
         
@@ -75,20 +63,22 @@
         // Linie Links
         &:before {
             left: 0;
-            .gradient-horizontal(
-                fade(@app-color-text-pale, 0%),
-                fade(@app-color-text-pale, 100%),
-                0%, 25%
+            .gradient(
+                left,
+                fade(@app-color-text-dark-pale, 0%),
+                @app-color-text-dark-pale,
+                0%, @_notice-size-title
             );
         }
         
         // Linie Rechts
         &:after {
             right: 0;
-            .gradient-horizontal(
-                fade(@app-color-text-pale, 100%),
-                fade(@app-color-text-pale, 0%),
-                75%, 100%
+            .gradient(
+                right,
+                fade(@app-color-text-dark-pale, 0%),
+                @app-color-text-dark-pale,
+                0%, @_notice-size-title
             );
         }
     }
@@ -97,6 +87,13 @@
     &__text {
         display: block;
         font-style: italic;
-        color: @app-color-text-pale;
+    }
+    
+    // Mod: Fehler
+    &--error { font-weight: bold; .colored(@app-color-light); }
+    &--error &__title-text {
+        .colored(@app-color-light, true);
+        .shadow(0, 0, @_notice-size-title, (@_notice-size-title / 2), @app-color-light);
+        &:before { content: @fontello-icon-error; }
     }
 }

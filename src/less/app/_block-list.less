@@ -8,28 +8,15 @@
  */
 
 // Modul-Variablen
-@_list:                     list;
-@_list-size-height:         44px;
-
-// Animation: Highlight
-@keyframes list-highlight {
-    0% {
-        background: @app-color-star;
-        .shadow(0, 0, @app-size-line-medium, @app-size-line-thin, @app-color-star);
-    }
-    100% {
-        background: fade(@app-color-star, @app-fade-highlight);
-        .shadow-none();
-    }
-}
+@_list-size-height: 44px;
 
 // Block: Liste
-.@{_list} {
+.list {
     display: block;
     list-style-type: none;
     margin: 0;
     padding: 0;
-    .border(bottom, @app-color-background);
+    .border(bottom);
     
     // Element: Item
     &__item {
@@ -41,17 +28,14 @@
         position: relative;
         text-decoration: none;
         margin: 0;
-        background: @app-color-white;
-        padding: 0 @app-size-margin;
+        padding: 0 @app-size-gap;
         padding-right: @_list-size-height;
         height: @_list-size-height;
         line-height: @_list-size-height;
-        .border(top, @app-color-background);
-        .gradient-background();
+        vertical-align: 1px;
+        .colored-gradient();
+        .border(top);
         .ellipsis();
-        
-        // Aktiv
-        &:active:after { color: @app-color-text-dark; }
         
         // Icon
         &:after {
@@ -64,12 +48,12 @@
             top: 0;
             right: 0;
             content: @fontello-icon-forward;
-            padding-right: @app-size-margin;
+            padding-right: @app-size-gap;
             font-size: @app-font-size-medium;
-            color: @app-color-text-pale;
             width: @_list-size-height;
             height: @_list-size-height;
             line-height: (@_list-size-height + @app-size-line-thin);
+            .color-on(@app-color-background-light, true);
             .transition(color);
             .font-icon();
         }
@@ -77,19 +61,18 @@
         // Sub-Element: Label
         &-label {
             font-weight: bold;
-            color: @app-color-text-dark;
-            font-size: @app-font-size-medium;
-            
-            // Ausnahme: Erstes Element
-            &:not(:first-child) { margin-left: @app-size-margin-half; }
+            display: inline-block;
+            vertical-align: top;
+            margin-top: -(@app-size-line-thin);
+            &:not(:first-child) { margin-left: @app-size-gap-small; }
         }
         
         // Sub-Element: Highlight
         &-highlight {
-            color: darken(@app-color-star, @app-darken-star);
-            background: fade(@app-color-star, @app-fade-highlight);
-            .animation(list-highlight);
-            .round-all();
+            .animation(highlight);
+            .colored-highlight();
+            .border-radius();
+            .transition();
             
             // Leer
             &:empty { display: none; }
@@ -101,12 +84,12 @@
         display: block;
         font-weight: bold;
         position: relative;
-        padding: @app-size-margin;
-        font-size: @app-font-size-small;
-        background: @app-color-white;
-        margin-bottom: @app-size-margin-half;
-        .border(bottom, @app-color-background);
-        .border(top, @app-color-background);
+        padding: @app-size-gap;
+        font-size: @app-font-size-medium;
+        margin-bottom: @app-size-gap-small;
+        .colored(@app-color-light, true);
+        .border(bottom);
+        .border(top);
         
         // Ausnahme: Letztes Element
         &:last-child {
@@ -114,11 +97,8 @@
             margin-bottom: 0;
         }
         
-        // Sub-Element: Titel-Text
-        &-text {
-            display: block;
-            text-transform: uppercase;
-            color: @app-color-text-pale;
-        }
+        // Sub-Elemente: Titel-Text und -Icon
+        &-text { display: block; }
+        &-icon { margin-right: @app-size-gap-small; }
     }
 }

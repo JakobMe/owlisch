@@ -14,7 +14,7 @@ var Dictionary = (function() {
     var _SEL_ITEM               = "[role='listitem']";
     var _SEL_DETAILS            = "[role='complementary']";
     var _SEL_TMPL_DICTIONARY    = "#tmpl-dictionary";
-    var _SEL_TMPL_WORDLIST      = "#tmpl-wordlist";
+    var _SEL_TMPL_TERMLIST      = "#tmpl-termlist";
     
     // Private Variablen
     var _listOriginal           = [];
@@ -24,7 +24,7 @@ var Dictionary = (function() {
     var _currentSort            = CFG.SORTING.SORT.ALPHA;
     var _currentOrder           = CFG.SORTING.ORDER.ASC;
     var _tmplDictionary         = $(_SEL_TMPL_DICTIONARY).html();
-    var _tmplWordlist           = $(_SEL_TMPL_WORDLIST).html();
+    var _tmplTermlist           = $(_SEL_TMPL_TERMLIST).html();
     
     // DOM-Elemente
     var _$slider                = null;
@@ -41,7 +41,7 @@ var Dictionary = (function() {
 
         // Templates parsen, Funktionen ausführen
         Mustache.parse(_tmplDictionary);
-        Mustache.parse(_tmplWordlist);
+        Mustache.parse(_tmplTermlist);
         _bindEvents();
     }
     
@@ -84,7 +84,7 @@ var Dictionary = (function() {
     function _createDictionary(event, data) {
         if ((typeof data !== typeof undefined) &&
             (CFG.VIEW[data.panel] === CFG.VIEW.DICTIONARY) &&
-            (data.target instanceof jQuery)) {
+            (data.target instanceof $)) {
 
             // Template füllen, Callback ausführen
             data.target.html(Mustache.render(_tmplDictionary))
@@ -94,7 +94,7 @@ var Dictionary = (function() {
     
     /**
      * Listen-Element miteinander vergleichen.
-     * Eine Vergleichs-Funktion für Elemente der Wortliste;
+     * Eine Vergleichs-Funktion für Elemente der Begriffliste;
      * wird von der JavaScript-Funktion "sort" verwendet.
      * @param {Objekt} a Erstes zu vergleichende Listen-Objekt
      * @param {Objekt} b Zweites zu vergleichende Listen-Objekt
@@ -114,7 +114,7 @@ var Dictionary = (function() {
     
     /**
      * Liste sortieren.
-     * Sortiert die Liste der Wörter anhand der von einem Event
+     * Sortiert die Liste der Begriffe anhand der von einem Event
      * übergenen Sortierung und Ordnung; rendert die Liste anschließend.
      * @param {Object} event Ausgelöstes Event
      * @param {Object} data Daten des Events
@@ -162,11 +162,11 @@ var Dictionary = (function() {
         } else {
             _listFiltered = [];
             var len = _currentFilter.length;
-            $.each(_listOriginal, function(index, item) {
-                var word = $.extend({}, item);
+            $.each(_listOriginal, function(i, item) {
+                var term = $.extend({}, item);
                 var found = item.term.toLowerCase().indexOf(_currentFilter);
                 if (found > -1) {
-                    _listFiltered.push($.extend(word, {
+                    _listFiltered.push($.extend(term, {
                         start: item.term.substring(0, found),
                         highlight: item.term.substr(found, len),
                         tail: item.term.substr(found + len)
@@ -191,9 +191,9 @@ var Dictionary = (function() {
             (typeof data.list !== typeof undefined)) {
             _listCaption = data.caption;
             _listOriginal = data.list;
-            $.each(_listOriginal, function(index, word) {
+            $.each(_listOriginal, function(i, item) {
                 $.extend(this, {
-                    start: word.term,
+                    start: item.term,
                     highlight: CFG.STR.EMPTY,
                     tail: CFG.STR.EMPTY
                 });
@@ -209,14 +209,13 @@ var Dictionary = (function() {
     function _renderList() {
         if (_$list instanceof jQuery) {
             _$list.html(
-                Mustache.render(_tmplWordlist, {
+                Mustache.render(_tmplTermlist, {
                     caption     : _listCaption,
-                    words       : _listFiltered,
+                    terms       : _listFiltered,
                     levels      : CFG.QUIZ.LEVELS,
                     size        : _listFiltered.length,
                     single      : (_listFiltered.length === 1),
-                    filtered    : (_currentFilter.length > 0),
-                    filter      : _currentFilter.toUpperCase()
+                    filtered    : (_currentFilter.length > 0)
                 })
             );
         }

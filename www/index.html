@@ -97,7 +97,7 @@
                         </span>
                         <span class="notice__text">
                             Dein persönliches <b>Wörterbuch</b> füllt sich
-                            automatisch mit allen Wörtern, die du schon
+                            automatisch mit allen Begriffen, die du schon
                             im <b>Quiz</b> erraten hast.
                         </span>
                     </p>
@@ -107,17 +107,17 @@
             </div>
         </script>
                 
-        <!-- Template: Wortliste -->
-        <script id="tmpl-wordlist" type="text/template">
+        <!-- Template: Begriffliste -->
+        <script id="tmpl-termlist" type="text/template">
             <li class="list__title">
                 <span class="list__title-text">
                     {{caption}}
                     <span class="badge{{#filtered}} badge--filter{{/filtered}}">
-                        {{size}} {{#single}}Eintrag{{/single}}{{^single}}Einträge{{/single}}
+                        {{size}} {{#single}}Begriff{{/single}}{{^single}}Begriffe{{/single}}
                     </span>
                 </span>
             </li>
-            {{#words}}
+            {{#terms}}
             <li class="list__item" role="listitem" data-word="{{alias}}">
                 <span class="stars stars--is-{{lvl}}">
                     {{#levels}}
@@ -128,20 +128,20 @@
                     {{start}}<b class="list__item-highlight">{{highlight}}</b>{{tail}}
                 </span>
             </li>
-            {{/words}}
-            {{^words}}
+            {{/terms}}
+            {{^terms}}
             {{#filtered}}
             <li class="list__title notice notice--error notice--background-light">
                 <span class="notice__title">
                     <span class="notice__title-text">Nichts gefunden!</span>
                 </span>
                 <span class="notice__text">
-                    Es konnten keine Wörter gefunden werden, die zu dem
+                    Es konnten keine Begriffe gefunden werden, die zu dem
                     eingegebenen Suchbegriff passen.
                 </span>
             </li>
             {{/filtered}}
-            {{/words}}
+            {{/terms}}
         </script>
                 
         <!-- Template: Dropdown -->

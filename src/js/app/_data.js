@@ -81,12 +81,12 @@ var Data = (function() {
                              CFG.DICTIONARY.TYPE_DATA;
         
         // AJAX Get-Anfrage zur Datei
-        $.getJSON(dictionaryPath, function(data) {
-            if ((typeof data.caption === typeof CFG.STR.EMPTY) &&
-                $.isArray(data.words)) {
-                _dictionaryCaption = data.caption;
-                _dictionaryData = data.words;
-                _dictionarySize = data.words.length;
+        $.getJSON(dictionaryPath, function(dictionary) {
+            if ((typeof dictionary.caption === typeof CFG.STR.EMPTY) &&
+                $.isArray(dictionary.terms)) {
+                _dictionaryCaption = dictionary.caption;
+                _dictionaryData = dictionary.terms;
+                _dictionarySize = dictionary.terms.length;
             }
         });
 
@@ -95,8 +95,8 @@ var Data = (function() {
     }
     
     /**
-     * Wort-Listen aktualisieren.
-     * Aktualisiert die Wort-Listen für den Fortschritt und das
+     * Begriff-Listen aktualisieren.
+     * Aktualisiert die Begriff-Listen für den Fortschritt und das
      * gesamte Wörterbuch anhand der zuvor geladenen Wörterbuch-Daten
      * und den aktuellen Fortschritts-Daten.
      */
@@ -106,18 +106,18 @@ var Data = (function() {
         _dictionaryList = [];
         _progressList   = [];
         
-        // Alle Wörter des Wörterbuches iterieren
-        $.each(_dictionaryData, function(index, word) {
+        // Alle Begriffe des Wörterbuches iterieren
+        $.each(_dictionaryData, function(i, item) {
             
             // Level und Fehlschläge ermitteln
-            var progress = (_progressData[word.alias] || { lvl: 0, fail: 0 });
+            var progress = (_progressData[item.alias] || { lvl: 0, fail: 0 });
             var lvl = Math.min(Math.max(progress.lvl, 0), CFG.QUIZ.LVL_MAX);
             var fail = Math.max(progress.fail, 0);
             
             // Wort um Werte erweitern und zu Listen hinzufügen
-            $.extend(word, { lvl: lvl, fail: fail });
-            _dictionaryList.push(word);
-            if (lvl > 0) { _progressList.push(word); }
+            $.extend(item, { lvl: lvl, fail: fail });
+            _dictionaryList.push(item);
+            if (lvl > 0) { _progressList.push(item); }
         });
         
         // Fortschritt-Größe aktualisieren
@@ -141,7 +141,7 @@ var Data = (function() {
     /**
      * Fortschitt aktualisieren.
      * Setzt das neue Level und die Anzahl der Fehlschläge
-     * beim entsprechenden Event.
+     * für einen bestimmten Begriff beim entsprechenden Event.
      * @param {Object} event Ausgelöstes Event
      * @param {Object} data Daten des Events
      */

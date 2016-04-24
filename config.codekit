@@ -551,21 +551,21 @@
 		"outputPathIsOutsideProject": 0,
 		"outputPathIsSetByUser": 0
 		},
+	"\/src\/kit\/tmpl\/_termlist.kit": {
+		"fileType": 2048,
+		"ignore": 1,
+		"ignoreWasSetByUser": 0,
+		"inputAbbreviatedPath": "\/src\/kit\/tmpl\/_termlist.kit",
+		"outputAbbreviatedPath": "\/src\/kit\/tmpl\/_termlist.html",
+		"outputPathIsOutsideProject": 0,
+		"outputPathIsSetByUser": 0
+		},
 	"\/src\/kit\/tmpl\/_viewpanels.kit": {
 		"fileType": 2048,
 		"ignore": 1,
 		"ignoreWasSetByUser": 0,
 		"inputAbbreviatedPath": "\/src\/kit\/tmpl\/_viewpanels.kit",
 		"outputAbbreviatedPath": "\/src\/kit\/tmpl\/_viewpanels.html",
-		"outputPathIsOutsideProject": 0,
-		"outputPathIsSetByUser": 0
-		},
-	"\/src\/kit\/tmpl\/_wordlist.kit": {
-		"fileType": 2048,
-		"ignore": 1,
-		"ignoreWasSetByUser": 0,
-		"inputAbbreviatedPath": "\/src\/kit\/tmpl\/_wordlist.kit",
-		"outputAbbreviatedPath": "\/src\/kit\/tmpl\/_wordlist.html",
 		"outputPathIsOutsideProject": 0,
 		"outputPathIsSetByUser": 0
 		},

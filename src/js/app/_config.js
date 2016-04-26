@@ -8,14 +8,14 @@
  */
 var CFG = (function() {
     return {
-        DICTIONARY: {
+        DATA: {
             ALIAS               : "owl",
             PATH_DATA           : "data/",
             PATH_AUDIO          : "/audio/",
-            PATH_IMAGES         : "/images/",
+            PATH_IMAGE          : "/image/",
             TYPE_DATA           : ".json",
             TYPE_AUDIO          : ".mp3",
-            TYPE_IMAGES         : ".jpg"
+            TYPE_IMAGE          : ".jpg"
         },
         QUIZ: {
             LVL_MIN             : 1,
@@ -102,6 +102,10 @@ var CFG = (function() {
             ELEMDIV             : "__",
             MODDIV              : "--",
             MODKEY              : "-"
+        },
+        AJAX: {
+            HEAD                : "HEAD",
+            ERROR               : "error"
         },
         STR: {
             EMPTY               : "",

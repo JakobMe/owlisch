@@ -12,7 +12,7 @@ var App = {
     init: function() {
         
         // AJAX-Asynchronität deaktivieren
-        $.ajaxSetup({ async: false });
+        //$.ajaxSetup({ async: false });
         
         // FastClick initialisieren
         FastClick.attach(document.body);

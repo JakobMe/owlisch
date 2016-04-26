@@ -551,6 +551,15 @@
 		"outputPathIsOutsideProject": 0,
 		"outputPathIsSetByUser": 0
 		},
+	"\/src\/kit\/tmpl\/_termdetails.kit": {
+		"fileType": 2048,
+		"ignore": 1,
+		"ignoreWasSetByUser": 0,
+		"inputAbbreviatedPath": "\/src\/kit\/tmpl\/_termdetails.kit",
+		"outputAbbreviatedPath": "\/src\/kit\/tmpl\/_termdetails.html",
+		"outputPathIsOutsideProject": 0,
+		"outputPathIsSetByUser": 0
+		},
 	"\/src\/kit\/tmpl\/_termlist.kit": {
 		"fileType": 2048,
 		"ignore": 1,
@@ -1018,101 +1027,101 @@
 		"outputPathIsOutsideProject": 0,
 		"outputPathIsSetByUser": 0
 		},
-	"\/www\/data\/owl\/images\/beoemmeln.jpg": {
+	"\/www\/data\/owl\/image\/beoemmeln.jpg": {
 		"fileType": 16384,
 		"ignore": 0,
 		"ignoreWasSetByUser": 0,
 		"initialSize": 15709,
-		"inputAbbreviatedPath": "\/www\/data\/owl\/images\/beoemmeln.jpg",
-		"outputAbbreviatedPath": "\/www\/data\/owl\/images\/beoemmeln.jpg",
+		"inputAbbreviatedPath": "\/www\/data\/owl\/image\/beoemmeln.jpg",
+		"outputAbbreviatedPath": "\/www\/data\/owl\/image\/beoemmeln.jpg",
 		"outputPathIsOutsideProject": 0,
 		"outputPathIsSetByUser": 0,
 		"processed": 1
 		},
-	"\/www\/data\/owl\/images\/blume.jpg": {
+	"\/www\/data\/owl\/image\/blume.jpg": {
 		"fileType": 16384,
 		"ignore": 0,
 		"ignoreWasSetByUser": 0,
 		"initialSize": 26481,
-		"inputAbbreviatedPath": "\/www\/data\/owl\/images\/blume.jpg",
-		"outputAbbreviatedPath": "\/www\/data\/owl\/images\/blume.jpg",
+		"inputAbbreviatedPath": "\/www\/data\/owl\/image\/blume.jpg",
+		"outputAbbreviatedPath": "\/www\/data\/owl\/image\/blume.jpg",
 		"outputPathIsOutsideProject": 0,
 		"outputPathIsSetByUser": 0,
 		"processed": 1
 		},
-	"\/www\/data\/owl\/images\/buetterken.jpg": {
+	"\/www\/data\/owl\/image\/buetterken.jpg": {
 		"fileType": 16384,
 		"ignore": 0,
 		"ignoreWasSetByUser": 0,
 		"initialSize": 25114,
-		"inputAbbreviatedPath": "\/www\/data\/owl\/images\/buetterken.jpg",
-		"outputAbbreviatedPath": "\/www\/data\/owl\/images\/buetterken.jpg",
+		"inputAbbreviatedPath": "\/www\/data\/owl\/image\/buetterken.jpg",
+		"outputAbbreviatedPath": "\/www\/data\/owl\/image\/buetterken.jpg",
 		"outputPathIsOutsideProject": 0,
 		"outputPathIsSetByUser": 0,
 		"processed": 1
 		},
-	"\/www\/data\/owl\/images\/knuepp.jpg": {
+	"\/www\/data\/owl\/image\/knuepp.jpg": {
 		"fileType": 16384,
 		"ignore": 0,
 		"ignoreWasSetByUser": 0,
 		"initialSize": 9892,
-		"inputAbbreviatedPath": "\/www\/data\/owl\/images\/knuepp.jpg",
-		"outputAbbreviatedPath": "\/www\/data\/owl\/images\/knuepp.jpg",
+		"inputAbbreviatedPath": "\/www\/data\/owl\/image\/knuepp.jpg",
+		"outputAbbreviatedPath": "\/www\/data\/owl\/image\/knuepp.jpg",
 		"outputPathIsOutsideProject": 0,
 		"outputPathIsSetByUser": 0,
 		"processed": 1
 		},
-	"\/www\/data\/owl\/images\/latuechte.jpg": {
+	"\/www\/data\/owl\/image\/latuechte.jpg": {
 		"fileType": 16384,
 		"ignore": 0,
 		"ignoreWasSetByUser": 0,
 		"initialSize": 14670,
-		"inputAbbreviatedPath": "\/www\/data\/owl\/images\/latuechte.jpg",
-		"outputAbbreviatedPath": "\/www\/data\/owl\/images\/latuechte.jpg",
+		"inputAbbreviatedPath": "\/www\/data\/owl\/image\/latuechte.jpg",
+		"outputAbbreviatedPath": "\/www\/data\/owl\/image\/latuechte.jpg",
 		"outputPathIsOutsideProject": 0,
 		"outputPathIsSetByUser": 0,
 		"processed": 1
 		},
-	"\/www\/data\/owl\/images\/noenkern.jpg": {
+	"\/www\/data\/owl\/image\/noenkern.jpg": {
 		"fileType": 16384,
 		"ignore": 0,
 		"ignoreWasSetByUser": 0,
 		"initialSize": 11133,
-		"inputAbbreviatedPath": "\/www\/data\/owl\/images\/noenkern.jpg",
-		"outputAbbreviatedPath": "\/www\/data\/owl\/images\/noenkern.jpg",
+		"inputAbbreviatedPath": "\/www\/data\/owl\/image\/noenkern.jpg",
+		"outputAbbreviatedPath": "\/www\/data\/owl\/image\/noenkern.jpg",
 		"outputPathIsOutsideProject": 0,
 		"outputPathIsSetByUser": 0,
 		"processed": 1
 		},
-	"\/www\/data\/owl\/images\/pinienzapfen.jpg": {
+	"\/www\/data\/owl\/image\/pinienzapfen.jpg": {
 		"fileType": 16384,
 		"ignore": 0,
 		"ignoreWasSetByUser": 0,
 		"initialSize": 21744,
-		"inputAbbreviatedPath": "\/www\/data\/owl\/images\/pinienzapfen.jpg",
-		"outputAbbreviatedPath": "\/www\/data\/owl\/images\/pinienzapfen.jpg",
+		"inputAbbreviatedPath": "\/www\/data\/owl\/image\/pinienzapfen.jpg",
+		"outputAbbreviatedPath": "\/www\/data\/owl\/image\/pinienzapfen.jpg",
 		"outputPathIsOutsideProject": 0,
 		"outputPathIsSetByUser": 0,
 		"processed": 1
 		},
-	"\/www\/data\/owl\/images\/pinneken.jpg": {
+	"\/www\/data\/owl\/image\/pinneken.jpg": {
 		"fileType": 16384,
 		"ignore": 0,
 		"ignoreWasSetByUser": 0,
 		"initialSize": 8807,
-		"inputAbbreviatedPath": "\/www\/data\/owl\/images\/pinneken.jpg",
-		"outputAbbreviatedPath": "\/www\/data\/owl\/images\/pinneken.jpg",
+		"inputAbbreviatedPath": "\/www\/data\/owl\/image\/pinneken.jpg",
+		"outputAbbreviatedPath": "\/www\/data\/owl\/image\/pinneken.jpg",
 		"outputPathIsOutsideProject": 0,
 		"outputPathIsSetByUser": 0,
 		"processed": 1
 		},
-	"\/www\/data\/owl\/images\/schraube.jpg": {
+	"\/www\/data\/owl\/image\/schraube.jpg": {
 		"fileType": 16384,
 		"ignore": 0,
 		"ignoreWasSetByUser": 0,
 		"initialSize": 6932,
-		"inputAbbreviatedPath": "\/www\/data\/owl\/images\/schraube.jpg",
-		"outputAbbreviatedPath": "\/www\/data\/owl\/images\/schraube.jpg",
+		"inputAbbreviatedPath": "\/www\/data\/owl\/image\/schraube.jpg",
+		"outputAbbreviatedPath": "\/www\/data\/owl\/image\/schraube.jpg",
 		"outputPathIsOutsideProject": 0,
 		"outputPathIsSetByUser": 0,
 		"processed": 1

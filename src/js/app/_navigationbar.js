@@ -194,7 +194,7 @@ var NavigationBar = (function() {
         var action = (button.action || null);
         
         // Falls Button vorhanden ist
-        if ($button instanceof jQuery) {
+        if ($button instanceof $) {
             
             // Button ausblenden/deaktivieren
             _buttonsAreDisabled = true;
@@ -221,7 +221,7 @@ var NavigationBar = (function() {
      * aktuell gesetzten Titels neu.
      */
     function _renderTitle() {
-        if (_title.$title instanceof jQuery) {
+        if (_title.$title instanceof $) {
             _title.$title.setMod(_B_BAR, _E_TITLE, _M_HIDDEN, true);
             setTimeout(function() {
                 _title.$title.text(_title.str || CFG.STR.EMPTY);
@@ -369,7 +369,7 @@ var NavigationBar = (function() {
      * @param {string} icon Name des Button-Icons
      */
     function _setButton(button, action, icon) {
-        if (button.$button instanceof jQuery) {
+        if (button.$button instanceof $) {
             button.action = (action || null);
             button.icon = (icon || null);
             _renderButton(button);

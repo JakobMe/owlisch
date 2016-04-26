@@ -15,6 +15,10 @@ var Dictionary = (function() {
     var _SEL_DETAILS            = "[role='complementary']";
     var _SEL_TMPL_DICTIONARY    = "#tmpl-dictionary";
     var _SEL_TMPL_TERMLIST      = "#tmpl-termlist";
+    var _SEL_TMPL_TERMDETAILS   = "#tmpl-termdetails";
+    
+    // Data-Attribut-Konstanten
+    var _DATA_TERM              = "term";
     
     // Private Variablen
     var _listOriginal           = [];
@@ -23,13 +27,16 @@ var Dictionary = (function() {
     var _currentFilter          = CFG.STR.EMPTY;
     var _currentSort            = CFG.SORTING.SORT.ALPHA;
     var _currentOrder           = CFG.SORTING.ORDER.ASC;
+    var _currentTerm            = {};
+    
+    // Templates
     var _tmplDictionary         = $(_SEL_TMPL_DICTIONARY).html();
     var _tmplTermlist           = $(_SEL_TMPL_TERMLIST).html();
+    var _tmplTermdetails        = $(_SEL_TMPL_TERMDETAILS).html();
     
     // DOM-Elemente
     var _$slider                = null;
     var _$list                  = null;
-    var _$items                 = null;
     var _$details               = null;
     
     /**
@@ -42,6 +49,7 @@ var Dictionary = (function() {
         // Templates parsen, Funktionen ausführen
         Mustache.parse(_tmplDictionary);
         Mustache.parse(_tmplTermlist);
+        Mustache.parse(_tmplTermdetails);
         _bindEvents();
     }
     
@@ -56,7 +64,9 @@ var Dictionary = (function() {
         _$slider            = $(_SEL_SLIDER);
         _$list              = _$slider.find(_SEL_LIST);
         _$details           = _$slider.find(_SEL_DETAILS);
-        _$items             = _$list.find(_SEL_ITEM);
+        
+        // Events binden
+        _bindClickEvents();
         
         // Fortschritt-Liste anfragen
         $(window).trigger(CFG.EVT.REQUEST_PROGRESS);
@@ -72,6 +82,16 @@ var Dictionary = (function() {
         $(window).on(CFG.EVT.SERVE_PROGRESS, _updateList);
         $(window).on(CFG.EVT.SORTED_LIST, _sortList);
         $(window).on(CFG.EVT.SEARCHED_LIST, _filterList);
+    }
+    
+    /**
+     * Klick-Events binden.
+     * Bindet Klick-Funktionen an interne jQuery-Objekte.
+     */
+    function _bindClickEvents() {
+        if (_$list instanceof $) {
+            _$list.on(CFG.EVT.CLICK, _SEL_ITEM, _setCurrentTerm);
+        }
     }
     
     /**
@@ -204,10 +224,10 @@ var Dictionary = (function() {
     
     /**
      * Liste rendern.
-     * Rendert die Liste des Wörterbuches.
+     * Rendert die Liste des Wörterbuches anhand eines Mustache-Templates.
      */
     function _renderList() {
-        if (_$list instanceof jQuery) {
+        if (_$list instanceof $) {
             _$list.html(
                 Mustache.render(_tmplTermlist, {
                     caption     : _listCaption,
@@ -218,6 +238,49 @@ var Dictionary = (function() {
                     filtered    : (_currentFilter.length > 0)
                 })
             );
+        }
+    }
+    
+    /**
+     * Aktuellen Begriff setzen.
+     * Lädt anhand eines Events und einem dazugehörigen Begriff-Alias
+     * den zugehörigen Begriff aus der aktuellen Liste; rendert
+     * anschließend die Details des Begriffes.
+     * @param {Object} event Ausgelöstes Event
+     */
+    function _setCurrentTerm(event) {
+        if (typeof event !== typeof undefined) {
+            
+            // Alias ermitteln, Begriff suchen und setzen
+            var alias = $(event.target).closest(_SEL_ITEM).data(_DATA_TERM);
+            $.each(_listFiltered, function(i, item) {
+                if (item.alias === alias) {
+                    _currentTerm = $.extend({}, this);
+                    _renderDetails();             
+                    return false;
+                }
+            });
+        }
+    }
+    
+    /**
+     * Begriff-Details rendern.
+     * Rendert die Details des aktuellen Begriffs anhand eines
+     * Mustache-Templates; bewegt den Wörterbuch-Slider und
+     * ändert die Navigation-Bar.
+     */
+    function _renderDetails() {
+        if ((typeof _currentTerm === typeof {}) &&
+            (typeof _currentTerm.alias !== typeof undefined)) {
+            
+            // Inhalte einfügen
+            _$details.html(Mustache.render(_tmplTermdetails, _currentTerm))
+                .promise().done(function() {
+                
+                window.console.log(_currentTerm);
+                // !TODO: _renderDetails() Slider und Navigation-Bar
+                
+            });
         }
     }
     

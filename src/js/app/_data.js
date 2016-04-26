@@ -9,7 +9,7 @@
 var Data = (function() {
     
     // Private Variablen
-    var _dictionaryAlias        = CFG.DICTIONARY.ALIAS;
+    var _dictionaryAlias        = CFG.DATA.ALIAS;
     var _dictionaryCaption      = CFG.STR.EMPTY;
     var _dictionaryData         = [];
     var _dictionaryList         = [];
@@ -57,12 +57,12 @@ var Data = (function() {
             "latuechte"         : { lvl: 1, fail: 0 },
             "pluedden"          : { lvl: 2, fail: 0 },
             "vermackeln"        : { lvl: 3, fail: 0 },
-            "noehlen"           : { lvl: 2, fail: 0 },
+            "noehlen"           : { lvl: 2, fail: 0 }/*,
             "angeschickert"     : { lvl: 1, fail: 0 },
             "beoemmeln"         : { lvl: 3, fail: 0 },
             "dittken"           : { lvl: 1, fail: 0 },
             "knuepp"            : { lvl: 2, fail: 0 },
-            "noenkern"          : { lvl: 3, fail: 0 }
+            "noenkern"          : { lvl: 3, fail: 0 }*/
         };
         
         // !TODO: _loadProgress() LocalStorage
@@ -76,22 +76,84 @@ var Data = (function() {
     function _loadDictionary() {
         
         // Pfad zur Wörterbuch-Datei zusammensetzen
-        var dictionaryPath = CFG.DICTIONARY.PATH_DATA + _dictionaryAlias +
-                             CFG.STR.SLASH + _dictionaryAlias +
-                             CFG.DICTIONARY.TYPE_DATA;
+        var dictionaryPath =
+            CFG.DATA.PATH_DATA + _dictionaryAlias + CFG.STR.SLASH +
+            _dictionaryAlias + CFG.DATA.TYPE_DATA;
         
-        // AJAX Get-Anfrage zur Datei
-        $.getJSON(dictionaryPath, function(dictionary) {
-            if ((typeof dictionary.caption === typeof CFG.STR.EMPTY) &&
-                $.isArray(dictionary.terms)) {
-                _dictionaryCaption = dictionary.caption;
-                _dictionaryData = dictionary.terms;
-                _dictionarySize = dictionary.terms.length;
+        // AJAX Get-Anfrage zur Datei, im Anschluss Dateien prüfen
+        $.getJSON(dictionaryPath, function(data) {
+            if ((typeof data.caption === typeof CFG.STR.EMPTY) &&
+                $.isArray(data.terms)) {
+                _dictionaryCaption = data.caption;
+                _dictionaryData    = data.terms;
+                _dictionarySize    = data.terms.length;
             }
+        }).done(function() { _checkDictionaryFiles(); });
+    }
+    
+    /**
+     * Datei überprüfen.
+     * Überprüft die Existenz einer gegebenen Datei.
+     * @param {string} file Dateipfad
+     * @returns {Object} AJAX-Antwort
+     */
+    function _checkFile(file) {
+        return $.ajax({
+            url: file,
+            type: CFG.AJAX.HEAD
         });
-
-        // Listen aktualisieren
-        _updateLists();
+    }
+    
+    /**
+     * Dateien eines Begriffes prüfen.
+     * Prüft mittels AJAX-Anfragen, ob ein gegebener Begriff
+     * über Audio- und/oder Bild-Dateien verfügt; erweitert die
+     * Wörterbuch-Daten um den Datei-Status.
+     * @param {string} alias Kürzel des Begriffes
+     * @returns {Object} AJAX-Objekte der Anfragen
+     */
+    function _checkTermFiles(alias) {
+        if (typeof alias === typeof CFG.STR.EMPTY) {
+        
+            // Pfade zusammensetzen, Datei-Status initialisieren
+            var pathData   = CFG.DATA.PATH_DATA + _dictionaryAlias;
+            var pathAudio  = pathData + CFG.DATA.PATH_AUDIO;
+            var pathImage  = pathData + CFG.DATA.PATH_IMAGE;
+            var fileAudio  = pathAudio + alias + CFG.DATA.TYPE_AUDIO;
+            var fileImage  = pathImage + alias + CFG.DATA.TYPE_IMAGE;
+            
+            // AJAX-Anfragen zurückgeben
+            return {
+                audio: _checkFile(fileAudio),
+                image: _checkFile(fileImage)
+            };
+        }
+    }
+    
+    /**
+     * Wörterbuch nach Existenz von Dateien überprüfen.
+     * Prüft alle Begriffe des Wörterbuches nach der Existenz von
+     * zugehörigen Audio- und Bild-Dateien; aktualisiert anschließend
+     * die Begriff-Listen.
+     */
+    function _checkDictionaryFiles() {
+        
+        // Liste der anstehenden AJAX-Anfragen initialisieren
+        var fileChecks = [];
+        
+        // Wörterbuch iterieren, Dateien überprüfen
+        $.each(_dictionaryData, function(i, item) {
+            $.each(_checkTermFiles(item.alias), function(type, check) {
+                fileChecks.push(check);
+                check.done(function() { _dictionaryData[i][type] = true; })
+                     .fail(function() { _dictionaryData[i][type] = false; });
+            });
+        });
+        
+        // Begriff-Listen aktualisieren, sobald Dateien geprüft wurden
+        $.when.apply($, fileChecks).always(function() {
+            _updateLists();
+        });
     }
     
     /**
@@ -114,16 +176,14 @@ var Data = (function() {
             var lvl = Math.min(Math.max(progress.lvl, 0), CFG.QUIZ.LVL_MAX);
             var fail = Math.max(progress.fail, 0);
             
-            // Wort um Werte erweitern und zu Listen hinzufügen
+            // Begriff um Werte erweitern, Listen aktualisieren
             $.extend(item, { lvl: lvl, fail: fail });
-            _dictionaryList.push(item);
             if (lvl > 0) { _progressList.push(item); }
+            _dictionaryList.push(item);
         });
         
-        // Fortschritt-Größe aktualisieren
+        // Fortschritts-Größe aktualisieren, Begriff-Listen bereitstellen
         _progressSize = Object.keys(_progressData).length;
-        
-        // Updates bereitstellen
         _serveDictionary();
         _serveProgress();
     }

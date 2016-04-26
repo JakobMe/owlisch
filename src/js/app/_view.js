@@ -131,10 +131,7 @@ var View = (function() {
             });
             
             // Event auslösen
-            $(window).trigger(
-                CFG.EVT.CREATE_PANELS,
-                { panels: panels }
-            );
+            $(window).trigger(CFG.EVT.CREATE_PANELS, { panels: panels });
         });
     }
     
@@ -146,8 +143,8 @@ var View = (function() {
      * @param {Object} data Daten des Events
      */
     function _setPanel(event, data) {
-        if ((typeof data !== typeof undefined) &&
-            (typeof data.panel !== typeof undefined) &&
+        if ((typeof data          !== typeof undefined) &&
+            (typeof data.panel    !== typeof undefined) &&
             (_$panels[data.panel] instanceof jQuery)) {
                     
             // Navigation-Bar aktualisieren

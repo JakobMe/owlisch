@@ -76,11 +76,11 @@ var TabBar = (function() {
      * @param {Object} data Daten des Events
      */
     function _createTablist(event, data) {
-        if ((typeof data !== typeof undefined) &&
+        if ((typeof data        !== typeof undefined) &&
             (typeof data.panels !== typeof undefined)) {
             _$tabbar.html(Mustache.render(_tmplTablist, data.panels))
                 .promise().done(function() {
-                    _$tabs = _$tabbar.find(_SEL_TABS);
+                    _$tabs     = _$tabbar.find(_SEL_TABS);
                     _tabNumber = _$tabs.length - 1;
                     _setTab(_tabActive);
                     $(window).trigger(CFG.EVT.SHOW_VIEWPORT);
@@ -99,7 +99,7 @@ var TabBar = (function() {
     function _setTab(tab) {
         
         // Variablen initialisieren, Tab-Index ermitteln
-        var i = -1;
+        var i     = -1;
         var panel = null;
         if (tab.target) { i = $(tab.target).closest(_SEL_TABS).index(); }
         else { i = parseInt(tab); }

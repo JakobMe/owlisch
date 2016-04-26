@@ -9,14 +9,13 @@
 var Data = (function() {
     
     // Private Variablen
-    var _dictionaryAlias        = CFG.DATA.ALIAS;
-    var _dictionaryCaption      = CFG.STR.EMPTY;
-    var _dictionaryData         = [];
-    var _dictionaryList         = [];
-    var _dictionarySize         = 0;
-    var _progressData           = [];
-    var _progressList           = [];
-    var _progressSize           = 0;
+    var _alias                  = CFG.DATA.ALIAS;
+    var _caption                = CFG.STR.EMPTY;
+    var _listDictionary         = [];
+    var _listProgress           = [];
+    var _savegame               = {};
+    var _sizeDictionary         = 0;
+    var _sizeProgress           = 0;
     
     /**
      * SaveGame initialisieren.
@@ -26,7 +25,7 @@ var Data = (function() {
         
         // Funktionen ausführen
         _bindEvents();
-        _loadProgress();
+        _loadSavegame();
         _loadDictionary();
     }
     
@@ -44,10 +43,10 @@ var Data = (function() {
      * Fortschritt laden.
      * Setzt den bisherigen Fortschritt.
      */
-    function _loadProgress() {
+    function _loadSavegame() {
         
         // Fortschritt-Daten setzen
-        _progressData = {
+        _savegame = {
             "pinneken"          : { lvl: 3, fail: 0 },
             "anneeckeliegen"    : { lvl: 1, fail: 0 },
             "buetterken"        : { lvl: 1, fail: 0 },
@@ -65,7 +64,7 @@ var Data = (function() {
             "noenkern"          : { lvl: 3, fail: 0 }*/
         };
         
-        // !TODO: _loadProgress() LocalStorage
+        // !TODO: _loadSavegame() LocalStorage
     }
     
     /**
@@ -76,17 +75,16 @@ var Data = (function() {
     function _loadDictionary() {
         
         // Pfad zur Wörterbuch-Datei zusammensetzen
-        var dictionaryPath =
-            CFG.DATA.PATH_DATA + _dictionaryAlias + CFG.STR.SLASH +
-            _dictionaryAlias + CFG.DATA.TYPE_DATA;
+        var file = CFG.DATA.PATH_DATA + _alias + CFG.STR.SLASH + _alias +
+                   CFG.DATA.TYPE_DATA;
         
         // AJAX Get-Anfrage zur Datei, im Anschluss Dateien prüfen
-        $.getJSON(dictionaryPath, function(data) {
+        $.getJSON(file, function(data) {
             if ((typeof data.caption === typeof CFG.STR.EMPTY) &&
                 $.isArray(data.terms)) {
-                _dictionaryCaption = data.caption;
-                _dictionaryData    = data.terms;
-                _dictionarySize    = data.terms.length;
+                _caption        = data.caption;
+                _listDictionary = data.terms;
+                _sizeDictionary = data.terms.length;
             }
         }).done(function() { _checkDictionaryFiles(); });
     }
@@ -99,8 +97,8 @@ var Data = (function() {
      */
     function _checkFile(file) {
         return $.ajax({
-            url: file,
-            type: CFG.AJAX.HEAD
+            url  : file,
+            type : CFG.AJAX.HEAD
         });
     }
     
@@ -116,16 +114,16 @@ var Data = (function() {
         if (typeof alias === typeof CFG.STR.EMPTY) {
         
             // Pfade zusammensetzen, Datei-Status initialisieren
-            var pathData   = CFG.DATA.PATH_DATA + _dictionaryAlias;
-            var pathAudio  = pathData + CFG.DATA.PATH_AUDIO;
-            var pathImage  = pathData + CFG.DATA.PATH_IMAGE;
-            var fileAudio  = pathAudio + alias + CFG.DATA.TYPE_AUDIO;
-            var fileImage  = pathImage + alias + CFG.DATA.TYPE_IMAGE;
+            var pathData  = CFG.DATA.PATH_DATA + _alias;
+            var pathAudio = pathData + CFG.DATA.PATH_AUDIO;
+            var pathImage = pathData + CFG.DATA.PATH_IMAGE;
+            var fileAudio = pathAudio + alias + CFG.DATA.TYPE_AUDIO;
+            var fileImage = pathImage + alias + CFG.DATA.TYPE_IMAGE;
             
             // AJAX-Anfragen zurückgeben
             return {
-                audio: _checkFile(fileAudio),
-                image: _checkFile(fileImage)
+                audio : _checkFile(fileAudio),
+                image : _checkFile(fileImage)
             };
         }
     }
@@ -142,11 +140,11 @@ var Data = (function() {
         var fileChecks = [];
         
         // Wörterbuch iterieren, Dateien überprüfen
-        $.each(_dictionaryData, function(i, item) {
+        $.each(_listDictionary, function(i, item) {
             $.each(_checkTermFiles(item.alias), function(type, check) {
                 fileChecks.push(check);
-                check.done(function() { _dictionaryData[i][type] = true; })
-                     .fail(function() { _dictionaryData[i][type] = false; });
+                check.done(function() { item[type] = true; })
+                     .fail(function() { item[type] = false; });
             });
         });
         
@@ -164,26 +162,17 @@ var Data = (function() {
      */
     function _updateLists() {
         
-        // Listen zurücksetzen
-        _dictionaryList = [];
-        _progressList   = [];
+        // Fortschritts-Liste zurücksetzen
+        _listProgress   = [];
         
-        // Alle Begriffe des Wörterbuches iterieren
-        $.each(_dictionaryData, function(i, item) {
-            
-            // Level und Fehlschläge ermitteln
-            var progress = (_progressData[item.alias] || { lvl: 0, fail: 0 });
-            var lvl = Math.min(Math.max(progress.lvl, 0), CFG.QUIZ.LVL_MAX);
-            var fail = Math.max(progress.fail, 0);
-            
-            // Begriff um Werte erweitern, Listen aktualisieren
-            $.extend(item, { lvl: lvl, fail: fail });
-            if (lvl > 0) { _progressList.push(item); }
-            _dictionaryList.push(item);
+        // Alle Begriffe um Fortschritt erweitert, Listen aktualisieren
+        $.each(_listDictionary, function(i, item) {
+            $.extend(item, (_savegame[item.alias] || { lvl: 0, fail: 0 }));
+            if (item.lvl > 0) { _listProgress.push(item); }
         });
         
         // Fortschritts-Größe aktualisieren, Begriff-Listen bereitstellen
-        _progressSize = Object.keys(_progressData).length;
+        _sizeProgress = _listProgress.length;
         _serveDictionary();
         _serveProgress();
     }
@@ -206,14 +195,18 @@ var Data = (function() {
      * @param {Object} data Daten des Events
      */
     function _updateProgress(event, data) {
-        if ((typeof data !== typeof undefined) &&
+        if ((typeof data       !== typeof undefined) &&
             (typeof data.alias !== typeof undefined) &&
-            (typeof data.lvl !== typeof undefined) &&
-            (typeof data.fail !== typeof undefined)) {
-            _progressData[data.alias] = {
-                lvl: data.lvl,
-                fail: data.fail
+            (typeof data.lvl   !== typeof undefined) &&
+            (typeof data.fail  !== typeof undefined)) {
+            
+            // Fortschritts-Daten aktualisieren
+            _savegame[data.alias] = {
+                lvl  : Math.max(Math.min(data.lvl, CFG.QUIZ.LVL_MAX), 0),
+                fail : Math.max(data.fail, 0)
             };
+            
+            // Speichern und Listen aktualisieren
             _saveProgress();
             _updateLists();
         }
@@ -225,9 +218,9 @@ var Data = (function() {
      */
     function _serveProgress() {
         $(window).trigger(CFG.EVT.SERVE_PROGRESS, {
-            caption: _dictionaryCaption,
-            list: _progressList,
-            size: _progressSize
+            caption : _caption,
+            list    : _listProgress,
+            size    : _sizeProgress
         });
     }
     
@@ -237,9 +230,9 @@ var Data = (function() {
      */
     function _serveDictionary() {
         $(window).trigger(CFG.EVT.SERVE_DICTIONARY, {
-            caption : _dictionaryCaption,
-            list: _dictionaryList,
-            size: _dictionarySize
+            caption : _caption,
+            list    : _listDictionary,
+            size    : _sizeDictionary
         });
     }
     

@@ -102,7 +102,7 @@ var Dictionary = (function() {
      * @param {Object} data Daten des Events
      */
     function _createDictionary(event, data) {
-        if ((typeof data !== typeof undefined) &&
+        if ((typeof data          !== typeof undefined) &&
             (CFG.VIEW[data.panel] === CFG.VIEW.DICTIONARY) &&
             (data.target instanceof $)) {
 
@@ -124,8 +124,8 @@ var Dictionary = (function() {
         
         // Sortierung: Numerisch
         if (_currentSort === CFG.SORTING.SORT.NUMERIC) {
-            if (parseInt(a.lvl) < parseInt(b.lvl)) { return -1; }
-            else if (parseInt(a.lvl) > parseInt(b.lvl)) { return 1; }
+            if      (parseInt(a.lvl) < parseInt(b.lvl)) { return -1; }
+            else if (parseInt(a.lvl) > parseInt(b.lvl)) { return  1; }
             else { return a.term.localeCompare(b.term); }
             
         // Standard-Sortierung: Alphabetisch
@@ -142,8 +142,8 @@ var Dictionary = (function() {
     function _sortList(event, data) {
 
         // Wenn ein Event übergeben wurde, dessen Daten setzen
-        if ((typeof data !== typeof undefined) &&
-            (typeof data.sort !== typeof undefined) &&
+        if ((typeof data       !== typeof undefined) &&
+            (typeof data.sort  !== typeof undefined) &&
             (typeof data.order !== typeof undefined)) {
             _currentSort = data.sort;
             _currentOrder = data.order;
@@ -169,7 +169,7 @@ var Dictionary = (function() {
     function _filterList(event, data) {
         
         // Filter-Wort gegebenenfalls aktualisieren
-        if ((typeof data !== typeof undefined) &&
+        if ((typeof data        !== typeof undefined) &&
             (typeof data.search === typeof CFG.STR.EMPTY)) {
             _currentFilter = data.search.toLowerCase();
         }
@@ -183,13 +183,13 @@ var Dictionary = (function() {
             _listFiltered = [];
             var len = _currentFilter.length;
             $.each(_listOriginal, function(i, item) {
-                var term = $.extend({}, item);
+                var term  = $.extend({}, item);
                 var found = item.term.toLowerCase().indexOf(_currentFilter);
                 if (found > -1) {
                     _listFiltered.push($.extend(term, {
-                        start: item.term.substring(0, found),
-                        highlight: item.term.substr(found, len),
-                        tail: item.term.substr(found + len)
+                        start     : item.term.substring(0, found),
+                        highlight : item.term.substr(found, len),
+                        tail      : item.term.substr(found + len)
                     }));
                 }
             });
@@ -207,15 +207,15 @@ var Dictionary = (function() {
      * @param {Object} data Daten des Events
      */
     function _updateList(event, data) {
-        if ((typeof data !== typeof undefined) &&
+        if ((typeof data      !== typeof undefined) &&
             (typeof data.list !== typeof undefined)) {
-            _listCaption = data.caption;
+            _listCaption  = data.caption;
             _listOriginal = data.list;
             $.each(_listOriginal, function(i, item) {
                 $.extend(this, {
-                    start: item.term,
-                    highlight: CFG.STR.EMPTY,
-                    tail: CFG.STR.EMPTY
+                    start     : item.term,
+                    highlight : CFG.STR.EMPTY,
+                    tail      : CFG.STR.EMPTY
                 });
             });
             _filterList();
@@ -230,12 +230,12 @@ var Dictionary = (function() {
         if (_$list instanceof $) {
             _$list.html(
                 Mustache.render(_tmplTermlist, {
-                    caption     : _listCaption,
-                    terms       : _listFiltered,
-                    levels      : CFG.QUIZ.LEVELS,
-                    size        : _listFiltered.length,
-                    single      : (_listFiltered.length === 1),
-                    filtered    : (_currentFilter.length > 0)
+                    caption   : _listCaption,
+                    terms     : _listFiltered,
+                    levels    : CFG.QUIZ.LEVELS,
+                    size      : _listFiltered.length,
+                    single    : (_listFiltered.length === 1),
+                    filtered  : (_currentFilter.length > 0)
                 })
             );
         }
@@ -270,7 +270,7 @@ var Dictionary = (function() {
      * ändert die Navigation-Bar.
      */
     function _renderDetails() {
-        if ((typeof _currentTerm === typeof {}) &&
+        if ((typeof _currentTerm      === typeof {}) &&
             (typeof _currentTerm.alias !== typeof undefined)) {
             
             // Inhalte einfügen

@@ -190,8 +190,8 @@ var NavigationBar = (function() {
         
         // Button-Werte initialisieren
         var $button = (button.$button || null);
-        var icon = (button.icon || null);
-        var action = (button.action || null);
+        var icon    = (button.icon    || null);
+        var action  = (button.action  || null);
         
         // Falls Button vorhanden ist
         if ($button instanceof $) {
@@ -255,7 +255,7 @@ var NavigationBar = (function() {
             
             // Geklickten Button aktivieren, Geschwister deaktivieren
             var $sort = $(event.target).closest(_SEL_SORT);
-            var sort = CFG.SORTING.SORT[$sort.data(_DATA_SORT)];
+            var sort  = CFG.SORTING.SORT[$sort.data(_DATA_SORT)];
             var order = CFG.SORTING.ORDER[$sort.data(_DATA_ORDER)];
             $sort.setMod(_B_DROPDOWN, _E_ITEM, _M_SELECTED, true)
                 .siblings().setMod(_B_DROPDOWN, _E_ITEM, _M_SELECTED, false);
@@ -283,7 +283,7 @@ var NavigationBar = (function() {
      * @param {Object} data Daten des Events
      */
     function _buttonPressed(event, data) {
-        if ((typeof data !== typeof undefined) &&
+        if ((typeof data        !== typeof undefined) &&
             (typeof data.action !== typeof undefined)) {
             switch (data.action) {
                 
@@ -335,7 +335,7 @@ var NavigationBar = (function() {
                 action = _buttonRight.action;
             }
             
-            // Event auslösen, wenn Aktion gültig ist
+            // Event auslösen
             $(window).trigger(CFG.EVT.PRESSED_BUTTON, { action: action });
         }
     }
@@ -371,7 +371,7 @@ var NavigationBar = (function() {
     function _setButton(button, action, icon) {
         if (button.$button instanceof $) {
             button.action = (action || null);
-            button.icon = (icon || null);
+            button.icon   = (icon   || null);
             _renderButton(button);
         }
     }
@@ -407,7 +407,7 @@ var NavigationBar = (function() {
             _searchIsActive = willBeActive;
             _setButtonLeft(
                 (willBeActive ? CFG.ACT.SEARCH_HIDE : CFG.ACT.SEARCH_SHOW),
-                (willBeActive ? CFG.ICON.CANCEL : CFG.ICON.SEARCH)
+                (willBeActive ? CFG.ICON.CANCEL     : CFG.ICON.SEARCH)
             );
             $(window).trigger(
                 CFG.EVT.SEARCHED_LIST,
@@ -429,7 +429,7 @@ var NavigationBar = (function() {
             _dropdownIsOpened = willBeOpened;
             _setButtonRight(
                 (willBeOpened ? CFG.ACT.SORT_HIDE : CFG.ACT.SORT_SHOW),
-                (willBeOpened ? CFG.ICON.CANCEL : CFG.ICON.SORT) 
+                (willBeOpened ? CFG.ICON.CANCEL   : CFG.ICON.SORT) 
             );
             _renderDropdown();
         }
@@ -444,18 +444,18 @@ var NavigationBar = (function() {
      * @param {Object} data Daten des Events
      */
     function _updateCache(event, data) {
-        if ((typeof data !== typeof undefined) &&
+        if ((typeof data          !== typeof undefined) &&
             (typeof data.panelOld !== typeof undefined) &&
             (typeof data.panelNew !== typeof undefined)) {
 
             // Aktuellen Status speichern
             if (data.panelOld !== null) {
                 _cache[data.panelOld] = {
-                    title               : $.extend({}, _title),
-                    buttonLeft          : $.extend({}, _buttonLeft),
-                    buttonRight         : $.extend({}, _buttonRight),
-                    dropdownIsOpened    : _dropdownIsOpened,
-                    searchIsActive      : _searchIsActive
+                    title             : $.extend({}, _title),
+                    buttonLeft        : $.extend({}, _buttonLeft),
+                    buttonRight       : $.extend({}, _buttonRight),
+                    dropdownIsOpened  : _dropdownIsOpened,
+                    searchIsActive    : _searchIsActive
                 };
             }
 
@@ -465,7 +465,7 @@ var NavigationBar = (function() {
             $.extend(_buttonLeft, cached.buttonLeft);
             $.extend(_buttonRight, cached.buttonRight);
             _dropdownIsOpened = cached.dropdownIsOpened;
-            _searchIsActive = cached.searchIsActive;
+            _searchIsActive   = cached.searchIsActive;
             _render();
         }
     }

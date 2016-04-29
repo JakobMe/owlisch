@@ -40,9 +40,17 @@ var TabBar = (function() {
      */
     function init() {
         
-        // Templates parsen, Funktionen ausführen
-        Mustache.parse(_tmplTablist);
+        // Funktionen ausführen
+        _parseTemplates();
         _bindEvents();
+    }
+    
+    /**
+     * Templates parsen.
+     * Übergibt die Templates dieses Moduls an Mustache, um sie zu parsen.
+     */
+    function _parseTemplates() {
+        Mustache.parse(_tmplTablist);
     }
     
     /**

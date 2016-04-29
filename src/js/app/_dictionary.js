@@ -46,11 +46,19 @@ var Dictionary = (function() {
      */
     function init() {
 
-        // Templates parsen, Funktionen ausführen
+        // Funktionen ausführen
+        _parseTemplates();
+        _bindEvents();
+    }
+    
+    /**
+     * Templates parsen.
+     * Übergibt die Templates dieses Moduls an Mustache, um sie zu parsen.
+     */
+    function _parseTemplates() {
         Mustache.parse(_tmplDictionary);
         Mustache.parse(_tmplTermlist);
         Mustache.parse(_tmplTermdetails);
-        _bindEvents();
     }
     
     /**
@@ -270,7 +278,7 @@ var Dictionary = (function() {
      * ändert die Navigation-Bar.
      */
     function _renderDetails() {
-        if ((typeof _currentTerm      === typeof {}) &&
+        if ((typeof _currentTerm       === typeof {}) &&
             (typeof _currentTerm.alias !== typeof undefined)) {
             
             // Inhalte einfügen

@@ -45,11 +45,19 @@ var View = (function() {
      */
     function init() {
         
-        // Templates parsen, Funktionen ausführen
-        Mustache.parse(_tmplViewpanels);
+        // Funktionen ausführen
+        _parseTemplates();
         _bindEvents();
         _initPanels();
         _render();
+    }
+    
+    /**
+     * Templates parsen.
+     * Übergibt die Templates dieses Moduls an Mustache, um sie zu parsen.
+     */
+    function _parseTemplates() {
+        Mustache.parse(_tmplViewpanels);
     }
     
     /**

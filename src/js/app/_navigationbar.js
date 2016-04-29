@@ -62,10 +62,18 @@ var NavigationBar = (function() {
      */
     function init() {
         
-        // Templates parsen, Funktionen ausführen
-        Mustache.parse(_tmplDropdown);
+        // Funktionen ausführen
+        _parseTemplates();
         _initNavigationBar();
         _render();
+    }
+    
+    /**
+     * Templates parsen.
+     * Übergibt die Templates dieses Moduls an Mustache, um sie zu parsen.
+     */
+    function _parseTemplates() {
+        Mustache.parse(_tmplDropdown);
     }
     
     /**

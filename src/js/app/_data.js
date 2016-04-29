@@ -11,9 +11,9 @@ var Data = (function() {
     // Private Variablen
     var _alias                  = CFG.DATA.ALIAS;
     var _caption                = CFG.STR.EMPTY;
+    var _savegame               = {};
     var _listDictionary         = [];
     var _listProgress           = [];
-    var _savegame               = {};
     var _sizeDictionary         = 0;
     var _sizeProgress           = 0;
     

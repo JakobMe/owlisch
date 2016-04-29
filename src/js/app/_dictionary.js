@@ -11,14 +11,20 @@ var Dictionary = (function() {
     // Selektor-Konstanten
     var _SEL_ITEM               = "[role='listitem']";
     var _SEL_SLIDER             = "#dictionary-slider";
+    var _SEL_LISTBOX            = "#dictionary-listbox";
     var _SEL_LIST               = "#dictionary-list";
     var _SEL_DETAILS            = "#dictionary-details";
     var _SEL_TMPL_DICTIONARY    = "#tmpl-dictionary";
     var _SEL_TMPL_TERMLIST      = "#tmpl-termlist";
     var _SEL_TMPL_TERMDETAILS   = "#tmpl-termdetails";
     
+    // BEM-Konstanten
+    var _B_SLIDER               = "slider";
+    var _M_IS                   = "is";
+    
     // Data-Attribut-Konstanten
     var _DATA_TERM              = "term";
+    var _DATA_SLIDE             = "slide";
     
     // Private Variablen
     var _listOriginal           = [];
@@ -28,6 +34,9 @@ var Dictionary = (function() {
     var _currentSort            = CFG.SORTING.SORT.ALPHA;
     var _currentOrder           = CFG.SORTING.ORDER.ASC;
     var _currentTerm            = {};
+    var _currentSlide           = 0;
+    var _indexListbox           = 0;
+    var _indexDetails           = 0;
     
     // Templates
     var _tmplDictionary         = $(_SEL_TMPL_DICTIONARY).html();
@@ -37,6 +46,7 @@ var Dictionary = (function() {
     // DOM-Elemente
     var _$slider                = null;
     var _$list                  = null;
+    var _$listbox               = null;
     var _$details               = null;
     
     /**
@@ -71,9 +81,13 @@ var Dictionary = (function() {
         // Modulvariablen initialisieren
         _$slider            = $(_SEL_SLIDER);
         _$list              = _$slider.find(_SEL_LIST);
+        _$listbox           = _$slider.find(_SEL_LISTBOX);
         _$details           = _$slider.find(_SEL_DETAILS);
+        _indexDetails       = parseInt(_$details.data(_DATA_SLIDE));
+        _indexListbox       = parseInt(_$listbox.data(_DATA_SLIDE));
         
-        // Events binden
+        // Funktionen ausführen
+        _setCurrentSlide(_indexListbox);
         _bindClickEvents();
         
         // Fortschritt-Liste anfragen
@@ -90,6 +104,7 @@ var Dictionary = (function() {
         $(window).on(CFG.EVT.SERVE_PROGRESS, _updateList);
         $(window).on(CFG.EVT.SORTED_LIST, _sortList);
         $(window).on(CFG.EVT.SEARCHED_LIST, _filterList);
+        $(window).on(CFG.EVT.PRESSED_BUTTON, _backToList);
     }
     
     /**
@@ -272,6 +287,41 @@ var Dictionary = (function() {
     }
     
     /**
+     * Aktuellen Slide setzen.
+     * Aktualisiert den aktiven Slide des Wörterbuch-Sliders;
+     * rendert den Slider anschließend neu.
+     * @param {number} slide Nummer des neuen Slides
+     */
+    function _setCurrentSlide(slide) {
+        _currentSlide = slide;
+        _renderSlider();
+    }
+    
+    /**
+     * Slider rendern.
+     * Rendert den Wörterbuch-Slider anhand der intern
+     * gesetzt Variablen.
+     */
+    function _renderSlider() {
+        _$slider.setMod(_B_SLIDER, _M_IS, _currentSlide);
+    }
+    
+    /**
+     * Zurück zu Liste.
+     * Reagiert auf ein Navigation-Bar Event; verschiebt den Slider
+     * zurück zur Wörterbuch-Liste, wenn das Event passend ist.
+     * @param {Object} event Ausgelöstes Event
+     * @param {Object} data Daten des Events
+     */
+    function _backToList(event, data) {
+        if ((typeof data        !== typeof undefined) &&
+            (typeof data.action !== typeof undefined) &&
+            (data.action === CFG.ACT.DICTIONARY_BACK)) {
+            _setCurrentSlide(_indexListbox);
+        }
+    }
+    
+    /**
      * Begriff-Details rendern.
      * Rendert die Details des aktuellen Begriffs anhand eines
      * Mustache-Templates; bewegt den Wörterbuch-Slider und
@@ -279,15 +329,21 @@ var Dictionary = (function() {
      */
     function _renderDetails() {
         if ((typeof _currentTerm       === typeof {}) &&
-            (typeof _currentTerm.alias !== typeof undefined)) {
+            (typeof _currentTerm.alias !== typeof undefined) &&
+            (typeof _currentTerm.term  !== typeof undefined)) {
             
             // Inhalte einfügen
             _$details.html(Mustache.render(_tmplTermdetails, _currentTerm))
                 .promise().done(function() {
                 
-                window.console.log(_currentTerm);
-                // !TODO: _renderDetails() Slider und Navigation-Bar
+                // Event für Navigation-Bar auslösen
+                $(window).trigger(CFG.EVT.PRESSED_BUTTON, {
+                    action : CFG.ACT.DICTIONARY_FORWARD,
+                    text   : _currentTerm.term
+                });
                 
+                // Slider verschieben
+                _setCurrentSlide(_indexDetails);
             });
         }
     }

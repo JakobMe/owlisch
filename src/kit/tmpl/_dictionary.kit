@@ -1,8 +1,8 @@
         
         <!-- Template: Wörterbuch -->
         <script id="tmpl-dictionary" type="text/template">
-            <div class="slider slider--has-2 slider--is-1" id="dictionary-slider">
-                <div class="slider__slide">
+            <div class="slider slider--has-2" id="dictionary-slider">
+                <div class="slider__slide" id="dictionary-listbox" data-slide="1">
                     <ul class="list" id="dictionary-list" role="list"></ul>
                     <p class="notice">
                         <span class="notice__title">
@@ -15,7 +15,7 @@
                         </span>
                     </p>
                 </div>
-                <div class="slider__slide" id="dictionary-details">
+                <div class="slider__slide" id="dictionary-details" data-slide="2">
                 </div>
             </div>
         </script>

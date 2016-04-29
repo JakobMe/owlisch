@@ -135,27 +135,18 @@ var NavigationBar = (function() {
             var panelAlias = alias;
             var panelTitle = panel.TITLE;
             
-            // Cache für Panel setzen
-            _cache[panelAlias] = {
-                title               : $.extend({}, _title),
-                buttonLeft          : $.extend({}, _buttonLeft),
-                buttonRight         : $.extend({}, _buttonRight),
-                dropdownIsOpened    : _dropdownIsOpened,
-                searchIsActive      : _searchIsActive
-            };
-            
-            // Titel setzen
-            _cache[panelAlias].title.str = panelTitle;
+            // Konfiguration im Cache speichern
+            _saveToCache(panelAlias, panelTitle);
             
             // Sonderfall: Wörterbuch
             if (panel === CFG.VIEW.DICTIONARY) {
                 $.extend(_cache[panelAlias].buttonLeft, {
-                    action  : CFG.ACT.SEARCH_SHOW,
-                    icon    : CFG.ICON.SEARCH
+                    action : CFG.ACT.SEARCH_SHOW,
+                    icon   : CFG.ICON.SEARCH
                 });
                 $.extend(_cache[panelAlias].buttonRight, {
-                    action  : CFG.ACT.SORT_SHOW,
-                    icon    : CFG.ICON.SORT
+                    action : CFG.ACT.SORT_SHOW,
+                    icon   : CFG.ICON.SORT
                 });
             }            
         });
@@ -170,7 +161,7 @@ var NavigationBar = (function() {
         _$navbar.on(CFG.EVT.CLICK, _SEL_BUTTONS, _buttonAction);
         _$search.on(CFG.EVT.INPUT, _searchAction);
         _$clear.on(CFG.EVT.CLICK, _clearSearch);
-        $(window).on(CFG.EVT.UPDATE_NAVBAR, _updateCache);
+        $(window).on(CFG.EVT.UPDATE_NAVBAR, _updateNavbar);
         $(window).on(CFG.EVT.PRESSED_BUTTON, _buttonPressed);
     }
     
@@ -307,9 +298,7 @@ var NavigationBar = (function() {
                 
                 // Suche einblenden
                 case CFG.ACT.SEARCH_SHOW:
-                    setTimeout(function() {
-                        _$search.focus();
-                    }, CFG.TIME.DELAY);
+                    _focusSearch();
                     _setDropdown(false);
                     _setSearch(true);
                     break;
@@ -318,6 +307,21 @@ var NavigationBar = (function() {
                 case CFG.ACT.SEARCH_HIDE:
                     _setDropdown(false);
                     _setSearch(false);
+                    break;
+                
+                // Wörterbuch vorwärts
+                case CFG.ACT.DICTIONARY_FORWARD:
+                    _saveToCache(CFG.ACT.DICTIONARY_BACK);
+                    _setDropdown(false);
+                    _setSearch(false, false);
+                    _setButtonLeft(CFG.ACT.DICTIONARY_BACK, CFG.ICON.BACK);
+                    _setButtonRight(null, null);
+                    _setTitle(data.text || CFG.VIEW.DICTIONARY.TITLE);
+                    break;
+                
+                // Wörterbuch zurück
+                case CFG.ACT.DICTIONARY_BACK:
+                    _loadFromCache(CFG.ACT.DICTIONARY_BACK);
                     break;
                 
                 // !TODO: Switch Button-Aktionen
@@ -405,24 +409,55 @@ var NavigationBar = (function() {
     }
     
     /**
+     * Titel setzen.
+     * Setzt den aktuellen Titel und rendert ihn neu.
+     * @param {string} title Neuer Titel
+     */
+    function _setTitle(title) {
+        if (typeof title === typeof CFG.STR.EMPTY) {
+            _title.str = title;
+            _renderTitle();
+        }
+    }
+    
+    /**
      * Suche (de-)aktivieren.
      * Aktiviert oder deaktiviert die Suche anhand des übergebenen Wertes;
      * setzt den zugehörigen Button entsprechend und rendert die Suche neu.
      * @param {boolean} willBeActive Angabe, ob die Suche aktiviert wird
+     * @param {boolean} triggerSearch Angabe, ob Such-Event ausgelöst wird
      */
-    function _setSearch(willBeActive) {
+    function _setSearch(willBeActive, triggerSearch) {
         if (_searchIsActive !== willBeActive) {
             _searchIsActive = willBeActive;
             _setButtonLeft(
                 (willBeActive ? CFG.ACT.SEARCH_HIDE : CFG.ACT.SEARCH_SHOW),
                 (willBeActive ? CFG.ICON.CANCEL     : CFG.ICON.SEARCH)
             );
-            $(window).trigger(
-                CFG.EVT.SEARCHED_LIST,
-                { search: (willBeActive ? _$search.val() : CFG.STR.EMPTY) }
-            );
+            if (triggerSearch !== false) { _triggerSearch(); }
             _renderSearch();
         }
+    }
+    
+    /**
+     * Such-Event auslösen.
+     * Löst ein globales Event mit dem aktuellen Suchbegriff aus.
+     */
+    function _triggerSearch() {
+        $(window).trigger(
+            CFG.EVT.SEARCHED_LIST,
+            { search: (_searchIsActive ? _$search.val() : CFG.STR.EMPTY) }
+        );
+    }
+    
+    /**
+     * Suche fokussieren.
+     * Fokussiert das Such-Input nach einem kurzen Delay.
+     */
+    function _focusSearch() {
+        setTimeout(function() {
+            _$search.focus();
+        }, CFG.TIME.DELAY);
     }
     
     /**
@@ -444,37 +479,67 @@ var NavigationBar = (function() {
     }
     
     /**
-     * Zustands-Cache aktualisieren.
-     * Aktualisiert anhand eines ausgelösten Events den Zustands-Cache
-     * der Navigation-Bar; speichert den Zustand für das vorige View-Panel
-     * und lädt den Zustand für das neue View-Panel aus dem Cache.
-     * @param {Object} event Ausgelöstes Event
-     * @param {Object} data Daten des Events
+     * Aktuelle Navigation-Bar im Cache speichern.
+     * Hinterlegt die aktuelle Konfiguration der Navigation-Bar
+     * anhand des übergebenen Indexes im internen Cache.
+     * @param {string} index Name der Konfiguration
+     * @param {string} title Alternativer neuer Titel
      */
-    function _updateCache(event, data) {
-        if ((typeof data          !== typeof undefined) &&
-            (typeof data.panelOld !== typeof undefined) &&
-            (typeof data.panelNew !== typeof undefined)) {
-
-            // Aktuellen Status speichern
-            if (data.panelOld !== null) {
-                _cache[data.panelOld] = {
-                    title             : $.extend({}, _title),
-                    buttonLeft        : $.extend({}, _buttonLeft),
-                    buttonRight       : $.extend({}, _buttonRight),
-                    dropdownIsOpened  : _dropdownIsOpened,
-                    searchIsActive    : _searchIsActive
-                };
-            }
-
-            // Neuen Status laden
-            var cached = _cache[data.panelNew];
+    function _saveToCache(index, title) {
+        
+        // Aktuellen Status speichern
+        _cache[index] = {
+            title             : $.extend({}, _title),
+            buttonLeft        : $.extend({}, _buttonLeft),
+            buttonRight       : $.extend({}, _buttonRight),
+            dropdownIsOpened  : _dropdownIsOpened,
+            searchIsActive    : _searchIsActive
+        };
+        
+        // Optional Titel überschreiben
+        if (typeof title === typeof CFG.STR.EMPTY) {
+            $.extend(_cache[index].title, { str: title });
+        }
+    }
+    
+    /**
+     * Aktuelle Konfiguration aus Cache wiederherstellen.
+     * Lädt eine Konfiguration anhand des übergebenen Indexes aus dem Cache,
+     * falls sie vorhanden ist, und ersetzt die aktuelle Konfiguration.
+     * @param {string} index Name der Konfiguration
+     */
+    function _loadFromCache(index) {
+        
+        // Cache laden, falls vorhanden
+        if (typeof _cache[index] !== typeof undefined) {
+            var cached = _cache[index];
             $.extend(_title, cached.title);
             $.extend(_buttonLeft, cached.buttonLeft);
             $.extend(_buttonRight, cached.buttonRight);
             _dropdownIsOpened = cached.dropdownIsOpened;
             _searchIsActive   = cached.searchIsActive;
-            _render();
+        }
+        
+        // Rendern
+        _render();
+    }
+    
+    /**
+     * Navigation-Bar aktualisieren.
+     * Aktualisiert anhand eines ausgelösten Events den Zustands
+     * der Navigation-Bar; speichert den Zustand für das vorige View-Panel
+     * im Cache und lädt den Zustand für das neue View-Panel aus dem Cache.
+     * @param {Object} event Ausgelöstes Event
+     * @param {Object} data Daten des Events
+     */
+    function _updateNavbar(event, data) {
+        if ((typeof data          !== typeof undefined) &&
+            (typeof data.panelOld !== typeof undefined) &&
+            (typeof data.panelNew !== typeof undefined)) {
+
+            // Aktuellen Status speichern, neuen Status laden
+            if (data.panelOld !== null) { _saveToCache(data.panelOld);   }
+            if (data.panelNew !== null) { _loadFromCache(data.panelNew); }
         }
     }
     

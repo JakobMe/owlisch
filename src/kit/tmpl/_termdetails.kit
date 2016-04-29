@@ -1,5 +1,17 @@
         
         <!-- Template: Begriffdetails -->
         <script id="tmpl-termdetails" type="text/template">
-            
+            <article class="term">
+                <header class="term__header">
+                    {{#image}}
+                    <img class="term__image" alt="{{term}}" src="{{image}}" />
+                    {{/image}}
+                    <h1 class="term__title">
+                        {{term}}
+                        {{#article}}
+                        <span class="term__article">, {{article}}</span>
+                        {{/article}}
+                    </h1>
+                </header>
+            </article>
         </script>

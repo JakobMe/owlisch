@@ -122,8 +122,8 @@ var Data = (function() {
             
             // AJAX-Anfragen zurückgeben
             return {
-                audio : _checkFile(fileAudio),
-                image : _checkFile(fileImage)
+                audio : { check: _checkFile(fileAudio), file: fileAudio },
+                image : { check: _checkFile(fileImage), file: fileImage }
             };
         }
     }
@@ -141,10 +141,10 @@ var Data = (function() {
         
         // Wörterbuch iterieren, Dateien überprüfen
         $.each(_listDictionary, function(i, item) {
-            $.each(_checkTermFiles(item.alias), function(type, check) {
-                fileChecks.push(check);
-                check.done(function() { item[type] = true; })
-                     .fail(function() { item[type] = false; });
+            $.each(_checkTermFiles(item.alias), function(type, result) {
+                fileChecks.push(result.check);
+                result.check.done(function() { item[type] = result.file; })
+                            .fail(function() { item[type] = false;       });
             });
         });
         

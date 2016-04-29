@@ -52,6 +52,7 @@ var CFG = (function() {
             SEARCH_HIDE         : "search-hide",
             SORT_SHOW           : "sort-show",
             SORT_HIDE           : "sort-hide",
+            DICTIONARY_FORWARD  : "dictionary-forward",
             DICTIONARY_BACK     : "dictionary-back",
             QUIZ_SKIP           : "quiz-skip",
             QUIZ_CANCEL         : "quiz-cancel"

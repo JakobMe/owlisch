@@ -9,9 +9,9 @@
 var View = (function() {
     
     // Selektor-Konstanten
-    var _SEL_VIEW               = "[role='main']";
-    var _SEL_CONTENT            = "[role='article']";
     var _SEL_PANELS             = "[role='tabpanel']";
+    var _SEL_VIEW               = "#view-container";
+    var _SEL_CONTENT            = "#view-content";
     var _SEL_TMPL               = "#tmpl-viewpanels";
     
     // BEM-Konstanten

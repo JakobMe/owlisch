@@ -28,28 +28,29 @@
         
         <!-- Viewport -->
         <div class="viewport">
-            <div class="viewport__app" role="application">
+            <div class="viewport__app" id="viewport">
                 
                 <!-- View -->
-                <main class="view" role="main">
-                    <article class="view__content" role="article"></article>
+                <main class="view" id="view-container" role="main">
+                    <section class="view__content" id="view-content"></section>
                 </main>
                 
                 <!-- Navigation-Bar -->
-                <header class="navigation-bar" role="navigation">
-                    <ul class="dropdown" role="menu"></ul>
+                <header class="navigation-bar" id="navigation-bar" role="navigation">
+                    <ul class="dropdown" id="navigation-dropdown" role="menu"></ul>
                     <div class="navigation-bar__wrapper">
                         <div class="navigation-bar__search">
                             <input class="navigation-bar__search-input" type="text"
                                    spellcheck="false" autocomplete="off"
                                    autocorrect="off" autocapitalize="none"
                                    tabindex="-100" placeholder="Suche"
-                                   maxlength="16" role="search" />
+                                   maxlength="16" id="navigation-search"
+                                   role="search" />
                             <i class="navigation-bar__search-clear
                                navigation-bar__search-clear--hidden"
-                               role="option"></i>
+                               id="navigation-clear"></i>
                         </div>
-                        <h1 class="navigation-bar__title" role="heading"></h1>
+                        <h1 class="navigation-bar__title" id="navigation-title"></h1>
                         <i class="navigation-bar__button navigation-bar__button--left"
                            role="button"></i>
                         <i class="navigation-bar__button navigation-bar__button--right"
@@ -58,7 +59,7 @@
                 </header>
                 
                 <!-- Tab-Bar -->
-                <nav class="tab-bar" role="tablist"></nav>
+                <nav class="tab-bar" id="tab-bar" role="tablist"></nav>
                 
             </div>
         </div>

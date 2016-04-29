@@ -9,10 +9,10 @@
 var Dictionary = (function() {
     
     // Selektor-Konstanten
-    var _SEL_SLIDER             = "[role='directory']";
-    var _SEL_LIST               = "[role='list']";
     var _SEL_ITEM               = "[role='listitem']";
-    var _SEL_DETAILS            = "[role='complementary']";
+    var _SEL_SLIDER             = "#dictionary-slider";
+    var _SEL_LIST               = "#dictionary-list";
+    var _SEL_DETAILS            = "#dictionary-details";
     var _SEL_TMPL_DICTIONARY    = "#tmpl-dictionary";
     var _SEL_TMPL_TERMLIST      = "#tmpl-termlist";
     var _SEL_TMPL_TERMDETAILS   = "#tmpl-termdetails";

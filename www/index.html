@@ -28,28 +28,29 @@
         
         <!-- Viewport -->
         <div class="viewport">
-            <div class="viewport__app" role="application">
+            <div class="viewport__app" id="viewport">
                 
                 <!-- View -->
-                <main class="view" role="main">
-                    <article class="view__content" role="article"></article>
+                <main class="view" id="view-container" role="main">
+                    <section class="view__content" id="view-content"></section>
                 </main>
                 
                 <!-- Navigation-Bar -->
-                <header class="navigation-bar" role="navigation">
-                    <ul class="dropdown" role="menu"></ul>
+                <header class="navigation-bar" id="navigation-bar" role="navigation">
+                    <ul class="dropdown" id="navigation-dropdown" role="menu"></ul>
                     <div class="navigation-bar__wrapper">
                         <div class="navigation-bar__search">
                             <input class="navigation-bar__search-input" type="text"
                                    spellcheck="false" autocomplete="off"
                                    autocorrect="off" autocapitalize="none"
                                    tabindex="-100" placeholder="Suche"
-                                   maxlength="16" role="search" />
+                                   maxlength="16" id="navigation-search"
+                                   role="search" />
                             <i class="navigation-bar__search-clear
                                navigation-bar__search-clear--hidden"
-                               role="option"></i>
+                               id="navigation-clear"></i>
                         </div>
-                        <h1 class="navigation-bar__title" role="heading"></h1>
+                        <h1 class="navigation-bar__title" id="navigation-title"></h1>
                         <i class="navigation-bar__button navigation-bar__button--left"
                            role="button"></i>
                         <i class="navigation-bar__button navigation-bar__button--right"
@@ -58,7 +59,7 @@
                 </header>
                 
                 <!-- Tab-Bar -->
-                <nav class="tab-bar" role="tablist"></nav>
+                <nav class="tab-bar" id="tab-bar" role="tablist"></nav>
                 
             </div>
         </div>
@@ -88,9 +89,9 @@
                 
         <!-- Template: Wörterbuch -->
         <script id="tmpl-dictionary" type="text/template">
-            <div class="slider slider--has-2 slider--is-1" role="directory">
-                <div class="slider__slide" role="listbox" data-slide="1">
-                    <ul class="list" role="list"></ul>
+            <div class="slider slider--has-2 slider--is-1" id="dictionary-slider">
+                <div class="slider__slide">
+                    <ul class="list" id="dictionary-list" role="list"></ul>
                     <p class="notice">
                         <span class="notice__title">
                             <span class="notice__title-text">Hinweis</span>
@@ -102,7 +103,7 @@
                         </span>
                     </p>
                 </div>
-                <div class="slider__slide" role="complementary" data-slide="2">
+                <div class="slider__slide" id="dictionary-details">
                 </div>
             </div>
         </script>
@@ -146,7 +147,7 @@
                 
         <!-- Template: Begriffdetails -->
         <script id="tmpl-termdetails" type="text/template">
-            <div></div>
+            
         </script>
                 
         <!-- Template: Dropdown -->

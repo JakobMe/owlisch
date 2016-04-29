@@ -9,13 +9,13 @@
 var NavigationBar = (function() {
 
     // Selektor-Konstanten
-    var _SEL_TITLEBAR           = "[role='navigation']";
     var _SEL_BUTTONS            = "[role='button']";
-    var _SEL_TITLE              = "[role='heading']";
-    var _SEL_SEARCH             = "[role='search']";
-    var _SEL_CLEAR              = "[role='option']";
-    var _SEL_DROPDOWN           = "[role='menu']";
     var _SEL_SORT               = "[role='menuitem']";
+    var _SEL_NAVBAR             = "#navigation-bar";
+    var _SEL_TITLE              = "#navigation-title";
+    var _SEL_SEARCH             = "#navigation-search";
+    var _SEL_CLEAR              = "#navigation-clear";
+    var _SEL_DROPDOWN           = "#navigation-dropdown";
     var _SEL_TMPL_DROPDOWN      = "#tmpl-dropdown";
     
     // BEM-Konstanten
@@ -49,7 +49,7 @@ var NavigationBar = (function() {
     var _isWebapp               = (CFG.WEBAPP.IOS || CFG.WEBAPP.CORDOVA);
     
     // DOM-Elemente
-    var _$navbar                = $(_SEL_TITLEBAR);
+    var _$navbar                = $(_SEL_NAVBAR);
     var _$search                = _$navbar.find(_SEL_SEARCH);
     var _$clear                 = _$navbar.find(_SEL_CLEAR);
     var _$dropdown              = _$navbar.find(_SEL_DROPDOWN);

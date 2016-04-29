@@ -9,7 +9,7 @@
 var Viewport = (function() {
     
     // Konstanten
-    var _SEL_VIEWPORT           = "[role='application']";
+    var _SEL_VIEWPORT           = "#viewport";
     var _B                      = "viewport";
     var _E                      = "app";
     var _M                      = "visible";

@@ -333,8 +333,14 @@ var Dictionary = (function() {
             (typeof _currentTerm.term  !== typeof undefined)) {
             
             // Inhalte einfügen
-            _$details.html(Mustache.render(_tmplTermdetails, _currentTerm))
-                .promise().done(function() {
+            _$details.html(
+                Mustache.render(
+                    _tmplTermdetails,
+                    $.extend(_currentTerm, { levels: CFG.QUIZ.LEVELS }))
+                ).promise().done(function() {
+                
+                // !TEST
+                window.console.log(_currentTerm);
                 
                 // Event für Navigation-Bar auslösen
                 $(window).trigger(CFG.EVT.PRESSED_BUTTON, {

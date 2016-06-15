@@ -1,0 +1,77 @@
+/*
+ * Modul: Begriff.
+ * Definiert das Verhalten von Begriffen.
+ * @author Jakob Metzger <jakob.me@gmail.com>
+ * @copyright 2016 Jakob Metzger
+ * @licence https://opensource.org/licenses/MIT MIT
+ * @link http://jmportfolio.de
+ */
+
+// Modul-Variablen
+@_term-size-image:                      140px;
+@_term-size-info:                       36px;
+
+// Block: Begriff
+.term {
+    
+    // Element: Header
+    &__header {
+        font-size: 0;
+        position: relative;
+        text-align: center;
+        .colored(@app-color-light);
+        .border(bottom);
+    }
+    
+    // Element: Bild
+    &__image {
+        display: block;
+        margin: 0 auto;
+        height: @_term-size-image;
+    }
+    
+    // Element: Titel
+    &__title {
+        display: block;
+        font-weight: bold;
+        font-style: italic;
+        line-height: 1.4;
+        margin: 0;
+        padding: 0 @app-size-gap;
+        font-size: @app-font-size-large;
+    }
+    
+    // Mod: Kein Bild & Element: Titel
+    &--no-image &__title { padding-top: @app-size-gap; }
+    
+    // Element: Artikel
+    &__article {
+        font-weight: normal;
+    }
+    
+    // Element: Info
+    &__info {
+        display: block;
+        padding: 0 @app-size-gap;
+        height: @_term-size-info;
+        line-height: @_term-size-info;
+        font-size: @app-font-size-small;
+        .color-on(@app-color-light, true);
+        
+        // Mod: Links & Rechts
+        &--left, &--right {
+            position: absolute;
+            bottom: 0;
+        }
+        
+        // Mod: Links & Rechts
+        &--left { left: 0; }
+        &--right { right: 0; }
+    }
+    
+    // Element: Label
+    &__label {
+        font-weight: bold;
+        font-style: italic;
+    }
+}

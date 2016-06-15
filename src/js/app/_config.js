@@ -71,6 +71,8 @@ var CFG = (function() {
             FOCUS               : "focus",
             SUBMIT              : "submit",
             INPUT               : "input",
+            PLAY                : "play",
+            LOADEDDATA          : "loadeddata",
             KEYBOARD_HIDE       : "keyboardWillHide",
             KEYBOARD_SHOW       : "keyboardWillShow",
             LOAD_PANEL_CONTENT  : "loadedPanelContent",

@@ -120,6 +120,35 @@
 }
 
 /**
+ * Mixin: Text-Schatten.
+ * Setzt einen Text-Shadow.
+ * @param {*px} x - Position links
+ * @param {*px} y - Position oben
+ * @param {*px} blur - Weichzeichner-Größe
+ * @param {#color} color - Schatten-Farbe
+ */
+.textshadow(@x, @y, @blur, @color) {
+    text-shadow: @arguments;
+}
+
+/**
+ * Mixin: Text-Schatten Glühen.
+ * @param {#color} color - Farbe des Text-Schattens.
+ */
+.textshadow-glow(@color: @app-color-highlight, @size: 2px, @blur: 6px) {
+    text-shadow: -(@size) -(@size) @blur @color, -(@size) @size @blur @color,
+                 @size -(@size) @blur @color, @size @size @blur @color;
+}
+
+/**
+ * Mixin: Kein Text-Schatten.
+ * Deaktiviert alle Text-Shadows.
+ */
+.textshadow-none() {
+    text-shadow: none;
+}
+
+/**
  * Mixin: Abgerundete Ecken.
  * Setzt an der angegebenen Seite abgerundete Ecken.
  * @param {all|left|top|right|bottom} position - Position der Ecken

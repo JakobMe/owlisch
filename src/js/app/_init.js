@@ -27,6 +27,7 @@ var App = {
         Dictionary.init();
         NavigationBar.init();
         TabBar.init();
+        Play.init();
         View.init();
     }
 };

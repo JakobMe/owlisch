@@ -38,7 +38,8 @@ var NavigationBar = (function() {
     var _DATA_ORDER             = "order";
     
     // Private Variablen  
-    var _cache                  = {};  
+    var _cache                  = {};
+    var _defaults               = {};
     var _title                  = {};
     var _buttonLeft             = {};
     var _buttonRight            = {};
@@ -129,6 +130,8 @@ var NavigationBar = (function() {
      * der Navigation-Bar im Cache fest.
      */
     function _setDefaultCache() {
+        
+        // Alle View-Panels iterieren
         $.each(CFG.VIEW, function(alias, panel) {
             
             // Name und Titel des Panels ermitteln
@@ -150,6 +153,9 @@ var NavigationBar = (function() {
                 });
             }            
         });
+        
+        // Cache duplizieren
+        _defaults = $.extend({}, _cache);
     }
     
     /**
@@ -162,6 +168,7 @@ var NavigationBar = (function() {
         _$search.on(CFG.EVT.INPUT, _searchAction);
         _$clear.on(CFG.EVT.CLICK, _clearSearch);
         $(window).on(CFG.EVT.UPDATE_NAVBAR, _updateNavbar);
+        $(window).on(CFG.EVT.RESTORE_DEFAULT, _restoreDefault);
         $(window).on(CFG.EVT.PRESSED_BUTTON, _buttonPressed);
     }
     
@@ -525,8 +532,33 @@ var NavigationBar = (function() {
     }
     
     /**
+     * Standard-Konfiguration wiederherstellen.
+     * Lädt anhand eines ausgelösten Events den Original-Zustand der
+     * Navigation-Bar für ein bestimmtes View-Panel.
+     * @param {Object} event Ausgelöstes Event
+     * @param {Object} data Daten des Events
+     */
+    function _restoreDefault(event, data) {
+        if ((typeof data                  !== typeof undefined) &&
+            (typeof data.panel            !== typeof undefined) &&
+            (typeof _cache[data.panel]    !== typeof undefined) &&
+            (typeof _defaults[data.panel] !== typeof undefined)) {
+            
+            // Aktuelle Konfiguration im Cache speichern
+            _saveToCache(data.panel);
+
+            // Standard-Konfiguration wiederherstellen und laden
+            if (JSON.stringify(_defaults[data.panel]) !==
+                JSON.stringify(_cache[data.panel])) {
+                _cache[data.panel] = $.extend({}, _defaults[data.panel]);
+                _loadFromCache(data.panel);
+            }
+        }
+    }
+    
+    /**
      * Navigation-Bar aktualisieren.
-     * Aktualisiert anhand eines ausgelösten Events den Zustands
+     * Aktualisiert anhand eines ausgelösten Events den Zustand
      * der Navigation-Bar; speichert den Zustand für das vorige View-Panel
      * im Cache und lädt den Zustand für das neue View-Panel aus dem Cache.
      * @param {Object} event Ausgelöstes Event

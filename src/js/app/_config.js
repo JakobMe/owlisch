@@ -81,6 +81,7 @@ var CFG = (function() {
             SEARCHED_LIST       : "searchedDictionaryList",
             SORTED_LIST         : "sortedDictionaryList",
             SET_PANEL           : "setCurrentPanel",
+            RESTORE_DEFAULT     : "restoreDefaultPanel",
             HIDE_VIEW           : "hideView",
             SHOW_VIEW           : "showView",
             SHOW_VIEWPORT       : "showViewport",

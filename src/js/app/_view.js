@@ -76,9 +76,8 @@ var View = (function() {
      * View rendern.
      * Rendert alle Elemente der View anhand der intern
      * gesetzten aktuellen Variablen.
-     * @param {boolean} hide Ausblenden ja/nein
      */
-    function _render(hide) {
+    function _render() {
         
         // View und Content rendern
         _$view.setMod(_B, _M_WEBAPP, _isWebapp);
@@ -86,14 +85,12 @@ var View = (function() {
         _$content.setMod(_B, _E_CONTENT, _M_VISIBLE, _isVisible);
         
         // View-Panels (de-)aktivieren
-        if (hide !== true) {
-            $.each(_$panels, function(name, $panel) {
-                $panel.setMod(
-                    _B, _E_PANEL, _M_CURRENT,
-                    (name === _currentPanel)
-                );
-            });
-        }
+        $.each(_$panels, function(name, $panel) {
+            $panel.setMod(
+                _B, _E_PANEL, _M_CURRENT,
+                (name === _currentPanel)
+            );
+        });
     }
     
     /**
@@ -146,7 +143,7 @@ var View = (function() {
     /**
      * Aktuelles View-Panel setzen.
      * Setzt das aktuelle View-Panel anhand eines Events;
-     * blendet die View erst aus und lädt anschließen den Panel-Inhalt.
+     * entscheidet, ob sich das Panel geändert hat oder nicht.
      * @param {Object} event Ausgelöstes Event
      * @param {Object} data Daten des Events
      */
@@ -154,22 +151,41 @@ var View = (function() {
         if ((typeof data          !== typeof undefined) &&
             (typeof data.panel    !== typeof undefined) &&
             (_$panels[data.panel] instanceof jQuery)) {
-                    
-            // Navigation-Bar aktualisieren
-            $(window).trigger(
-                CFG.EVT.UPDATE_NAVBAR,
-                { panelOld: _currentPanel, panelNew: data.panel }
-            );
             
-            // Aktuelles Panel setzen, ausblenden
-            _currentPanel = data.panel;
-            _hide();
-
-            // Inhalt laden
-            setTimeout(function() {
-                _loadPanelContent();
-            }, CFG.TIME.ANIMATION);
+            // Wenn Panel sich nicht geändert hat, Wiederherstellung auslösen
+            if (data.panel === _currentPanel) {
+                $(window).trigger(
+                    CFG.EVT.RESTORE_DEFAULT,
+                    { panel: _currentPanel }
+                );
+            
+            // Ansonsten Panel ändern
+            } else { _changePanel(data.panel); }
         }
+    }
+    
+    /**
+     * Aktuelles View-Panel ändern.
+     * Ändern das aktuelle View-Panel anhand eines Panel-Namens;
+     * blendet die View erst aus und lädt anschließen den Panel-Inhalt.
+     * @param {string} panel Name des neuen Panels
+     */
+    function _changePanel(panel) {
+        
+        // Navigation-Bar aktualisieren
+        $(window).trigger(
+            CFG.EVT.UPDATE_NAVBAR,
+            { panelOld: _currentPanel, panelNew: panel }
+        );
+        
+        // Aktuelles Panel setzen, ausblenden
+        _currentPanel = panel;
+        _hide();
+
+        // Inhalt laden
+        setTimeout(function() {
+            _loadPanelContent();
+        }, CFG.TIME.ANIMATION);
     }
     
     /**
@@ -198,7 +214,7 @@ var View = (function() {
      */
     function _hide() {
         _isVisible = false;
-        _render(true);
+        _render();
     }
     
     /**

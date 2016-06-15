@@ -31,12 +31,13 @@ var Dictionary = (function() {
     var _listFiltered           = [];
     var _listCaption            = CFG.STR.EMPTY;
     var _currentFilter          = CFG.STR.EMPTY;
-    var _currentSort            = CFG.SORTING.SORT.ALPHA;
-    var _currentOrder           = CFG.SORTING.ORDER.ASC;
+    var _currentSort            = CFG.STR.EMPTY;
+    var _currentOrder           = CFG.STR.EMPTY;
     var _currentTerm            = {};
     var _currentSlide           = 0;
     var _indexListbox           = 0;
     var _indexDetails           = 0;
+    var _listIsLocked           = false;
     
     // Templates
     var _tmplDictionary         = $(_SEL_TMPL_DICTIONARY).html();
@@ -57,8 +58,20 @@ var Dictionary = (function() {
     function init() {
 
         // Funktionen ausführen
+        _setDefaults();
         _parseTemplates();
         _bindEvents();
+    }
+    
+    /**
+     * Standard-Konfiguration setzen.
+     * Setzt die Standardwerte für den aktuellen Filter,
+     * die Sortierung und die Ordnung der Liste.
+     */
+    function _setDefaults() {
+        _currentFilter = CFG.STR.EMPTY;
+        _currentSort   = CFG.SORTING.SORT.ALPHA;
+        _currentOrder  = CFG.SORTING.ORDER.ASC;
     }
     
     /**
@@ -105,6 +118,7 @@ var Dictionary = (function() {
         $(window).on(CFG.EVT.SORTED_LIST, _sortList);
         $(window).on(CFG.EVT.SEARCHED_LIST, _filterList);
         $(window).on(CFG.EVT.PRESSED_BUTTON, _backToList);
+        $(window).on(CFG.EVT.RESTORE_DEFAULT, _restoreDefault);
     }
     
     /**
@@ -272,7 +286,10 @@ var Dictionary = (function() {
      * @param {Object} event Ausgelöstes Event
      */
     function _setCurrentTerm(event) {
-        if (typeof event !== typeof undefined) {
+        if ((typeof event !== typeof undefined) && (!_listIsLocked)) {
+            
+            // Liste sperren
+            _listIsLocked = true;
             
             // Alias ermitteln, Begriff suchen und setzen
             var alias = $(event.target).closest(_SEL_ITEM).data(_DATA_TERM);
@@ -288,12 +305,13 @@ var Dictionary = (function() {
     
     /**
      * Aktuellen Slide setzen.
-     * Aktualisiert den aktiven Slide des Wörterbuch-Sliders;
-     * rendert den Slider anschließend neu.
+     * Aktualisiert den aktiven Slide des Wörterbuch-Sliders; entsperrt
+     * die Liste gegebenenfalls und rendert den Slider anschließend neu.
      * @param {number} slide Nummer des neuen Slides
      */
     function _setCurrentSlide(slide) {
         _currentSlide = slide;
+        if (_currentSlide === _indexListbox) { _listIsLocked = false; }
         _renderSlider();
     }
     
@@ -352,6 +370,26 @@ var Dictionary = (function() {
                 // Slider verschieben
                 _setCurrentSlide(_indexDetails);
             });
+        }
+    }
+    
+    /**
+     * Standard-Konfiguration wiederherstellen.
+     * Setzt die internen Variablen und Zustände anhand eines ausgelösten
+     * Events wieder auf ihre Standardwerte zurück; filtert die Liste
+     * und setzt den Slider zurück.
+     * @param {Object} event Ausgelöstes Event
+     * @param {Object} data Daten des Events
+     */
+    function _restoreDefault(event, data) {
+        if ((typeof data         !== typeof undefined) &&
+            (typeof data.panel   !== typeof undefined) &&
+            (CFG.VIEW[data.panel] === CFG.VIEW.DICTIONARY)) {
+                
+            // Standardwerte und Slider setzen, Liste filtern
+            _setDefaults();
+            _setCurrentSlide(_indexListbox);
+            _filterList();
         }
     }
     

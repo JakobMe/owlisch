@@ -89,11 +89,36 @@
         font-style: italic;
     }
     
-    // Mod: Fehler
-    &--error { font-weight: bold; .colored(@app-color-light); }
-    &--error &__title-text {
+    // Mod: Box
+    &--box {
+        margin-bottom: @app-size-gap-small;
+        .colored(@app-color-light);
+        .border(bottom);
+        .border(top);
+    }
+    
+    // Mod: Box & Element: Titel-Text
+    &--box &__title-text {
         .colored(@app-color-light, true);
         .shadow(0, 0, @_notice-size-title, (@_notice-size-title / 2), @app-color-light);
-        &:before { content: @fontello-icon-error; }
+    }
+    
+    // Mod: Fehler & Element: Titel-Text Icon
+    &--error &__title-text:before { content: @fontello-icon-error; }
+    &--translation &__title-text:before { content: @fontello-icon-translation; }
+    
+    // Mod: Titel & Element: Text
+    &--title &__text {
+        font-weight: bold;
+        font-style: normal;
+        font-size: @app-font-size-large;
+    }
+    
+    // Mod: Absatz & Element: Text
+    &--paragraph &__text {
+        hyphens: auto;
+        font-style: normal;
+        text-align: justify;
+        line-height: 1.5;
     }
 }

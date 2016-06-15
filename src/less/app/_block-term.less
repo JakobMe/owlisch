@@ -22,7 +22,11 @@
         text-align: center;
         .colored(@app-color-light);
         .border(bottom);
+        .border(top);
     }
+    
+    // Mod: Nicht Quiz & Element: Header
+    &:not(&--quiz) &__header { margin-bottom: @app-size-gap-small; }
     
     // Element: Bild
     &__image {

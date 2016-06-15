@@ -332,15 +332,16 @@ var Dictionary = (function() {
             (typeof _currentTerm.alias !== typeof undefined) &&
             (typeof _currentTerm.term  !== typeof undefined)) {
             
+            // Daten definieren
+            var data = $.extend({
+                quiz   : false,
+                levels : CFG.QUIZ.LEVELS,
+                label  : CFG.LABEL.PROGRESS
+            }, _currentTerm);
+            
             // Inhalte einfügen
-            _$details.html(
-                Mustache.render(
-                    _tmplTermdetails,
-                    $.extend(_currentTerm, { levels: CFG.QUIZ.LEVELS }))
-                ).promise().done(function() {
-                
-                // !TEST
-                window.console.log(_currentTerm);
+            _$details.html(Mustache.render(_tmplTermdetails, data))
+                     .promise().done(function() {
                 
                 // Event für Navigation-Bar auslösen
                 $(window).trigger(CFG.EVT.PRESSED_BUTTON, {

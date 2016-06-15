@@ -1,15 +1,22 @@
         
         <!-- Template: Begriffdetails -->
         <script id="tmpl-termdetails" type="text/template">
-            <article class="term{{^image}} term--no-image{{/image}}">
+            <article class="term{{^image}} term--no-image{{/image}}{{#quiz}} term--quiz{{/quiz}}">
                 <header class="term__header">
+                    {{#quiz}}
+                    <h1 class="term__title">
+                        {{question}} <span class="term__keyword">{{keyword}}</span>?
+                    </h1>
+                    {{/quiz}}
                     {{#image}}
                     <img class="term__image" alt="{{term}}" src="{{image}}" />
                     {{/image}}
+                    {{^quiz}}
                     <h1 class="term__title">
                         {{term}}{{#article}}<span class="term__article">, {{article}}</span>{{/article}}
                     </h1>
-                    <span class="term__info term__info--left term__label">Fortschritt:</span>
+                    {{/quiz}}
+                    <span class="term__info term__info--left term__label">{{label}}</span>
                     <span class="term__info">
                         <span class="stars stars--is-{{lvl}}">
                             {{#levels}}
@@ -26,5 +33,6 @@
                     </span>
                     {{/audio}}
                 </header>
+                
             </article>
         </script>

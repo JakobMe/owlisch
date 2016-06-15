@@ -9,6 +9,7 @@
 
 // Modul-Variablen
 @_term-size-image:                      140px;
+@_term-size-image-quiz:                 100px;
 @_term-size-info:                       36px;
 
 // Block: Begriff
@@ -42,12 +43,16 @@
     }
     
     // Mod: Kein Bild & Element: Titel
-    &--no-image &__title { padding-top: @app-size-gap; }
+    &--no-image:not(&--quiz) &__title { padding-top: @app-size-gap; }
     
-    // Element: Artikel
-    &__article {
-        font-weight: normal;
-    }
+    // Mod: Quiz & Element: Bild
+    &--quiz &__image { height: @_term-size-image-quiz; }
+    
+    // Element: Artikel & Mod: Quiz & Element: Titel
+    &__article, &--quiz &__title { font-weight: normal; }
+    
+    // Element: Schlüsselwort
+    &__keyword { font-weight: bold; }
     
     // Element: Info
     &__info {

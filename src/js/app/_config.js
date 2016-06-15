@@ -101,6 +101,14 @@ var CFG = (function() {
                 DESC            : "absteigend"
             }
         },
+        LABEL: {
+            PROGRESS            : "Fortschritt:",
+            NEW                 : "Neu!",
+            EASY                : "Leicht",
+            MEDIUM              : "Mittel",
+            HARD                : "Schwer",
+            MEANING             : "Was bedeutet"
+        },
         BEM: {
             ELEMDIV             : "__",
             MODDIV              : "--",

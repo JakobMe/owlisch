@@ -104,6 +104,15 @@
 }
 
 /**
+ * Mixin: Schatten Riesig.
+ * Setzt einen riesigen Box-Shadow.
+ * @param {#color} color - Farbe des Schattens
+ */
+.shadow-huge(@color: @app-color-shadow-black) {
+    .shadow(0, 0, 32px, 0, @color);
+}
+
+/**
  * Mixin: Schatten Glühen.
  * @param {#color} color - Farbe des Schattens.
  */
@@ -117,18 +126,6 @@
  */
 .shadow-none() {
     box-shadow: none;
-}
-
-/**
- * Mixin: Text-Schatten.
- * Setzt einen Text-Shadow.
- * @param {*px} x - Position links
- * @param {*px} y - Position oben
- * @param {*px} blur - Weichzeichner-Größe
- * @param {#color} color - Schatten-Farbe
- */
-.textshadow(@x, @y, @blur, @color) {
-    text-shadow: @arguments;
 }
 
 /**

@@ -31,8 +31,8 @@ var Dictionary = (function() {
     var _listFiltered           = [];
     var _listCaption            = CFG.STR.EMPTY;
     var _currentFilter          = CFG.STR.EMPTY;
-    var _currentSort            = CFG.STR.EMPTY;
-    var _currentOrder           = CFG.STR.EMPTY;
+    var _currentSort            = CFG.SORTING.SORT.ALPHA;
+    var _currentOrder           = CFG.SORTING.ORDER.ASC;
     var _currentTerm            = {};
     var _currentSlide           = 0;
     var _indexListbox           = 0;
@@ -58,20 +58,8 @@ var Dictionary = (function() {
     function init() {
 
         // Funktionen ausführen
-        _setDefaults();
         _parseTemplates();
         _bindEvents();
-    }
-    
-    /**
-     * Standard-Konfiguration setzen.
-     * Setzt die Standardwerte für den aktuellen Filter,
-     * die Sortierung und die Ordnung der Liste.
-     */
-    function _setDefaults() {
-        _currentFilter = CFG.STR.EMPTY;
-        _currentSort   = CFG.SORTING.SORT.ALPHA;
-        _currentOrder  = CFG.SORTING.ORDER.ASC;
     }
     
     /**
@@ -387,7 +375,7 @@ var Dictionary = (function() {
             (CFG.VIEW[data.panel] === CFG.VIEW.DICTIONARY)) {
                 
             // Standardwerte und Slider setzen, Liste filtern
-            _setDefaults();
+            _currentFilter = CFG.STR.EMPTY;
             _setCurrentSlide(_indexListbox);
             _filterList();
         }

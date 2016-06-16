@@ -37,9 +37,9 @@ var CFG = (function() {
                 LABEL           : "Quiz",
                 TITLE           : "OWL-Quiz"
             },
-            PROGRESS: {
-                LABEL           : "Fortschritt",
-                TITLE           : "Mein Fortschritt"
+            STATISTICS: {
+                LABEL           : "Statistik",
+                TITLE           : "Meine Statistik"
             },
             MORE: {
                 LABEL           : "Mehr",
@@ -88,9 +88,12 @@ var CFG = (function() {
             PRESSED_BUTTON      : "pressedNavigationBarButton",
             REQUEST_DICTIONARY  : "requestedDictionary",
             REQUEST_PROGRESS    : "requestedProgress",
+            REQUEST_LASTGAMES   : "requestedLastgames",
             SERVE_DICTIONARY    : "servedDictionary",
             SERVE_PROGRESS      : "servedProgress",
-            UPDATE_PROGRESS     : "updatedProgress"
+            SERVE_LASTGAMES     : "servedLastgames",
+            UPDATE_PROGRESS     : "updatedProgress",
+            UPDATE_LASTGAMES    : "updatedLastgames"
         },
         SORTING: {
             SORT: {

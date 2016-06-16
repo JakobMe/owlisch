@@ -91,7 +91,7 @@ var Dictionary = (function() {
         _setCurrentSlide(_indexListbox);
         _bindClickEvents();
         
-        // Fortschritt-Liste anfragen
+        // Fortschritt-Liste anfragen, View einblenden
         $(window).trigger(CFG.EVT.REQUEST_PROGRESS);
         $(window).trigger(CFG.EVT.SHOW_VIEW);
     }

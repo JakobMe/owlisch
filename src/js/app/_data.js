@@ -14,8 +14,10 @@ var Data = (function() {
     var _savegame               = {};
     var _listDictionary         = [];
     var _listProgress           = [];
+    var _listLastgames          = [];
     var _sizeDictionary         = 0;
     var _sizeProgress           = 0;
+    var _sizeLastgames          = 0;
     
     /**
      * SaveGame initialisieren.
@@ -36,7 +38,9 @@ var Data = (function() {
     function _bindEvents() {
         $(window).on(CFG.EVT.REQUEST_DICTIONARY, _serveDictionary);
         $(window).on(CFG.EVT.REQUEST_PROGRESS, _serveProgress);
+        $(window).on(CFG.EVT.REQUEST_LASTGAMES, _serveLastgames);
         $(window).on(CFG.EVT.UPDATE_PROGRESS, _updateProgress);
+        $(window).on(CFG.EVT.UPDATE_LASTGAMES, _updateLastgames);
     }
     
     /**
@@ -63,6 +67,10 @@ var Data = (function() {
             "knuepp"            : { lvl: 2, fail: 0 },
             "noenkern"          : { lvl: 3, fail: 0 }*/
         };
+        
+        // Letzten Spiele setzen
+        _listLastgames = [1, 2, 0, 3, 5, 4, 8, 7, 10, 9];
+        _sizeLastgames = _listLastgames.length;
         
         // !TODO: _loadSavegame() LocalStorage
     }
@@ -175,6 +183,7 @@ var Data = (function() {
         _sizeProgress = _listProgress.length;
         _serveDictionary();
         _serveProgress();
+        _serveLastgames();
     }
     
     /**
@@ -185,6 +194,16 @@ var Data = (function() {
     function _saveProgress() {
         
         // !TODO: _saveProgress() LocalStorage
+    }
+    
+    /**
+     * Die letzten Spiele speichern.
+     * Speichert die zuvor aktualisierten letzten Spieleregebnisse
+     * als JSON-String im LocalStorage.
+     */
+    function _saveLastgames() {
+        
+        // !TODO: _saveLastgames() LocalStorage
     }
     
     /**
@@ -213,6 +232,30 @@ var Data = (function() {
     }
     
     /**
+     * Die letzten Spiele aktualisieren.
+     * Ergänzt die Liste der letzten Spieleergebnisse um ein bestimmtes
+     * Ergebnis beim entsprechenden Event.
+     * @param {Object} event Ausgelöstes Event
+     * @param {Object} data Daten des Events
+     */
+    function _updateLastgames(event, data) {
+        if ((typeof data        !== typeof undefined) &&
+            (typeof data.result === typeof 0)) {
+
+            // Neuen Wert hinzufügen, Liste kürzen, Länge speichern
+            _listLastgames.push(data.result);
+            _listLastgames.slice(
+                Math.max(_listLastgames.length - CFG.QUIZ.NUM_PROGRESS, 0)
+            );
+            _sizeLastgames = _listLastgames.length;
+            
+            // Speichern und bereitstellen
+            _saveLastgames();
+            _serveLastgames();
+        }
+    }
+    
+    /**
      * Fortschritt-Liste bereitstellen.
      * Liefert die Fortschritt-Liste in einem Event.
      */
@@ -233,6 +276,17 @@ var Data = (function() {
             caption : _caption,
             list    : _listDictionary,
             size    : _sizeDictionary
+        });
+    }
+    
+    /**
+     * Die letzten Spieleergebnisse bereitstellen.
+     * Liefert die Ergebnisse der letzten Spiele in einem Event.
+     */
+    function _serveLastgames() {
+        $(window).trigger(CFG.EVT.SERVE_LASTGAMES, {
+            list : _listLastgames,
+            size : _sizeLastgames
         });
     }
     

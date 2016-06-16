@@ -85,12 +85,14 @@ var View = (function() {
         _$content.setMod(_B, _E_CONTENT, _M_VISIBLE, _isVisible);
         
         // View-Panels (de-)aktivieren
-        $.each(_$panels, function(name, $panel) {
-            $panel.setMod(
-                _B, _E_PANEL, _M_CURRENT,
-                (name === _currentPanel)
-            );
-        });
+        setTimeout(function() {
+            $.each(_$panels, function(name, $panel) {
+                $panel.setMod(
+                    _B, _E_PANEL, _M_CURRENT,
+                    (name === _currentPanel)
+                );
+            });
+        }, (_isVisible ? 0 : CFG.TIME.ANIMATION));
     }
     
     /**

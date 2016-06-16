@@ -19,6 +19,7 @@
     <preference name="KeyboardShrinksView" value="true" />
     <preference name="SuppressesIncrementalRendering" value="true" />
     <preference name="StatusBarStyle" value="lightcontent" />
+    <preference name="StatusBarBackgroundColor" value="#3bbb77" />
     <preference name="hardwareAccelerated" value="true" />
     <access origin="*" />
     <allow-intent href="http://*/*" />

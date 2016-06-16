@@ -340,7 +340,6 @@ var Dictionary = (function() {
             
             // Daten definieren
             var data = $.extend({
-                quiz   : false,
                 levels : CFG.QUIZ.LEVELS,
                 label  : CFG.LABEL.PROGRESS
             }, _currentTerm);
@@ -364,8 +363,8 @@ var Dictionary = (function() {
     /**
      * Standard-Konfiguration wiederherstellen.
      * Setzt die internen Variablen und Zustände anhand eines ausgelösten
-     * Events wieder auf ihre Standardwerte zurück; filtert die Liste
-     * und setzt den Slider zurück.
+     * Events wieder auf ihre Standardwerte zurück; filtert die Liste,
+     * setzt den Slider zurück und scrollt die Liste nach oben.
      * @param {Object} event Ausgelöstes Event
      * @param {Object} data Daten des Events
      */
@@ -374,8 +373,9 @@ var Dictionary = (function() {
             (typeof data.panel   !== typeof undefined) &&
             (CFG.VIEW[data.panel] === CFG.VIEW.DICTIONARY)) {
                 
-            // Standardwerte und Slider setzen, Liste filtern
+            // Standardwerte setzen, Liste filtern und scrollen
             _currentFilter = CFG.STR.EMPTY;
+            _$listbox.animate({ scrollTop: 0 }, CFG.TIME.ANIMATION);
             _setCurrentSlide(_indexListbox);
             _filterList();
         }

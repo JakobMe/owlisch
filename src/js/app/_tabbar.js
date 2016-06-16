@@ -10,11 +10,11 @@ var TabBar = (function() {
     
     // Selektor-Konstanten
     var _SEL_TABS               = "[role='tab']";
-    var _SEL_TABBAR             = "#tab-bar";
+    var _SEL_TABBAR             = "#tabbar";
     var _SEL_TMPL               = "#tmpl-tablist";
     
     // BEM-Konstanten
-    var _B                      = "tab-bar";
+    var _B                      = "tabbar";
     var _E                      = "tab";
     var _M_ACTIVE               = "active";
     var _M_HIDDEN               = "hidden";

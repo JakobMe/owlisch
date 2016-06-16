@@ -8,15 +8,15 @@
  */
 
 // Modul-Variablen
-@_navigation-bar-font-size-title:       17px;
-@_navigation-bar-font-size-search:      14px;
-@_navigation-bar-font-size-clear:       17px;
-@_navigation-bar-font-size-icon:        20px;
-@_navigation-bar-size-search:           28px;
-@_navigation-bar-size-padding:          6px;
+@_navigationbar-font-size-title:       17px;
+@_navigationbar-font-size-search:      14px;
+@_navigationbar-font-size-clear:       17px;
+@_navigationbar-font-size-icon:        20px;
+@_navigationbar-size-search:           28px;
+@_navigationbar-size-padding:          6px;
  
 // Block: Navigation-Bar
-.navigation-bar {
+.navigationbar {
     position: absolute;
     height: auto;
     top: 0;
@@ -52,7 +52,7 @@
         padding: 0 @app-size-height-navigationbar;
         height: @app-size-height-navigationbar;
         line-height: @app-size-height-navigationbar;
-        font-size: @_navigation-bar-font-size-title;
+        font-size: @_navigationbar-font-size-title;
         .transition();
         .ellipsis();
         
@@ -73,7 +73,7 @@
         margin: 0;
         padding: 0;
         z-index: 1500;
-        font-size: @_navigation-bar-font-size-icon;
+        font-size: @_navigationbar-font-size-icon;
         height: @app-size-height-navigationbar;
         line-height: (@app-size-height-navigationbar - @app-size-line-thin);
         width: @app-size-height-navigationbar;
@@ -107,8 +107,8 @@
         z-index: 500;
         left: @app-size-height-navigationbar;
         right: @app-size-height-navigationbar;
-        bottom: ((@app-size-height-navigationbar - @_navigation-bar-size-search) / 2);
-        height: @_navigation-bar-size-search;
+        bottom: ((@app-size-height-navigationbar - @_navigationbar-size-search) / 2);
+        height: @_navigationbar-size-search;
         opacity: @app-opacity-invisible;
         .transition(opacity);
         
@@ -121,10 +121,10 @@
             left: 0;
             bottom: 0;
             z-index: 2000;
-            width: @_navigation-bar-size-search;
-            height: @_navigation-bar-size-search;
-            line-height: (@_navigation-bar-size-search - @app-size-line-thin);
-            font-size: @_navigation-bar-font-size-search;
+            width: @_navigationbar-size-search;
+            height: @_navigationbar-size-search;
+            line-height: (@_navigationbar-size-search - @app-size-line-thin);
+            font-size: @_navigationbar-font-size-search;
             content: @fontello-icon-search;
             .color-on(@app-color-main, true);
             .font-icon();
@@ -143,9 +143,9 @@
             text-transform: uppercase;
             width: 100%;
             font-size: @app-font-size-small;
-            height: @_navigation-bar-size-search;
-            padding: @_navigation-bar-size-padding (@_navigation-bar-size-search + @_navigation-bar-size-padding);
-            line-height: (@_navigation-bar-size-search - (@_navigation-bar-size-padding * 2));
+            height: @_navigationbar-size-search;
+            padding: @_navigationbar-size-padding (@_navigationbar-size-search + @_navigationbar-size-padding);
+            line-height: (@_navigationbar-size-search - (@_navigationbar-size-padding * 2));
             .colored(@app-color-main-dark);
             .border-radius();
             .font-main();
@@ -166,10 +166,10 @@
             font-weight: normal;
             right: 0;
             bottom: 0;
-            width: @_navigation-bar-size-search;
-            height: @_navigation-bar-size-search;
-            line-height: @_navigation-bar-size-search;
-            font-size: @_navigation-bar-font-size-clear;
+            width: @_navigationbar-size-search;
+            height: @_navigationbar-size-search;
+            line-height: @_navigationbar-size-search;
+            font-size: @_navigationbar-font-size-clear;
             .fontello-icon(@fontello-icon-clear);
             .color-on(@app-color-main-dark, true);
             .translate();
@@ -184,7 +184,7 @@
 @media screen and (min-width: @app-size-max) {
     
     // Block: Navigation-Bar & Element: Wrapper
-    .navigation-bar__wrapper {
+    .navigationbar__wrapper {
         padding-top: @app-size-height-statusbar;
         
         // Statusbar-Overlay

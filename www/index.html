@@ -36,30 +36,30 @@
                 </main>
                 
                 <!-- Navigation-Bar -->
-                <header class="navigation-bar" id="navigation-bar" role="navigation">
+                <header class="navigationbar" id="navigationbar" role="navigation">
                     <ul class="dropdown" id="navigation-dropdown" role="menu"></ul>
-                    <div class="navigation-bar__wrapper">
-                        <div class="navigation-bar__search">
-                            <input class="navigation-bar__search-input" type="text"
+                    <div class="navigationbar__wrapper">
+                        <div class="navigationbar__search">
+                            <input class="navigationbar__search-input" type="text"
                                    spellcheck="false" autocomplete="off"
                                    autocorrect="off" autocapitalize="none"
                                    tabindex="-100" placeholder="Suche"
                                    maxlength="16" id="navigation-search"
                                    role="search" />
-                            <i class="navigation-bar__search-clear
-                               navigation-bar__search-clear--hidden"
+                            <i class="navigationbar__search-clear
+                               navigationbar__search-clear--hidden"
                                id="navigation-clear"></i>
                         </div>
-                        <h1 class="navigation-bar__title" id="navigation-title"></h1>
-                        <i class="navigation-bar__button navigation-bar__button--left"
+                        <h1 class="navigationbar__title" id="navigation-title"></h1>
+                        <i class="navigationbar__button navigationbar__button--left"
                            role="button"></i>
-                        <i class="navigation-bar__button navigation-bar__button--right"
+                        <i class="navigationbar__button navigationbar__button--right"
                            role="button"></i>
                     </div>
                 </header>
                 
                 <!-- Tab-Bar -->
-                <nav class="tab-bar" id="tab-bar" role="tablist"></nav>
+                <nav class="tabbar" id="tabbar" role="tablist"></nav>
                 
             </div>
         </div>
@@ -76,15 +76,15 @@
                 
         <!-- Template: Tab-List -->
         <script id="tmpl-tablist" type="text/template">
-            <ul class="tab-bar__list">
+            <ul class="tabbar__list">
                 {{#.}}
-                <li class="tab-bar__tab" role="tab" data-panel="{{alias}}">
-                    <i class="tab-bar__icon icon icon--{{icon}}"></i>
-                    <span class="tab-bar__label">{{label}}</span>
+                <li class="tabbar__tab" role="tab" data-panel="{{alias}}">
+                    <i class="tabbar__icon icon icon--{{icon}}"></i>
+                    <span class="tabbar__label">{{label}}</span>
                 </li>
                 {{/.}}
             </ul>
-            <div class="tab-bar__status"></div>
+            <div class="tabbar__status"></div>
         </script>
                 
         <!-- Template: Wörterbuch -->

@@ -11,7 +11,7 @@ var NavigationBar = (function() {
     // Selektor-Konstanten
     var _SEL_BUTTONS            = "[role='button']";
     var _SEL_SORT               = "[role='menuitem']";
-    var _SEL_NAVBAR             = "#navigation-bar";
+    var _SEL_NAVBAR             = "#navigationbar";
     var _SEL_TITLE              = "#navigation-title";
     var _SEL_SEARCH             = "#navigation-search";
     var _SEL_CLEAR              = "#navigation-clear";
@@ -19,7 +19,7 @@ var NavigationBar = (function() {
     var _SEL_TMPL_DROPDOWN      = "#tmpl-dropdown";
     
     // BEM-Konstanten
-    var _B_BAR                  = "navigation-bar";
+    var _B_BAR                  = "navigationbar";
     var _B_DROPDOWN             = "dropdown";
     var _E_ITEM                 = "item";
     var _E_TITLE                = "title";

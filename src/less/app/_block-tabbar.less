@@ -8,21 +8,21 @@
  */
 
 // Modul-Variablen
-@_tab-bar-number-tabs:                  5;
-@_tab-bar-size-icon:                    24px;
-@_tab-bar-size-padding:                 6px;
-@_tab-bar-size-padding-status:          3%;
-@_tab-bar-fontsize-icon:                21px;
-@_tab-bar-fontsize-label:               10px;
+@_tabbar-number-tabs:                  5;
+@_tabbar-size-icon:                    24px;
+@_tabbar-size-padding:                 6px;
+@_tabbar-size-padding-status:          3%;
+@_tabbar-fontsize-icon:                21px;
+@_tabbar-fontsize-label:               10px;
 
 // Loop: Status-Position für Tab-Bar-Modfikation
-._tab-bar-loop(@n: @_tab-bar-number-tabs, @i: 0) when (@i < @n) {
+._tabbar-loop(@n: @_tabbar-number-tabs, @i: 0) when (@i < @n) {
     &--tab-@{i} &__status { .translate(100% * @i); }
-    ._tab-bar-loop(@n, (@i + 1));
+    ._tabbar-loop(@n, (@i + 1));
 }
  
 // Block: Tab-Bar
-.tab-bar {
+.tabbar {
     position: absolute;
     left: 0;
     bottom: 0;
@@ -30,7 +30,7 @@
     z-index: 200;
     height: @app-size-height-tabbar;
     .border(top, @app-color-shadow-dark);
-    ._tab-bar-loop();
+    ._tabbar-loop();
     
     // Mod: Versteckt
     &--hidden { .translate(0, 100%); }
@@ -53,8 +53,8 @@
         text-align: center;
         text-decoration: none;
         box-sizing: border-box;
-        padding: @_tab-bar-size-padding 0;
-        width: (100% / @_tab-bar-number-tabs);
+        padding: @_tabbar-size-padding 0;
+        width: (100% / @_tabbar-number-tabs);
         height: @app-size-height-tabbar;
         .transition(color);
         
@@ -65,17 +65,17 @@
     // Element: Icon
     &__icon {
         display: block;
-        font-size: @_tab-bar-fontsize-icon;
-        height: @_tab-bar-size-icon;
-        line-height: @_tab-bar-size-icon;
+        font-size: @_tabbar-fontsize-icon;
+        height: @_tabbar-size-icon;
+        line-height: @_tabbar-size-icon;
     }
     
     // Element: Label
     &__label {
         display: block;
         font-weight: bold;
-        font-size: @_tab-bar-fontsize-label;
-        line-height: (@app-size-height-tabbar - @_tab-bar-size-icon - (2 * @_tab-bar-size-padding));
+        font-size: @_tabbar-fontsize-label;
+        line-height: (@app-size-height-tabbar - @_tabbar-size-icon - (2 * @_tabbar-size-padding));
     }
     
     // Element: Status
@@ -84,8 +84,8 @@
         position: absolute;
         box-sizing: border-box;
         left: 0;
-        width: (100% / @_tab-bar-number-tabs);
-        padding: 0 @_tab-bar-size-padding-status;
+        width: (100% / @_tabbar-number-tabs);
+        padding: 0 @_tabbar-size-padding-status;
         top: -(@app-size-line-thin);
         height: @app-size-line-medium;
         .transition(transform);

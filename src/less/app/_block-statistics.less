@@ -1,0 +1,29 @@
+/*
+ * Modul: Statistik.
+ * Definiert das Verhalten von Statistik-Containern.
+ * @author Jakob Metzger <jakob.me@gmail.com>
+ * @copyright 2016 Jakob Metzger
+ * @licence https://opensource.org/licenses/MIT MIT
+ * @link http://jmportfolio.de
+ */
+
+// Block: Statistik
+.statistics {
+    .border(bottom);
+    
+    // Erstes Element
+    &:first-child { .border(top); }
+    
+    // Element: Titel
+    &__title {
+        display: block;
+        text-align: center;
+        font-weight: normal;
+        font-style: italic;
+        margin: 0;
+        font-size: @app-font-size-large;
+        padding: @app-size-gap;
+        padding-bottom: 0;
+        .colored(@app-color-light);
+    }
+}

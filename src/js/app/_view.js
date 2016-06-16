@@ -170,7 +170,7 @@ var View = (function() {
      * Aktuelles View-Panel ändern.
      * Ändern das aktuelle View-Panel anhand eines Panel-Namens;
      * blendet die View erst aus und lädt anschließen den Panel-Inhalt.
-     * @param {string} panel Name des neuen Panels
+     * @param {String} panel Name des neuen Panels
      */
     function _changePanel(panel) {
         

@@ -102,7 +102,7 @@ var TabBar = (function() {
      * Setzt den aktiven Tab anhand eines (Klick)-Events oder eines
      * übergebenen Tab-Indexes; falls der Index gültig ist, wird dieser
      * als aktiver Index gesetzt und die Tabbar wird gerendert.
-     * @param {(Object|number)} tab Klick-Event vom Tab oder Tab-Index
+     * @param {(Object|Number)} tab Klick-Event vom Tab oder Tab-Index
      */
     function _setTab(tab) {
         

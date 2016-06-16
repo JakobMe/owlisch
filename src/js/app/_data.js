@@ -100,7 +100,7 @@ var Data = (function() {
     /**
      * Datei überprüfen.
      * Überprüft die Existenz einer gegebenen Datei.
-     * @param {string} file Dateipfad
+     * @param {String} file Dateipfad
      * @returns {Object} AJAX-Antwort
      */
     function _checkFile(file) {
@@ -263,7 +263,8 @@ var Data = (function() {
         $(window).trigger(CFG.EVT.SERVE_PROGRESS, {
             caption : _caption,
             list    : _listProgress,
-            size    : _sizeProgress
+            size    : _sizeProgress,
+            max     : _sizeDictionary
         });
     }
     

@@ -44,7 +44,8 @@
  * @param {#color} color - Farbe des Rahmens
  */
 .border(@location, @color: @app-color-background-dark) {
-    border-@{location}: @app-size-line-thin solid @color;
+    & when (@location = all) { border: @app-size-line-thin solid @color; }
+    & when not(@location = all) { border-@{location}: @app-size-line-thin solid @color; }
 }
 
 /**
@@ -92,6 +93,15 @@
  */
 .shadow(@x, @y, @blur, @spread, @color) {
     box-shadow: @arguments;
+}
+
+/**
+ * Mixin: Schatten Klein.
+ * Setzt einen kleinen Box-Shadow.
+ * @param {#color} color - Farbe des Schattens
+ */
+.shadow-small(@color: @app-color-shadow-dark) {
+    .shadow(0, 2px, 2px, 0, @color);
 }
 
 /**

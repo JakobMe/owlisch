@@ -1,6 +1,17 @@
         
-        <!-- Template: Statistik -->
+        <!-- Template: Diagramm -->
         <script id="tmpl-chart" type="text/template">
-            <div class="chart">
+            <div class="chart__lines">
+                {{#steps}}
+                <div class="chart__line"></div>
+                {{/steps}}
+            </div>
+            <div class="chart__container">
+                {{#data}}
+                <div class="chart__data chart__data--{{.}}">
+                    <div class="chart__bar"></div>
+                    <div class="chart__label">{{.}}</div>
+                </div>
+                {{/data}}
             </div>
         </script>

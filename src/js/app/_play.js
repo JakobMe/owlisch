@@ -79,7 +79,7 @@ var Play = (function() {
     /**
      * Lade-Zustand setzen.
      * Setzt den aktuellen Lade-Zustand des Moduls; rendert neu.
-     * @param {boolean} isLoading Neuer Lade-Zustand
+     * @param {Boolean} isLoading Neuer Lade-Zustand
      */
     function _setLoading(isLoading) {
         if (typeof isLoading === typeof true) {
@@ -91,7 +91,7 @@ var Play = (function() {
     /**
      * Abspiel-Zustand setzen.
      * Setzt den aktuellen Abspiel-Zustand des Moduls; rendert neu.
-     * @param {boolean} isPlaying Neuer Abspiel-Zustand
+     * @param {Boolean} isPlaying Neuer Abspiel-Zustand
      */
     function _setPlaying(isPlaying) {
         if (typeof isPlaying === typeof true) {

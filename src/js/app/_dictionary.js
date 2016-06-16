@@ -295,7 +295,7 @@ var Dictionary = (function() {
      * Aktuellen Slide setzen.
      * Aktualisiert den aktiven Slide des Wörterbuch-Sliders; entsperrt
      * die Liste gegebenenfalls und rendert den Slider anschließend neu.
-     * @param {number} slide Nummer des neuen Slides
+     * @param {Number} slide Nummer des neuen Slides
      */
     function _setCurrentSlide(slide) {
         _currentSlide = slide;

@@ -384,8 +384,8 @@ var NavigationBar = (function() {
      * Button-Eigenschaften setzen.
      * Setzt die Aktion und das Icon eines gegebenen Buttons.
      * @param {Object} button Button-Objekt
-     * @param {string} action Name der Button-Aktion
-     * @param {string} icon Name des Button-Icons
+     * @param {String} action Name der Button-Aktion
+     * @param {String} icon Name des Button-Icons
      */
     function _setButton(button, action, icon) {
         if (button.$button instanceof $) {
@@ -398,8 +398,8 @@ var NavigationBar = (function() {
     /**
      * Button Links setzen.
      * Setzt Aktion und Icon des linken Buttons.
-     * @param {string} action Neue Aktion
-     * @param {string} icon Neues Icon
+     * @param {String} action Neue Aktion
+     * @param {String} icon Neues Icon
      */
     function _setButtonLeft(action, icon) {
         _setButton(_buttonLeft, action, icon);
@@ -408,8 +408,8 @@ var NavigationBar = (function() {
     /**
      * Button Rechts setzen.
      * Setzt Aktion und Icon des rechten Buttons.
-     * @param {string} action Neue Aktion
-     * @param {string} icon Neues Icon
+     * @param {String} action Neue Aktion
+     * @param {String} icon Neues Icon
      */
     function _setButtonRight(action, icon) {
         _setButton(_buttonRight, action, icon);
@@ -418,7 +418,7 @@ var NavigationBar = (function() {
     /**
      * Titel setzen.
      * Setzt den aktuellen Titel und rendert ihn neu.
-     * @param {string} title Neuer Titel
+     * @param {String} title Neuer Titel
      */
     function _setTitle(title) {
         if (typeof title === typeof CFG.STR.EMPTY) {
@@ -431,8 +431,8 @@ var NavigationBar = (function() {
      * Suche (de-)aktivieren.
      * Aktiviert oder deaktiviert die Suche anhand des übergebenen Wertes;
      * setzt den zugehörigen Button entsprechend und rendert die Suche neu.
-     * @param {boolean} willBeActive Angabe, ob die Suche aktiviert wird
-     * @param {boolean} triggerSearch Angabe, ob Such-Event ausgelöst wird
+     * @param {Boolean} willBeActive Angabe, ob die Suche aktiviert wird
+     * @param {Boolean} triggerSearch Angabe, ob Such-Event ausgelöst wird
      */
     function _setSearch(willBeActive, triggerSearch) {
         if (_searchIsActive !== willBeActive) {
@@ -472,7 +472,7 @@ var NavigationBar = (function() {
      * Blendet das Dropdown-Menü anhand des übergebenen Wertes ein
      * oder aus; setzt den zugehörigen Button entsprechend und rendert
      * das Dropdown-Menü.
-     * @param {boolean} willBeOpened Angabe, ob das Dropdown geöffnet wird
+     * @param {Boolean} willBeOpened Angabe, ob das Dropdown geöffnet wird
      */
     function _setDropdown(willBeOpened) {
         if (_dropdownIsOpened !== willBeOpened) {
@@ -489,8 +489,8 @@ var NavigationBar = (function() {
      * Aktuelle Navigation-Bar im Cache speichern.
      * Hinterlegt die aktuelle Konfiguration der Navigation-Bar
      * anhand des übergebenen Indexes im internen Cache.
-     * @param {string} index Name der Konfiguration
-     * @param {string} title Alternativer neuer Titel
+     * @param {String} index Name der Konfiguration
+     * @param {String} title Alternativer neuer Titel
      */
     function _saveToCache(index, title) {
         
@@ -513,7 +513,7 @@ var NavigationBar = (function() {
      * Aktuelle Konfiguration aus Cache wiederherstellen.
      * Lädt eine Konfiguration anhand des übergebenen Indexes aus dem Cache,
      * falls sie vorhanden ist, und ersetzt die aktuelle Konfiguration.
-     * @param {string} index Name der Konfiguration
+     * @param {String} index Name der Konfiguration
      */
     function _loadFromCache(index) {
         

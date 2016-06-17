@@ -12,7 +12,7 @@
 @_chart-size-info:                      128px;
 @_chart-size-step:                      16px;
 @_chart-size-bar:                       18px;
-@_chart-size-line:                      1px;
+@_chart-size-gap:                       6px;
 @_chart-number-lastgames:               10;
 @_chart-number-points:                  10;
 @_chart-number-percent:                 10;
@@ -50,7 +50,7 @@
     
     // Mod: Horizontal & Element: Container
     &--horizontal &__container {
-        padding: (@app-size-gap-tiny + @app-size-gap-small) 0;
+        padding: (@app-size-gap - @_chart-size-gap) 0;
     }
     
     // Mod: Horizontal
@@ -121,7 +121,7 @@
     // Mod: Horizontal & Element: Daten
     &--horizontal &__data {
         width: 100%;
-        padding: @app-size-gap-tiny 0;
+        padding: @_chart-size-gap 0;
     }
     
     // Element: Balken
@@ -131,6 +131,7 @@
         max-width: 100%;
         .gradient(top, @app-color-main-light, @app-color-main);
         .border(all, @app-color-main-dark);
+        .border(bottom, shade(@app-color-main-dark, 10%));
         .border-radius();
         .shadow-small();
     }
@@ -147,6 +148,9 @@
     // Mod: Horizontal & Element: Balken
     &--horizontal &__bar {
         height: @_chart-size-bar;
+        border-color: @app-color-star-dark;
+        border-bottom-color: shade(@app-color-star-dark, 10%);
+        .gradient(top, @app-color-star-light, @app-color-star);
     }
     
     // Mod: Vertikal & Element: Daten & Mod: Ohne & Element: Balken
@@ -187,7 +191,7 @@
         height: 100%;
         top: 0;
         box-sizing: border-box;
-        line-height: (@_chart-size-bar + (2 * @app-size-gap-tiny));
+        line-height: (@_chart-size-bar + (2 * @_chart-size-gap));
         padding: 0 @app-size-gap;
         width: @_chart-size-info;
         right: -(@_chart-size-info);

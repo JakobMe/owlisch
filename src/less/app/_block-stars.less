@@ -9,12 +9,19 @@
 
 // Modul-Variablen
 @_stars-font-size:                      15px;
+@_stars-font-size-small:                14px;
 
 // Block: Sterne
 .stars {
     vertical-align: top;
     display: inline-block;
     font-size: @_stars-font-size;
+    
+    // Mod: Klein
+    &--small {
+        font-size: @_stars-font-size-small;
+        letter-spacing: -(@app-size-line-thin);
+    }
     
     // Mod: Sterne-Zustand und enthaltene Sterne
     &--is-1 &__star--1,

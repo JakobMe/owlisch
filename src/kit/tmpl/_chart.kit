@@ -8,9 +8,23 @@
             </div>
             <div class="chart__container">
                 {{#data}}
-                <div class="chart__data chart__data--{{.}}">
-                    <div class="chart__bar"></div>
-                    <div class="chart__label">{{.}}</div>
+                <div class="chart__data{{#zero}} chart__data--none{{/zero}}">
+                    <div class="chart__bar"
+                         style="{{#hrznt}}width{{/hrznt}}{{^hrznt}}height{{/hrznt}}: {{percent}}%;">
+                    </div>
+                    <div class="chart__label">
+                        {{#stars}}
+                        <span class="chart__text chart__text--stars stars stars--small stars--is-{{lvl}}">
+                            {{#levels}}
+                            <i class="stars__star stars__star--{{.}}"></i>
+                            {{/levels}}
+                        </span>
+                        {{/stars}}
+                        {{#hrznt}}
+                        <span class="chart__text chart__text--percent">{{percent}}%</span>
+                        {{/hrznt}}
+                        <span class="chart__text{{#stars}} chart__text--value{{/stars}}">{{label}}</span>
+                    </div>
                 </div>
                 {{/data}}
             </div>

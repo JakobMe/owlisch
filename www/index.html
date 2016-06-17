@@ -206,20 +206,31 @@
                 <h2 class="statistics__title">
                     Meine <b>{{games}}</b> letzten <b>Spiele</b>
                 </h2>
-                <div class="chart"></div>
+                <div class="statistics__chart chart chart--vertical"></div>
             </div>
             <div id="statistics-progress" class="statistics">
                 <h2 class="statistics__title">
                     <b>Gelernte</b> Wörter
                 </h2>
-                <div class="chart"></div>
+                <div class="statistics__chart chart chart--horizontal"></div>
             </div>
             <div id="statistics-dictionary" class="statistics">
                 <h2 class="statistics__title">
                     Mein <b>Wörterbuch</b>
                 </h2>
-                <div class="chart"></div>
+                <div class="statistics__chart chart chart--horizontal"></div>
             </div>
+            <p class="notice">
+                <span class="notice__title">
+                    <span class="notice__title-text">Hinweis</span>
+                </span>
+                <span class="notice__text">
+                    Hier siehst du, wie viele Fragen du in deinen <b>{{games}} letzten
+                    Spielen</b> richtig beantwortet hast, wie viele der <b>vorhandenen Wörter</b>
+                    du schon <b>erlernt</b> hast und wie viele Wörter du bereits auf welchen
+                    <b>Stufen</b> erraten hast.
+                </span>
+            </p>
         </script>
                 
         <!-- Template: Diagramm -->
@@ -231,9 +242,23 @@
             </div>
             <div class="chart__container">
                 {{#data}}
-                <div class="chart__data chart__data--{{.}}">
-                    <div class="chart__bar"></div>
-                    <div class="chart__label">{{.}}</div>
+                <div class="chart__data{{#zero}} chart__data--none{{/zero}}">
+                    <div class="chart__bar"
+                         style="{{#hrznt}}width{{/hrznt}}{{^hrznt}}height{{/hrznt}}: {{percent}}%;">
+                    </div>
+                    <div class="chart__label">
+                        {{#stars}}
+                        <span class="chart__text chart__text--stars stars stars--small stars--is-{{lvl}}">
+                            {{#levels}}
+                            <i class="stars__star stars__star--{{.}}"></i>
+                            {{/levels}}
+                        </span>
+                        {{/stars}}
+                        {{#hrznt}}
+                        <span class="chart__text chart__text--percent">{{percent}}%</span>
+                        {{/hrznt}}
+                        <span class="chart__text{{#stars}} chart__text--value{{/stars}}">{{label}}</span>
+                    </div>
                 </div>
                 {{/data}}
             </div>

@@ -9,6 +9,7 @@
 
 // Modul-Variablen
 @_chart-size-label:                     24px;
+@_chart-size-info:                      128px;
 @_chart-size-step:                      16px;
 @_chart-size-bar:                       18px;
 @_chart-size-line:                      1px;
@@ -22,84 +23,141 @@
     ._chart-loop-lines-vertical(@n, (@i + 1));
 }
 
-// Loop: Balken Vertikal
-._chart-loop-bars-vertical(@n, @i: 1) when (@i <= @n) {
-    &--@{i} .chart__bar { height: ((@i / @n) * 100%); }
-    ._chart-loop-bars-vertical(@n, (@i + 1));
+// Loop: Linien Horizontal
+._chart-loop-lines-horizontal(@n, @i: 1) when (@i <= @n) {
+    &:nth-child(@{i}) { left: ((@i / @n) * 100%); }
+    ._chart-loop-lines-horizontal(@n, (@i + 1));
 }
 
 // Block: Diagramm
 .chart {
+    overflow: hidden;
     position: relative;
-    padding-bottom: @app-size-gap;
     .colored-gradient(@app-color-background-light);
+    
+    // Mod: Vertikal & Element: Container
+    &--vertical, &--vertical &__container {
+        padding-top: @app-size-gap;
+        padding-bottom: (@app-size-gap-small + @_chart-size-label);
+    }
+    
+    // Mod: Vertikal & Element: Container
+    &--vertical &__container {
+        position: absolute;
+        padding-left: @app-size-gap;
+        padding-right: @app-size-gap;
+    }
+    
+    // Mod: Horizontal & Element: Container
+    &--horizontal &__container {
+        padding: (@app-size-gap-tiny + @app-size-gap-small) 0;
+    }
+    
+    // Mod: Horizontal
+    &--horizontal {
+        padding-left: @app-size-gap;
+        padding-right: @_chart-size-info;
+    }
     
     // Element: Linie
     &__line {
         display: block;
         box-sizing: border-box;
+    }
+    
+    // Mod: Vertikal & Element: Linie
+    &--vertical &__line {
         width: 100%;
         height: @_chart-size-step;
         ._chart-loop-lines-vertical(@_chart-number-points);
-        .border(top);
+        .border(top, @app-color-background);
         
         // Erstes Element
         &:first-child { border-top: none; }
     }
     
+    // Mod: Horizontal & Element: Linien
+    &--horizontal &__lines {
+        position: absolute;
+        height: 100%;
+        left: @app-size-gap;
+        right: @_chart-size-info;
+    }
+    
+    // Mod: Horizontal & Element: Linie
+    &--horizontal &__line {
+        position: absolute;
+        top: 0;
+        height: 100%;
+        width: @app-size-line-thin;
+        margin-left: -(@app-size-line-thin);
+        .gradient(top, @app-color-background, @app-color-background-light);
+        ._chart-loop-lines-horizontal(@_chart-number-percent);
+    }
+    
     // Element: Container
     &__container {
         display: block;
-        position: absolute;
         box-sizing: border-box;
         top: 0;
         left: 0;
         width: 100%;
         height: 100%;
-        padding: 0 @app-size-gap;
-    }
-    
-    // Block & Element: Container
-    &, &__container {
-        padding-top: @app-size-gap;
-        padding-bottom: (@app-size-gap-small + @_chart-size-label);
     }
     
     // Element: Daten
     &__data {
-        float: left;
         display: block;
         position: relative;
+    }
+    
+    // Mod: Vertikal & Element: Daten
+    &--vertical &__data {
+        float: left;
         height: 100%;
         width: (100% / @_chart-number-lastgames);
-        ._chart-loop-bars-vertical(@_chart-number-points);
+    }
+    
+    // Mod: Horizontal & Element: Daten
+    &--horizontal &__data {
+        width: 100%;
+        padding: @app-size-gap-tiny 0;
     }
     
     // Element: Balken
     &__bar {
         display: block;
-        position: absolute;
         box-sizing: border-box;
-        bottom: 0;
-        left: 50%;
         max-width: 100%;
-        width: @_chart-size-bar;
-        margin-left: -(@_chart-size-bar / 2);
         .gradient(top, @app-color-main-light, @app-color-main);
         .border(all, @app-color-main-dark);
         .border-radius();
         .shadow-small();
     }
     
-    // Element: Daten & Mod: 0 & Element: Balken
-    &__data--0 &__bar {
+    // Mod: Vertikal & Element: Balken
+    &--vertical &__bar {
+        position: absolute;
+        bottom: 0;
+        left: 50%;
+        width: @_chart-size-bar;
+        margin-left: -(@_chart-size-bar / 2);
+    }
+    
+    // Mod: Horizontal & Element: Balken
+    &--horizontal &__bar {
+        height: @_chart-size-bar;
+    }
+    
+    // Mod: Vertikal & Element: Daten & Mod: Ohne & Element: Balken
+    &--vertical &__data--none &__bar {
         border: none;
-        height: auto;
         width: 100%;
         left: 0;
         margin: 0;
         text-align: center;
         background: transparent;
+        height: auto !important;
         font-size: @app-font-size-small;
         color: @app-color-text-dark-pale;
         .fontello-icon(@fontello-icon-frown);
@@ -110,16 +168,59 @@
     &__label {
         display: block;
         position: absolute;
-        text-align: center;
         font-weight: bold;
+        font-size: @app-font-size-small;
+    }
+    
+    // Mod: Vertikal & Element: Label
+    &--vertical &__label {
+        text-align: center;
         left: 0;
         width: 100%;
         height: @_chart-size-label;
         line-height: @_chart-size-label;
         bottom: -(@_chart-size-label);
-        font-size: @app-font-size-small;
     }
     
-    // Element: Daten & Mod: 0 & Element: Label
-    &__data--0 &__label { color: @app-color-text-dark-pale; }
+    // Mod: Horizontal & Element: Label
+    &--horizontal &__label {
+        height: 100%;
+        top: 0;
+        box-sizing: border-box;
+        line-height: (@_chart-size-bar + (2 * @app-size-gap-tiny));
+        padding: 0 @app-size-gap;
+        width: @_chart-size-info;
+        right: -(@_chart-size-info);
+    }
+    
+    // Mod: Horizontal & Element: Text
+    &--horizontal &__text {
+        display: block;
+        float: left;
+        
+        // Mod: Sterne
+        &--stars { font-weight: normal; }
+        
+        // Mod: Prozenz
+        &--percent {
+            float: right;
+            font-style: italic;
+            text-align: right;
+            font-size: @app-font-size-micro;
+            color: @app-color-text-dark-pale;
+            margin-top: @app-size-line-thin;
+            width: @_chart-size-label;
+        }
+        
+        // Mod: Wert
+        &--value {
+            float: right;
+            text-align: right;
+            min-width: @_chart-size-label;
+            padding: 0 @app-size-gap-tiny;
+        }
+    }
+    
+    // Mod: Vertikal & Element: Daten & Mod: Ohne & Element: Label
+    &--vertical &__data--none &__label { color: @app-color-text-dark-pale; }
 }

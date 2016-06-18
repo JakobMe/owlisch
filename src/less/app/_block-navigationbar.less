@@ -22,6 +22,8 @@
     top: 0;
     left: 0;
     width: 100%;
+    z-index: 1000;
+    .border(bottom, @app-color-main-shadow);
     
     // Mods
     &--webapp &__wrapper { padding-top: @app-size-height-statusbar; }
@@ -35,7 +37,6 @@
         text-align: center;
         z-index: 1000;
         height: @app-size-height-navigationbar;
-        .border(bottom, @app-color-main-dark);
         .colored(@app-color-main);
     }
     

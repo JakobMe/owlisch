@@ -255,12 +255,12 @@ var Dictionary = (function() {
         if (_$list instanceof $) {
             _$list.html(
                 Mustache.render(_tmplTermlist, {
-                    caption   : _listCaption,
-                    terms     : _listFiltered,
-                    levels    : CFG.QUIZ.LEVELS,
-                    size      : _listFiltered.length,
-                    single    : (_listFiltered.length === 1),
-                    filtered  : (_currentFilter.length > 0)
+                    caption  : _listCaption,
+                    terms    : _listFiltered,
+                    levels   : CFG.QUIZ.LEVELS,
+                    size     : _listFiltered.length,
+                    single   : (_listFiltered.length === 1),
+                    filtered : (_currentFilter.length > 0)
                 })
             );
         }
@@ -276,10 +276,8 @@ var Dictionary = (function() {
     function _setCurrentTerm(event) {
         if ((typeof event !== typeof undefined) && (!_listIsLocked)) {
             
-            // Liste sperren
+            // Liste sperren, Alias ermitteln, Begriff suchen und setzen
             _listIsLocked = true;
-            
-            // Alias ermitteln, Begriff suchen und setzen
             var alias = $(event.target).closest(_SEL_ITEM).data(_DATA_TERM);
             $.each(_listFiltered, function(i, item) {
                 if (item.alias === alias) {
@@ -305,8 +303,7 @@ var Dictionary = (function() {
     
     /**
      * Slider rendern.
-     * Rendert den Wörterbuch-Slider anhand der intern
-     * gesetzt Variablen.
+     * Rendert den Wörterbuch-Slider anhand der intern gesetzt Variablen.
      */
     function _renderSlider() {
         _$slider.setMod(_B_SLIDER, _M_IS, _currentSlide);
@@ -354,7 +351,8 @@ var Dictionary = (function() {
                     text   : _currentTerm.term
                 });
                 
-                // Slider verschieben
+                // Details scrollen, Slider verschieben
+                _$details.scrollTop(0);
                 _setCurrentSlide(_indexDetails);
             });
         }

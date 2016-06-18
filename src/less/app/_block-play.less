@@ -9,6 +9,7 @@
 
 // Modul-Variablen
 @_play-size-loading:                    16px;
+@_play-font-size-icon:                  16px;
 
 // Block: Play
 .play {
@@ -43,7 +44,7 @@
     &--loading:before { opacity: @app-opacity-full; }
     
     // Element: Icon
-    &__icon { vertical-align: @app-size-line-thin; }
+    &__icon { font-size: @_play-font-size-icon; }
     
     // Element: Audio
     &__audio { display: none; }

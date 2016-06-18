@@ -60,12 +60,12 @@ var Data = (function() {
             "latuechte"         : { lvl: 1, fail: 0 },
             "pluedden"          : { lvl: 2, fail: 0 },
             "vermackeln"        : { lvl: 3, fail: 0 },
-            "noehlen"           : { lvl: 2, fail: 0 }/*,
+            "noehlen"           : { lvl: 2, fail: 0 },
             "angeschickert"     : { lvl: 1, fail: 0 },
             "beoemmeln"         : { lvl: 3, fail: 0 },
             "dittken"           : { lvl: 1, fail: 0 },
             "knuepp"            : { lvl: 2, fail: 0 },
-            "noenkern"          : { lvl: 3, fail: 0 }*/
+            "noenkern"          : { lvl: 3, fail: 0 }
         };
         
         // Letzten Spiele setzen

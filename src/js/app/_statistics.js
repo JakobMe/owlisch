@@ -175,7 +175,8 @@ var Statistics = (function() {
      * @returns {Number} Prozentpunkte
      */
     function _calcPercent(first, second) {
-        return Math.round((first / second) * 100);
+        var result = Math.round((first / second) * 100);
+        return (isNaN(result) ? 0 : result);
     }
     
     /**
@@ -245,7 +246,8 @@ var Statistics = (function() {
         if (_$progress instanceof $) {
             var data = [{
                 label   : _sizeProgress + CFG.STR.SLASH + _sizeDictionary,
-                percent : _calcPercent(_sizeProgress, _sizeDictionary)
+                percent : _calcPercent(_sizeProgress, _sizeDictionary),
+                zero    : (_sizeProgress === 0)
             }];
             _renderChart(_$progress, data, _arrStepsPercent, true);
         }
@@ -265,6 +267,7 @@ var Statistics = (function() {
                     lvl     : level,
                     levels  : CFG.QUIZ.LEVELS,
                     label   : count,
+                    zero    : (count === 0),
                     percent : _calcPercent(count, _sizeProgress)
                 });
             });

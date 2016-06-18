@@ -186,6 +186,10 @@
         .shadow-none();
     }
     
+    // Mod: Horizontal & Element: Daten & Mod: Ohne & Element: Balken & Text
+    &--horizontal &__data--none &__bar { width: (@app-size-line-thin * 3) !important; }
+    &--horizontal &__data--none &__text { color: @app-color-text-dark-pale; }
+    
     // Element: Label
     &__label {
         display: block;

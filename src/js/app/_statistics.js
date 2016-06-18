@@ -10,11 +10,16 @@ var Statistics = (function() {
     
     // Selektor-Konstanten
     var _SEL_CHART              = ".chart";
+    var _SEL_STATISTICS         = ".statistics";
     var _SEL_LASTGAMES          = "#statistics-lastgames";
     var _SEL_PROGRESS           = "#statistics-progress";
     var _SEL_DICTIONARY         = "#statistics-dictionary";
     var _SEL_TMPL_STATISTICS    = "#tmpl-statistics";
     var _SEL_TMPL_CHART         = "#tmpl-chart";
+    
+    // BEM-Konstanten
+    var _B_CHART                = "chart";
+    var _M_GROW                 = "grow";
     
     // Sonstige Konstanten
     var _NUM_STEPS_PERCENT      = 10;
@@ -32,6 +37,7 @@ var Statistics = (function() {
     var _tmplChart              = $(_SEL_TMPL_CHART).html();
     
     // DOM-Elemente
+    var _$statistics            = null;
     var _$lastgames             = null;
     var _$progress              = null;
     var _$dictionary            = null;
@@ -68,14 +74,18 @@ var Statistics = (function() {
     function _initStatistics() {
         
         // Modulvariablen initialisieren
-        _$lastgames  = $(_SEL_LASTGAMES);
-        _$progress   = $(_SEL_PROGRESS);
-        _$dictionary = $(_SEL_DICTIONARY);           
+        _$statistics = $(_SEL_STATISTICS);
+        _$lastgames  = _$statistics.find(_SEL_LASTGAMES);
+        _$progress   = _$statistics.find(_SEL_PROGRESS);
+        _$dictionary = _$statistics.find(_SEL_DICTIONARY);           
         
         // Letzte Spiele und Fortschritt anfragen, View einblenden
         $(window).trigger(CFG.EVT.REQUEST_PROGRESS);
         $(window).trigger(CFG.EVT.REQUEST_LASTGAMES);
         $(window).trigger(CFG.EVT.SHOW_VIEW);
+        
+        // Diagramme animieren
+        _growCharts();
     }
     
     /**
@@ -86,7 +96,8 @@ var Statistics = (function() {
         $(window).on(CFG.EVT.LOAD_PANEL_CONTENT, _createStatistics);
         $(window).on(CFG.EVT.SERVE_PROGRESS, _updateProgress);
         $(window).on(CFG.EVT.SERVE_LASTGAMES, _updateLastgames);
-        //$(window).on(CFG.EVT.RESTORE_DEFAULT, _restoreDefault);
+        $(window).on(CFG.EVT.SET_PANEL, _growCharts);
+        $(window).on(CFG.EVT.RESTORE_DEFAULT, _restoreDefault);
     }
     
     /**
@@ -258,6 +269,42 @@ var Statistics = (function() {
                 });
             });
             _renderChart(_$dictionary, data, _arrStepsPercent, true, true);
+        }
+    }
+    
+    /**
+     * Diagramme animieren.
+     * Fügt den Diagrammen der Statistik eine Klasse hinzu oder entfernt sie,
+     * um sie zu animieren; reagiert mit und ohne Event.
+     * @param {Object} event Ausgelöstes Event
+     * @param {Object} data Daten des Events
+     */
+    function _growCharts(event, data) {
+        var doGrow = true;
+        if ((typeof data       !== typeof undefined) &&
+            (typeof data.panel !== typeof undefined)) {
+            doGrow = (CFG.VIEW[data.panel] === CFG.VIEW.STATISTICS);   
+        } else {
+            $(_SEL_CHART).setMod(_B_CHART, _M_GROW, false);
+        }
+        setTimeout(function() {
+            $(_SEL_CHART).setMod(_B_CHART, _M_GROW, doGrow);
+        }, (doGrow ? CFG.TIME.DELAY : CFG.TIME.ANIMATION));
+    }
+    
+    /**
+     * Standard-Konfiguration wiederherstellen.
+     * Scrollt die Statistik nach oben und animiert die Diagramme, wenn
+     * ein entsprechendes Event ausgelöst wird.
+     * @param {Object} event Ausgelöstes Event
+     * @param {Object} data Daten des Events
+     */
+    function _restoreDefault(event, data) {
+        if ((typeof data         !== typeof undefined) &&
+            (typeof data.panel   !== typeof undefined) &&
+            (CFG.VIEW[data.panel] === CFG.VIEW.STATISTICS)) {
+            _$statistics.animate({ scrollTop: 0 }, CFG.TIME.ANIMATION);
+            _growCharts();
         }
     }
     

@@ -9,10 +9,18 @@
 
 // Block: Statistik
 .statistics {
-    margin-bottom: @app-size-gap-small;
+    -webkit-overflow-scrolling: touch;
+    overflow-x: hidden;
+    overflow-y: scroll;
+    max-height: 100%;
     
-    // Letztes Element
-    &:last-of-type { margin-bottom: 0; }
+    // Element: Container
+    &__container {
+        margin-bottom: @app-size-gap-small;
+    
+        // Letztes Element
+        &:last-of-type { margin-bottom: 0; }
+    }
     
     // Element: Titel
     &__title {

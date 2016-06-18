@@ -16,6 +16,7 @@
 @_chart-number-lastgames:               10;
 @_chart-number-points:                  10;
 @_chart-number-percent:                 10;
+@_chart-time-animation:                 0.05s;
 
 // Loop: Linien Vertikal
 ._chart-loop-lines-vertical(@n, @i: 1) when (@i <= @n) {
@@ -29,6 +30,12 @@
     ._chart-loop-lines-horizontal(@n, (@i + 1));
 }
 
+// Loop: Datensätze
+._chart-loop-data(@n, @i: 1) when (@i <= @n) {
+    &:nth-child(@{i}) { .transition(all, (@_chart-time-animation * (@n - @i))); }
+    ._chart-loop-data(@n, (@i + 1));
+}
+
 // Block: Diagramm
 .chart {
     overflow: hidden;
@@ -38,7 +45,7 @@
     // Mod: Vertikal & Element: Container
     &--vertical, &--vertical &__container {
         padding-top: @app-size-gap;
-        padding-bottom: (@app-size-gap-small + @_chart-size-label);
+        padding-bottom: (@app-size-gap + @_chart-size-label);
     }
     
     // Mod: Vertikal & Element: Container
@@ -109,6 +116,9 @@
     &__data {
         display: block;
         position: relative;
+        opacity: @app-opacity-invisible;
+        .transition();
+        ._chart-loop-data(@_chart-number-lastgames);
     }
     
     // Mod: Vertikal & Element: Daten
@@ -116,12 +126,20 @@
         float: left;
         height: 100%;
         width: (100% / @_chart-number-lastgames);
+        .translate(0, 125%);
     }
     
     // Mod: Horizontal & Element: Daten
     &--horizontal &__data {
         width: 100%;
         padding: @_chart-size-gap 0;
+        .translate(-180%);
+    }
+    
+    // Mod: Wachsen & Element: Daten
+    &--grow &__data {
+        opacity: @app-opacity-full;
+        .translate();
     }
     
     // Element: Balken

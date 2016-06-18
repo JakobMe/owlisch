@@ -152,7 +152,7 @@ var View = (function() {
     function _setPanel(event, data) {
         if ((typeof data          !== typeof undefined) &&
             (typeof data.panel    !== typeof undefined) &&
-            (_$panels[data.panel] instanceof jQuery)) {
+            (_$panels[data.panel] instanceof $)) {
             
             // Wenn Panel sich nicht geändert hat, Wiederherstellung auslösen
             if (data.panel === _currentPanel) {

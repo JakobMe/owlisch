@@ -30,10 +30,12 @@
     z-index: 200;
     height: @app-size-height-tabbar;
     .border(top, @app-color-shadow-dark);
+    .transition(transform);
     ._tabbar-loop();
     
-    // Mod: Versteckt
+    // Mod: Versteckt & Deaktiviert
     &--hidden { .translate(0, 100%); }
+    &--disabled { display: none; }
 
     // Element: Liste
     &__list {

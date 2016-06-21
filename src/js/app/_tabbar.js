@@ -18,6 +18,7 @@ var TabBar = (function() {
     var _E                      = "tab";
     var _M_ACTIVE               = "active";
     var _M_HIDDEN               = "hidden";
+    var _M_DISABLED             = "disabled";
     var _M_TAB                  = "tab";
     
     // Data-Attibut-Konstanten
@@ -27,6 +28,7 @@ var TabBar = (function() {
     var _tabActive              = 0;
     var _tabNumber              = -1;
     var _isHidden               = false;
+    var _isDisabled             = false;
     var _tmplTablist            = $(_SEL_TMPL).html();
     
     // DOM-Elemente
@@ -58,8 +60,8 @@ var TabBar = (function() {
     function _bindEvents() {
         _$tabbar.on(CFG.EVT.CLICK, _SEL_TABS, setTab);
         $(window).on(CFG.EVT.CREATE_PANELS, _createTablist);
-        window.addEventListener(CFG.EVT.KEYBOARD_SHOW, hide);
-        window.addEventListener(CFG.EVT.KEYBOARD_HIDE, show);
+        window.addEventListener(CFG.EVT.KEYBOARD_SHOW, disable);
+        window.addEventListener(CFG.EVT.KEYBOARD_HIDE, enable);
     }
     
     /**
@@ -69,6 +71,7 @@ var TabBar = (function() {
      */
     function _render() {
         _$tabbar.setMod(_B, _M_HIDDEN, _isHidden);
+        _$tabbar.setMod(_B, _M_DISABLED, _isDisabled);
         _$tabbar.setMod(_B, _M_TAB, _tabActive);
         _$tabs.eq(_tabActive).setMod(_B, _E, _M_ACTIVE, true)
               .siblings().setMod(_B, _E, _M_ACTIVE, false);
@@ -139,12 +142,32 @@ var TabBar = (function() {
         _render();
     }
     
+    /**
+     * Modul deaktivieren.
+     * Deaktiviert das Modul aus und rendert es neu.
+     */
+    function disable() {
+        _isDisabled = true;
+        _render();
+    }
+    
+    /**
+     * Modul aktivieren.
+     * Akiviert das Modul ein und rendert es neu.
+     */
+    function enable() {
+        _isDisabled = false;
+        _render();
+    }
+    
     // Öffentliches Interface
     return {
-        init   : init,
-        hide   : hide,
-        show   : show,
-        setTab : setTab
+        init    : init,
+        hide    : hide,
+        show    : show,
+        disable : disable,
+        enable  : enable,
+        setTab  : setTab
     };
     
 })();

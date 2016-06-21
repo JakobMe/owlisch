@@ -13,8 +13,6 @@
 @_chart-size-step:                      16px;
 @_chart-size-bar:                       18px;
 @_chart-size-gap:                       6px;
-@_chart-number-lastgames:               10;
-@_chart-number-points:                  10;
 @_chart-number-percent:                 10;
 @_chart-time-animation:                 0.05s;
 
@@ -76,7 +74,7 @@
     &--vertical &__line {
         width: 100%;
         height: @_chart-size-step;
-        ._chart-loop-lines-vertical(@_chart-number-points);
+        ._chart-loop-lines-vertical(@app-number-questions);
         .border(top, @app-color-background);
         
         // Erstes Element
@@ -118,14 +116,14 @@
         position: relative;
         opacity: @app-opacity-invisible;
         .transition();
-        ._chart-loop-data(@_chart-number-lastgames);
+        ._chart-loop-data(@app-number-lastgames);
     }
     
     // Mod: Vertikal & Element: Daten
     &--vertical &__data {
         float: left;
         height: 100%;
-        width: (100% / @_chart-number-lastgames);
+        width: (100% / @app-number-lastgames);
         .translate(0, 125%);
     }
     

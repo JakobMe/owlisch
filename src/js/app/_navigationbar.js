@@ -62,8 +62,6 @@ var NavigationBar = (function() {
      * um den Anfangszustand der Navigation-Bar herzustellen.
      */
     function init() {
-        
-        // Funktionen ausführen
         _parseTemplates();
         _initNavigationBar();
         _render();

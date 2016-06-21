@@ -56,8 +56,6 @@ var Dictionary = (function() {
      * um den Anfangszustand des Wörterbuches herzustellen.
      */
     function init() {
-
-        // Funktionen ausführen
         _parseTemplates();
         _bindEvents();
     }
@@ -115,7 +113,7 @@ var Dictionary = (function() {
      */
     function _bindClickEvents() {
         if (_$list instanceof $) {
-            _$list.on(CFG.EVT.CLICK, _SEL_ITEM, _setCurrentTerm);
+            _$list.on(CFG.EVT.CLICK, _SEL_ITEM, _updateCurrentTerm);
         }
     }
     
@@ -234,8 +232,12 @@ var Dictionary = (function() {
     function _updateList(event, data) {
         if ((typeof data      !== typeof undefined) &&
             (typeof data.list !== typeof undefined)) {
+                
+            // Daten aktualisieren
             _listCaption  = data.caption;
             _listOriginal = data.list;
+            
+            // Liste erweitert und filtern
             $.each(_listOriginal, function(i, item) {
                 $.extend(this, {
                     start     : item.term,
@@ -244,6 +246,11 @@ var Dictionary = (function() {
                 });
             });
             _filterList();
+            
+            // Details neu rendern
+            if (_currentSlide === _indexDetails) {
+                _setCurrentTerm(_currentTerm.alias, false);
+            }
         }
     }
     
@@ -267,22 +274,37 @@ var Dictionary = (function() {
     }
     
     /**
-     * Aktuellen Begriff setzen.
-     * Lädt anhand eines Events und einem dazugehörigen Begriff-Alias
-     * den zugehörigen Begriff aus der aktuellen Liste; rendert
-     * anschließend die Details des Begriffes.
+     * Aktuellen Begriff aktualisieren.
+     * Setzt einen neuen aktuellen Begriff anhand eines ausgelösten
+     * Klick-Events; sperrt die Begriff-Liste.
      * @param {Object} event Ausgelöstes Event
      */
-    function _setCurrentTerm(event) {
+    function _updateCurrentTerm(event) {
         if ((typeof event !== typeof undefined) && (!_listIsLocked)) {
             
-            // Liste sperren, Alias ermitteln, Begriff suchen und setzen
+            // Liste sperren und Begriff setzen
             _listIsLocked = true;
-            var alias = $(event.target).closest(_SEL_ITEM).data(_DATA_TERM);
+            _setCurrentTerm(
+                $(event.target).closest(_SEL_ITEM).data(_DATA_TERM)
+            );
+        }
+    }
+    
+    /**
+     * Aktuellen Begriff setzen.
+     * Durchsucht die Begriff-Liste nach dem Begriff-Alias und aktualisiert
+     * den aktuellen Begriff; rendert die Begriff-Details neu.
+     * @param {String} alias Alias des neuen Begriffs
+     * @param {Boolean} renderNavBar Navigation-Bar neu rendern
+     */
+    function _setCurrentTerm(alias, renderNavBar) {
+        if (typeof alias !== typeof undefined) {
+            
+            // Aktuelle Liste iterieren und Begriff setzen
             $.each(_listFiltered, function(i, item) {
                 if (item.alias === alias) {
                     _currentTerm = $.extend({}, this);
-                    _renderDetails();             
+                    _renderDetails(renderNavBar !== false);             
                     return false;
                 }
             });
@@ -329,8 +351,9 @@ var Dictionary = (function() {
      * Rendert die Details des aktuellen Begriffs anhand eines
      * Mustache-Templates; bewegt den Wörterbuch-Slider und
      * ändert die Navigation-Bar.
+     * @param {Boolean} renderNavBar Navigation rendern
      */
-    function _renderDetails() {
+    function _renderDetails(renderNavBar) {
         if ((typeof _currentTerm       === typeof {}) &&
             (typeof _currentTerm.alias !== typeof undefined) &&
             (typeof _currentTerm.term  !== typeof undefined)) {
@@ -346,11 +369,13 @@ var Dictionary = (function() {
                      .promise().done(function() {
                 
                 // Event für Navigation-Bar auslösen
-                $(window).trigger(CFG.EVT.PRESSED_BUTTON, {
-                    action : CFG.ACT.DICTIONARY_FORWARD,
-                    text   : _currentTerm.term
-                });
-                
+                if (renderNavBar !== false) {
+                    $(window).trigger(CFG.EVT.PRESSED_BUTTON, {
+                        action : CFG.ACT.DICTIONARY_FORWARD,
+                        text   : _currentTerm.term
+                    });
+                }
+                    
                 // Details scrollen, Slider verschieben
                 _$details.scrollTop(0);
                 _setCurrentSlide(_indexDetails);

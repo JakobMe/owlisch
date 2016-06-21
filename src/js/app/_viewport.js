@@ -31,11 +31,11 @@ var Viewport = (function() {
      * Bindet Funktionen an Events und Elemente des Moduls.
      */
     function _bindEvents() {
-        $(window).on(CFG.EVT.SHOW_VIEWPORT, _show);
+        $(window).on(CFG.EVT.SHOW_VIEWPORT, show);
     }
     
     /**
-     * Modul rendern.
+     * Viewport rendern.
      * Rendert alle Elemente des Moduls anhand der intern
      * gesetzten aktuellen Variablen.
      */
@@ -44,15 +44,28 @@ var Viewport = (function() {
     }
     
     /**
-     * Modul zeigen.
+     * Viewport zeigen.
      * Blendet das Modul ein und rendert es neu.
      */
-    function _show() {
+    function show() {
         _isVisible = true;
         setTimeout(function() { _render(); }, CFG.TIME.DELAY);
     }
     
+    /**
+     * Viewport ausblenden.
+     * Blendet das Modul aus und rendert es neu.
+     */
+    function hide() {
+        _isVisible = false;
+        setTimeout(function() { _render(); }, CFG.TIME.DELAY);
+    }
+    
     // Öffentliches Interface
-    return { init: init };
+    return {
+        init : init,
+        show : show,
+        hide : hide
+    };
     
 })();

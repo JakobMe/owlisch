@@ -50,7 +50,7 @@ var Statistics = (function() {
         
         // Interne Variablen initialisieren
         _arrStepsPercent   = _arrayFromNumber(_NUM_STEPS_PERCENT);
-        _arrStepsLastgames = _arrayFromNumber(CFG.QUIZ.NUM_STEPS);
+        _arrStepsLastgames = _arrayFromNumber(CFG.QUIZ.QUESTIONS);
         
         // Funktionen ausführen
         _parseTemplates();
@@ -114,7 +114,7 @@ var Statistics = (function() {
 
             // Template füllen, Callback ausführen
             data.target.html(Mustache.render(
-                _tmplStatistics, { games: CFG.QUIZ.NUM_PROGRESS }
+                _tmplStatistics, { games: CFG.QUIZ.LASTGAMES }
                 )).promise().done(function() { _initStatistics(); });
         }
     }
@@ -229,7 +229,7 @@ var Statistics = (function() {
             $.each(_listLastgames, function(i, value) {
                 data.push({
                     label   : value,
-                    percent : _calcPercent(value, CFG.QUIZ.NUM_STEPS),
+                    percent : _calcPercent(value, CFG.QUIZ.QUESTIONS),
                     zero    : (value === 0)
                 });
             });

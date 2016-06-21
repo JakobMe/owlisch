@@ -39,8 +39,6 @@ var TabBar = (function() {
      * um den Anfangszustand der Tab-Bar herzustellen.
      */
     function init() {
-        
-        // Funktionen ausführen
         _parseTemplates();
         _bindEvents();
     }
@@ -58,10 +56,10 @@ var TabBar = (function() {
      * Bindet Funktionen an Events und Elemente des Moduls.
      */
     function _bindEvents() {
-        _$tabbar.on(CFG.EVT.CLICK, _SEL_TABS, _setTab);
+        _$tabbar.on(CFG.EVT.CLICK, _SEL_TABS, setTab);
         $(window).on(CFG.EVT.CREATE_PANELS, _createTablist);
-        window.addEventListener(CFG.EVT.KEYBOARD_SHOW, _hide);
-        window.addEventListener(CFG.EVT.KEYBOARD_HIDE, _show);
+        window.addEventListener(CFG.EVT.KEYBOARD_SHOW, hide);
+        window.addEventListener(CFG.EVT.KEYBOARD_HIDE, show);
     }
     
     /**
@@ -90,7 +88,7 @@ var TabBar = (function() {
                 .promise().done(function() {
                     _$tabs     = _$tabbar.find(_SEL_TABS);
                     _tabNumber = _$tabs.length - 1;
-                    _setTab(_tabActive);
+                    setTab(_tabActive);
                     $(window).trigger(CFG.EVT.SHOW_VIEWPORT);
                 }
             );
@@ -104,7 +102,7 @@ var TabBar = (function() {
      * als aktiver Index gesetzt und die Tabbar wird gerendert.
      * @param {(Object|Number)} tab Klick-Event vom Tab oder Tab-Index
      */
-    function _setTab(tab) {
+    function setTab(tab) {
         
         // Variablen initialisieren, Tab-Index ermitteln
         var i     = -1;
@@ -127,7 +125,7 @@ var TabBar = (function() {
      * Modul verbergen.
      * Blendet das Modul aus und rendert es neu.
      */
-    function _hide() {
+    function hide() {
         _isHidden = true;
         _render();
     }
@@ -136,12 +134,17 @@ var TabBar = (function() {
      * Modul zeigen.
      * Blendet das Modul ein und rendert es neu.
      */
-    function _show() {
+    function show() {
         _isHidden = false;
         _render();
     }
     
     // Öffentliches Interface
-    return { init: init };
+    return {
+        init   : init,
+        hide   : hide,
+        show   : show,
+        setTab : setTab
+    };
     
 })();

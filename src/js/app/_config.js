@@ -18,11 +18,9 @@ var CFG = (function() {
             TYPE_IMAGE          : ".jpg"
         },
         QUIZ: {
-            LVL_MIN             : 1,
-            LVL_MAX             : 3,
             LEVELS              : [1,2,3],
-            NUM_STEPS           : 10,
-            NUM_PROGRESS        : 10
+            QUESTIONS           : 10,
+            LASTGAMES           : 10
         },
         VIEW: {
             START: {

@@ -44,8 +44,6 @@ var View = (function() {
      * um den Anfangszustand der View herzustellen.
      */
     function init() {
-        
-        // Funktionen ausführen
         _parseTemplates();
         _bindEvents();
         _initPanels();
@@ -66,10 +64,10 @@ var View = (function() {
      */
     function _bindEvents() {
         $(window).on(CFG.EVT.SET_PANEL, _setPanel);
-        $(window).on(CFG.EVT.SHOW_VIEW, _show);
-        $(window).on(CFG.EVT.HIDE_VIEW, _hide);
-        window.addEventListener(CFG.EVT.KEYBOARD_SHOW, _setFullscreen);
-        window.addEventListener(CFG.EVT.KEYBOARD_HIDE, _unsetFullscreen);
+        $(window).on(CFG.EVT.SHOW_VIEW, show);
+        $(window).on(CFG.EVT.HIDE_VIEW, hide);
+        window.addEventListener(CFG.EVT.KEYBOARD_SHOW, enableFullscreen);
+        window.addEventListener(CFG.EVT.KEYBOARD_HIDE, disableFullscreen);
     }
     
     /**
@@ -182,7 +180,7 @@ var View = (function() {
         
         // Aktuelles Panel setzen, ausblenden
         _currentPanel = panel;
-        _hide();
+        hide();
 
         // Inhalt laden
         setTimeout(function() {
@@ -207,14 +205,14 @@ var View = (function() {
             );
         
         // Ansonsten einblenden
-        } else { _show(); }
+        } else { show(); }
     }
     
     /**
      * Modul verbergen.
      * Blendet das Modul aus und rendert es neu.
      */
-    function _hide() {
+    function hide() {
         _isVisible = false;
         _render();
     }
@@ -223,7 +221,7 @@ var View = (function() {
      * Modul zeigen.
      * Blendet das Modul ein und rendert es neu.
      */
-    function _show() {
+    function show() {
         _isVisible = true;
         _render();
     }
@@ -232,7 +230,7 @@ var View = (function() {
      * Fullscreen aktivieren.
      * Aktiviert die volle Höhe für das Modul.
      */
-    function _setFullscreen() {
+    function enableFullscreen() {
         _isFullscreen = true;
         _render();
     }
@@ -241,12 +239,18 @@ var View = (function() {
      * Fullscreen deaktivieren.
      * Deaktiviert die volle Höhe für das Modul.
      */
-    function _unsetFullscreen() {
+    function disableFullscreen() {
         _isFullscreen = false;
         _render();
     }
     
     // Öffentliches Interface
-    return { init: init };
+    return {
+        init              : init,
+        show              : show,
+        hide              : hide,
+        enableFullscreen  : enableFullscreen,
+        disableFullscreen : disableFullscreen
+    };
     
 })();

@@ -24,8 +24,6 @@ var Data = (function() {
      * Startet Funktionen, um den Anfangszustand des SaveGames herzustellen.
      */
     function init() {
-        
-        // Funktionen ausführen
         _bindEvents();
         _loadSavegame();
         _loadDictionary();
@@ -218,11 +216,32 @@ var Data = (function() {
             (typeof data.alias !== typeof undefined) &&
             (typeof data.lvl   !== typeof undefined) &&
             (typeof data.fail  !== typeof undefined)) {
+            setProgress(data.alias, data.lvl, data.fail);
+        }
+    }
+    
+    /**
+     * Fortschritt setzen.
+     * Setzt den Fortschritt für einen bestimmten Begriff;
+     * aktualisiert die Stufe und die Fehlschläge des Begriffs,
+     * speichert den Fortschritt und aktualisiert die Listen.
+     * @param {String} alias Alias des Begriffs
+     * @param {Number} lvl Neue Stufe des Begriffs
+     * @param {Number} fail Neue Fehlschläge des Begriffs
+     */
+    function setProgress(alias, lvl, fail) {
+        if ((typeof _savegame[alias] !== typeof undefined) &&
+            (typeof lvl              === typeof 0) &&
+            (typeof fail             === typeof 0)) {
+            
+            // Minimum und Maximum für Level ermitteln
+            var min = CFG.QUIZ.LEVELS[0];
+            var max = CFG.QUIZ.LEVELS.length;
             
             // Fortschritts-Daten aktualisieren
-            _savegame[data.alias] = {
-                lvl  : Math.max(Math.min(data.lvl, CFG.QUIZ.LVL_MAX), 0),
-                fail : Math.max(data.fail, 0)
+            _savegame[alias] = {
+                lvl  : Math.max(Math.min(lvl, max), min),
+                fail : Math.max(fail, 0)
             };
             
             // Speichern und Listen aktualisieren
@@ -241,12 +260,27 @@ var Data = (function() {
     function _updateLastgames(event, data) {
         if ((typeof data        !== typeof undefined) &&
             (typeof data.result === typeof 0)) {
-
+            setLastgames(data.result);
+        }
+    }
+    
+    /**
+     * Die letzten Spiele setzen.
+     * Fügt einen neuen Wert zur Liste der letzten Spiele hinzu;
+     * kürzt die Liste wieder auf die Maximallänge, speichert sie
+     * und stellt sie zur Verfügung.
+     * @param {Number} result Neues Quiz-Ergebnis
+     */
+    function setLastgames(result) {
+        if (typeof result === typeof 0) {
+            
+            // Neuen Wert korrigieren, Startindex für Kürzung berechnen
+            var value = Math.max(Math.min(result, CFG.QUIZ.QUESTIONS), 0);
+            var start = Math.max(_sizeLastgames + 1 - CFG.QUIZ.LASTGAMES, 0);
+            
             // Neuen Wert hinzufügen, Liste kürzen, Länge speichern
-            _listLastgames.push(data.result);
-            _listLastgames.slice(
-                Math.max(_listLastgames.length - CFG.QUIZ.NUM_PROGRESS, 0)
-            );
+            _listLastgames.push(value);
+            _listLastgames = _listLastgames.slice(start);
             _sizeLastgames = _listLastgames.length;
             
             // Speichern und bereitstellen
@@ -292,6 +326,10 @@ var Data = (function() {
     }
     
     // Öffentliches Interface
-    return { init: init };
+    return {
+        init         : init,
+        setProgress  : setProgress,
+        setLastgames : setLastgames
+    };
     
 })();

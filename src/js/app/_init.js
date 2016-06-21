@@ -26,6 +26,7 @@ var App = {
         Viewport.init();
         Dictionary.init();
         Statistics.init();
+        Quiz.init();
         NavigationBar.init();
         TabBar.init();
         Play.init();

@@ -32,7 +32,7 @@
 
 // Loop: Datensätze
 ._chart-loop-data(@n, @i: 1) when (@i <= @n) {
-    &:nth-child(@{i}) { .transition(all, (@_chart-time-animation * (@n - @i))); }
+    &:nth-child(@{i}) { .transition(all, (@_chart-time-animation * (@n - @i + 1))); }
     ._chart-loop-data(@n, (@i + 1));
 }
 

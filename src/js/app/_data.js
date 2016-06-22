@@ -54,18 +54,18 @@ var Data = (function() {
             "doenekens"         : { lvl: 3, fail: 0 },
             "fickerich"         : { lvl: 1, fail: 0 },
             "latuechte"         : { lvl: 1, fail: 0 },
-            "pluedden"          : { lvl: 2, fail: 0 },
+            "pluedden"          : { lvl: 2, fail: 0 }/*,
             "vermackeln"        : { lvl: 3, fail: 0 },
             "noehlen"           : { lvl: 2, fail: 0 },
             "angeschickert"     : { lvl: 1, fail: 0 },
             "beoemmeln"         : { lvl: 3, fail: 0 },
             "dittken"           : { lvl: 1, fail: 0 },
             "knuepp"            : { lvl: 2, fail: 0 },
-            "noenkern"          : { lvl: 3, fail: 0 }
+            "noenkern"          : { lvl: 3, fail: 0 }*/
         };
         
         // Letzten Spiele setzen
-        _dataScores = [1, 2, 0, 3, 5, 4, 8, 7, 10, 9];
+        _dataScores = [1, 2, 0, 3, 4, 2, 5, 4, 7, 6];
         _sizeScores = _dataScores.length;
         
         // !TODO: _loadDataSaved() LocalStorage

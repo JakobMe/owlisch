@@ -306,8 +306,11 @@ var Statistics = (function() {
         if ((typeof data         !== typeof undefined) &&
             (typeof data.panel   !== typeof undefined) &&
             (CFG.VIEW[data.panel] === CFG.VIEW.STATISTICS)) {
-            _$statistics.animate({ scrollTop: 0 }, CFG.TIME.ANIMATION);
-            _growCharts();
+            _$statistics.animate(
+                { scrollTop: 0 },
+                CFG.TIME.ANIMATION,
+                _growCharts
+            );
         }
     }
     

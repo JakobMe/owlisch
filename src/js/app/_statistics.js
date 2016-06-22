@@ -49,8 +49,8 @@ var Statistics = (function() {
     function init() {
         
         // Interne Variablen initialisieren
-        _arrStepsPercent = _arrayFromNumber(_NUM_STEPS_PERCENT);
-        _arrStepsScores  = _arrayFromNumber(CFG.QUIZ.QUESTIONS);
+        _arrStepsPercent = Helper.arrayFromNumber(_NUM_STEPS_PERCENT);
+        _arrStepsScores  = Helper.arrayFromNumber(CFG.QUIZ.QUESTIONS);
         
         // Funktionen ausführen
         _parseTemplates();
@@ -155,47 +155,6 @@ var Statistics = (function() {
     }
     
     /**
-     * Ein Array aus einer Zahl generieren.
-     * Erzeugt ein Array mit Ganzzahlen von 1 bis zur gewählten Zahl.
-     * @param {Number} number Letzte Zahl im Array
-     * @returns {Number[]} Array aus Zahlen bis zur gewählten Zahl
-     */
-    function _arrayFromNumber(number) {
-        var arr = [];
-        for (var i = 0; i < number; i++) { arr.push(i + 1); }
-        return arr;
-    }
-    
-    /**
-     * Prozentwert zweier Zahlen berechnen.
-     * Berechnet den prozentualen Anteil einer Zahl an einer anderen;
-     * gibt das Ergebnis in Prozentpunkten zurück.
-     * @param {Number} first Erster Zahlenwert
-     * @param {Number} second Zweiter Zahlenwert
-     * @returns {Number} Prozentpunkte
-     */
-    function _calcPercent(first, second) {
-        var result = Math.round((first / second) * 100);
-        return (isNaN(result) ? 0 : result);
-    }
-    
-    /**
-     * Begriffe mit Level zählen.
-     * Zählt in einer gegeben Begriff-Liste alle Einträge,
-     * die das angegebene Level haben.
-     * @param {Object[]} list Begriff-Liste
-     * @param {Number} level Gesuchter Level
-     * @returns {Number} Anzahl der gefundenen Begriffe
-     */
-    function _countTermsWithLevel(list, level) {
-        var count = 0;
-        $.each(list, function(i, data) {
-            if (data.lvl === level) { count++; }
-        });
-        return count;
-    }
-    
-    /**
      * Diagramm rendern.
      * Rendert ein Diagramm mit gegebenen Eigenschaften anhand eines
      * Mustache-Templates in einen angegebenen Container.
@@ -229,7 +188,7 @@ var Statistics = (function() {
             $.each(_dataScores, function(i, value) {
                 data.push({
                     label   : value,
-                    percent : _calcPercent(value, CFG.QUIZ.QUESTIONS),
+                    percent : Helper.calcPercent(value, CFG.QUIZ.QUESTIONS),
                     zero    : (value === 0)
                 });
             });
@@ -246,7 +205,7 @@ var Statistics = (function() {
         if (_$progress instanceof $) {
             var data = [{
                 label   : _sizeSolved + CFG.STR.SLASH + _sizeTerms,
-                percent : _calcPercent(_sizeSolved, _sizeTerms),
+                percent : Helper.calcPercent(_sizeSolved, _sizeTerms),
                 zero    : (_sizeSolved === 0)
             }];
             _renderChart(_$progress, data, _arrStepsPercent, true);
@@ -262,13 +221,13 @@ var Statistics = (function() {
         if (_$dictionary instanceof $) {
             var data = [];
             $.each(CFG.QUIZ.LEVELS, function(i, level) {
-                var count = _countTermsWithLevel(_dataTerms, level);
+                var count = Helper.countTermsWithLevel(_dataTerms, level);
                 data.push({
                     lvl     : level,
                     levels  : CFG.QUIZ.LEVELS,
                     label   : count,
                     zero    : (count === 0),
-                    percent : _calcPercent(count, _sizeSolved)
+                    percent : Helper.calcPercent(count, _sizeSolved)
                 });
             });
             _renderChart(_$dictionary, data, _arrStepsPercent, true, true);

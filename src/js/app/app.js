@@ -8,6 +8,7 @@
  */
 
 // @codekit-prepend "_config.js";
+// @codekit-prepend "_helper.js";
 // @codekit-prepend "_data.js";
 // @codekit-prepend "_play.js";
 // @codekit-prepend "_viewport.js";

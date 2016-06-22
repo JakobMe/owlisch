@@ -268,8 +268,17 @@
                 
         <!-- Template: Quiz -->
         <script id="tmpl-quiz" type="text/template">
-            <div class="quiz">
-            <div>
+            <div class="slider slider--has-{{slides}} quiz" id="quiz-slider">
+                <div class="slider__slide" id="quiz-start" data-slide="1">
+                    
+                </div>
+                {{#questions}}
+                <div class="slider__slide quiz__step" data-slide="{{.}}"></div>
+                {{/questions}}
+                <div class="slider__slide" id="quiz-finish" data-slide="{{slides}}">
+                    
+                </div>
+            </div>
         </script>
         
         <!-- Javascript -->

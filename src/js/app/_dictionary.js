@@ -78,12 +78,12 @@ var Dictionary = (function() {
     function _initDictionary() {
         
         // Modulvariablen initialisieren
-        _$slider            = $(_SEL_SLIDER);
-        _$list              = _$slider.find(_SEL_LIST);
-        _$listbox           = _$slider.find(_SEL_LISTBOX);
-        _$details           = _$slider.find(_SEL_DETAILS);
-        _indexDetails       = parseInt(_$details.data(_DATA_SLIDE));
-        _indexListbox       = parseInt(_$listbox.data(_DATA_SLIDE));
+        _$slider      = $(_SEL_SLIDER);
+        _$list        = _$slider.find(_SEL_LIST);
+        _$listbox     = _$slider.find(_SEL_LISTBOX);
+        _$details     = _$slider.find(_SEL_DETAILS);
+        _indexDetails = parseInt(_$details.data(_DATA_SLIDE));
+        _indexListbox = parseInt(_$listbox.data(_DATA_SLIDE));
         
         // Funktionen ausführen
         _setCurrentSlide(_indexListbox);

@@ -9,24 +9,23 @@
 var Data = (function() {
     
     // Private Variablen
-    var _alias                  = CFG.DATA.ALIAS;
-    var _caption                = CFG.STR.EMPTY;
-    var _savegame               = {};
-    var _listDictionary         = [];
-    var _listProgress           = [];
-    var _listLastgames          = [];
-    var _sizeDictionary         = 0;
-    var _sizeProgress           = 0;
-    var _sizeLastgames          = 0;
+    var _dictionaryAlias        = CFG.DATA.ALIAS;
+    var _dictionaryCaption      = CFG.STR.EMPTY;
+    var _dataScores             = [];
+    var _dataTerms              = [];
+    var _dataSaved              = {};
+    var _sizeScores             = 0;
+    var _sizeTerms              = 0;
+    var _sizeSolved             = 0;
     
     /**
-     * SaveGame initialisieren.
-     * Startet Funktionen, um den Anfangszustand des SaveGames herzustellen.
+     * Daten initialisieren.
+     * Startet Funktionen, um den Anfangszustand des Data-Moduls herzustellen.
      */
     function init() {
         _bindEvents();
-        _loadSavegame();
-        _loadDictionary();
+        _loadDataSaved();
+        _loadDataDictionary();
     }
     
     /**
@@ -34,21 +33,20 @@ var Data = (function() {
      * Bindet Funktionen an Events und Elemente des Moduls.
      */
     function _bindEvents() {
-        $(window).on(CFG.EVT.REQUEST_DICTIONARY, _serveDictionary);
-        $(window).on(CFG.EVT.REQUEST_PROGRESS, _serveProgress);
-        $(window).on(CFG.EVT.REQUEST_LASTGAMES, _serveLastgames);
-        $(window).on(CFG.EVT.UPDATE_PROGRESS, _updateProgress);
-        $(window).on(CFG.EVT.UPDATE_LASTGAMES, _updateLastgames);
+        $(window).on(CFG.EVT.REQUEST_TERMS, _serveDataTerms);
+        $(window).on(CFG.EVT.REQUEST_SCORES, _serveDataScores);
+        $(window).on(CFG.EVT.UPDATE_TERMS, _updateDataTerm);
+        $(window).on(CFG.EVT.UPDATE_SCORES, _updateDataScore);
     }
     
     /**
-     * Fortschritt laden.
-     * Setzt den bisherigen Fortschritt.
+     * Gespeicherte Daten laden.
+     * Lädt alle gespeicherten Daten aus dem LocalStorage.
      */
-    function _loadSavegame() {
+    function _loadDataSaved() {
         
         // Fortschritt-Daten setzen
-        _savegame = {
+        _dataSaved = {
             "pinneken"          : { lvl: 3, fail: 0 },
             "anneeckeliegen"    : { lvl: 1, fail: 0 },
             "buetterken"        : { lvl: 1, fail: 0 },
@@ -67,10 +65,10 @@ var Data = (function() {
         };
         
         // Letzten Spiele setzen
-        _listLastgames = [1, 2, 0, 3, 5, 4, 8, 7, 10, 9];
-        _sizeLastgames = _listLastgames.length;
+        _dataScores = [1, 2, 0, 3, 5, 4, 8, 7, 10, 9];
+        _sizeScores = _dataScores.length;
         
-        // !TODO: _loadSavegame() LocalStorage
+        // !TODO: _loadDataSaved() LocalStorage
     }
     
     /**
@@ -78,19 +76,19 @@ var Data = (function() {
      * Lädt die Datei zum eingestellten Wörterbuch und
      * speichert die Daten in einer lokalen Variable.
      */
-    function _loadDictionary() {
+    function _loadDataDictionary() {
         
         // Pfad zur Wörterbuch-Datei zusammensetzen
-        var file = CFG.DATA.PATH_DATA + _alias + CFG.STR.SLASH + _alias +
-                   CFG.DATA.TYPE_DATA;
+        var file = CFG.DATA.PATH_DATA + _dictionaryAlias +
+                   CFG.STR.SLASH + _dictionaryAlias + CFG.DATA.TYPE_DATA;
         
         // AJAX Get-Anfrage zur Datei, im Anschluss Dateien prüfen
         $.getJSON(file, function(data) {
             if ((typeof data.caption === typeof CFG.STR.EMPTY) &&
                 $.isArray(data.terms)) {
-                _caption        = data.caption;
-                _listDictionary = data.terms;
-                _sizeDictionary = data.terms.length;
+                _dictionaryCaption = data.caption;
+                _dataTerms = data.terms;
+                _sizeTerms = data.terms.length;
             }
         }).done(function() { _checkDictionaryFiles(); });
     }
@@ -120,7 +118,7 @@ var Data = (function() {
         if (typeof alias === typeof CFG.STR.EMPTY) {
         
             // Pfade zusammensetzen, Datei-Status initialisieren
-            var pathData  = CFG.DATA.PATH_DATA + _alias;
+            var pathData  = CFG.DATA.PATH_DATA + _dictionaryAlias;
             var pathAudio = pathData + CFG.DATA.PATH_AUDIO;
             var pathImage = pathData + CFG.DATA.PATH_IMAGE;
             var fileAudio = pathAudio + alias + CFG.DATA.TYPE_AUDIO;
@@ -138,7 +136,7 @@ var Data = (function() {
      * Wörterbuch nach Existenz von Dateien überprüfen.
      * Prüft alle Begriffe des Wörterbuches nach der Existenz von
      * zugehörigen Audio- und Bild-Dateien; aktualisiert anschließend
-     * die Begriff-Listen.
+     * die Begriff-Daten.
      */
     function _checkDictionaryFiles() {
         
@@ -146,7 +144,7 @@ var Data = (function() {
         var fileChecks = [];
         
         // Wörterbuch iterieren, Dateien überprüfen
-        $.each(_listDictionary, function(i, item) {
+        $.each(_dataTerms, function(i, item) {
             $.each(_checkTermFiles(item.alias), function(type, result) {
                 fileChecks.push(result.check);
                 result.check.done(function() { item[type] = result.file; })
@@ -156,32 +154,28 @@ var Data = (function() {
         
         // Begriff-Listen aktualisieren, sobald Dateien geprüft wurden
         $.when.apply($, fileChecks).always(function() {
-            _updateLists();
+            _processDataTerms();
         });
     }
     
     /**
-     * Begriff-Listen aktualisieren.
-     * Aktualisiert die Begriff-Listen für den Fortschritt und das
-     * gesamte Wörterbuch anhand der zuvor geladenen Wörterbuch-Daten
-     * und den aktuellen Fortschritts-Daten.
+     * Begriff-Daten aufbereiten.
+     * Verknüpft alle Daten der Wörterbuch-Begriffe mit den
+     * gespeicherten Fortschritts-Daten; stellt die aktuellen Daten
+     * über Events zur Verfügung.
      */
-    function _updateLists() {
-        
-        // Fortschritts-Liste zurücksetzen
-        _listProgress   = [];
-        
-        // Alle Begriffe um Fortschritt erweitert, Listen aktualisieren
-        $.each(_listDictionary, function(i, item) {
-            $.extend(item, (_savegame[item.alias] || { lvl: 0, fail: 0 }));
-            if (item.lvl > 0) { _listProgress.push(item); }
+    function _processDataTerms() {
+
+        // Daten aktualisieren
+        _sizeSolved = 0;
+        $.each(_dataTerms, function(i, item) {
+            $.extend(item, (_dataSaved[item.alias] || { lvl: 0, fail: 0 }));
+            if (item.lvl > 0) { _sizeSolved++; }
         });
         
-        // Fortschritts-Größe aktualisieren, Begriff-Listen bereitstellen
-        _sizeProgress = _listProgress.length;
-        _serveDictionary();
-        _serveProgress();
-        _serveLastgames();
+        // Daten bereitstellen
+        _serveDataTerms();
+        _serveDataScores();
     }
     
     /**
@@ -189,9 +183,9 @@ var Data = (function() {
      * Speichert den zuvor aktualisierten Fortschritt als
      * JSON-String im LocalStorage.
      */
-    function _saveProgress() {
+    function _saveDataTerms() {
         
-        // !TODO: _saveProgress() LocalStorage
+        // !TODO: _saveDataTerms() LocalStorage
     }
     
     /**
@@ -199,54 +193,54 @@ var Data = (function() {
      * Speichert die zuvor aktualisierten letzten Spieleregebnisse
      * als JSON-String im LocalStorage.
      */
-    function _saveLastgames() {
+    function _saveDataScores() {
         
-        // !TODO: _saveLastgames() LocalStorage
+        // !TODO: _saveDataScores() LocalStorage
     }
     
     /**
-     * Fortschitt aktualisieren.
+     * Begriff-Daten aktualisieren.
      * Setzt das neue Level und die Anzahl der Fehlschläge
      * für einen bestimmten Begriff beim entsprechenden Event.
      * @param {Object} event Ausgelöstes Event
      * @param {Object} data Daten des Events
      */
-    function _updateProgress(event, data) {
+    function _updateDataTerm(event, data) {
         if ((typeof data       !== typeof undefined) &&
             (typeof data.alias !== typeof undefined) &&
             (typeof data.lvl   !== typeof undefined) &&
             (typeof data.fail  !== typeof undefined)) {
-            setProgress(data.alias, data.lvl, data.fail);
+            setDataTerm(data.alias, data.lvl, data.fail);
         }
     }
     
     /**
-     * Fortschritt setzen.
+     * Begriff-Daten setzen.
      * Setzt den Fortschritt für einen bestimmten Begriff;
      * aktualisiert die Stufe und die Fehlschläge des Begriffs,
-     * speichert den Fortschritt und aktualisiert die Listen.
+     * speichert den Fortschritt und aktualisiert die Begriff-Daten.
      * @param {String} alias Alias des Begriffs
      * @param {Number} lvl Neue Stufe des Begriffs
      * @param {Number} fail Neue Fehlschläge des Begriffs
      */
-    function setProgress(alias, lvl, fail) {
-        if ((typeof _savegame[alias] !== typeof undefined) &&
-            (typeof lvl              === typeof 0) &&
-            (typeof fail             === typeof 0)) {
+    function setDataTerm(alias, lvl, fail) {
+        if ((typeof _dataSaved[alias] !== typeof undefined) &&
+            (typeof lvl               === typeof 0) &&
+            (typeof fail              === typeof 0)) {
             
             // Minimum und Maximum für Level ermitteln
             var min = CFG.QUIZ.LEVELS[0];
             var max = CFG.QUIZ.LEVELS.length;
             
             // Fortschritts-Daten aktualisieren
-            _savegame[alias] = {
+            _dataSaved[alias] = {
                 lvl  : Math.max(Math.min(lvl, max), min),
                 fail : Math.max(fail, 0)
             };
             
             // Speichern und Listen aktualisieren
-            _saveProgress();
-            _updateLists();
+            _saveDataTerms();
+            _processDataTerms();
         }
     }
     
@@ -257,10 +251,10 @@ var Data = (function() {
      * @param {Object} event Ausgelöstes Event
      * @param {Object} data Daten des Events
      */
-    function _updateLastgames(event, data) {
+    function _updateDataScore(event, data) {
         if ((typeof data        !== typeof undefined) &&
             (typeof data.result === typeof 0)) {
-            setLastgames(data.result);
+            addDataScore(data.result);
         }
     }
     
@@ -271,21 +265,21 @@ var Data = (function() {
      * und stellt sie zur Verfügung.
      * @param {Number} result Neues Quiz-Ergebnis
      */
-    function setLastgames(result) {
-        if (typeof result === typeof 0) {
+    function addDataScore(score) {
+        if (typeof score === typeof 0) {
             
             // Neuen Wert korrigieren, Startindex für Kürzung berechnen
-            var value = Math.max(Math.min(result, CFG.QUIZ.QUESTIONS), 0);
-            var start = Math.max(_sizeLastgames + 1 - CFG.QUIZ.LASTGAMES, 0);
+            var value = Math.max(Math.min(score, CFG.QUIZ.QUESTIONS), 0);
+            var start = Math.max(_sizeScores + 1 - CFG.QUIZ.LASTGAMES, 0);
             
             // Neuen Wert hinzufügen, Liste kürzen, Länge speichern
-            _listLastgames.push(value);
-            _listLastgames = _listLastgames.slice(start);
-            _sizeLastgames = _listLastgames.length;
+            _dataScores.push(value);
+            _dataScores = _dataScores.slice(start);
+            _sizeScores = _dataScores.length;
             
             // Speichern und bereitstellen
-            _saveLastgames();
-            _serveLastgames();
+            _saveDataScores();
+            _serveDataScores();
         }
     }
     
@@ -293,24 +287,12 @@ var Data = (function() {
      * Fortschritt-Liste bereitstellen.
      * Liefert die Fortschritt-Liste in einem Event.
      */
-    function _serveProgress() {
-        $(window).trigger(CFG.EVT.SERVE_PROGRESS, {
-            caption : _caption,
-            list    : _listProgress,
-            size    : _sizeProgress,
-            max     : _sizeDictionary
-        });
-    }
-    
-    /**
-     * Wörterbuch-Liste bereitstellen.
-     * Liefert die Wörterbuch-Liste in einem Event.
-     */
-    function _serveDictionary() {
-        $(window).trigger(CFG.EVT.SERVE_DICTIONARY, {
-            caption : _caption,
-            list    : _listDictionary,
-            size    : _sizeDictionary
+    function _serveDataTerms() {
+        $(window).trigger(CFG.EVT.SERVE_TERMS, {
+            caption : _dictionaryCaption,
+            data    : _dataTerms,
+            solved  : _sizeSolved,
+            size    : _sizeTerms
         });
     }
     
@@ -318,18 +300,18 @@ var Data = (function() {
      * Die letzten Spieleergebnisse bereitstellen.
      * Liefert die Ergebnisse der letzten Spiele in einem Event.
      */
-    function _serveLastgames() {
-        $(window).trigger(CFG.EVT.SERVE_LASTGAMES, {
-            list : _listLastgames,
-            size : _sizeLastgames
+    function _serveDataScores() {
+        $(window).trigger(CFG.EVT.SERVE_SCORES, {
+            data : _dataScores,
+            size : _sizeScores
         });
     }
     
     // Öffentliches Interface
     return {
         init         : init,
-        setProgress  : setProgress,
-        setLastgames : setLastgames
+        setDataTerm  : setDataTerm,
+        addDataScore : addDataScore
     };
     
 })();

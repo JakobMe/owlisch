@@ -11,7 +11,7 @@ var Statistics = (function() {
     // Selektor-Konstanten
     var _SEL_CHART              = ".chart";
     var _SEL_STATISTICS         = ".statistics";
-    var _SEL_LASTGAMES          = "#statistics-lastgames";
+    var _SEL_SCORES             = "#statistics-scores";
     var _SEL_PROGRESS           = "#statistics-progress";
     var _SEL_DICTIONARY         = "#statistics-dictionary";
     var _SEL_TMPL_STATISTICS    = "#tmpl-statistics";
@@ -25,12 +25,12 @@ var Statistics = (function() {
     var _NUM_STEPS_PERCENT      = 10;
     
     // Private Variablen
-    var _listLastgames          = [];
-    var _listProgress           = [];
+    var _dataScores             = [];
+    var _dataTerms              = [];
     var _arrStepsPercent        = [];
-    var _arrStepsLastgames      = [];
-    var _sizeProgress           = 0;
-    var _sizeDictionary         = 0;
+    var _arrStepsScores         = [];
+    var _sizeSolved             = 0;
+    var _sizeTerms              = 0;
     
     // Templates
     var _tmplStatistics         = $(_SEL_TMPL_STATISTICS).html();
@@ -38,7 +38,7 @@ var Statistics = (function() {
     
     // DOM-Elemente
     var _$statistics            = null;
-    var _$lastgames             = null;
+    var _$scores                = null;
     var _$progress              = null;
     var _$dictionary            = null;
     
@@ -49,8 +49,8 @@ var Statistics = (function() {
     function init() {
         
         // Interne Variablen initialisieren
-        _arrStepsPercent   = _arrayFromNumber(_NUM_STEPS_PERCENT);
-        _arrStepsLastgames = _arrayFromNumber(CFG.QUIZ.QUESTIONS);
+        _arrStepsPercent = _arrayFromNumber(_NUM_STEPS_PERCENT);
+        _arrStepsScores  = _arrayFromNumber(CFG.QUIZ.QUESTIONS);
         
         // Funktionen ausführen
         _parseTemplates();
@@ -75,13 +75,13 @@ var Statistics = (function() {
         
         // Modulvariablen initialisieren
         _$statistics = $(_SEL_STATISTICS);
-        _$lastgames  = _$statistics.find(_SEL_LASTGAMES);
+        _$scores     = _$statistics.find(_SEL_SCORES);
         _$progress   = _$statistics.find(_SEL_PROGRESS);
         _$dictionary = _$statistics.find(_SEL_DICTIONARY);           
         
         // Letzte Spiele und Fortschritt anfragen, View einblenden
-        $(window).trigger(CFG.EVT.REQUEST_PROGRESS);
-        $(window).trigger(CFG.EVT.REQUEST_LASTGAMES);
+        $(window).trigger(CFG.EVT.REQUEST_TERMS);
+        $(window).trigger(CFG.EVT.REQUEST_SCORES);
         $(window).trigger(CFG.EVT.SHOW_VIEW);
         
         // Diagramme animieren
@@ -94,8 +94,8 @@ var Statistics = (function() {
      */
     function _bindEvents() {
         $(window).on(CFG.EVT.LOAD_PANEL_CONTENT, _createStatistics);
-        $(window).on(CFG.EVT.SERVE_PROGRESS, _updateProgress);
-        $(window).on(CFG.EVT.SERVE_LASTGAMES, _updateLastgames);
+        $(window).on(CFG.EVT.SERVE_TERMS, _updateProgress);
+        $(window).on(CFG.EVT.SERVE_SCORES, _updateScores);
         $(window).on(CFG.EVT.SET_PANEL, _growCharts);
         $(window).on(CFG.EVT.RESTORE_DEFAULT, _restoreDefault);
     }
@@ -126,11 +126,11 @@ var Statistics = (function() {
      * @param {Object} event Ausgelöstes Event
      * @param {Object} data Daten des Events
      */
-    function _updateLastgames(event, data) {
+    function _updateScores(event, data) {
         if ((typeof data      !== typeof undefined) &&
-            (typeof data.list !== typeof undefined)) {
-            _listLastgames = data.list;
-            _renderLastgames();
+            (typeof data.data !== typeof undefined)) {
+            _dataScores = data.data;
+            _renderScores();
         }
     }
     
@@ -142,13 +142,13 @@ var Statistics = (function() {
      * @param {Object} data Daten des Events
      */
     function _updateProgress(event, data) {
-        if ((typeof data      !== typeof undefined) &&
-            (typeof data.size !== typeof undefined) &&
-            (typeof data.list !== typeof undefined) &&
-            (typeof data.max  !== typeof undefined)) {  
-            _listProgress   = data.list;
-            _sizeProgress   = data.size;
-            _sizeDictionary = data.max;
+        if ((typeof data        !== typeof undefined) &&
+            (typeof data.solved !== typeof undefined) &&
+            (typeof data.data   !== typeof undefined) &&
+            (typeof data.size   !== typeof undefined)) {  
+            _dataTerms  = data.data;
+            _sizeSolved = data.solved;
+            _sizeTerms  = data.size;
             _renderProgress();
             _renderDictionary();
         }
@@ -223,17 +223,17 @@ var Statistics = (function() {
      * Rendert ein Diagramm für die letzten Spielergebnisse
      * anhand eines Mustache-Templates.
      */
-    function _renderLastgames() {
-        if (_$lastgames instanceof $) {
+    function _renderScores() {
+        if (_$scores instanceof $) {
             var data = [];
-            $.each(_listLastgames, function(i, value) {
+            $.each(_dataScores, function(i, value) {
                 data.push({
                     label   : value,
                     percent : _calcPercent(value, CFG.QUIZ.QUESTIONS),
                     zero    : (value === 0)
                 });
             });
-            _renderChart(_$lastgames, data, _arrStepsLastgames);
+            _renderChart(_$scores, data, _arrStepsScores);
         }
     }
     
@@ -245,9 +245,9 @@ var Statistics = (function() {
     function _renderProgress() {
         if (_$progress instanceof $) {
             var data = [{
-                label   : _sizeProgress + CFG.STR.SLASH + _sizeDictionary,
-                percent : _calcPercent(_sizeProgress, _sizeDictionary),
-                zero    : (_sizeProgress === 0)
+                label   : _sizeSolved + CFG.STR.SLASH + _sizeTerms,
+                percent : _calcPercent(_sizeSolved, _sizeTerms),
+                zero    : (_sizeSolved === 0)
             }];
             _renderChart(_$progress, data, _arrStepsPercent, true);
         }
@@ -262,13 +262,13 @@ var Statistics = (function() {
         if (_$dictionary instanceof $) {
             var data = [];
             $.each(CFG.QUIZ.LEVELS, function(i, level) {
-                var count = _countTermsWithLevel(_listProgress, level);
+                var count = _countTermsWithLevel(_dataTerms, level);
                 data.push({
                     lvl     : level,
                     levels  : CFG.QUIZ.LEVELS,
                     label   : count,
                     zero    : (count === 0),
-                    percent : _calcPercent(count, _sizeProgress)
+                    percent : _calcPercent(count, _sizeSolved)
                 });
             });
             _renderChart(_$dictionary, data, _arrStepsPercent, true, true);

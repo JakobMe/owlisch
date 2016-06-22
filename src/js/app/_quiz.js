@@ -51,7 +51,7 @@ var Quiz = (function() {
         
         // Wörterbuch und Fortschritt anfragen, View einblenden
         $(window).trigger(CFG.EVT.REQUEST_DICTIONARY);
-        $(window).trigger(CFG.EVT.REQUEST_PROGRESS);
+        $(window).trigger(CFG.EVT.REQUEST_TERMS);
         $(window).trigger(CFG.EVT.SHOW_VIEW);
     }
     

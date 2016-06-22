@@ -84,14 +84,12 @@ var CFG = (function() {
             SHOW_VIEW           : "showView",
             SHOW_VIEWPORT       : "showViewport",
             PRESSED_BUTTON      : "pressedNavigationBarButton",
-            REQUEST_DICTIONARY  : "requestedDictionary",
-            REQUEST_PROGRESS    : "requestedProgress",
-            REQUEST_LASTGAMES   : "requestedLastgames",
-            SERVE_DICTIONARY    : "servedDictionary",
-            SERVE_PROGRESS      : "servedProgress",
-            SERVE_LASTGAMES     : "servedLastgames",
-            UPDATE_PROGRESS     : "updatedProgress",
-            UPDATE_LASTGAMES    : "updatedLastgames"
+            REQUEST_TERMS       : "requestedTerms",
+            REQUEST_SCORES      : "requestedScores",
+            SERVE_TERMS         : "servedTerms",
+            SERVE_SCORES        : "servedScores",
+            UPDATE_TERMS        : "updatedTerms",
+            UPDATE_SCORES       : "updatedScores"
         },
         SORTING: {
             SORT: {

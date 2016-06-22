@@ -90,7 +90,7 @@ var Dictionary = (function() {
         _bindClickEvents();
         
         // Fortschritt-Liste anfragen, View einblenden
-        $(window).trigger(CFG.EVT.REQUEST_PROGRESS);
+        $(window).trigger(CFG.EVT.REQUEST_TERMS);
         $(window).trigger(CFG.EVT.SHOW_VIEW);
     }
     
@@ -100,7 +100,7 @@ var Dictionary = (function() {
      */
     function _bindEvents() {
         $(window).on(CFG.EVT.LOAD_PANEL_CONTENT, _createDictionary);
-        $(window).on(CFG.EVT.SERVE_PROGRESS, _updateList);
+        $(window).on(CFG.EVT.SERVE_TERMS, _updateList);
         $(window).on(CFG.EVT.SORTED_LIST, _sortList);
         $(window).on(CFG.EVT.SEARCHED_LIST, _filterList);
         $(window).on(CFG.EVT.PRESSED_BUTTON, _backToList);
@@ -231,19 +231,23 @@ var Dictionary = (function() {
      */
     function _updateList(event, data) {
         if ((typeof data      !== typeof undefined) &&
-            (typeof data.list !== typeof undefined)) {
+            (typeof data.data !== typeof undefined)) {
                 
-            // Daten aktualisieren
+            // Daten zurücksetzen
+            var listTemp  = data.data;
             _listCaption  = data.caption;
-            _listOriginal = data.list;
+            _listOriginal = [];
             
             // Liste erweitert und filtern
-            $.each(_listOriginal, function(i, item) {
-                $.extend(this, {
-                    start     : item.term,
-                    highlight : CFG.STR.EMPTY,
-                    tail      : CFG.STR.EMPTY
-                });
+            $.each(listTemp, function(i, item) {
+                if (item.lvl > 0) {
+                    $.extend(item, {
+                        start     : item.term,
+                        highlight : CFG.STR.EMPTY,
+                        tail      : CFG.STR.EMPTY
+                    });
+                    _listOriginal.push(item);
+                }
             });
             _filterList();
             

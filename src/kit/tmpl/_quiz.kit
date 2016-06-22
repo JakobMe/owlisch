@@ -1,15 +1,29 @@
         
         <!-- Template: Quiz -->
         <script id="tmpl-quiz" type="text/template">
-            <div class="slider slider--has-{{slides}} quiz" id="quiz-slider">
-                <div class="slider__slide" id="quiz-start" data-slide="1">
-                    
+            <div class="quiz">
+                <div class="progressbar" id="quiz-progressbar">
+                    <div class="progressbar__wrapper">
+                        <div class="progressbar__line"></div>
+                        <ul class="progressbar__steps">
+                            {{#questions}}
+                            <li class="progressbar__step" role="checkbox">
+                                <i class="progressbar__icon icon"></i>
+                            </li>
+                            {{/questions}}
+                        </ul>
+                    </div>
                 </div>
-                {{#questions}}
-                <div class="slider__slide quiz__step" data-slide="{{.}}"></div>
-                {{/questions}}
-                <div class="slider__slide" id="quiz-finish" data-slide="{{slides}}">
-                    
+                <div class="slider slider--has-{{slides}}" id="quiz-slider">
+                    <div class="slider__slide" id="quiz-start" data-slide="1">
+                        
+                    </div>
+                    {{#questions}}
+                    <div class="slider__slide" data-slide="{{.}}"></div>
+                    {{/questions}}
+                    <div class="slider__slide" id="quiz-finish" data-slide="{{slides}}">
+                        
+                    </div>
                 </div>
             </div>
         </script>

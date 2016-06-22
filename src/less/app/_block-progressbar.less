@@ -1,0 +1,128 @@
+/*
+ * Modul: Fortschritts-Leiste.
+ * Definiert das Verhalten vom Quiz-Fortschritt.
+ * @author Jakob Metzger <jakob.me@gmail.com>
+ * @copyright 2016 Jakob Metzger
+ * @licence https://opensource.org/licenses/MIT MIT
+ * @link http://jmportfolio.de
+ */
+
+// Modul-Variablen
+@_progressbar-size-line:                2px;
+@_progressbar-font-size-icon:           12px;
+@_progressbar-color-line:               darken(@app-color-background-dark, 10%);
+
+// Block: Fortschritts-Leiste
+.progressbar {
+    display: block;
+    position: absolute;
+    box-sizing: border-box;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: auto;
+    padding: @app-size-gap;
+    .colored(@app-color-light, true);
+    .border(bottom);
+    
+    // Element: Wrapper
+    &__wrapper {
+        display: block;
+        position: relative;
+        height: @app-size-height-progressbar;
+    }
+    
+    // Element: Linie
+    &__line {
+        display: block;
+        position: absolute;
+        left: 0;
+        top: 50%;
+        width: 100%;
+        z-index: 100;
+        height: @_progressbar-size-line;
+        background: @_progressbar-color-line;
+        margin-top: -(@_progressbar-size-line / 2);
+        .border-radius(@_progressbar-size-line);
+    }
+    
+    // Element: Schritte
+    &__steps {
+        display: block;
+        position: absolute;
+        list-style-type: none;
+        margin: 0;
+        padding: 0;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: 500;
+        height: @app-size-height-progressbar;
+        line-height: @app-size-height-progressbar;
+    }
+    
+    // Element: Schritt
+    &__step {
+        float: left;
+        display: block;
+        text-align: center;
+        position: relative;
+        margin: 0;
+        padding: 0;
+        height: @app-size-height-progressbar;
+        width: (100% / @app-number-questions);
+        .transition();
+    }
+    
+    // Element: Icon
+    &__icon {
+        display: block;
+        max-width: 100%;
+        text-align: center;
+        box-sizing: border-box;
+        font-size: @_progressbar-font-size-icon;
+        margin: (@app-size-height-progressbar / 4) auto;
+        width: (@app-size-height-progressbar / 2);
+        height: (@app-size-height-progressbar / 2);
+        border: @_progressbar-size-line solid @_progressbar-color-line;
+        background: @app-color-light;
+        .border-radius(50%);
+        .transition(all, @app-time-animation-long);
+    }
+    
+    // Mod: Aktuell & Übersprungen & Fehler & Erfolg & Element: Icon
+    &__step--error   &__icon,
+    &__step--current &__icon,
+    &__step--skipped &__icon,
+    &__step--success &__icon {
+        margin: 0 auto;
+        width: @app-size-height-progressbar;
+        height: @app-size-height-progressbar;
+        line-height: (@app-size-height-progressbar - (2 * @_progressbar-size-line));
+    }
+    
+    // Mod: Übersprungen
+    &__step--skipped &__icon {
+        background: transparent;
+        box-shadow: inset 0 0 0 @_progressbar-size-line @app-color-light;
+    }
+    
+    // Mod: Fehler
+    &__step--error &__icon {
+        .animation(progress-step-error);
+        &:after {
+            content: @fontello-icon-cancel;
+            color: @app-color-error;
+        }
+    }
+    
+    // Mod: Erfolg
+    &__step--success &__icon {
+        .animation(progress-step-success);
+        &:after {
+            content: @fontello-icon-check;
+            color: @app-color-success;
+        }
+    }
+}

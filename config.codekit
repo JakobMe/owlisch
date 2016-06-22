@@ -809,7 +809,7 @@
 		"strictMath": 0,
 		"strictUnits": 0
 		},
-	"\/src\/less\/app\/_block-progress.less": {
+	"\/src\/less\/app\/_block-progressbar.less": {
 		"allowInsecureImports": 0,
 		"createSourceMap": 0,
 		"disableJavascript": 0,
@@ -817,8 +817,8 @@
 		"ieCompatibility": 1,
 		"ignore": 1,
 		"ignoreWasSetByUser": 0,
-		"inputAbbreviatedPath": "\/src\/less\/app\/_block-progress.less",
-		"outputAbbreviatedPath": "\/src\/less\/css\/_block-progress.css",
+		"inputAbbreviatedPath": "\/src\/less\/app\/_block-progressbar.less",
+		"outputAbbreviatedPath": "\/src\/less\/css\/_block-progressbar.css",
 		"outputPathIsOutsideProject": 0,
 		"outputPathIsSetByUser": 0,
 		"outputStyle": 0,

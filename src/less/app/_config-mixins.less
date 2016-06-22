@@ -28,6 +28,16 @@
 }
 
 /**
+ * Mixin: Animation.
+ * Setzt eine Animation.
+ * @param {string} animation - Name der Animation
+ * @param {*s} time - Animations-Zeit
+ */
+.animation(@animation, @time: @app-time-animation-long) {
+    animation: @animation @time normal forwards;
+}
+
+/**
  * Mixin: Ellipse.
  * Schneidet einen zu langen Text ab und setzt drei Punkte.
  */
@@ -241,4 +251,27 @@
 .colored-gradient(@color: @app-color-background-light, @pale: false, @tint: 100%) {
     .colored(@color, @pale);
     .gradient(top, tint(@color, @tint), @color);
+}
+
+/**
+ * Mixin: Leuchtender Block.
+ * Setzt alle Farben eines Element und einen Schlagschatten.
+ * @param {#color} color - Farbe des Blocks
+ */
+.block-glow(@color) {
+    color: @color;
+    border-color: @color;
+    background-color: @color;
+    .shadow-glow(@color);
+}
+
+/**
+ * Mixin: Leuchtenden Block deaktivieren.
+ * Negiert alle Auswirkungen eines leuchtenden Blocks.
+ */
+.block-glow-none() {
+    color: inherit;
+    border-color: inherit;
+    background-color: inherit;
+    .shadow-none();
 }

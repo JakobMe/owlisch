@@ -85,7 +85,7 @@ var Statistics = (function() {
         $(window).trigger(CFG.EVT.SHOW_VIEW);
         
         // Diagramme animieren
-        _growCharts();
+        _growCharts(false);
     }
     
     /**
@@ -96,7 +96,6 @@ var Statistics = (function() {
         $(window).on(CFG.EVT.LOAD_PANEL_CONTENT, _createStatistics);
         $(window).on(CFG.EVT.SERVE_TERMS, _updateProgress);
         $(window).on(CFG.EVT.SERVE_SCORES, _updateScores);
-        $(window).on(CFG.EVT.SET_PANEL, _growCharts);
         $(window).on(CFG.EVT.RESTORE_DEFAULT, _restoreDefault);
     }
     
@@ -237,21 +236,15 @@ var Statistics = (function() {
     /**
      * Diagramme animieren.
      * Fügt den Diagrammen der Statistik eine Klasse hinzu oder entfernt sie,
-     * um sie zu animieren; reagiert mit und ohne Event.
-     * @param {Object} event Ausgelöstes Event
-     * @param {Object} data Daten des Events
+     * um sie zu animieren; blendet Diagramm gegebenenfalls vorher aus.
+     * @param {Boolean} shrink Diagramm vorher ausblenden
      */
-    function _growCharts(event, data) {
-        var doGrow = true;
-        if ((typeof data       !== typeof undefined) &&
-            (typeof data.panel !== typeof undefined)) {
-            doGrow = (CFG.VIEW[data.panel] === CFG.VIEW.STATISTICS);   
-        } else {
-            $(_SEL_CHART).setMod(_B_CHART, _M_GROW, false);
-        }
+    function _growCharts(shrink) {
+        shrink = (shrink || false);
+        if (shrink) { $(_SEL_CHART).setMod(_B_CHART, _M_GROW, false); }
         setTimeout(function() {
-            $(_SEL_CHART).setMod(_B_CHART, _M_GROW, doGrow);
-        }, (doGrow ? CFG.TIME.DELAY : CFG.TIME.ANIMATION));
+            $(_SEL_CHART).setMod(_B_CHART, _M_GROW, true);
+        }, (shrink ? CFG.TIME.DELAY : CFG.TIME.ANIMATION));
     }
     
     /**
@@ -268,7 +261,7 @@ var Statistics = (function() {
             _$statistics.animate(
                 { scrollTop: 0 },
                 CFG.TIME.ANIMATION,
-                _growCharts
+                function() { _growCharts(true); }
             );
         }
     }

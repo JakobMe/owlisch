@@ -15,3 +15,21 @@
     0%   { .shadow-glow(); }
     100% { .shadow-none(); }
 }
+
+/*
+ * Animation: Fortschritts-Stufe Fehler.
+ * Lässt eine Fortschritts-Stufe kurz rot aufleuchten.
+ */
+@keyframes progress-step-error {
+    0%   { .block-glow(@app-color-error); }
+    100% { .block-glow-none(); }
+}
+
+/*
+ * Animation: Fortschritts-Stufe Erfolg.
+ * Lässt eine Fortschritts-Stufe kurz grün aufleuchten.
+ */
+@keyframes progress-step-success {
+    0%   { .block-glow(@app-color-success); }
+    100% { .block-glow-none(); }
+}

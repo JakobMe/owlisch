@@ -12,11 +12,19 @@ var Quiz = (function() {
     var _SEL_SLIDER             = "#quiz-slider";
     var _SEL_START              = "#quiz-start";
     var _SEL_FINISH             = "#quiz-finish";
+    var _SEL_PROGRESSBAR        = "#quiz-progressbar";
+    var _SEL_STEP               = "[role='checkbox']";
     var _SEL_TMPL_QUIZ          = "#tmpl-quiz";
     
     // BEM-Konstanten
     var _B_SLIDER               = "slider";
+    var _B_PROGRESSBAR          = "progressbar";
     var _M_IS                   = "is";
+    var _E_STEP                 = "step";
+    var _M_SKIPPED              = "skipped";
+    var _M_ERROR                = "error";
+    var _M_SUCCESS              = "success";
+    var _M_CURRENT              = "current";
     
     // Data-Attribut-Konstanten
     var _DATA_SLIDE             = "slide";
@@ -29,6 +37,8 @@ var Quiz = (function() {
     var _indexStart             = 0;
     var _indexFinish            = 0;
     var _currentSlide           = 0;
+    var _currentStep            = 0;
+    var _progress               = [];
     
     // Templates
     var _tmplQuiz               = $(_SEL_TMPL_QUIZ).html();
@@ -37,6 +47,7 @@ var Quiz = (function() {
     var _$slider                = null;
     var _$start                 = null;
     var _$finish                = null;
+    var _$progressbar           = null;
     
     /**
      * Statistik initialisieren.
@@ -63,13 +74,15 @@ var Quiz = (function() {
     function _initQuiz() {
         
         // Modulvariablen initialisieren
-        _$slider     = $(_SEL_SLIDER);
-        _$start      = _$slider.find(_SEL_START);
-        _$finish     = _$slider.find(_SEL_FINISH); 
-        _indexStart  = parseInt(_$start.data(_DATA_SLIDE));
-        _indexFinish = parseInt(_$finish.data(_DATA_SLIDE));
+        _$slider      = $(_SEL_SLIDER);
+        _$start       = $(_SEL_START);
+        _$finish      = $(_SEL_FINISH);
+        _$progressbar = $(_SEL_PROGRESSBAR);
+        _indexStart   = parseInt(_$start.data(_DATA_SLIDE));
+        _indexFinish  = parseInt(_$finish.data(_DATA_SLIDE));
         
         // Funktionen ausführen
+        _resetProgress();
         _setCurrentSlide(_indexStart);
         
         // Wörterbuch und Fortschritt anfragen, View einblenden
@@ -88,7 +101,8 @@ var Quiz = (function() {
     
     /**
      * Quiz erzeugen.
-     * ...
+     * Erzeugt anhand eines Mustache-Templates den Inhalt des
+     * Quiz-Panels; initialisiert das Quiz anschließend.
      * @param {Object} event Ausgelöstes Event
      * @param {Object} data Daten des Events
      */
@@ -131,6 +145,58 @@ var Quiz = (function() {
     }
     
     /**
+     * Fortschritt zurücksetzen.
+     * Setzt den aktuellen Fortschritt des Quizes zurück.
+     */
+    function _resetProgress() {
+        for (var i = 1; i <= CFG.QUIZ.QUESTIONS; i++) {
+            _progress[i] = CFG.STR.EMPTY;
+        }
+        _currentStep = 0;
+        _renderProgressbar();
+    }
+    
+    /**
+     * Fortschritt setzen.
+     * Setzt den Status eines Schrittes des Quizes;
+     * rendert anschließend die Fortschrittsleiste.
+     * @param {Number} step Nummer des Quiz-Schrittes
+     * @param {String} status Neuer Status des Schrittes
+     */
+    function setProgress(step, status) {
+        if ((typeof step            === typeof 0) &&
+            (typeof status          === typeof CFG.STR.EMPTY) &&
+            (typeof _progress[step] !== typeof undefined)) {
+            _progress[step] = status;
+            _renderProgressbar();
+        }
+    }
+    
+    /**
+     * Fortschrittsleiste rendern.
+     * Rendert alle Schritte der Fortschrittsleiste anhand 
+     * des aktuellen Fortschrittes.
+     */
+    function _renderProgressbar() {
+        if (_$progressbar instanceof $) {
+            $.each(_$progressbar.find(_SEL_STEP), function(i, step) {
+                
+                // Status ermitteln
+                var current = (i + 1 === _currentStep);
+                var skipped = (_progress[i + 1] === _M_SKIPPED);
+                var success = (_progress[i + 1] === _M_SUCCESS);
+                var error   = (_progress[i + 1] === _M_ERROR);
+                
+                // Fortschritts-Schritte rendern
+                $(step).setMod(_B_PROGRESSBAR, _E_STEP, _M_CURRENT, current)
+                       .setMod(_B_PROGRESSBAR, _E_STEP, _M_SKIPPED, skipped)
+                       .setMod(_B_PROGRESSBAR, _E_STEP, _M_SUCCESS, success)
+                       .setMod(_B_PROGRESSBAR, _E_STEP, _M_ERROR, error);
+            });
+        }
+    }
+    
+    /**
      * Standard-Konfiguration wiederherstellen.
      * ...
      * @param {Object} event Ausgelöstes Event
@@ -146,6 +212,9 @@ var Quiz = (function() {
     }
     
     // Öffentliches Interface
-    return { init: init };
+    return {
+        init        : init,
+        setProgress : setProgress
+    };
     
 })();

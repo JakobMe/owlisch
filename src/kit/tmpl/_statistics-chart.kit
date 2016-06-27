@@ -1,6 +1,17 @@
         
         <!-- Template: Diagramm -->
         <script id="tmpl-statistics-chart" type="text/template">
+            {{#empty}}
+            <li class="notice notice--quiz notice--chart">
+                <span class="notice__title">
+                    <span class="notice__title-text">Noch keine Spiele!</span>
+                </span>
+                <span class="notice__text">
+                    Du hast bisher noch kein Quiz gespielt. Spiele das Quiz,
+                    um neue Begriffe zu lernen und deine Statistik zu füllen.
+                </span>
+            </li>
+            {{/empty}}
             <div class="chart__lines">
                 {{#steps}}
                 <div class="chart__line"></div>

@@ -163,15 +163,17 @@ var Statistics = (function() {
      * @param {Boolean} hrznt Horizontales Diagramm
      * @param {Boolean} stars Level-Sterne anzeigen
      */
-    function _renderChart($target, data, steps, hrznt, stars) {
+    function _renderChart($target, data, steps, hrznt, stars, empty) {
         if (typeof hrznt !== typeof true) { hrznt = false; }
         if (typeof stars !== typeof true) { stars = false; }
+        if (typeof empty !== typeof true) { empty = false; }
         $target.find(_SEL_CHART).html(
             Mustache.render(_tmplChart, {
                 data  : data,
                 hrznt : hrznt,
                 steps : steps,
-                stars : stars
+                stars : stars,
+                empty : empty
             })
         );
     }
@@ -191,7 +193,8 @@ var Statistics = (function() {
                     zero    : (value === 0)
                 });
             });
-            _renderChart(_$scores, data, _arrStepsScores);
+            _renderChart(_$scores, data, _arrStepsScores,
+                false, false, (_dataScores.length === 0));
         }
     }
     

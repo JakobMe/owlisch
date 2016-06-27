@@ -34,4 +34,16 @@
             </li>
             {{/filtered}}
             {{/terms}}
+            {{#empty}}
+            <li class="list__title notice notice--quiz notice--box">
+                <span class="notice__title">
+                    <span class="notice__title-text">Dein Wörterbuch ist leer!</span>
+                </span>
+                <span class="notice__text">
+                    Du hast bisher noch keine Begriffe erraten. Spiele das
+                    Quiz, um Dein Wörterbuch mit den richtig geratenen Begriffen
+                    zu füllen.
+                </span>
+            </li>
+            {{/empty}}
         </script>

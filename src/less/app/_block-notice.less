@@ -101,8 +101,15 @@
         .border(top);
     }
     
+    // Mod: Diagramm
+    &--chart {
+        padding-top: 0;
+        padding-bottom: 0;
+        .colored(@app-color-light);
+    }
+    
     // Mod: Box & Element: Titel-Text
-    &--box &__title-text {
+    &--box &__title-text, &--chart &__title-text {
         .colored(@app-color-light, true);
         .shadow(0, 0, @_notice-size-title, (@_notice-size-title / 2), @app-color-light);
     }
@@ -119,7 +126,7 @@
     }
     
     // Mod: Titel & Element: Text
-    &--title &__text { font-weight: bold; }
+    &--title &__text, &--chart &__text { font-weight: bold; }
     
     // Mod: Absatz & Element: Text
     &--paragraph &__text {

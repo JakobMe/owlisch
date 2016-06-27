@@ -148,6 +148,18 @@
             </li>
             {{/filtered}}
             {{/terms}}
+            {{#empty}}
+            <li class="list__title notice notice--quiz notice--box">
+                <span class="notice__title">
+                    <span class="notice__title-text">Dein Wörterbuch ist leer!</span>
+                </span>
+                <span class="notice__text">
+                    Du hast bisher noch keine Begriffe erraten. Spiele das
+                    Quiz, um Dein Wörterbuch mit den richtig geratenen Begriffen
+                    zu füllen.
+                </span>
+            </li>
+            {{/empty}}
         </script>
                 
         <!-- Template: Begriffdetails -->
@@ -203,7 +215,7 @@
                 </div>
                 <div id="statistics-progress" class="statistics__container">
                     <h2 class="statistics__title">
-                        <b>Gelernte</b> Wörter
+                        <b>Gelernte</b> Begriffe
                     </h2>
                     <div class="statistics__chart chart chart--horizontal"></div>
                 </div>
@@ -219,8 +231,8 @@
                     </span>
                     <span class="notice__text">
                         Hier siehst du, wie viele Fragen du in deinen <b>{{games}} letzten
-                        Spielen</b> richtig beantwortet hast, wie viele der <b>vorhandenen Wörter</b>
-                        du schon <b>erlernt</b> hast und wie viele Wörter du bereits auf welchen
+                        Spielen</b> richtig beantwortet hast, wie viele der <b>vorhandenen Begriffe</b>
+                        du schon <b>erlernt</b> hast und wie viele Begriffe du bereits auf welchen
                         <b>Stufen</b> erraten hast.
                     </span>
                 </p>
@@ -229,6 +241,17 @@
                 
         <!-- Template: Diagramm -->
         <script id="tmpl-statistics-chart" type="text/template">
+            {{#empty}}
+            <li class="notice notice--quiz notice--chart">
+                <span class="notice__title">
+                    <span class="notice__title-text">Noch keine Spiele!</span>
+                </span>
+                <span class="notice__text">
+                    Du hast bisher noch kein Quiz gespielt. Spiele das Quiz,
+                    um neue Begriffe zu lernen und deine Statistik zu füllen.
+                </span>
+            </li>
+            {{/empty}}
             <div class="chart__lines">
                 {{#steps}}
                 <div class="chart__line"></div>

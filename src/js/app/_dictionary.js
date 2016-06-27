@@ -271,7 +271,8 @@ var Dictionary = (function() {
                     levels   : CFG.QUIZ.LEVELS,
                     size     : _listFiltered.length,
                     single   : (_listFiltered.length === 1),
-                    filtered : (_currentFilter.length > 0)
+                    filtered : (_currentFilter.length > 0),
+                    empty    : (_listOriginal.length === 0)
                 })
             );
         }

@@ -26,7 +26,7 @@ var CFG = (function() {
         VIEW: {
             START: {
                 LABEL           : "Start",
-                TITLE           : "Wort der Woche"
+                TITLE           : "Begriff der Woche"
             },
             DICTIONARY: {
                 LABEL           : "Wörterbuch",

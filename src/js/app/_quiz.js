@@ -39,6 +39,8 @@ var Quiz = (function() {
     var _currentSlide           = 0;
     var _currentStep            = 0;
     var _progress               = [];
+    var _dataTerms              = [];
+    var _dataCaption            = CFG.STR.EMPTY;
     
     // Templates
     var _tmplQuiz               = $(_SEL_TMPL_QUIZ).html();
@@ -97,6 +99,7 @@ var Quiz = (function() {
     function _bindEvents() {
         $(window).on(CFG.EVT.LOAD_PANEL_CONTENT, _createQuiz);
         $(window).on(CFG.EVT.RESTORE_DEFAULT, _restoreDefault);
+        $(window).on(CFG.EVT.SERVE_TERMS, _updateData);
     }
     
     /**
@@ -120,7 +123,7 @@ var Quiz = (function() {
             
             // Template füllen, Callback ausführen
             data.target.html(Mustache.render(_tmplQuiz,
-                { slides: slides, questions: questions }
+                { slides: slides, questions: questions, caption: _dataCaption }
                 )).promise().done(function() { _initQuiz(); });
         }
     }
@@ -193,6 +196,22 @@ var Quiz = (function() {
                        .setMod(_B_PROGRESSBAR, _E_STEP, _M_SUCCESS, success)
                        .setMod(_B_PROGRESSBAR, _E_STEP, _M_ERROR, error);
             });
+        }
+    }
+    
+    /**
+     * Wörterbuch-Daten aktualisieren.
+     * Aktualisiert die interne Kopie der Wörterbuch-Daten des Quizes
+     * anhand eines ausgelösten Events.
+     * @param {Object} event Ausgelöstes Event
+     * @param {Object} data Daten des Events
+     */
+    function _updateData(event, data) {
+        if ((typeof data         !== typeof undefined) &&
+            (typeof data.data    !== typeof undefined) &&
+            (typeof data.caption !== typeof undefined)) {
+            _dataCaption = data.caption;
+            _dataTerms = data.data;
         }
     }
     

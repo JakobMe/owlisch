@@ -9,6 +9,7 @@
 var CFG = (function() {
     return {
         DATA: {
+            STORE               : "owlisch",
             ALIAS               : "owl",
             PATH_DATA           : "data/",
             PATH_AUDIO          : "/audio/",
@@ -33,7 +34,7 @@ var CFG = (function() {
             },
             QUIZ: {
                 LABEL           : "Quiz",
-                TITLE           : "OWL-Quiz"
+                TITLE           : "Quiz"
             },
             STATISTICS: {
                 LABEL           : "Statistik",

@@ -9,14 +9,14 @@
 var Data = (function() {
     
     // Private Variablen
-    var _dictionaryAlias        = CFG.DATA.ALIAS;
+    var _dictionaryAlias        = CFG.STR.EMPTY;
     var _dictionaryCaption      = CFG.STR.EMPTY;
     var _dataScores             = [];
     var _dataTerms              = [];
-    var _dataSaved              = {};
+    var _dataProgress           = {};
     var _sizeScores             = 0;
     var _sizeTerms              = 0;
-    var _sizeSolved             = 0;
+    var _sizeProgress           = 0;
     
     /**
      * Daten initialisieren.
@@ -24,8 +24,7 @@ var Data = (function() {
      */
     function init() {
         _bindEvents();
-        _loadDataSaved();
-        _loadDataDictionary();
+        _loadDataStored();
     }
     
     /**
@@ -40,35 +39,34 @@ var Data = (function() {
     }
     
     /**
+     * Gespeicherte Daten initialisieren.
+     * Erstellt einen leeren Standard-Datensatz im LocalStorage.
+     */
+    function _initDataStored() {
+        var dataInitial = { dictionary: CFG.DATA.ALIAS };
+        dataInitial[CFG.DATA.ALIAS] = { progress: {}, scores: [] };
+        localStorage.setItem(CFG.DATA.STORE, JSON.stringify(dataInitial));
+        _loadDataStored();
+    }
+    
+    /**
      * Gespeicherte Daten laden.
      * Lädt alle gespeicherten Daten aus dem LocalStorage.
      */
-    function _loadDataSaved() {
+    function _loadDataStored() {
         
-        // Fortschritt-Daten setzen
-        _dataSaved = {
-            "pinneken"          : { lvl: 3, fail: 0 },
-            "anneeckeliegen"    : { lvl: 1, fail: 0 },
-            "buetterken"        : { lvl: 1, fail: 0 },
-            "doelmern"          : { lvl: 2, fail: 0 },
-            "doenekens"         : { lvl: 3, fail: 0 },
-            "fickerich"         : { lvl: 1, fail: 0 },
-            "latuechte"         : { lvl: 1, fail: 0 },
-            "pluedden"          : { lvl: 2, fail: 0 }/*,
-            "vermackeln"        : { lvl: 3, fail: 0 },
-            "noehlen"           : { lvl: 2, fail: 0 },
-            "angeschickert"     : { lvl: 1, fail: 0 },
-            "beoemmeln"         : { lvl: 3, fail: 0 },
-            "dittken"           : { lvl: 1, fail: 0 },
-            "knuepp"            : { lvl: 2, fail: 0 },
-            "noenkern"          : { lvl: 3, fail: 0 }*/
-        };
+        // Daten aus dem LocalStorage laden
+        var dataStored = JSON.parse(localStorage.getItem(CFG.DATA.STORE));
+        if (dataStored === null) { _initDataStored(); return false; }
         
-        // Letzten Spiele setzen
-        _dataScores = [1, 2, 0, 3, 4, 2, 5, 4, 7, 6];
+        // Daten setzen
+        _dictionaryAlias = dataStored.dictionary;
+        _dataProgress = dataStored[_dictionaryAlias].progress;
+        _dataScores = dataStored[_dictionaryAlias].scores;
         _sizeScores = _dataScores.length;
         
-        // !TODO: _loadDataSaved() LocalStorage
+        // Wörterbuch-Daten laden
+        _loadDataDictionary();
     }
     
     /**
@@ -167,10 +165,10 @@ var Data = (function() {
     function _processDataTerms() {
 
         // Daten aktualisieren
-        _sizeSolved = 0;
+        _sizeProgress = 0;
         $.each(_dataTerms, function(i, item) {
-            $.extend(item, (_dataSaved[item.alias] || { lvl: 0, fail: 0 }));
-            if (item.lvl > 0) { _sizeSolved++; }
+            $.extend(item, (_dataProgress[item.alias] || { lvl: 0, fail: 0 }));
+            if (item.lvl > 0) { _sizeProgress++; }
         });
         
         // Daten bereitstellen
@@ -179,23 +177,19 @@ var Data = (function() {
     }
     
     /**
-     * Fortschritt speichern.
-     * Speichert den zuvor aktualisierten Fortschritt als
-     * JSON-String im LocalStorage.
+     * Daten speichern.
+     * Speichert alle aktuellen Daten als JSON-String im LocalStorage.
      */
-    function _saveDataTerms() {
+    function _storeData() {
         
-        // !TODO: _saveDataTerms() LocalStorage
-    }
-    
-    /**
-     * Die letzten Spiele speichern.
-     * Speichert die zuvor aktualisierten letzten Spieleregebnisse
-     * als JSON-String im LocalStorage.
-     */
-    function _saveDataScores() {
+        // Gespeicherte Daten um aktuelle Daten erweitern
+        var dataStored = JSON.parse(localStorage.getItem(CFG.DATA.STORE));
+        dataStored.dictionary = _dictionaryAlias;
+        dataStored[_dictionaryAlias].progress = _dataProgress;
+        dataStored[_dictionaryAlias].scores = _dataScores;
         
-        // !TODO: _saveDataScores() LocalStorage
+        // Daten speichern
+        localStorage.setItem(CFG.DATA.STORE, JSON.stringify(dataStored));
     }
     
     /**
@@ -224,22 +218,21 @@ var Data = (function() {
      * @param {Number} fail Neue Fehlschläge des Begriffs
      */
     function setDataTerm(alias, lvl, fail) {
-        if ((typeof _dataSaved[alias] !== typeof undefined) &&
-            (typeof lvl               === typeof 0) &&
-            (typeof fail              === typeof 0)) {
+        if ((typeof lvl  === typeof 0) &&
+            (typeof fail === typeof 0)) {
             
             // Minimum und Maximum für Level ermitteln
             var min = CFG.QUIZ.LEVELS[0];
             var max = CFG.QUIZ.LEVELS.length;
             
             // Fortschritts-Daten aktualisieren
-            _dataSaved[alias] = {
+            _dataProgress[alias] = {
                 lvl  : Math.max(Math.min(lvl, max), min),
                 fail : Math.max(fail, 0)
             };
             
             // Speichern und Listen aktualisieren
-            _saveDataTerms();
+            _storeData();
             _processDataTerms();
         }
     }
@@ -278,9 +271,29 @@ var Data = (function() {
             _sizeScores = _dataScores.length;
             
             // Speichern und bereitstellen
-            _saveDataScores();
+            _storeData();
             _serveDataScores();
         }
+    }
+    
+    /**
+     * Die letzten Spiele löschen.
+     * Entfernt alle Daten der letzten Spiele.
+     */
+    function clearDataScores() {
+        _dataScores = [];
+        _storeData();
+        _serveDataScores();
+    }
+    
+    /**
+     * Fortschritt-Liste löschen.
+     * Entfernt alle Daten des Wörterbuch-Fortschritts.
+     */
+    function clearDataTerms() {
+        _dataProgress = {};
+        _storeData();
+        _processDataTerms();
     }
     
     /**
@@ -291,7 +304,7 @@ var Data = (function() {
         $(window).trigger(CFG.EVT.SERVE_TERMS, {
             caption : _dictionaryCaption,
             data    : _dataTerms,
-            solved  : _sizeSolved,
+            solved  : _sizeProgress,
             size    : _sizeTerms
         });
     }
@@ -309,9 +322,11 @@ var Data = (function() {
     
     // Öffentliches Interface
     return {
-        init         : init,
-        setDataTerm  : setDataTerm,
-        addDataScore : addDataScore
+        init            : init,
+        setDataTerm     : setDataTerm,
+        addDataScore    : addDataScore,
+        clearDataTerms  : clearDataTerms,
+        clearDataScores : clearDataScores
     };
     
 })();

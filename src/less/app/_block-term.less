@@ -20,13 +20,13 @@
         font-size: 0;
         position: relative;
         text-align: center;
+        margin-bottom: @app-size-gap-small;
         .colored(@app-color-light);
         .border(bottom);
-        .border(top);
     }
     
     // Mod: Nicht Quiz & Element: Header
-    &:not(&--quiz) &__header { margin-bottom: @app-size-gap-small; }
+    &:not(&--quiz) &__header { .border(top); }
     
     // Element: Bild
     &__image {

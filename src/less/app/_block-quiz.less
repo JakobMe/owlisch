@@ -7,6 +7,10 @@
  * @link http://jmportfolio.de
  */
 
+// Modul-Variablen
+@_quiz-size-button-round:               128px;
+@_quiz-padding-button-round:            40px;
+
 // Block: Quiz
 .quiz {
     display: block;
@@ -14,4 +18,63 @@
     box-sizing: border-box;
     height: 100%;
     padding-top: ((@app-size-gap * 2) + @app-size-height-progressbar);
+    
+    // Element: Titel
+    &__title {
+        display: block;
+        font-weight: normal;
+        font-style: italic;
+        text-align: center;
+        line-height: 1.4;
+        margin: 0;
+        padding: 0 @app-size-gap;
+        padding-bottom: @app-size-gap;
+        font-size: @app-font-size-large;
+        margin-bottom: @app-size-gap-small;
+        .colored(@app-color-light);
+        .border(bottom);
+    }
+    
+    // Element: Button
+    &__button {
+        display: block;
+        cursor: pointer;
+        font-weight: bold;
+        position: relative;
+        text-align: center;
+        text-decoration: none;
+        box-sizing: border-box;
+        font-size: @app-font-size-big;
+        .shadow-small(@app-color-shadow-light);
+        .colored-gradient();
+        .border-radius();
+        .border(all);
+        
+        // Mod: Rund
+        &--round {
+            margin: @app-size-gap auto;
+            font-size: @app-font-size-huge;
+            width: @_quiz-size-button-round;
+            height: @_quiz-size-button-round;
+            padding: @_quiz-padding-button-round 0;
+            line-height: ((@_quiz-size-button-round - (2 * (@_quiz-padding-button-round + @app-size-line-thin))) / 2);
+            .border-radius(50%);
+        }
+        
+        // Mod: Aktion
+        &--action {
+            text-transform: uppercase;
+            border-color: @app-color-main-dark;
+            border-bottom-color: shade(@app-color-main-dark, 10%);
+            .colored-gradient(@app-color-main, false, 10%);
+            //.colored(@app-color-main);
+            //.gradient(top, @app-color-main, @app-color-main-dark);
+            .shadow-small(@app-color-shadow-dark);
+        }
+    }
+    
+    // Element: Button & Mod: Rund & Element: Button-Text
+    &__button--round &__buttontext:last-child {
+        font-size: @app-font-size-medium;
+    }
 }

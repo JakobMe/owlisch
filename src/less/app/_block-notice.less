@@ -108,12 +108,14 @@
     &--error &__title-text:before { content: @fontello-icon-error; }
     &--translation &__title-text:before { content: @fontello-icon-translation; }
     
-    // Mod: Titel & Element: Text
-    &--title &__text {
-        font-weight: bold;
+    // Mod: Titel & Groß & Element: Text
+    &--title &__text, &--big &__text {
         font-style: normal;
         font-size: @app-font-size-large;
     }
+    
+    // Mod: Titel & Element: Text
+    &--title &__text { font-weight: bold; }
     
     // Mod: Absatz & Element: Text
     &--paragraph &__text {

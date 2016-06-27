@@ -16,7 +16,27 @@
                 </div>
                 <div class="slider slider--has-{{slides}}" id="quiz-slider">
                     <div class="slider__slide" id="quiz-start" data-slide="1">
-                        
+                        <h1 class="quiz__title"><b>{{caption}}</b>-Quiz</h1>
+                        <p class="notice notice--box notice--big">
+                            <span class="notice__text">
+                                <i class="icon icon--quiz icon--left"></i>
+                                Teste dein <b>Wissen</b>!
+                            </span>
+                        </p>
+                        <p class="notice">
+                            <span class="notice__title">
+                                <span class="notice__title-text">Hinweis</span>
+                            </span>
+                            <span class="notice__text">
+                                Du kannst das <b>Quiz</b> jederzeit <b>abbrechen</b>.
+                                Wenn Du eine Antwort nicht weißt, kannst Du die Frage
+                                auch <b>überspringen</b>.
+                            </span>
+                        </p>
+                        <a class="quiz__button quiz__button--round quiz__button--action" href="#" role="button">
+                            <span class="quiz__buttontext">Quiz</span><br/>
+                            <span class="quiz__buttontext">starten</span>
+                        </a>
                     </div>
                     {{#questions}}
                     <div class="slider__slide" data-slide="{{.}}"></div>

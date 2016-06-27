@@ -10,7 +10,7 @@
 // Modul-Variablen
 @_progressbar-size-line:                2px;
 @_progressbar-font-size-icon:           12px;
-@_progressbar-color-line:               darken(@app-color-background-dark, 10%);
+@_progressbar-color-line:               @app-color-background-dark;
 
 // Block: Fortschritts-Leiste
 .progressbar {
@@ -23,6 +23,7 @@
     height: auto;
     padding: @app-size-gap;
     .colored(@app-color-light, true);
+    .border(bottom);
     
     // Element: Wrapper
     &__wrapper {

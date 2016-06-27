@@ -64,7 +64,7 @@
         &:before {
             left: 0;
             .gradient(
-                left,
+                right,
                 fade(@app-color-text-dark-pale, 0%),
                 @app-color-text-dark-pale,
                 0%, @_notice-size-title
@@ -75,7 +75,7 @@
         &:after {
             right: 0;
             .gradient(
-                right,
+                left,
                 fade(@app-color-text-dark-pale, 0%),
                 @app-color-text-dark-pale,
                 0%, @_notice-size-title
@@ -88,6 +88,9 @@
         display: block;
         font-style: italic;
         hyphens: auto;
+        
+        // Nicht Letztes Element
+        &:not(:last-child) { margin-bottom: @app-size-gap; }
     }
     
     // Mod: Box
@@ -107,6 +110,7 @@
     // Mod: Fehler & Element: Titel-Text Icon
     &--error &__title-text:before { content: @fontello-icon-error; }
     &--translation &__title-text:before { content: @fontello-icon-translation; }
+    &--quiz &__title-text:before { content: @fontello-icon-quiz; }
     
     // Mod: Titel & Groß & Element: Text
     &--title &__text, &--big &__text {
@@ -119,9 +123,8 @@
     
     // Mod: Absatz & Element: Text
     &--paragraph &__text {
-        hyphens: auto;
         font-style: normal;
-        text-align: justify;
+        text-align: left;
         line-height: 1.5;
     }
 }

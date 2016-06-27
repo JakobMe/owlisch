@@ -15,7 +15,7 @@ var Statistics = (function() {
     var _SEL_PROGRESS           = "#statistics-progress";
     var _SEL_DICTIONARY         = "#statistics-dictionary";
     var _SEL_TMPL_STATISTICS    = "#tmpl-statistics";
-    var _SEL_TMPL_CHART         = "#tmpl-chart";
+    var _SEL_TMPL_CHART         = "#tmpl-statistics-chart";
     
     // BEM-Konstanten
     var _B_CHART                = "chart";

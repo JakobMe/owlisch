@@ -16,7 +16,7 @@ var NavigationBar = (function() {
     var _SEL_SEARCH             = "#navigation-search";
     var _SEL_CLEAR              = "#navigation-clear";
     var _SEL_DROPDOWN           = "#navigation-dropdown";
-    var _SEL_TMPL_DROPDOWN      = "#tmpl-dropdown";
+    var _SEL_TMPL               = "#tmpl-navigationbar";
     
     // BEM-Konstanten
     var _B_BAR                  = "navigationbar";
@@ -46,14 +46,14 @@ var NavigationBar = (function() {
     var _searchIsActive         = false;
     var _buttonsAreDisabled     = false;
     var _dropdownIsOpened       = false;
-    var _tmplDropdown           = $(_SEL_TMPL_DROPDOWN).html();
+    var _tmpl                   = $(_SEL_TMPL).html();
     var _isWebapp               = (CFG.WEBAPP.IOS || CFG.WEBAPP.CORDOVA);
     
     // DOM-Elemente
     var _$navbar                = $(_SEL_NAVBAR);
-    var _$search                = _$navbar.find(_SEL_SEARCH);
-    var _$clear                 = _$navbar.find(_SEL_CLEAR);
-    var _$dropdown              = _$navbar.find(_SEL_DROPDOWN);
+    var _$search                = null;
+    var _$clear                 = null;
+    var _$dropdown              = null;
     var _$sort                  = null;
     
     /**
@@ -64,7 +64,6 @@ var NavigationBar = (function() {
     function init() {
         _parseTemplates();
         _initNavigationBar();
-        _render();
     }
     
     /**
@@ -72,7 +71,7 @@ var NavigationBar = (function() {
      * Übergibt die Templates dieses Moduls an Mustache, um sie zu parsen.
      */
     function _parseTemplates() {
-        Mustache.parse(_tmplDropdown);
+        Mustache.parse(_tmpl);
     }
     
     /**
@@ -99,14 +98,15 @@ var NavigationBar = (function() {
         });
         
         // Template füllen, Callback ausführen
-        _$dropdown.html(Mustache.render(_tmplDropdown, sorting))
+        _$navbar.html(Mustache.render(_tmpl, sorting))
             .promise().done(function() {
                 _initComponents();
                 _setDefaultCache();
                 _bindEvents();
                 _$sort.first().click();
+                _render();
             }
-        );
+        );        
     }
     
     /**
@@ -119,6 +119,9 @@ var NavigationBar = (function() {
         _buttonLeft = { $button: $buttons.first(), action: null, icon: null };
         _buttonRight = { $button: $buttons.last(), action: null, icon: null };
         _title = { $title: _$navbar.find(_SEL_TITLE), str: CFG.STR.EMPTY };
+        _$search = _$navbar.find(_SEL_SEARCH);
+        _$clear = _$navbar.find(_SEL_CLEAR);
+        _$dropdown = _$navbar.find(_SEL_DROPDOWN);
         _$sort = _$dropdown.find(_SEL_SORT);
     }
     

@@ -16,11 +16,10 @@
                 </div>
                 <div class="slider slider--has-{{slides}}" id="quiz-slider">
                     <div class="slider__slide" id="quiz-start" data-slide="1">
-                        <h1 class="quiz__title"><b>{{caption}}</b>-Quiz</h1>
-                        <p class="notice notice--box notice--big">
-                            <span class="notice__text">
-                                <i class="icon icon--quiz icon--left"></i>
-                                Teste dein <b>Wissen</b>!
+                        <p class="quiz__title">
+                            <span class="quiz__title-text">
+                                <i class="icon icon--dictionary quiz__title-icon"></i> {{caption}}
+                                <span class="badge">{{size}} Fragen</span>
                             </span>
                         </p>
                         <p class="notice">
@@ -30,7 +29,8 @@
                             <span class="notice__text">
                                 Du kannst das <b>Quiz</b> jederzeit <b>abbrechen</b>.
                                 Wenn Du eine Antwort nicht weißt, kannst Du die Frage
-                                auch <b>überspringen</b>.
+                                auch <b>überspringen</b>. Je häufiger Du einen Begriff
+                                <b>richtig errätst</b>, desto schwieriger wird die <b>Frage</b>.
                             </span>
                         </p>
                         <a class="quiz__button quiz__button--round quiz__button--action" href="#" role="button">

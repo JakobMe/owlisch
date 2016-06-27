@@ -9,6 +9,7 @@
 
 // Modul-Variablen
 @_list-size-height:                     44px;
+@_list-line-height-title:               20px;
 
 // Block: Liste
 .list {
@@ -83,6 +84,7 @@
         padding: @app-size-gap;
         font-size: @app-font-size-medium;
         margin-bottom: @app-size-gap-small;
+        line-height: @_list-line-height-title;
         .colored(@app-color-light, true);
         .border(bottom);
         .border(top);
@@ -94,7 +96,7 @@
         }
         
         // Sub-Elemente: Titel-Text und -Icon
-        &-text { display: block; }
+        &-text { display: block; position: relative; }
         &-icon { margin-right: @app-size-gap-small; }
     }
 }

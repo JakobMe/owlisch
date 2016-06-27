@@ -10,6 +10,7 @@
 // Modul-Variablen
 @_quiz-size-button-round:               128px;
 @_quiz-padding-button-round:            40px;
+@_quiz-line-height-title:               20px;
 
 // Block: Quiz
 .quiz {
@@ -22,17 +23,20 @@
     // Element: Titel
     &__title {
         display: block;
-        font-weight: normal;
-        font-style: italic;
-        text-align: center;
-        line-height: 1.4;
+        font-weight: bold;
+        position: relative;
         margin: 0;
-        padding: 0 @app-size-gap;
-        padding-bottom: @app-size-gap;
-        font-size: @app-font-size-large;
+        padding: @app-size-gap;
+        font-size: @app-font-size-medium;
         margin-bottom: @app-size-gap-small;
-        .colored(@app-color-light);
+        margin-top: -(@app-size-gap);
+        line-height: @_quiz-line-height-title;
+        .colored(@app-color-light, true);
         .border(bottom);
+        
+        // Sub-Elemente: Titel-Text und -Icon
+        &-text { display: block; position: relative; }
+        &-icon { margin-right: @app-size-gap-small; }
     }
     
     // Element: Button
@@ -40,6 +44,7 @@
         display: block;
         cursor: pointer;
         font-weight: bold;
+        font-style: normal;
         position: relative;
         text-align: center;
         text-decoration: none;
@@ -66,10 +71,10 @@
             text-transform: uppercase;
             border-color: @app-color-main-dark;
             border-bottom-color: shade(@app-color-main-dark, 10%);
-            .colored-gradient(@app-color-main, false, 10%);
-            //.colored(@app-color-main);
-            //.gradient(top, @app-color-main, @app-color-main-dark);
+            .colored(@app-color-main);
+            .gradient(bottom, @app-color-main-light, @app-color-main);
             .shadow-small(@app-color-shadow-dark);
+            .textshadow();
         }
     }
     

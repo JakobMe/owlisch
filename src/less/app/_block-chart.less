@@ -96,7 +96,7 @@
         height: 100%;
         width: @app-size-line-thin;
         margin-left: -(@app-size-line-thin);
-        .gradient(top, @app-color-background, @app-color-background-light);
+        .gradient(bottom, @app-color-background, @app-color-background-light);
         ._chart-loop-lines-horizontal(@_chart-number-percent);
     }
     
@@ -145,7 +145,7 @@
         display: block;
         box-sizing: border-box;
         max-width: 100%;
-        .gradient(top, @app-color-main-light, @app-color-main);
+        .gradient(bottom, @app-color-main-light, @app-color-main);
         .border(all, @app-color-main-dark);
         .border(bottom, shade(@app-color-main-dark, 10%));
         .border-radius();
@@ -166,7 +166,7 @@
         height: @_chart-size-bar;
         border-color: @app-color-star-dark;
         border-bottom-color: shade(@app-color-star-dark, 10%);
-        .gradient(top, @app-color-star-light, @app-color-star);
+        .gradient(bottom, @app-color-star-light, @app-color-star);
     }
     
     // Mod: Vertikal & Element: Daten & Mod: Ohne & Element: Balken

@@ -568,12 +568,21 @@
 		"outputPathIsOutsideProject": 0,
 		"outputPathIsSetByUser": 1
 		},
-	"\/src\/kit\/tmpl\/_chart.kit": {
+	"\/src\/kit\/tmpl\/_dictionary-details.kit": {
 		"fileType": 2048,
 		"ignore": 1,
 		"ignoreWasSetByUser": 0,
-		"inputAbbreviatedPath": "\/src\/kit\/tmpl\/_chart.kit",
-		"outputAbbreviatedPath": "\/src\/kit\/tmpl\/_chart.html",
+		"inputAbbreviatedPath": "\/src\/kit\/tmpl\/_dictionary-details.kit",
+		"outputAbbreviatedPath": "\/src\/kit\/tmpl\/_dictionary-details.html",
+		"outputPathIsOutsideProject": 0,
+		"outputPathIsSetByUser": 0
+		},
+	"\/src\/kit\/tmpl\/_dictionary-list.kit": {
+		"fileType": 2048,
+		"ignore": 1,
+		"ignoreWasSetByUser": 0,
+		"inputAbbreviatedPath": "\/src\/kit\/tmpl\/_dictionary-list.kit",
+		"outputAbbreviatedPath": "\/src\/kit\/tmpl\/_dictionary-list.html",
 		"outputPathIsOutsideProject": 0,
 		"outputPathIsSetByUser": 0
 		},
@@ -586,12 +595,12 @@
 		"outputPathIsOutsideProject": 0,
 		"outputPathIsSetByUser": 0
 		},
-	"\/src\/kit\/tmpl\/_dropdown.kit": {
+	"\/src\/kit\/tmpl\/_navigationbar.kit": {
 		"fileType": 2048,
 		"ignore": 1,
 		"ignoreWasSetByUser": 0,
-		"inputAbbreviatedPath": "\/src\/kit\/tmpl\/_dropdown.kit",
-		"outputAbbreviatedPath": "\/src\/kit\/tmpl\/_dropdown.html",
+		"inputAbbreviatedPath": "\/src\/kit\/tmpl\/_navigationbar.kit",
+		"outputAbbreviatedPath": "\/src\/kit\/tmpl\/_navigationbar.html",
 		"outputPathIsOutsideProject": 0,
 		"outputPathIsSetByUser": 0
 		},
@@ -604,6 +613,15 @@
 		"outputPathIsOutsideProject": 0,
 		"outputPathIsSetByUser": 0
 		},
+	"\/src\/kit\/tmpl\/_statistics-chart.kit": {
+		"fileType": 2048,
+		"ignore": 1,
+		"ignoreWasSetByUser": 0,
+		"inputAbbreviatedPath": "\/src\/kit\/tmpl\/_statistics-chart.kit",
+		"outputAbbreviatedPath": "\/src\/kit\/tmpl\/_statistics-chart.html",
+		"outputPathIsOutsideProject": 0,
+		"outputPathIsSetByUser": 0
+		},
 	"\/src\/kit\/tmpl\/_statistics.kit": {
 		"fileType": 2048,
 		"ignore": 1,
@@ -613,39 +631,21 @@
 		"outputPathIsOutsideProject": 0,
 		"outputPathIsSetByUser": 0
 		},
-	"\/src\/kit\/tmpl\/_tablist.kit": {
+	"\/src\/kit\/tmpl\/_tabbar.kit": {
 		"fileType": 2048,
 		"ignore": 1,
 		"ignoreWasSetByUser": 0,
-		"inputAbbreviatedPath": "\/src\/kit\/tmpl\/_tablist.kit",
-		"outputAbbreviatedPath": "\/src\/kit\/tmpl\/_tablist.html",
+		"inputAbbreviatedPath": "\/src\/kit\/tmpl\/_tabbar.kit",
+		"outputAbbreviatedPath": "\/src\/kit\/tmpl\/_tabbar.html",
 		"outputPathIsOutsideProject": 0,
 		"outputPathIsSetByUser": 0
 		},
-	"\/src\/kit\/tmpl\/_termdetails.kit": {
+	"\/src\/kit\/tmpl\/_view.kit": {
 		"fileType": 2048,
 		"ignore": 1,
 		"ignoreWasSetByUser": 0,
-		"inputAbbreviatedPath": "\/src\/kit\/tmpl\/_termdetails.kit",
-		"outputAbbreviatedPath": "\/src\/kit\/tmpl\/_termdetails.html",
-		"outputPathIsOutsideProject": 0,
-		"outputPathIsSetByUser": 0
-		},
-	"\/src\/kit\/tmpl\/_termlist.kit": {
-		"fileType": 2048,
-		"ignore": 1,
-		"ignoreWasSetByUser": 0,
-		"inputAbbreviatedPath": "\/src\/kit\/tmpl\/_termlist.kit",
-		"outputAbbreviatedPath": "\/src\/kit\/tmpl\/_termlist.html",
-		"outputPathIsOutsideProject": 0,
-		"outputPathIsSetByUser": 0
-		},
-	"\/src\/kit\/tmpl\/_viewpanels.kit": {
-		"fileType": 2048,
-		"ignore": 1,
-		"ignoreWasSetByUser": 0,
-		"inputAbbreviatedPath": "\/src\/kit\/tmpl\/_viewpanels.kit",
-		"outputAbbreviatedPath": "\/src\/kit\/tmpl\/_viewpanels.html",
+		"inputAbbreviatedPath": "\/src\/kit\/tmpl\/_view.kit",
+		"outputAbbreviatedPath": "\/src\/kit\/tmpl\/_view.html",
 		"outputPathIsOutsideProject": 0,
 		"outputPathIsSetByUser": 0
 		},

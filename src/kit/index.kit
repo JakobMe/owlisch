@@ -13,7 +13,6 @@
         <meta name="apple-mobile-web-app-capable"          content="yes">
         <meta name="apple-mobile-web-app-title"            content="OWLisch">
         <meta name="application-name"                      content="OWLisch">
-        <meta name="theme-color"                           content="#3bbb77">
         <meta name="viewport"                              content="width=device-width, height=device-height,
                                                                     initial-scale=1, user-scalable=no,
                                                                     minimum-scale=1, maximum-scale=1">
@@ -29,49 +28,20 @@
         <!-- Viewport -->
         <div class="viewport">
             <div class="viewport__app" id="viewport">
-                
-                <!-- View -->
-                <main class="view" id="view-container" role="main">
-                    <section class="view__content" id="view-content"></section>
-                </main>
-                
-                <!-- Navigation-Bar -->
-                <header class="navigationbar" id="navigationbar" role="navigation">
-                    <ul class="dropdown" id="navigation-dropdown" role="menu"></ul>
-                    <div class="navigationbar__wrapper">
-                        <div class="navigationbar__search">
-                            <input class="navigationbar__search-input" type="text"
-                                   spellcheck="false" autocomplete="off"
-                                   autocorrect="off" autocapitalize="none"
-                                   tabindex="-100" placeholder="Suche"
-                                   maxlength="16" id="navigation-search"
-                                   role="search" />
-                            <i class="navigationbar__search-clear
-                               navigationbar__search-clear--hidden"
-                               id="navigation-clear"></i>
-                        </div>
-                        <h1 class="navigationbar__title" id="navigation-title"></h1>
-                        <i class="navigationbar__button navigationbar__button--left"
-                           role="button"></i>
-                        <i class="navigationbar__button navigationbar__button--right"
-                           role="button"></i>
-                    </div>
-                </header>
-                
-                <!-- Tab-Bar -->
+                <main class="view" id="view-container" role="main"></main>
+                <header class="navigationbar" id="navigationbar" role="navigation"></header>
                 <nav class="tabbar" id="tabbar" role="tablist"></nav>
-                
             </div>
         </div>
         
-        <!-- @import tmpl/viewpanels -->
-        <!-- @import tmpl/tablist -->
+        <!-- @import tmpl/view -->
+        <!-- @import tmpl/tabbar -->
+        <!-- @import tmpl/navigationbar -->
         <!-- @import tmpl/dictionary -->
-        <!-- @import tmpl/termlist -->
-        <!-- @import tmpl/termdetails -->
-        <!-- @import tmpl/dropdown -->
+        <!-- @import tmpl/dictionary-list -->
+        <!-- @import tmpl/dictionary-details -->
         <!-- @import tmpl/statistics -->
-        <!-- @import tmpl/chart -->
+        <!-- @import tmpl/statistics-chart -->
         <!-- @import tmpl/quiz -->
         
         <!-- Javascript -->

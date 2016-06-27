@@ -12,7 +12,7 @@ var View = (function() {
     var _SEL_PANELS             = "[role='tabpanel']";
     var _SEL_VIEW               = "#view-container";
     var _SEL_CONTENT            = "#view-content";
-    var _SEL_TMPL               = "#tmpl-viewpanels";
+    var _SEL_TMPL               = "#tmpl-view";
     
     // BEM-Konstanten
     var _B                      = "view";
@@ -31,11 +31,11 @@ var View = (function() {
     var _isVisible              = false;
     var _isFullscreen           = false;
     var _isWebapp               = (CFG.WEBAPP.IOS || CFG.WEBAPP.CORDOVA);
-    var _tmplViewpanels         = $(_SEL_TMPL).html();
+    var _tmplView               = $(_SEL_TMPL).html();
     
     // DOM-Elemente
     var _$view                  = $(_SEL_VIEW);
-    var _$content               = _$view.find(_SEL_CONTENT);
+    var _$content               = null;
     var _$panels                = {};
     
     /**
@@ -47,7 +47,6 @@ var View = (function() {
         _parseTemplates();
         _bindEvents();
         _initPanels();
-        _render();
     }
     
     /**
@@ -55,7 +54,7 @@ var View = (function() {
      * Übergibt die Templates dieses Moduls an Mustache, um sie zu parsen.
      */
     function _parseTemplates() {
-        Mustache.parse(_tmplViewpanels);
+        Mustache.parse(_tmplView);
     }
     
     /**
@@ -113,7 +112,7 @@ var View = (function() {
         });
         
         // Template füllen und in Content laden, Event auslösen
-        _$content.html(Mustache.render(_tmplViewpanels, panels))
+        _$view.html(Mustache.render(_tmplView, panels))
             .promise().done(function() {
                 if ($.isFunction(callback)) { callback(panels); }
             }
@@ -135,8 +134,10 @@ var View = (function() {
                 _$panels[$(this).data(_DATA_PANEL)] = $(this);
             });
             
-            // Event auslösen
+            // Inhalt initialisieren, Event auslösen, rendern
+            _$content = _$view.find(_SEL_CONTENT);
             $(window).trigger(CFG.EVT.CREATE_PANELS, { panels: panels });
+            _render();
         });
     }
     

@@ -13,7 +13,6 @@
         <meta name="apple-mobile-web-app-capable"          content="yes">
         <meta name="apple-mobile-web-app-title"            content="OWLisch">
         <meta name="application-name"                      content="OWLisch">
-        <meta name="theme-color"                           content="#3bbb77">
         <meta name="viewport"                              content="width=device-width, height=device-height,
                                                                     initial-scale=1, user-scalable=no,
                                                                     minimum-scale=1, maximum-scale=1">
@@ -29,53 +28,26 @@
         <!-- Viewport -->
         <div class="viewport">
             <div class="viewport__app" id="viewport">
-                
-                <!-- View -->
-                <main class="view" id="view-container" role="main">
-                    <section class="view__content" id="view-content"></section>
-                </main>
-                
-                <!-- Navigation-Bar -->
-                <header class="navigationbar" id="navigationbar" role="navigation">
-                    <ul class="dropdown" id="navigation-dropdown" role="menu"></ul>
-                    <div class="navigationbar__wrapper">
-                        <div class="navigationbar__search">
-                            <input class="navigationbar__search-input" type="text"
-                                   spellcheck="false" autocomplete="off"
-                                   autocorrect="off" autocapitalize="none"
-                                   tabindex="-100" placeholder="Suche"
-                                   maxlength="16" id="navigation-search"
-                                   role="search" />
-                            <i class="navigationbar__search-clear
-                               navigationbar__search-clear--hidden"
-                               id="navigation-clear"></i>
-                        </div>
-                        <h1 class="navigationbar__title" id="navigation-title"></h1>
-                        <i class="navigationbar__button navigationbar__button--left"
-                           role="button"></i>
-                        <i class="navigationbar__button navigationbar__button--right"
-                           role="button"></i>
-                    </div>
-                </header>
-                
-                <!-- Tab-Bar -->
+                <main class="view" id="view-container" role="main"></main>
+                <header class="navigationbar" id="navigationbar" role="navigation"></header>
                 <nav class="tabbar" id="tabbar" role="tablist"></nav>
-                
             </div>
         </div>
         
                 
-        <!-- Template: View-Panels -->
-        <script id="tmpl-viewpanels" type="text/template">
-            {{#.}}
-            <section class="view__panel" role="tabpanel"
-                     data-panel="{{alias}}" data-title="{{title}}">
+        <!-- Template: View -->
+        <script id="tmpl-view" type="text/template">
+            <section class="view__content" id="view-content">
+                {{#.}}
+                <section class="view__panel" role="tabpanel"
+                         data-panel="{{alias}}" data-title="{{title}}">
+                </section>
+                {{/.}}
             </section>
-            {{/.}}
         </script>
                 
-        <!-- Template: Tab-List -->
-        <script id="tmpl-tablist" type="text/template">
+        <!-- Template: Tab-Bar -->
+        <script id="tmpl-tabbar" type="text/template">
             <ul class="tabbar__list">
                 {{#.}}
                 <li class="tabbar__tab" role="tab" data-panel="{{alias}}">
@@ -85,6 +57,39 @@
                 {{/.}}
             </ul>
             <div class="tabbar__status"></div>
+        </script>
+                
+        <!-- Template: Navigation-Bar -->
+        <script id="tmpl-navigationbar" type="text/template">
+            <ul class="dropdown" id="navigation-dropdown" role="menu">
+                {{#.}}
+                <li class="dropdown__item" role="menuitem"
+                    data-sort="{{optionSort}}" data-order="{{optionOrder}}">
+                    <i class="dropdown__icon icon icon--sort-{{iconSort}}-{{iconOrder}}"></i>
+                    <span class="dropdown__label">
+                        {{labelSort}} {{labelOrder}} sortieren
+                    </span>
+                </li>
+                {{/.}}
+            </ul>
+            <div class="navigationbar__wrapper">
+                <div class="navigationbar__search">
+                    <input class="navigationbar__search-input" type="text"
+                           spellcheck="false" autocomplete="off"
+                           autocorrect="off" autocapitalize="none"
+                           tabindex="-100" placeholder="Suche"
+                           maxlength="16" id="navigation-search"
+                           role="search" />
+                    <i class="navigationbar__search-clear
+                       navigationbar__search-clear--hidden"
+                       id="navigation-clear"></i>
+                </div>
+                <h1 class="navigationbar__title" id="navigation-title"></h1>
+                <i class="navigationbar__button navigationbar__button--left"
+                   role="button"></i>
+                <i class="navigationbar__button navigationbar__button--right"
+                   role="button"></i>
+            </div>
         </script>
                 
         <!-- Template: Wörterbuch -->
@@ -109,7 +114,7 @@
         </script>
                 
         <!-- Template: Begriffliste -->
-        <script id="tmpl-termlist" type="text/template">
+        <script id="tmpl-dictionary-list" type="text/template">
             <li class="list__title">
                 <span class="list__title-text">
                     <i class="icon icon--dictionary list__title-icon"></i> {{caption}}
@@ -146,7 +151,7 @@
         </script>
                 
         <!-- Template: Begriffdetails -->
-        <script id="tmpl-termdetails" type="text/template">
+        <script id="tmpl-dictionary-details" type="text/template">
             <article class="term{{^image}} term--no-image{{/image}}">
                 <header class="term__header">
                     {{#image}}
@@ -187,19 +192,6 @@
             </article>
         </script>
                 
-        <!-- Template: Dropdown -->
-        <script id="tmpl-dropdown" type="text/template">
-            {{#.}}
-            <li class="dropdown__item" role="menuitem"
-                data-sort="{{optionSort}}" data-order="{{optionOrder}}">
-                <i class="dropdown__icon icon icon--sort-{{iconSort}}-{{iconOrder}}"></i>
-                <span class="dropdown__label">
-                    {{labelSort}} {{labelOrder}} sortieren
-                </span>
-            </li>
-            {{/.}}
-        </script>
-                
         <!-- Template: Statistik -->
         <script id="tmpl-statistics" type="text/template">
             <div class="statistics">
@@ -236,7 +228,7 @@
         </script>
                 
         <!-- Template: Diagramm -->
-        <script id="tmpl-chart" type="text/template">
+        <script id="tmpl-statistics-chart" type="text/template">
             <div class="chart__lines">
                 {{#steps}}
                 <div class="chart__line"></div>
@@ -283,11 +275,10 @@
                 </div>
                 <div class="slider slider--has-{{slides}}" id="quiz-slider">
                     <div class="slider__slide" id="quiz-start" data-slide="1">
-                        <h1 class="quiz__title"><b>{{caption}}</b>-Quiz</h1>
-                        <p class="notice notice--box notice--big">
-                            <span class="notice__text">
-                                <i class="icon icon--quiz icon--left"></i>
-                                Teste dein <b>Wissen</b>!
+                        <p class="quiz__title">
+                            <span class="quiz__title-text">
+                                <i class="icon icon--dictionary quiz__title-icon"></i> {{caption}}
+                                <span class="badge">{{size}} Fragen</span>
                             </span>
                         </p>
                         <p class="notice">
@@ -297,7 +288,8 @@
                             <span class="notice__text">
                                 Du kannst das <b>Quiz</b> jederzeit <b>abbrechen</b>.
                                 Wenn Du eine Antwort nicht weißt, kannst Du die Frage
-                                auch <b>überspringen</b>.
+                                auch <b>überspringen</b>. Je häufiger Du einen Begriff
+                                <b>richtig errätst</b>, desto schwieriger wird die <b>Frage</b>.
                             </span>
                         </p>
                         <a class="quiz__button quiz__button--round quiz__button--action" href="#" role="button">

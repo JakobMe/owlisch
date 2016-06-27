@@ -1,0 +1,33 @@
+        
+        <!-- Template: Navigation-Bar -->
+        <script id="tmpl-navigationbar" type="text/template">
+            <ul class="dropdown" id="navigation-dropdown" role="menu">
+                {{#.}}
+                <li class="dropdown__item" role="menuitem"
+                    data-sort="{{optionSort}}" data-order="{{optionOrder}}">
+                    <i class="dropdown__icon icon icon--sort-{{iconSort}}-{{iconOrder}}"></i>
+                    <span class="dropdown__label">
+                        {{labelSort}} {{labelOrder}} sortieren
+                    </span>
+                </li>
+                {{/.}}
+            </ul>
+            <div class="navigationbar__wrapper">
+                <div class="navigationbar__search">
+                    <input class="navigationbar__search-input" type="text"
+                           spellcheck="false" autocomplete="off"
+                           autocorrect="off" autocapitalize="none"
+                           tabindex="-100" placeholder="Suche"
+                           maxlength="16" id="navigation-search"
+                           role="search" />
+                    <i class="navigationbar__search-clear
+                       navigationbar__search-clear--hidden"
+                       id="navigation-clear"></i>
+                </div>
+                <h1 class="navigationbar__title" id="navigation-title"></h1>
+                <i class="navigationbar__button navigationbar__button--left"
+                   role="button"></i>
+                <i class="navigationbar__button navigationbar__button--right"
+                   role="button"></i>
+            </div>
+        </script>

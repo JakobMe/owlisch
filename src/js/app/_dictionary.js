@@ -15,8 +15,8 @@ var Dictionary = (function() {
     var _SEL_LIST               = "#dictionary-list";
     var _SEL_DETAILS            = "#dictionary-details";
     var _SEL_TMPL_DICTIONARY    = "#tmpl-dictionary";
-    var _SEL_TMPL_TERMLIST      = "#tmpl-termlist";
-    var _SEL_TMPL_TERMDETAILS   = "#tmpl-termdetails";
+    var _SEL_TMPL_LIST          = "#tmpl-dictionary-list";
+    var _SEL_TMPL_DETAILS       = "#tmpl-dictionary-details";
     
     // BEM-Konstanten
     var _B_SLIDER               = "slider";
@@ -41,8 +41,8 @@ var Dictionary = (function() {
     
     // Templates
     var _tmplDictionary         = $(_SEL_TMPL_DICTIONARY).html();
-    var _tmplTermlist           = $(_SEL_TMPL_TERMLIST).html();
-    var _tmplTermdetails        = $(_SEL_TMPL_TERMDETAILS).html();
+    var _tmplTermlist           = $(_SEL_TMPL_LIST).html();
+    var _tmplTermdetails        = $(_SEL_TMPL_DETAILS).html();
     
     // DOM-Elemente
     var _$slider                = null;

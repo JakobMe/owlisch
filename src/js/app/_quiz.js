@@ -122,9 +122,12 @@ var Quiz = (function() {
             );
             
             // Template füllen, Callback ausführen
-            data.target.html(Mustache.render(_tmplQuiz,
-                { slides: slides, questions: questions, caption: _dataCaption }
-                )).promise().done(function() { _initQuiz(); });
+            data.target.html(Mustache.render(_tmplQuiz, {
+                slides    : slides,
+                questions : questions,
+                caption   : _dataCaption,
+                size      : slides - extra
+            })).promise().done(function() { _initQuiz(); });
         }
     }
     

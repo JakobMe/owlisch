@@ -149,6 +149,15 @@
 }
 
 /**
+ * Mixin: Text-Schatten.
+ * @param {#color} color - Farbe des Text-Schattens
+ * @param {*px} size - Größe des Text-Schattens
+ */
+.textshadow(@color: @app-color-shadow-dark, @size: 1px) {
+    text-shadow: 0 @size 0 @color;
+}
+
+/**
  * Mixin: Text-Schatten Glühen.
  * @param {#color} color - Farbe des Text-Schattens.
  */
@@ -189,7 +198,7 @@
  * @param {*px|*%} end - Endposition des Verlaufes
  */
 .gradient(@pos, @color-start, @color-end, @start: 0%, @end: 100%) {
-    background-image: linear-gradient(@pos, @color-start @start, @color-end @end);
+    background-image: linear-gradient(to @pos, @color-start @start, @color-end @end);
 }
 
 /**
@@ -250,7 +259,7 @@
  */
 .colored-gradient(@color: @app-color-background-light, @pale: false, @tint: 100%) {
     .colored(@color, @pale);
-    .gradient(top, tint(@color, @tint), @color);
+    .gradient(bottom, tint(@color, @tint), @color);
 }
 
 /**

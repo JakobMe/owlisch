@@ -52,6 +52,8 @@ var TabBar = (function() {
     function _bindEvents() {
         _$tabbar.on(CFG.EVT.CLICK, _SEL_TABS, setTab);
         $(window).on(CFG.EVT.CREATE_PANELS, _createTablist);
+        $(window).on(CFG.EVT.QUIZ_START, hide);
+        $(window).on(CFG.EVT.QUIZ_END, show);
         window.addEventListener(CFG.EVT.KEYBOARD_SHOW, disable);
         window.addEventListener(CFG.EVT.KEYBOARD_HIDE, enable);
     }

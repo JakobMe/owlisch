@@ -57,6 +57,8 @@ var View = (function() {
         $(window).on(CFG.EVT.SET_PANEL, _setPanel);
         $(window).on(CFG.EVT.SHOW_VIEW, show);
         $(window).on(CFG.EVT.HIDE_VIEW, hide);
+        $(window).on(CFG.EVT.QUIZ_START, enableFullscreen);
+        $(window).on(CFG.EVT.QUIZ_END, disableFullscreen);
         window.addEventListener(CFG.EVT.KEYBOARD_SHOW, enableFullscreen);
         window.addEventListener(CFG.EVT.KEYBOARD_HIDE, disableFullscreen);
     }

@@ -322,6 +322,18 @@ var NavigationBar = (function() {
                     _loadFromCache(CFG.ACT.DICTIONARY_BACK);
                     break;
                 
+                // Quiz gestartet
+                case CFG.ACT.QUIZ_START:
+                    _setButtonLeft(CFG.ACT.QUIZ_CANCEL, CFG.ICON.CANCEL);
+                    _setButtonRight(CFG.ACT.QUIZ_SKIP, CFG.ICON.SKIP);
+                    break;
+                
+                // Quiz beendet
+                case CFG.ACT.QUIZ_CANCEL:
+                    _setButtonLeft(null, null);
+                    _setButtonRight(null, null);
+                    break;
+                
                 // !TODO: Switch Button-Aktionen
             }
         }

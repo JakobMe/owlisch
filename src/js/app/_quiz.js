@@ -92,6 +92,7 @@ var Quiz = (function() {
         $(window).on(CFG.EVT.LOAD_PANEL_CONTENT, _createQuiz);
         $(window).on(CFG.EVT.RESTORE_DEFAULT, _restoreDefault);
         $(window).on(CFG.EVT.SERVE_TERMS, _updateData);
+        $(window).on(CFG.EVT.PRESSED_BUTTON, _cancel);
     }
     
     /**
@@ -140,8 +141,14 @@ var Quiz = (function() {
      */
     function _startQuiz(event) {
         
-        // !TODO: _startQuiz()
+        $(window).trigger(CFG.EVT.QUIZ_START);
+        $(window).trigger(CFG.EVT.PRESSED_BUTTON, {
+            action : CFG.ACT.QUIZ_START,
+        });
         
+        // Auf erste Frage springen
+        _setCurrentStep(1);
+        _setCurrentSlide(_indexStart + 1);
         event.preventDefault();
     }
     
@@ -172,8 +179,7 @@ var Quiz = (function() {
         for (var i = 1; i <= CFG.QUIZ.QUESTIONS; i++) {
             _progress[i] = CFG.STR.EMPTY;
         }
-        _currentStep = 0;
-        _renderProgressbar();
+        _setCurrentStep(0);
     }
     
     /**
@@ -182,12 +188,25 @@ var Quiz = (function() {
      * rendert anschließend die Fortschrittsleiste.
      * @param {Number} step Nummer des Quiz-Schrittes
      * @param {String} status Neuer Status des Schrittes
-     */
-    function setProgress(step, status) {
+     *
+    function _setProgress(step, status) {
         if ((typeof step            === typeof 0) &&
             (typeof status          === typeof CFG.STR.EMPTY) &&
             (typeof _progress[step] !== typeof undefined)) {
             _progress[step] = status;
+            _renderProgressbar();
+        }
+    }*/
+    
+    /**
+     * Aktuellen Schritt setzen.
+     * Setzt das Quiz auf den gegebenen Schritt; rendert die
+     * Fortschrittsleiste neu.
+     * @param {Number} step Neuer Quiz-Schritt
+     */
+    function _setCurrentStep(step) {
+        if (typeof step === typeof 0) {
+            _currentStep = Math.max(Math.min(step, CFG.QUIZ.QUESTIONS), 0);
             _renderProgressbar();
         }
     }
@@ -242,15 +261,35 @@ var Quiz = (function() {
         if ((typeof data         !== typeof undefined) &&
             (typeof data.panel   !== typeof undefined) &&
             (CFG.VIEW[data.panel] === CFG.VIEW.QUIZ)) {
-            
-            // !TODO: _restoreDefault()
+            _resetAll();
         }
     }
     
+    /**
+     * Quiz abbrechen.
+     * Bricht das Quiz anhand eines Events ab.
+     * @param {Object} event Ausgelöstes Event
+     * @param {Object} data Daten des Events
+     */
+    function _cancel(event, data) {
+        if ((typeof data        !== typeof undefined) &&
+            (typeof data.action !== typeof undefined) &&
+            (data.action === CFG.ACT.QUIZ_CANCEL)) {
+            _resetAll();
+        }
+    }
+    
+    /**
+     * Alles zurücksetzen.
+     * Setzt alle Kompenenten und Daten vom Quiz zurück.
+     */
+    function _resetAll() {
+        $(window).trigger(CFG.EVT.QUIZ_END);
+        _setCurrentSlide(_indexStart);
+        _resetProgress();
+    }
+    
     // Öffentliches Interface
-    return {
-        init        : init,
-        setProgress : setProgress
-    };
+    return { init: init };
     
 })();

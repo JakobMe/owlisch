@@ -351,17 +351,14 @@ var Dictionary = (function() {
                 label  : CFG.LABEL.PROGRESS
             }, _currentTerm);
             
+            // Details laden, Event auslösen, Slider bewegen
             Template.render(_$details, _TMPL_DETAILS, data, function() {
-                
-                // Event für Navigation-Bar auslösen
                 if (renderNavBar !== false) {
                     $(window).trigger(CFG.EVT.PRESSED_BUTTON, {
                         action : CFG.ACT.DICTIONARY_FORWARD,
                         text   : _currentTerm.term
                     });
                 }
-                    
-                // Details scrollen, Slider verschieben
                 _$details.scrollTop(0);
                 _setCurrentSlide(_indexDetails);
             });

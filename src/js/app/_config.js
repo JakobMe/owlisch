@@ -54,7 +54,8 @@ var CFG = (function() {
             DICTIONARY_FORWARD  : "dictionary-forward",
             DICTIONARY_BACK     : "dictionary-back",
             QUIZ_SKIP           : "quiz-skip",
-            QUIZ_CANCEL         : "quiz-cancel"
+            QUIZ_CANCEL         : "quiz-cancel",
+            QUIZ_START          : "quiz-start"
         },
         ICON: {
             NONE                : "none",
@@ -90,7 +91,9 @@ var CFG = (function() {
             SERVE_TERMS         : "servedTerms",
             SERVE_SCORES        : "servedScores",
             UPDATE_TERMS        : "updatedTerms",
-            UPDATE_SCORES       : "updatedScores"
+            UPDATE_SCORES       : "updatedScores",
+            QUIZ_START          : "quizHasStarted",
+            QUIZ_END            : "quizHasEnded"
         },
         SORTING: {
             SORT: {

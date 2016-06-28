@@ -1269,97 +1269,16 @@
 		"outputStyle": 1,
 		"syntaxCheckerStyle": 1
 		},
-	"\/www\/tmpl\/dictionary-details.html": {
-		"fileType": 8192,
-		"ignore": 1,
-		"ignoreWasSetByUser": 1,
-		"inputAbbreviatedPath": "\/www\/tmpl\/dictionary-details.html",
-		"outputAbbreviatedPath": "No Output Path",
-		"outputPathIsOutsideProject": 0,
-		"outputPathIsSetByUser": 0
-		},
-	"\/www\/tmpl\/dictionary-list.html": {
-		"fileType": 8192,
-		"ignore": 1,
-		"ignoreWasSetByUser": 1,
-		"inputAbbreviatedPath": "\/www\/tmpl\/dictionary-list.html",
-		"outputAbbreviatedPath": "No Output Path",
-		"outputPathIsOutsideProject": 0,
-		"outputPathIsSetByUser": 0
-		},
-	"\/www\/tmpl\/dictionary.html": {
-		"fileType": 8192,
-		"ignore": 1,
-		"ignoreWasSetByUser": 1,
-		"inputAbbreviatedPath": "\/www\/tmpl\/dictionary.html",
-		"outputAbbreviatedPath": "No Output Path",
-		"outputPathIsOutsideProject": 0,
-		"outputPathIsSetByUser": 0
-		},
-	"\/www\/tmpl\/navigationbar.html": {
-		"fileType": 8192,
-		"ignore": 1,
-		"ignoreWasSetByUser": 1,
-		"inputAbbreviatedPath": "\/www\/tmpl\/navigationbar.html",
-		"outputAbbreviatedPath": "No Output Path",
-		"outputPathIsOutsideProject": 0,
-		"outputPathIsSetByUser": 0
-		},
-	"\/www\/tmpl\/preload.json": {
+	"\/www\/tpl\/preload.json": {
 		"fileType": 524288,
 		"ignore": 1,
 		"ignoreWasSetByUser": 0,
-		"inputAbbreviatedPath": "\/www\/tmpl\/preload.json",
+		"inputAbbreviatedPath": "\/www\/tpl\/preload.json",
 		"orderOutput": 0,
-		"outputAbbreviatedPath": "\/www\/tmpl\/preload-min.json",
+		"outputAbbreviatedPath": "\/www\/tpl\/preload-min.json",
 		"outputPathIsOutsideProject": 0,
 		"outputPathIsSetByUser": 0,
 		"outputStyle": 1
-		},
-	"\/www\/tmpl\/quiz.html": {
-		"fileType": 8192,
-		"ignore": 1,
-		"ignoreWasSetByUser": 1,
-		"inputAbbreviatedPath": "\/www\/tmpl\/quiz.html",
-		"outputAbbreviatedPath": "No Output Path",
-		"outputPathIsOutsideProject": 0,
-		"outputPathIsSetByUser": 0
-		},
-	"\/www\/tmpl\/statistics-chart.html": {
-		"fileType": 8192,
-		"ignore": 1,
-		"ignoreWasSetByUser": 1,
-		"inputAbbreviatedPath": "\/www\/tmpl\/statistics-chart.html",
-		"outputAbbreviatedPath": "No Output Path",
-		"outputPathIsOutsideProject": 0,
-		"outputPathIsSetByUser": 0
-		},
-	"\/www\/tmpl\/statistics.html": {
-		"fileType": 8192,
-		"ignore": 1,
-		"ignoreWasSetByUser": 1,
-		"inputAbbreviatedPath": "\/www\/tmpl\/statistics.html",
-		"outputAbbreviatedPath": "No Output Path",
-		"outputPathIsOutsideProject": 0,
-		"outputPathIsSetByUser": 0
-		},
-	"\/www\/tmpl\/tabbar.html": {
-		"fileType": 8192,
-		"ignore": 1,
-		"ignoreWasSetByUser": 1,
-		"inputAbbreviatedPath": "\/www\/tmpl\/tabbar.html",
-		"outputAbbreviatedPath": "No Output Path",
-		"outputPathIsOutsideProject": 0,
-		"outputPathIsSetByUser": 0
-		},
-	"\/www\/tmpl\/view.html": {
-		"fileType": 8192,
-		"ignore": 1,
-		"ignoreWasSetByUser": 1,
-		"inputAbbreviatedPath": "\/www\/tmpl\/view.html",
-		"outputAbbreviatedPath": "No Output Path",
-		"outputPathIsOutsideProject": 0,
-		"outputPathIsSetByUser": 0
 		}
 	},
 "hooks": [

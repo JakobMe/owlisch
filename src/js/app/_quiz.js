@@ -14,6 +14,7 @@ var Quiz = (function() {
     var _SEL_FINISH             = "#quiz-finish";
     var _SEL_PROGRESSBAR        = "#quiz-progressbar";
     var _SEL_STEP               = "[role='checkbox']";
+    var _SEL_BUTTON             = "[role='button']";
     
     // Template-Namen
     var _TMPL_QUIZ              = "quiz";
@@ -75,6 +76,7 @@ var Quiz = (function() {
         
         // Funktionen ausführen
         _resetProgress();
+        _bindClickEvents();
         _setCurrentSlide(_indexStart);
         
         // Wörterbuch und Fortschritt anfragen, View einblenden
@@ -90,6 +92,16 @@ var Quiz = (function() {
         $(window).on(CFG.EVT.LOAD_PANEL_CONTENT, _createQuiz);
         $(window).on(CFG.EVT.RESTORE_DEFAULT, _restoreDefault);
         $(window).on(CFG.EVT.SERVE_TERMS, _updateData);
+    }
+    
+    /**
+     * Klick-Events binden.
+     * Bindet Klick-Funktionen an interne jQuery-Objekte.
+     */
+    function _bindClickEvents() {
+        if ((_$start instanceof $) && (_$finish instanceof $)) {
+            _$start.add(_$finish).on(CFG.EVT.CLICK, _SEL_BUTTON, _startQuiz);
+        }
     }
     
     /**
@@ -119,6 +131,18 @@ var Quiz = (function() {
                 size      : slides - extra
             }, _initQuiz);
         }
+    }
+    
+    /**
+     * Quiz starten.
+     * ...
+     * @param {Object} event Ausgelöstes Event
+     */
+    function _startQuiz(event) {
+        
+        // !TODO: _startQuiz()
+        
+        event.preventDefault();
     }
     
     /**

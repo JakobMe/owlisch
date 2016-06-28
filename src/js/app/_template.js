@@ -9,7 +9,7 @@
 var Template = (function() {
     
     // Konstanten
-    var _INDEX                  = "tmpl.json";
+    var _PRELOAD                = "preload.json";
     var _PATH                   = "tmpl/";
     var _TYPE                   = ".html";
     
@@ -22,7 +22,7 @@ var Template = (function() {
      * und lädt alle genannten Templates vor.
      */
     function init() {
-        $.getJSON(_PATH + _INDEX, function(data) {
+        $.getJSON(_PATH + _PRELOAD, function(data) {
             $.each(data.templates, function(i, template) {
                 $.get(_PATH + template + _TYPE, function(content) {
                     _cache[template] = content;

@@ -1305,6 +1305,17 @@
 		"outputPathIsOutsideProject": 0,
 		"outputPathIsSetByUser": 0
 		},
+	"\/www\/tmpl\/preload.json": {
+		"fileType": 524288,
+		"ignore": 1,
+		"ignoreWasSetByUser": 0,
+		"inputAbbreviatedPath": "\/www\/tmpl\/preload.json",
+		"orderOutput": 0,
+		"outputAbbreviatedPath": "\/www\/tmpl\/preload-min.json",
+		"outputPathIsOutsideProject": 0,
+		"outputPathIsSetByUser": 0,
+		"outputStyle": 1
+		},
 	"\/www\/tmpl\/quiz.html": {
 		"fileType": 8192,
 		"ignore": 1,
@@ -1340,17 +1351,6 @@
 		"outputAbbreviatedPath": "No Output Path",
 		"outputPathIsOutsideProject": 0,
 		"outputPathIsSetByUser": 0
-		},
-	"\/www\/tmpl\/tmpl.json": {
-		"fileType": 524288,
-		"ignore": 1,
-		"ignoreWasSetByUser": 0,
-		"inputAbbreviatedPath": "\/www\/tmpl\/tmpl.json",
-		"orderOutput": 0,
-		"outputAbbreviatedPath": "\/www\/tmpl\/tmpl-min.json",
-		"outputPathIsOutsideProject": 0,
-		"outputPathIsSetByUser": 0,
-		"outputStyle": 0
 		},
 	"\/www\/tmpl\/view.html": {
 		"fileType": 8192,

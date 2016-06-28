@@ -11,7 +11,9 @@ var TabBar = (function() {
     // Selektor-Konstanten
     var _SEL_TABS               = "[role='tab']";
     var _SEL_TABBAR             = "#tabbar";
-    var _SEL_TMPL               = "#tmpl-tabbar";
+    
+    // Template-Namen
+    var _TMPL_TABBAR            = "tabbar";
     
     // BEM-Konstanten
     var _B                      = "tabbar";
@@ -29,7 +31,6 @@ var TabBar = (function() {
     var _tabNumber              = -1;
     var _isHidden               = false;
     var _isDisabled             = false;
-    var _tmpl                   = $(_SEL_TMPL).html();
     
     // DOM-Elemente
     var _$tabbar                = $(_SEL_TABBAR);
@@ -41,16 +42,7 @@ var TabBar = (function() {
      * um den Anfangszustand der Tab-Bar herzustellen.
      */
     function init() {
-        _parseTemplates();
         _bindEvents();
-    }
-    
-    /**
-     * Templates parsen.
-     * Übergibt die Templates dieses Moduls an Mustache, um sie zu parsen.
-     */
-    function _parseTemplates() {
-        Mustache.parse(_tmpl);
     }
     
     /**
@@ -87,14 +79,12 @@ var TabBar = (function() {
     function _createTablist(event, data) {
         if ((typeof data        !== typeof undefined) &&
             (typeof data.panels !== typeof undefined)) {
-            _$tabbar.html(Mustache.render(_tmpl, data.panels))
-                .promise().done(function() {
-                    _$tabs = _$tabbar.find(_SEL_TABS);
-                    _tabNumber = _$tabs.length - 1;
-                    setTab(_tabActive);
-                    $(window).trigger(CFG.EVT.SHOW_VIEWPORT);
-                }
-            );
+            Template.render(_$tabbar, _TMPL_TABBAR, data.panels, function() {
+                _$tabs = _$tabbar.find(_SEL_TABS);
+                _tabNumber = _$tabs.length - 1;
+                setTab(_tabActive);
+                $(window).trigger(CFG.EVT.SHOW_VIEWPORT);
+            });
         }
     }
     

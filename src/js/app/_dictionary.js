@@ -14,9 +14,11 @@ var Dictionary = (function() {
     var _SEL_LISTBOX            = "#dictionary-listbox";
     var _SEL_LIST               = "#dictionary-list";
     var _SEL_DETAILS            = "#dictionary-details";
-    var _SEL_TMPL_DICTIONARY    = "#tmpl-dictionary";
-    var _SEL_TMPL_LIST          = "#tmpl-dictionary-list";
-    var _SEL_TMPL_DETAILS       = "#tmpl-dictionary-details";
+    
+    // Template-Namen
+    var _TMPL_DICTIONARY        = "dictionary";
+    var _TMPL_LIST              = "dictionary-list";
+    var _TMPL_DETAILS           = "dictionary-details";
     
     // BEM-Konstanten
     var _B_SLIDER               = "slider";
@@ -39,11 +41,6 @@ var Dictionary = (function() {
     var _indexDetails           = 0;
     var _listIsLocked           = false;
     
-    // Templates
-    var _tmplDictionary         = $(_SEL_TMPL_DICTIONARY).html();
-    var _tmplTermlist           = $(_SEL_TMPL_LIST).html();
-    var _tmplTermdetails        = $(_SEL_TMPL_DETAILS).html();
-    
     // DOM-Elemente
     var _$slider                = null;
     var _$list                  = null;
@@ -52,22 +49,11 @@ var Dictionary = (function() {
     
     /**
      * Wörterbuch initialisieren.
-     * Parst alle benötigten Templates und startet Funktionen,
-     * um den Anfangszustand des Wörterbuches herzustellen.
+     * Führt Funktionen aus, um den Ausgangszustand des
+     * des Wörterbuches herzustellen.
      */
     function init() {
-        _parseTemplates();
         _bindEvents();
-    }
-    
-    /**
-     * Templates parsen.
-     * Übergibt die Templates dieses Moduls an Mustache, um sie zu parsen.
-     */
-    function _parseTemplates() {
-        Mustache.parse(_tmplDictionary);
-        Mustache.parse(_tmplTermlist);
-        Mustache.parse(_tmplTermdetails);
     }
     
     /**
@@ -128,10 +114,8 @@ var Dictionary = (function() {
         if ((typeof data          !== typeof undefined) &&
             (CFG.VIEW[data.panel] === CFG.VIEW.DICTIONARY) &&
             (data.target instanceof $)) {
-
-            // Template füllen, Callback ausführen
-            data.target.html(Mustache.render(_tmplDictionary))
-                .promise().done(function() { _initDictionary(); });
+            Template.render(data.target, _TMPL_DICTIONARY,
+                            null, _initDictionary);
         }
     }
     
@@ -264,17 +248,15 @@ var Dictionary = (function() {
      */
     function _renderList() {
         if (_$list instanceof $) {
-            _$list.html(
-                Mustache.render(_tmplTermlist, {
-                    caption  : _listCaption,
-                    terms    : _listFiltered,
-                    levels   : CFG.QUIZ.LEVELS,
-                    size     : _listFiltered.length,
-                    single   : (_listFiltered.length === 1),
-                    filtered : (_currentFilter.length > 0),
-                    empty    : (_listOriginal.length === 0)
-                })
-            );
+            Template.render(_$list, _TMPL_LIST, {
+                caption  : _listCaption,
+                terms    : _listFiltered,
+                levels   : CFG.QUIZ.LEVELS,
+                size     : _listFiltered.length,
+                single   : (_listFiltered.length === 1),
+                filtered : (_currentFilter.length > 0),
+                empty    : (_listOriginal.length === 0)
+            });
         }
     }
     
@@ -369,9 +351,7 @@ var Dictionary = (function() {
                 label  : CFG.LABEL.PROGRESS
             }, _currentTerm);
             
-            // Inhalte einfügen
-            _$details.html(Mustache.render(_tmplTermdetails, data))
-                     .promise().done(function() {
+            Template.render(_$details, _TMPL_DETAILS, data, function() {
                 
                 // Event für Navigation-Bar auslösen
                 if (renderNavBar !== false) {

@@ -14,7 +14,9 @@ var Quiz = (function() {
     var _SEL_FINISH             = "#quiz-finish";
     var _SEL_PROGRESSBAR        = "#quiz-progressbar";
     var _SEL_STEP               = "[role='checkbox']";
-    var _SEL_TMPL_QUIZ          = "#tmpl-quiz";
+    
+    // Template-Namen
+    var _TMPL_QUIZ              = "quiz";
     
     // BEM-Konstanten
     var _B_SLIDER               = "slider";
@@ -42,9 +44,6 @@ var Quiz = (function() {
     var _dataTerms              = [];
     var _dataCaption            = CFG.STR.EMPTY;
     
-    // Templates
-    var _tmplQuiz               = $(_SEL_TMPL_QUIZ).html();
-    
     // DOM-Elemente
     var _$slider                = null;
     var _$start                 = null;
@@ -56,16 +55,7 @@ var Quiz = (function() {
      * Startet Funktionen, um den Anfangszustand der Statistik herzustellen.
      */
     function init() {
-        _parseTemplates();
         _bindEvents();
-    }
-    
-    /**
-     * Templates parsen.
-     * Übergibt die Templates dieses Moduls an Mustache, um sie zu parsen.
-     */
-    function _parseTemplates() {
-        Mustache.parse(_tmplQuiz);
     }
     
     /**
@@ -122,12 +112,12 @@ var Quiz = (function() {
             );
             
             // Template füllen, Callback ausführen
-            data.target.html(Mustache.render(_tmplQuiz, {
+            Template.render(data.target, _TMPL_QUIZ, {
                 slides    : slides,
                 questions : questions,
                 caption   : _dataCaption,
                 size      : slides - extra
-            })).promise().done(function() { _initQuiz(); });
+            }, _initQuiz);
         }
     }
     

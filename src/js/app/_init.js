@@ -22,6 +22,7 @@ var App = {
         });
         
         // Komponenten initialisieren
+        Template.init();
         Data.init();
         Viewport.init();
         Dictionary.init();

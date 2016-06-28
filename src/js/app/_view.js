@@ -12,7 +12,9 @@ var View = (function() {
     var _SEL_PANELS             = "[role='tabpanel']";
     var _SEL_VIEW               = "#view-container";
     var _SEL_CONTENT            = "#view-content";
-    var _SEL_TMPL               = "#tmpl-view";
+    
+    // Template-Namen
+    var _TMPL_VIEW              = "view";
     
     // BEM-Konstanten
     var _B                      = "view";
@@ -31,7 +33,6 @@ var View = (function() {
     var _isVisible              = false;
     var _isFullscreen           = false;
     var _isWebapp               = (CFG.WEBAPP.IOS || CFG.WEBAPP.CORDOVA);
-    var _tmplView               = $(_SEL_TMPL).html();
     
     // DOM-Elemente
     var _$view                  = $(_SEL_VIEW);
@@ -44,17 +45,8 @@ var View = (function() {
      * um den Anfangszustand der View herzustellen.
      */
     function init() {
-        _parseTemplates();
-        _bindEvents();
         _initPanels();
-    }
-    
-    /**
-     * Templates parsen.
-     * Übergibt die Templates dieses Moduls an Mustache, um sie zu parsen.
-     */
-    function _parseTemplates() {
-        Mustache.parse(_tmplView);
+        _bindEvents();
     }
     
     /**
@@ -111,12 +103,10 @@ var View = (function() {
             panels.push(panelProps);
         });
         
-        // Template füllen und in Content laden, Event auslösen
-        _$view.html(Mustache.render(_tmplView, panels))
-            .promise().done(function() {
-                if ($.isFunction(callback)) { callback(panels); }
-            }
-        );
+        // Template laden, Callback
+        Template.render(_$view, _TMPL_VIEW, panels, function() {
+            if ($.isFunction(callback)) { callback(panels); }
+        });
     }
     
     /**

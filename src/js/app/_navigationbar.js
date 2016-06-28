@@ -16,7 +16,9 @@ var NavigationBar = (function() {
     var _SEL_SEARCH             = "#navigation-search";
     var _SEL_CLEAR              = "#navigation-clear";
     var _SEL_DROPDOWN           = "#navigation-dropdown";
-    var _SEL_TMPL               = "#tmpl-navigationbar";
+    
+    // Template-Namen
+    var _TMPL_NAVBAR            = "navigationbar";
     
     // BEM-Konstanten
     var _B_BAR                  = "navigationbar";
@@ -46,7 +48,6 @@ var NavigationBar = (function() {
     var _searchIsActive         = false;
     var _buttonsAreDisabled     = false;
     var _dropdownIsOpened       = false;
-    var _tmpl                   = $(_SEL_TMPL).html();
     var _isWebapp               = (CFG.WEBAPP.IOS || CFG.WEBAPP.CORDOVA);
     
     // DOM-Elemente
@@ -58,20 +59,11 @@ var NavigationBar = (function() {
     
     /**
      * Navigation-Bar initialisieren.
-     * Parst alle benötigten Templates und startet Funktionen,
-     * um den Anfangszustand der Navigation-Bar herzustellen.
+     * Führt Funktionen aus, um den Anfangszustand der
+     * Navigation-Bar herzustellen.
      */
     function init() {
-        _parseTemplates();
         _initNavigationBar();
-    }
-    
-    /**
-     * Templates parsen.
-     * Übergibt die Templates dieses Moduls an Mustache, um sie zu parsen.
-     */
-    function _parseTemplates() {
-        Mustache.parse(_tmpl);
     }
     
     /**
@@ -98,15 +90,13 @@ var NavigationBar = (function() {
         });
         
         // Template füllen, Callback ausführen
-        _$navbar.html(Mustache.render(_tmpl, sorting))
-            .promise().done(function() {
-                _initComponents();
-                _setDefaultCache();
-                _bindEvents();
-                _$sort.first().click();
-                _render();
-            }
-        );        
+        Template.render(_$navbar, _TMPL_NAVBAR, sorting, function() {
+            _initComponents();
+            _setDefaultCache();
+            _bindEvents();
+            _$sort.first().click();
+            _render();
+        });    
     }
     
     /**

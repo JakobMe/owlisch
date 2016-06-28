@@ -14,8 +14,10 @@ var Statistics = (function() {
     var _SEL_SCORES             = "#statistics-scores";
     var _SEL_PROGRESS           = "#statistics-progress";
     var _SEL_DICTIONARY         = "#statistics-dictionary";
-    var _SEL_TMPL_STATISTICS    = "#tmpl-statistics";
-    var _SEL_TMPL_CHART         = "#tmpl-statistics-chart";
+    
+    // Template-Namen
+    var _TMPL_STATISTICS        = "statistics";
+    var _TMPL_CHART             = "statistics-chart";
     
     // BEM-Konstanten
     var _B_CHART                = "chart";
@@ -32,10 +34,6 @@ var Statistics = (function() {
     var _sizeSolved             = 0;
     var _sizeTerms              = 0;
     
-    // Templates
-    var _tmplStatistics         = $(_SEL_TMPL_STATISTICS).html();
-    var _tmplChart              = $(_SEL_TMPL_CHART).html();
-    
     // DOM-Elemente
     var _$statistics            = null;
     var _$scores                = null;
@@ -47,23 +45,9 @@ var Statistics = (function() {
      * Startet Funktionen, um den Anfangszustand der Statistik herzustellen.
      */
     function init() {
-        
-        // Interne Variablen initialisieren
         _arrStepsPercent = Helper.arrayFromNumber(_NUM_STEPS_PERCENT);
         _arrStepsScores  = Helper.arrayFromNumber(CFG.QUIZ.QUESTIONS);
-        
-        // Funktionen ausführen
-        _parseTemplates();
         _bindEvents();
-    }
-    
-    /**
-     * Templates parsen.
-     * Übergibt die Templates dieses Moduls an Mustache, um sie zu parsen.
-     */
-    function _parseTemplates() {
-        Mustache.parse(_tmplStatistics);
-        Mustache.parse(_tmplChart);
     }
     
     /**
@@ -110,11 +94,11 @@ var Statistics = (function() {
         if ((typeof data          !== typeof undefined) &&
             (CFG.VIEW[data.panel] === CFG.VIEW.STATISTICS) &&
             (data.target instanceof $)) {
-
-            // Template füllen, Callback ausführen
-            data.target.html(Mustache.render(
-                _tmplStatistics, { games: CFG.QUIZ.LASTGAMES }
-                )).promise().done(function() { _initStatistics(); });
+            Template.render(
+                data.target, _TMPL_STATISTICS,
+                { games: CFG.QUIZ.LASTGAMES },
+                _initStatistics
+            );
         }
     }
     
@@ -167,15 +151,9 @@ var Statistics = (function() {
         if (typeof hrznt !== typeof true) { hrznt = false; }
         if (typeof stars !== typeof true) { stars = false; }
         if (typeof empty !== typeof true) { empty = false; }
-        $target.find(_SEL_CHART).html(
-            Mustache.render(_tmplChart, {
-                data  : data,
-                hrznt : hrznt,
-                steps : steps,
-                stars : stars,
-                empty : empty
-            })
-        );
+        Template.render($target.find(_SEL_CHART), _TMPL_CHART, {
+            data: data, hrznt: hrznt, steps: steps, stars: stars, empty: empty
+        });
     }
     
     /**

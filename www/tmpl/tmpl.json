@@ -1,0 +1,13 @@
+{
+    "templates": [
+        "dictionary-details",
+        "dictionary-list",
+        "dictionary",
+        "navigationbar",
+        "quiz",
+        "statistics-chart",
+        "statistics",
+        "tabbar",
+        "view"
+    ]
+}

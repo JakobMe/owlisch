@@ -37,6 +37,15 @@
         // Sub-Elemente: Titel-Text und -Icon
         &-text { display: block; position: relative; }
         &-icon { margin-right: @app-size-gap-small; }
+        
+        // Mod: Groß
+        &--big {
+            font-weight: bold;
+            font-style: italic;
+            text-align: center;
+            font-size: @app-font-size-big;
+            .color-on(@app-color-light);
+        }
     }
     
     // Element: Button
@@ -80,5 +89,11 @@
     // Element: Button & Mod: Rund & Element: Button-Text
     &__button--round &__buttontext:last-child {
         font-size: @app-font-size-medium;
+    }
+    
+    // Element: Diagramm
+    &__chart {
+        .border(bottom);
+        .border(top);
     }
 }

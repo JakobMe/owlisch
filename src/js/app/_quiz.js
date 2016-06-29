@@ -15,19 +15,23 @@ var Quiz = (function() {
     var _SEL_PROGRESSBAR        = "#quiz-progressbar";
     var _SEL_STEP               = "[role='checkbox']";
     var _SEL_BUTTON             = "[role='button']";
+    var _SEL_CHART              = ".chart";
     
     // Template-Namen
     var _TMPL_QUIZ              = "quiz";
+    var _TMPL_FINISH            = "quiz-finish";
     
     // BEM-Konstanten
     var _B_SLIDER               = "slider";
     var _B_PROGRESSBAR          = "progressbar";
-    var _M_IS                   = "is";
+    var _B_CHART                = "chart";
     var _E_STEP                 = "step";
+    var _M_IS                   = "is";
     var _M_SKIPPED              = "skipped";
     var _M_ERROR                = "error";
     var _M_SUCCESS              = "success";
     var _M_CURRENT              = "current";
+    var _M_GROW                 = "grow";
     
     // Data-Attribut-Konstanten
     var _DATA_SLIDE             = "slide";
@@ -254,8 +258,9 @@ var Quiz = (function() {
     
     /**
      * Quiz beenden.
-     * Beendet das Quiz, sendet das Ergebnis und andere Events per
-     * Mediator, aktualisiert das Ergebnis-Diagramm.
+     * Berechnet das Endergebnis vom Quiz, ermittelt die entsprechende
+     * Bewertung aus der Konfiguration, rendert den Abschluss und
+     * sendet das Ergebnis an andere Module.
      */
     function _finish() {
         
@@ -265,11 +270,41 @@ var Quiz = (function() {
             if (status === _M_SUCCESS) { result++; }
         });
         
-        // !TODO: Ergebnis anzeigen
+        // Bewertung ermitteln
+        var rating  = CFG.RATING.BAD;
+        var percent = Helper.calcPercent(result, CFG.QUIZ.QUESTIONS);
+        $.each(CFG.RATING, function(i, val) {
+            if ((percent       >= val.PERCENT) &&
+                (rating.PERCENT < val.PERCENT)) {
+                 rating         = val;
+            }
+        });
         
-        // Ergebnis senden
+        // Rendern und Ergebnis senden
+        _renderFinish(result, rating);
         Mediator.send(CFG.CNL.QUIZ_END, { act: CFG.ACT.QUIZ_CANCEL })
                 .send(CFG.CNL.SCORES_UPDATE, result);
+    }
+    
+    /**
+     * Quiz-Ende rendern.
+     * Rendert das Quiz-Ende mit einem Mustache-Template; fügt
+     * alle Ergebnisse des Quizes ein und animiert abschließend
+     * das Ergebnis-Diagramm.
+     * @param {Number} result Ergebnis vom Quiz
+     * @param {Object} rating Bewertungs-Objekt
+     */
+    function _renderFinish(result, rating) {
+        Template.render(_$finish, _TMPL_FINISH, {
+            result    : result,
+            zero      : result === 0,
+            rating    : rating.LABEL,
+            icon      : rating.ICON,
+            percent   : Helper.calcPercent(result, CFG.QUIZ.QUESTIONS),
+            questions : Helper.arrayFromNumber(CFG.QUIZ.QUESTIONS)
+        }, setTimeout(function() {
+            _$finish.find(_SEL_CHART).setMod(_B_CHART, _M_GROW, true);
+        }, CFG.TIME.ANIMATION));
     }
     
     /**

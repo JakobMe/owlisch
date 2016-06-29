@@ -215,9 +215,10 @@ var Statistics = (function() {
      */
     function _growCharts(shrink) {
         shrink = (shrink || false);
-        if (shrink) { $(_SEL_CHART).setMod(_B_CHART, _M_GROW, false); }
+        var $charts = $(_SEL_STATISTICS).find(_SEL_CHART);
+        if (shrink) { $charts.setMod(_B_CHART, _M_GROW, false); }
         setTimeout(function() {
-            $(_SEL_CHART).setMod(_B_CHART, _M_GROW, true);
+            $charts.setMod(_B_CHART, _M_GROW, true);
         }, (shrink ? CFG.TIME.DELAY : CFG.TIME.ANIMATION));
     }
     

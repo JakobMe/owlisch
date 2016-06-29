@@ -38,8 +38,6 @@
         {{#questions}}
         <div class="slider__slide" data-slide="{{.}}"></div>
         {{/questions}}
-        <div class="slider__slide" id="quiz-finish" data-slide="{{slides}}">
-            
-        </div>
+        <div class="slider__slide" id="quiz-finish" data-slide="{{slides}}"></div>
     </div>
 </div>

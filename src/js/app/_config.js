@@ -23,6 +23,28 @@ var CFG = (function() {
             QUESTIONS           : 10,
             LASTGAMES           : 10
         },
+        RATING: {
+            EXCELLENT: {
+                ICON            : "smile",
+                LABEL           : "Hervorragend!",
+                PERCENT         : 90
+            },
+            GOOD: {
+                ICON            : "smile",
+                LABEL           : "Sehr gut!",
+                PERCENT         : 50
+            },
+            MEDIOCRE: {
+                ICON            : "meh",
+                LABEL           : "Das geht besser!",
+                PERCENT         : 20
+            },
+            BAD: {
+                ICON            : "frown",
+                LABEL           : "Das war nichts...",
+                PERCENT         : 0
+            }
+        },
         VIEW: {
             START: {
                 LABEL           : "Start",
@@ -128,7 +150,9 @@ var CFG = (function() {
         },
         STR: {
             EMPTY               : "",
-            SLASH               : "/"
+            SLASH               : "/",
+            WIDTH               : "width",
+            PCT                 : "%"
         },
         TIME: {
             ANIMATION           : 150,

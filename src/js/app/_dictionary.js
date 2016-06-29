@@ -34,7 +34,7 @@ var Dictionary = (function() {
     var _listCaption            = CFG.STR.EMPTY;
     var _currentFilter          = CFG.STR.EMPTY;
     var _currentSort            = CFG.SORTING.SORT.ALPHA;
-    var _currentOrder           = CFG.SORTING.ORDER.ASC;
+    var _currentOrdr            = CFG.SORTING.ORDR.ASC;
     var _currentTerm            = {};
     var _currentSlide           = 0;
     var _indexListbox           = 0;
@@ -53,193 +53,76 @@ var Dictionary = (function() {
      * des Wörterbuches herzustellen.
      */
     function init() {
-        _bindEvents();
+        _hookMediator();
     }
     
     /**
-     * Wörterbuch initialisieren.
-     * Initialisiert die DOM-Elemente und internen Variablen
-     * des Wörterbuch-Moduls, sobald sie bereitstehen.
+     * Events binden.
+     * Bindet Funktionen an Events.
      */
-    function _initDictionary() {
-        
-        // Modulvariablen initialisieren
+    function _bindEvents() {
+        if (_$list instanceof $) {
+            _$list.on(CFG.EVT.CLICK, _SEL_ITEM, _setDetails);
+        }
+    }
+
+    /**
+     * Mediator abonnieren.
+     * Meldet Funktionen beim Mediator an.
+     */
+    function _hookMediator() {
+        Mediator.hook(CFG.CNL.VIEW_LOAD, _create)
+                .hook(CFG.CNL.VIEW_RESTORE, _restore)
+                .hook(CFG.CNL.TERMS_SERVE, _update)
+                .hook(CFG.CNL.DICTIONARY_SEARCH, _filter)
+                .hook(CFG.CNL.DICTIONARY_SORT, _sort)
+                .hook(CFG.CNL.NAVBAR_ACTION, _back);
+    }
+    
+    /**
+     * Wörterbuch erzeugen.
+     * Erzeugt das Wörterbuch anhand eines Mediator-Events; fügt das
+     * Wörterbuch mittels Template ein, initialisiert die Elemente des
+     * Wörterbuches und teilt dem Mediator weitere Events mit.
+     * @param {Object} data Übergebene Daten des Mediators
+     */
+    function _create(data) {
+        if ((typeof data !== typeof undefined) &&
+            (CFG.VIEW[data.panel] === CFG.VIEW.DICTIONARY) &&
+            (data.target instanceof $)) {
+            Template.render(data.target, _TMPL_DICTIONARY, null, function() {
+                
+                // Funktionen ausführen
+                _initDom();
+                _setSlider(_indexListbox);
+                _bindEvents();
+                
+                // Fortschritt-Liste anfragen, View einblenden
+                Mediator.send(CFG.CNL.VIEW_SHOW)
+                        .send(CFG.CNL.TERMS_REQUEST);
+            });
+        }
+    }
+    
+    /**
+     * DOM-Komponenten initialisieren.
+     * Initialisiert alle DOM-Elemente des Wörterbuches.
+     */
+    function _initDom() {
         _$slider      = $(_SEL_SLIDER);
         _$list        = _$slider.find(_SEL_LIST);
         _$listbox     = _$slider.find(_SEL_LISTBOX);
         _$details     = _$slider.find(_SEL_DETAILS);
         _indexDetails = parseInt(_$details.data(_DATA_SLIDE));
         _indexListbox = parseInt(_$listbox.data(_DATA_SLIDE));
-        
-        // Funktionen ausführen
-        _setCurrentSlide(_indexListbox);
-        _bindClickEvents();
-        
-        // Fortschritt-Liste anfragen, View einblenden
-        $(window).trigger(CFG.EVT.REQUEST_TERMS);
-        $(window).trigger(CFG.EVT.SHOW_VIEW);
     }
     
     /**
-     * Events binden.
-     * Bindet Funktionen an Events und Elemente des Moduls.
+     * Slider rendern.
+     * Rendert den Wörterbuch-Slider anhand der intern gesetzt Variablen.
      */
-    function _bindEvents() {
-        $(window).on(CFG.EVT.LOAD_PANEL_CONTENT, _createDictionary);
-        $(window).on(CFG.EVT.SERVE_TERMS, _updateList);
-        $(window).on(CFG.EVT.SORTED_LIST, _sortList);
-        $(window).on(CFG.EVT.SEARCHED_LIST, _filterList);
-        $(window).on(CFG.EVT.PRESSED_BUTTON, _backToList);
-        $(window).on(CFG.EVT.RESTORE_DEFAULT, _restoreDefault);
-    }
-    
-    /**
-     * Klick-Events binden.
-     * Bindet Klick-Funktionen an interne jQuery-Objekte.
-     */
-    function _bindClickEvents() {
-        if (_$list instanceof $) {
-            _$list.on(CFG.EVT.CLICK, _SEL_ITEM, _updateCurrentTerm);
-        }
-    }
-    
-    /**
-     * Wörterbuch erzeugen.
-     * Erzeugt das Wörterbuch mit Mustache in dem übergebenen
-     * jQuery-Container und initialisiert das Wörterbuch danach.
-     * @param {Object} event Ausgelöstes Event
-     * @param {Object} data Daten des Events
-     */
-    function _createDictionary(event, data) {
-        if ((typeof data          !== typeof undefined) &&
-            (CFG.VIEW[data.panel] === CFG.VIEW.DICTIONARY) &&
-            (data.target instanceof $)) {
-            Template.render(data.target, _TMPL_DICTIONARY,
-                            null, _initDictionary);
-        }
-    }
-    
-    /**
-     * Listen-Element miteinander vergleichen.
-     * Eine Vergleichs-Funktion für Elemente der Begriffliste;
-     * wird von der JavaScript-Funktion "sort" verwendet.
-     * @param {Objekt} a Erstes zu vergleichende Listen-Objekt
-     * @param {Objekt} b Zweites zu vergleichende Listen-Objekt
-     * @returns {integer} Ergebnis des Vergleichs
-     */
-    function _compareListItems(a, b) {
-        
-        // Sortierung: Numerisch
-        if (_currentSort === CFG.SORTING.SORT.NUMERIC) {
-            if      (parseInt(a.lvl) < parseInt(b.lvl)) { return -1; }
-            else if (parseInt(a.lvl) > parseInt(b.lvl)) { return  1; }
-            else { return a.term.localeCompare(b.term); }
-            
-        // Standard-Sortierung: Alphabetisch
-        } else { return a.term.localeCompare(b.term); }
-    }
-    
-    /**
-     * Liste sortieren.
-     * Sortiert die Liste der Begriffe anhand der von einem Event
-     * übergenen Sortierung und Ordnung; rendert die Liste anschließend.
-     * @param {Object} event Ausgelöstes Event
-     * @param {Object} data Daten des Events
-     */
-    function _sortList(event, data) {
-
-        // Wenn ein Event übergeben wurde, dessen Daten setzen
-        if ((typeof data       !== typeof undefined) &&
-            (typeof data.sort  !== typeof undefined) &&
-            (typeof data.order !== typeof undefined)) {
-            _currentSort = data.sort;
-            _currentOrder = data.order;
-        }
-        
-        // Liste sortieren und rendern
-        _listFiltered.sort(_compareListItems);
-        if (_currentOrder === CFG.SORTING.ORDER.DESC) {
-            _listFiltered.reverse();
-        }
-        _renderList();
-    }
-    
-    /**
-     * Liste filtern.
-     * Filtert die Liste anhand des aktuell gesetzten Suchbegriffes
-     * oder einem durch ein Event übergebenen Suchbegriff; filtert die
-     * Original-Liste und kopiert übereinstimmende Einträge in die
-     * Filter-Liste; sortiert die Liste anschließend.
-     * @param {Object} event Ausgelöstes Event
-     * @param {Object} data Daten des Events
-     */
-    function _filterList(event, data) {
-        
-        // Filter-Wort gegebenenfalls aktualisieren
-        if ((typeof data        !== typeof undefined) &&
-            (typeof data.search === typeof CFG.STR.EMPTY)) {
-            _currentFilter = data.search.toLowerCase();
-        }
-        
-        // Wenn Suchbegriff leer ist, Original-Liste setzen
-        if (_currentFilter === CFG.STR.EMPTY) {
-            _listFiltered = _listOriginal.slice(0);
-        
-        // Ansonsten Filter-Liste neu erzeugen
-        } else {
-            _listFiltered = [];
-            var len = _currentFilter.length;
-            $.each(_listOriginal, function(i, item) {
-                var term  = $.extend({}, item);
-                var found = item.term.toLowerCase().indexOf(_currentFilter);
-                if (found > -1) {
-                    _listFiltered.push($.extend(term, {
-                        start     : item.term.substring(0, found),
-                        highlight : item.term.substr(found, len),
-                        tail      : item.term.substr(found + len)
-                    }));
-                }
-            });
-        }
-        
-        // Liste sortieren
-        _sortList();
-    }
-    
-    /**
-     * Liste aktualisieren.
-     * Aktualisiert die Wörterbuch-Liste, sobald ein entsprechendes
-     * Event mit den erforderlichen Daten ausgelöst wird.
-     * @param {Object} event Ausgelöstes Event
-     * @param {Object} data Daten des Events
-     */
-    function _updateList(event, data) {
-        if ((typeof data      !== typeof undefined) &&
-            (typeof data.data !== typeof undefined)) {
-                
-            // Daten zurücksetzen
-            var listTemp  = data.data;
-            _listCaption  = data.caption;
-            _listOriginal = [];
-            
-            // Liste erweitert und filtern
-            $.each(listTemp, function(i, item) {
-                if (item.lvl > 0) {
-                    $.extend(item, {
-                        start     : item.term,
-                        highlight : CFG.STR.EMPTY,
-                        tail      : CFG.STR.EMPTY
-                    });
-                    _listOriginal.push(item);
-                }
-            });
-            _filterList();
-            
-            // Details neu rendern
-            if (_currentSlide === _indexDetails) {
-                _setCurrentTerm(_currentTerm.alias, false);
-            }
-        }
+    function _renderSlider() {
+        _$slider.setMod(_B_SLIDER, _M_IS, _currentSlide);
     }
     
     /**
@@ -257,79 +140,6 @@ var Dictionary = (function() {
                 filtered : (_currentFilter.length > 0),
                 empty    : (_listOriginal.length === 0)
             });
-        }
-    }
-    
-    /**
-     * Aktuellen Begriff aktualisieren.
-     * Setzt einen neuen aktuellen Begriff anhand eines ausgelösten
-     * Klick-Events; sperrt die Begriff-Liste.
-     * @param {Object} event Ausgelöstes Event
-     */
-    function _updateCurrentTerm(event) {
-        if ((typeof event !== typeof undefined) && (!_listIsLocked)) {
-            
-            // Liste sperren und Begriff setzen
-            _listIsLocked = true;
-            _setCurrentTerm(
-                $(event.target).closest(_SEL_ITEM).data(_DATA_TERM)
-            );
-        }
-    }
-    
-    /**
-     * Aktuellen Begriff setzen.
-     * Durchsucht die Begriff-Liste nach dem Begriff-Alias und aktualisiert
-     * den aktuellen Begriff; rendert die Begriff-Details neu.
-     * @param {String} alias Alias des neuen Begriffs
-     * @param {Boolean} renderNavBar Navigation-Bar neu rendern
-     */
-    function _setCurrentTerm(alias, renderNavBar) {
-        if (typeof alias !== typeof undefined) {
-            
-            // Aktuelle Liste iterieren und Begriff setzen
-            $.each(_listFiltered, function(i, item) {
-                if (item.alias === alias) {
-                    _currentTerm = $.extend({}, this);
-                    _renderDetails(renderNavBar !== false);             
-                    return false;
-                }
-            });
-        }
-    }
-    
-    /**
-     * Aktuellen Slide setzen.
-     * Aktualisiert den aktiven Slide des Wörterbuch-Sliders; entsperrt
-     * die Liste gegebenenfalls und rendert den Slider anschließend neu.
-     * @param {Number} slide Nummer des neuen Slides
-     */
-    function _setCurrentSlide(slide) {
-        _currentSlide = slide;
-        if (_currentSlide === _indexListbox) { _listIsLocked = false; }
-        _renderSlider();
-    }
-    
-    /**
-     * Slider rendern.
-     * Rendert den Wörterbuch-Slider anhand der intern gesetzt Variablen.
-     */
-    function _renderSlider() {
-        _$slider.setMod(_B_SLIDER, _M_IS, _currentSlide);
-    }
-    
-    /**
-     * Zurück zu Liste.
-     * Reagiert auf ein Navigation-Bar Event; verschiebt den Slider
-     * zurück zur Wörterbuch-Liste, wenn das Event passend ist.
-     * @param {Object} event Ausgelöstes Event
-     * @param {Object} data Daten des Events
-     */
-    function _backToList(event, data) {
-        if ((typeof data        !== typeof undefined) &&
-            (typeof data.action !== typeof undefined) &&
-            (data.action === CFG.ACT.DICTIONARY_BACK)) {
-            _setCurrentSlide(_indexListbox);
         }
     }
     
@@ -354,14 +164,178 @@ var Dictionary = (function() {
             // Details laden, Event auslösen, Slider bewegen
             Template.render(_$details, _TMPL_DETAILS, data, function() {
                 if (renderNavBar !== false) {
-                    $(window).trigger(CFG.EVT.PRESSED_BUTTON, {
-                        action : CFG.ACT.DICTIONARY_FORWARD,
-                        text   : _currentTerm.term
+                    Mediator.send(CFG.CNL.NAVBAR_ACTION, {
+                        act : CFG.ACT.DICTIONARY_FORWARD,
+                        str : _currentTerm.term
                     });
                 }
                 _$details.scrollTop(0);
-                _setCurrentSlide(_indexDetails);
+                _setSlider(_indexDetails);
             });
+        }
+    }
+    
+    /**
+     * Liste sortieren.
+     * Sortiert die Liste der Begriffe anhand der von einer Mediator-Nachricht
+     * übergenen Sortierung und Ordnung; rendert die Liste anschließend.
+     * @param {Object} data Übermittelte Daten
+     */
+    function _sort(data) {
+
+        // Wenn ein Event übergeben wurde, dessen Daten setzen
+        if ((typeof data      !== typeof undefined) &&
+            (typeof data.sort !== typeof undefined) &&
+            (typeof data.ordr !== typeof undefined)) {
+            _currentSort = data.sort;
+            _currentOrdr = data.ordr;
+        }
+        
+        // Liste sortieren und rendern
+        _listFiltered.sort(_compareListItems);
+        if (_currentOrdr === CFG.SORTING.ORDR.DESC) {
+            _listFiltered.reverse();
+        }
+        _renderList();
+    }
+    
+    /**
+     * Liste filtern.
+     * Filtert die Liste anhand des aktuell gesetzten Suchbegriffes
+     * oder einem durch eine Mediator-Nachricht übergebenen Suchbegriff;
+     * filtert die Original-Liste und kopiert übereinstimmende Einträge
+     * in die Filter-Liste; sortiert die Liste anschließend.
+     * @param {String} keyword Neuer Suchbegriff
+     */
+    function _filter(keyword) {
+        
+        // Filter-Wort gegebenenfalls aktualisieren
+        if (typeof keyword === typeof CFG.STR.EMPTY) {
+            _currentFilter = keyword.toLowerCase();
+        }
+        
+        // Wenn Suchbegriff leer ist, Original-Liste setzen
+        if (_currentFilter === CFG.STR.EMPTY) {
+            _listFiltered = _listOriginal.slice(0);
+        
+        // Ansonsten Filter-Liste neu erzeugen
+        } else {
+            _listFiltered = [];
+            var len = _currentFilter.length;
+            $.each(_listOriginal, function(i, item) {
+                var term  = $.extend({}, item);
+                var found = item.term.toLowerCase().indexOf(_currentFilter);
+                if (found > -1) {
+                    _listFiltered.push($.extend(term, {
+                        start     : item.term.substring(0, found),
+                        highlight : item.term.substr(found, len),
+                        tail      : item.term.substr(found + len)
+                    }));
+                }
+            });
+        }
+        
+        // Liste sortieren
+        _sort();
+    }
+    
+    /**
+     * Liste aktualisieren.
+     * Aktualisiert die Wörterbuch-Liste, sobald ein entsprechendes
+     * Event mit den erforderlichen Daten ausgelöst wird.
+     * @param {Object} data Daten des Events
+     */
+    function _update(data) {
+        if ((typeof data      !== typeof undefined) &&
+            (typeof data.data !== typeof undefined)) {
+                
+            // Daten zurücksetzen
+            var listTemp  = data.data;
+            _listCaption  = data.caption;
+            _listOriginal = [];
+            
+            // Liste erweitert und filtern
+            $.each(listTemp, function(i, item) {
+                if (item.lvl > 0) {
+                    $.extend(item, {
+                        start     : item.term,
+                        highlight : CFG.STR.EMPTY,
+                        tail      : CFG.STR.EMPTY
+                    });
+                    _listOriginal.push(item);
+                }
+            });
+            _filter();
+            
+            // Details neu rendern
+            if (_currentSlide === _indexDetails) {
+                _loadDetails(_currentTerm.alias, false);
+            }
+        }
+    }
+    
+    /**
+     * Aktuellen Begriff aktualisieren.
+     * Setzt einen neuen aktuellen Begriff anhand eines ausgelösten
+     * Klick-Events; sperrt die Begriff-Liste.
+     * @param {Object} event Ausgelöstes Event
+     */
+    function _setDetails(event) {
+        if ((typeof event !== typeof undefined) && (!_listIsLocked)) {
+            _listIsLocked = true;
+            _loadDetails(
+                $(event.target).closest(_SEL_ITEM).data(_DATA_TERM)
+            );
+        }
+    }
+    
+    /**
+     * Aktuellen Begriff setzen.
+     * Durchsucht die Begriff-Liste nach dem Begriff-Alias und aktualisiert
+     * den aktuellen Begriff; rendert die Begriff-Details neu.
+     * @param {String} alias Alias des neuen Begriffs
+     * @param {Boolean} renderNavBar Navigation-Bar neu rendern
+     */
+    function _loadDetails(alias, renderNavBar) {
+        if (typeof alias !== typeof undefined) {
+            
+            // Aktuelle Liste iterieren und Begriff setzen
+            $.each(_listFiltered, function(i, item) {
+                if (item.alias === alias) {
+                    _currentTerm = $.extend({}, this);
+                    _renderDetails(renderNavBar !== false);             
+                    return false;
+                }
+            });
+        }
+    }
+    
+    /**
+     * Aktuellen Slide setzen.
+     * Aktualisiert den aktiven Slide des Wörterbuch-Sliders; entsperrt
+     * die Liste gegebenenfalls und rendert den Slider anschließend neu.
+     * @param {Number} slide Nummer des neuen Slides
+     */
+    function _setSlider(slide) {
+        _currentSlide = slide;
+        if (_currentSlide === _indexListbox) { _listIsLocked = false; }
+        _renderSlider();
+    }
+    
+    /**
+     * Zurück zu Liste.
+     * Bewegt den Wörterbuch-Slider anhand einer Mediatior-Nachricht
+     * zurück zur Wörterbuch-Liste; leert die Begriff-Details.
+     * @param {Object} data Übermittelte Daten
+     */
+    function _back(data) {
+        if ((typeof data     !== typeof undefined) &&
+            (typeof data.act !== typeof undefined) &&
+            (data.act === CFG.ACT.DICTIONARY_BACK)) {
+            setTimeout(function() {
+                _$details.html(CFG.STR.EMPTY);
+            }, CFG.TIME.DELAY);
+            _setSlider(_indexListbox);
         }
     }
     
@@ -373,17 +347,36 @@ var Dictionary = (function() {
      * @param {Object} event Ausgelöstes Event
      * @param {Object} data Daten des Events
      */
-    function _restoreDefault(event, data) {
-        if ((typeof data         !== typeof undefined) &&
-            (typeof data.panel   !== typeof undefined) &&
-            (CFG.VIEW[data.panel] === CFG.VIEW.DICTIONARY)) {
+    function _restore(panel) {
+        if ((typeof panel    !== typeof undefined) &&
+            (CFG.VIEW[panel] === CFG.VIEW.DICTIONARY)) {
                 
             // Standardwerte setzen, Liste filtern und scrollen
             _currentFilter = CFG.STR.EMPTY;
             _$listbox.animate({ scrollTop: 0 }, CFG.TIME.ANIMATION);
-            _setCurrentSlide(_indexListbox);
-            _filterList();
+            _setSlider(_indexListbox);
+            _filter();
         }
+    }
+    
+    /**
+     * Listen-Element miteinander vergleichen.
+     * Eine Vergleichs-Funktion für Elemente der Begriffliste;
+     * wird von der JavaScript-Funktion "sort" verwendet.
+     * @param {Objekt} a Erstes zu vergleichende Listen-Objekt
+     * @param {Objekt} b Zweites zu vergleichende Listen-Objekt
+     * @returns {integer} Ergebnis des Vergleichs
+     */
+    function _compareListItems(a, b) {
+        
+        // Sortierung: Numerisch
+        if (_currentSort === CFG.SORTING.SORT.NUMERIC) {
+            if      (parseInt(a.lvl) < parseInt(b.lvl)) { return -1; }
+            else if (parseInt(a.lvl) > parseInt(b.lvl)) { return  1; }
+            else { return a.term.localeCompare(b.term); }
+            
+        // Standard-Sortierung: Alphabetisch
+        } else { return a.term.localeCompare(b.term); }
     }
     
     // Öffentliches Interface

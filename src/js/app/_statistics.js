@@ -47,93 +47,53 @@ var Statistics = (function() {
     function init() {
         _arrStepsPercent = Helper.arrayFromNumber(_NUM_STEPS_PERCENT);
         _arrStepsScores  = Helper.arrayFromNumber(CFG.QUIZ.QUESTIONS);
-        _bindEvents();
+        _hookMediator();
     }
     
     /**
-     * Statistik initialisieren.
-     * Initialisiert die DOM-Elemente und internen Variablen
-     * des Statistik-Moduls, sobald sie bereitstehen.
+     * Mediator abonnieren.
+     * Meldet Funktionen beim Mediator an.
      */
-    function _initStatistics() {
-        
-        // Modulvariablen initialisieren
-        _$statistics = $(_SEL_STATISTICS);
-        _$scores     = _$statistics.find(_SEL_SCORES);
-        _$progress   = _$statistics.find(_SEL_PROGRESS);
-        _$dictionary = _$statistics.find(_SEL_DICTIONARY);           
-        
-        // Letzte Spiele und Fortschritt anfragen, View einblenden
-        $(window).trigger(CFG.EVT.REQUEST_TERMS);
-        $(window).trigger(CFG.EVT.REQUEST_SCORES);
-        $(window).trigger(CFG.EVT.SHOW_VIEW);
-        
-        // Diagramme animieren
-        _growCharts(false);
-    }
-    
-    /**
-     * Events binden.
-     * Bindet Funktionen an Events und Elemente des Moduls.
-     */
-    function _bindEvents() {
-        $(window).on(CFG.EVT.LOAD_PANEL_CONTENT, _createStatistics);
-        $(window).on(CFG.EVT.SERVE_TERMS, _updateProgress);
-        $(window).on(CFG.EVT.SERVE_SCORES, _updateScores);
-        $(window).on(CFG.EVT.RESTORE_DEFAULT, _restoreDefault);
+    function _hookMediator() {
+        Mediator.hook(CFG.CNL.VIEW_LOAD, _create)
+                .hook(CFG.CNL.VIEW_RESTORE, _restore)
+                .hook(CFG.CNL.TERMS_SERVE, _updateProgress)
+                .hook(CFG.CNL.SCORES_SERVE, _updateScores);
     }
     
     /**
      * Statistik erzeugen.
-     * Erzeugt die Statistik mit Mustache in dem übergebenen
-     * jQuery-Container und initialisiert die Statistik danach.
-     * @param {Object} event Ausgelöstes Event
-     * @param {Object} data Daten des Events
+     * Erzeugt die Statistik anhand eines Mediator-Events; fügt die
+     * Statistik mittels Template ein, initialisiert die Elemente der
+     * Statistik und teilt dem Mediator weitere Events mit.
+     * @param {Object} data Übergebene Daten des Mediators
      */
-    function _createStatistics(event, data) {
-        if ((typeof data          !== typeof undefined) &&
+    function _create(data) {
+        if ((typeof data !== typeof undefined) &&
             (CFG.VIEW[data.panel] === CFG.VIEW.STATISTICS) &&
             (data.target instanceof $)) {
+            
+            // Mit Template rendern
             Template.render(
                 data.target, _TMPL_STATISTICS,
                 { games: CFG.QUIZ.LASTGAMES },
-                _initStatistics
+                function() {
+                    
+                    // Modulvariablen initialisieren
+                    _$statistics = $(_SEL_STATISTICS);
+                    _$scores     = _$statistics.find(_SEL_SCORES);
+                    _$progress   = _$statistics.find(_SEL_PROGRESS);
+                    _$dictionary = _$statistics.find(_SEL_DICTIONARY);
+                    
+                    // Diagramme animieren
+                    _growCharts(false);
+                    
+                    // Mediator aufrufen
+                    Mediator.send(CFG.CNL.VIEW_SHOW)
+                            .send(CFG.CNL.TERMS_REQUEST)
+                            .send(CFG.CNL.SCORES_REQUEST);
+                }
             );
-        }
-    }
-    
-    /**
-     * Letzte Spielergebnisse aktualisieren.
-     * Aktualisiert die Spielergebnis-Liste, sobald ein entsprechendes
-     * Event mit den erforderlichen Daten ausgelöst wird.
-     * @param {Object} event Ausgelöstes Event
-     * @param {Object} data Daten des Events
-     */
-    function _updateScores(event, data) {
-        if ((typeof data      !== typeof undefined) &&
-            (typeof data.data !== typeof undefined)) {
-            _dataScores = data.data;
-            _renderScores();
-        }
-    }
-    
-    /**
-     * Fortschritt aktualisieren.
-     * Aktualisiert die Fortschritts-Liste, sobald ein entsprechendes
-     * Event mit den erforderlichen Daten ausgelöst wird.
-     * @param {Object} event Ausgelöstes Event
-     * @param {Object} data Daten des Events
-     */
-    function _updateProgress(event, data) {
-        if ((typeof data        !== typeof undefined) &&
-            (typeof data.solved !== typeof undefined) &&
-            (typeof data.data   !== typeof undefined) &&
-            (typeof data.size   !== typeof undefined)) {  
-            _dataTerms  = data.data;
-            _sizeSolved = data.solved;
-            _sizeTerms  = data.size;
-            _renderProgress();
-            _renderDictionary();
         }
     }
     
@@ -148,9 +108,9 @@ var Statistics = (function() {
      * @param {Boolean} stars Level-Sterne anzeigen
      */
     function _renderChart($target, data, steps, hrznt, stars, empty) {
-        if (typeof hrznt !== typeof true) { hrznt = false; }
-        if (typeof stars !== typeof true) { stars = false; }
-        if (typeof empty !== typeof true) { empty = false; }
+        hrznt = (hrznt || false);
+        stars = (stars || false);
+        empty = (empty || false);
         Template.render($target.find(_SEL_CHART), _TMPL_CHART, {
             data: data, hrznt: hrznt, steps: steps, stars: stars, empty: empty
         });
@@ -215,6 +175,39 @@ var Statistics = (function() {
     }
     
     /**
+     * Letzte Spielergebnisse aktualisieren.
+     * Aktualisiert die Spielergebnis-Liste, sobald ein entsprechendes
+     * Mediator-Event mit den erforderlichen Daten ausgelöst wird.
+     * @param {Object} data Übergebene Daten
+     */
+    function _updateScores(data) {
+        if ((typeof data      !== typeof undefined) &&
+            (typeof data.data !== typeof undefined)) {
+            _dataScores = data.data;
+            _renderScores();
+        }
+    }
+    
+    /**
+     * Fortschritt aktualisieren.
+     * Aktualisiert die Fortschritts-Liste, sobald ein entsprechendes
+     * Mediator-Event mit den erforderlichen Daten ausgelöst wird.
+     * @param {Object} data Übergebene Daten
+     */
+    function _updateProgress(data) {
+        if ((typeof data        !== typeof undefined) &&
+            (typeof data.solved !== typeof undefined) &&
+            (typeof data.data   !== typeof undefined) &&
+            (typeof data.size   !== typeof undefined)) {  
+            _dataTerms  = data.data;
+            _sizeSolved = data.solved;
+            _sizeTerms  = data.size;
+            _renderProgress();
+            _renderDictionary();
+        }
+    }
+    
+    /**
      * Diagramme animieren.
      * Fügt den Diagrammen der Statistik eine Klasse hinzu oder entfernt sie,
      * um sie zu animieren; blendet Diagramm gegebenenfalls vorher aus.
@@ -231,14 +224,12 @@ var Statistics = (function() {
     /**
      * Standard-Konfiguration wiederherstellen.
      * Scrollt die Statistik nach oben und animiert die Diagramme, wenn
-     * ein entsprechendes Event ausgelöst wird.
-     * @param {Object} event Ausgelöstes Event
-     * @param {Object} data Daten des Events
+     * ein entsprechendes Mediator-Event ausgelöst wird.
+     * @param {String} panel Ziel-Panel des Events
      */
-    function _restoreDefault(event, data) {
-        if ((typeof data         !== typeof undefined) &&
-            (typeof data.panel   !== typeof undefined) &&
-            (CFG.VIEW[data.panel] === CFG.VIEW.STATISTICS)) {
+    function _restore(panel) {
+        if ((typeof panel    !== typeof undefined) &&
+            (CFG.VIEW[panel] === CFG.VIEW.STATISTICS)) {
             _$statistics.animate(
                 { scrollTop: 0 },
                 CFG.TIME.ANIMATION,

@@ -23,12 +23,11 @@
     left: 0;
     width: 100%;
     z-index: 1000;
-    .border(bottom, @app-color-main-shadow);
     
     // Mods
     &--webapp &__wrapper { padding-top: @app-size-height-statusbar; }
     &--search &__search { opacity: @app-opacity-full; }
-    &--search &__title { opacity: @app-opacity-invisible; .translate(0, 100%); }
+    &--search &__heading { opacity: @app-opacity-invisible; .translate(0, 100%); }
     
     // Element: Wrapper
     &__wrapper {
@@ -37,12 +36,13 @@
         text-align: center;
         z-index: 1000;
         height: @app-size-height-navigationbar;
+        .border(bottom, @app-color-main-shadow);
         .colored(@app-color-main);
         .textshadow();
     }
     
     // Element: Titel
-    &__title {
+    &__heading {
         font-weight: bold;
         position: relative;
         display: inline-block;

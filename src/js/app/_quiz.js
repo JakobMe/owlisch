@@ -56,64 +56,39 @@ var Quiz = (function() {
      * Startet Funktionen, um den Anfangszustand der Statistik herzustellen.
      */
     function init() {
-        _bindEvents();
+        _hookMediator();
     }
     
     /**
-     * Statistik initialisieren.
-     * Initialisiert die DOM-Elemente und internen Variablen
-     * des Statistik-Moduls, sobald sie bereitstehen.
+     * Mediator abonnieren.
+     * Meldet Funktionen beim Mediator an.
      */
-    function _initQuiz() {
-        
-        // Modulvariablen initialisieren
-        _$slider      = $(_SEL_SLIDER);
-        _$start       = $(_SEL_START);
-        _$finish      = $(_SEL_FINISH);
-        _$progressbar = $(_SEL_PROGRESSBAR);
-        _indexStart   = parseInt(_$start.data(_DATA_SLIDE));
-        _indexFinish  = parseInt(_$finish.data(_DATA_SLIDE));
-        
-        // Funktionen ausführen
-        _resetProgress();
-        _bindClickEvents();
-        _setCurrentSlide(_indexStart);
-        
-        // Wörterbuch und Fortschritt anfragen, View einblenden
-        $(window).trigger(CFG.EVT.REQUEST_TERMS);
-        $(window).trigger(CFG.EVT.SHOW_VIEW);
-    }
-    
-    /**
-     * Events binden.
-     * Bindet Funktionen an Events und Elemente des Moduls.
-     */
-    function _bindEvents() {
-        $(window).on(CFG.EVT.LOAD_PANEL_CONTENT, _createQuiz);
-        $(window).on(CFG.EVT.RESTORE_DEFAULT, _restoreDefault);
-        $(window).on(CFG.EVT.SERVE_TERMS, _updateData);
-        $(window).on(CFG.EVT.PRESSED_BUTTON, _cancel);
+    function _hookMediator() {
+        Mediator.hook(CFG.CNL.VIEW_LOAD, _create)
+                .hook(CFG.CNL.VIEW_RESTORE, _restore)
+                .hook(CFG.CNL.TERMS_SERVE, _update)
+                .hook(CFG.CNL.NAVBAR_ACTION, _cancel);
     }
     
     /**
      * Klick-Events binden.
      * Bindet Klick-Funktionen an interne jQuery-Objekte.
      */
-    function _bindClickEvents() {
+    function _bindEvents() {
         if ((_$start instanceof $) && (_$finish instanceof $)) {
-            _$start.add(_$finish).on(CFG.EVT.CLICK, _SEL_BUTTON, _startQuiz);
+            _$start.add(_$finish).on(CFG.EVT.CLICK, _SEL_BUTTON, _start);
         }
     }
     
     /**
      * Quiz erzeugen.
-     * Erzeugt anhand eines Mustache-Templates den Inhalt des
-     * Quiz-Panels; initialisiert das Quiz anschließend.
-     * @param {Object} event Ausgelöstes Event
-     * @param {Object} data Daten des Events
+     * Erzeugt das Quiz anhand eines Mediator-Events; fügt das Quiz
+     * mittels Template ein, initialisiert die Elemente des Quiz
+     * und teilt dem Mediator weitere Events mit.
+     * @param {Object} data Übergebene Daten des Mediators
      */
-    function _createQuiz(event, data) {
-        if ((typeof data          !== typeof undefined) &&
+    function _create(data) {
+        if ((typeof data !== typeof undefined) &&
             (CFG.VIEW[data.panel] === CFG.VIEW.QUIZ) &&
             (data.target instanceof $)) {
             
@@ -130,26 +105,40 @@ var Quiz = (function() {
                 questions : questions,
                 caption   : _dataCaption,
                 size      : slides - extra
-            }, _initQuiz);
+            }, function() {
+                
+                // Modulvariablen initialisieren
+                _$slider      = $(_SEL_SLIDER);
+                _$start       = $(_SEL_START);
+                _$finish      = $(_SEL_FINISH);
+                _$progressbar = $(_SEL_PROGRESSBAR);
+                _indexStart   = parseInt(_$start.data(_DATA_SLIDE));
+                _indexFinish  = parseInt(_$finish.data(_DATA_SLIDE));
+                
+                // Funktionen ausführen
+                _resetProgress();
+                _bindEvents();
+                _setSlide(_indexStart);
+                
+                // Wörterbuch und Fortschritt anfragen, View einblenden
+                Mediator.send(CFG.CNL.VIEW_SHOW)
+                        .send(CFG.CNL.TERMS_REQUEST);
+            });
         }
     }
     
     /**
      * Quiz starten.
-     * ...
+     * Startet das Quiz anhand eines Klick-Events; bewegt den Slider
+     * zur ersten Frage, aktiviert den ersten Schritt und sendet
+     * eine Mediator-Nachricht an andere Module.
      * @param {Object} event Ausgelöstes Event
      */
-    function _startQuiz(event) {
-        
-        $(window).trigger(CFG.EVT.QUIZ_START);
-        $(window).trigger(CFG.EVT.PRESSED_BUTTON, {
-            action : CFG.ACT.QUIZ_START,
-        });
-        
-        // Auf erste Frage springen
-        _setCurrentStep(1);
-        _setCurrentSlide(_indexStart + 1);
+    function _start(event) {
+        Mediator.send(CFG.CNL.QUIZ_START, { act: CFG.ACT.QUIZ_START });
         event.preventDefault();
+        _setSlide(_indexStart + 1);
+        _setStep(1);
     }
     
     /**
@@ -158,7 +147,7 @@ var Quiz = (function() {
      * rendert den Slider anschließend neu.
      * @param {Number} slide Nummer des neuen Slides
      */
-    function _setCurrentSlide(slide) {
+    function _setSlide(slide) {
         _currentSlide = slide;
         _renderSlider();
     }
@@ -179,7 +168,7 @@ var Quiz = (function() {
         for (var i = 1; i <= CFG.QUIZ.QUESTIONS; i++) {
             _progress[i] = CFG.STR.EMPTY;
         }
-        _setCurrentStep(0);
+        _setStep(0);
     }
     
     /**
@@ -204,7 +193,7 @@ var Quiz = (function() {
      * Fortschrittsleiste neu.
      * @param {Number} step Neuer Quiz-Schritt
      */
-    function _setCurrentStep(step) {
+    function _setStep(step) {
         if (typeof step === typeof 0) {
             _currentStep = Math.max(Math.min(step, CFG.QUIZ.QUESTIONS), 0);
             _renderProgressbar();
@@ -239,10 +228,9 @@ var Quiz = (function() {
      * Wörterbuch-Daten aktualisieren.
      * Aktualisiert die interne Kopie der Wörterbuch-Daten des Quizes
      * anhand eines ausgelösten Events.
-     * @param {Object} event Ausgelöstes Event
      * @param {Object} data Daten des Events
      */
-    function _updateData(event, data) {
+    function _update(data) {
         if ((typeof data         !== typeof undefined) &&
             (typeof data.data    !== typeof undefined) &&
             (typeof data.caption !== typeof undefined)) {
@@ -253,28 +241,26 @@ var Quiz = (function() {
     
     /**
      * Standard-Konfiguration wiederherstellen.
-     * ...
-     * @param {Object} event Ausgelöstes Event
-     * @param {Object} data Daten des Events
+     * Stellt die Standard-Konfiguration des Quizes anhand
+     * einer Mediator-Nachricht wieder her.
+     * @param {String} panel Name des View-Panels
      */
-    function _restoreDefault(event, data) {
-        if ((typeof data         !== typeof undefined) &&
-            (typeof data.panel   !== typeof undefined) &&
-            (CFG.VIEW[data.panel] === CFG.VIEW.QUIZ)) {
+    function _restore(panel) {
+        if ((typeof panel   !== typeof undefined) &&
+            (CFG.VIEW[panel] === CFG.VIEW.QUIZ)) {
             _resetAll();
         }
     }
     
     /**
      * Quiz abbrechen.
-     * Bricht das Quiz anhand eines Events ab.
-     * @param {Object} event Ausgelöstes Event
-     * @param {Object} data Daten des Events
+     * Bricht das Quiz anhand einer Mediator-Nachricht ab.
+     * @param {Object} data Übermittelte Daten
      */
-    function _cancel(event, data) {
-        if ((typeof data        !== typeof undefined) &&
-            (typeof data.action !== typeof undefined) &&
-            (data.action === CFG.ACT.QUIZ_CANCEL)) {
+    function _cancel(data) {
+        if ((typeof data     !== typeof undefined) &&
+            (typeof data.act !== typeof undefined) &&
+            (data.act        === CFG.ACT.QUIZ_CANCEL)) {
             _resetAll();
         }
     }
@@ -284,9 +270,14 @@ var Quiz = (function() {
      * Setzt alle Kompenenten und Daten vom Quiz zurück.
      */
     function _resetAll() {
-        $(window).trigger(CFG.EVT.QUIZ_END);
-        _setCurrentSlide(_indexStart);
-        _resetProgress();
+        Mediator.send(CFG.CNL.QUIZ_END).send(CFG.CNL.VIEW_HIDE);
+        setTimeout(function() {
+            _setSlide(_indexStart);
+            _resetProgress();
+            setTimeout(function() {
+                Mediator.send(CFG.CNL.VIEW_SHOW);
+            }, CFG.TIME.DELAY);
+        }, CFG.TIME.ANIMATION);
     }
     
     // Öffentliches Interface

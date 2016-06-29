@@ -23,19 +23,19 @@ var Data = (function() {
      * Startet Funktionen, um den Anfangszustand des Data-Moduls herzustellen.
      */
     function init() {
-        _bindEvents();
+        _hookMediator();
         _loadDataStored();
     }
     
     /**
-     * Events binden.
-     * Bindet Funktionen an Events und Elemente des Moduls.
+     * Mediator abonnieren.
+     * Meldet Funktionen beim Mediator an.
      */
-    function _bindEvents() {
-        $(window).on(CFG.EVT.REQUEST_TERMS, _serveDataTerms);
-        $(window).on(CFG.EVT.REQUEST_SCORES, _serveDataScores);
-        $(window).on(CFG.EVT.UPDATE_TERMS, _updateDataTerm);
-        $(window).on(CFG.EVT.UPDATE_SCORES, _updateDataScore);
+    function _hookMediator() {
+        Mediator.hook(CFG.CNL.TERMS_REQUEST, _serveDataTerms)
+                .hook(CFG.CNL.TERMS_UPDATE, _updateDataTerm)
+                .hook(CFG.CNL.SCORES_REQUEST, _serveDataScores)
+                .hook(CFG.CNL.SCORES_UPDATE, _updateDataScore);
     }
     
     /**
@@ -196,10 +196,9 @@ var Data = (function() {
      * Begriff-Daten aktualisieren.
      * Setzt das neue Level und die Anzahl der Fehlschläge
      * für einen bestimmten Begriff beim entsprechenden Event.
-     * @param {Object} event Ausgelöstes Event
      * @param {Object} data Daten des Events
      */
-    function _updateDataTerm(event, data) {
+    function _updateDataTerm(data) {
         if ((typeof data       !== typeof undefined) &&
             (typeof data.alias !== typeof undefined) &&
             (typeof data.lvl   !== typeof undefined) &&
@@ -244,11 +243,8 @@ var Data = (function() {
      * @param {Object} event Ausgelöstes Event
      * @param {Object} data Daten des Events
      */
-    function _updateDataScore(event, data) {
-        if ((typeof data        !== typeof undefined) &&
-            (typeof data.result === typeof 0)) {
-            addDataScore(data.result);
-        }
+    function _updateDataScore(score) {
+        if (typeof score === typeof 0) { addDataScore(score); }
     }
     
     /**
@@ -301,7 +297,7 @@ var Data = (function() {
      * Liefert die Fortschritt-Liste in einem Event.
      */
     function _serveDataTerms() {
-        $(window).trigger(CFG.EVT.SERVE_TERMS, {
+        Mediator.send(CFG.CNL.TERMS_SERVE, {
             caption : _dictionaryCaption,
             data    : _dataTerms,
             solved  : _sizeProgress,
@@ -314,7 +310,7 @@ var Data = (function() {
      * Liefert die Ergebnisse der letzten Spiele in einem Event.
      */
     function _serveDataScores() {
-        $(window).trigger(CFG.EVT.SERVE_SCORES, {
+        Mediator.send(CFG.CNL.SCORES_SERVE, {
             data : _dataScores,
             size : _sizeScores
         });

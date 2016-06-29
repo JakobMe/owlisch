@@ -12,7 +12,7 @@ var NavigationBar = (function() {
     var _SEL_BUTTONS            = "[role='button']";
     var _SEL_SORT               = "[role='menuitem']";
     var _SEL_NAVBAR             = "#navigationbar";
-    var _SEL_TITLE              = "#navigation-title";
+    var _SEL_HEADING            = "#navigation-heading";
     var _SEL_SEARCH             = "#navigation-search";
     var _SEL_CLEAR              = "#navigation-clear";
     var _SEL_DROPDOWN           = "#navigation-dropdown";
@@ -24,7 +24,7 @@ var NavigationBar = (function() {
     var _B_BAR                  = "navigationbar";
     var _B_DROPDOWN             = "dropdown";
     var _E_ITEM                 = "item";
-    var _E_TITLE                = "title";
+    var _E_HEADING              = "heading";
     var _E_BUTTON               = "button";
     var _E_CLEAR                = "search-clear";
     var _M_HIDDEN               = "hidden";
@@ -37,14 +37,14 @@ var NavigationBar = (function() {
     
     // Data-Attibut-Konstanten
     var _DATA_SORT              = "sort";
-    var _DATA_ORDER             = "order";
+    var _DATA_ORDR              = "ordr";
+    var _DATA_ICO               = "ico";
+    var _DATA_ACT               = "act";
+    var _DATA_STR               = "str";
     
     // Private Variablen  
     var _cache                  = {};
     var _defaults               = {};
-    var _title                  = {};
-    var _buttonLeft             = {};
-    var _buttonRight            = {};
     var _searchIsActive         = false;
     var _buttonsAreDisabled     = false;
     var _dropdownIsOpened       = false;
@@ -52,10 +52,13 @@ var NavigationBar = (function() {
     
     // DOM-Elemente
     var _$navbar                = $(_SEL_NAVBAR);
+    var _$drpdwn                = null;
     var _$search                = null;
     var _$clear                 = null;
-    var _$dropdown              = null;
     var _$sort                  = null;
+    var _$head                  = null;
+    var _$btnL                  = null;
+    var _$btnR                  = null;
     
     /**
      * Navigation-Bar initialisieren.
@@ -63,56 +66,79 @@ var NavigationBar = (function() {
      * Navigation-Bar herzustellen.
      */
     function init() {
-        _initNavigationBar();
+        _create();
+        _hookMediator();
     }
     
     /**
-     * Navigation-Bar initialisieren.
-     * Ermittelt alle verfügbaren Sortier-Optionen, füllt das Dropdown-Menü
-     * per Mustache-Template mit diesen Optionen und löst dann alle
-     * weiteren Initialisierungs-Funktionen aus.
+     * Events binden.
+     * Bindet Funktionen an Events.
      */
-    function _initNavigationBar() {
+    function _bindEvents() {
+        _$sort.on(CFG.EVT.CLICK, _setSort);
+        _$navbar.on(CFG.EVT.CLICK, _SEL_BUTTONS, _triggerAction);
+        _$search.on(CFG.EVT.INPUT, _updateSearch);
+        _$clear.on(CFG.EVT.CLICK, _clearSearch);
+    }
+    
+    /**
+     * Mediator abonnieren.
+     * Meldet Funktionen beim Mediator an.
+     */
+    function _hookMediator() {
+        Mediator.hook(CFG.CNL.VIEW_CHANGE, _update)
+                .hook(CFG.CNL.VIEW_RESTORE, _restore)
+                .hook(CFG.CNL.NAVBAR_ACTION, _performAction)
+                .hook(CFG.CNL.QUIZ_START, _performAction);
+    }
+    
+    /**
+     * Navigation-Bar erzeugen.
+     * Erzeugt die Navigation-Bar; fügt die Navigation-Bar mittels Template
+     * ein, initialisiert die Elemente der Navigation-Bar und teilt dem
+     * Mediator weitere Events mit.
+     */
+    function _create() {
         
         // Verfügbare Sortierungen ermitteln
         var sorting = [];
-        $.each(CFG.SORTING.SORT, function(optionSort, labelSort) {
-            $.each(CFG.SORTING.ORDER, function(optionOrder, labelOrder) {
+        $.each(CFG.SORTING.SORT, function(optSort, lblSort) {
+            $.each(CFG.SORTING.ORDR, function(optOrdr, lblOrdr) {
                 sorting.push({
-                    iconSort    : optionSort.toLowerCase(),
-                    iconOrder   : optionOrder.toLowerCase(),
-                    optionSort  : optionSort,
-                    optionOrder : optionOrder,
-                    labelSort   : labelSort,
-                    labelOrder  : labelOrder
+                    icoSort : optSort.toLowerCase(),
+                    icoOrdr : optOrdr.toLowerCase(),
+                    optSort : optSort,
+                    optOrdr : optOrdr,
+                    lblSort : lblSort,
+                    lblOrdr : lblOrdr
                 });
             });
         });
         
-        // Template füllen, Callback ausführen
+        // Template füllen, initialisieren
         Template.render(_$navbar, _TMPL_NAVBAR, sorting, function() {
-            _initComponents();
-            _setDefaultCache();
+            _initDom();
+            _setBtnL();
+            _setBtnR();
+            _initCache();
             _bindEvents();
-            _$sort.first().click();
             _render();
+            _$sort.first().click();
         });    
     }
     
     /**
-     * Buttons initialisieren.
-     * Setzt die DOM-Elemente des Titels und des linken und rechten Buttons,
-     * initialisiert die Aktionen und Icons auf null, den Titel auf leer.
+     * DOM-Komponenten initialisieren.
+     * Initialisiert alle DOM-Elemente der Navigation-Bar.
      */
-    function _initComponents() {
-        var $buttons = _$navbar.find(_SEL_BUTTONS);
-        _buttonLeft = { $button: $buttons.first(), action: null, icon: null };
-        _buttonRight = { $button: $buttons.last(), action: null, icon: null };
-        _title = { $title: _$navbar.find(_SEL_TITLE), str: CFG.STR.EMPTY };
+    function _initDom() {
         _$search = _$navbar.find(_SEL_SEARCH);
-        _$clear = _$navbar.find(_SEL_CLEAR);
-        _$dropdown = _$navbar.find(_SEL_DROPDOWN);
-        _$sort = _$dropdown.find(_SEL_SORT);
+        _$clear  = _$navbar.find(_SEL_CLEAR);
+        _$drpdwn = _$navbar.find(_SEL_DROPDOWN);
+        _$head   = _$navbar.find(_SEL_HEADING);
+        _$btnL   = _$navbar.find(_SEL_BUTTONS).first();
+        _$btnR   = _$navbar.find(_SEL_BUTTONS).last();
+        _$sort   = _$drpdwn.find(_SEL_SORT);
     }
     
     /**
@@ -120,27 +146,25 @@ var NavigationBar = (function() {
      * Legt für jedes vorhandene View-Panel die Standard-Konfiguration
      * der Navigation-Bar im Cache fest.
      */
-    function _setDefaultCache() {
+    function _initCache() {
         
         // Alle View-Panels iterieren
         $.each(CFG.VIEW, function(alias, panel) {
             
-            // Name und Titel des Panels ermitteln
+            // Name und Titel des Panels ermitteln, speichern
             var panelAlias = alias;
             var panelTitle = panel.TITLE;
-            
-            // Konfiguration im Cache speichern
-            _saveToCache(panelAlias, panelTitle);
+            _saveCache(panelAlias, panelTitle);
             
             // Sonderfall: Wörterbuch
             if (panel === CFG.VIEW.DICTIONARY) {
-                $.extend(_cache[panelAlias].buttonLeft, {
-                    action : CFG.ACT.SEARCH_SHOW,
-                    icon   : CFG.ICON.SEARCH
+                $.extend(_cache[panelAlias].btnL, {
+                    act : CFG.ACT.SEARCH_SHOW,
+                    ico : CFG.ICO.SEARCH
                 });
-                $.extend(_cache[panelAlias].buttonRight, {
-                    action : CFG.ACT.SORT_SHOW,
-                    icon   : CFG.ICON.SORT
+                $.extend(_cache[panelAlias].btnR, {
+                    act : CFG.ACT.SORT_SHOW,
+                    ico : CFG.ICO.SORT
                 });
             }            
         });
@@ -150,60 +174,41 @@ var NavigationBar = (function() {
     }
     
     /**
-     * Events binden.
-     * Bindet Funktionen an Events und Elemente des Moduls.
-     */
-    function _bindEvents() {
-        _$sort.on(CFG.EVT.CLICK, _renderDropdown);
-        _$navbar.on(CFG.EVT.CLICK, _SEL_BUTTONS, _buttonAction);
-        _$search.on(CFG.EVT.INPUT, _searchAction);
-        _$clear.on(CFG.EVT.CLICK, _clearSearch);
-        $(window).on(CFG.EVT.UPDATE_NAVBAR, _updateNavbar);
-        $(window).on(CFG.EVT.RESTORE_DEFAULT, _restoreDefault);
-        $(window).on(CFG.EVT.PRESSED_BUTTON, _buttonPressed);
-    }
-    
-    /**
-     * Modul rendern.
-     * Rendert alle Elemente des Moduls anhand der intern
+     * Navigation-Bar rendern.
+     * Rendert alle Elemente der Navigation-Bar anhand der intern
      * gesetzten aktuellen Variablen.
      */
     function _render() {
         _$navbar.setMod(_B_BAR, _M_WEBAPP, _isWebapp);
-        _renderButton(_buttonLeft);
-        _renderButton(_buttonRight);
+        _renderBtn(_$btnL);
+        _renderBtn(_$btnR);
         _renderDropdown();
         _renderSearch();
-        _renderTitle();
+        _renderHead();
     }
     
     /**
      * Button rendern.
      * Rendert einen gewählten Button (Links/Rechts) anhand seiner
      * gesetzten Eigenschaften (Aktion/Icon).
-     * @param {Object} button Button-Objekt
+     * @param {Object} $btn jQuery-Objekt des Buttons
      */
-    function _renderButton(button) {
-        
-        // Button-Werte initialisieren
-        var $button = (button.$button || null);
-        var icon    = (button.icon    || null);
-        var action  = (button.action  || null);
-        
-        // Falls Button vorhanden ist
-        if ($button instanceof $) {
+    function _renderBtn($btn) {
+        if ($btn instanceof $) {
+            
+            // Aktion und Icon ermitteln
+            var ico = ($btn.data(_DATA_ICO) || null);
+            var act = ($btn.data(_DATA_ACT) || null);
             
             // Button ausblenden/deaktivieren
             _buttonsAreDisabled = true;
-            $button.setMod(_B_BAR, _E_BUTTON, _M_DISABLED, true);
+            $btn.setMod(_B_BAR, _E_BUTTON, _M_DISABLED, true);
             
             // Button aktualisieren
             setTimeout(function() {
-                if ((icon === null) || (action === null)) {
-                    $button.setMod(_B_BAR, _E_BUTTON, _M_ICON, CFG.ICON.NONE);
-                } else {
-                    $button.setMod(_B_BAR, _E_BUTTON, _M_DISABLED, false);
-                    $button.setMod(_B_BAR, _E_BUTTON, _M_ICON, icon);
+                if ((ico !== null) || (act !== null)) {
+                    $btn.setMod(_B_BAR, _E_BUTTON, _M_DISABLED, false);
+                    $btn.setMod(_B_BAR, _E_BUTTON, _M_ICON, ico);
                 }
                 setTimeout(function() {
                     _buttonsAreDisabled = false;
@@ -217,12 +222,12 @@ var NavigationBar = (function() {
      * Rendert den Titel der Titelleiste anhand des
      * aktuell gesetzten Titels neu.
      */
-    function _renderTitle() {
-        if (_title.$title instanceof $) {
-            _title.$title.setMod(_B_BAR, _E_TITLE, _M_HIDDEN, true);
+    function _renderHead() {
+        if (_$head instanceof $) {
+            _$head.setMod(_B_BAR, _E_HEADING, _M_HIDDEN, true);
             setTimeout(function() {
-                _title.$title.text(_title.str || CFG.STR.EMPTY);
-                _title.$title.setMod(_B_BAR, _E_TITLE, _M_HIDDEN, false);
+                _$head.text(_$head.data(_DATA_STR) || CFG.STR.EMPTY);
+                _$head.setMod(_B_BAR, _E_HEADING, _M_HIDDEN, false);
             }, CFG.TIME.ANIMATION);
         }
     }
@@ -244,45 +249,25 @@ var NavigationBar = (function() {
      * des Menüs (offen/geschlossen, aktiver Menüpunkt).
      * @param {Object} event Ausgelöstes Event
      */
-    function _renderDropdown(event) {
-        
-        // Falls Funktion durch Klick-Event ausgelöst wurde
-        if ((typeof event !== typeof undefined) &&
-            (event.target)) {
-            
-            // Geklickten Button aktivieren, Geschwister deaktivieren
-            var $sort = $(event.target).closest(_SEL_SORT);
-            var sort  = CFG.SORTING.SORT[$sort.data(_DATA_SORT)];
-            var order = CFG.SORTING.ORDER[$sort.data(_DATA_ORDER)];
-            $sort.setMod(_B_DROPDOWN, _E_ITEM, _M_SELECTED, true)
+    function _renderDropdown($selected) {
+        _$drpdwn.setMod(_B_DROPDOWN, _M_OPENED, _dropdownIsOpened);  
+        if ((typeof $selected !== typeof undefined) &&
+            ($selected instanceof $)) {
+            $selected.setMod(_B_DROPDOWN, _E_ITEM, _M_SELECTED, true)
                 .siblings().setMod(_B_DROPDOWN, _E_ITEM, _M_SELECTED, false);
-            
-            // Event auslösen
-            $(window).trigger(
-                CFG.EVT.SORTED_LIST,
-                { sort: sort, order: order }
-            );
-            
-            // Dropdown ausblenden
-            _setDropdown(false);
-        
-        // Ansonsten Dropdown ein-/ausblenden
-        } else {
-            _$dropdown.setMod(_B_DROPDOWN, _M_OPENED, _dropdownIsOpened);
-        }        
+        }  
     }
     
     /**
-     * Klick auf Navigations-Button.
-     * Führt bei einem Event auf einem der Navigation-Bar Buttons
-     * Funktionen entsprechend der gesetzt Aktion für diesen Button aus.
-     * @param {Object} event Ausgelöstes Event
-     * @param {Object} data Daten des Events
+     * Aktion ausführen.
+     * Führt anhand einer über den Mediator übermittelten Nachricht
+     * eine entsprechende Aktion aus.
+     * @param {Object} data Übermittelte Daten
      */
-    function _buttonPressed(event, data) {
-        if ((typeof data        !== typeof undefined) &&
-            (typeof data.action !== typeof undefined)) {
-            switch (data.action) {
+    function _performAction(data) {
+        if ((typeof data     !== typeof undefined) &&
+            (typeof data.act !== typeof undefined)) {
+            switch (data.act) {
                 
                 // Sortierung einblenden
                 case CFG.ACT.SORT_SHOW:
@@ -309,29 +294,34 @@ var NavigationBar = (function() {
                 
                 // Wörterbuch vorwärts
                 case CFG.ACT.DICTIONARY_FORWARD:
-                    _saveToCache(CFG.ACT.DICTIONARY_BACK);
+                    _saveCache(CFG.ACT.DICTIONARY_BACK);
                     _setDropdown(false);
                     _setSearch(false, false);
-                    _setButtonLeft(CFG.ACT.DICTIONARY_BACK, CFG.ICON.BACK);
-                    _setButtonRight(null, null);
-                    _setTitle(data.text || CFG.VIEW.DICTIONARY.TITLE);
+                    _setBtnL(CFG.ACT.DICTIONARY_BACK, CFG.ICO.BACK);
+                    _setBtnR(null, null);
+                    _setHead(data.str || CFG.VIEW.DICTIONARY.TITLE);
                     break;
                 
                 // Wörterbuch zurück
                 case CFG.ACT.DICTIONARY_BACK:
-                    _loadFromCache(CFG.ACT.DICTIONARY_BACK);
+                    _loadCache(CFG.ACT.DICTIONARY_BACK);
                     break;
                 
                 // Quiz gestartet
                 case CFG.ACT.QUIZ_START:
-                    _setButtonLeft(CFG.ACT.QUIZ_CANCEL, CFG.ICON.CANCEL);
-                    _setButtonRight(CFG.ACT.QUIZ_SKIP, CFG.ICON.SKIP);
+                    _setBtnL(CFG.ACT.QUIZ_CANCEL, CFG.ICO.CANCEL);
+                    _setBtnR(CFG.ACT.QUIZ_SKIP, CFG.ICO.SKIP);
                     break;
                 
                 // Quiz beendet
                 case CFG.ACT.QUIZ_CANCEL:
-                    _setButtonLeft(null, null);
-                    _setButtonRight(null, null);
+                    _setBtnL(null, null);
+                    _setBtnR(null, null);
+                    break;
+                
+                // Quiz übersprungen
+                case CFG.ACT.QUIZ_SKIP:
+                    _setBtnR(CFG.ACT.QUIZ_SKIP, CFG.ICO.SKIP);
                     break;
                 
                 // !TODO: Switch Button-Aktionen
@@ -340,47 +330,59 @@ var NavigationBar = (function() {
     }
     
     /**
-     * Button-Aktion ausführen.
-     * Führt anhand des Events des geklickten Buttons und
-     * der dazu gesetzten Aktion eine bestimmte Funktion aus.
-     * @param {Object} event Event des geklickten Buttons
+     * Aktion auslösen.
+     * Läst anhand eines Klick-Events auf einen Navigation-Bar-Button
+     * die damit verknüpfte Aktion aus; veröffentlich die Aktion
+     * über den Mediator.
+     * @param {Object} event Ausgelöstes Event
      */
-    function _buttonAction(event) {
+    function _triggerAction(event) {
         if (!_buttonsAreDisabled && event.target) {
-            
-            // Button und Aktion initialisieren/bestimmen
-            var action;
             var $button = $(event.target).closest(_SEL_BUTTONS);
-            if ($button.is(_buttonLeft.$button)) {
-                action = _buttonLeft.action;
-            } else if ($button.is(_buttonRight.$button)) {
-                action = _buttonRight.action;
-            }
-            
-            // Event auslösen
-            $(window).trigger(CFG.EVT.PRESSED_BUTTON, { action: action });
+            var data = { act: $button.data(_DATA_ACT) };
+            Mediator.send(CFG.CNL.NAVBAR_ACTION, data);
         }
     }
     
     /**
-     * Such-Aktion ausführen.
-     * Ermittelt den aktuellen Suchbegriff und leitet diesen Wert weiter;
-     * blendet den Clear-Button für das Input ein/aus.
+     * Sortierung setzen.
+     * Setzt anhand eines Klick-Events die aktuelle Sortierung;
+     * veröffentlicht die Sortierung per Mediator und blendet
+     * die Dropdown-Sortierung aus.
+     * @param {Object} event Ausgelöstes Event
      */
-    function _searchAction() {
-        var search = _$search.val();
-        _$clear.setMod(_B_BAR, _E_CLEAR, _M_HIDDEN, (search.length === 0));
-        $(window).trigger(CFG.EVT.SEARCHED_LIST, { search: search });
+    function _setSort(event) {
+        if ((typeof event !== typeof undefined) && (event.target)) {
+            
+            // Sortierung veröffentlichen
+            var $selected = $(event.target).closest(_SEL_SORT);            
+            Mediator.send(CFG.CNL.DICTIONARY_SORT, {
+                sort : CFG.SORTING.SORT[$selected.data(_DATA_SORT)],
+                ordr : CFG.SORTING.ORDR[$selected.data(_DATA_ORDR)]
+            });
+            
+            // Dropdown ausblenden
+            _setDropdown(false, $selected);
+        }
     }
     
     /**
-     * Suchfeld leeren.
-     * Leert das Suchfeld, löst ein Input-Event aus
-     * und fokussiert das Suchfeld.
+     * Dropdown-Sortierung ein-/ausblenden.
+     * Blendet das Dropdown-Menü anhand des übergebenen Wertes ein oder aus;
+     * setzt den zugehörigen Button entsprechend; aktualisiert optional
+     * die ausgewählte Sortierungs-Option.
+     * @param {Boolean} willBeOpened Angabe, ob das Dropdown geöffnet wird
+     * @param {Object} [undefined] $selected Ausgewählte Opttion
      */
-    function _clearSearch() {
-        _$search.val(CFG.STR.EMPTY).trigger(CFG.EVT.INPUT);
-        _$search.focus();
+    function _setDropdown(willBeOpened, $selected) {
+        if (_dropdownIsOpened !== willBeOpened) {
+            _dropdownIsOpened = willBeOpened;
+            _setBtnR(
+                (willBeOpened ? CFG.ACT.SORT_HIDE : CFG.ACT.SORT_SHOW),
+                (willBeOpened ? CFG.ICO.CANCEL    : CFG.ICO.SORT) 
+            );
+        }
+        _renderDropdown($selected);
     }
     
     /**
@@ -390,11 +392,11 @@ var NavigationBar = (function() {
      * @param {String} action Name der Button-Aktion
      * @param {String} icon Name des Button-Icons
      */
-    function _setButton(button, action, icon) {
-        if (button.$button instanceof $) {
-            button.action = (action || null);
-            button.icon   = (icon   || null);
-            _renderButton(button);
+    function _setBtn($btn, act, ico) {
+        if ($btn instanceof $) {
+            $btn.data(_DATA_ACT, (act || null));
+            $btn.data(_DATA_ICO, (ico || null));
+            _renderBtn($btn);
         }
     }
     
@@ -404,8 +406,8 @@ var NavigationBar = (function() {
      * @param {String} action Neue Aktion
      * @param {String} icon Neues Icon
      */
-    function _setButtonLeft(action, icon) {
-        _setButton(_buttonLeft, action, icon);
+    function _setBtnL(act, ico) {
+        _setBtn(_$btnL, act, ico);
     }
     
     /**
@@ -414,8 +416,8 @@ var NavigationBar = (function() {
      * @param {String} action Neue Aktion
      * @param {String} icon Neues Icon
      */
-    function _setButtonRight(action, icon) {
-        _setButton(_buttonRight, action, icon);
+    function _setBtnR(act, ico) {
+        _setBtn(_$btnR, act, ico);
     }
     
     /**
@@ -423,10 +425,10 @@ var NavigationBar = (function() {
      * Setzt den aktuellen Titel und rendert ihn neu.
      * @param {String} title Neuer Titel
      */
-    function _setTitle(title) {
-        if (typeof title === typeof CFG.STR.EMPTY) {
-            _title.str = title;
-            _renderTitle();
+    function _setHead(head) {
+        if (typeof head === typeof CFG.STR.EMPTY) {
+            _$head.data(_DATA_STR, head);
+            _renderHead();
         }
     }
     
@@ -440,9 +442,9 @@ var NavigationBar = (function() {
     function _setSearch(willBeActive, triggerSearch) {
         if (_searchIsActive !== willBeActive) {
             _searchIsActive = willBeActive;
-            _setButtonLeft(
+            _setBtnL(
                 (willBeActive ? CFG.ACT.SEARCH_HIDE : CFG.ACT.SEARCH_SHOW),
-                (willBeActive ? CFG.ICON.CANCEL     : CFG.ICON.SEARCH)
+                (willBeActive ? CFG.ICO.CANCEL      : CFG.ICO.SEARCH)
             );
             if (triggerSearch !== false) { _triggerSearch(); }
             _renderSearch();
@@ -450,13 +452,13 @@ var NavigationBar = (function() {
     }
     
     /**
-     * Such-Event auslösen.
-     * Löst ein globales Event mit dem aktuellen Suchbegriff aus.
+     * Suche auslösen.
+     * Sendet den aktuellen Suchbegriff an den Mediator.
      */
     function _triggerSearch() {
-        $(window).trigger(
-            CFG.EVT.SEARCHED_LIST,
-            { search: (_searchIsActive ? _$search.val() : CFG.STR.EMPTY) }
+        Mediator.send(
+            CFG.CNL.DICTIONARY_SEARCH,
+            (_searchIsActive ? _$search.val() : CFG.STR.EMPTY)
         );
     }
     
@@ -471,21 +473,24 @@ var NavigationBar = (function() {
     }
     
     /**
-     * Dropdown-Sortierung ein-/ausblenden.
-     * Blendet das Dropdown-Menü anhand des übergebenen Wertes ein
-     * oder aus; setzt den zugehörigen Button entsprechend und rendert
-     * das Dropdown-Menü.
-     * @param {Boolean} willBeOpened Angabe, ob das Dropdown geöffnet wird
+     * Suche aktualisieren.
+     * Ermittelt den aktuellen Suchbegriff und leitet diesen Wert weiter;
+     * blendet den Clear-Button für das Input ein/aus.
      */
-    function _setDropdown(willBeOpened) {
-        if (_dropdownIsOpened !== willBeOpened) {
-            _dropdownIsOpened = willBeOpened;
-            _setButtonRight(
-                (willBeOpened ? CFG.ACT.SORT_HIDE : CFG.ACT.SORT_SHOW),
-                (willBeOpened ? CFG.ICON.CANCEL   : CFG.ICON.SORT) 
-            );
-            _renderDropdown();
-        }
+    function _updateSearch() {
+        var search = _$search.val();
+        _$clear.setMod(_B_BAR, _E_CLEAR, _M_HIDDEN, (search.length === 0));
+        _triggerSearch();
+    }
+    
+    /**
+     * Suchfeld leeren.
+     * Leert das Suchfeld, löst ein Input-Event aus
+     * und fokussiert das Suchfeld.
+     */
+    function _clearSearch() {
+        _$search.val(CFG.STR.EMPTY).trigger(CFG.EVT.INPUT);
+        _$search.focus();
     }
     
     /**
@@ -495,20 +500,20 @@ var NavigationBar = (function() {
      * @param {String} index Name der Konfiguration
      * @param {String} title Alternativer neuer Titel
      */
-    function _saveToCache(index, title) {
+    function _saveCache(index, head) {
         
         // Aktuellen Status speichern
         _cache[index] = {
-            title             : $.extend({}, _title),
-            buttonLeft        : $.extend({}, _buttonLeft),
-            buttonRight       : $.extend({}, _buttonRight),
-            dropdownIsOpened  : _dropdownIsOpened,
-            searchIsActive    : _searchIsActive
+            head             : $.extend({}, _$head.data()),
+            btnL             : $.extend({}, _$btnL.data()),
+            btnR             : $.extend({}, _$btnR.data()),
+            dropdownIsOpened : _dropdownIsOpened,
+            searchIsActive   : _searchIsActive
         };
         
         // Optional Titel überschreiben
-        if (typeof title === typeof CFG.STR.EMPTY) {
-            $.extend(_cache[index].title, { str: title });
+        if (typeof head === typeof CFG.STR.EMPTY) {
+            $.extend(_cache[index].head, { str: head });
         }
     }
     
@@ -518,63 +523,58 @@ var NavigationBar = (function() {
      * falls sie vorhanden ist, und ersetzt die aktuelle Konfiguration.
      * @param {String} index Name der Konfiguration
      */
-    function _loadFromCache(index) {
+    function _loadCache(index) {
         
-        // Cache laden, falls vorhanden
+        // Cache laden, falls vorhanden und rendern
         if (typeof _cache[index] !== typeof undefined) {
             var cached = _cache[index];
-            $.extend(_title, cached.title);
-            $.extend(_buttonLeft, cached.buttonLeft);
-            $.extend(_buttonRight, cached.buttonRight);
+            $.each(cached.head, function(i, val) { _$head.data(i, val); });
+            $.each(cached.btnL, function(i, val) { _$btnL.data(i, val); });
+            $.each(cached.btnR, function(i, val) { _$btnR.data(i, val); });
             _dropdownIsOpened = cached.dropdownIsOpened;
             _searchIsActive   = cached.searchIsActive;
         }
-        
-        // Rendern
         _render();
     }
     
     /**
      * Standard-Konfiguration wiederherstellen.
-     * Lädt anhand eines ausgelösten Events den Original-Zustand der
+     * Lädt anhand einer Mediator-Nachricht den Original-Zustand der
      * Navigation-Bar für ein bestimmtes View-Panel.
-     * @param {Object} event Ausgelöstes Event
-     * @param {Object} data Daten des Events
+     * @param {String} panel Name des View-Panels
      */
-    function _restoreDefault(event, data) {
-        if ((typeof data                  !== typeof undefined) &&
-            (typeof data.panel            !== typeof undefined) &&
-            (typeof _cache[data.panel]    !== typeof undefined) &&
-            (typeof _defaults[data.panel] !== typeof undefined)) {
+    function _restore(panel) {
+        if ((typeof panel            !== typeof undefined) &&
+            (typeof _cache[panel]    !== typeof undefined) &&
+            (typeof _defaults[panel] !== typeof undefined)) {
             
             // Aktuelle Konfiguration im Cache speichern
-            _saveToCache(data.panel);
+            _saveCache(panel);
 
             // Standard-Konfiguration wiederherstellen und laden
-            if (JSON.stringify(_defaults[data.panel]) !==
-                JSON.stringify(_cache[data.panel])) {
-                _cache[data.panel] = $.extend({}, _defaults[data.panel]);
-                _loadFromCache(data.panel);
+            if (JSON.stringify(_defaults[panel]) !==
+                JSON.stringify(_cache[panel])) {
+                _cache[panel] = $.extend({}, _defaults[panel]);
+                _loadCache(panel);
             }
         }
     }
     
     /**
      * Navigation-Bar aktualisieren.
-     * Aktualisiert anhand eines ausgelösten Events den Zustand
+     * Aktualisiert anhand einer Mediator-Nachricht den Zustand
      * der Navigation-Bar; speichert den Zustand für das vorige View-Panel
      * im Cache und lädt den Zustand für das neue View-Panel aus dem Cache.
-     * @param {Object} event Ausgelöstes Event
-     * @param {Object} data Daten des Events
+     * @param {Object} data Empfangene Daten
      */
-    function _updateNavbar(event, data) {
+    function _update(data) {
         if ((typeof data          !== typeof undefined) &&
             (typeof data.panelOld !== typeof undefined) &&
             (typeof data.panelNew !== typeof undefined)) {
 
             // Aktuellen Status speichern, neuen Status laden
-            if (data.panelOld !== null) { _saveToCache(data.panelOld);   }
-            if (data.panelNew !== null) { _loadFromCache(data.panelNew); }
+            if (data.panelOld !== null) { _saveCache(data.panelOld);   }
+            if (data.panelNew !== null) { _loadCache(data.panelNew); }
         }
     }
     

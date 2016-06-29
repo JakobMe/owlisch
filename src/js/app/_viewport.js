@@ -23,15 +23,16 @@ var Viewport = (function() {
      * Startet Funktionen, um den Anfangszustand des Viewports herzustellen.
      */
     function init() {
-        _bindEvents();
+        _hookMediator();
     }
     
     /**
      * Events binden.
      * Bindet Funktionen an Events und Elemente des Moduls.
      */
-    function _bindEvents() {
-        $(window).on(CFG.EVT.SHOW_VIEWPORT, show);
+    function _hookMediator() {
+        Mediator.hook(CFG.CNL.VIEWPORT_SHOW, show)
+                .hook(CFG.CNL.VIEWPORT_HIDE, hide);
     }
     
     /**

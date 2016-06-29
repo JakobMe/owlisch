@@ -51,13 +51,14 @@ var CFG = (function() {
             SEARCH_HIDE         : "search-hide",
             SORT_SHOW           : "sort-show",
             SORT_HIDE           : "sort-hide",
+            SORT_TOGGLE         : "sort-toggle",
             DICTIONARY_FORWARD  : "dictionary-forward",
             DICTIONARY_BACK     : "dictionary-back",
             QUIZ_SKIP           : "quiz-skip",
             QUIZ_CANCEL         : "quiz-cancel",
             QUIZ_START          : "quiz-start"
         },
-        ICON: {
+        ICO: {
             NONE                : "none",
             SEARCH              : "search",
             SORT                : "sort",
@@ -74,33 +75,37 @@ var CFG = (function() {
             PLAY                : "play",
             LOADEDDATA          : "loadeddata",
             KEYBOARD_HIDE       : "keyboardWillHide",
-            KEYBOARD_SHOW       : "keyboardWillShow",
-            LOAD_PANEL_CONTENT  : "loadedPanelContent",
-            CREATE_PANELS       : "createdPanelContainers",
-            UPDATE_NAVBAR       : "updateNavigationBar",
-            SEARCHED_LIST       : "searchedDictionaryList",
-            SORTED_LIST         : "sortedDictionaryList",
-            SET_PANEL           : "setCurrentPanel",
-            RESTORE_DEFAULT     : "restoreDefaultPanel",
-            HIDE_VIEW           : "hideView",
-            SHOW_VIEW           : "showView",
-            SHOW_VIEWPORT       : "showViewport",
-            PRESSED_BUTTON      : "pressedNavigationBarButton",
-            REQUEST_TERMS       : "requestedTerms",
-            REQUEST_SCORES      : "requestedScores",
-            SERVE_TERMS         : "servedTerms",
-            SERVE_SCORES        : "servedScores",
-            UPDATE_TERMS        : "updatedTerms",
-            UPDATE_SCORES       : "updatedScores",
-            QUIZ_START          : "quizHasStarted",
-            QUIZ_END            : "quizHasEnded"
+            KEYBOARD_SHOW       : "keyboardWillShow"
+        },
+        CNL: {
+            TERMS_REQUEST       : "terms:request",
+            TERMS_SERVE         : "terms:serve",
+            TERMS_UPDATE        : "terms:update",
+            SCORES_REQUEST      : "scores:request",
+            SCORES_SERVE        : "scores:serve",
+            SCORES_UPDATE       : "scores:update",
+            VIEWPORT_SHOW       : "viewport:show",
+            VIEWPORT_HIDE       : "viewport:hide",
+            VIEW_SHOW           : "view:show",
+            VIEW_HIDE           : "view:hide",
+            VIEW_CHANGE         : "view:change",
+            VIEW_SET            : "view:set",
+            VIEW_INIT           : "view:init",
+            VIEW_LOAD           : "view:load",
+            VIEW_RESTORE        : "view:restore",
+            NAVBAR_ACTION       : "navbar:action",
+            QUIZ_START          : "quiz:start",
+            QUIZ_END            : "quiz:end",
+            QUIZ_SKIP           : "quiz:skip",
+            DICTIONARY_SORT     : "dictionary:sort",
+            DICTIONARY_SEARCH   : "dictionary:search"
         },
         SORTING: {
             SORT: {
                 ALPHA           : "Alphabetisch",
                 NUMERIC         : "Nach Stufe"
             },
-            ORDER: {
+            ORDR: {
                 ASC             : "aufsteigend",
                 DESC            : "absteigend"
             }

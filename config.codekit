@@ -394,6 +394,17 @@
 		"outputStyle": 1,
 		"syntaxCheckerStyle": 1
 		},
+	"\/src\/js\/app\/_mediator.js": {
+		"fileType": 64,
+		"ignore": 1,
+		"ignoreWasSetByUser": 0,
+		"inputAbbreviatedPath": "\/src\/js\/app\/_mediator.js",
+		"outputAbbreviatedPath": "\/src\/js\/app\/min\/_mediator-min.js",
+		"outputPathIsOutsideProject": 0,
+		"outputPathIsSetByUser": 0,
+		"outputStyle": 1,
+		"syntaxCheckerStyle": 1
+		},
 	"\/src\/js\/app\/_navigationbar.js": {
 		"fileType": 64,
 		"ignore": 1,

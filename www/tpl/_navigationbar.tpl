@@ -1,10 +1,10 @@
 <ul class="dropdown" id="navigation-dropdown" role="menu">
     {{#.}}
     <li class="dropdown__item" role="menuitem"
-        data-sort="{{optionSort}}" data-order="{{optionOrder}}">
-        <i class="dropdown__icon icon icon--sort-{{iconSort}}-{{iconOrder}}"></i>
+        data-sort="{{optSort}}" data-ordr="{{optOrdr}}">
+        <i class="dropdown__icon icon icon--sort-{{icoSort}}-{{icoOrdr}}"></i>
         <span class="dropdown__label">
-            {{labelSort}} {{labelOrder}} sortieren
+            {{lblSort}} {{lblOrdr}} sortieren
         </span>
     </li>
     {{/.}}
@@ -21,9 +21,9 @@
            navigationbar__search-clear--hidden"
            id="navigation-clear"></i>
     </div>
-    <h1 class="navigationbar__title" id="navigation-title"></h1>
+    <h1 class="navigationbar__heading" id="navigation-heading"></h1>
     <i class="navigationbar__button navigationbar__button--left"
-       role="button"></i>
+       role="button" data-action="null" data-icon="null"></i>
     <i class="navigationbar__button navigationbar__button--right"
-       role="button"></i>
+       role="button" data-action="null" data-icon="null"></i>
 </div>

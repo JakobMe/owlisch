@@ -24,15 +24,25 @@ var CFG = (function() {
             LASTGAMES           : 10
         },
         RATING: {
+            PERFECT: {
+                ICON            : "smile",
+                LABEL           : "Perfekt!",
+                PERCENT         : 100
+            },
             EXCELLENT: {
                 ICON            : "smile",
                 LABEL           : "Hervorragend!",
-                PERCENT         : 90
+                PERCENT         : 80
+            },
+            VERYGOOD: {
+                ICON            : "smile",
+                LABEL           : "Sehr gut!",
+                PERCENT         : 60
             },
             GOOD: {
                 ICON            : "smile",
-                LABEL           : "Sehr gut!",
-                PERCENT         : 50
+                LABEL           : "Gar nicht übel!",
+                PERCENT         : 40
             },
             MEDIOCRE: {
                 ICON            : "meh",

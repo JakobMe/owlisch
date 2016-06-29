@@ -1,10 +1,12 @@
 <p class="quiz__title">
     <span class="quiz__title-text">
         <i class="icon icon--{{icon}} quiz__title-icon"></i> {{rating}}
-        <span class="badge">{{result}} Punkte</span>
+        <span class="badge{{#noskip}} badge--disabled{{/noskip}}">
+            {{skipped}} ausgelassen
+        </span>
     </span>
 </p>
-<div class="quiz__chart chart chart--horizontal chart--no-label">
+<div class="quiz__chart chart chart--score">
     <div class="chart__lines">
         {{#questions}}
         <div class="chart__line"></div>
@@ -13,6 +15,10 @@
     <div class="chart__container">
         <div class="chart__data{{#zero}} chart__data--none{{/zero}}">
             <div id="quiz-chart" class="chart__bar" style="width: {{percent}}%;"></div>
+            <div class="chart__label">
+                <span class="chart__text chart__text--percent">{{percent}}%</span>
+                <span class="chart__text">{{result}} Punkt{{^single}}e{{/single}}</span>
+            </div>
         </div>
     </div>
 </div>

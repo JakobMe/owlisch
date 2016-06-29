@@ -30,6 +30,11 @@
     .translate(0, -50%);
     .transition();
     
+    // Mod: Deaktiviert
+    &--disabled {
+        opacity: @app-opacity-locked;
+    }
+    
     // Mod: Highlight
     &--highlight {
         .fontello-icon(@fontello-icon-search, before);

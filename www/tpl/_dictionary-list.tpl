@@ -2,7 +2,7 @@
     <span class="list__title-text">
         <i class="icon icon--dictionary list__title-icon"></i> {{caption}}
         <span class="badge{{#filtered}} badge--highlight{{/filtered}}">
-            {{size}} {{#single}}Begriff{{/single}}{{^single}}Begriffe{{/single}}
+            {{size}} Begriff{{^single}}e{{/single}}
         </span>
     </span>
 </li>

@@ -25,9 +25,8 @@
                 </span>
                 <span class="notice__text">
                     Du kannst das <b>Quiz</b> jederzeit <b>abbrechen</b>.
-                    Wenn Du eine Antwort nicht weißt, kannst Du die Frage
-                    auch <b>überspringen</b>. Je häufiger Du einen Begriff
-                    <b>richtig errätst</b>, desto schwieriger wird die <b>Frage</b>.
+                    Wenn Du eine Antwort nicht weißt, kannst Du die Frage auch <b>auslassen</b>.
+                    Je häufiger Du einen Begriff <b>richtig errätst</b>, desto schwieriger wird die <b>Frage</b>.
                 </span>
             </p>
             <a class="quiz__button quiz__button--round quiz__button--action" href="#" role="button">

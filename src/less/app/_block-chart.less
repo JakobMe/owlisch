@@ -38,7 +38,26 @@
 .chart {
     overflow: hidden;
     position: relative;
+    padding-left: @app-size-gap;
+    padding-right: @_chart-size-info;
     .colored-gradient(@app-color-background-light);
+    
+    // Mod: Vertikal
+    &--vertical {
+        padding-left: 0;
+        padding-right: 0;
+    }
+    
+    // Element: Container
+    &__container {
+        display: block;
+        box-sizing: border-box;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        padding: (@app-size-gap - @_chart-size-gap) 0;
+    }
     
     // Mod: Vertikal & Element: Container
     &--vertical, &--vertical &__container {
@@ -53,44 +72,25 @@
         padding-right: @app-size-gap;
     }
     
-    // Mod: Horizontal & Element: Container
-    &--horizontal &__container {
-        padding: (@app-size-gap - @_chart-size-gap) 0;
-    }
-    
-    // Mod: Horizontal
-    &--horizontal {
-        padding-left: @app-size-gap;
-        padding-right: @_chart-size-info;
-    }
-    
-    // Element: Linie
-    &__line {
-        display: block;
-        box-sizing: border-box;
-    }
-    
-    // Mod: Vertikal & Element: Linie
-    &--vertical &__line {
-        width: 100%;
-        height: @_chart-size-step;
-        ._chart-loop-lines-vertical(@app-number-questions);
-        .border(top, @app-color-background);
-        
-        // Erstes Element
-        &:first-child { border-top: none; }
-    }
-    
-    // Mod: Horizontal & Element: Linien
-    &--horizontal &__lines {
+    // Element: Linien
+    &__lines {
         position: absolute;
         height: 100%;
         left: @app-size-gap;
         right: @_chart-size-info;
     }
     
-    // Mod: Horizontal & Element: Linie
-    &--horizontal &__line {
+    // Mod: Vertikal & Element: linien
+    &--vertical &__lines {
+        position: static;
+        left: auto;
+        right: auto;
+    }
+    
+    // Element: Linie
+    &__line {
+        display: block;
+        box-sizing: border-box;
         position: absolute;
         top: 0;
         height: 100%;
@@ -100,21 +100,28 @@
         ._chart-loop-lines-horizontal(@_chart-number-percent);
     }
     
-    // Element: Container
-    &__container {
-        display: block;
-        box-sizing: border-box;
-        top: 0;
-        left: 0;
+    // Mod: Vertikal & Element: Linie
+    &--vertical &__line {
         width: 100%;
-        height: 100%;
+        float: none;
+        position: static;
+        height: @_chart-size-step;
+        .border(top, @app-color-background);
+        .gradient-none();
+        ._chart-loop-lines-vertical(@app-number-questions);
+        
+        // Erstes Element
+        &:first-child { border-top: none; }
     }
     
     // Element: Daten
     &__data {
         display: block;
         position: relative;
+        width: 100%;
+        padding: @_chart-size-gap 0;
         opacity: @app-opacity-invisible;
+        .translate(-180%);
         .transition();
         ._chart-loop-data(@app-number-lastgames);
     }
@@ -122,16 +129,10 @@
     // Mod: Vertikal & Element: Daten
     &--vertical &__data {
         float: left;
+        padding: 0;
         height: 100%;
         width: (100% / @app-number-lastgames);
         .translate(0, 125%);
-    }
-    
-    // Mod: Horizontal & Element: Daten
-    &--horizontal &__data {
-        width: 100%;
-        padding: @_chart-size-gap 0;
-        .translate(-180%);
     }
     
     // Mod: Wachsen & Element: Daten
@@ -145,9 +146,10 @@
         display: block;
         box-sizing: border-box;
         max-width: 100%;
-        .gradient(bottom, @app-color-main-light, @app-color-main);
-        .border(all, @app-color-main-dark);
-        .border(bottom, shade(@app-color-main-dark, 10%));
+        height: @_chart-size-bar;
+        .gradient(bottom, @app-color-star-light, @app-color-star);
+        .border(all, @app-color-star-dark);
+        .border(bottom, shade(@app-color-star-dark, 10%));
         .border-radius();
         .shadow-small();
     }
@@ -161,64 +163,43 @@
         margin-left: -(@_chart-size-bar / 2);
     }
     
-    // Mod: Horizontal & Element: Balken
-    &--horizontal &__bar {
-        height: @_chart-size-bar;
-        border-color: @app-color-star-dark;
-        border-bottom-color: shade(@app-color-star-dark, 10%);
-        .gradient(bottom, @app-color-star-light, @app-color-star);
+    // Mod: Spielergebnis & Element: Balken
+    &--score &__bar {
+        border-color: @app-color-main-dark;
+        border-bottom-color: shade(@app-color-main-dark, 10%);
+        .gradient(bottom, @app-color-main-light, @app-color-main);
     }
-    
-    // Mod: Vertikal & Element: Daten & Mod: Ohne & Element: Balken
-    &--vertical &__data--none &__bar {
-        border: none;
-        width: 100%;
-        left: 0;
-        margin: 0;
-        text-align: center;
-        background: transparent;
-        height: auto !important;
-        font-size: @app-font-size-small;
-        color: @app-color-text-dark-pale;
-        .fontello-icon(@fontello-icon-frown);
-        .shadow-none();
-    }
-    
-    // Mod: Horizontal & Element: Daten & Mod: Ohne & Element: Balken & Text
-    &--horizontal &__data--none &__bar { width: (@app-size-line-thin * 3) !important; }
-    &--horizontal &__data--none &__text { color: @app-color-text-dark-pale; }
     
     // Element: Label
     &__label {
         display: block;
         position: absolute;
-        font-weight: bold;
-        font-size: @app-font-size-small;
-    }
-    
-    // Mod: Vertikal & Element: Label
-    &--vertical &__label {
-        text-align: center;
-        left: 0;
-        width: 100%;
-        height: @_chart-size-label;
-        line-height: @_chart-size-label;
-        bottom: -(@_chart-size-label);
-    }
-    
-    // Mod: Horizontal & Element: Label
-    &--horizontal &__label {
-        height: 100%;
-        top: 0;
         box-sizing: border-box;
+        font-weight: bold;
+        top: 0;
+        height: 100%;
+        font-size: @app-font-size-small;        
         line-height: (@_chart-size-bar + (2 * @_chart-size-gap));
         padding: 0 @app-size-gap;
         width: @_chart-size-info;
         right: -(@_chart-size-info);
     }
     
-    // Mod: Horizontal & Element: Text
-    &--horizontal &__text {
+    // Mod: Vertikal & Element: Label
+    &--vertical &__label {
+        text-align: center;
+        left: 0;
+        top: auto;
+        right: auto;
+        width: 100%;
+        padding: 0;
+        height: @_chart-size-label;
+        line-height: @_chart-size-label;
+        bottom: -(@_chart-size-label);
+    }
+    
+    // Element: Text
+    &__text {
         display: block;
         float: left;
         
@@ -245,6 +226,28 @@
         }
     }
     
-    // Mod: Vertikal & Element: Daten & Mod: Ohne & Element: Label
-    &--vertical &__data--none &__label { color: @app-color-text-dark-pale; }
+    // Mod: Vertikal & Element: Text
+    &--vertical &__text {
+        float: none;
+    }
+    
+    // Element: Daten & Mod: Ohne & Element: Balken & Text & Label
+    &__data--none &__bar { width: (@app-size-line-thin * 3) !important; }
+    &__data--none &__text { color: @app-color-text-dark-pale; }
+    &__data--none &__label { color: @app-color-text-dark-pale; }
+
+    // Mod: Vertikal & Element: Daten & Mod: Ohne & Element: Balken
+    &--vertical &__data--none &__bar {
+        border: none;
+        left: 0;
+        margin: 0;
+        text-align: center;
+        background: transparent;
+        width: 100% !important;
+        height: auto !important;
+        font-size: @app-font-size-small;
+        color: @app-color-text-dark-pale;
+        .fontello-icon(@fontello-icon-frown);
+        .shadow-none();
+    }
 }

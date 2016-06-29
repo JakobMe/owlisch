@@ -266,22 +266,24 @@ var Quiz = (function() {
         
         // Ergebnis ermitteln
         var result = 0;
+        var skipped = 0;
         $.each(_progress, function(i, status) {
             if (status === _M_SUCCESS) { result++; }
+            if (status === _M_SKIPPED) { skipped++; }
         });
         
         // Bewertung ermitteln
         var rating  = CFG.RATING.BAD;
         var percent = Helper.calcPercent(result, CFG.QUIZ.QUESTIONS);
         $.each(CFG.RATING, function(i, val) {
-            if ((percent       >= val.PERCENT) &&
-                (rating.PERCENT < val.PERCENT)) {
-                 rating         = val;
+            if ((percent        >= val.PERCENT) &&
+                (rating.PERCENT <= val.PERCENT)) {
+                 rating          = val;
             }
         });
         
         // Rendern und Ergebnis senden
-        _renderFinish(result, rating);
+        _renderFinish(result, skipped, rating);
         Mediator.send(CFG.CNL.QUIZ_END, { act: CFG.ACT.QUIZ_CANCEL })
                 .send(CFG.CNL.SCORES_UPDATE, result);
     }
@@ -291,13 +293,17 @@ var Quiz = (function() {
      * Rendert das Quiz-Ende mit einem Mustache-Template; fügt
      * alle Ergebnisse des Quizes ein und animiert abschließend
      * das Ergebnis-Diagramm.
-     * @param {Number} result Ergebnis vom Quiz
+     * @param {Number} result Anzahl er richtigen Fragen
+     * @param {Number} skipped Anzahl der übersprungenen Fragen
      * @param {Object} rating Bewertungs-Objekt
      */
-    function _renderFinish(result, rating) {
+    function _renderFinish(result, skipped, rating) {
         Template.render(_$finish, _TMPL_FINISH, {
+            skipped   : skipped,
+            noskip    : skipped === 0,
             result    : result,
             zero      : result === 0,
+            single    : result === 1,
             rating    : rating.LABEL,
             icon      : rating.ICON,
             percent   : Helper.calcPercent(result, CFG.QUIZ.QUESTIONS),

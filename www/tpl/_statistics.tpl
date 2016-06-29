@@ -3,19 +3,19 @@
         <h2 class="statistics__title">
             Meine <b>{{games}}</b> letzten <b>Spiele</b>
         </h2>
-        <div class="statistics__chart chart chart--vertical"></div>
+        <div class="statistics__chart chart chart--vertical chart--score"></div>
     </div>
     <div id="statistics-progress" class="statistics__container">
         <h2 class="statistics__title">
             <b>Gelernte</b> Begriffe
         </h2>
-        <div class="statistics__chart chart chart--horizontal"></div>
+        <div class="statistics__chart chart"></div>
     </div>
     <div id="statistics-dictionary" class="statistics__container">
         <h2 class="statistics__title">
             Mein <b>Wörterbuch</b>
         </h2>
-        <div class="statistics__chart chart chart--horizontal"></div>
+        <div class="statistics__chart chart"></div>
     </div>
     <p class="notice">
         <span class="notice__title">

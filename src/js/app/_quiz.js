@@ -249,11 +249,15 @@ var Quiz = (function() {
      * @param {Object} event Ausgelöstes Event
      */
     function _start(event) {
-        Mediator.send(CFG.CNL.QUIZ_START, { act: CFG.ACT.QUIZ_START });
-        event.preventDefault();
-        _resetProgress();
-        _setSlider(_indexStart + 1);
-        _setStep(1);
+        if (typeof event !== typeof undefined) { event.preventDefault(); }
+        if (_currentStep !== 0) {
+            _resetAll(true);
+        } else {
+            Mediator.send(CFG.CNL.QUIZ_START, { act: CFG.ACT.QUIZ_START });
+            _resetProgress();
+            _setSlider(_indexStart + 1);
+            _setStep(1);
+        }
     }
     
     /**
@@ -335,8 +339,9 @@ var Quiz = (function() {
      * @param {String} panel Name des View-Panels
      */
     function _restore(panel) {
-        if ((typeof panel   !== typeof undefined) &&
-            (CFG.VIEW[panel] === CFG.VIEW.QUIZ)) {
+        if ((typeof panel    !== typeof undefined) &&
+            (CFG.VIEW[panel] === CFG.VIEW.QUIZ) &&
+            (_currentStep    !== 0)) {
             _resetAll();
         }
     }
@@ -361,11 +366,12 @@ var Quiz = (function() {
      * Alles zurücksetzen.
      * Setzt alle Kompenenten und Daten vom Quiz zurück.
      */
-    function _resetAll() {
+    function _resetAll(restart) {
         Mediator.send(CFG.CNL.QUIZ_END).send(CFG.CNL.VIEW_HIDE);
         setTimeout(function() {
             _setSlider(_indexStart);
             _resetProgress();
+            if (restart === true) { _start(); }
             setTimeout(function() {
                 Mediator.send(CFG.CNL.VIEW_SHOW);
             }, CFG.TIME.DELAY);

@@ -31,6 +31,7 @@ var TabBar = (function() {
     var _tabNumber              = 0;
     var _isHidden               = false;
     var _isDisabled             = false;
+    var _isLocked               = false;
     
     // DOM-Elemente
     var _$tabbar                = $(_SEL_TABBAR);
@@ -108,18 +109,26 @@ var TabBar = (function() {
      * @param {(Object|Number)} tab Klick-Event vom Tab oder Tab-Index
      */
     function _setTab(tab) {
-        
-        // Aktiven Tab ermitteln
-        _tabActive = Math.min(Math.max(
-            (tab.target ? $(tab.target).closest(_SEL_TABS).index() : tab),
-            0), _tabNumber);
-
-        // Rendern, Mediator aufrufen
-        _render();
-        Mediator.send(
-            CFG.CNL.VIEW_SET,
-            _$tabs.eq(_tabActive).data(_DATA_PANEL)
-        );
+        if (!_isLocked) {
+            
+            // Tabs sperren und entsperren
+            _isLocked = true;
+            setTimeout(function() {
+                _isLocked = false;
+            }, CFG.TIME.ANIMATION);
+            
+            // Aktiven Tab ermitteln
+            _tabActive = Math.min(Math.max(
+                (tab.target ? $(tab.target).closest(_SEL_TABS).index() : tab),
+                0), _tabNumber);
+    
+            // Rendern, Mediator aufrufen
+            _render();
+            Mediator.send(
+                CFG.CNL.VIEW_SET,
+                _$tabs.eq(_tabActive).data(_DATA_PANEL)
+            );
+        }
     }
     
     /**
@@ -128,6 +137,7 @@ var TabBar = (function() {
      */
     function _hide() {
         _isHidden = true;
+        _isLocked = true;
         _render();
     }
     
@@ -137,6 +147,7 @@ var TabBar = (function() {
      */
     function _show() {
         _isHidden = false;
+        _isLocked = false;
         _render();
     }
     
@@ -146,6 +157,7 @@ var TabBar = (function() {
      */
     function _disable() {
         _isDisabled = true;
+        _isLocked = true;
         _render();
     }
     
@@ -155,6 +167,7 @@ var TabBar = (function() {
      */
     function _enable() {
         _isDisabled = false;
+        _isLocked = false;
         _render();
     }
     

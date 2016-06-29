@@ -239,9 +239,8 @@ var Data = (function() {
     /**
      * Die letzten Spiele aktualisieren.
      * Ergänzt die Liste der letzten Spieleergebnisse um ein bestimmtes
-     * Ergebnis beim entsprechenden Event.
-     * @param {Object} event Ausgelöstes Event
-     * @param {Object} data Daten des Events
+     * Ergebnis bei einer Mediator-Nachricht.
+     * @param {Number} score Neues Ergebnis
      */
     function _updateDataScore(score) {
         if (typeof score === typeof 0) { addDataScore(score); }

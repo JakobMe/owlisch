@@ -67,7 +67,7 @@ var Quiz = (function() {
         Mediator.hook(CFG.CNL.VIEW_LOAD, _create)
                 .hook(CFG.CNL.VIEW_RESTORE, _restore)
                 .hook(CFG.CNL.TERMS_SERVE, _update)
-                .hook(CFG.CNL.NAVBAR_ACTION, _cancel);
+                .hook(CFG.CNL.NAVBAR_ACTION, _navbarAction);
     }
     
     /**
@@ -106,19 +106,12 @@ var Quiz = (function() {
                 caption   : _dataCaption,
                 size      : slides - extra
             }, function() {
-                
-                // Modulvariablen initialisieren
-                _$slider      = $(_SEL_SLIDER);
-                _$start       = $(_SEL_START);
-                _$finish      = $(_SEL_FINISH);
-                _$progressbar = $(_SEL_PROGRESSBAR);
-                _indexStart   = parseInt(_$start.data(_DATA_SLIDE));
-                _indexFinish  = parseInt(_$finish.data(_DATA_SLIDE));
-                
+
                 // Funktionen ausführen
+                _initDom();
                 _resetProgress();
                 _bindEvents();
-                _setSlide(_indexStart);
+                _setSlider(_indexStart);
                 
                 // Wörterbuch und Fortschritt anfragen, View einblenden
                 Mediator.send(CFG.CNL.VIEW_SHOW)
@@ -128,28 +121,16 @@ var Quiz = (function() {
     }
     
     /**
-     * Quiz starten.
-     * Startet das Quiz anhand eines Klick-Events; bewegt den Slider
-     * zur ersten Frage, aktiviert den ersten Schritt und sendet
-     * eine Mediator-Nachricht an andere Module.
-     * @param {Object} event Ausgelöstes Event
+     * DOM-Komponenten initialisieren.
+     * Initialisiert alle DOM-Elemente des Quizes.
      */
-    function _start(event) {
-        Mediator.send(CFG.CNL.QUIZ_START, { act: CFG.ACT.QUIZ_START });
-        event.preventDefault();
-        _setSlide(_indexStart + 1);
-        _setStep(1);
-    }
-    
-    /**
-     * Aktuellen Slide setzen.
-     * Aktualisiert den aktiven Slide des Quiz-Sliders;
-     * rendert den Slider anschließend neu.
-     * @param {Number} slide Nummer des neuen Slides
-     */
-    function _setSlide(slide) {
-        _currentSlide = slide;
-        _renderSlider();
+    function _initDom() {
+        _$slider      = $(_SEL_SLIDER);
+        _$start       = $(_SEL_START);
+        _$finish      = $(_SEL_FINISH);
+        _$progressbar = $(_SEL_PROGRESSBAR);
+        _indexStart   = parseInt(_$start.data(_DATA_SLIDE));
+        _indexFinish  = parseInt(_$finish.data(_DATA_SLIDE));
     }
     
     /**
@@ -158,46 +139,6 @@ var Quiz = (function() {
      */
     function _renderSlider() {
         _$slider.setMod(_B_SLIDER, _M_IS, _currentSlide);
-    }
-    
-    /**
-     * Fortschritt zurücksetzen.
-     * Setzt den aktuellen Fortschritt des Quizes zurück.
-     */
-    function _resetProgress() {
-        for (var i = 1; i <= CFG.QUIZ.QUESTIONS; i++) {
-            _progress[i] = CFG.STR.EMPTY;
-        }
-        _setStep(0);
-    }
-    
-    /**
-     * Fortschritt setzen.
-     * Setzt den Status eines Schrittes des Quizes;
-     * rendert anschließend die Fortschrittsleiste.
-     * @param {Number} step Nummer des Quiz-Schrittes
-     * @param {String} status Neuer Status des Schrittes
-     *
-    function _setProgress(step, status) {
-        if ((typeof step            === typeof 0) &&
-            (typeof status          === typeof CFG.STR.EMPTY) &&
-            (typeof _progress[step] !== typeof undefined)) {
-            _progress[step] = status;
-            _renderProgressbar();
-        }
-    }*/
-    
-    /**
-     * Aktuellen Schritt setzen.
-     * Setzt das Quiz auf den gegebenen Schritt; rendert die
-     * Fortschrittsleiste neu.
-     * @param {Number} step Neuer Quiz-Schritt
-     */
-    function _setStep(step) {
-        if (typeof step === typeof 0) {
-            _currentStep = Math.max(Math.min(step, CFG.QUIZ.QUESTIONS), 0);
-            _renderProgressbar();
-        }
     }
     
     /**
@@ -222,6 +163,113 @@ var Quiz = (function() {
                        .setMod(_B_PROGRESSBAR, _E_STEP, _M_ERROR, error);
             });
         }
+    }
+    
+    /**
+     * Aktuellen Slide setzen.
+     * Aktualisiert den aktiven Slide des Quiz-Sliders;
+     * rendert den Slider anschließend neu.
+     * @param {Number} slide Nummer des neuen Slides
+     */
+    function _setSlider(slide) {
+        _currentSlide = Math.max(Math.min(slide, _indexFinish), _indexStart);
+        _renderSlider();
+    }
+    
+    /**
+     * Fortschritt setzen.
+     * Setzt den Status eines Schrittes des Quizes;
+     * rendert anschließend die Fortschrittsleiste.
+     * @param {Number} step Nummer des Quiz-Schrittes
+     * @param {String} status Neuer Status des Schrittes
+     */
+    function _setProgress(step, status) {
+        if ((typeof step            === typeof 0) &&
+            (typeof status          === typeof CFG.STR.EMPTY) &&
+            (typeof _progress[step] !== typeof undefined)) {
+            _progress[step] = status;
+            _renderProgressbar();
+        }
+    }
+    
+    /**
+     * Aktuellen Schritt setzen.
+     * Setzt das Quiz auf den gegebenen Schritt; rendert die
+     * Fortschrittsleiste neu.
+     * @param {Number} step Neuer Quiz-Schritt
+     */
+    function _setStep(step) {
+        if (typeof step === typeof 0) {
+            _currentStep = Math.max(Math.min(step, CFG.QUIZ.QUESTIONS), 0);
+            _renderProgressbar();
+        }
+    }
+    
+    /**
+     * Fortschritt zurücksetzen.
+     * Setzt den aktuellen Fortschritt des Quizes zurück.
+     */
+    function _resetProgress() {
+        for (var i = 1; i <= CFG.QUIZ.QUESTIONS; i++) {
+            _progress[i] = CFG.STR.EMPTY;
+        }
+        _setStep(0);
+    }
+    
+    /**
+     * Schritt überspringen.
+     * Markiert den aktuellen Schritt als übersprungen,
+     * fährt zum nächsten Schritt vor.
+     */
+    function _skipStep() {
+        _setProgress(_currentStep, _M_SKIPPED);
+        _nextStep();
+    }
+    
+    /**
+     * Nächsten Schritt einleiten.
+     * Markiert den nächsten Schritt als aktiv, bewegt den Slider weiter.
+     */
+    function _nextStep() {
+        var next = _currentStep + 1;
+        if (next > CFG.QUIZ.QUESTIONS) { _finish(); }
+        _setSlider(_currentSlide + 1);
+        _setStep(next);
+    }
+    
+    /**
+     * Quiz starten.
+     * Startet das Quiz anhand eines Klick-Events; bewegt den Slider
+     * zur ersten Frage, aktiviert den ersten Schritt und sendet
+     * eine Mediator-Nachricht an andere Module.
+     * @param {Object} event Ausgelöstes Event
+     */
+    function _start(event) {
+        Mediator.send(CFG.CNL.QUIZ_START, { act: CFG.ACT.QUIZ_START });
+        event.preventDefault();
+        _resetProgress();
+        _setSlider(_indexStart + 1);
+        _setStep(1);
+    }
+    
+    /**
+     * Quiz beenden.
+     * Beendet das Quiz, sendet das Ergebnis und andere Events per
+     * Mediator, aktualisiert das Ergebnis-Diagramm.
+     */
+    function _finish() {
+        
+        // Ergebnis ermitteln
+        var result = 0;
+        $.each(_progress, function(i, status) {
+            if (status === _M_SUCCESS) { result++; }
+        });
+        
+        // !TODO: Ergebnis anzeigen
+        
+        // Ergebnis senden
+        Mediator.send(CFG.CNL.QUIZ_END, { act: CFG.ACT.QUIZ_CANCEL })
+                .send(CFG.CNL.SCORES_UPDATE, result);
     }
     
     /**
@@ -253,18 +301,21 @@ var Quiz = (function() {
     }
     
     /**
-     * Quiz abbrechen.
-     * Bricht das Quiz anhand einer Mediator-Nachricht ab.
+     * Navigation-Bar Aktion ausführen.
+     * Entscheided anhand einer Mediator-Nachricht, welche
+     * Aktion beim Klick eines Navigation-Bar-Buttons ausgeführt wird.
      * @param {Object} data Übermittelte Daten
      */
-    function _cancel(data) {
+    function _navbarAction(data) {
         if ((typeof data     !== typeof undefined) &&
-            (typeof data.act !== typeof undefined) &&
-            (data.act        === CFG.ACT.QUIZ_CANCEL)) {
-            _resetAll();
+            (typeof data.act !== typeof undefined)) {
+            switch (data.act) {
+                case CFG.ACT.QUIZ_CANCEL: _resetAll(); break;
+                case CFG.ACT.QUIZ_SKIP:   _skipStep(); break;
+            }
         }
     }
-    
+
     /**
      * Alles zurücksetzen.
      * Setzt alle Kompenenten und Daten vom Quiz zurück.
@@ -272,7 +323,7 @@ var Quiz = (function() {
     function _resetAll() {
         Mediator.send(CFG.CNL.QUIZ_END).send(CFG.CNL.VIEW_HIDE);
         setTimeout(function() {
-            _setSlide(_indexStart);
+            _setSlider(_indexStart);
             _resetProgress();
             setTimeout(function() {
                 Mediator.send(CFG.CNL.VIEW_SHOW);

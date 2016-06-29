@@ -96,7 +96,6 @@ var CFG = (function() {
             NAVBAR_ACTION       : "navbar:action",
             QUIZ_START          : "quiz:start",
             QUIZ_END            : "quiz:end",
-            QUIZ_SKIP           : "quiz:skip",
             DICTIONARY_SORT     : "dictionary:sort",
             DICTIONARY_SEARCH   : "dictionary:search"
         },

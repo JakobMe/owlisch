@@ -89,7 +89,8 @@ var NavigationBar = (function() {
         Mediator.hook(CFG.CNL.VIEW_CHANGE, _update)
                 .hook(CFG.CNL.VIEW_RESTORE, _restore)
                 .hook(CFG.CNL.NAVBAR_ACTION, _performAction)
-                .hook(CFG.CNL.QUIZ_START, _performAction);
+                .hook(CFG.CNL.QUIZ_START, _performAction)
+                .hook(CFG.CNL.QUIZ_END, _performAction);
     }
     
     /**
@@ -321,7 +322,6 @@ var NavigationBar = (function() {
                 
                 // Quiz übersprungen
                 case CFG.ACT.QUIZ_SKIP:
-                    _setBtnR(CFG.ACT.QUIZ_SKIP, CFG.ICO.SKIP);
                     break;
                 
                 // !TODO: Switch Button-Aktionen

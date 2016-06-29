@@ -38,7 +38,6 @@
         height: @app-size-height-navigationbar;
         .border(bottom, @app-color-main-shadow);
         .colored(@app-color-main);
-        .textshadow();
     }
     
     // Element: Titel
@@ -56,6 +55,7 @@
         line-height: @app-size-height-navigationbar;
         font-size: @_navigationbar-font-size-title;
         .transition();
+        .textshadow();
         .ellipsis();
         
         // Mod: Versteckt
@@ -80,6 +80,7 @@
         line-height: (@app-size-height-navigationbar - @app-size-line-thin);
         width: @app-size-height-navigationbar;
         .transition();
+        .textshadow();
         
         // Mod: Links/Rechts
         &--left { left: 0; }
@@ -150,11 +151,13 @@
             line-height: (@_navigationbar-size-search - (@_navigationbar-size-padding * 2));
             .colored(@app-color-main-dark);
             .border-radius();
+            .textshadow();
             .font-main();
 
             // Webkit-Platzhalter
             &::-webkit-input-placeholder {
                 .color-on(@app-color-main-dark, true);
+                .textshadow-none();
             }
         }
         

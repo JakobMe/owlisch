@@ -1,4 +1,4 @@
-<ul class="tabbar__list">
+<ul class="tabbar__list tabbar__list--hidden" data-tabbar="list">
     {{#.}}
     <li class="tabbar__tab" data-tabbar="tab" data-panel="{{alias}}">
         <i class="tabbar__icon icon icon--{{icon}}"></i>

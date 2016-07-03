@@ -24,7 +24,6 @@ var App = {
         // Komponenten initialisieren
         Template.init();
         Data.init();
-        Viewport.init();
         Dictionary.init();
         Statistics.init();
         Quiz.init();

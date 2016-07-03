@@ -117,8 +117,6 @@ var CFG = (function() {
             SCORES_REQUEST      : "scores:request",
             SCORES_SERVE        : "scores:serve",
             SCORES_UPDATE       : "scores:update",
-            VIEWPORT_SHOW       : "viewport:show",
-            VIEWPORT_HIDE       : "viewport:hide",
             VIEW_SHOW           : "view:show",
             VIEW_HIDE           : "view:hide",
             VIEW_CHANGE         : "view:change",

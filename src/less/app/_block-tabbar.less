@@ -24,11 +24,13 @@
 // Block: Tab-Bar
 .tabbar {
     position: absolute;
+    background-clip: content-box;
     left: 0;
     bottom: 0;
     width: 100%;
     z-index: 200;
     height: @app-size-height-tabbar;
+    .colored-gradient(@app-color-background-light, true);
     .border(top, @app-color-shadow-light);
     .transition(transform);
     ._tabbar-loop();
@@ -42,8 +44,12 @@
         overflow: hidden;
         margin: 0;
         padding: 0;
+        opacity: @app-opacity-full;
         height: @app-size-height-tabbar;
-        .colored-gradient(@app-color-background-light, true);
+        .transition(opacity);
+        
+        // Mod: Versteckt
+        &--hidden { opacity: @app-opacity-invisible; }
     }
     
     // Element: Tab
@@ -91,6 +97,7 @@
         top: -(@app-size-line-thin);
         height: @app-size-line-medium;
         .transition(transform);
+        .translate(-100%);
         
         // Status-Balken
         &:after {

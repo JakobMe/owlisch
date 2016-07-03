@@ -23,9 +23,12 @@
     left: 0;
     width: 100%;
     z-index: 1000;
+    height: @app-size-height-navigationbar;
+    .border(bottom, @app-color-main-dark);
     .colored(@app-color-main);
     
-    // Mods
+    // Mods & Elemente
+    &--webapp { height: (@app-size-height-statusbar + @app-size-height-navigationbar); }
     &--webapp &__wrapper { padding-top: @app-size-height-statusbar; }
     &--search &__search { opacity: @app-opacity-full; }
     &--search &__heading { opacity: @app-opacity-invisible; .translate(0, 100%); }
@@ -189,9 +192,9 @@
 // Responsive
 @media screen and (min-width: @app-size-max) {
     
-    // Block: Navigation-Bar & Element: Wrapper
-    .navigationbar__wrapper {
-        padding-top: @app-size-height-statusbar;
+    // Block: Navigation-Bar
+    .navigationbar {
+        height: (@app-size-height-statusbar + @app-size-height-navigationbar);
         
         // Statusbar-Overlay
         &:after {
@@ -200,9 +203,13 @@
             top: 0;
             left: 0;
             width: 100%;
+            z-index: 1000;
             content: "";
             height: @app-size-height-statusbar;
             background: @app-color-main-dark;
         }
+        
+        // Element: Wrapper
+        &__wrapper { padding-top: @app-size-height-statusbar; }
     }
 }

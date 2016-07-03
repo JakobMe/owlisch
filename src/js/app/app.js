@@ -13,7 +13,6 @@
 // @codekit-prepend "_template.js";
 // @codekit-prepend "_data.js";
 // @codekit-prepend "_play.js";
-// @codekit-prepend "_viewport.js";
 // @codekit-prepend "_dictionary.js";
 // @codekit-prepend "_statistics.js";
 // @codekit-prepend "_quiz.js";

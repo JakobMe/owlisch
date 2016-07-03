@@ -10,6 +10,7 @@ var TabBar = (function() {
     
     // Selektor-Konstanten
     var _SEL_MAIN               = "[data-tabbar='main']";
+    var _SEL_LIST               = "[data-tabbar='list']";
     var _SEL_TAB                = "[data-tabbar='tab']";
     
     // Template-Namen
@@ -17,7 +18,8 @@ var TabBar = (function() {
     
     // BEM-Konstanten
     var _B                      = "tabbar";
-    var _E                      = "tab";
+    var _E_TAB                  = "tab";
+    var _E_LIST                 = "list";
     var _M_ACTIVE               = "active";
     var _M_HIDDEN               = "hidden";
     var _M_DISABLED             = "disabled";
@@ -35,6 +37,7 @@ var TabBar = (function() {
     
     // DOM-Elemente
     var _$tabbar                = $(_SEL_MAIN);
+    var _$list                  = null;
     var _$tabs                  = null;
     
     /**
@@ -77,9 +80,12 @@ var TabBar = (function() {
         if (typeof panels !== typeof undefined) {
             Template.render(_$tabbar, _TMPL_TABBAR, panels, function() {
                 _$tabs = _$tabbar.find(_SEL_TAB);
+                _$list = _$tabbar.find(_SEL_LIST);
                 _tabNumber = _$tabs.length - 1;
-                _setTab(_tabActive);
-                Mediator.send(CFG.CNL.VIEWPORT_SHOW);
+                setTimeout(function() {
+                    _$list.setMod(_B, _E_LIST, _M_HIDDEN, false);
+                    _setTab(_tabActive);
+                }, CFG.TIME.DELAY);
             });
         }
     }
@@ -97,8 +103,8 @@ var TabBar = (function() {
         _$tabbar.setMod(_B, _M_TAB, _tabActive);
         
         // Tabs aktivieren/deaktivieren
-        _$tabs.eq(_tabActive).setMod(_B, _E, _M_ACTIVE, true)
-                  .siblings().setMod(_B, _E, _M_ACTIVE, false);
+        _$tabs.eq(_tabActive).setMod(_B, _E_TAB, _M_ACTIVE, true)
+                  .siblings().setMod(_B, _E_TAB, _M_ACTIVE, false);
     }
     
     /**

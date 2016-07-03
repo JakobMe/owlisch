@@ -1,7 +1,6 @@
 /*
  * Modul: Viewport.
- * Definiert das Verhalten des Viewports, insbesondere
- * für die Anwendung in Desktop-Browsern.
+ * Definiert das Verhalten des Viewports.
  * @author Jakob Metzger <jakob.me@gmail.com>
  * @copyright 2016 Jakob Metzger
  * @licence https://opensource.org/licenses/MIT MIT
@@ -11,37 +10,16 @@
 // Modul-Variablen
 @_viewport-size-height:                 568px;
 @_viewport-size-width:                  320px;
-@_viewport-size-spinner:                48px;
 
 // Block: Viewport
 .viewport {
+    overflow: hidden;
+    position: relative;
+    top: 0;
+    left: 0;
     width: 100%;
     height: 100%;
-    background-repeat: no-repeat;
-    background-position: center center;
-    background-image: url("@{app-path-img}/spinner-viewport.gif?v=@{app-version}");
-    background-size: @_viewport-size-spinner @_viewport-size-spinner;
-    .colored(@app-color-light);
-
-    // Element: App
-    &__app {
-        overflow: hidden;
-        position: relative;
-        background-repeat: no-repeat;
-        background-position: center center;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background-image: url("@{app-path-img}/spinner-panel.gif?v=@{app-version}");
-        background-size: @_viewport-size-spinner @_viewport-size-spinner;
-        opacity: @app-opacity-invisible;
-        .colored(@app-color-background);
-        .transition(opacity);
-        
-        // Mod: Sichtbar
-        &--visible { opacity: @app-opacity-full; }
-    }
+    .colored(@app-color-background);
 }
 
 // Responsive

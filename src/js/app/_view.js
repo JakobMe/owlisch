@@ -9,9 +9,9 @@
 var View = (function() {
     
     // Selektor-Konstanten
-    var _SEL_PANELS             = "[role='tabpanel']";
-    var _SEL_VIEW               = "#view-container";
-    var _SEL_CONTENT            = "#view-content";
+    var _SEL_MAIN               = "[data-view='main']";
+    var _SEL_PANEL              = "[data-view='panel']";
+    var _SEL_CONTENT            = "[data-view='content']";
     
     // Template-Namen
     var _TMPL_VIEW              = "view";
@@ -35,7 +35,7 @@ var View = (function() {
     var _isWebapp               = (CFG.WEBAPP.IOS || CFG.WEBAPP.CORDOVA);
     
     // DOM-Elemente
-    var _$view                  = $(_SEL_VIEW);
+    var _$view                  = $(_SEL_MAIN);
     var _$content               = null;
     var _$panels                = {};
     
@@ -92,7 +92,7 @@ var View = (function() {
         // Template laden, Elemente initialisieren
         Template.render(_$view, _TMPL_VIEW, panels, function() {
             _$content = _$view.find(_SEL_CONTENT);
-            _$view.find(_SEL_PANELS).each(function() {
+            _$view.find(_SEL_PANEL).each(function() {
                 _$panels[$(this).data(_DATA_PANEL)] = $(this);
             });
             Mediator.send(CFG.CNL.VIEW_INIT, panels);

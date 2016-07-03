@@ -1,21 +1,21 @@
-<div class="statistics">
-    <div id="statistics-scores" class="statistics__container">
+<div class="statistics" data-statistics="main">
+    <div data-statistics="scores" class="statistics__container">
         <h2 class="statistics__title">
             Meine <b>{{games}}</b> letzten <b>Spiele</b>
         </h2>
-        <div class="statistics__chart chart chart--vertical chart--score"></div>
+        <div class="statistics__chart chart chart--vertical chart--score" data-statistics="chart"></div>
     </div>
-    <div id="statistics-progress" class="statistics__container">
+    <div data-statistics="progress" class="statistics__container">
         <h2 class="statistics__title">
             <b>Gelernte</b> Begriffe
         </h2>
-        <div class="statistics__chart chart"></div>
+        <div class="statistics__chart chart" data-statistics="chart"></div>
     </div>
-    <div id="statistics-dictionary" class="statistics__container">
+    <div data-statistics="dictionary" class="statistics__container">
         <h2 class="statistics__title">
             Mein <b>Wörterbuch</b>
         </h2>
-        <div class="statistics__chart chart"></div>
+        <div class="statistics__chart chart" data-statistics="chart"></div>
     </div>
     <p class="notice">
         <span class="notice__title">

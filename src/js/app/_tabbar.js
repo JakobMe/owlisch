@@ -9,8 +9,8 @@
 var TabBar = (function() {
     
     // Selektor-Konstanten
-    var _SEL_TABS               = "[role='tab']";
-    var _SEL_TABBAR             = "#tabbar";
+    var _SEL_MAIN               = "[data-tabbar='main']";
+    var _SEL_TAB                = "[data-tabbar='tab']";
     
     // Template-Namen
     var _TMPL_TABBAR            = "tabbar";
@@ -34,7 +34,7 @@ var TabBar = (function() {
     var _isLocked               = false;
     
     // DOM-Elemente
-    var _$tabbar                = $(_SEL_TABBAR);
+    var _$tabbar                = $(_SEL_MAIN);
     var _$tabs                  = null;
     
     /**
@@ -52,7 +52,7 @@ var TabBar = (function() {
      * Bindet Funktionen an Events.
      */
     function _bindEvents() {
-        _$tabbar.on(CFG.EVT.CLICK, _SEL_TABS, _setTab);
+        _$tabbar.on(CFG.EVT.CLICK, _SEL_TAB, _setTab);
         window.addEventListener(CFG.EVT.KEYBOARD_SHOW, _disable);
         window.addEventListener(CFG.EVT.KEYBOARD_HIDE, _enable);
     }
@@ -76,7 +76,7 @@ var TabBar = (function() {
     function _create(panels) {
         if (typeof panels !== typeof undefined) {
             Template.render(_$tabbar, _TMPL_TABBAR, panels, function() {
-                _$tabs = _$tabbar.find(_SEL_TABS);
+                _$tabs = _$tabbar.find(_SEL_TAB);
                 _tabNumber = _$tabs.length - 1;
                 _setTab(_tabActive);
                 Mediator.send(CFG.CNL.VIEWPORT_SHOW);
@@ -119,7 +119,7 @@ var TabBar = (function() {
             
             // Aktiven Tab ermitteln
             _tabActive = Math.min(Math.max(
-                (tab.target ? $(tab.target).closest(_SEL_TABS).index() : tab),
+                (tab.target ? $(tab.target).closest(_SEL_TAB).index() : tab),
                 0), _tabNumber);
     
             // Rendern, Mediator aufrufen

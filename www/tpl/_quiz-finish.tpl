@@ -6,7 +6,7 @@
         </span>
     </span>
 </p>
-<div class="quiz__chart chart chart--score">
+<div class="quiz__chart chart chart--score" data-quiz="chart">
     <div class="chart__lines">
         {{#questions}}
         <div class="chart__line"></div>
@@ -14,7 +14,7 @@
     </div>
     <div class="chart__container">
         <div class="chart__data{{#zero}} chart__data--none{{/zero}}">
-            <div id="quiz-chart" class="chart__bar" style="width: {{percent}}%;"></div>
+            <div class="chart__bar" data-quiz="chart" style="width: {{percent}}%;"></div>
             <div class="chart__label">
                 <span class="chart__text chart__text--percent">{{percent}}%</span>
                 <span class="chart__text">{{result}} Punkt{{^single}}e{{/single}}</span>
@@ -31,7 +31,7 @@
         <b>Willst Du noch einmal spielen?</b>
     </span>
 </p>
-<a class="quiz__button quiz__button--round quiz__button--action" href="#" role="button">
+<a class="quiz__button quiz__button--round quiz__button--action" href="#" data-quiz="button">
     <span class="quiz__buttontext">Quiz</span><br/>
     <span class="quiz__buttontext">starten</span>
 </a>

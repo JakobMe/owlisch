@@ -9,11 +9,11 @@
 var Statistics = (function() {
     
     // Selektor-Konstanten
-    var _SEL_CHART              = ".chart";
-    var _SEL_STATISTICS         = ".statistics";
-    var _SEL_SCORES             = "#statistics-scores";
-    var _SEL_PROGRESS           = "#statistics-progress";
-    var _SEL_DICTIONARY         = "#statistics-dictionary";
+    var _SEL_MAIN               = "[data-statistics='main']";
+    var _SEL_CHART              = "[data-statistics='chart']";
+    var _SEL_SCORES             = "[data-statistics='scores']";
+    var _SEL_PROGRESS           = "[data-statistics='progress']";
+    var _SEL_DICTIONARY         = "[data-statistics='dictionary']";
     
     // Template-Namen
     var _TMPL_STATISTICS        = "statistics";
@@ -80,7 +80,7 @@ var Statistics = (function() {
                 function() {
                     
                     // Modulvariablen initialisieren
-                    _$statistics = $(_SEL_STATISTICS);
+                    _$statistics = $(_SEL_MAIN);
                     _$scores     = _$statistics.find(_SEL_SCORES);
                     _$progress   = _$statistics.find(_SEL_PROGRESS);
                     _$dictionary = _$statistics.find(_SEL_DICTIONARY);
@@ -215,7 +215,7 @@ var Statistics = (function() {
      */
     function _growCharts(shrink) {
         shrink = (shrink || false);
-        var $charts = $(_SEL_STATISTICS).find(_SEL_CHART);
+        var $charts = _$statistics.find(_SEL_CHART);
         if (shrink) { $charts.setMod(_B_CHART, _M_GROW, false); }
         setTimeout(function() {
             $charts.setMod(_B_CHART, _M_GROW, true);

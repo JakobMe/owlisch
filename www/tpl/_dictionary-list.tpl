@@ -7,7 +7,7 @@
     </span>
 </li>
 {{#terms}}
-<li class="list__item" role="listitem" data-term="{{alias}}">
+<li class="list__item" data-dictionary="item" data-term="{{alias}}">
     <span class="stars stars--is-{{lvl}}">
         {{#levels}}
         <i class="stars__star stars__star--{{.}}"></i>

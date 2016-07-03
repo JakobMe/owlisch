@@ -1,6 +1,6 @@
-<ul class="dropdown" id="navigation-dropdown" role="menu">
+<ul class="dropdown" data-navigationbar="dropdown">
     {{#.}}
-    <li class="dropdown__item" role="menuitem"
+    <li class="dropdown__item" data-navigationbar="sort"
         data-sort="{{optSort}}" data-ordr="{{optOrdr}}">
         <i class="dropdown__icon icon icon--sort-{{icoSort}}-{{icoOrdr}}"></i>
         <span class="dropdown__label">
@@ -15,15 +15,13 @@
                spellcheck="false" autocomplete="off"
                autocorrect="off" autocapitalize="none"
                tabindex="-100" placeholder="Suche"
-               maxlength="16" id="navigation-search"
-               role="search" />
-        <i class="navigationbar__search-clear
-           navigationbar__search-clear--hidden"
-           id="navigation-clear"></i>
+               maxlength="16" data-navigationbar="search" />
+        <i class="navigationbar__search-clear navigationbar__search-clear--hidden"
+           data-navigationbar="clear"></i>
     </div>
-    <h1 class="navigationbar__heading" id="navigation-heading"></h1>
+    <h1 class="navigationbar__heading" data-navigationbar="heading"></h1>
     <i class="navigationbar__button navigationbar__button--left"
-       role="button" data-action="null" data-icon="null"></i>
+       data-navigationbar="button" data-action="null" data-icon="null"></i>
     <i class="navigationbar__button navigationbar__button--right"
-       role="button" data-action="null" data-icon="null"></i>
+       data-navigationbar="button" data-action="null" data-icon="null"></i>
 </div>

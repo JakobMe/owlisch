@@ -9,13 +9,14 @@
 var Quiz = (function() {
     
     // Selektor-Konstanten
-    var _SEL_SLIDER             = "#quiz-slider";
-    var _SEL_START              = "#quiz-start";
-    var _SEL_FINISH             = "#quiz-finish";
-    var _SEL_PROGRESSBAR        = "#quiz-progressbar";
-    var _SEL_STEP               = "[role='checkbox']";
-    var _SEL_BUTTON             = "[role='button']";
-    var _SEL_CHART              = ".chart";
+    var _SEL_SLIDER             = "[data-quiz='slider']";
+    var _SEL_START              = "[data-quiz='start']";
+    var _SEL_FINISH             = "[data-quiz='finish']";
+    var _SEL_PROGRESSBAR        = "[data-quiz='progressbar']";
+    var _SEL_STEP               = "[data-quiz='step']";
+    var _SEL_BUTTON             = "[data-quiz='button']";
+    var _SEL_QUESTION           = "[data-quiz='question']";
+    var _SEL_CHART              = "[data-quiz='chart']";
     
     // Template-Namen
     var _TMPL_QUIZ              = "quiz";
@@ -54,6 +55,7 @@ var Quiz = (function() {
     var _$slider                = null;
     var _$start                 = null;
     var _$finish                = null;
+    var _$questions             = null;
     var _$progressbar           = null;
     
     /**
@@ -131,9 +133,10 @@ var Quiz = (function() {
      */
     function _initDom() {
         _$slider      = $(_SEL_SLIDER);
-        _$start       = $(_SEL_START);
-        _$finish      = $(_SEL_FINISH);
-        _$progressbar = $(_SEL_PROGRESSBAR);
+        _$start       = _$slider.find(_SEL_START);
+        _$finish      = _$slider.find(_SEL_FINISH);
+        _$questions   = _$slider.find(_SEL_QUESTION);
+        _$progressbar = _$slider.find(_SEL_PROGRESSBAR);
         _indexStart   = parseInt(_$start.data(_DATA_SLIDE));
         _indexFinish  = parseInt(_$finish.data(_DATA_SLIDE));
     }
@@ -257,9 +260,21 @@ var Quiz = (function() {
             Mediator.send(CFG.CNL.QUIZ_START, { act: CFG.ACT.QUIZ_START });
             _resetProgress();
             _pickQuestions();
+            _renderQuestions();
             _setSlider(_indexStart + 1);
             _setStep(1);
         }
+    }
+    
+    /**
+     * Fragen rendern.
+     * ...
+     */
+    function _renderQuestions() {
+        _$questions.each(function(i) {
+            window.console.log(i);
+            // !TODO _renderQuestions()
+        });
     }
     
     /**
@@ -387,6 +402,7 @@ var Quiz = (function() {
     /**
      * Alles zurücksetzen.
      * Setzt alle Kompenenten und Daten vom Quiz zurück.
+     * @param {Boolean} [true] restart Quiz nach dem Zurücksetzen starten
      */
     function _resetAll(restart) {
         Mediator.send(CFG.CNL.QUIZ_END).send(CFG.CNL.VIEW_HIDE);

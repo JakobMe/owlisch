@@ -9,14 +9,14 @@
 var Viewport = (function() {
     
     // Konstanten
-    var _SEL_VIEWPORT           = "#viewport";
+    var _SEL_MAIN               = "[data-viewport='main']";
     var _B                      = "viewport";
     var _E                      = "app";
     var _M                      = "visible";
     
     // Private Variablen
     var _isVisible              = false;
-    var _$viewport              = $(_SEL_VIEWPORT);
+    var _$viewport              = $(_SEL_MAIN);
     
     /**
      * Viewport initialisieren.

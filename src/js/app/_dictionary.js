@@ -9,11 +9,11 @@
 var Dictionary = (function() {
     
     // Selektor-Konstanten
-    var _SEL_ITEM               = "[role='listitem']";
-    var _SEL_SLIDER             = "#dictionary-slider";
-    var _SEL_LISTBOX            = "#dictionary-listbox";
-    var _SEL_LIST               = "#dictionary-list";
-    var _SEL_DETAILS            = "#dictionary-details";
+    var _SEL_LIST               = "[data-dictionary='list']";
+    var _SEL_LISTBOX            = "[data-dictionary='listbox']";
+    var _SEL_ITEM               = "[data-dictionary='item']";
+    var _SEL_DETAILS            = "[data-dictionary='details']";
+    var _SEL_SLIDER             = "[data-dictionary='slider']";
     
     // Template-Namen
     var _TMPL_DICTIONARY        = "dictionary";

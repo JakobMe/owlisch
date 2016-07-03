@@ -1,6 +1,6 @@
-<div class="slider slider--has-2" id="dictionary-slider">
-    <div class="slider__slide" id="dictionary-listbox" data-slide="1">
-        <ul class="list" id="dictionary-list" role="list"></ul>
+<div class="slider slider--has-2" data-dictionary="slider">
+    <div class="slider__slide" data-dictionary="listbox" data-slide="1">
+        <ul class="list" data-dictionary="list"></ul>
         <p class="notice">
             <span class="notice__title">
                 <span class="notice__title-text">Hinweis</span>
@@ -12,6 +12,6 @@
             </span>
         </p>
     </div>
-    <div class="slider__slide" id="dictionary-details" data-slide="2">
+    <div class="slider__slide" data-dictionary="details" data-slide="2">
     </div>
 </div>

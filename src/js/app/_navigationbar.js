@@ -9,13 +9,13 @@
 var NavigationBar = (function() {
 
     // Selektor-Konstanten
-    var _SEL_BUTTONS            = "[role='button']";
-    var _SEL_SORT               = "[role='menuitem']";
-    var _SEL_NAVBAR             = "#navigationbar";
-    var _SEL_HEADING            = "#navigation-heading";
-    var _SEL_SEARCH             = "#navigation-search";
-    var _SEL_CLEAR              = "#navigation-clear";
-    var _SEL_DROPDOWN           = "#navigation-dropdown";
+    var _SEL_MAIN               = "[data-navigationbar='main']";
+    var _SEL_BUTTON             = "[data-navigationbar='button']";
+    var _SEL_SORT               = "[data-navigationbar='sort']";
+    var _SEL_HEADING            = "[data-navigationbar='heading']";
+    var _SEL_SEARCH             = "[data-navigationbar='search']";
+    var _SEL_CLEAR              = "[data-navigationbar='clear']";
+    var _SEL_DROPDOWN           = "[data-navigationbar='dropdown']";
     
     // Template-Namen
     var _TMPL_NAVBAR            = "navigationbar";
@@ -51,7 +51,7 @@ var NavigationBar = (function() {
     var _isWebapp               = (CFG.WEBAPP.IOS || CFG.WEBAPP.CORDOVA);
     
     // DOM-Elemente
-    var _$navbar                = $(_SEL_NAVBAR);
+    var _$navbar                = $(_SEL_MAIN);
     var _$drpdwn                = null;
     var _$search                = null;
     var _$clear                 = null;
@@ -76,7 +76,7 @@ var NavigationBar = (function() {
      */
     function _bindEvents() {
         _$sort.on(CFG.EVT.CLICK, _setSort);
-        _$navbar.on(CFG.EVT.CLICK, _SEL_BUTTONS, _triggerAction);
+        _$navbar.on(CFG.EVT.CLICK, _SEL_BUTTON, _triggerAction);
         _$search.on(CFG.EVT.INPUT, _updateSearch);
         _$clear.on(CFG.EVT.CLICK, _clearSearch);
     }
@@ -137,8 +137,8 @@ var NavigationBar = (function() {
         _$clear  = _$navbar.find(_SEL_CLEAR);
         _$drpdwn = _$navbar.find(_SEL_DROPDOWN);
         _$head   = _$navbar.find(_SEL_HEADING);
-        _$btnL   = _$navbar.find(_SEL_BUTTONS).first();
-        _$btnR   = _$navbar.find(_SEL_BUTTONS).last();
+        _$btnL   = _$navbar.find(_SEL_BUTTON).first();
+        _$btnR   = _$navbar.find(_SEL_BUTTON).last();
         _$sort   = _$drpdwn.find(_SEL_SORT);
     }
     
@@ -338,7 +338,7 @@ var NavigationBar = (function() {
      */
     function _triggerAction(event) {
         if (!_buttonsAreDisabled && event.target) {
-            var $button = $(event.target).closest(_SEL_BUTTONS);
+            var $button = $(event.target).closest(_SEL_BUTTON);
             var data = { act: $button.data(_DATA_ACT) };
             Mediator.send(CFG.CNL.NAVBAR_ACTION, data);
         }

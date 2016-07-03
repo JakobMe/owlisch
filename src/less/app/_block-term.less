@@ -23,10 +23,11 @@
         margin-bottom: @app-size-gap-small;
         .colored(@app-color-light);
         .border(bottom);
+        .border(top);
     }
     
-    // Mod: Nicht Quiz & Element: Header
-    &:not(&--quiz) &__header { .border(top); }
+    // Mod: Quiz & Element: Header
+    &--quiz &__header { margin-top: @app-size-gap-small; }
     
     // Element: Bild
     &__image {
@@ -34,6 +35,9 @@
         margin: 0 auto;
         height: @_term-size-image;
     }
+    
+    // Mod: Quiz & Element: Bild
+    &--quiz &__image { margin-top: @app-size-gap-small; }
     
     // Element: Titel
     &__title {
@@ -47,7 +51,7 @@
     }
     
     // Mod: Kein Bild & Element: Titel
-    &--no-image:not(&--quiz) &__title { padding-top: @app-size-gap; }
+    &--no-image &__title { padding-top: @app-size-gap; }
     
     // Mod: Quiz & Element: Bild
     &--quiz &__image { height: @_term-size-image-quiz; }

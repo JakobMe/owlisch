@@ -21,6 +21,7 @@ var Quiz = (function() {
     // Template-Namen
     var _TMPL_QUIZ              = "quiz";
     var _TMPL_FINISH            = "quiz-finish";
+    var _TMPL_QUESTION          = "quiz-question";
     
     // BEM-Konstanten
     var _B_SLIDER               = "slider";
@@ -133,10 +134,10 @@ var Quiz = (function() {
      */
     function _initDom() {
         _$slider      = $(_SEL_SLIDER);
+        _$progressbar = $(_SEL_PROGRESSBAR);
         _$start       = _$slider.find(_SEL_START);
         _$finish      = _$slider.find(_SEL_FINISH);
         _$questions   = _$slider.find(_SEL_QUESTION);
-        _$progressbar = _$slider.find(_SEL_PROGRESSBAR);
         _indexStart   = parseInt(_$start.data(_DATA_SLIDE));
         _indexFinish  = parseInt(_$finish.data(_DATA_SLIDE));
     }
@@ -258,11 +259,13 @@ var Quiz = (function() {
             _resetAll(true);
         } else {
             Mediator.send(CFG.CNL.QUIZ_START, { act: CFG.ACT.QUIZ_START });
-            _resetProgress();
-            _pickQuestions();
-            _renderQuestions();
-            _setSlider(_indexStart + 1);
-            _setStep(1);
+            setTimeout(function() {
+                _resetProgress();
+                _pickQuestions();
+                _renderQuestions();
+                _setSlider(_indexStart + 1);
+                _setStep(1);
+            }, (typeof event === typeof undefined ? 0 : CFG.TIME.ANIMATION));
         }
     }
     
@@ -272,8 +275,9 @@ var Quiz = (function() {
      */
     function _renderQuestions() {
         _$questions.each(function(i) {
-            window.console.log(i);
-            // !TODO _renderQuestions()
+            Template.render($(this), _TMPL_QUESTION, $.extend(_questions[i], {
+                levels : CFG.QUIZ.LEVELS
+            }));
         });
     }
     
@@ -402,7 +406,7 @@ var Quiz = (function() {
     /**
      * Alles zurücksetzen.
      * Setzt alle Kompenenten und Daten vom Quiz zurück.
-     * @param {Boolean} [true] restart Quiz nach dem Zurücksetzen starten
+     * @param {Boolean} [false] restart Quiz nach dem Zurücksetzen starten
      */
     function _resetAll(restart) {
         Mediator.send(CFG.CNL.QUIZ_END).send(CFG.CNL.VIEW_HIDE);

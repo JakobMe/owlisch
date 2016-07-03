@@ -18,34 +18,24 @@
     position: relative;
     box-sizing: border-box;
     height: 100%;
-    padding-top: ((@app-size-gap * 2) + @app-size-height-progressbar);
+    padding-top: (((@app-size-gap + @app-size-line-thin) * 2) + @app-size-height-progressbar);
     
     // Element: Titel
     &__title {
         display: block;
         font-weight: bold;
         position: relative;
-        margin: 0;
+        margin: @app-size-gap-small 0;
         padding: @app-size-gap;
         font-size: @app-font-size-medium;
-        margin-bottom: @app-size-gap-small;
-        margin-top: -(@app-size-gap);
         line-height: @_quiz-line-height-title;
         .colored(@app-color-light, true);
         .border(bottom);
+        .border(top);
         
         // Sub-Elemente: Titel-Text und -Icon
         &-text { display: block; position: relative; }
         &-icon { margin-right: @app-size-gap-small; }
-        
-        // Mod: Groß
-        &--big {
-            font-weight: bold;
-            font-style: italic;
-            text-align: center;
-            font-size: @app-font-size-big;
-            .color-on(@app-color-light);
-        }
     }
     
     // Element: Button

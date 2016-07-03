@@ -49,11 +49,22 @@ var Helper = (function() {
         return count;
     }
     
+    /**
+     * Zufälliges Array-Element auswählen.
+     * Gibt ein zufälliges Element eines Arrays zurück.
+     * @param {*[]} array Beliebiges Array
+     * @returns {*} Zufälliges Element des Arrays
+     */
+    function getRandomItem(array) {
+        return array[Math.floor(Math.random() * array.length)];
+    }
+    
     // Öffentliches Interface
     return { 
         arrayFromNumber     : arrayFromNumber,
         calcPercent         : calcPercent,
-        countTermsWithLevel : countTermsWithLevel
+        countTermsWithLevel : countTermsWithLevel,
+        getRandomItem       : getRandomItem
     };
     
 })();

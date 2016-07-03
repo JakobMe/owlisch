@@ -45,6 +45,7 @@ var Quiz = (function() {
     var _indexFinish            = 0;
     var _currentSlide           = 0;
     var _currentStep            = 0;
+    var _questions              = [];
     var _progress               = [];
     var _dataTerms              = [];
     var _dataCaption            = CFG.STR.EMPTY;
@@ -255,8 +256,29 @@ var Quiz = (function() {
         } else {
             Mediator.send(CFG.CNL.QUIZ_START, { act: CFG.ACT.QUIZ_START });
             _resetProgress();
+            _pickQuestions();
             _setSlider(_indexStart + 1);
             _setStep(1);
+        }
+    }
+    
+    /**
+     * Fragen aussuchen.
+     * Sucht zufällige Fragen für das Quiz aus; stellt sicher, dass
+     * jeder Begriff nur einmal im Quiz auftaucht, gewichtet die
+     * die Begriffe nach ihren bisherigen Fehlschlägen (je mehr
+     * Fehlschläge, desto höher die Wahrscheinlichkeit).
+     */
+    function _pickQuestions() {
+        _questions = [];
+        var dataTemp = _dataTerms.slice(0);
+        while (_questions.length < CFG.QUIZ.QUESTIONS) {
+            var randomTerm = Helper.getRandomItem(dataTemp);
+            var randomIndex = dataTemp.indexOf(randomTerm);
+            if (Helper.getRandomItem(CFG.QUIZ.FAILS) <= randomTerm.fail) {
+                dataTemp.splice(randomIndex, 1);
+                _questions.push(randomTerm);
+            }
         }
     }
     

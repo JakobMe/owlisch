@@ -365,7 +365,7 @@ var Dictionary = (function() {
      * wird von der JavaScript-Funktion "sort" verwendet.
      * @param {Objekt} a Erstes zu vergleichende Listen-Objekt
      * @param {Objekt} b Zweites zu vergleichende Listen-Objekt
-     * @returns {integer} Ergebnis des Vergleichs
+     * @returns {Number} Ergebnis des Vergleichs
      */
     function _compareListItems(a, b) {
         

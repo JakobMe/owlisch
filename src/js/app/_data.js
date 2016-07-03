@@ -160,14 +160,17 @@ var Data = (function() {
      * Begriff-Daten aufbereiten.
      * Verknüpft alle Daten der Wörterbuch-Begriffe mit den
      * gespeicherten Fortschritts-Daten; stellt die aktuellen Daten
-     * über Events zur Verfügung.
+     * über den Mediator zur Verfügung.
      */
     function _processDataTerms() {
 
         // Daten aktualisieren
         _sizeProgress = 0;
         $.each(_dataTerms, function(i, item) {
-            $.extend(item, (_dataProgress[item.alias] || { lvl: 0, fail: 0 }));
+            $.extend(item, (_dataProgress[item.alias] || {
+                lvl  : 0,
+                fail : CFG.QUIZ.FAILS[0]
+            }));
             if (item.lvl > 0) { _sizeProgress++; }
         });
         
@@ -220,14 +223,16 @@ var Data = (function() {
         if ((typeof lvl  === typeof 0) &&
             (typeof fail === typeof 0)) {
             
-            // Minimum und Maximum für Level ermitteln
-            var min = CFG.QUIZ.LEVELS[0];
-            var max = CFG.QUIZ.LEVELS.length;
+            // Minimum und Maximum für Level und Fehlschläge ermitteln
+            var minFail = CFG.QUIZ.FAILS[0];
+            var maxFail = CFG.QUIZ.FAILS.length;
+            var minLvl  = CFG.QUIZ.LEVELS[0];
+            var maxLvl  = CFG.QUIZ.LEVELS.length;
             
             // Fortschritts-Daten aktualisieren
             _dataProgress[alias] = {
-                lvl  : Math.max(Math.min(lvl, max), min),
-                fail : Math.max(fail, 0)
+                lvl  : Math.max(Math.min(lvl, maxLvl), minLvl),
+                fail : Math.max(Math.min(fail, maxFail), minFail)
             };
             
             // Speichern und Listen aktualisieren

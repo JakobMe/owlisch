@@ -9,8 +9,8 @@
 var Play = (function() {
     
     // Selektor-Konstanten
-    var _SEL_PLAY               = ".play";
-    var _SEL_AUDIO              = "audio";
+    var _SEL_MAIN               = "[data-play='main']";
+    var _SEL_AUDIO              = "[data-play='audio']";
     
     // BEM-Konstanten
     var _B                      = "play";
@@ -42,7 +42,7 @@ var Play = (function() {
      * Bindet Funktionen an Events und Elemente des Moduls.
      */
     function _bindEvents() {
-        $(document).on(CFG.EVT.CLICK, _SEL_PLAY, _play);
+        $(document).on(CFG.EVT.CLICK, _SEL_MAIN, _play);
     }
     
     /**
@@ -65,7 +65,7 @@ var Play = (function() {
         if (typeof event !== typeof undefined) {
             
             // Play-Button und Audio definieren
-            _$play = $(event.target).closest(_SEL_PLAY);
+            _$play = $(event.target).closest(_SEL_MAIN);
             _$audio = _$play.find(_SEL_AUDIO);
             
             // Abspielen, Audio-Events binden, Zustand aktualisieren

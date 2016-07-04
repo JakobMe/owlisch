@@ -15,9 +15,9 @@
             </span>
         </span>
         {{#audio}}
-        <span class="term__info term__info--right play">
+        <span class="term__info term__info--right play" data-play="main">
             <i class="icon icon--audio play__icon"></i>
-            <audio preload="none" class="play__audio">
+            <audio preload="none" class="play__audio" data-play="audio">
                 <source src="{{.}}" type="audio/mpeg">
             </audio>
         </span>

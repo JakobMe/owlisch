@@ -35,4 +35,10 @@
         </span>
         {{/answers}}
     </div>
+    <div class="quiz__continue quiz__continue--locked">
+        <span class="quiz__button quiz__button--action" data-locked="true" data-quiz="continue">
+            Weiter
+            <i class="icon icon--right icon--forward"></i>
+        </span>
+    </div>
 </article>

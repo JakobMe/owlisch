@@ -158,7 +158,7 @@ var Dictionary = (function() {
             // Daten definieren
             var data = $.extend({
                 levels : CFG.QUIZ.LEVELS,
-                label  : CFG.QUIZ.LABEL_PROGRESS
+                label  : CFG.LABEL.PROGRESS
             }, _currentTerm);
             
             // Details laden, Event auslösen, Slider bewegen
@@ -166,7 +166,7 @@ var Dictionary = (function() {
                 if (renderNavBar !== false) {
                     Mediator.send(CFG.CNL.NAVBAR_ACTION, {
                         act : CFG.ACT.DICTIONARY_FORWARD,
-                        str : _currentTerm.term
+                        str : CFG.LABEL.DETAILS
                     });
                 }
                 _$details.scrollTop(0);

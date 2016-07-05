@@ -29,10 +29,10 @@
                     Je häufiger Du einen Begriff <b>richtig errätst</b>, desto schwieriger wird die <b>Frage</b>.
                 </span>
             </p>
-            <a class="quiz__button quiz__button--round quiz__button--action" href="#" data-quiz="button">
+            <span class="quiz__button quiz__button--round quiz__button--action" data-quiz="button">
                 <span class="quiz__buttontext">Quiz</span><br/>
                 <span class="quiz__buttontext">starten</span>
-            </a>
+            </span>
         </div>
         {{#questions}}
         <div class="slider__slide" data-quiz="question" data-slide="{{.}}"></div>

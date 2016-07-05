@@ -31,7 +31,7 @@
         <b>Willst Du noch einmal spielen?</b>
     </span>
 </p>
-<a class="quiz__button quiz__button--round quiz__button--action" href="#" data-quiz="button">
+<span class="quiz__button quiz__button--round quiz__button--action" data-quiz="button">
     <span class="quiz__buttontext">Quiz</span><br/>
     <span class="quiz__buttontext">starten</span>
-</a>
+</span>

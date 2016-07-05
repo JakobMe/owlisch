@@ -47,15 +47,22 @@
     // Element: Panel
     &__panel {
         -webkit-overflow-scrolling: touch;
-        display: none;
+        visibility: hidden;
         overflow-y: auto;
         overflow-x: hidden;
-        position: relative;
+        position: absolute;
         width: 100%;
         height: 100%;
+        z-index: 0;
+        background: @app-color-background;
+        opacity: @app-opacity-invisible;
         
         // Mod: Aktuell
-        &--current { display: block; }
+        &--current {
+            z-index: 100;
+            visibility: visible;
+            opacity: @app-opacity-full;
+        }
     }
 }
 

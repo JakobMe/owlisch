@@ -20,6 +20,7 @@ var Quiz = (function() {
     var _SEL_ANSWER             = "[data-quiz='answer']";
     var _SEL_ANSWERS            = "[data-quiz='answers']";
     var _SEL_LEVEL              = "[data-quiz='level']";
+    var _SEL_CONTINUE           = "[data-quiz='continue']";
     
     // Template-Namen
     var _TMPL_QUIZ              = "quiz";
@@ -35,6 +36,7 @@ var Quiz = (function() {
     var _E_STEP                 = "step";
     var _E_BUTTON               = "button";
     var _E_ANSWERS              = "answers";
+    var _E_CONTINUE             = "continue";
     var _M_IS                   = "is";
     var _M_SKIPPED              = "skipped";
     var _M_ERROR                = "error";
@@ -97,7 +99,8 @@ var Quiz = (function() {
             _$start.add(_$finish).on(CFG.EVT.CLICK, _SEL_BUTTON, _start);
         }
         if (_$questions instanceof $) {
-            _$questions.on(CFG.EVT.CLICK, _SEL_ANSWER, _evaluateAnswer);
+            _$questions.on(CFG.EVT.CLICK, _SEL_ANSWER, _evaluateAnswer)
+                       .on(CFG.EVT.CLICK, _SEL_CONTINUE, _continue);
         }
     }
     
@@ -311,7 +314,7 @@ var Quiz = (function() {
         $.each(_questions, function(i, term) {
             _renderQuestion(i, {
                 answers    : _pickAnswers(term),
-                question   : CFG.QUIZ.LABEL_QUESTION,
+                question   : CFG.LABEL.QUESTION,
                 image      : false,
                 keyword    : term.term,
                 difficulty : CFG.QUIZ.DIFFICULTIES[term.lvl],
@@ -374,6 +377,7 @@ var Quiz = (function() {
                 _setProgress(_currentStep, correct ? _M_SUCCESS : _M_ERROR);
                 _renderAnswers($answer, correct);
                 _updateTerm(correct);
+                _unlockContinue();
                 _lockSkip();
             }
         }
@@ -419,6 +423,40 @@ var Quiz = (function() {
      */
     function _lockSkip() {
         Mediator.send(CFG.CNL.NAVBAR_ACTION, { act: CFG.ACT.QUIZ_SOLVE });
+    }
+    
+    /**
+     * Überspringen entsperren.
+     * Sendet eine Nachricht über den Mediator, um den Überspringen-Button
+     * zu aktivieren und somit das Überspringen möglich zu machen.
+     */
+    function _unlockSkip() {
+        Mediator.send(CFG.CNL.NAVBAR_ACTION, { act: CFG.ACT.QUIZ_START });
+    }
+    
+    /**
+     * Weiter-Button entsperren.
+     * Entsperrt den Weiter-Button der aktuellen Frage, um es zu
+     * ermöglichen, zur nächsten Frage fortzufahren.
+     */
+    function _unlockContinue() {
+        _$questions.eq(_currentStep - 1)
+            .find(_SEL_CONTINUE).data(_DATA_LOCKED, false).parent()
+            .setMod(_B_QUIZ, _E_CONTINUE, _M_LOCKED, false);
+    }
+    
+    /**
+     * Quiz fortfahren.
+     * Fährt zur nächsten Frage des Quiz fort, falls der Weiter-Button
+     * nicht gesperrt ist; reagiert auf ein Klick-Event.
+     * @param {Object} event Ausgelöstes Klick-Event.
+     */
+    function _continue(event) {
+        if ((typeof event !== typeof undefined) && (event.target) &&
+            (!$(event.target).closest(_SEL_CONTINUE).data(_DATA_LOCKED))) {
+            _unlockSkip();
+            _nextStep();
+        }
     }
     
     /**
@@ -560,8 +598,9 @@ var Quiz = (function() {
      * @param {Boolean} [false] restart Quiz nach dem Zurücksetzen starten
      */
     function _resetAll(restart) {
-        Mediator.send(CFG.CNL.QUIZ_END).send(CFG.CNL.VIEW_HIDE);
+        Mediator.send(CFG.CNL.VIEW_HIDE);
         setTimeout(function() {
+            Mediator.send(CFG.CNL.QUIZ_END);
             _clearQuestions(true);
             _setSlider(_indexStart);
             _resetProgress();

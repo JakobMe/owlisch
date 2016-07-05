@@ -21,12 +21,15 @@ var CFG = (function() {
         QUIZ: {
             LEVELS              : [1,2,3],
             FAILS               : [1,2,3,4,5],
-            DIFFICULTIES        : ["Neu!", "Leicht", "Mittel", "Schwer"],
+            DIFFICULTIES        : ["Leicht", "Mittel", "Schwer", "Schwer"],
             QUESTIONS           : 10,
             LASTGAMES           : 10,
-            ANSWERS             : 4,
-            LABEL_QUESTION      : "Was bedeutet",
-            LABEL_PROGRESS      : "Fortschritt:"
+            ANSWERS             : 4
+        },
+        LABEL: {
+            QUESTION            : "Was bedeutet",
+            PROGRESS            : "Fortschritt:",
+            DETAILS             : "Details"
         },
         RATING: {
             PERFECT: {

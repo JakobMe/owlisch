@@ -107,10 +107,10 @@
         // Mod: Aktion
         &--action {
             text-transform: uppercase;
-            border-color: @app-color-main-dark;
-            .colored(@app-color-main);
             .gradient(bottom, @app-color-main-light, @app-color-main);
             .shadow-small(@app-color-shadow-dark);
+            .border-button(@app-color-main-dark);
+            .colored(@app-color-main);
             .textshadow();
         }
         
@@ -161,9 +161,7 @@
     }
     
     // Element: Antworten
-    &__answers {
-        padding: @app-size-gap;
-    }
+    &__answers { padding: @app-size-gap; }
     
     // Element: Antworten & Mod: Gesperrt & Element: Button
     &__answers--locked &__button { cursor: default; }
@@ -175,5 +173,23 @@
     &__chart {
         .border(bottom);
         .border(top);
+    }
+    
+    // Element: Weiter
+    &__continue {
+        position: absolute;
+        box-sizing: border-box;
+        left: 0;
+        bottom: 0;
+        width: 100%;
+        height: auto;
+        padding: @app-size-gap;
+        .transition();
+        
+        // Mod: Gesperrt
+        &--locked {
+            opacity: @app-opacity-invisible;
+            .translate(0, 100%);
+        }
     }
 }

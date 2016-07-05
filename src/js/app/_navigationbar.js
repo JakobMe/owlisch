@@ -395,9 +395,19 @@ var NavigationBar = (function() {
      */
     function _setBtn($btn, act, ico) {
         if ($btn instanceof $) {
-            $btn.data(_DATA_ACT, (act || null));
-            $btn.data(_DATA_ICO, (ico || null));
-            _renderBtn($btn);
+            
+            // Alte und neue Eigenschaften bestimmen
+            var actOld = $btn.data(_DATA_ACT);
+            var icoOld = $btn.data(_DATA_ICO);
+            var actNew = (act || null);
+            var icoNew = (ico || null);
+            
+            // Button aktualisieren, wenn sich Eigenschaften geändert haben
+            if ((icoNew !== icoOld) || (actNew !== actOld)) {
+                $btn.data(_DATA_ACT, actNew);
+                $btn.data(_DATA_ICO, icoNew);
+                _renderBtn($btn);
+            }
         }
     }
     

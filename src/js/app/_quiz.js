@@ -17,6 +17,9 @@ var Quiz = (function() {
     var _SEL_BUTTON             = "[data-quiz='button']";
     var _SEL_QUESTION           = "[data-quiz='question']";
     var _SEL_CHART              = "[data-quiz='chart']";
+    var _SEL_ANSWER             = "[data-quiz='answer']";
+    var _SEL_ANSWERS            = "[data-quiz='answers']";
+    var _SEL_LEVEL              = "[data-quiz='level']";
     
     // Template-Namen
     var _TMPL_QUIZ              = "quiz";
@@ -24,19 +27,26 @@ var Quiz = (function() {
     var _TMPL_QUESTION          = "quiz-question";
     
     // BEM-Konstanten
+    var _B_QUIZ                 = "quiz";
     var _B_SLIDER               = "slider";
+    var _B_STARS                = "stars";
     var _B_PROGRESSBAR          = "progressbar";
     var _B_CHART                = "chart";
     var _E_STEP                 = "step";
+    var _E_BUTTON               = "button";
+    var _E_ANSWERS              = "answers";
     var _M_IS                   = "is";
     var _M_SKIPPED              = "skipped";
     var _M_ERROR                = "error";
     var _M_SUCCESS              = "success";
     var _M_CURRENT              = "current";
+    var _M_LOCKED               = "locked";
     var _M_GROW                 = "grow";
     
     // Data-Attribut-Konstanten
     var _DATA_SLIDE             = "slide";
+    var _DATA_ANSWER            = "answer";
+    var _DATA_LOCKED            = "locked";
     
     // Sonstige Konstanten
     var _NUM_SLIDES_BEFORE      = 1;
@@ -85,6 +95,9 @@ var Quiz = (function() {
     function _bindEvents() {
         if ((_$start instanceof $) && (_$finish instanceof $)) {
             _$start.add(_$finish).on(CFG.EVT.CLICK, _SEL_BUTTON, _start);
+        }
+        if (_$questions instanceof $) {
+            _$questions.on(CFG.EVT.CLICK, _SEL_ANSWER, _evaluateAnswer);
         }
     }
     
@@ -262,23 +275,11 @@ var Quiz = (function() {
             setTimeout(function() {
                 _resetProgress();
                 _pickQuestions();
-                _renderQuestions();
+                _processQuestions();
                 _setSlider(_indexStart + 1);
                 _setStep(1);
             }, (typeof event === typeof undefined ? 0 : CFG.TIME.ANIMATION));
         }
-    }
-    
-    /**
-     * Fragen rendern.
-     * ...
-     */
-    function _renderQuestions() {
-        _$questions.each(function(i) {
-            Template.render($(this), _TMPL_QUESTION, $.extend(_questions[i], {
-                levels : CFG.QUIZ.LEVELS
-            }));
-        });
     }
     
     /**
@@ -293,11 +294,148 @@ var Quiz = (function() {
         var dataTemp = _dataTerms.slice(0);
         while (_questions.length < CFG.QUIZ.QUESTIONS) {
             var randomTerm = Helper.getRandomItem(dataTemp);
-            var randomIndex = dataTemp.indexOf(randomTerm);
             if (Helper.getRandomItem(CFG.QUIZ.FAILS) <= randomTerm.fail) {
-                dataTemp.splice(randomIndex, 1);
+                dataTemp.splice(dataTemp.indexOf(randomTerm), 1);
                 _questions.push(randomTerm);
             }
+        }
+    }
+    
+    /**
+     * Fragen aufbereiten.
+     * Ergänzt die ausgewählten Fragen um zusätzliche Daten für
+     * die Darstellung und Funktionsweise des Quiz; rendert
+     * die Fragen anschließend.
+     */
+    function _processQuestions() {
+        $.each(_questions, function(i, term) {
+            _renderQuestion(i, {
+                answers    : _pickAnswers(term),
+                question   : CFG.QUIZ.LABEL_QUESTION,
+                image      : false,
+                keyword    : term.term,
+                difficulty : CFG.QUIZ.DIFFICULTIES[term.lvl],
+                levels     : CFG.QUIZ.LEVELS,
+                lvl        : term.lvl
+            });
+        });
+    }
+    
+    /**
+     * Frage rendern.
+     * Rendert eine Frage eines bestimmten Indexes anhand der übergebenen
+     * Daten mit einem Mustache-Template.
+     * @param {Number} i Index der Frage
+     * @param {Object} data Daten der Frage
+     */
+    function _renderQuestion(i, data) {
+        Template.render(_$questions.eq(i), _TMPL_QUESTION, data);
+    }
+    
+    /**
+     * Antworten aussuchen.
+     * Stellt für einen gegebenen Begriff zufällig Antworten zusammen.
+     * @param {Object} term Begriff mit Antworten
+     * @returns {Object[]} Liste der zusammengestellten Antworten
+     */
+    function _pickAnswers(term) {
+        var answers = [{ label: term.translation, correct: true }];
+        var dataTemp = term.answersNative.slice(0);
+        while (answers.length < CFG.QUIZ.ANSWERS) {
+            var randomAnswer = Helper.getRandomItem(dataTemp);
+            answers.push({ label: randomAnswer, correct: false });
+            dataTemp.splice(dataTemp.indexOf(randomAnswer), 1);
+        }
+        Helper.shuffleArray(answers);
+        return answers;
+    }
+    
+    /**
+     * Antwort evaluieren.
+     * Prüft, ob eine geklickte Antwort richtig oder falsch ist; setzt den
+     * aktuellen Fortschritt entsprechend und rendert alle Antworten.
+     * @param {Object} event Ausgelöstes Klick-Event
+     */
+    function _evaluateAnswer(event) {
+        if (typeof event !== typeof undefined) {
+            var $answer = $(event.target).closest(_SEL_ANSWER);
+            var correct = $answer.data(_DATA_ANSWER);
+            if (!$answer.parents(_SEL_ANSWERS).data(_DATA_LOCKED)) {
+                _setProgress(_currentStep, correct ? _M_SUCCESS : _M_ERROR);
+                _renderAnswers($answer, correct);
+                _updateTerm(correct);
+                _lockSkip();
+            }
+        }
+    }
+    
+    /**
+     * Begriff aktualisieren.
+     * Aktualisiert den Begriff der aktuellen Frage entsprechend
+     * der Korrektheit der gegebenen Antwort über eine Mediator-Nachricht.
+     * @param {Boolean} correct Angabe, ob der Begriff richtig erraten wurde
+     */
+    function _updateTerm(correct) {
+        if (typeof correct === typeof true) {
+            var term = $.extend({}, _questions[_currentStep - 1]);
+            if (correct) { _renderLevel(term.lvl + 1); }
+            Mediator.send(CFG.CNL.TERMS_UPDATE, {
+                alias : term.alias,
+                lvl   : (correct ? term.lvl + 1 : term.lvl),
+                fail  : (correct ? term.fail - 1 : term.fail + 1)
+            });
+        }
+    }
+    
+    /**
+     * Level-Anzeige rendern.
+     * Rendert die Level-Anzeige der aktuellen Frage anhand
+     * des übergebenen Levels; aktualisiert die Anzahl der Sterne
+     * und beachtet dabei das Level-Maximum.
+     * @param {Boolean} level Neues Level
+     */
+    function _renderLevel(level) {
+        if (typeof level === typeof 0) {
+            _$questions.eq(_currentStep - 1).find(_SEL_LEVEL).setMod(
+                _B_STARS, _M_IS, Math.min(CFG.QUIZ.LEVELS.length, level)
+            );
+        }
+    }
+    
+    /**
+     * Überspringen sperren.
+     * Sendet eine Nachricht über den Mediator, um den Überspringen-Button
+     * zu deaktivieren und somit das Überspringen unmöglich zu machen.
+     */
+    function _lockSkip() {
+        Mediator.send(CFG.CNL.NAVBAR_ACTION, { act: CFG.ACT.QUIZ_SOLVE });
+    }
+    
+    /**
+     * Antworten rendern.
+     * Rendert die Antworten anhand einer ausgewählten Antwort;
+     * aktualisiert die Status-Klasse aller benachbarten Antworten.
+     * @param {Object} $answer DOM-Element der gewählten Antwort
+     * @param {Boolean} correct Angabe, ob die Antwort korrekt ist
+     */
+    function _renderAnswers($answer, correct) {
+        if ($answer instanceof $) {
+            
+            // Antworten modifizieren
+            var status = (correct ? _M_SUCCESS : _M_ERROR);
+            $answer.setMod(_B_QUIZ, _E_BUTTON, status, true).siblings().each(
+                function() {
+                    $(this).setMod(
+                        _B_QUIZ, _E_BUTTON, _M_SUCCESS,
+                        $(this).data(_DATA_ANSWER)
+                    );
+                }
+            );
+            
+            // Antworten sperren
+            $answer.parents(_SEL_ANSWERS)
+                   .setMod(_B_QUIZ, _E_ANSWERS, _M_LOCKED, true)
+                   .data(_DATA_LOCKED, true);
         }
     }
     

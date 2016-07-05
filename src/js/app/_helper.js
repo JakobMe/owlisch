@@ -59,12 +59,28 @@ var Helper = (function() {
         return array[Math.floor(Math.random() * array.length)];
     }
     
+    /**
+     * Array mischen.
+     * Mischt ein Array zufällig durch.
+     * @param {*[]} array Zu mischendes Array
+     */
+    function shuffleArray(array) {
+        var rand, last;
+        for (var i = array.length; i; i -= 1) {
+            rand = Math.floor(Math.random() * i);
+            last = array[i - 1];
+            array[i - 1] = array[rand];
+            array[rand] = last;
+        }
+    }
+    
     // Öffentliches Interface
     return { 
         arrayFromNumber     : arrayFromNumber,
         calcPercent         : calcPercent,
         countTermsWithLevel : countTermsWithLevel,
-        getRandomItem       : getRandomItem
+        getRandomItem       : getRandomItem,
+        shuffleArray        : shuffleArray
     };
     
 })();

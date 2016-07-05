@@ -33,3 +33,30 @@
     0%   { .block-glow(@app-color-success); }
     100% { .block-glow-none(); }
 }
+
+/*
+ * Animation: Antwort Fehler.
+ * Lässt eine Antwort kurz rot aufleuchten.
+ */
+@keyframes answer-error {
+    0%   { .shadow-glow(@app-color-error); }
+    100% { .shadow-small(); }
+}
+
+/*
+ * Animation: Antwort Erfolg.
+ * Lässt eine Antwort kurz grün aufleuchten.
+ */
+@keyframes answer-success {
+    0%   { .shadow-glow(@app-color-success); }
+    100% { .shadow-small(); }
+}
+
+/*
+ * Animation: Stufe erhöhen.
+ * Lässt einen Stufen-Stern kurz gelb aufleuchten.
+ */
+@keyframes level-up {
+    0%   { .text-glow(@app-color-star); }
+    100% { .text-glow-none(); }
+}

@@ -10,7 +10,7 @@
 // Modul-Variablen
 @_term-size-image:                      140px;
 @_term-size-image-quiz:                 100px;
-@_term-size-info:                       36px;
+@_term-size-info:                       16px;
 
 // Block: Begriff
 .term {
@@ -27,7 +27,10 @@
     }
     
     // Mod: Quiz & Element: Header
-    &--quiz &__header { margin-top: @app-size-gap-small; }
+    &--quiz &__header {
+        margin-bottom: 0;
+        margin-top: @app-size-gap-small; 
+    }
     
     // Element: Bild
     &__image {
@@ -43,10 +46,10 @@
     &__title {
         display: block;
         font-weight: bold;
-        font-style: italic;
         line-height: 1.4;
         margin: 0;
         padding: 0 @app-size-gap;
+        margin-bottom: @app-size-gap-small;
         font-size: @app-font-size-large;
     }
     
@@ -59,13 +62,15 @@
     // Element: Artikel & Mod: Quiz & Element: Titel
     &__article, &--quiz &__title { font-weight: normal; }
     
-    // Element: Schlüsselwort
-    &__keyword { font-weight: bold; }
+    // Elemente: Schlüsselwort & Artikel
+    &__keyword, &__article { font-style: italic; }
+    &__keyword { font-weight: bold;}
     
     // Element: Info
     &__info {
         display: block;
         padding: 0 @app-size-gap;
+        padding-bottom: @app-size-gap;
         height: @_term-size-info;
         line-height: @_term-size-info;
         font-size: @app-font-size-small;

@@ -20,7 +20,7 @@
     padding: 0;
     width: 100vw;
     height: 100vh;
-    .colored(@app-color-light);
+    background: @app-color-background;
     .font-main();
 }
 
@@ -28,5 +28,5 @@
 @media screen and (min-width: @app-size-max) {
     
     // Block: Body
-    .body { .colored(@app-color-background-dark); }
+    .body { background: @app-color-background-dark; }
 }

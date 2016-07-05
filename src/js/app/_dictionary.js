@@ -158,7 +158,7 @@ var Dictionary = (function() {
             // Daten definieren
             var data = $.extend({
                 levels : CFG.QUIZ.LEVELS,
-                label  : CFG.LABEL.PROGRESS
+                label  : CFG.QUIZ.LABEL_PROGRESS
             }, _currentTerm);
             
             // Details laden, Event auslösen, Slider bewegen

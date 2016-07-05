@@ -59,6 +59,17 @@
 }
 
 /**
+ * Mixin: Button-Rahmen.
+ * Setzt einen vollständigen Rahmen für einen Button.
+ * @param {#color} color - Farbe des Rahmens
+ * @param {*px} size Dicke des Rahmens
+ */
+.border-button(@color: @app-color-background-dark, @size: @app-size-line-thin) {
+    border: @size solid @color;
+    border-bottom-color: darken(@color, 5%);
+}
+
+/**
  * Mixin: Transition.
  * Setzt eine Transition-Eigenschaft.
  * @param {all|opacity|...} property - CSS-Eigenschaft, die betroffen ist
@@ -78,18 +89,6 @@
  */
 .translate(@x: 0, @y: 0) {
     transform: translate3d(@x, @y, 0);
-}
-
-/**
- * Mixin: Animation.
- * Setzte eine CSS-Animation.
- * @param {*} animation - Name der Keyframe-Animation
- * @param {*s} time - Animations-Zeit
- * @param {normal|...} direction - Richtung der Animation
- * @param {forwards|...} fill - Fill-Mode der Animation
- */
-.animation(@animation, @time: @app-time-animation, @direction: normal, @fill: forwards) {
-    animation: @animation @time @direction @fill;
 }
 
 /**
@@ -146,6 +145,14 @@
  */
 .shadow-none() {
     box-shadow: none;
+}
+
+/**
+ * Mixin: Schatten zurücksetzen.
+ * Setzt den Schatten auf den ursprünglichen Zustand.
+ */
+.shadow-reset() {
+    box-shadow: inherit;
 }
 
 /**
@@ -277,8 +284,8 @@
  */
 .block-glow(@color) {
     color: @color;
+    background: @color;
     border-color: @color;
-    background-color: @color;
     .shadow-glow(@color);
 }
 
@@ -288,7 +295,26 @@
  */
 .block-glow-none() {
     color: inherit;
+    background: inherit;
     border-color: inherit;
-    background-color: inherit;
-    .shadow-none();
+    .shadow-reset();
 }
+
+/**
+ * Mixin: Leuchtender Text.
+ * Setzt Farbe und Schatten für Text.
+ * @param {#color}color - Farbe des Textes
+ */
+ .text-glow(@color) {
+     color: @color;
+     .textshadow-glow(@color);
+ }
+ 
+ /**
+ * Mixin: Leuchtenden Text deaktivieren.
+ * Negiert alle Auswirkungen des leuchtendes Textes.
+ */
+ .text-glow-none() {
+     color: inherit;
+     text-shadow: inherit;
+ }

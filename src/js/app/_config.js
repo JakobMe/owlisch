@@ -21,8 +21,12 @@ var CFG = (function() {
         QUIZ: {
             LEVELS              : [1,2,3],
             FAILS               : [1,2,3,4,5],
+            DIFFICULTIES        : ["Neu!", "Leicht", "Mittel", "Schwer"],
             QUESTIONS           : 10,
-            LASTGAMES           : 10
+            LASTGAMES           : 10,
+            ANSWERS             : 4,
+            LABEL_QUESTION      : "Was bedeutet",
+            LABEL_PROGRESS      : "Fortschritt:"
         },
         RATING: {
             PERFECT: {
@@ -89,7 +93,8 @@ var CFG = (function() {
             DICTIONARY_BACK     : "dictionary-back",
             QUIZ_SKIP           : "quiz-skip",
             QUIZ_CANCEL         : "quiz-cancel",
-            QUIZ_START          : "quiz-start"
+            QUIZ_START          : "quiz-start",
+            QUIZ_SOLVE          : "quiz-solve"
         },
         ICO: {
             NONE                : "none",
@@ -139,14 +144,6 @@ var CFG = (function() {
                 ASC             : "aufsteigend",
                 DESC            : "absteigend"
             }
-        },
-        LABEL: {
-            PROGRESS            : "Fortschritt:",
-            NEW                 : "Neu!",
-            EASY                : "Leicht",
-            MEDIUM              : "Mittel",
-            HARD                : "Schwer",
-            MEANING             : "Was bedeutet"
         },
         BEM: {
             ELEMDIV             : "__",

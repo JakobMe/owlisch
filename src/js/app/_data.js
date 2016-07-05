@@ -297,6 +297,16 @@ var Data = (function() {
     }
     
     /**
+     * Daten loggen.
+     * Erstellt zu Testzwecken ein Log für alle Daten in der Konsole.
+     */
+    function logData() {
+        
+        // !TODO logData() entfernen
+        window.console.log("Stored Data:", _dataProgress, _dataScores);
+    }
+    
+    /**
      * Fortschritt-Liste bereitstellen.
      * Liefert die Fortschritt-Liste in einem Event.
      */
@@ -326,7 +336,8 @@ var Data = (function() {
         setDataTerm     : setDataTerm,
         addDataScore    : addDataScore,
         clearDataTerms  : clearDataTerms,
-        clearDataScores : clearDataScores
+        clearDataScores : clearDataScores,
+        logData         : logData
     };
     
 })();

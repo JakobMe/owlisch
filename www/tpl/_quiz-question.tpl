@@ -1,19 +1,22 @@
-<article class="term term--quiz{{^image}} term--no-image{{/image}}">
+<article class="term term--quiz term--no-image">
     <header class="term__header">
+        <!--
         {{#image}}
         <img class="term__image" alt="{{term}}" src="{{image}}" />
         {{/image}}
+        -->
         <h1 class="term__title">
-            {{term}}{{#article}}<span class="term__article">, {{article}}</span>{{/article}}
+            {{question}} <span class="term__keyword">{{keyword}}</span>?
         </h1>
-        <span class="term__info term__info--left term__label">{{label}}</span>
+        <span class="term__info term__info--left term__label">{{difficulty}}</span>
         <span class="term__info">
-            <span class="stars stars--is-{{lvl}}">
+            <span class="stars stars--animated stars--is-{{lvl}}" data-quiz="level">
                 {{#levels}}
                 <i class="stars__star stars__star--{{.}}"></i>
                 {{/levels}}
             </span>
         </span>
+        <!--
         {{#audio}}
         <span class="term__info term__info--right play" data-play="main">
             <i class="icon icon--audio play__icon"></i>
@@ -22,5 +25,14 @@
             </audio>
         </span>
         {{/audio}}
+        -->
     </header>
+    <div class="quiz__answers" data-locked="false" data-quiz="answers">
+        {{#answers}}
+        <span class="quiz__button quiz__button--{{#correct}}right{{/correct}}{{^correct}}wrong{{/correct}}"
+              data-quiz="answer" data-answer="{{correct}}">
+            {{label}}
+        </span>
+        {{/answers}}
+    </div>
 </article>

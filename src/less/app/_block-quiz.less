@@ -11,6 +11,9 @@
 @_quiz-size-button-round:               128px;
 @_quiz-padding-button-round:            40px;
 @_quiz-line-height-title:               20px;
+@_quiz-size-button:                     44px;
+@_quiz-size-button-small:               32px;
+@_quiz-font-size-button:                16px;
 
 // Block: Quiz
 .quiz {
@@ -42,17 +45,53 @@
     &__button {
         display: block;
         cursor: pointer;
+        overflow: hidden;
         font-weight: bold;
         font-style: normal;
         position: relative;
         text-align: center;
-        text-decoration: none;
         box-sizing: border-box;
-        font-size: @app-font-size-big;
-        .shadow-small(@app-color-shadow-light);
+        text-decoration: none;
+        padding: (@app-size-line-medium / 2) @_quiz-size-button;
+        margin-bottom: @app-size-gap-small;
+        height: @_quiz-size-button;
+        line-height: (@_quiz-size-button - (2 * @app-size-line-medium));
+        font-size: @_quiz-font-size-button;
+        .shadow-small(@app-color-shadow-lighter);
         .colored-gradient();
         .border-radius();
-        .border(all);
+        .border-button();
+        .transition();
+        
+        // Icon
+        &:before {
+            display: block;
+            position: absolute;
+            text-align: center;
+            font-weight: normal;
+            top: 0;
+            left: 0;
+            height: 100%;
+            content: "";
+            font-size: @app-font-size-medium;
+            color: @app-color-text-dark-pale;
+            padding: (@app-size-line-medium / 2) 0;
+            opacity: @app-opacity-invisible;
+            width: @_quiz-size-button;
+            .translate(-100%);
+            .transition();
+        }
+        
+        // Letztes Element
+        &:last-child { margin-bottom: 0; }
+        
+        // Mod: Klein
+        &--small {
+            padding: 0 @_quiz-size-button-small;
+            font-size: @app-font-size-medium;
+            height: @_quiz-size-button-small;
+            line-height: (@_quiz-size-button-small - (2 * @app-size-line-medium));
+        }
         
         // Mod: Rund
         &--round {
@@ -74,11 +113,62 @@
             .shadow-small(@app-color-shadow-dark);
             .textshadow();
         }
+        
+        // Mods: Erfolg & Fehler
+        &--success, &--error {
+            
+            // Mods & Icon
+            &, &:before {
+                padding-top: 0;
+                padding-bottom: 0;
+            }
+            
+            // Icon
+            &:before {
+                opacity: @app-opacity-full;
+                .translate();
+            }
+        }
+        
+        // Mod: Richtig
+        &--right {
+            .fontello-icon(@fontello-icon-check, before);
+            &:before { color: @app-color-success; }
+        }
+        
+        // Mod: Falsch
+        &--wrong {
+            .fontello-icon(@fontello-icon-cancel, before);
+            &:before { color: @app-color-error; }
+        }
+        
+        // Mod: Erfolg
+        &--success {
+            .border-button(@app-color-success, @app-size-line-medium);
+            .animation(answer-success);
+        }
+        
+        // Mod: Fehler
+        &--error {
+            .border-button(@app-color-error, @app-size-line-medium);
+            .animation(answer-error);
+        }
     }
     
     // Element: Button & Mod: Rund & Element: Button-Text
     &__button--round &__buttontext:last-child {
         font-size: @app-font-size-medium;
+    }
+    
+    // Element: Antworten
+    &__answers {
+        padding: @app-size-gap;
+    }
+    
+    // Element: Antworten & Mod: Gesperrt & Element: Button
+    &__answers--locked &__button { cursor: default; }
+    &__answers--locked &__button:not(&__button--error):not(&__button--success) {
+        opacity: @app-opacity-locked;
     }
     
     // Element: Diagramm

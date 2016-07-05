@@ -321,7 +321,8 @@ var NavigationBar = (function() {
                     break;
                 
                 // Quiz übersprungen
-                case CFG.ACT.QUIZ_SKIP:
+                case CFG.ACT.QUIZ_SOLVE:
+                    _setBtnR(null, null);
                     break;
                 
                 // !TODO: Switch Button-Aktionen

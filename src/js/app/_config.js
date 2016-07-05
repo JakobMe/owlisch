@@ -162,7 +162,8 @@ var CFG = (function() {
         },
         TIME: {
             ANIMATION           : 150,
-            DELAY               : 300
+            DELAY               : 300,
+            WAIT                : 450
         },
         WEBAPP: {
             IOS                 : (window.navigator.standalone || false),

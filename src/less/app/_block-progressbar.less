@@ -9,8 +9,7 @@
 
 // Modul-Variablen
 @_progressbar-size-line:                2px;
-@_progressbar-font-size-icon:           12px;
-@_progressbar-color-line:               @app-color-background-dark;
+@_progressbar-font-size-icon:           10px;
 
 // Block: Fortschritts-Leiste
 .progressbar {
@@ -42,7 +41,7 @@
         width: 100%;
         z-index: 100;
         height: @_progressbar-size-line;
-        background: @_progressbar-color-line;
+        background: @app-color-background-dark;
         margin-top: -(@_progressbar-size-line / 2);
         .border-radius(@_progressbar-size-line);
     }
@@ -86,7 +85,7 @@
         margin: (@app-size-height-progressbar / 4) auto;
         width: (@app-size-height-progressbar / 2);
         height: (@app-size-height-progressbar / 2);
-        border: @_progressbar-size-line solid @_progressbar-color-line;
+        border: @_progressbar-size-line solid @app-color-background-dark;
         background: @app-color-light;
         .border-radius(50%);
         .transition(all, @app-time-animation-long);

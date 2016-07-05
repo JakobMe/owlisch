@@ -19,7 +19,7 @@
 
 // Innerer Loop: Slides
 .slider-loop-inner(@n, @i: 1) when (@i <= @n) {
-    .slider__slide:nth-child(@{i}) { .translate(); }
+    .slider__slide:nth-child(@{i}) { visibility: visible; .translate(); }
     .slider-loop-inner(@n, (@i + 1));
 }
 
@@ -39,6 +39,7 @@
         overflow-y: auto;
         overflow-x: hidden;
         position: absolute;
+        visibility: hidden;
         top: 0;
         left: 0;
         width: 100%;

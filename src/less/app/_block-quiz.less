@@ -68,6 +68,7 @@
             display: block;
             position: absolute;
             text-align: center;
+            visibility: hidden;
             font-weight: normal;
             top: 0;
             left: 0;
@@ -78,7 +79,6 @@
             padding: (@app-size-line-medium / 2) 0;
             opacity: @app-opacity-invisible;
             width: @_quiz-size-button;
-            .translate(-100%);
             .transition();
         }
         
@@ -125,8 +125,8 @@
             
             // Icon
             &:before {
+                visibility: visible;
                 opacity: @app-opacity-full;
-                .translate();
             }
         }
         

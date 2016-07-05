@@ -333,6 +333,16 @@ var Quiz = (function() {
     }
     
     /**
+     * Fragen leeren.
+     * Entfernt sämtlichen Inhalt aus allen Fragen.
+     * @param {Boolean} finish Quiz-Ende ebenfalls leeren
+     */
+    function _clearQuestions(finish) {
+        _$questions.each(function() { $(this).html(CFG.STR.EMPTY); });
+        if (finish === true) { _$finish.html(CFG.STR.EMPTY); }
+    }
+    
+    /**
      * Antworten aussuchen.
      * Stellt für einen gegebenen Begriff zufällig Antworten zusammen.
      * @param {Object} term Begriff mit Antworten
@@ -467,8 +477,11 @@ var Quiz = (function() {
         
         // Rendern und Ergebnis senden
         _renderFinish(result, skipped, rating);
-        Mediator.send(CFG.CNL.QUIZ_END, { act: CFG.ACT.QUIZ_CANCEL })
-                .send(CFG.CNL.SCORES_UPDATE, result);
+        setTimeout(function() {
+            _clearQuestions();
+            Mediator.send(CFG.CNL.QUIZ_END, { act: CFG.ACT.QUIZ_CANCEL })
+                    .send(CFG.CNL.SCORES_UPDATE, result);
+        }, CFG.TIME.DELAY);
     }
     
     /**
@@ -549,13 +562,14 @@ var Quiz = (function() {
     function _resetAll(restart) {
         Mediator.send(CFG.CNL.QUIZ_END).send(CFG.CNL.VIEW_HIDE);
         setTimeout(function() {
+            _clearQuestions(true);
             _setSlider(_indexStart);
             _resetProgress();
             if (restart === true) { _start(); }
             setTimeout(function() {
                 Mediator.send(CFG.CNL.VIEW_SHOW);
             }, CFG.TIME.DELAY);
-        }, CFG.TIME.ANIMATION);
+        }, CFG.TIME.DELAY);
     }
     
     // Öffentliches Interface

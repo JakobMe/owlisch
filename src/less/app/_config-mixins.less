@@ -64,9 +64,9 @@
  * @param {#color} color - Farbe des Rahmens
  * @param {*px} size Dicke des Rahmens
  */
-.border-button(@color: @app-color-background-dark, @size: @app-size-line-thin) {
+.border-button(@color: @app-color-background-dark, @size: @app-size-line-thin, @darken: true) {
     border: @size solid @color;
-    border-bottom-color: darken(@color, 5%);
+    & when (@darken = true) { border-bottom-color: darken(@color, 5%); }
 }
 
 /**

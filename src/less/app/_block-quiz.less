@@ -23,6 +23,9 @@
     height: 100%;
     padding-top: (((@app-size-gap + @app-size-line-thin) * 2) + @app-size-height-progressbar);
     
+    // Block: Slider & Element: Slide
+    .slider__slide { overflow: hidden; }
+    
     // Element: Titel
     &__title {
         display: block;
@@ -144,13 +147,13 @@
         
         // Mod: Erfolg
         &--success {
-            .border-button(@app-color-success, @app-size-line-medium);
+            .border-button(@app-color-success, @app-size-line-medium, false);
             .animation(answer-success);
         }
         
         // Mod: Fehler
         &--error {
-            .border-button(@app-color-error, @app-size-line-medium);
+            .border-button(@app-color-error, @app-size-line-medium, false);
             .animation(answer-error);
         }
     }

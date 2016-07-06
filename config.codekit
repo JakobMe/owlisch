@@ -1139,17 +1139,6 @@
 		"outputPathIsOutsideProject": 0,
 		"outputPathIsSetByUser": 0
 		},
-	"\/www\/data\/owl\/image\/beoemmeln.jpg": {
-		"fileType": 16384,
-		"ignore": 0,
-		"ignoreWasSetByUser": 0,
-		"initialSize": 15709,
-		"inputAbbreviatedPath": "\/www\/data\/owl\/image\/beoemmeln.jpg",
-		"outputAbbreviatedPath": "\/www\/data\/owl\/image\/beoemmeln.jpg",
-		"outputPathIsOutsideProject": 0,
-		"outputPathIsSetByUser": 0,
-		"processed": 1
-		},
 	"\/www\/data\/owl\/image\/blume.jpg": {
 		"fileType": 16384,
 		"ignore": 0,
@@ -1190,17 +1179,6 @@
 		"initialSize": 14670,
 		"inputAbbreviatedPath": "\/www\/data\/owl\/image\/latuechte.jpg",
 		"outputAbbreviatedPath": "\/www\/data\/owl\/image\/latuechte.jpg",
-		"outputPathIsOutsideProject": 0,
-		"outputPathIsSetByUser": 0,
-		"processed": 1
-		},
-	"\/www\/data\/owl\/image\/noenkern.jpg": {
-		"fileType": 16384,
-		"ignore": 0,
-		"ignoreWasSetByUser": 0,
-		"initialSize": 11133,
-		"inputAbbreviatedPath": "\/www\/data\/owl\/image\/noenkern.jpg",
-		"outputAbbreviatedPath": "\/www\/data\/owl\/image\/noenkern.jpg",
 		"outputPathIsOutsideProject": 0,
 		"outputPathIsSetByUser": 0,
 		"processed": 1

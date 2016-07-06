@@ -25,6 +25,10 @@ var Data = (function() {
     function init() {
         _hookMediator();
         _loadDataStored();
+        
+        // !TODO: clearData wieder entfernen
+        clearDataScores();
+        clearDataTerms();
     }
     
     /**
@@ -224,10 +228,10 @@ var Data = (function() {
             (typeof fail === typeof 0)) {
             
             // Minimum und Maximum für Level und Fehlschläge ermitteln
-            var minFail = CFG.QUIZ.FAILS[0];
             var maxFail = CFG.QUIZ.FAILS.length;
-            var minLvl  = CFG.QUIZ.LEVELS[0];
+            var minFail = CFG.QUIZ.FAILS[0];
             var maxLvl  = CFG.QUIZ.LEVELS.length;
+            var minLvl  = 0;
             
             // Fortschritts-Daten aktualisieren
             _dataProgress[alias] = {

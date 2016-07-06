@@ -250,7 +250,7 @@ var Quiz = (function() {
      */
     function _setProgressbarAnimation(animated) {
         if (typeof animated === typeof true) {
-         _$progressbar.setMod(_B_PROGRESSBAR, _M_ANIMATED, animated);
+            _$progressbar.setMod(_B_PROGRESSBAR, _M_ANIMATED, animated);
         }
     }
     
@@ -424,12 +424,12 @@ var Quiz = (function() {
      */
     function _renderLevel(level) {
         if (typeof level === typeof 0) {
-            var lvl = Math.min(CFG.QUIZ.LEVELS.length, level);
             var $levels =  _$questions.eq(_currentStep - 1).find(_SEL_LEVEL);
-            $levels.setMod(_B_STARS, _M_ANIMATED, true);
-            setTimeout(function() {
-                $levels.setMod(_B_STARS, _M_IS, lvl);
-            }, CFG.TIME.WAIT);
+            var lvl = Math.min(CFG.QUIZ.LEVELS.length, level);
+            if (level <= CFG.QUIZ.LEVELS.length) {
+                $levels.setMod(_B_STARS, _M_ANIMATED, true)
+                       .setMod(_B_STARS, _M_IS, lvl);
+            }
         }
     }
     

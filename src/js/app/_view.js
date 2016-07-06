@@ -106,21 +106,30 @@ var View = (function() {
      * gesetzten aktuellen Variablen.
      */
     function _render() {
-        
+            
         // View und Content rendern
         _$view.setMod(_B, _M_WEBAPP, _isWebapp);
         _$view.setMod(_B, _M_FULLSCREEN, _isFullscreen);
         _$content.setMod(_B, _E_CONTENT, _M_VISIBLE, _isVisible);
         
         // View-Panels (de-)aktivieren
-        setTimeout(function() {
-            $.each(_$panels, function(name, $panel) {
-                $panel.setMod(
-                    _B, _E_PANEL, _M_CURRENT,
-                    (name === _currentPanel)
-                );
-            });
-        }, (_isVisible ? 0 : CFG.TIME.ANIMATION));
+        if (!_isVisible) {
+            setTimeout(function() {
+                _renderPanels();
+            }, CFG.TIME.ANIMATION);
+        } else {
+            _renderPanels();
+        }
+    }
+    
+    /**
+     * View-Panels rendern.
+     * Rendert alle View-Panels; blendet sie ein oder aus.
+     */
+    function _renderPanels() {
+        $.each(_$panels, function(name, $panel) {
+            $panel.setMod(_B, _E_PANEL, _M_CURRENT, (name === _currentPanel));
+        });
     }
     
     /**

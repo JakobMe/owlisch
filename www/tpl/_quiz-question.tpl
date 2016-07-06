@@ -10,7 +10,7 @@
         </h1>
         <span class="term__info term__info--left term__label">{{difficulty}}</span>
         <span class="term__info">
-            <span class="stars stars--animated stars--is-{{lvl}}" data-quiz="level">
+            <span class="stars stars--is-{{lvl}}" data-quiz="level">
                 {{#levels}}
                 <i class="stars__star stars__star--{{.}}"></i>
                 {{/levels}}

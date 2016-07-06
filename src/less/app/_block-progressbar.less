@@ -107,21 +107,19 @@
         box-shadow: inset 0 0 0 @_progressbar-size-line @app-color-light;
     }
     
-    // Mod: Fehler
-    &__step--error &__icon {
-        .animation(progress-step-error);
-        &:after {
-            content: @fontello-icon-cancel;
-            color: @app-color-error;
-        }
+    // Mod: Fehler & Element: Icon
+    &__step--error &__icon:after {
+        content: @fontello-icon-cancel;
+        color: @app-color-error;
     }
     
-    // Mod: Erfolg
-    &__step--success &__icon {
-        .animation(progress-step-success);
-        &:after {
-            content: @fontello-icon-check;
-            color: @app-color-success;
-        }
+    // Mod: Erfolg & Element: Icon
+    &__step--success &__icon:after {
+        content: @fontello-icon-check;
+        color: @app-color-success;
     }
+    
+    // Mod: Animiert & Elemente: Schritt und Icon
+    &--animated &__step--success &__icon { .animation(progress-step-success); }
+    &--animated &__step--error &__icon { .animation(progress-step-error); }
 }

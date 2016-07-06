@@ -38,6 +38,7 @@ var Quiz = (function() {
     var _E_ANSWERS              = "answers";
     var _E_CONTINUE             = "continue";
     var _M_IS                   = "is";
+    var _M_ANIMATED             = "animated";
     var _M_SKIPPED              = "skipped";
     var _M_ERROR                = "error";
     var _M_SUCCESS              = "success";
@@ -242,6 +243,18 @@ var Quiz = (function() {
     }
     
     /**
+     * Fortschritts-Balken-Animationen setzen.
+     * Aktiviert oder deaktiviert die Animationen für die Icons
+     * des Fortschritts-Balkens.
+     * @param {Boolean} animated Animationen aktiviern oder deaktivieren
+     */
+    function _setProgressbarAnimation(animated) {
+        if (typeof animated === typeof true) {
+         _$progressbar.setMod(_B_PROGRESSBAR, _M_ANIMATED, animated);
+        }
+    }
+    
+    /**
      * Schritt überspringen.
      * Markiert den aktuellen Schritt als übersprungen,
      * fährt zum nächsten Schritt vor.
@@ -276,6 +289,7 @@ var Quiz = (function() {
         } else {
             Mediator.send(CFG.CNL.QUIZ_START, { act: CFG.ACT.QUIZ_START });
             setTimeout(function() {
+                _setProgressbarAnimation(true);
                 _resetProgress();
                 _pickQuestions();
                 _processQuestions();
@@ -410,9 +424,12 @@ var Quiz = (function() {
      */
     function _renderLevel(level) {
         if (typeof level === typeof 0) {
-            _$questions.eq(_currentStep - 1).find(_SEL_LEVEL).setMod(
-                _B_STARS, _M_IS, Math.min(CFG.QUIZ.LEVELS.length, level)
-            );
+            var lvl = Math.min(CFG.QUIZ.LEVELS.length, level);
+            var $levels =  _$questions.eq(_currentStep - 1).find(_SEL_LEVEL);
+            $levels.setMod(_B_STARS, _M_ANIMATED, true);
+            setTimeout(function() {
+                $levels.setMod(_B_STARS, _M_IS, lvl);
+            }, 10);
         }
     }
     
@@ -514,6 +531,7 @@ var Quiz = (function() {
         });
         
         // Rendern und Ergebnis senden
+        _setProgressbarAnimation(false);
         _renderFinish(result, skipped, rating);
         setTimeout(function() {
             _clearQuestions();

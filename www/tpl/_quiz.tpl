@@ -1,5 +1,5 @@
 <div class="quiz">
-    <div class="progressbar" data-quiz="progressbar">
+    <div class="progressbar progressbar--animated" data-quiz="progressbar">
         <div class="progressbar__wrapper">
             <div class="progressbar__line"></div>
             <ul class="progressbar__steps">

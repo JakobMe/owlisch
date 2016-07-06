@@ -30,6 +30,7 @@
     
     // Element: Content
     &__content {
+        -webkit-backface-visibility: hidden;
         overflow: hidden;
         position: relative;
         box-sizing: border-box;
@@ -39,7 +40,6 @@
         .colored(@app-color-background);
         .transition(opacity);
         
-        
         // Mod: Sichtbar
         &--visible { opacity: @app-opacity-full; }
     }
@@ -47,22 +47,18 @@
     // Element: Panel
     &__panel {
         -webkit-overflow-scrolling: touch;
-        visibility: hidden;
+        -webkit-backface-visibility: hidden;
         overflow-y: auto;
         overflow-x: hidden;
-        position: absolute;
+        display: none;
+        top: 0;
+        left: 0;
         width: 100%;
         height: 100%;
-        z-index: 0;
         background: @app-color-background;
-        opacity: @app-opacity-invisible;
         
         // Mod: Aktuell
-        &--current {
-            z-index: 100;
-            visibility: visible;
-            opacity: @app-opacity-full;
-        }
+        &--current { display: block; }
     }
 }
 

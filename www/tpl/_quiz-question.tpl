@@ -1,10 +1,8 @@
-<article class="term term--quiz term--no-image">
+<article class="term term--quiz{{^image}} term--no-image{{/image}}">
     <header class="term__header">
-        <!--
         {{#image}}
         <img class="term__image" alt="{{term}}" src="{{image}}" />
         {{/image}}
-        -->
         <h1 class="term__title">
             {{question}} <span class="term__keyword">{{keyword}}</span>?
         </h1>
@@ -29,7 +27,7 @@
     </header>
     <div class="quiz__answers" data-locked="false" data-quiz="answers">
         {{#answers}}
-        <span class="quiz__button quiz__button--{{#correct}}right{{/correct}}{{^correct}}wrong{{/correct}}"
+        <span class="quiz__button{{#image}} quiz__button--small{{/image}} quiz__button--{{#correct}}right{{/correct}}{{^correct}}wrong{{/correct}}"
               data-quiz="answer" data-answer="{{correct}}">
             {{label}}
         </span>

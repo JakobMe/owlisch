@@ -21,15 +21,85 @@ var CFG = (function() {
         QUIZ: {
             LEVELS              : [1,2,3],
             FAILS               : [1,2,3,4,5],
-            DIFFICULTIES        : ["Leicht", "Mittel", "Schwer", "Schwer"],
+            DIFFICULTIES        : ["Neu!", "Leicht", "Mittel", "Schwer"],
             QUESTIONS           : 10,
             LASTGAMES           : 10,
             ANSWERS             : 4
         },
+        QUIZ_TYPES: [
+            [
+                {
+                    keyword  : "translation",
+                    answers  : "answersForeign",
+                    right    : "term",
+                    buttons  : true,
+                    image    : false,
+                    pictures : false,
+                    chars    : false,
+                    input    : false
+                },
+                {
+                    keyword  : "term",
+                    answers  : "answersNative",
+                    right    : "translation",
+                    buttons  : true,
+                    image    : false,
+                    pictures : false,
+                    chars    : false,
+                    input    : false
+                },
+                {
+                    keyword  : "term",
+                    answers  : "answersPictures",
+                    right    : "alias",
+                    buttons  : false,
+                    image    : false,
+                    pictures : true,
+                    chars    : false,
+                    input    : false
+                },
+                {
+                    keyword  : undefined,
+                    answers  : "answersForeign",
+                    right    : "term",
+                    buttons  : true,
+                    image    : true,
+                    pictures : false,
+                    chars    : false,
+                    input    : false
+                }
+            ],
+            [
+                {
+                    keyword  : "translation",
+                    answers  : "term",
+                    right    : "term",
+                    buttons  : false,
+                    image    : false,
+                    pictures : false,
+                    chars    : true,
+                    input    : false
+                }
+            ],
+            [
+                {
+                    keyword  : "translation",
+                    answers  : "term",
+                    right    : "term",
+                    buttons  : false,
+                    image    : false,
+                    pictures : false,
+                    chars    : false,
+                    input    : true
+                }
+            ]
+        ],
         LABEL: {
-            QUESTION            : "Was bedeutet",
+            MEANING             : "Was bedeutet",
+            WHAT                : "Was ist",
             PROGRESS            : "Fortschritt:",
-            DETAILS             : "Details"
+            DETAILS             : "Details",
+            THIS                : "das"
         },
         RATING: {
             PERFECT: {

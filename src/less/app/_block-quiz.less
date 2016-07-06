@@ -12,7 +12,7 @@
 @_quiz-padding-button-round:            40px;
 @_quiz-line-height-title:               20px;
 @_quiz-size-button:                     44px;
-@_quiz-size-button-small:               32px;
+@_quiz-size-button-small:               36px;
 @_quiz-font-size-button:                16px;
 
 // Block: Quiz
@@ -94,6 +94,9 @@
             font-size: @app-font-size-medium;
             height: @_quiz-size-button-small;
             line-height: (@_quiz-size-button-small - (2 * @app-size-line-medium));
+            
+            // Icon
+            &:before { width: @_quiz-size-button-small; }
         }
         
         // Mod: Rund

@@ -74,13 +74,30 @@ var Helper = (function() {
         }
     }
     
+    /**
+     * Zahl begrenzen
+     * Begrenzt eine gegebene Zahl zwischen dem
+     * gegebenen Minimum und Maximum.
+     * @param {Number} number Zu begrenzende Zahl
+     * @param {Number} min Minimum
+     * @param {Number} max Maximum
+     */
+    function limit(number, min, max) {
+        if (typeof number === typeof 0) {
+            return Math.max(Math.min(number, max), min);
+        } else {
+            return number;
+        }
+    }
+    
     // Öffentliches Interface
     return { 
         arrayFromNumber     : arrayFromNumber,
         calcPercent         : calcPercent,
         countTermsWithLevel : countTermsWithLevel,
         getRandomItem       : getRandomItem,
-        shuffleArray        : shuffleArray
+        shuffleArray        : shuffleArray,
+        limit               : limit
     };
     
 })();

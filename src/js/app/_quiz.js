@@ -319,6 +319,30 @@ var Quiz = (function() {
     }
     
     /**
+     * Frage-Typen auswählen.
+     * Wählt anhand eines übergebenen Begriffs und den globalen Einstellungen
+     * für die Quiz-Typen einen passenden Typen für die Frage zu diesem
+     * Begriff aus; zieht die Stufe des Begriffs, das Vorhandensein
+     * eines Bildes und die Vollständigkeit der Antwortmöglichkeiten
+     * für die Auswahl hinzu.
+     * @param {Object} term Begriff-Daten für den Frage-Typen
+     */
+    function _pickQuestionType(term) {
+        var config = null;
+        var index = Helper.limit(term.lvl, 0, CFG.QUIZ_TYPES.length - 1);
+        while (config === null) {
+            var type = Helper.getRandomItem(CFG.QUIZ_TYPES[index]);
+            if (($.isArray(term[type.answers]) &&
+                (term[type.answers].length < CFG.QUIZ.ANSWERS - 1)) ||
+                (type.image && !term.image)) {
+                continue;
+            }
+            config = $.extend({}, type);
+        }
+        return config;
+    }
+    
+    /**
      * Fragen aufbereiten.
      * Ergänzt die ausgewählten Fragen um zusätzliche Daten für
      * die Darstellung und Funktionsweise des Quiz; rendert
@@ -326,14 +350,19 @@ var Quiz = (function() {
      */
     function _processQuestions() {
         $.each(_questions, function(i, term) {
+            var type = _pickQuestionType(term);
             _renderQuestion(i, {
-                answers    : _pickAnswers(term),
-                question   : CFG.LABEL.QUESTION,
-                image      : false,
-                keyword    : term.term,
+                answers    : _pickAnswers(term, type.answers, type.right),
+                question   : (type.image ? CFG.LABEL.WHAT : CFG.LABEL.MEANING),
+                image      : (type.image ? term.image : false),
+                keyword    : (term[type.keyword] || CFG.LABEL.THIS),
                 difficulty : CFG.QUIZ.DIFFICULTIES[term.lvl],
                 levels     : CFG.QUIZ.LEVELS,
-                lvl        : term.lvl
+                lvl        : term.lvl,
+                pictures   : type.pictures,
+                buttons    : type.buttons,
+                chars      : type.chars,
+                input      : type.input
             });
         });
     }
@@ -365,15 +394,17 @@ var Quiz = (function() {
      * @param {Object} term Begriff mit Antworten
      * @returns {Object[]} Liste der zusammengestellten Antworten
      */
-    function _pickAnswers(term) {
-        var answers = [{ label: term.translation, correct: true }];
-        var dataTemp = term.answersNative.slice(0);
-        while (answers.length < CFG.QUIZ.ANSWERS) {
-            var randomAnswer = Helper.getRandomItem(dataTemp);
-            answers.push({ label: randomAnswer, correct: false });
-            dataTemp.splice(dataTemp.indexOf(randomAnswer), 1);
+    function _pickAnswers(term, propAnswers, propRight) {
+        var answers = [{ label: term[propRight], correct: true }];
+        if ($.isArray(term[propAnswers])) {
+            var dataTemp = term[propAnswers].slice(0);
+            while (answers.length < CFG.QUIZ.ANSWERS) {
+                var randomAnswer = Helper.getRandomItem(dataTemp);
+                answers.push({ label: randomAnswer, correct: false });
+                dataTemp.splice(dataTemp.indexOf(randomAnswer), 1);
+            }
+            Helper.shuffleArray(answers);
         }
-        Helper.shuffleArray(answers);
         return answers;
     }
     

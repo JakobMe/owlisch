@@ -21,85 +21,11 @@ var CFG = (function() {
         QUIZ: {
             LEVELS              : [1,2,3],
             FAILS               : [1,2,3,4,5],
-            DIFFICULTIES        : ["Neu!", "Leicht", "Mittel", "Schwer"],
+            DIFF                : ["Leicht", "Mittel", "Schwer"],
             QUESTIONS           : 10,
             LASTGAMES           : 10,
             ANSWERS             : 4
         },
-        QUIZ_TYPES: [
-            [
-                {
-                    keyword  : "translation",
-                    answers  : "answersForeign",
-                    right    : "term",
-                    audio    : false,
-                    buttons  : true,
-                    image    : false,
-                    pictures : false,
-                    chars    : false,
-                    input    : false
-                },
-                {
-                    keyword  : "term",
-                    answers  : "answersNative",
-                    right    : "translation",
-                    audio    : true,
-                    buttons  : true,
-                    image    : false,
-                    pictures : false,
-                    chars    : false,
-                    input    : false
-                },
-                {
-                    keyword  : "term",
-                    answers  : "answersPictures",
-                    right    : "alias",
-                    audio    : true,
-                    buttons  : false,
-                    image    : false,
-                    pictures : true,
-                    chars    : false,
-                    input    : false
-                },
-                {
-                    keyword  : undefined,
-                    answers  : "answersForeign",
-                    right    : "term",
-                    audio    : false,
-                    buttons  : true,
-                    image    : true,
-                    pictures : false,
-                    chars    : false,
-                    input    : false
-                }
-            ],
-            [
-                {
-                    keyword  : "translation",
-                    answers  : "term",
-                    right    : "term",
-                    audio    : false,
-                    buttons  : false,
-                    image    : false,
-                    pictures : false,
-                    chars    : true,
-                    input    : false
-                }
-            ],
-            [
-                {
-                    keyword  : "translation",
-                    answers  : "term",
-                    right    : "term",
-                    audio    : false,
-                    buttons  : false,
-                    image    : false,
-                    pictures : false,
-                    chars    : false,
-                    input    : true
-                }
-            ]
-        ],
         LABEL: {
             MEANING             : "Was bedeutet",
             WHAT                : "Was ist",
@@ -201,6 +127,8 @@ var CFG = (function() {
             SCORES_REQUEST      : "scores:request",
             SCORES_SERVE        : "scores:serve",
             SCORES_UPDATE       : "scores:update",
+            CONFIG_REQUEST      : "config:request",
+            CONFIG_SERVE        : "config:serve",
             VIEW_SHOW           : "view:show",
             VIEW_HIDE           : "view:hide",
             VIEW_CHANGE         : "view:change",

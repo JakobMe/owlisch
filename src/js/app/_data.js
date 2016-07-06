@@ -13,6 +13,7 @@ var Data = (function() {
     var _dictionaryCaption      = CFG.STR.EMPTY;
     var _dataScores             = [];
     var _dataTerms              = [];
+    var _dataConfig             = [];
     var _dataProgress           = {};
     var _sizeScores             = 0;
     var _sizeTerms              = 0;
@@ -39,7 +40,8 @@ var Data = (function() {
         Mediator.hook(CFG.CNL.TERMS_REQUEST, _serveDataTerms)
                 .hook(CFG.CNL.TERMS_UPDATE, _updateDataTerm)
                 .hook(CFG.CNL.SCORES_REQUEST, _serveDataScores)
-                .hook(CFG.CNL.SCORES_UPDATE, _updateDataScore);
+                .hook(CFG.CNL.SCORES_UPDATE, _updateDataScore)
+                .hook(CFG.CNL.CONFIG_REQUEST, _serveDataConfig);
     }
     
     /**
@@ -89,8 +91,9 @@ var Data = (function() {
             if ((typeof data.caption === typeof CFG.STR.EMPTY) &&
                 $.isArray(data.terms)) {
                 _dictionaryCaption = data.caption;
-                _dataTerms = data.terms;
-                _sizeTerms = data.terms.length;
+                _dataTerms  = data.terms;
+                _sizeTerms  = data.terms.length;
+                _dataConfig = data.config;
             }
         }).done(function() { _checkDictionaryFiles(); });
     }
@@ -332,6 +335,14 @@ var Data = (function() {
             data : _dataScores,
             size : _sizeScores
         });
+    }
+    
+    /**
+     * Wörberbuch-Konfiguration bereitstellen.
+     * Liefert die Konfiguration des Wörterbuches in einem Event.
+     */
+    function _serveDataConfig() {
+        Mediator.send(CFG.CNL.CONFIG_SERVE, _dataConfig);
     }
     
     // Öffentliches Interface

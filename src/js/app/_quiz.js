@@ -63,6 +63,7 @@ var Quiz = (function() {
     var _questions              = [];
     var _progress               = [];
     var _dataTerms              = [];
+    var _dataConfig             = [];
     var _dataCaption            = CFG.STR.EMPTY;
     
     // DOM-Elemente
@@ -88,7 +89,8 @@ var Quiz = (function() {
         Mediator.hook(CFG.CNL.VIEW_LOAD, _create)
                 .hook(CFG.CNL.VIEW_RESTORE, _restore)
                 .hook(CFG.CNL.TERMS_SERVE, _update)
-                .hook(CFG.CNL.NAVBAR_ACTION, _navbarAction);
+                .hook(CFG.CNL.NAVBAR_ACTION, _navbarAction)
+                .hook(CFG.CNL.CONFIG_SERVE, _setConfig);
     }
     
     /**
@@ -140,7 +142,8 @@ var Quiz = (function() {
                 
                 // Wörterbuch und Fortschritt anfragen, View einblenden
                 Mediator.send(CFG.CNL.VIEW_SHOW)
-                        .send(CFG.CNL.TERMS_REQUEST);
+                        .send(CFG.CNL.TERMS_REQUEST)
+                        .send(CFG.CNL.CONFIG_REQUEST);
             });
         }
     }
@@ -329,9 +332,9 @@ var Quiz = (function() {
      */
     function _pickQuestionType(term) {
         var config = null;
-        var index = Util.limit(term.lvl, 0, CFG.QUIZ_TYPES.length - 1);
+        var index = Util.limit(term.lvl, 0, _dataConfig.length - 1);
         while (config === null) {
-            var type = Util.getRandom(CFG.QUIZ_TYPES[index]);
+            var type = Util.getRandom(_dataConfig[index]);
             if (($.isArray(term[type.answers]) &&
                 (term[type.answers].length < CFG.QUIZ.ANSWERS - 1)) ||
                 (type.image && !term.image)) {
@@ -351,13 +354,14 @@ var Quiz = (function() {
     function _processQuestions() {
         $.each(_questions, function(i, term) {
             var type = _pickQuestionType(term);
+            var diff = Util.limit(term.lvl, 0, CFG.QUIZ.DIFF.length - 1);
             _renderQuestion(i, {
                 answers    : _pickAnswers(term, type.answers, type.right),
                 question   : (type.image ? CFG.LABEL.WHAT : CFG.LABEL.MEANING),
                 image      : (type.image ? term.image : false),
                 audio      : (type.audio ? term.audio : false),
                 keyword    : (term[type.keyword] || CFG.LABEL.THIS),
-                difficulty : CFG.QUIZ.DIFFICULTIES[term.lvl],
+                difficulty : CFG.QUIZ.DIFF[diff],
                 levels     : CFG.QUIZ.LEVELS,
                 lvl        : term.lvl,
                 pictures   : type.pictures,
@@ -602,8 +606,8 @@ var Quiz = (function() {
     /**
      * Wörterbuch-Daten aktualisieren.
      * Aktualisiert die interne Kopie der Wörterbuch-Daten des Quizes
-     * anhand eines ausgelösten Events.
-     * @param {Object} data Daten des Events
+     * anhand einer Mediator-Nachricht.
+     * @param {Object} data Übermittelte Daten
      */
     function _update(data) {
         if ((typeof data         !== typeof undefined) &&
@@ -612,6 +616,16 @@ var Quiz = (function() {
             _dataCaption = data.caption;
             _dataTerms = data.data;
         }
+    }
+    
+    /**
+     * Wörterbuch-Konfiguration setzen.
+     * Setzt die Konfiguration des Wörterbuches
+     * anhand einer Mediator-Nachricht.
+     * @param {*[]} data Übermittelte Daten
+     */
+    function _setConfig(data) {
+        if ($.isArray(data)) { _dataConfig = data; }
     }
     
     /**

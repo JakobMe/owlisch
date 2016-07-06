@@ -355,6 +355,7 @@ var Quiz = (function() {
                 answers    : _pickAnswers(term, type.answers, type.right),
                 question   : (type.image ? CFG.LABEL.WHAT : CFG.LABEL.MEANING),
                 image      : (type.image ? term.image : false),
+                audio      : (type.audio ? term.audio : false),
                 keyword    : (term[type.keyword] || CFG.LABEL.THIS),
                 difficulty : CFG.QUIZ.DIFFICULTIES[term.lvl],
                 levels     : CFG.QUIZ.LEVELS,

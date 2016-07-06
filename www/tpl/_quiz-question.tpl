@@ -14,7 +14,6 @@
                 {{/levels}}
             </span>
         </span>
-        <!--
         {{#audio}}
         <span class="term__info term__info--right play" data-play="main">
             <i class="icon icon--audio play__icon"></i>
@@ -23,7 +22,6 @@
             </audio>
         </span>
         {{/audio}}
-        -->
     </header>
     <div class="quiz__answers" data-locked="false" data-quiz="answers">
         {{#answers}}

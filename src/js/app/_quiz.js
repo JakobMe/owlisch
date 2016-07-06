@@ -457,9 +457,11 @@ var Quiz = (function() {
      * ermöglichen, zur nächsten Frage fortzufahren.
      */
     function _unlockContinue() {
-        _$questions.eq(_currentStep - 1)
-            .find(_SEL_CONTINUE).data(_DATA_LOCKED, false)
-            .setMod(_B_QUIZ, _E_CONTINUE, _M_LOCKED, false);
+        setTimeout(function() {
+            _$questions.eq(_currentStep - 1)
+                .find(_SEL_CONTINUE).data(_DATA_LOCKED, false)
+                .setMod(_B_QUIZ, _E_CONTINUE, _M_LOCKED, false);
+        }, CFG.TIME.DELAY);
     }
     
     /**

@@ -164,6 +164,7 @@ var CFG = (function() {
             PCT                 : "%"
         },
         TIME: {
+            WAIT                : 10,
             ANIMATION           : 150,
             DELAY               : 300
         },

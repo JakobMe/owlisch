@@ -429,7 +429,7 @@ var Quiz = (function() {
             $levels.setMod(_B_STARS, _M_ANIMATED, true);
             setTimeout(function() {
                 $levels.setMod(_B_STARS, _M_IS, lvl);
-            }, 10);
+            }, CFG.TIME.WAIT);
         }
     }
     
@@ -458,7 +458,7 @@ var Quiz = (function() {
      */
     function _unlockContinue() {
         _$questions.eq(_currentStep - 1)
-            .find(_SEL_CONTINUE).data(_DATA_LOCKED, false).parent()
+            .find(_SEL_CONTINUE).data(_DATA_LOCKED, false)
             .setMod(_B_QUIZ, _E_CONTINUE, _M_LOCKED, false);
     }
     

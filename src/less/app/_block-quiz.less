@@ -13,7 +13,10 @@
 @_quiz-line-height-title:               20px;
 @_quiz-size-button:                     44px;
 @_quiz-size-button-small:               36px;
+@_quiz-size-button-image:               110px;
 @_quiz-font-size-button:                16px;
+@_quiz-size-icon-image:                 30px;
+@_quiz-size-gap-image:                  3%;
 
 // Block: Quiz
 .quiz {
@@ -90,13 +93,41 @@
         
         // Mod: Klein
         &--small {
-            padding: 0 @_quiz-size-button-small;
+            padding-left: @_quiz-size-button-small;
+            padding-right: @_quiz-size-button-small;
             font-size: @app-font-size-medium;
             height: @_quiz-size-button-small;
             line-height: (@_quiz-size-button-small - (2 * @app-size-line-medium));
             
             // Icon
             &:before { width: @_quiz-size-button-small; }
+        }
+        
+        // Mod: Bild
+        &--image {
+            float: left;
+            font-size: 0;
+            padding-left: 0;
+            padding-right: 0;
+            margin-bottom: 0;
+            background: @app-color-light;
+            height: @_quiz-size-button-image;
+            margin-top: @_quiz-size-gap-image;
+            width: ((100% - @_quiz-size-gap-image) / 2);
+            line-height: (@_quiz-size-button-image - (2 * @app-size-line-medium));
+            
+            // Alternierende Elemente, Erstes & Zweites Element
+            &:nth-child(1), &:nth-child(2) { margin-top: 0; }
+            &:nth-child(odd) { margin-right: @_quiz-size-gap-image; }
+            
+            // Icon
+            &:before {
+                top: auto;
+                bottom: 0;
+                width: @_quiz-size-icon-image;
+                height: @_quiz-size-icon-image;
+                line-height: @_quiz-size-icon-image;
+            }
         }
         
         // Mod: Rund
@@ -161,13 +192,29 @@
         }
     }
     
+    // Element: Bild
+    &__image {
+        display: inline-block;
+        height: 100%;
+        width: auto;
+    }
+    
     // Element: Button & Mod: Rund & Element: Button-Text
     &__button--round &__buttontext:last-child {
         font-size: @app-font-size-medium;
     }
     
     // Element: Antworten
-    &__answers { padding: @app-size-gap; }
+    &__answers {
+        padding: @app-size-gap;
+        
+        // Clearfix
+        &:after {
+            content: "";
+            clear: both;
+            display: table;
+        }        
+    }
     
     // Element: Antworten & Mod: Gesperrt & Element: Button
     &__answers--locked &__button { cursor: default; }

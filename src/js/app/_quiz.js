@@ -64,6 +64,7 @@ var Quiz = (function() {
     var _progress               = [];
     var _dataTerms              = [];
     var _dataConfig             = [];
+    var _dataAlias              = CFG.STR.EMPTY;
     var _dataCaption            = CFG.STR.EMPTY;
     
     // DOM-Elemente
@@ -352,11 +353,13 @@ var Quiz = (function() {
      * die Fragen anschließend.
      */
     function _processQuestions() {
+        var type, diff, answ;
         $.each(_questions, function(i, term) {
-            var type = _pickQuestionType(term);
-            var diff = Util.limit(term.lvl, 0, CFG.QUIZ.DIFF.length - 1);
+            type = _pickQuestionType(term);
+            answ = _pickAnswers(term, type.answers, type.right, type.pictures);
+            diff = Util.limit(term.lvl, 0, CFG.QUIZ.DIFF.length - 1);
             _renderQuestion(i, {
-                answers    : _pickAnswers(term, type.answers, type.right),
+                answers    : answ,
                 question   : (type.image ? CFG.LABEL.WHAT : CFG.LABEL.MEANING),
                 image      : (type.image ? term.image : false),
                 audio      : (type.audio ? term.audio : false),
@@ -397,9 +400,14 @@ var Quiz = (function() {
      * Antworten aussuchen.
      * Stellt für einen gegebenen Begriff zufällig Antworten zusammen.
      * @param {Object} term Begriff mit Antworten
+     * @param {String} propAnswers Name der Antwort-Eigenschaft
+     * @param {String} propRight Name der Korrektheit-Eigenschaft
+     * @param {Boolean} pictures Antworten sind Bilder
      * @returns {Object[]} Liste der zusammengestellten Antworten
      */
-    function _pickAnswers(term, propAnswers, propRight) {
+    function _pickAnswers(term, propAnswers, propRight, pictures) {
+        
+        // Antworten zusammenstellen und mischen
         var answers = [{ label: term[propRight], correct: true }];
         if ($.isArray(term[propAnswers])) {
             var dataTemp = term[propAnswers].slice(0);
@@ -410,6 +418,16 @@ var Quiz = (function() {
             }
             Util.shuffle(answers);
         }
+        
+        // Bei Bildern das Label durch Bild-Pfad ersetzen
+        if (pictures) {
+            var path = CFG.DATA.PATH_DATA + _dataAlias + CFG.DATA.PATH_IMAGE;
+            $.each(answers, function(i, answer) {
+                answer.label = path + answer.label + CFG.DATA.TYPE_IMAGE;
+            });
+        }
+        
+        // Antworten zurückgeben
         return answers;
     }
     
@@ -625,7 +643,12 @@ var Quiz = (function() {
      * @param {*[]} data Übermittelte Daten
      */
     function _setConfig(data) {
-        if ($.isArray(data)) { _dataConfig = data; }
+        if ((typeof data       !== typeof undefined) &&
+            (typeof data.alias === typeof CFG.STR.EMPTY) &&
+            ($.isArray(data.config))) {
+            _dataConfig = data.config;
+            _dataAlias  = data.alias;
+        }
     }
     
     /**

@@ -24,12 +24,22 @@
         {{/audio}}
     </header>
     <div class="quiz__answers" data-locked="false" data-quiz="answers">
+        {{#buttons}}
         {{#answers}}
         <span class="quiz__button{{#image}} quiz__button--small{{/image}} quiz__button--{{#correct}}right{{/correct}}{{^correct}}wrong{{/correct}}"
               data-quiz="answer" data-answer="{{correct}}">
             {{label}}
         </span>
         {{/answers}}
+        {{/buttons}}
+        {{#pictures}}
+        {{#answers}}
+        <span class="quiz__button quiz__button--image quiz__button--{{#correct}}right{{/correct}}{{^correct}}wrong{{/correct}}"
+              data-quiz="answer" data-answer="{{correct}}">
+            <img class="quiz__image" src="{{label}}" />
+        </span>
+        {{/answers}}
+        {{/pictures}}
     </div>
 </article>
 <div class="quiz__continue quiz__continue--locked" data-locked="true" data-quiz="continue">

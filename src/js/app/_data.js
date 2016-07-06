@@ -342,7 +342,10 @@ var Data = (function() {
      * Liefert die Konfiguration des Wörterbuches in einem Event.
      */
     function _serveDataConfig() {
-        Mediator.send(CFG.CNL.CONFIG_SERVE, _dataConfig);
+        Mediator.send(CFG.CNL.CONFIG_SERVE, {
+            alias  : _dictionaryAlias,
+            config : _dataConfig
+        });
     }
     
     // Öffentliches Interface

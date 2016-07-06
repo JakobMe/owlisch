@@ -124,9 +124,10 @@ var TabBar = (function() {
             }, CFG.TIME.ANIMATION);
             
             // Aktiven Tab ermitteln
-            _tabActive = Math.min(Math.max(
+            _tabActive = Util.limit(
                 (tab.target ? $(tab.target).closest(_SEL_TAB).index() : tab),
-                0), _tabNumber);
+                0, _tabNumber
+            );
     
             // Rendern, Mediator aufrufen
             _render();

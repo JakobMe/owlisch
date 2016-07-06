@@ -235,8 +235,8 @@ var Data = (function() {
             
             // Fortschritts-Daten aktualisieren
             _dataProgress[alias] = {
-                lvl  : Math.max(Math.min(lvl, maxLvl), minLvl),
-                fail : Math.max(Math.min(fail, maxFail), minFail)
+                lvl  : Util.limit(lvl, minLvl, maxLvl),
+                fail : Util.limit(fail, minFail, maxFail)
             };
             
             // Speichern und Listen aktualisieren
@@ -266,7 +266,7 @@ var Data = (function() {
         if (typeof score === typeof 0) {
             
             // Neuen Wert korrigieren, Startindex für Kürzung berechnen
-            var value = Math.max(Math.min(score, CFG.QUIZ.QUESTIONS), 0);
+            var value = Util.limit(score, 0, CFG.QUIZ.QUESTIONS);
             var start = Math.max(_sizeScores + 1 - CFG.QUIZ.LASTGAMES, 0);
             
             // Neuen Wert hinzufügen, Liste kürzen, Länge speichern

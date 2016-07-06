@@ -120,7 +120,7 @@ var Quiz = (function() {
             // Daten zusammenstellen
             var extra     = _NUM_SLIDES_BEFORE + _NUM_SLIDES_AFTER;
             var slides    = extra + CFG.QUIZ.QUESTIONS;
-            var questions = Helper.arrayFromNumber(slides).slice(
+            var questions = Util.arrFromNum(slides).slice(
                 _NUM_SLIDES_BEFORE, slides - _NUM_SLIDES_AFTER
             );
             
@@ -198,7 +198,7 @@ var Quiz = (function() {
      * @param {Number} slide Nummer des neuen Slides
      */
     function _setSlider(slide) {
-        _currentSlide = Math.max(Math.min(slide, _indexFinish), _indexStart);
+        _currentSlide = Util.limit(slide, _indexStart, _indexFinish);
         _renderSlider();
     }
     
@@ -226,7 +226,7 @@ var Quiz = (function() {
      */
     function _setStep(step) {
         if (typeof step === typeof 0) {
-            _currentStep = Math.max(Math.min(step, CFG.QUIZ.QUESTIONS), 0);
+            _currentStep = Util.limit(step, 0, CFG.QUIZ.QUESTIONS);
             _renderProgressbar();
         }
     }
@@ -310,8 +310,8 @@ var Quiz = (function() {
         _questions = [];
         var dataTemp = _dataTerms.slice(0);
         while (_questions.length < CFG.QUIZ.QUESTIONS) {
-            var randomTerm = Helper.getRandomItem(dataTemp);
-            if (Helper.getRandomItem(CFG.QUIZ.FAILS) <= randomTerm.fail) {
+            var randomTerm = Util.getRandom(dataTemp);
+            if (Util.getRandom(CFG.QUIZ.FAILS) <= randomTerm.fail) {
                 dataTemp.splice(dataTemp.indexOf(randomTerm), 1);
                 _questions.push(randomTerm);
             }
@@ -329,9 +329,9 @@ var Quiz = (function() {
      */
     function _pickQuestionType(term) {
         var config = null;
-        var index = Helper.limit(term.lvl, 0, CFG.QUIZ_TYPES.length - 1);
+        var index = Util.limit(term.lvl, 0, CFG.QUIZ_TYPES.length - 1);
         while (config === null) {
-            var type = Helper.getRandomItem(CFG.QUIZ_TYPES[index]);
+            var type = Util.getRandom(CFG.QUIZ_TYPES[index]);
             if (($.isArray(term[type.answers]) &&
                 (term[type.answers].length < CFG.QUIZ.ANSWERS - 1)) ||
                 (type.image && !term.image)) {
@@ -400,11 +400,11 @@ var Quiz = (function() {
         if ($.isArray(term[propAnswers])) {
             var dataTemp = term[propAnswers].slice(0);
             while (answers.length < CFG.QUIZ.ANSWERS) {
-                var randomAnswer = Helper.getRandomItem(dataTemp);
+                var randomAnswer = Util.getRandom(dataTemp);
                 answers.push({ label: randomAnswer, correct: false });
                 dataTemp.splice(dataTemp.indexOf(randomAnswer), 1);
             }
-            Helper.shuffleArray(answers);
+            Util.shuffle(answers);
         }
         return answers;
     }
@@ -556,7 +556,7 @@ var Quiz = (function() {
         
         // Bewertung ermitteln
         var rating  = CFG.RATING.BAD;
-        var percent = Helper.calcPercent(result, CFG.QUIZ.QUESTIONS);
+        var percent = Util.calcPercent(result, CFG.QUIZ.QUESTIONS);
         $.each(CFG.RATING, function(i, val) {
             if ((percent        >= val.PERCENT) &&
                 (rating.PERCENT <= val.PERCENT)) {
@@ -592,8 +592,8 @@ var Quiz = (function() {
             single    : result === 1,
             rating    : rating.LABEL,
             icon      : rating.ICON,
-            percent   : Helper.calcPercent(result, CFG.QUIZ.QUESTIONS),
-            questions : Helper.arrayFromNumber(CFG.QUIZ.QUESTIONS)
+            percent   : Util.calcPercent(result, CFG.QUIZ.QUESTIONS),
+            questions : Util.arrFromNum(CFG.QUIZ.QUESTIONS)
         }, setTimeout(function() {
             _$finish.find(_SEL_CHART).setMod(_B_CHART, _M_GROW, true);
         }, CFG.TIME.ANIMATION));

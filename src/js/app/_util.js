@@ -1,12 +1,12 @@
 /**
- * Helper-Modul.
+ * Util-Modul.
  * Stellt Hilfs-Funktionen zur Verfügung.
  * @author Jakob Metzger <jakob.me@gmail.com>
  * @copyright 2016 Jakob Metzger
  * @licence https://opensource.org/licenses/MIT MIT
  * @link http://jmportfolio.de
  */
-var Helper = (function() {
+var Util = (function() {
     
     /**
      * Ein Array aus einer Zahl generieren.
@@ -14,7 +14,7 @@ var Helper = (function() {
      * @param {Number} number Letzte Zahl im Array
      * @returns {Number[]} Array aus Zahlen bis zur gewählten Zahl
      */
-    function arrayFromNumber(number) {
+    function arrFromNum(number) {
         var arr = [];
         for (var i = 0; i < number; i++) { arr.push(i + 1); }
         return arr;
@@ -55,7 +55,7 @@ var Helper = (function() {
      * @param {*[]} array Beliebiges Array
      * @returns {*} Zufälliges Element des Arrays
      */
-    function getRandomItem(array) {
+    function getRandom(array) {
         return array[Math.floor(Math.random() * array.length)];
     }
     
@@ -64,7 +64,7 @@ var Helper = (function() {
      * Mischt ein Array zufällig durch.
      * @param {*[]} array Zu mischendes Array
      */
-    function shuffleArray(array) {
+    function shuffle(array) {
         var rand, last;
         for (var i = array.length; i; i -= 1) {
             rand = Math.floor(Math.random() * i);
@@ -92,11 +92,11 @@ var Helper = (function() {
     
     // Öffentliches Interface
     return { 
-        arrayFromNumber     : arrayFromNumber,
+        arrFromNum          : arrFromNum,
         calcPercent         : calcPercent,
         countTermsWithLevel : countTermsWithLevel,
-        getRandomItem       : getRandomItem,
-        shuffleArray        : shuffleArray,
+        getRandom           : getRandom,
+        shuffle             : shuffle,
         limit               : limit
     };
     

@@ -1,5 +1,5 @@
 /**
- * Helper-Modul.
+ * Util-Modul.
  * Stellt Hilfs-Funktionen zur Verfügung.
  * @author Jakob Metzger <jakob.me@gmail.com>
  * @copyright 2016 Jakob Metzger

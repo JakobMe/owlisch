@@ -45,8 +45,8 @@ var Statistics = (function() {
      * Startet Funktionen, um den Anfangszustand der Statistik herzustellen.
      */
     function init() {
-        _arrStepsPercent = Helper.arrayFromNumber(_NUM_STEPS_PERCENT);
-        _arrStepsScores  = Helper.arrayFromNumber(CFG.QUIZ.QUESTIONS);
+        _arrStepsPercent = Util.arrFromNum(_NUM_STEPS_PERCENT);
+        _arrStepsScores  = Util.arrFromNum(CFG.QUIZ.QUESTIONS);
         _hookMediator();
     }
     
@@ -127,7 +127,7 @@ var Statistics = (function() {
             $.each(_dataScores, function(i, value) {
                 data.push({
                     label   : value,
-                    percent : Helper.calcPercent(value, CFG.QUIZ.QUESTIONS),
+                    percent : Util.calcPercent(value, CFG.QUIZ.QUESTIONS),
                     zero    : (value === 0)
                 });
             });
@@ -145,7 +145,7 @@ var Statistics = (function() {
         if (_$progress instanceof $) {
             var data = [{
                 label   : _sizeSolved + CFG.STR.SLASH + _sizeTerms,
-                percent : Helper.calcPercent(_sizeSolved, _sizeTerms),
+                percent : Util.calcPercent(_sizeSolved, _sizeTerms),
                 zero    : (_sizeSolved === 0)
             }];
             _renderChart(_$progress, data, _arrStepsPercent, true);
@@ -161,13 +161,13 @@ var Statistics = (function() {
         if (_$dictionary instanceof $) {
             var data = [];
             $.each(CFG.QUIZ.LEVELS, function(i, level) {
-                var count = Helper.countTermsWithLevel(_dataTerms, level);
+                var count = Util.countTermsWithLevel(_dataTerms, level);
                 data.push({
                     lvl     : level,
                     levels  : CFG.QUIZ.LEVELS,
                     label   : count,
                     zero    : (count === 0),
-                    percent : Helper.calcPercent(count, _sizeSolved)
+                    percent : Util.calcPercent(count, _sizeSolved)
                 });
             });
             _renderChart(_$dictionary, data, _arrStepsPercent, true, true);

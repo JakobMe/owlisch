@@ -21,6 +21,12 @@ var Quiz = (function() {
     var _SEL_ANSWERS            = "[data-quiz='answers']";
     var _SEL_LEVEL              = "[data-quiz='level']";
     var _SEL_CONTINUE           = "[data-quiz='continue']";
+    var _SEL_INPUT              = "[data-quiz='input']";
+    var _SEL_BACKSPACE          = "[data-quiz='backspace']";
+    var _SEL_KEYBOARD           = "[data-quiz='keyboard']";
+    var _SEL_LETTER             = "[data-quiz='letter']";
+    var _SEL_SOLUTION           = "[data-quiz='solution']";
+    var _SEL_SOLVE              = "[data-quiz='solve']";
     
     // Template-Namen
     var _TMPL_QUIZ              = "quiz";
@@ -36,7 +42,9 @@ var Quiz = (function() {
     var _E_STEP                 = "step";
     var _E_BUTTON               = "button";
     var _E_ANSWERS              = "answers";
-    var _E_CONTINUE             = "continue";
+    var _E_ACTION               = "action";
+    var _E_INPUT                = "input";
+    var _E_SOLUTION             = "solution";
     var _M_IS                   = "is";
     var _M_ANIMATED             = "animated";
     var _M_SKIPPED              = "skipped";
@@ -50,6 +58,10 @@ var Quiz = (function() {
     var _DATA_SLIDE             = "slide";
     var _DATA_ANSWER            = "answer";
     var _DATA_LOCKED            = "locked";
+    var _DATA_LETTER            = "letter";
+    var _DATA_SOLUTION          = "solution";
+    var _DATA_INPUT             = "input";
+    var _DATA_CURRENT           = "current";
     
     // Sonstige Konstanten
     var _NUM_SLIDES_BEFORE      = 1;
@@ -72,6 +84,7 @@ var Quiz = (function() {
     var _$start                 = null;
     var _$finish                = null;
     var _$questions             = null;
+    var _$currentQuestion       = null;
     var _$progressbar           = null;
     
     /**
@@ -104,7 +117,10 @@ var Quiz = (function() {
         }
         if (_$questions instanceof $) {
             _$questions.on(CFG.EVT.CLICK, _SEL_ANSWER, _evaluateAnswer)
-                       .on(CFG.EVT.CLICK, _SEL_CONTINUE, _continue);
+                       .on(CFG.EVT.CLICK, _SEL_SOLVE, _evaluateInput)
+                       .on(CFG.EVT.CLICK, _SEL_CONTINUE, _continue)
+                       .on(CFG.EVT.CLICK, _SEL_BACKSPACE, _removeLetter)
+                       .on(CFG.EVT.CLICK, _SEL_LETTER, _addLetter);
         }
     }
     
@@ -231,6 +247,7 @@ var Quiz = (function() {
     function _setStep(step) {
         if (typeof step === typeof 0) {
             _currentStep = Util.limit(step, 0, CFG.QUIZ.QUESTIONS);
+            _$currentQuestion = _$questions.eq(_currentStep - 1);
             _renderProgressbar();
         }
     }
@@ -369,6 +386,7 @@ var Quiz = (function() {
                 image      : (type.image ? term.image : false),
                 audio      : (type.audio ? term.audio : false),
                 keyword    : (term[type.keyword] || CFG.LABEL.THIS),
+                solve      : (chars || type.input),
                 difficulty : CFG.QUIZ.DIFF[diff],
                 levels     : CFG.QUIZ.LEVELS,
                 lvl        : term.lvl,
@@ -467,6 +485,22 @@ var Quiz = (function() {
     }
     
     /**
+     * Lösung verarbeiten.
+     * Führt Funktionen aus, um eine gegebene Lösung in Abhängigkeit
+     * ihrer Korrektheit zu verarbeiten; aktualisiert den Fortschritts-Balken,
+     * aktualisiert die gespeicherten Daten und zeigt den Weiter-Button an.
+     * @param {Boolean} correct Lösung ist korrekt
+     */
+    function _processSolution(correct) {
+        if (typeof correct === typeof true) {
+            _setProgress(_currentStep, correct ? _M_SUCCESS : _M_ERROR);
+            _updateTerm(correct);
+            _unlockContinue();
+            _lockSkip();
+        }
+    }
+    
+    /**
      * Antwort evaluieren.
      * Prüft, ob eine geklickte Antwort richtig oder falsch ist; setzt den
      * aktuellen Fortschritt entsprechend und rendert alle Antworten.
@@ -477,12 +511,115 @@ var Quiz = (function() {
             var $answer = $(event.target).closest(_SEL_ANSWER);
             var correct = $answer.data(_DATA_ANSWER);
             if (!$answer.parents(_SEL_ANSWERS).data(_DATA_LOCKED)) {
-                _setProgress(_currentStep, correct ? _M_SUCCESS : _M_ERROR);
                 _renderAnswers($answer, correct);
-                _updateTerm(correct);
-                _unlockContinue();
-                _lockSkip();
+                _processSolution(correct);
             }
+        }
+    }
+    
+    /**
+     * Input evaluieren.
+     * ...
+     * @param {Object}
+     */
+    function _evaluateInput(event) {
+        if ((typeof event !== typeof undefined) && (event.target) &&
+            (!$(event.target).closest(_SEL_SOLVE).data(_DATA_LOCKED))) {
+            
+            // DOM-Elemente und Daten initialisieren
+            var $input   = _$currentQuestion.find(_SEL_INPUT);
+            var input    = $input.data(_DATA_INPUT).toUpperCase();
+            var solution = $input.data(_DATA_SOLUTION).toUpperCase();
+            var correct  = (input === solution);
+            
+            //
+            _lockSolve();
+            _renderInput($input, correct);
+            _processSolution(correct);
+        }
+    }
+    
+    /**
+     * Buchstaben hinzufügen.
+     * Fügt bei Klick-Event einen Buchstaben zum Quiz-Input der aktuellen
+     * Frage hinzu; deaktiviert den gedrückten Button und aktualisiert
+     * die Daten des Inputs.
+     * @param {Object} event Ausgelöstes Event
+     */
+    function _addLetter(event) {
+        if (typeof event !== typeof undefined) {
+            var $btn = $(event.target).closest(_SEL_LETTER);
+            if (!$btn.data(_DATA_LOCKED) &&
+                !$btn.parents(_SEL_ANSWERS).data(_DATA_LOCKED)) {
+                
+                // Daten ermitteln, DOM-Elemente initialisieren
+                var $char  = null;
+                var $input = _$currentQuestion.find(_SEL_INPUT);
+                var input  = $input.data(_DATA_INPUT);
+                
+                // Löschen entsperren
+                _toggleBackspace(false);
+                
+                // Nach leerem Input suchen, Buchstabe einfügen
+                $input.children().each(function(i) {
+                    $char = $(this);
+                    if ($char.text().length === 0) {
+                        $char.text($btn.text());
+                        $char.data(_DATA_LETTER, $btn.index());
+                        $input.data(_DATA_INPUT, input + $btn.text());
+                        $input.data(_DATA_CURRENT, i);
+                        $btn.data(_DATA_LOCKED, true);
+                        $btn.setMod(_B_QUIZ, _E_BUTTON, _M_LOCKED, true);
+                        return false;
+                    }
+                });
+            }
+        }
+    }
+    
+    /**
+     * Buchstaben entfernen.
+     * Entfernt bei Klick-Event einen Buchstaben aus dem Quiz-Input der
+     * aktuellen Frage; aktualisiert die Daten des Inputs und deaktiviert
+     * gegebenenfalls den Backspace-Button.
+     */
+    function _removeLetter(event) {
+        if (typeof event !== typeof undefined) {
+            var $btn = $(event.target).closest(_SEL_BACKSPACE);
+            if (!$btn.data(_DATA_LOCKED) &&
+                !$btn.parents(_SEL_ANSWERS).data(_DATA_LOCKED)) {
+                
+                // DOM-Elemente und Daten initialisieren
+                var $input   = _$currentQuestion.find(_SEL_INPUT);
+                var current  = $input.data(_DATA_CURRENT);
+                var $current = $input.children().eq(current);
+                var letter   = $current.data(_DATA_LETTER);
+                var input    = $input.data(_DATA_INPUT);
+                
+                // Elemente und Daten aktualisieren
+                $current.text(CFG.STR.EMPTY).removeData(_DATA_LETTER);
+                $input.data(_DATA_CURRENT, current - 1);
+                $input.data(_DATA_INPUT, input.slice(0, -1));
+                _$currentQuestion.find(_SEL_KEYBOARD).children().eq(letter)
+                    .setMod(_B_QUIZ, _E_BUTTON, _M_LOCKED, false)
+                    .data(_DATA_LOCKED, false);
+                
+                // Backspace sperren, falls keine Buchstaben mehr
+                if (current <= 0) { _toggleBackspace(true); }
+            }
+        }
+    }
+    
+    /**
+     * Backspace umschalten.
+     * Sperrt oder entsperrt den Backspace-Button der aktuellen Frage.
+     * @param {Boolean} locked Button sperren
+     */
+    function _toggleBackspace(locked) {
+        if (typeof locked === typeof true) {
+        _$currentQuestion.find(_SEL_BACKSPACE)
+            .setMod(_B_QUIZ, _E_BUTTON, _M_LOCKED, locked)
+            .data(_DATA_LOCKED, locked);
         }
     }
     
@@ -513,7 +650,7 @@ var Quiz = (function() {
      */
     function _renderLevel(level) {
         if (typeof level === typeof 0) {
-            var $levels =  _$questions.eq(_currentStep - 1).find(_SEL_LEVEL);
+            var $levels =  _$currentQuestion.find(_SEL_LEVEL);
             var lvl = Math.min(CFG.QUIZ.LEVELS.length, level);
             if (level <= CFG.QUIZ.LEVELS.length) {
                 $levels.setMod(_B_STARS, _M_ANIMATED, true)
@@ -547,10 +684,18 @@ var Quiz = (function() {
      */
     function _unlockContinue() {
         setTimeout(function() {
-            _$questions.eq(_currentStep - 1)
-                .find(_SEL_CONTINUE).data(_DATA_LOCKED, false)
-                .setMod(_B_QUIZ, _E_CONTINUE, _M_LOCKED, false);
+            _$currentQuestion.find(_SEL_CONTINUE).data(_DATA_LOCKED, false)
+                .setMod(_B_QUIZ, _E_ACTION, _M_LOCKED, false);
         }, CFG.TIME.DELAY);
+    }
+    
+    /**
+     * Lösen.Button entsperren.
+     * Sperrt den Lösen-Button der aktuellen Frage.
+     */
+    function _lockSolve() {
+        _$currentQuestion.find(_SEL_SOLVE).data(_DATA_LOCKED, true)
+            .setMod(_B_QUIZ, _E_ACTION, _M_LOCKED, true);
     }
     
     /**
@@ -592,6 +737,30 @@ var Quiz = (function() {
             $answer.parents(_SEL_ANSWERS)
                    .setMod(_B_QUIZ, _E_ANSWERS, _M_LOCKED, true)
                    .data(_DATA_LOCKED, true);
+        }
+    }
+    
+    /**
+     * Input rendern.
+     * Rendert den übergebenen Input; aktualisiert seine Status-Klasse
+     * und blendet die Lösung ein; sperrt das Input.
+     * @param {Object} $answer DOM-Element des Inputs
+     * @param {Boolean} correct Angabe, ob die Lösung korrekt ist
+     */
+    function _renderInput($input, correct) {
+        if ($input instanceof $) {
+                
+            // Input modifizieren
+            var status = (correct ? _M_SUCCESS : _M_ERROR);
+            $input.setMod(_B_QUIZ, _E_INPUT, status, true);
+            $input.siblings(_SEL_SOLUTION)
+                  .setMod(_B_QUIZ, _E_SOLUTION, _M_LOCKED, false)
+                  .setMod(_B_QUIZ, _E_SOLUTION, status, true);
+            
+            // Input sperren
+            $input.parents(_SEL_ANSWERS)
+                  .setMod(_B_QUIZ, _E_ANSWERS, _M_LOCKED, true)
+                  .data(_DATA_LOCKED, true);
         }
     }
     

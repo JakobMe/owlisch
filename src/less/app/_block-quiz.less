@@ -16,6 +16,7 @@
 @_quiz-size-button-image:               110px;
 @_quiz-font-size-button:                16px;
 @_quiz-size-icon-image:                 30px;
+@_quiz-size-triangle:                   12px;
 @_quiz-size-gap-image:                  3%;
 
 // Block: Quiz
@@ -111,6 +112,7 @@
             padding-right: @app-size-gap;
             margin: 0 @app-size-gap-micro;
             margin-bottom: @app-size-gap-tiny;
+            min-width: @_quiz-size-button;
             
             // Icon
             &:before { display: none; }
@@ -212,6 +214,7 @@
         
         // Mod: Gesperrt
         &--locked {
+            cursor: default;
             opacity: @app-opacity-locked;
         }
     }
@@ -248,6 +251,15 @@
         opacity: @app-opacity-locked;
     }
     
+    // Element: Keyboard
+    &__keyboard { .transition(); }
+    
+    // Element: Antworten & Mod: Gesperrt & Element: Tastatur
+    &__answers--locked &__keyboard {
+        opacity: @app-opacity-invisible;
+        .translate(0, 50%);
+    }
+    
     // Element: Diagramm
     &__chart {
         .border(bottom);
@@ -261,16 +273,100 @@
         display: block;
         overflow: hidden;
         position: relative;
-        box-sizing: content-box;
-        padding: 0;
+        box-sizing: border-box;
+        font-weight: bold;
+        font-style: normal;
         margin: 0;
+        padding: (@app-size-line-medium / 2) 0;
+        font-size: @app-font-size-medium;
         margin-bottom: @app-size-gap;
         height: @_quiz-size-button;
-        line-height: @_quiz-size-button;
+        line-height: (@_quiz-size-button - (2 * @app-size-line-medium));
         .shadow-small(@app-color-shadow-lighter);
         .border-radius();
+        .border-button();
         .gradient(top);
-        .border(all);
+        .transition();
+        
+        // Mods: Erfolg & Fehler
+        &--success, &--error {
+            padding-top: 0;
+            padding-bottom: 0;
+        }
+        
+        // Mod: Erfolg
+        &--success {
+            .border-button(@app-color-success, @app-size-line-medium, false);
+            .animation(answer-success);
+        }
+        
+        // Mod: Fehler
+        &--error {
+            .border-button(@app-color-error, @app-size-line-medium, false);
+            .animation(answer-error);
+        }
+    }
+    
+    // Element: Lösung
+    &__solution {
+        display: block;
+        font-weight: normal;
+        position: relative;
+        text-align: center;
+        box-sizing: border-box;
+        line-height: @_quiz-size-button;
+        font-size: @app-font-size-big;
+        .shadow-small(@app-color-shadow-lighter);
+        .colored(@app-color-light);
+        .border-button();
+        .transition(opacity);
+        .translate();
+        
+        // Dreieck
+        &:before {
+            display: block;
+            position: absolute;
+            content: "";
+            left: 50%;
+            background: @app-color-light;
+            width: @_quiz-size-triangle;
+            height: @_quiz-size-triangle;
+            top: -(@_quiz-size-triangle / 2);
+            transform: translate3d(-50%, 0, 0) rotate(45deg);
+            .shadow(-(@app-size-line-thin), -(@app-size-line-thin), 0, 0, @app-color-background-dark);
+        }
+        
+        // Icon
+        &:after {
+            display: block;
+            font-weight: normal;
+            font-style: normal;
+            position: absolute;
+            text-align: center;
+            top: 0;
+            left: 0;
+            height: @_quiz-size-button;
+            width: @_quiz-size-button;
+            content: "";
+        }
+        
+        // Mod: Erfolg
+        &--success {
+            .fontello-icon(@fontello-icon-check);
+            &:after { color: @app-color-success; }
+        }
+        
+        // Mod: Fehler
+        &--error {
+            .fontello-icon(@fontello-icon-cancel);
+            &:after { color: @app-color-error; }
+        }
+        
+        // Mod: Gesperrt
+        &--locked {
+            height: 0;
+            opacity: @app-opacity-invisible;
+        }
     }
     
     // Element: Buchstabe
@@ -278,15 +374,17 @@
         float: left;
         display: block;
         box-sizing: border-box;
-        height: 100%;
-        .border(right);
+        margin-top: -(@app-size-line-medium / 2);
+        height: (@_quiz-size-button - @app-size-line-medium);
+        .border(right, @app-color-background-light);
+        .transition();
         
         // Letztes Element
         &:last-child { border: none; }
     }
     
-    // Element: Weiter
-    &__continue {
+    // Element: Aktion
+    &__action {
         position: fixed;
         box-sizing: border-box;
         left: 0;
@@ -310,6 +408,6 @@
 // Responsive
 @media screen and (min-width: @app-size-max) {
     
-    // Block: Quiz & Element: Weiter
-    .quiz__continue { position: absolute; }
+    // Block: Quiz & Element: Aktion
+    .quiz__action { position: absolute; }
 }

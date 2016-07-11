@@ -41,22 +41,35 @@
         {{/answers}}
         {{/pictures}}
         {{#chars}}
-        <div class="quiz__input quiz__input--letters" data-quiz="input" data-solution="{{solution}}" data-input="">
+        <div class="quiz__input quiz__input--letters" data-quiz="input" data-solution="{{solution}}" data-input="" data-current="-1">
             {{#letters}}
             <span class="quiz__letter" style="width:{{width}}%;"></span>
             {{/letters}}
         </div>
-        <span class="quiz__button quiz__button--inline quiz__button--backspace quiz__button--locked" data-quiz="backspace">
-            <i class="icon icon--backspace icon--left"></i> Entfernen
-        </span>
-        <br/>
-        {{#letters}}
-        <span class="quiz__button quiz__button--inline" data-quiz="char">{{.}}</span>
-        {{/letters}}
+        <div class="quiz__solution quiz__solution--locked" data-quiz="solution">
+            Lösung: <b>„{{solution}}“</b>
+        </div>
+        <div class="quiz__keyboard" data-quiz="keyboard">
+            <span class="quiz__button quiz__button--inline quiz__button--backspace quiz__button--locked" data-quiz="backspace">
+                <i class="icon icon--backspace icon--left"></i> Entfernen
+            </span>
+            <br/>
+            {{#letters}}
+            <span class="quiz__button quiz__button--inline" data-quiz="letter" data-locked="false">{{.}}</span>
+            {{/letters}}
+        </div>
         {{/chars}}
     </div>
 </article>
-<div class="quiz__continue quiz__continue--locked" data-locked="true" data-quiz="continue">
+{{#solve}}
+<div class="quiz__action" data-locked="false" data-quiz="solve">
+    <span class="quiz__button quiz__button--action">
+        <span>Lösen</span>
+        <i class="icon icon--right icon--solve"></i>
+    </span>
+</div>
+{{/solve}}
+<div class="quiz__action quiz__action--locked" data-locked="true" data-quiz="continue">
     <span class="quiz__button quiz__button--action">
         <span>Weiter</span>
         <i class="icon icon--right icon--forward"></i>

@@ -353,11 +353,16 @@ var Quiz = (function() {
      * die Fragen anschließend.
      */
     function _processQuestions() {
-        var type, diff, answ;
+        var type, diff, answ, chars;
         $.each(_questions, function(i, term) {
-            type = _pickQuestionType(term);
-            answ = _pickAnswers(term, type.answers, type.right, type.pictures);
-            diff = Util.limit(term.lvl, 0, CFG.QUIZ.DIFF.length - 1);
+            
+            // Daten zusammenstellen
+            type  = _pickQuestionType(term);
+            answ  = _pickAnswers(term, type.answers, type.right, type.pictures);
+            chars = _pickChars(type, answ);
+            diff  = Util.limit(term.lvl, 0, CFG.QUIZ.DIFF.length - 1);
+            
+            // Frage rendern
             _renderQuestion(i, {
                 answers    : answ,
                 question   : (type.image ? CFG.LABEL.WHAT : CFG.LABEL.MEANING),
@@ -369,10 +374,40 @@ var Quiz = (function() {
                 lvl        : term.lvl,
                 pictures   : type.pictures,
                 buttons    : type.buttons,
-                chars      : type.chars,
+                chars      : chars,
                 input      : type.input
             });
         });
+    }
+    
+    /**
+     * Zeichen auswählen.
+     * Wählt anhand des gegebenen Frage-Typs und der Antworten
+     * die Zeichen für die Ausgabe der Lösung aus; mischt die Zeichen
+     * der Lösung durch und wandelt sie in Großbuchstaben um. Falls
+     * der Typ oder die Antworten nicht stimmen, wird false zurückgegeben.
+     * @param {Object} type Typ der Quiz-Frage
+     * @param {Object[]} answer Antworten der Quiz-Frage
+     * @returns {(Object|Boolean)} Konfiguration der Buchstaben oder false
+     */
+    function _pickChars(type, answer) {
+        if ((typeof type.chars !== typeof undefined) && ($.isArray(answer)) &&
+            (type.chars !== false) && (answer.length === 1)) {
+            
+            // Buchstaben mischen und in Großbuchstaben umwandeln
+            var letters = [];
+            $.each(Util.shuffle(answer[0].label.split(CFG.STR.EMPTY)),
+                function(i, self) { letters.push(self.toUpperCase()); });
+            
+            // Konfiguration zurückgeben
+            return {
+                letters  : letters,
+                solution : answer[0].label,
+                width    : Util.calcPercent(1, letters.length, false)
+            };
+            
+        // Ansonsten Buchstaben deaktivieren
+        } else { return false; }
     }
     
     /**

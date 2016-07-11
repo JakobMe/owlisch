@@ -23,7 +23,7 @@
         </span>
         {{/audio}}
     </header>
-    <div class="quiz__answers" data-locked="false" data-quiz="answers">
+    <div class="quiz__answers{{#chars}} quiz__answers--chars{{/chars}}" data-locked="false" data-quiz="answers">
         {{#buttons}}
         {{#answers}}
         <span class="quiz__button{{#image}} quiz__button--small{{/image}} quiz__button--{{#correct}}right{{/correct}}{{^correct}}wrong{{/correct}}"
@@ -40,6 +40,20 @@
         </span>
         {{/answers}}
         {{/pictures}}
+        {{#chars}}
+        <div class="quiz__input quiz__input--letters" data-quiz="input" data-solution="{{solution}}" data-input="">
+            {{#letters}}
+            <span class="quiz__letter" style="width:{{width}}%;"></span>
+            {{/letters}}
+        </div>
+        <span class="quiz__button quiz__button--inline quiz__button--backspace quiz__button--locked" data-quiz="backspace">
+            <i class="icon icon--backspace icon--left"></i> Entfernen
+        </span>
+        <br/>
+        {{#letters}}
+        <span class="quiz__button quiz__button--inline" data-quiz="char">{{.}}</span>
+        {{/letters}}
+        {{/chars}}
     </div>
 </article>
 <div class="quiz__continue quiz__continue--locked" data-locked="true" data-quiz="continue">

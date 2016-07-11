@@ -26,10 +26,12 @@ var Util = (function() {
      * gibt das Ergebnis in Prozentpunkten zurück.
      * @param {Number} first Erster Zahlenwert
      * @param {Number} second Zweiter Zahlenwert
+     * @param {Boolean} [true] round Prozentpunkte runden
      * @returns {Number} Prozentpunkte
      */
-    function calcPercent(first, second) {
-        var result = Math.round((first / second) * 100);
+    function calcPercent(first, second, round) {
+        var result = ((first / second) * 100);
+        if (typeof round !== typeof true) { result = Math.round(result); }
         return (isNaN(result) ? 0 : result);
     }
     
@@ -63,6 +65,7 @@ var Util = (function() {
      * Array mischen.
      * Mischt ein Array zufällig durch.
      * @param {*[]} array Zu mischendes Array
+     * @returns {*[]} Gemischtes Array
      */
     function shuffle(array) {
         var rand, last;
@@ -72,6 +75,7 @@ var Util = (function() {
             array[i - 1] = array[rand];
             array[rand] = last;
         }
+        return array;
     }
     
     /**

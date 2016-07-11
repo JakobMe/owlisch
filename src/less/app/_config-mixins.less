@@ -204,7 +204,7 @@
  * @param {*px|*%} start - Startposition des Verlaufes
  * @param {*px|*%} end - Endposition des Verlaufes
  */
-.gradient(@pos, @color-start, @color-end, @start: 0%, @end: 100%) {
+.gradient(@pos, @color-start: tint(@app-color-background-light, 100%), @color-end: @app-color-background-light, @start: 0%, @end: 100%) {
     background-image: linear-gradient(to @pos, @color-start @start, @color-end @end);
 }
 

@@ -103,6 +103,25 @@
             &:before { width: @_quiz-size-button-small; }
         }
         
+        // Mod: Inline
+        &--inline {
+            width: auto;
+            display: inline-block;
+            padding-left: @app-size-gap;
+            padding-right: @app-size-gap;
+            margin: 0 @app-size-gap-micro;
+            margin-bottom: @app-size-gap-tiny;
+            
+            // Icon
+            &:before { display: none; }
+        }
+        
+        // Mod: Backspace
+        &--backspace {
+            text-transform: uppercase;
+            font-size: @app-font-size-small;
+        }
+        
         // Mod: Bild
         &--image {
             float: left;
@@ -190,6 +209,11 @@
             .border-button(@app-color-error, @app-size-line-medium, false);
             .animation(answer-error);
         }
+        
+        // Mod: Gesperrt
+        &--locked {
+            opacity: @app-opacity-locked;
+        }
     }
     
     // Element: Bild
@@ -206,6 +230,8 @@
     
     // Element: Antworten
     &__answers {
+        font-size: 0;
+        text-align: center;
         padding: @app-size-gap;
         
         // Clearfix
@@ -226,6 +252,37 @@
     &__chart {
         .border(bottom);
         .border(top);
+    }
+    
+    // Element: Input
+    &__input {
+        -webkit-appearance: none;
+        outline: none;
+        display: block;
+        overflow: hidden;
+        position: relative;
+        box-sizing: content-box;
+        padding: 0;
+        margin: 0;
+        margin-bottom: @app-size-gap;
+        height: @_quiz-size-button;
+        line-height: @_quiz-size-button;
+        .shadow-small(@app-color-shadow-lighter);
+        .border-radius();
+        .gradient(top);
+        .border(all);
+    }
+    
+    // Element: Buchstabe
+    &__letter {
+        float: left;
+        display: block;
+        box-sizing: border-box;
+        height: 100%;
+        .border(right);
+        
+        // Letztes Element
+        &:last-child { border: none; }
     }
     
     // Element: Weiter

@@ -66,6 +66,7 @@ var Quiz = (function() {
     // Sonstige Konstanten
     var _NUM_SLIDES_BEFORE      = 1;
     var _NUM_SLIDES_AFTER       = 1;
+    var _ATTR_READONLY          = "readonly";
     
     // Private Variablen
     var _indexStart             = 0;
@@ -385,6 +386,7 @@ var Quiz = (function() {
                 question   : (type.image ? CFG.LABEL.WHAT : CFG.LABEL.MEANING),
                 image      : (type.image ? term.image : false),
                 audio      : (type.audio ? term.audio : false),
+                input      : (type.input ? answ[0].label : false),
                 keyword    : (term[type.keyword] || CFG.LABEL.THIS),
                 solve      : (chars || type.input),
                 difficulty : CFG.QUIZ.DIFF[diff],
@@ -392,9 +394,10 @@ var Quiz = (function() {
                 lvl        : term.lvl,
                 pictures   : type.pictures,
                 buttons    : type.buttons,
-                chars      : chars,
-                input      : type.input
+                chars      : chars
             });
+            
+            window.console.log(type.input);
         });
     }
     
@@ -530,9 +533,10 @@ var Quiz = (function() {
             
             // DOM-Elemente und Daten initialisieren
             var $input   = _$currentQuestion.find(_SEL_INPUT);
-            var input    = $input.data(_DATA_INPUT).toUpperCase();
             var solution = $input.data(_DATA_SOLUTION).toUpperCase();
-            var correct  = (input === solution);
+            var input    = $input.data(_DATA_INPUT);
+                input    = (input !== undefined ? input : $input.val());
+            var correct  = (input.toUpperCase() === solution);
             
             // Lösen sperren, Input aktualisiert, Lösung verarbeiten
             _lockSolve();
@@ -755,6 +759,7 @@ var Quiz = (function() {
             // Input modifizieren
             var status = (correct ? _M_SUCCESS : _M_ERROR);
             $input.setMod(_B_QUIZ, _E_INPUT, status, true)
+                  .attr(_ATTR_READONLY, _ATTR_READONLY)
                   .parents(_SEL_ANSWERS).data(_DATA_LOCKED, true)
                   .setMod(_B_QUIZ, _E_ANSWERS, _M_LOCKED, true);
             

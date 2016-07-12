@@ -59,6 +59,21 @@
             {{/letters}}
         </div>
         {{/chars}}
+        {{#input}}
+        <input class="quiz__input" data-quiz="input" data-solution="{{.}}" type="text"
+               spellcheck="false" autocomplete="off" autocorrect="off" tabindex="-1" />
+        <div class="quiz__solution quiz__solution--locked" data-quiz="solution">
+            Lösung: <b>„{{.}}“</b>
+        </div>
+        <p class="notice">
+            <span class="notice__title">
+                <span class="notice__title-text">Hinweis</span>
+            </span>
+            <span class="notice__text">
+                <b>Groß-/Kleinschreibung</b> wird <b>nicht</b> beachtet.
+            </span>
+        </p>
+        {{/input}}
     </div>
 </article>
 {{#solve}}

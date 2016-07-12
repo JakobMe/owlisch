@@ -261,6 +261,13 @@
         .translate(0, 50%);
     }
     
+    // Element: Antworten & Mod: Gesperrt & Element: Hinweis
+    &__answers .notice { .transition(); }
+    &__answers--locked .notice {
+        opacity: @app-opacity-invisible;
+        .translate(0, 100%);
+    }
+    
     // Element: Diagramm
     &__chart {
         .border(bottom);
@@ -274,21 +281,33 @@
         display: block;
         overflow: hidden;
         position: relative;
+        text-align: center;
         box-sizing: border-box;
         font-weight: bold;
         font-style: normal;
         margin: 0;
         z-index: 100;
-        padding: (@app-size-line-medium / 2) 0;
-        font-size: @app-font-size-medium;
-        margin-bottom: @app-size-gap;
+        width: 100%;
+        color: @app-color-text-dark;
+        padding: (@app-size-line-medium / 2) @app-size-gap;
+        font-size: @app-font-size-big;
         height: @_quiz-size-button;
-        line-height: (@_quiz-size-button - (2 * @app-size-line-medium));
+        line-height: 1;
         .shadow-small(@app-color-shadow-lighter);
         .border-radius();
         .border-button();
         .gradient(top);
         .transition();
+        .font-main();
+        
+        // Mod: Buchstaben
+        &--letters {
+            padding-left: 0;
+            padding-right: 0;
+            font-size: @app-font-size-medium;
+            line-height: (@_quiz-size-button - (2 * @app-size-line-medium));
+            margin-bottom: @app-size-gap;
+        }
         
         // Mods: Erfolg & Fehler
         &--success, &--error {

@@ -227,7 +227,7 @@ var NavigationBar = (function() {
         if (_$head instanceof $) {
             _$head.setMod(_B_BAR, _E_HEADING, _M_HIDDEN, true);
             setTimeout(function() {
-                _$head.text(_$head.data(_DATA_STR) || CFG.STR.EMPTY);
+                _$head.text(_$head.data(_DATA_STR) || "");
                 _$head.setMod(_B_BAR, _E_HEADING, _M_HIDDEN, false);
             }, CFG.TIME.ANIMATION);
         }
@@ -437,7 +437,7 @@ var NavigationBar = (function() {
      * @param {String} title Neuer Titel
      */
     function _setHead(head) {
-        if (typeof head === typeof CFG.STR.EMPTY) {
+        if (typeof head === typeof "") {
             _$head.data(_DATA_STR, head);
             _renderHead();
         }
@@ -469,7 +469,7 @@ var NavigationBar = (function() {
     function _triggerSearch() {
         Mediator.send(
             CFG.CNL.DICTIONARY_SEARCH,
-            (_searchIsActive ? _$search.val() : CFG.STR.EMPTY)
+            (_searchIsActive ? _$search.val() : "")
         );
     }
     
@@ -500,7 +500,7 @@ var NavigationBar = (function() {
      * und fokussiert das Suchfeld.
      */
     function _clearSearch() {
-        _$search.val(CFG.STR.EMPTY).trigger(CFG.EVT.INPUT);
+        _$search.val("").trigger(CFG.EVT.INPUT);
         _$search.focus();
     }
     
@@ -523,7 +523,7 @@ var NavigationBar = (function() {
         };
         
         // Optional Titel überschreiben
-        if (typeof head === typeof CFG.STR.EMPTY) {
+        if (typeof head === typeof "") {
             $.extend(_cache[index].head, { str: head });
         }
     }

@@ -11,6 +11,7 @@ var CFG = (function() {
         DATA: {
             STORE               : "owlisch",
             ALIAS               : "owl",
+            PATH_DELIMITER      : "/",
             PATH_DATA           : "data/",
             PATH_AUDIO          : "/audio/",
             PATH_IMAGE          : "/image/",
@@ -20,14 +21,15 @@ var CFG = (function() {
         },
         QUIZ: {
             LEVELS              : [1,2,3],
-            FAILS               : [1,2,3,4,5],
+            FAILS               : [1,2,3],
             DIFF                : ["Leicht", "Mittel", "Schwer"],
+            LEVEL_NONE          : 0,
             QUESTIONS           : 10,
             LASTGAMES           : 10,
             ANSWERS             : 4
         },
         LABEL: {
-            MEANING             : "Was bedeutet",
+            MEANING             : "Was heißt",
             WHAT                : "Was ist",
             PROGRESS            : "Fortschritt:",
             DETAILS             : "Details",
@@ -154,19 +156,13 @@ var CFG = (function() {
             }
         },
         BEM: {
-            ELEMDIV             : "__",
-            MODDIV              : "--",
-            MODKEY              : "-"
+            E_DELIMITER         : "__",
+            M_DELIMITER         : "--",
+            M_KEY               : "-"
         },
         AJAX: {
             HEAD                : "HEAD",
             ERROR               : "error"
-        },
-        STR: {
-            EMPTY               : "",
-            SLASH               : "/",
-            WIDTH               : "width",
-            PCT                 : "%"
         },
         TIME: {
             WAIT                : 10,

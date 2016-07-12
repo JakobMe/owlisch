@@ -9,8 +9,8 @@
 var Data = (function() {
     
     // Private Variablen
-    var _dictionaryAlias        = CFG.STR.EMPTY;
-    var _dictionaryCaption      = CFG.STR.EMPTY;
+    var _dictionaryAlias        = "";
+    var _dictionaryCaption      = "";
     var _dataScores             = [];
     var _dataTerms              = [];
     var _dataConfig             = [];
@@ -84,11 +84,12 @@ var Data = (function() {
         
         // Pfad zur Wörterbuch-Datei zusammensetzen
         var file = CFG.DATA.PATH_DATA + _dictionaryAlias +
-                   CFG.STR.SLASH + _dictionaryAlias + CFG.DATA.TYPE_DATA;
+                   CFG.DATA.PATH_DELIMITER + _dictionaryAlias +
+                   CFG.DATA.TYPE_DATA;
         
         // AJAX Get-Anfrage zur Datei, im Anschluss Dateien prüfen
         $.getJSON(file, function(data) {
-            if ((typeof data.caption === typeof CFG.STR.EMPTY) &&
+            if ((typeof data.caption === typeof "") &&
                 $.isArray(data.terms)) {
                 _dictionaryCaption = data.caption;
                 _dataTerms  = data.terms;
@@ -120,7 +121,7 @@ var Data = (function() {
      * @returns {Object} AJAX-Objekte der Anfragen
      */
     function _checkTermFiles(alias) {
-        if (typeof alias === typeof CFG.STR.EMPTY) {
+        if (typeof alias === typeof "") {
         
             // Pfade zusammensetzen, Datei-Status initialisieren
             var pathData  = CFG.DATA.PATH_DATA + _dictionaryAlias;
@@ -175,10 +176,10 @@ var Data = (function() {
         _sizeProgress = 0;
         $.each(_dataTerms, function(i, item) {
             $.extend(item, (_dataProgress[item.alias] || {
-                lvl  : /*0*/ 2, // !TODO: Wieder auf 0 setzen
+                lvl  : CFG.QUIZ.LEVEL_NONE,
                 fail : CFG.QUIZ.FAILS[0]
             }));
-            if (item.lvl > 0) { _sizeProgress++; }
+            if (item.lvl > CFG.QUIZ.LEVEL_NONE) { _sizeProgress++; }
         });
         
         // Daten bereitstellen
@@ -234,7 +235,7 @@ var Data = (function() {
             var maxFail = CFG.QUIZ.FAILS.length;
             var minFail = CFG.QUIZ.FAILS[0];
             var maxLvl  = CFG.QUIZ.LEVELS.length;
-            var minLvl  = 0;
+            var minLvl  = CFG.QUIZ.LEVEL_NONE;
             
             // Fortschritts-Daten aktualisieren
             _dataProgress[alias] = {

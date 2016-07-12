@@ -31,8 +31,8 @@ var Dictionary = (function() {
     // Private Variablen
     var _listOriginal           = [];
     var _listFiltered           = [];
-    var _listCaption            = CFG.STR.EMPTY;
-    var _currentFilter          = CFG.STR.EMPTY;
+    var _listCaption            = "";
+    var _currentFilter          = "";
     var _currentSort            = CFG.SORTING.SORT.ALPHA;
     var _currentOrdr            = CFG.SORTING.ORDR.ASC;
     var _currentTerm            = {};
@@ -210,12 +210,12 @@ var Dictionary = (function() {
     function _filter(keyword) {
         
         // Filter-Wort gegebenenfalls aktualisieren
-        if (typeof keyword === typeof CFG.STR.EMPTY) {
+        if (typeof keyword === typeof "") {
             _currentFilter = keyword.toLowerCase();
         }
         
         // Wenn Suchbegriff leer ist, Original-Liste setzen
-        if (_currentFilter === CFG.STR.EMPTY) {
+        if (_currentFilter === "") {
             _listFiltered = _listOriginal.slice(0);
         
         // Ansonsten Filter-Liste neu erzeugen
@@ -259,8 +259,8 @@ var Dictionary = (function() {
                 if (item.lvl > 0) {
                     $.extend(item, {
                         start     : item.term,
-                        highlight : CFG.STR.EMPTY,
-                        tail      : CFG.STR.EMPTY
+                        highlight : "",
+                        tail      : ""
                     });
                     _listOriginal.push(item);
                 }
@@ -333,7 +333,7 @@ var Dictionary = (function() {
             (typeof data.act !== typeof undefined) &&
             (data.act === CFG.ACT.DICTIONARY_BACK)) {
             setTimeout(function() {
-                _$details.html(CFG.STR.EMPTY);
+                _$details.html("");
             }, CFG.TIME.DELAY);
             _setSlider(_indexListbox);
         }
@@ -352,7 +352,7 @@ var Dictionary = (function() {
             (CFG.VIEW[panel] === CFG.VIEW.DICTIONARY)) {
                 
             // Standardwerte setzen, Liste filtern und scrollen
-            _currentFilter = CFG.STR.EMPTY;
+            _currentFilter = "";
             _$listbox.animate({ scrollTop: 0 }, CFG.TIME.ANIMATION);
             _setSlider(_indexListbox);
             _filter();

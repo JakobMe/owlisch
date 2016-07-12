@@ -25,6 +25,7 @@ var Statistics = (function() {
     
     // Sonstige Konstanten
     var _NUM_STEPS_PERCENT      = 10;
+    var _DELIMITER_SCORE        = "/";
     
     // Private Variablen
     var _dataScores             = [];
@@ -144,7 +145,7 @@ var Statistics = (function() {
     function _renderProgress() {
         if (_$progress instanceof $) {
             var data = [{
-                label   : _sizeSolved + CFG.STR.SLASH + _sizeTerms,
+                label   : _sizeSolved + _DELIMITER_SCORE + _sizeTerms,
                 percent : Util.calcPercent(_sizeSolved, _sizeTerms),
                 zero    : (_sizeSolved === 0)
             }];

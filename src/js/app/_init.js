@@ -16,9 +16,9 @@ var App = {
         
         // BEM-Syntax anpassen
         $.BEMsyntax({
-            elem      : CFG.BEM.ELEMDIV,
-            modBefore : CFG.BEM.MODDIV,
-            modKeyVal : CFG.BEM.MODKEY
+            elem      : CFG.BEM.E_DELIMITER,
+            modBefore : CFG.BEM.M_DELIMITER,
+            modKeyVal : CFG.BEM.M_KEY
         });
         
         // Komponenten initialisieren

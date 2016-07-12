@@ -42,7 +42,7 @@ var Template = (function() {
      */
     function _html($target, content, callback) {
         if (($target instanceof $) &&
-            (typeof content === typeof CFG.STR.EMPTY)) {
+            (typeof content === typeof "")) {
             $target.html(content).promise().done(function() {
                 if ($.isFunction(callback)) { callback(); }
             });

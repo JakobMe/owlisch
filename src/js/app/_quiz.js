@@ -79,8 +79,8 @@ var Quiz = (function() {
     var _progress               = [];
     var _dataTerms              = [];
     var _dataConfig             = [];
-    var _dataAlias              = CFG.STR.EMPTY;
-    var _dataCaption            = CFG.STR.EMPTY;
+    var _dataAlias              = "";
+    var _dataCaption            = "";
     
     // DOM-Elemente
     var _$slider                = null;
@@ -244,7 +244,7 @@ var Quiz = (function() {
      */
     function _setProgress(step, status) {
         if ((typeof step            === typeof 0) &&
-            (typeof status          === typeof CFG.STR.EMPTY) &&
+            (typeof status          === typeof "") &&
             (typeof _progress[step] !== typeof undefined)) {
             _progress[step] = status;
             _renderProgressbar();
@@ -271,7 +271,7 @@ var Quiz = (function() {
      */
     function _resetProgress() {
         for (var i = 1; i <= CFG.QUIZ.QUESTIONS; i++) {
-            _progress[i] = CFG.STR.EMPTY;
+            _progress[i] = "";
         }
         _setStep(0);
     }
@@ -427,7 +427,7 @@ var Quiz = (function() {
             
             // Buchstaben mischen und in Großbuchstaben umwandeln
             var letters = [];
-            $.each(Util.shuffle(answer[0].label.split(CFG.STR.EMPTY)),
+            $.each(Util.shuffle(answer[0].label.split("")),
                 function(i, self) { letters.push(self.toUpperCase()); });
             
             // Konfiguration zurückgeben
@@ -447,8 +447,8 @@ var Quiz = (function() {
      * @param {Boolean} finish Quiz-Ende ebenfalls leeren
      */
     function _clearQuestions(finish) {
-        _$questions.each(function() { $(this).html(CFG.STR.EMPTY); });
-        if (finish === true) { _$finish.html(CFG.STR.EMPTY); }
+        _$questions.each(function() { $(this).html(""); });
+        if (finish === true) { _$finish.html(""); }
     }
     
     /**
@@ -606,7 +606,7 @@ var Quiz = (function() {
                 var input    = $input.data(_DATA_INPUT);
                 
                 // Elemente und Daten aktualisieren
-                $current.text(CFG.STR.EMPTY).removeData(_DATA_LETTER);
+                $current.text("").removeData(_DATA_LETTER);
                 $input.data(_DATA_CURRENT, current - 1);
                 $input.data(_DATA_INPUT, input.slice(0, -1));
                 _$currentQuestion.find(_SEL_KEYBOARD).children().eq(letter)
@@ -896,7 +896,7 @@ var Quiz = (function() {
      */
     function _setConfig(data) {
         if ((typeof data       !== typeof undefined) &&
-            (typeof data.alias === typeof CFG.STR.EMPTY) &&
+            (typeof data.alias === typeof "") &&
             ($.isArray(data.config))) {
             _dataConfig = data.config;
             _dataAlias  = data.alias;

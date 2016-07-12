@@ -234,6 +234,7 @@
     // Element: Antworten
     &__answers {
         font-size: 0;
+        position: relative;
         text-align: center;
         padding: @app-size-gap;
         
@@ -242,7 +243,7 @@
             content: "";
             clear: both;
             display: table;
-        }        
+        }
     }
     
     // Element: Antworten & Mod: Gesperrt & Element: Button
@@ -277,6 +278,7 @@
         font-weight: bold;
         font-style: normal;
         margin: 0;
+        z-index: 100;
         padding: (@app-size-line-medium / 2) 0;
         font-size: @app-font-size-medium;
         margin-bottom: @app-size-gap;
@@ -310,16 +312,20 @@
     // Element: Lösung
     &__solution {
         display: block;
+        position: absolute;
         font-weight: normal;
-        position: relative;
         text-align: center;
         box-sizing: border-box;
+        z-index: 50;
+        top: (@app-size-gap-big + @_quiz-size-button);
+        left: @app-size-gap;
+        right: @app-size-gap;
         line-height: @_quiz-size-button;
         font-size: @app-font-size-big;
         .shadow-small(@app-color-shadow-lighter);
         .colored(@app-color-light);
         .border-button();
-        .transition(opacity);
+        .transition();
         .translate();
         
         // Dreieck
@@ -327,7 +333,7 @@
             display: block;
             position: absolute;
             content: "";
-            left: 50%;
+            left: (@_quiz-size-button / 2);
             background: @app-color-light;
             width: @_quiz-size-triangle;
             height: @_quiz-size-triangle;
@@ -364,8 +370,8 @@
         
         // Mod: Gesperrt
         &--locked {
-            height: 0;
             opacity: @app-opacity-invisible;
+            .translate(-150%);
         }
     }
     
@@ -374,7 +380,6 @@
         float: left;
         display: block;
         box-sizing: border-box;
-        margin-top: -(@app-size-line-medium / 2);
         height: (@_quiz-size-button - @app-size-line-medium);
         .border(right, @app-color-background-light);
         .transition();

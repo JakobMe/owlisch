@@ -519,8 +519,10 @@ var Quiz = (function() {
     
     /**
      * Input evaluieren.
-     * ...
-     * @param {Object}
+     * Evaluiert bei einem Klick-Event das Input der aktuellen Quiz-Frage;
+     * sperrt den Lösen-Button, rendert das Input anhand der Korrektheit
+     * der eingegebenen Lösung neu und verarbeitet die Lösung.
+     * @param {Object} event Ausgelöstes Event
      */
     function _evaluateInput(event) {
         if ((typeof event !== typeof undefined) && (event.target) &&
@@ -532,7 +534,7 @@ var Quiz = (function() {
             var solution = $input.data(_DATA_SOLUTION).toUpperCase();
             var correct  = (input === solution);
             
-            //
+            // Lösen sperren, Input aktualisiert, Lösung verarbeiten
             _lockSolve();
             _renderInput($input, correct);
             _processSolution(correct);
@@ -752,15 +754,14 @@ var Quiz = (function() {
                 
             // Input modifizieren
             var status = (correct ? _M_SUCCESS : _M_ERROR);
-            $input.setMod(_B_QUIZ, _E_INPUT, status, true);
+            $input.setMod(_B_QUIZ, _E_INPUT, status, true)
+                  .parents(_SEL_ANSWERS).data(_DATA_LOCKED, true)
+                  .setMod(_B_QUIZ, _E_ANSWERS, _M_LOCKED, true);
+            
+            // Lösung anzeigen
             $input.siblings(_SEL_SOLUTION)
                   .setMod(_B_QUIZ, _E_SOLUTION, _M_LOCKED, false)
                   .setMod(_B_QUIZ, _E_SOLUTION, status, true);
-            
-            // Input sperren
-            $input.parents(_SEL_ANSWERS)
-                  .setMod(_B_QUIZ, _E_ANSWERS, _M_LOCKED, true)
-                  .data(_DATA_LOCKED, true);
         }
     }
     

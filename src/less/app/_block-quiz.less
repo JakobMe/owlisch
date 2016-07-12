@@ -112,7 +112,7 @@
             padding-right: @app-size-gap;
             margin: 0 @app-size-gap-micro;
             margin-bottom: @app-size-gap-tiny;
-            min-width: @_quiz-size-button;
+            min-width: (@_quiz-size-button + (2 * @app-size-line-medium));
             
             // Icon
             &:before { display: none; }
@@ -371,7 +371,7 @@
         // Mod: Gesperrt
         &--locked {
             opacity: @app-opacity-invisible;
-            .translate(-150%);
+            .translate(0, -100%);
         }
     }
     

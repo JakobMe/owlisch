@@ -118,7 +118,8 @@ var CFG = (function() {
             PLAY                : "play",
             LOADEDDATA          : "loadeddata",
             KEYBOARD_HIDE       : "keyboardWillHide",
-            KEYBOARD_SHOW       : "keyboardWillShow"
+            KEYBOARD_SHOW       : "keyboardWillShow",
+            TRANSITION          : "transitionend"
         },
         CNL: {
             TERMS_REQUEST       : "terms:request",
@@ -170,7 +171,8 @@ var CFG = (function() {
         TIME: {
             WAIT                : 10,
             ANIMATION           : 150,
-            DELAY               : 300
+            DELAY               : 300,
+            DELAY_LONG          : 600
         },
         WEBAPP: {
             IOS                 : (window.navigator.standalone || false),

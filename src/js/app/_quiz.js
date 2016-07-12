@@ -115,18 +115,25 @@ var Quiz = (function() {
      * Bindet Klick-Funktionen an interne jQuery-Objekte.
      */
     function _bindEvents() {
+        
+        // Lösen-Button ein-/ausblenden
         window.addEventListener(CFG.EVT.KEYBOARD_SHOW, _hideSolve);
         window.addEventListener(CFG.EVT.KEYBOARD_HIDE, _showSolve);
+        
+        // Start-Buttons
         if ((_$start instanceof $) && (_$finish instanceof $)) {
             _$start.add(_$finish).on(CFG.EVT.CLICK, _SEL_BUTTON, _start);
         }
+        
+        // Frage-Funktionalitäten
         if (_$questions instanceof $) {
             _$questions.on(CFG.EVT.CLICK, _SEL_ANSWER, _evaluateAnswer)
                        .on(CFG.EVT.CLICK, _SEL_SOLVE, _evaluateInput)
                        .on(CFG.EVT.CLICK, _SEL_CONTINUE, _continue)
                        .on(CFG.EVT.CLICK, _SEL_BACKSPACE, _removeLetter)
                        .on(CFG.EVT.CLICK, _SEL_LETTER, _addLetter)
-                       .on(CFG.EVT.SUBMIT, _SEL_FORM, _evaluateInput);
+                       .on(CFG.EVT.SUBMIT, _SEL_FORM, _evaluateInput)
+                       .on(CFG.EVT.TRANSITION, _focusInput);
         }
     }
     
@@ -300,7 +307,6 @@ var Quiz = (function() {
         if (next > CFG.QUIZ.QUESTIONS) { _finish(); }
         _setSlider(_currentSlide + 1);
         _setStep(next);
-        _focusInput();
     }
     
     /**
@@ -323,7 +329,6 @@ var Quiz = (function() {
                 _processQuestions();
                 _setSlider(_indexStart + 1);
                 _setStep(1);
-                _focusInput();
             }, (typeof event === typeof undefined ? 0 : CFG.TIME.ANIMATION));
         }
     }

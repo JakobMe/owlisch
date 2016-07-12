@@ -19,7 +19,7 @@
 
 // Innerer Loop: Slides
 .slider-loop-inner(@n, @i: 1) when (@i <= @n) {
-    .slider__slide:nth-child(@{i}) { visibility: inherit; .translate(); }
+    .slider__slide:nth-child(@{i}) { .translate(); }
     .slider-loop-inner(@n, (@i + 1));
 }
 
@@ -40,14 +40,13 @@
         overflow-y: auto;
         overflow-x: hidden;
         position: absolute;
-        visibility: hidden;
         top: 0;
         left: 0;
         width: 100%;
         height: 100%;
         z-index: 100;
         background: @app-color-background;
-        .transition(all, @app-time-animation-long);
+        .transition(transform, @app-time-animation-long);
         .translate(120%);
         .shadow-huge();
     }

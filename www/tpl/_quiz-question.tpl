@@ -60,8 +60,11 @@
         </div>
         {{/chars}}
         {{#input}}
-        <input class="quiz__input" data-quiz="input" data-solution="{{.}}" type="text"
-               spellcheck="false" autocomplete="off" autocorrect="off" tabindex="-1" />
+        <form data-quiz="form">
+            <input class="quiz__input" data-quiz="input" data-solution="{{.}}" type="text"
+                   spellcheck="false" autocomplete="off" autocorrect="off" tabindex="-1" />
+            <input class="quiz__submit" type="submit" />
+        </form>
         <div class="quiz__solution quiz__solution--locked" data-quiz="solution">
             Lösung: <b>„{{.}}“</b>
         </div>

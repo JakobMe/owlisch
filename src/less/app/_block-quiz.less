@@ -409,7 +409,8 @@
     
     // Element: Aktion
     &__action {
-        position: fixed;
+        -webkit-backface-visibility: hidden;
+        position: absolute;
         box-sizing: border-box;
         left: 0;
         bottom: 0;
@@ -426,7 +427,13 @@
             opacity: @app-opacity-invisible;
             .translate(0, 100%);
         }
+        
+        // Mod: Versteckt
+        &--hidden { display: none; }
     }
+    
+    // Element: Absenden
+    &__submit { display: none; }
 }
 
 // Responsive

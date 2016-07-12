@@ -175,7 +175,7 @@ var Data = (function() {
         _sizeProgress = 0;
         $.each(_dataTerms, function(i, item) {
             $.extend(item, (_dataProgress[item.alias] || {
-                lvl  : 0,
+                lvl  : /*0*/ 2, // !TODO: Wieder auf 0 setzen
                 fail : CFG.QUIZ.FAILS[0]
             }));
             if (item.lvl > 0) { _sizeProgress++; }

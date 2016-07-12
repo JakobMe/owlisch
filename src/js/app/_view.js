@@ -30,6 +30,7 @@ var View = (function() {
     
     // Private Variablen
     var _currentPanel           = null;
+    var _isQuiz                 = false;
     var _isVisible              = false;
     var _isFullscreen           = false;
     var _isWebapp               = (CFG.WEBAPP.IOS || CFG.WEBAPP.CORDOVA);
@@ -66,8 +67,8 @@ var View = (function() {
         Mediator.hook(CFG.CNL.VIEW_SHOW, _show)
                 .hook(CFG.CNL.VIEW_HIDE, _hide)
                 .hook(CFG.CNL.VIEW_SET, _setView)
-                .hook(CFG.CNL.QUIZ_END, _disableFullscreen)
-                .hook(CFG.CNL.QUIZ_START, _enableFullscreen);
+                .hook(CFG.CNL.QUIZ_END, _disableQuiz)
+                .hook(CFG.CNL.QUIZ_START, _enableQuiz);
     }
     
     /**
@@ -199,11 +200,31 @@ var View = (function() {
     
     /**
      * Fullscreen deaktivieren.
-     * Deaktiviert die volle Höhe für die View.
+     * Deaktiviert die volle Höhe für die View, wenn Quiz inaktiv ist.
      */
     function _disableFullscreen() {
-        _isFullscreen = false;
-        _render();
+        if (!_isQuiz) {
+            _isFullscreen = false;
+            _render();
+        }
+    }
+    
+    /**
+     * Quiz aktivieren.
+     * Notiert, dass das Quiz aktiv ist; aktiviert Fullscreen.
+     */
+    function _enableQuiz() {
+        _isQuiz = true;
+        _enableFullscreen();
+    }
+    
+    /**
+     * Quiz deaktivieren.
+     * Notiert, dass Quiz inaktiv ist; deaktiviert Fullscreen.
+     */
+    function _disableQuiz() {
+        _isQuiz = false;
+        _disableFullscreen();
     }
     
     // Öffentliches Interface

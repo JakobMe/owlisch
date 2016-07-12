@@ -27,6 +27,7 @@ var Quiz = (function() {
     var _SEL_LETTER             = "[data-quiz='letter']";
     var _SEL_SOLUTION           = "[data-quiz='solution']";
     var _SEL_SOLVE              = "[data-quiz='solve']";
+    var _SEL_FORM               = "[data-quiz='form']";
     
     // Template-Namen
     var _TMPL_QUIZ              = "quiz";
@@ -52,6 +53,7 @@ var Quiz = (function() {
     var _M_SUCCESS              = "success";
     var _M_CURRENT              = "current";
     var _M_LOCKED               = "locked";
+    var _M_HIDDEN               = "hidden";
     var _M_GROW                 = "grow";
     
     // Data-Attribut-Konstanten
@@ -113,6 +115,8 @@ var Quiz = (function() {
      * Bindet Klick-Funktionen an interne jQuery-Objekte.
      */
     function _bindEvents() {
+        window.addEventListener(CFG.EVT.KEYBOARD_SHOW, _hideSolve);
+        window.addEventListener(CFG.EVT.KEYBOARD_HIDE, _showSolve);
         if ((_$start instanceof $) && (_$finish instanceof $)) {
             _$start.add(_$finish).on(CFG.EVT.CLICK, _SEL_BUTTON, _start);
         }
@@ -121,7 +125,8 @@ var Quiz = (function() {
                        .on(CFG.EVT.CLICK, _SEL_SOLVE, _evaluateInput)
                        .on(CFG.EVT.CLICK, _SEL_CONTINUE, _continue)
                        .on(CFG.EVT.CLICK, _SEL_BACKSPACE, _removeLetter)
-                       .on(CFG.EVT.CLICK, _SEL_LETTER, _addLetter);
+                       .on(CFG.EVT.CLICK, _SEL_LETTER, _addLetter)
+                       .on(CFG.EVT.SUBMIT, _SEL_FORM, _evaluateInput);
         }
     }
     
@@ -295,6 +300,7 @@ var Quiz = (function() {
         if (next > CFG.QUIZ.QUESTIONS) { _finish(); }
         _setSlider(_currentSlide + 1);
         _setStep(next);
+        _focusInput();
     }
     
     /**
@@ -317,6 +323,7 @@ var Quiz = (function() {
                 _processQuestions();
                 _setSlider(_indexStart + 1);
                 _setStep(1);
+                _focusInput();
             }, (typeof event === typeof undefined ? 0 : CFG.TIME.ANIMATION));
         }
     }
@@ -380,8 +387,8 @@ var Quiz = (function() {
             chars = _pickChars(type, answ);
             diff  = Util.limit(term.lvl, 0, CFG.QUIZ.DIFF.length - 1);
             
-            // Frage rendern
-            _renderQuestion(i, {
+            // Frage einfügen
+            Template.render(_$questions.eq(i), _TMPL_QUESTION, {
                 answers    : answ,
                 question   : (type.image ? CFG.LABEL.WHAT : CFG.LABEL.MEANING),
                 image      : (type.image ? term.image : false),
@@ -396,8 +403,6 @@ var Quiz = (function() {
                 buttons    : type.buttons,
                 chars      : chars
             });
-            
-            window.console.log(type.input);
         });
     }
     
@@ -429,17 +434,6 @@ var Quiz = (function() {
             
         // Ansonsten Buchstaben deaktivieren
         } else { return false; }
-    }
-    
-    /**
-     * Frage rendern.
-     * Rendert eine Frage eines bestimmten Indexes anhand der übergebenen
-     * Daten mit einem Mustache-Template.
-     * @param {Number} i Index der Frage
-     * @param {Object} data Daten der Frage
-     */
-    function _renderQuestion(i, data) {
-        Template.render(_$questions.eq(i), _TMPL_QUESTION, data);
     }
     
     /**
@@ -531,6 +525,9 @@ var Quiz = (function() {
         if ((typeof event !== typeof undefined) && (event.target) &&
             (!$(event.target).closest(_SEL_SOLVE).data(_DATA_LOCKED))) {
             
+            // Event verhindern
+            event.preventDefault();
+            
             // DOM-Elemente und Daten initialisieren
             var $input   = _$currentQuestion.find(_SEL_INPUT);
             var solution = $input.data(_DATA_SOLUTION).toUpperCase();
@@ -539,6 +536,7 @@ var Quiz = (function() {
             var correct  = (input.toUpperCase() === solution);
             
             // Lösen sperren, Input aktualisiert, Lösung verarbeiten
+            $input.blur();
             _lockSolve();
             _renderInput($input, correct);
             _processSolution(correct);
@@ -700,8 +698,47 @@ var Quiz = (function() {
      * Sperrt den Lösen-Button der aktuellen Frage.
      */
     function _lockSolve() {
-        _$currentQuestion.find(_SEL_SOLVE).data(_DATA_LOCKED, true)
-            .setMod(_B_QUIZ, _E_ACTION, _M_LOCKED, true);
+        if (_$currentQuestion instanceof $) {
+            _$currentQuestion.find(_SEL_SOLVE).data(_DATA_LOCKED, true)
+                .setMod(_B_QUIZ, _E_ACTION, _M_LOCKED, true);
+        }
+    }
+    
+    /**
+     * Lösen-Button ausblenden.
+     * Blendet den Lösen-Button der aktuellen Quiz-Frage aus.
+     */
+    function _hideSolve() {
+        if (_$currentQuestion instanceof $) {
+            _$currentQuestion.find(_SEL_SOLVE).setMod(
+                _B_QUIZ, _E_ACTION, _M_HIDDEN, true
+            );
+        }
+    }
+    
+    /**
+     * Lösen-Button einblenden.
+     * Blendet den Lösen-Button der aktuellen Quiz-Frage ein.
+     */
+    function _showSolve() {
+        if (_$currentQuestion instanceof $) {
+            _$currentQuestion.find(_SEL_SOLVE).setMod(
+                _B_QUIZ, _E_ACTION, _M_HIDDEN, false
+            );
+        }
+    }
+    
+    /**
+     * Input fokussieren.
+     * Fokussiert das Input der aktuellen Quiz-Frage, falls vorhanden.
+     */
+    function _focusInput() {
+        var $form = _$currentQuestion.find(_SEL_FORM);
+        if ($form.length > 0) {
+            setTimeout(function() {
+                $form.find(_SEL_INPUT).focus();
+            }, CFG.TIME.DELAY + CFG.TIME.ANIMATION);
+        }
     }
     
     /**
@@ -764,9 +801,9 @@ var Quiz = (function() {
                   .setMod(_B_QUIZ, _E_ANSWERS, _M_LOCKED, true);
             
             // Lösung anzeigen
-            $input.siblings(_SEL_SOLUTION)
-                  .setMod(_B_QUIZ, _E_SOLUTION, _M_LOCKED, false)
-                  .setMod(_B_QUIZ, _E_SOLUTION, status, true);
+            _$currentQuestion.find(_SEL_SOLUTION)
+                .setMod(_B_QUIZ, _E_SOLUTION, _M_LOCKED, false)
+                .setMod(_B_QUIZ, _E_SOLUTION, status, true);
         }
     }
     

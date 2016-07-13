@@ -39,16 +39,41 @@ var Util = (function() {
      * Begriffe mit Level zählen.
      * Zählt in einer gegeben Begriff-Liste alle Einträge,
      * die das angegebene Level haben.
-     * @param {Object[]} list Begriff-Liste
+     * @param {Object[]} terms Begriff-Liste
      * @param {Number} level Gesuchter Level
      * @returns {Number} Anzahl der gefundenen Begriffe
      */
-    function countTermsWithLevel(list, level) {
+    function countTermsWithLevel(terms, level) {
         var count = 0;
-        $.each(list, function(i, data) {
-            if (data.lvl === level) { count++; }
-        });
+        if ((typeof level === typeof 0) &&
+            (typeof terms === typeof [])) {
+            $.each(terms, function(i, term) {
+                if (term.lvl === level) { count++; }
+            });
+        }
         return count;
+    }
+    
+    /**
+     * Prüfen, ob Begriff existiert.
+     * Durchsicht eine gegebene Liste von Begriffen nach einen Alias;
+     * prüft damit, ob ein Begriff mit diesem Alias existiert.
+     * @param {Object[]} terms Liste der existierenden Begriffe
+     * @param {String} alias Zu suchender Begriff-Alias
+     * @returns {Boolean} Angabe, ob der gesuchte Begriff existiert
+     */
+    function termExists(terms, alias) {
+        var exists = false;
+        if ((typeof alias === typeof "") &&
+            (typeof terms === typeof [])) {
+            $.each(terms, function(i, term) {
+                if (term.alias === alias) {
+                    exists = true;
+                    return false;
+                }
+            });
+        }
+        return exists;
     }
     
     /**
@@ -79,9 +104,8 @@ var Util = (function() {
     }
     
     /**
-     * Zahl begrenzen
-     * Begrenzt eine gegebene Zahl zwischen dem
-     * gegebenen Minimum und Maximum.
+     * Zahl begrenzen.
+     * Begrenzt eine gegebene Zahl zwischen dem gegebenen Minimum und Maximum.
      * @param {Number} number Zu begrenzende Zahl
      * @param {Number} min Minimum
      * @param {Number} max Maximum
@@ -94,14 +118,50 @@ var Util = (function() {
         }
     }
     
+    /**
+     * Aktuelles Datum ermitteln.
+     * Gibt das aktuelle Datum als Zahl zurück, sortiert nach
+     * Jahr, Monat und Tag, jeweils mit der maximalen Anzahl an Stellen.
+     * @returns {Number} Aktuelles Datum
+     */
+    function getDate() {
+        var date = new Date();
+        return parseInt(
+            intToStr(date.getFullYear(), 4) +
+            intToStr(date.getMonth() + 1, 2) +
+            intToStr(date.getDate(), 2)
+        );
+    }
+    
+    /**
+     * Ganzzahl in String umwandeln.
+     * Wandelt eine gegebene Ganzzahl in einen String um; stellt
+     * führende Nullen entsprechend der angegebenen Mindeststellen an.
+     * @param {Number} number Ganzzahl, die umgewandelt werden soll
+     * @param {Number} digits Mindestanzahl der Vorkommastellen
+     * @returns {String} Umgewandelte Zahl
+     */
+    function intToStr(number, digits) {
+        var str = number.toString();
+        if (str.length < digits) {
+            for (var i = 0; i < (digits - str.length); i++) {
+                str = "0" + str;
+            }
+        }
+        return str;
+    }
+    
     // Öffentliches Interface
     return { 
         arrFromNum          : arrFromNum,
         calcPercent         : calcPercent,
+        termExists          : termExists,
         countTermsWithLevel : countTermsWithLevel,
         getRandom           : getRandom,
         shuffle             : shuffle,
-        limit               : limit
+        limit               : limit,
+        getDate             : getDate,
+        intToStr            : intToStr
     };
     
 })();

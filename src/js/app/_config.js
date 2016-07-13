@@ -70,7 +70,7 @@ var CFG = (function() {
         VIEW: {
             START: {
                 LABEL           : "Start",
-                TITLE           : "Begriff der Woche"
+                TITLE           : "Begriff des Tages"
             },
             DICTIONARY: {
                 LABEL           : "Wörterbuch",
@@ -132,6 +132,8 @@ var CFG = (function() {
             SCORES_UPDATE       : "scores:update",
             CONFIG_REQUEST      : "config:request",
             CONFIG_SERVE        : "config:serve",
+            FEATURED_REQUEST    : "featured:request",
+            FEATURED_SERVE      : "featured:serve",
             VIEW_SHOW           : "view:show",
             VIEW_HIDE           : "view:hide",
             VIEW_CHANGE         : "view:change",

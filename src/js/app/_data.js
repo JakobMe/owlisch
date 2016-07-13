@@ -15,6 +15,7 @@ var Data = (function() {
     var _dataTerms              = [];
     var _dataConfig             = [];
     var _dataProgress           = {};
+    var _dataFeatured           = {};
     var _sizeScores             = 0;
     var _sizeTerms              = 0;
     var _sizeProgress           = 0;
@@ -41,7 +42,8 @@ var Data = (function() {
                 .hook(CFG.CNL.TERMS_UPDATE, _updateDataTerm)
                 .hook(CFG.CNL.SCORES_REQUEST, _serveDataScores)
                 .hook(CFG.CNL.SCORES_UPDATE, _updateDataScore)
-                .hook(CFG.CNL.CONFIG_REQUEST, _serveDataConfig);
+                .hook(CFG.CNL.CONFIG_REQUEST, _serveDataConfig)
+                .hook(CFG.CNL.FEATURED_REQUEST, _serveDataFeatured);
     }
     
     /**
@@ -50,7 +52,11 @@ var Data = (function() {
      */
     function _initDataStored() {
         var dataInitial = { dictionary: CFG.DATA.ALIAS };
-        dataInitial[CFG.DATA.ALIAS] = { progress: {}, scores: [] };
+        dataInitial[CFG.DATA.ALIAS] = {
+            featured : {},
+            progress : {},
+            scores   : []
+        };
         localStorage.setItem(CFG.DATA.STORE, JSON.stringify(dataInitial));
         _loadDataStored();
     }
@@ -68,6 +74,7 @@ var Data = (function() {
         // Daten setzen
         _dictionaryAlias = dataStored.dictionary;
         _dataProgress = dataStored[_dictionaryAlias].progress;
+        _dataFeatured = dataStored[_dictionaryAlias].featured;
         _dataScores = dataStored[_dictionaryAlias].scores;
         _sizeScores = _dataScores.length;
         
@@ -96,7 +103,10 @@ var Data = (function() {
                 _sizeTerms  = data.terms.length;
                 _dataConfig = data.config;
             }
-        }).done(function() { _checkDictionaryFiles(); });
+        }).done(function() {
+            _checkDictionaryFiles();
+            _updateDataFeatured();
+        });
     }
     
     /**
@@ -198,6 +208,7 @@ var Data = (function() {
         dataStored.dictionary = _dictionaryAlias;
         dataStored[_dictionaryAlias].progress = _dataProgress;
         dataStored[_dictionaryAlias].scores = _dataScores;
+        dataStored[_dictionaryAlias].featured = _dataFeatured;
         
         // Daten speichern
         localStorage.setItem(CFG.DATA.STORE, JSON.stringify(dataStored));
@@ -229,7 +240,8 @@ var Data = (function() {
      */
     function setDataTerm(alias, lvl, fail) {
         if ((typeof lvl  === typeof 0) &&
-            (typeof fail === typeof 0)) {
+            (typeof fail === typeof 0) &&
+            (Util.termExists(_dataTerms, alias))) {
             
             // Minimum und Maximum für Level und Fehlschläge ermitteln
             var maxFail = CFG.QUIZ.FAILS.length;
@@ -285,6 +297,41 @@ var Data = (function() {
     }
     
     /**
+     * Begriff des Tages aktualisieren.
+     * Prüft, ob ein gespeichertes Datum für das Begriff des Tages gesetzt
+     * ist; vergleicht dieses Datum gegebenenfalls mit dem aktuellen und
+     * wählt ein neues zufälliges Begriff des Tages aus; speichert die Daten
+     * und stellt sie bereit.
+     */
+    function _updateDataFeatured() {
+        if ($.isEmptyObject(_dataFeatured) ||
+            (_dataFeatured.date < Util.getDate())) {
+            setDataFeatured();
+        } else { _serveDataFeatured(); }
+    }
+    
+    /**
+     * Begriff des Tages setzen.
+     * Setzt ein neues Begriff des Tages; wählt ein zufälliges Wort aus,
+     * falls keines gegeben ist und setzt das aktuelle Datum, wenn keines
+     * angegeben wurde; speichert die Date und stellt sie bereit.
+     * @param {(String|undefined)} [undefined] alias Begriff-Alias
+     */
+    function setDataFeatured(alias) {
+        var term;
+        if ((typeof alias === typeof "") &&
+            (Util.termExists(_dataTerms, alias))) {
+            term = alias;
+        }
+        _dataFeatured = {
+            term : (term || Util.getRandom(_dataTerms).alias),
+            date : Util.getDate()
+        };
+        _storeData();
+        _serveDataFeatured();
+    }
+    
+    /**
      * Die letzten Spiele löschen.
      * Entfernt alle Daten der letzten Spiele.
      */
@@ -311,12 +358,13 @@ var Data = (function() {
     function logData() {
         
         // !TODO logData() entfernen
-        window.console.log("Stored Data:", _dataProgress, _dataScores);
+        window.console.log("Stored Data:",
+            _dataProgress, _dataScores, _dataFeatured);
     }
     
     /**
      * Fortschritt-Liste bereitstellen.
-     * Liefert die Fortschritt-Liste in einem Event.
+     * Liefert die Fortschritt-Liste in einer Mediator-Nachricht.
      */
     function _serveDataTerms() {
         Mediator.send(CFG.CNL.TERMS_SERVE, {
@@ -329,7 +377,7 @@ var Data = (function() {
     
     /**
      * Die letzten Spieleergebnisse bereitstellen.
-     * Liefert die Ergebnisse der letzten Spiele in einem Event.
+     * Liefert die Ergebnisse der letzten Spiele in einer Mediator-Nachricht.
      */
     function _serveDataScores() {
         Mediator.send(CFG.CNL.SCORES_SERVE, {
@@ -340,7 +388,7 @@ var Data = (function() {
     
     /**
      * Wörberbuch-Konfiguration bereitstellen.
-     * Liefert die Konfiguration des Wörterbuches in einem Event.
+     * Liefert die Konfiguration des Wörterbuches in einer Mediator-Nachricht.
      */
     function _serveDataConfig() {
         Mediator.send(CFG.CNL.CONFIG_SERVE, {
@@ -349,9 +397,18 @@ var Data = (function() {
         });
     }
     
+    /**
+     * Begriff des Tages bereitstellen.
+     * Liefert das zufällige Begriff des Tages in einer Mediator-Nachricht.
+     */
+    function _serveDataFeatured() {
+        Mediator.send(CFG.CNL.FEATURED_SERVE, _dataFeatured.term);
+    }
+    
     // Öffentliches Interface
     return {
         init            : init,
+        setDataFeatured : setDataFeatured,
         setDataTerm     : setDataTerm,
         addDataScore    : addDataScore,
         clearDataTerms  : clearDataTerms,

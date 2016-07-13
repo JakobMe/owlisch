@@ -58,25 +58,26 @@ var Util = (function() {
     }
     
     /**
-     * Prüfen, ob Begriff existiert.
-     * Durchsicht eine gegebene Liste von Begriffen nach einen Alias;
-     * prüft damit, ob ein Begriff mit diesem Alias existiert.
-     * @param {Object[]} terms Liste der existierenden Begriffe
-     * @param {String} alias Zu suchender Begriff-Alias
-     * @returns {Boolean} Angabe, ob der gesuchte Begriff existiert
+     * Nach Begriff suchen.
+     * Sucht in einer gegebenen Begriff-Liste nach einem Begriff
+     * mit dem passenden gegebenen Alias; gibt entweder den Begriff
+     * oder false zurück.
+     * @param {Object[]} terms Liste der Begriffe
+     * @param {String} alias Alias des gesuchten Begriffs
+     * @returns {(Object|Boolean)} Gefundener Begriff oder false
      */
-    function termExists(terms, alias) {
-        var exists = false;
+    function findTerm(terms, alias) {
+        var found = false;
         if ((typeof alias === typeof "") &&
             (typeof terms === typeof [])) {
             $.each(terms, function(i, term) {
                 if (term.alias === alias) {
-                    exists = true;
+                    found = $.extend({}, term);
                     return false;
                 }
             });
         }
-        return exists;
+        return found;
     }
     
     /**
@@ -158,7 +159,7 @@ var Util = (function() {
     return { 
         arrFromNum          : arrFromNum,
         calcPercent         : calcPercent,
-        termExists          : termExists,
+        findTerm            : findTerm,
         countTermsWithLevel : countTermsWithLevel,
         getRandom           : getRandom,
         shuffle             : shuffle,

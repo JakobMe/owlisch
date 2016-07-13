@@ -241,7 +241,7 @@ var Data = (function() {
     function setDataTerm(alias, lvl, fail) {
         if ((typeof lvl  === typeof 0) &&
             (typeof fail === typeof 0) &&
-            (Util.termExists(_dataTerms, alias))) {
+            (Util.findTerm(_dataTerms, alias) !== false)) {
             
             // Minimum und Maximum für Level und Fehlschläge ermitteln
             var maxFail = CFG.QUIZ.FAILS.length;
@@ -322,7 +322,7 @@ var Data = (function() {
     function setDataFeatured(alias) {
         var term;
         if ((typeof alias === typeof "") &&
-            (Util.termExists(_dataTerms, alias))) {
+            (Util.findTerm(_dataTerms, alias) !== false)) {
             term = alias;
         }
         _dataFeatured = {

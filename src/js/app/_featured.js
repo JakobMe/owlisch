@@ -8,11 +8,12 @@
  */
 var Featured = (function() {
     
-    // Private Variablen
-    var _dataTerms              = [];
-    var _dataFeatured           = "";
+    // Template-Namen
+    var _TMPL_DETAILS           = "dictionary-details";
     
-    // DOM-Elemente
+    // Private Variablen
+    var _dataFeatured           = "";
+    var _dataTerms              = [];
     var _$featured              = null;
     
     /**
@@ -37,9 +38,9 @@ var Featured = (function() {
     
     /**
      * Wort des Tages erzeugen.
-     * Erzeugt das Wort des Tages anhand eines Mediator-Events; fügt den
-     * Inhalt mittels Template ein, initialisiert die Elemente des
-     * Moduls und teilt dem Mediator weitere Events mit.
+     * Erzeugt das Wort des Tages anhand eines Mediator-Events; sendet
+     * Anfragen für benötigte Daten über den Mediator und initialisiert
+     * benötigte DOM-Elemente.
      * @param {Object} data Übergebene Daten des Mediators
      */
     function _create(data) {
@@ -56,15 +57,38 @@ var Featured = (function() {
     }
     
     /**
+     * Begriff des Tages rendern.
+     * Rendert den aktuellen Begriff mittels Mustache-Template,
+     * falls alle benötigten Daten vorhanden sind.
+     */
+    function _render() {
+        if ((_$featured instanceof $) &&
+            (_dataFeatured.length > 0) &&
+            (_dataTerms.length > 0)) {
+            
+            // Daten definieren
+            var data = $.extend({
+                levels : CFG.QUIZ.LEVELS,
+                label  : CFG.LABEL.PROGRESS
+            }, Util.findTerm(_dataTerms, _dataFeatured));
+            
+            // Details laden, Event auslösen, Slider bewegen
+            Template.render(_$featured, _TMPL_DETAILS, data);
+        }
+    }
+    
+    /**
      * Begriff-Daten aktualisieren.
      * Aktualisiert die Begriff-Liste, sobald ein entsprechendes
-     * Mediator-Event mit den erforderlichen Daten ausgelöst wird.
+     * Mediator-Event mit den erforderlichen Daten ausgelöst wird;
+     * rendert den Begriff neu.
      * @param {Object} data Übergebene Daten
      */
     function _updateTerms(data) {
         if ((typeof data        !== typeof undefined) &&
             (typeof data.data   !== typeof undefined)) {  
             _dataTerms  = data.data;
+            _render();
         }
     }
     
@@ -72,12 +96,13 @@ var Featured = (function() {
      * Wort des Tages aktualisieren.
      * Aktualisiert den Begriff-Alias des Wort des Tages, sobald ein
      * entsprechendes Mediator-Event mit den erforderlichen
-     * Daten ausgelöst wird.
+     * Daten ausgelöst wird; rendert den Begriff neu.
      * @param {String} data Übergebene Daten
      */
     function _updateFeatured(data) {
         if (typeof data === typeof "") {  
             _dataFeatured = data;
+            _render();
         }
     }
     
@@ -89,7 +114,8 @@ var Featured = (function() {
      */
     function _restore(panel) {
         if ((typeof panel    !== typeof undefined) &&
-            (CFG.VIEW[panel] === CFG.VIEW.FEATURED)) {
+            (CFG.VIEW[panel] === CFG.VIEW.FEATURED) &&
+            (_$featured instanceof $)) {
             _$featured.animate({ scrollTop: 0 }, CFG.TIME.ANIMATION);
         }
     }

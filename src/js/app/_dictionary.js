@@ -298,15 +298,8 @@ var Dictionary = (function() {
      */
     function _loadDetails(alias, renderNavBar) {
         if (typeof alias !== typeof undefined) {
-            
-            // Aktuelle Liste iterieren und Begriff setzen
-            $.each(_listFiltered, function(i, item) {
-                if (item.alias === alias) {
-                    _currentTerm = $.extend({}, this);
-                    _renderDetails(renderNavBar !== false);             
-                    return false;
-                }
-            });
+            _currentTerm = Util.findTerm(_listFiltered, alias);
+            _renderDetails(renderNavBar !== false);  
         }
     }
     

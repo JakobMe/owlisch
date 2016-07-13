@@ -50,8 +50,7 @@ var Featured = (function() {
             
             // Modulvariablen initialisieren, Mediator aufrufen
             _$featured = data.target;
-            Mediator.send(CFG.CNL.VIEW_SHOW)
-                    .send(CFG.CNL.TERMS_REQUEST)
+            Mediator.send(CFG.CNL.TERMS_REQUEST)
                     .send(CFG.CNL.FEATURED_REQUEST);
         }
     }
@@ -73,7 +72,9 @@ var Featured = (function() {
             }, Util.findTerm(_dataTerms, _dataFeatured));
             
             // Details laden, Event auslösen, Slider bewegen
-            Template.render(_$featured, _TMPL_DETAILS, data);
+            Template.render(_$featured, _TMPL_DETAILS, data, function() {
+                Mediator.send(CFG.CNL.VIEW_SHOW);
+            });
         }
     }
     

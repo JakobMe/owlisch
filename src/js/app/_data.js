@@ -31,6 +31,7 @@ var Data = (function() {
         // !TODO: clearData wieder entfernen
         clearDataScores();
         clearDataTerms();
+        clearDataFeatured();
     }
     
     /**
@@ -327,7 +328,10 @@ var Data = (function() {
             (Util.findTerm(_dataTerms, alias) !== false)) {
             term = alias;
         }
-        if (term === _dataFeatured.term) { setDataFeatured(); return false; }
+        if (term === _dataFeatured.term) {
+            setDataFeatured();
+            return false;
+        }
         
         // Daten setzen
         _dataFeatured = {
@@ -361,6 +365,17 @@ var Data = (function() {
         _dataProgress = {};
         _storeData();
         _processDataTerms();
+    }
+    
+    /**
+     * Begriff des Tages löschen.
+     * Entfernt alle Daten für den Begriff des Tages.
+     */
+    function clearDataFeatured() {
+        // !TODO: clearDataFeatured entfernen
+        _dataFeatured = {};
+        _storeData();
+        _serveDataFeatured();
     }
     
     /**
@@ -418,13 +433,14 @@ var Data = (function() {
     
     // Öffentliches Interface
     return {
-        init            : init,
-        setDataFeatured : setDataFeatured,
-        setDataTerm     : setDataTerm,
-        addDataScore    : addDataScore,
-        clearDataTerms  : clearDataTerms,
-        clearDataScores : clearDataScores,
-        logData         : logData
+        init              : init,
+        setDataFeatured   : setDataFeatured,
+        setDataTerm       : setDataTerm,
+        addDataScore      : addDataScore,
+        clearDataTerms    : clearDataTerms,
+        clearDataScores   : clearDataScores,
+        clearDataFeatured : clearDataFeatured,
+        logData           : logData
     };
     
 })();

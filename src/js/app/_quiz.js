@@ -68,6 +68,7 @@ var Quiz = (function() {
     // Sonstige Konstanten
     var _NUM_SLIDES_BEFORE      = 1;
     var _NUM_SLIDES_AFTER       = 1;
+    var _NUM_CHARS_BREAK        = 10;
     var _ATTR_READONLY          = "readonly";
     
     // Private Variablen
@@ -434,7 +435,8 @@ var Quiz = (function() {
             return {
                 letters  : letters,
                 solution : answer[0].label,
-                width    : Util.calcPercent(1, letters.length, false)
+                width    : Util.calcPercent(1, letters.length, false),
+                small    : (letters.length > _NUM_CHARS_BREAK)
             };
             
         // Ansonsten Buchstaben deaktivieren

@@ -31,7 +31,10 @@ var Util = (function() {
      */
     function calcPercent(first, second, round) {
         var result = ((first / second) * 100);
-        if (typeof round !== typeof true) { result = Math.round(result); }
+        if ((typeof round === typeof undefined) ||
+            (round === true)) {
+            result = Math.round(result);
+        }
         return (isNaN(result) ? 0 : result);
     }
     

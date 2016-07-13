@@ -41,7 +41,7 @@
         {{/answers}}
         {{/pictures}}
         {{#chars}}
-        <div class="quiz__input quiz__input--letters" data-quiz="input" data-solution="{{solution}}" data-input="" data-current="-1">
+        <div class="quiz__input quiz__input--letters{{#small}} quiz__input--small{{/small}}" data-quiz="input" data-solution="{{solution}}" data-input="" data-current="-1">
             {{#letters}}
             <span class="quiz__letter" style="width:{{width}}%;"></span>
             {{/letters}}
@@ -55,7 +55,7 @@
             </span>
             <br/>
             {{#letters}}
-            <span class="quiz__button quiz__button--inline" data-quiz="letter" data-locked="false">{{.}}</span>
+            <span class="quiz__button{{#small}} quiz__button--small{{/small}} quiz__button--inline" data-quiz="letter" data-locked="false">{{.}}</span>
             {{/letters}}
         </div>
         {{/chars}}

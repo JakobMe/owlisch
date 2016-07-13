@@ -99,6 +99,7 @@
             font-size: @app-font-size-medium;
             height: @_quiz-size-button-small;
             line-height: (@_quiz-size-button-small - (2 * @app-size-line-medium));
+            min-width: (@_quiz-size-button-small + (2 * @app-size-line-medium));
             
             // Icon
             &:before { width: @_quiz-size-button-small; }
@@ -106,22 +107,29 @@
         
         // Mod: Inline
         &--inline {
-            width: auto;
             display: inline-block;
-            padding-left: @app-size-gap;
-            padding-right: @app-size-gap;
+            padding-left: 0;
+            padding-right: 0;
             margin: 0 @app-size-gap-micro;
             margin-bottom: @app-size-gap-tiny;
-            min-width: (@_quiz-size-button + (2 * @app-size-line-medium));
+            width: (@_quiz-size-button + (2 * @app-size-line-medium));
             
             // Icon
             &:before { display: none; }
         }
         
+        // Mods: Inline & Klein
+        &--inline&--small {
+            width: (@_quiz-size-button-small + (2 * @app-size-line-medium));
+        }
+        
         // Mod: Backspace
         &--backspace {
+            width: auto;
             text-transform: uppercase;
             font-size: @app-font-size-small;
+            padding-left: @app-size-gap;
+            padding-right: @app-size-gap;
         }
         
         // Mod: Bild
@@ -307,6 +315,11 @@
             font-size: @app-font-size-medium;
             line-height: (@_quiz-size-button - (2 * @app-size-line-medium));
             margin-bottom: @app-size-gap;
+        }
+        
+        // Mod: Klein
+        &--small {
+            font-size: @app-font-size-small;
         }
         
         // Mods: Erfolg & Fehler

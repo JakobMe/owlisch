@@ -315,20 +315,27 @@ var Data = (function() {
     /**
      * Begriff des Tages setzen.
      * Setzt ein neues Begriff des Tages; wählt ein zufälliges Wort aus,
-     * falls keines gegeben ist und setzt das aktuelle Datum, wenn keines
-     * angegeben wurde; speichert die Date und stellt sie bereit.
+     * falls keines gegeben ist und setzt das aktuelle Datum;
+     * speichert die Daten und stellt sie bereit.
      * @param {(String|undefined)} [undefined] alias Begriff-Alias
      */
     function setDataFeatured(alias) {
-        var term;
+        
+        // Neuen Begriff des Tages ermitteln
+        var term = Util.getRandom(_dataTerms).alias;
         if ((typeof alias === typeof "") &&
             (Util.findTerm(_dataTerms, alias) !== false)) {
             term = alias;
         }
+        if (term === _dataFeatured.term) { setDataFeatured(); return false; }
+        
+        // Daten setzen
         _dataFeatured = {
-            term : (term || Util.getRandom(_dataTerms).alias),
+            term : term,
             date : Util.getDate()
         };
+        
+        // Speichern und bereitstellen
         _storeData();
         _serveDataFeatured();
         logData();
@@ -363,8 +370,7 @@ var Data = (function() {
     function logData() {
         
         // !TODO logData() entfernen
-        window.console.log("Stored Data:",
-            _dataProgress, _dataScores, _dataFeatured);
+        window.console.log(JSON.parse(localStorage.getItem(CFG.DATA.STORE)));
     }
     
     /**

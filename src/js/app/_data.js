@@ -339,10 +339,10 @@ var Data = (function() {
      * Entfernt alle Daten der letzten Spiele.
      */
     function clearDataScores() {
+        // !TODO: clearDataScores entfernen
         _dataScores = [];
         _storeData();
         _serveDataScores();
-        logData();
     }
     
     /**
@@ -350,10 +350,10 @@ var Data = (function() {
      * Entfernt alle Daten des Wörterbuch-Fortschritts.
      */
     function clearDataTerms() {
+        // !TODO: clearDataTerms entfernen
         _dataProgress = {};
         _storeData();
         _processDataTerms();
-        logData();
     }
     
     /**

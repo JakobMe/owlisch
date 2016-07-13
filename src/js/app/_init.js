@@ -24,9 +24,10 @@ var App = {
         // Komponenten initialisieren
         Template.init();
         Data.init();
+        Featured.init();
         Dictionary.init();
-        Statistics.init();
         Quiz.init();
+        Statistics.init();
         NavigationBar.init();
         TabBar.init();
         Play.init();

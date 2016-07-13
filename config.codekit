@@ -372,6 +372,17 @@
 		"outputStyle": 1,
 		"syntaxCheckerStyle": 1
 		},
+	"\/src\/js\/app\/_featured.js": {
+		"fileType": 64,
+		"ignore": 1,
+		"ignoreWasSetByUser": 0,
+		"inputAbbreviatedPath": "\/src\/js\/app\/_featured.js",
+		"outputAbbreviatedPath": "\/src\/js\/app\/min\/_featured-min.js",
+		"outputPathIsOutsideProject": 0,
+		"outputPathIsSetByUser": 0,
+		"outputStyle": 1,
+		"syntaxCheckerStyle": 1
+		},
 	"\/src\/js\/app\/_init.js": {
 		"fileType": 64,
 		"ignore": 1,

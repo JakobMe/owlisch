@@ -258,6 +258,7 @@ var Data = (function() {
             // Speichern und Listen aktualisieren
             _storeData();
             _processDataTerms();
+            logData();
         }
     }
     
@@ -293,6 +294,7 @@ var Data = (function() {
             // Speichern und bereitstellen
             _storeData();
             _serveDataScores();
+            logData();
         }
     }
     
@@ -329,6 +331,7 @@ var Data = (function() {
         };
         _storeData();
         _serveDataFeatured();
+        logData();
     }
     
     /**
@@ -339,6 +342,7 @@ var Data = (function() {
         _dataScores = [];
         _storeData();
         _serveDataScores();
+        logData();
     }
     
     /**
@@ -349,6 +353,7 @@ var Data = (function() {
         _dataProgress = {};
         _storeData();
         _processDataTerms();
+        logData();
     }
     
     /**

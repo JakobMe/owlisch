@@ -68,8 +68,8 @@ var CFG = (function() {
             }
         },
         VIEW: {
-            START: {
-                LABEL           : "Start",
+            FEATURED: {
+                LABEL           : "Heute",
                 TITLE           : "Begriff des Tages"
             },
             DICTIONARY: {

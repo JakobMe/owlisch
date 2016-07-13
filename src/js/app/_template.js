@@ -1,6 +1,6 @@
 /**
- * Util-Modul.
- * Stellt Hilfs-Funktionen zur Verfügung.
+ * Template-Modul.
+ * Stellt Hilfs-Funktionen für Templating zur Verfügung.
  * @author Jakob Metzger <jakob.me@gmail.com>
  * @copyright 2016 Jakob Metzger
  * @licence https://opensource.org/licenses/MIT MIT
@@ -9,9 +9,9 @@
 var Template = (function() {
     
     // Konstanten
-    var _PRELOAD                = "tpl/preload.json";
-    var _PATH                   = "tpl/_";
-    var _TYPE                   = ".tpl";
+    var _PRELOAD                = "tmpl/preload.json";
+    var _PATH                   = "tmpl/_";
+    var _TYPE                   = ".html";
     
     // Private Variablen
     var _cache                  = {};

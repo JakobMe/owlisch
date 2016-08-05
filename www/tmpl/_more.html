@@ -1,0 +1,21 @@
+<div class="slider slider--has-2" data-more="slider">
+    <div class="slider__slide" data-more="listbox" data-slide="1">
+        <ul class="list">
+            <li class="list__title">
+                <span class="list__title-text">
+                    <i class="icon icon--settings list__title-icon"></i> Weitere Optionen
+                    <span class="badge">{{size}} Einträge</span>
+                </span>
+            </li>
+            {{#list}}
+            <li class="list__item" data-more="item" data-option="{{option}}">
+                <i class="icon icon--{{option}} list__item-icon"></i>
+                <span class="list__item-label" data-more="label">{{label}}</span>
+            </li>
+            {{/list}}
+        </ul>
+    </div>
+    <div class="slider__slide" data-more="option" data-slide="2"></div>
+</div>
+
+

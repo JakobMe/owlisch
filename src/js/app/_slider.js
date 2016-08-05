@@ -62,12 +62,33 @@ var Slider = function($target) {
         return _current;
     }
     
+    /**
+     * Index eines Elements ermitteln.
+     * Ermittelt den Slide-Index eines Elements innerhalb des Sliders
+     * anhand eines gegebenen Query-Selektors.
+     * @param {String} selector Query-Selektor
+     * @returns {(Number|Boolean)} Index des gefundenen Elements oder false
+     */
+    function getIndexOf(selector) {
+        var index = false;
+        if (typeof selector === typeof "") {
+            var $found = _$slider.children(selector);
+            if ($found.length > 0) {
+                index = $found.first().attr(_DATA_SLIDE);
+                index = (typeof index === typeof undefined ?
+                         false : parseInt(index));
+            }
+        }
+        return index;
+    }
+    
     // Initialisieren
     _init($target);
     
     // Öffentliches Interface
     return {
-        setSlide : setSlide,
-        getSlide : getSlide
+        setSlide   : setSlide,
+        getSlide   : getSlide,
+        getIndexOf : getIndexOf
     };
 };

@@ -56,7 +56,6 @@ var Quiz = (function() {
     var _M_GROW                 = "grow";
     
     // Data-Attribut-Konstanten
-    var _DATA_SLIDE             = "slide";
     var _DATA_ANSWER            = "answer";
     var _DATA_LOCKED            = "locked";
     var _DATA_LETTER            = "letter";
@@ -185,12 +184,12 @@ var Quiz = (function() {
     function _initDom() {
         _$quiz        = $(_SEL_SLIDER);
         _$progressbar = $(_SEL_PROGRESSBAR);
+        _slider       = new Slider(_$quiz);
         _$start       = _$quiz.find(_SEL_START);
         _$finish      = _$quiz.find(_SEL_FINISH);
         _$questions   = _$quiz.find(_SEL_QUESTION);
-        _slider       = new Slider(_$quiz);
-        _indexStart   = parseInt(_$start.data(_DATA_SLIDE));
-        _indexFinish  = parseInt(_$finish.data(_DATA_SLIDE));
+        _indexStart   = _slider.getIndexOf(_SEL_START);
+        _indexFinish  = _slider.getIndexOf(_SEL_FINISH);
     }
     
     /**

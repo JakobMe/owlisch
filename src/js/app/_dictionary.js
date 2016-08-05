@@ -22,7 +22,6 @@ var Dictionary = (function() {
     
     // Data-Attribut-Konstanten
     var _DATA_TERM              = "term";
-    var _DATA_SLIDE             = "slide";
     
     // Private Variablen
     var _listOriginal           = [];
@@ -106,12 +105,12 @@ var Dictionary = (function() {
      */
     function _initDom() {
         _$dictionary  = $(_SEL_SLIDER);
+        _slider       = new Slider(_$dictionary);
         _$list        = _$dictionary.find(_SEL_LIST);
         _$listbox     = _$dictionary.find(_SEL_LISTBOX);
         _$details     = _$dictionary.find(_SEL_DETAILS);
-        _slider       = new Slider(_$dictionary);
-        _indexDetails = parseInt(_$details.data(_DATA_SLIDE));
-        _indexListbox = parseInt(_$listbox.data(_DATA_SLIDE));
+        _indexDetails = _slider.getIndexOf(_SEL_DETAILS);
+        _indexListbox = _slider.getIndexOf(_SEL_LISTBOX);
     }
     
     /**

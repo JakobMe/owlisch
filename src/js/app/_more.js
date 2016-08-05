@@ -21,7 +21,6 @@ var More = (function() {
 
     // Data-Attribut-Konstanten
     var _DATA_OPTION            = "option";
-    var _DATA_SLIDE             = "slide";
     
     // Private Variablen
     var _slider                 = null;
@@ -61,12 +60,12 @@ var More = (function() {
      */
     function _initDom() {
         _$more        = $(_SEL_SLIDER);
+        _slider       = new Slider(_$more);
         _$items       = _$more.find(_SEL_ITEM);
         _$listbox     = _$more.find(_SEL_LISTBOX);
         _$option      = _$more.find(_SEL_OPTION);
-        _slider       = new Slider(_$more);
-        _indexOption  = parseInt(_$option.data(_DATA_SLIDE));
-        _indexListbox = parseInt(_$listbox.data(_DATA_SLIDE));
+        _indexOption  = _slider.getIndexOf(_SEL_OPTION);
+        _indexListbox = _slider.getIndexOf(_SEL_LISTBOX);
     }
     
     /**

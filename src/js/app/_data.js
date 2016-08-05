@@ -8,6 +8,10 @@
  */
 var Data = (function() {
     
+    // Selektor-Konstanten
+    var _SEL_BODY               = "body";
+    var _SEL_DELETE             = "[data-data='delete']";
+    
     // Private Variablen
     var _dictionaryAlias        = "";
     var _dictionaryCaption      = "";
@@ -16,6 +20,7 @@ var Data = (function() {
     var _dataConfig             = [];
     var _dataProgress           = {};
     var _dataFeatured           = {};
+    var _dataDictionaries       = {};
     var _sizeScores             = 0;
     var _sizeTerms              = 0;
     var _sizeProgress           = 0;
@@ -25,13 +30,10 @@ var Data = (function() {
      * Startet Funktionen, um den Anfangszustand des Data-Moduls herzustellen.
      */
     function init() {
+        _bindEvents();
         _hookMediator();
+        _loadDataDictionaries();
         _loadDataStored();
-        
-        // !TODO: clearData wieder entfernen
-        clearDataScores();
-        clearDataTerms();
-        clearDataFeatured();
     }
     
     /**
@@ -44,7 +46,16 @@ var Data = (function() {
                 .hook(CFG.CNL.SCORES_REQUEST, _serveDataScores)
                 .hook(CFG.CNL.SCORES_UPDATE, _updateDataScore)
                 .hook(CFG.CNL.CONFIG_REQUEST, _serveDataConfig)
-                .hook(CFG.CNL.FEATURED_REQUEST, _serveDataFeatured);
+                .hook(CFG.CNL.FEATURED_REQUEST, _serveDataFeatured)
+                .hook(CFG.CNL.DICTIONARY_REQUEST, _serveDataDictionaries);
+    }
+    
+    /**
+     * Events binden.
+     * Bindet Funktionen an Events.
+     */
+    function _bindEvents() {
+        $(_SEL_BODY).on(CFG.EVT.CLICK, _SEL_DELETE, _clearData);
     }
     
     /**
@@ -80,7 +91,23 @@ var Data = (function() {
         _sizeScores = _dataScores.length;
         
         // Wörterbuch-Daten laden
-        _loadDataDictionary();
+        _loadDataTerms();
+    }
+    
+    /**
+     * Daten für verfügbare Wörterbücher laden.
+     * Lädt die Datei mit der Liste der verfügbaren Wörterbücher,
+     * speichert die Daten und sendet sie per Mediator.
+     */
+    function _loadDataDictionaries() {
+        
+        // Pfad zur Wörterbücher-Übersicht-Datei zusammensetzen
+        var file = CFG.DATA.PATH_DATA + CFG.DATA.DICTIONARIES +
+                   CFG.DATA.TYPE_DATA;
+        
+        // AJAX-Anfrage zur Datei, im Anschluss Daten senden
+        $.getJSON(file, function(data) { _dataDictionaries = data; })
+         .done(function() { _serveDataDictionaries(); });
     }
     
     /**
@@ -88,7 +115,7 @@ var Data = (function() {
      * Lädt die Datei zum eingestellten Wörterbuch und
      * speichert die Daten in einer lokalen Variable.
      */
-    function _loadDataDictionary() {
+    function _loadDataTerms() {
         
         // Pfad zur Wörterbuch-Datei zusammensetzen
         var file = CFG.DATA.PATH_DATA + _dictionaryAlias +
@@ -226,7 +253,7 @@ var Data = (function() {
             (typeof data.alias !== typeof undefined) &&
             (typeof data.lvl   !== typeof undefined) &&
             (typeof data.fail  !== typeof undefined)) {
-            setDataTerm(data.alias, data.lvl, data.fail);
+            _setDataTerm(data.alias, data.lvl, data.fail);
         }
     }
     
@@ -239,7 +266,7 @@ var Data = (function() {
      * @param {Number} lvl Neue Stufe des Begriffs
      * @param {Number} fail Neue Fehlschläge des Begriffs
      */
-    function setDataTerm(alias, lvl, fail) {
+    function _setDataTerm(alias, lvl, fail) {
         if ((typeof lvl  === typeof 0) &&
             (typeof fail === typeof 0) &&
             (Util.findTerm(_dataTerms, alias) !== false)) {
@@ -259,20 +286,9 @@ var Data = (function() {
             // Speichern und Listen aktualisieren
             _storeData();
             _processDataTerms();
-            logData();
         }
     }
-    
-    /**
-     * Die letzten Spiele aktualisieren.
-     * Ergänzt die Liste der letzten Spieleergebnisse um ein bestimmtes
-     * Ergebnis bei einer Mediator-Nachricht.
-     * @param {Number} score Neues Ergebnis
-     */
-    function _updateDataScore(score) {
-        if (typeof score === typeof 0) { addDataScore(score); }
-    }
-    
+
     /**
      * Die letzten Spiele setzen.
      * Fügt einen neuen Wert zur Liste der letzten Spiele hinzu;
@@ -280,7 +296,7 @@ var Data = (function() {
      * und stellt sie zur Verfügung.
      * @param {Number} result Neues Quiz-Ergebnis
      */
-    function addDataScore(score) {
+    function _updateDataScore(score) {
         if (typeof score === typeof 0) {
             
             // Neuen Wert korrigieren, Startindex für Kürzung berechnen
@@ -295,7 +311,6 @@ var Data = (function() {
             // Speichern und bereitstellen
             _storeData();
             _serveDataScores();
-            logData();
         }
     }
     
@@ -309,7 +324,7 @@ var Data = (function() {
     function _updateDataFeatured() {
         if ($.isEmptyObject(_dataFeatured) ||
             (_dataFeatured.date < Util.getDate())) {
-            setDataFeatured();
+            _setDataFeatured();
         } else { _serveDataFeatured(); }
     }
     
@@ -320,7 +335,7 @@ var Data = (function() {
      * speichert die Daten und stellt sie bereit.
      * @param {(String|undefined)} [undefined] alias Begriff-Alias
      */
-    function setDataFeatured(alias) {
+    function _setDataFeatured(alias) {
         
         // Neuen Begriff des Tages ermitteln
         var term = Util.getRandom(_dataTerms).alias;
@@ -329,7 +344,7 @@ var Data = (function() {
             term = alias;
         }
         if (term === _dataFeatured.term) {
-            setDataFeatured();
+            _setDataFeatured();
             return false;
         }
         
@@ -342,50 +357,6 @@ var Data = (function() {
         // Speichern und bereitstellen
         _storeData();
         _serveDataFeatured();
-        logData();
-    }
-    
-    /**
-     * Die letzten Spiele löschen.
-     * Entfernt alle Daten der letzten Spiele.
-     */
-    function clearDataScores() {
-        // !TODO: clearDataScores entfernen
-        _dataScores = [];
-        _storeData();
-        _serveDataScores();
-    }
-    
-    /**
-     * Fortschritt-Liste löschen.
-     * Entfernt alle Daten des Wörterbuch-Fortschritts.
-     */
-    function clearDataTerms() {
-        // !TODO: clearDataTerms entfernen
-        _dataProgress = {};
-        _storeData();
-        _processDataTerms();
-    }
-    
-    /**
-     * Begriff des Tages löschen.
-     * Entfernt alle Daten für den Begriff des Tages.
-     */
-    function clearDataFeatured() {
-        // !TODO: clearDataFeatured entfernen
-        _dataFeatured = {};
-        _storeData();
-        _serveDataFeatured();
-    }
-    
-    /**
-     * Daten loggen.
-     * Erstellt zu Testzwecken ein Log für alle Daten in der Konsole.
-     */
-    function logData() {
-        
-        // !TODO logData() entfernen
-        window.console.log(JSON.parse(localStorage.getItem(CFG.DATA.STORE)));
     }
     
     /**
@@ -425,22 +396,36 @@ var Data = (function() {
     
     /**
      * Begriff des Tages bereitstellen.
-     * Liefert das zufällige Begriff des Tages in einer Mediator-Nachricht.
+     * Liefert den zufälligen Begriff des Tages in einer Mediator-Nachricht.
      */
     function _serveDataFeatured() {
         Mediator.send(CFG.CNL.FEATURED_SERVE, _dataFeatured.term);
     }
     
+    /**
+     * Verfügbare Wörterbücher bereitstellen.
+     * Liefert alle verfügbaren Wörterbucher in einer Mediator-Nachricht.
+     */
+    function _serveDataDictionaries() {
+        Mediator.send(CFG.CNL.DICTIONARIES_SERVE, _dataDictionaries);
+    }
+    
+    /**
+     * Daten löschen.
+     * Löschte alle Daten über die letzten Spiele und den Fortschritt;
+     * speichert die Daten und stellt sie über den Mediator bereit.
+     */
+    function _clearData() {
+        if (window.confirm(CFG.LABEL.DELETE)) {
+            _dataScores = [];
+            _dataProgress = {};
+            _storeData();
+            _serveDataScores();
+            _processDataTerms();
+        }
+    }
+    
     // Öffentliches Interface
-    return {
-        init              : init,
-        setDataFeatured   : setDataFeatured,
-        setDataTerm       : setDataTerm,
-        addDataScore      : addDataScore,
-        clearDataTerms    : clearDataTerms,
-        clearDataScores   : clearDataScores,
-        clearDataFeatured : clearDataFeatured,
-        logData           : logData
-    };
+    return { init: init };
     
 })();

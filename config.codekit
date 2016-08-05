@@ -592,6 +592,17 @@
 		"outputStyle": 1,
 		"syntaxCheckerStyle": 1
 		},
+	"\/src\/json\/dictionaries.json": {
+		"fileType": 524288,
+		"ignore": 0,
+		"ignoreWasSetByUser": 1,
+		"inputAbbreviatedPath": "\/src\/json\/dictionaries.json",
+		"orderOutput": 0,
+		"outputAbbreviatedPath": "\/www\/data\/dictionaries.json",
+		"outputPathIsOutsideProject": 0,
+		"outputPathIsSetByUser": 1,
+		"outputStyle": 1
+		},
 	"\/src\/json\/owl.json": {
 		"fileType": 524288,
 		"ignore": 0,
@@ -1192,6 +1203,17 @@
 		"outputPathIsOutsideProject": 0,
 		"outputPathIsSetByUser": 0
 		},
+	"\/www\/data\/dictionaries.json": {
+		"fileType": 524288,
+		"ignore": 1,
+		"ignoreWasSetByUser": 0,
+		"inputAbbreviatedPath": "\/www\/data\/dictionaries.json",
+		"orderOutput": 0,
+		"outputAbbreviatedPath": "\/www\/data\/dictionaries-min.json",
+		"outputPathIsOutsideProject": 0,
+		"outputPathIsSetByUser": 0,
+		"outputStyle": 1
+		},
 	"\/www\/data\/owl\/image\/blume.jpg": {
 		"fileType": 16384,
 		"ignore": 0,
@@ -1329,8 +1351,8 @@
 		},
 	"\/www\/tmpl\/_more-delete.html": {
 		"fileType": 8192,
-		"ignore": 0,
-		"ignoreWasSetByUser": 0,
+		"ignore": 1,
+		"ignoreWasSetByUser": 1,
 		"inputAbbreviatedPath": "\/www\/tmpl\/_more-delete.html",
 		"outputAbbreviatedPath": "No Output Path",
 		"outputPathIsOutsideProject": 0,
@@ -1338,8 +1360,8 @@
 		},
 	"\/www\/tmpl\/_more-dictionary.html": {
 		"fileType": 8192,
-		"ignore": 0,
-		"ignoreWasSetByUser": 0,
+		"ignore": 1,
+		"ignoreWasSetByUser": 1,
 		"inputAbbreviatedPath": "\/www\/tmpl\/_more-dictionary.html",
 		"outputAbbreviatedPath": "No Output Path",
 		"outputPathIsOutsideProject": 0,
@@ -1347,8 +1369,8 @@
 		},
 	"\/www\/tmpl\/_more-help.html": {
 		"fileType": 8192,
-		"ignore": 0,
-		"ignoreWasSetByUser": 0,
+		"ignore": 1,
+		"ignoreWasSetByUser": 1,
 		"inputAbbreviatedPath": "\/www\/tmpl\/_more-help.html",
 		"outputAbbreviatedPath": "No Output Path",
 		"outputPathIsOutsideProject": 0,
@@ -1356,8 +1378,8 @@
 		},
 	"\/www\/tmpl\/_more.html": {
 		"fileType": 8192,
-		"ignore": 0,
-		"ignoreWasSetByUser": 0,
+		"ignore": 1,
+		"ignoreWasSetByUser": 1,
 		"inputAbbreviatedPath": "\/www\/tmpl\/_more.html",
 		"outputAbbreviatedPath": "No Output Path",
 		"outputPathIsOutsideProject": 0,

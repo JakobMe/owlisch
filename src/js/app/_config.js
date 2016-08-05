@@ -9,6 +9,7 @@
 var CFG = (function() {
     return {
         DATA: {
+            DICTIONARIES        : "dictionaries",
             STORE               : "owlisch",
             ALIAS               : "owl",
             PATH_DELIMITER      : "/",
@@ -33,7 +34,8 @@ var CFG = (function() {
             WHAT                : "Was ist",
             PROGRESS            : "Fortschritt:",
             DETAILS             : "Details",
-            THIS                : "das"
+            THIS                : "das",
+            DELETE              : "Daten wirklich zurücksetzen?"
         },
         RATING: {
             PERFECT: {

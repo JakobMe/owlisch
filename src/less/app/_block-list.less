@@ -73,6 +73,15 @@
             // Leer
             &:empty { display: none; }
         }
+        
+        // Sub-Element: Icon
+        &-icon {
+            color: @app-color-text-dark-pale;
+            width: (@_list-size-height / 2);
+        }
+        
+        // Sub-Elemente: Icon & Label (aufeinanderfolgend)
+        &-icon + &-label { margin-left: 0; }
     }
     
     // Element: Titel
@@ -96,6 +105,6 @@
         
         // Sub-Elemente: Titel-Text und -Icon
         &-text { display: block; position: relative; }
-        &-icon { margin-right: @app-size-gap-small; }
+        &-icon { width: (@_list-size-height / 2); }
     }
 }

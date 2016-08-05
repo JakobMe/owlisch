@@ -308,6 +308,21 @@ var NavigationBar = (function() {
                     _loadCache(CFG.ACT.DICTIONARY_BACK);
                     break;
                 
+                // Mehr vorwärts
+                case CFG.ACT.MORE_FORWARD:
+                    _saveCache(CFG.ACT.MORE_BACK);
+                    _setDropdown(false);
+                    _setSearch(false, false);
+                    _setBtnL(CFG.ACT.MORE_BACK, CFG.ICO.BACK);
+                    _setBtnR(null, null);
+                    _setHead(data.str || CFG.VIEW.MORE.TITLE);
+                    break;
+                
+                // Mehr zurück
+                case CFG.ACT.MORE_BACK:
+                    _loadCache(CFG.ACT.MORE_BACK);
+                    break;
+                
                 // Quiz gestartet
                 case CFG.ACT.QUIZ_START:
                     _setBtnL(CFG.ACT.QUIZ_CANCEL, CFG.ICO.CANCEL);
@@ -324,8 +339,6 @@ var NavigationBar = (function() {
                 case CFG.ACT.QUIZ_SOLVE:
                     _setBtnR(null, null);
                     break;
-                
-                // !TODO: Switch Button-Aktionen
             }
         }
     }

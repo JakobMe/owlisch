@@ -71,7 +71,7 @@ var Featured = (function() {
                 label  : CFG.LABEL.PROGRESS
             }, Util.findTerm(_dataTerms, _dataFeatured));
             
-            // Details laden, Event auslösen, Slider bewegen
+            // Begriff des Tages per Template einfügen
             Template.render(_$featured, _TMPL_DETAILS, data, function() {
                 Mediator.send(CFG.CNL.VIEW_SHOW);
             });

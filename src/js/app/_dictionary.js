@@ -118,14 +118,6 @@ var Dictionary = (function() {
     }
     
     /**
-     * Slider rendern.
-     * Rendert den Wörterbuch-Slider anhand der intern gesetzt Variablen.
-     */
-    function _renderSlider() {
-        _$slider.setMod(_B_SLIDER, _M_IS, _currentSlide);
-    }
-    
-    /**
      * Liste rendern.
      * Rendert die Liste des Wörterbuches anhand eines Mustache-Templates.
      */
@@ -312,7 +304,7 @@ var Dictionary = (function() {
     function _setSlider(slide) {
         _currentSlide = slide;
         if (_currentSlide === _indexListbox) { _listIsLocked = false; }
-        _renderSlider();
+        _$slider.setMod(_B_SLIDER, _M_IS, _currentSlide);
     }
     
     /**

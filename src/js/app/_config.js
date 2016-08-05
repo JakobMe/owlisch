@@ -86,8 +86,13 @@ var CFG = (function() {
             },
             MORE: {
                 LABEL           : "Mehr",
-                TITLE           : "Mehr Optionen"
+                TITLE           : "Mehr"
             }
+        },
+        OPTIONS: {
+            HELP                : "Hilfe",
+            DELETE              : "Daten zurücksetzen",
+            DICTIONARY          : "Wörterbuch ändern"
         },
         ACT: {
             NONE                : "none",
@@ -98,6 +103,8 @@ var CFG = (function() {
             SORT_TOGGLE         : "sort-toggle",
             DICTIONARY_FORWARD  : "dictionary-forward",
             DICTIONARY_BACK     : "dictionary-back",
+            MORE_FORWARD        : "more-forward",
+            MORE_BACK           : "more-back",
             QUIZ_SKIP           : "quiz-skip",
             QUIZ_CANCEL         : "quiz-cancel",
             QUIZ_START          : "quiz-start",

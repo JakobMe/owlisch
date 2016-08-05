@@ -11,8 +11,8 @@
             </ul>
         </div>
     </div>
-    <div class="slider slider--has-{{slides}}" data-quiz="slider">
-        <div class="slider__slide" data-quiz="start" data-slide="1">
+    <div class="slider" data-quiz="slider">
+        <div class="slider__slide" data-quiz="start">
             <p class="quiz__title">
                 <span class="quiz__title-text">
                     <i class="icon icon--dictionary quiz__title-icon"></i> {{caption}}
@@ -35,8 +35,8 @@
             </span>
         </div>
         {{#questions}}
-        <div class="slider__slide" data-quiz="question" data-slide="{{.}}"></div>
+        <div class="slider__slide" data-quiz="question"></div>
         {{/questions}}
-        <div class="slider__slide" data-quiz="finish" data-slide="{{slides}}"></div>
+        <div class="slider__slide" data-quiz="finish"></div>
     </div>
 </div>

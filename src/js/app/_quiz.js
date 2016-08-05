@@ -36,7 +36,6 @@ var Quiz = (function() {
     
     // BEM-Konstanten
     var _B_QUIZ                 = "quiz";
-    var _B_SLIDER               = "slider";
     var _B_STARS                = "stars";
     var _B_PROGRESSBAR          = "progressbar";
     var _B_CHART                = "chart";
@@ -74,7 +73,6 @@ var Quiz = (function() {
     // Private Variablen
     var _indexStart             = 0;
     var _indexFinish            = 0;
-    var _currentSlide           = 0;
     var _currentStep            = 0;
     var _questions              = [];
     var _progress               = [];
@@ -82,9 +80,10 @@ var Quiz = (function() {
     var _dataConfig             = [];
     var _dataAlias              = "";
     var _dataCaption            = "";
+    var _slider                 = null;
     
     // DOM-Elemente
-    var _$slider                = null;
+    var _$quiz                  = null;
     var _$start                 = null;
     var _$finish                = null;
     var _$questions             = null;
@@ -169,7 +168,7 @@ var Quiz = (function() {
                 _initDom();
                 _resetProgress();
                 _bindEvents();
-                _setSlider(_indexStart);
+                _slider.setSlide(_indexStart);
                 
                 // Wörterbuch und Fortschritt anfragen, View einblenden
                 Mediator.send(CFG.CNL.VIEW_SHOW)
@@ -184,21 +183,14 @@ var Quiz = (function() {
      * Initialisiert alle DOM-Elemente des Quizes.
      */
     function _initDom() {
-        _$slider      = $(_SEL_SLIDER);
+        _$quiz        = $(_SEL_SLIDER);
         _$progressbar = $(_SEL_PROGRESSBAR);
-        _$start       = _$slider.find(_SEL_START);
-        _$finish      = _$slider.find(_SEL_FINISH);
-        _$questions   = _$slider.find(_SEL_QUESTION);
+        _$start       = _$quiz.find(_SEL_START);
+        _$finish      = _$quiz.find(_SEL_FINISH);
+        _$questions   = _$quiz.find(_SEL_QUESTION);
+        _slider       = new Slider(_$quiz);
         _indexStart   = parseInt(_$start.data(_DATA_SLIDE));
         _indexFinish  = parseInt(_$finish.data(_DATA_SLIDE));
-    }
-    
-    /**
-     * Slider rendern.
-     * Rendert den Wörterbuch-Slider anhand der intern gesetzt Variablen.
-     */
-    function _renderSlider() {
-        _$slider.setMod(_B_SLIDER, _M_IS, _currentSlide);
     }
     
     /**
@@ -223,17 +215,6 @@ var Quiz = (function() {
                        .setMod(_B_PROGRESSBAR, _E_STEP, _M_ERROR, error);
             });
         }
-    }
-    
-    /**
-     * Aktuellen Slide setzen.
-     * Aktualisiert den aktiven Slide des Quiz-Sliders;
-     * rendert den Slider anschließend neu.
-     * @param {Number} slide Nummer des neuen Slides
-     */
-    function _setSlider(slide) {
-        _currentSlide = Util.limit(slide, _indexStart, _indexFinish);
-        _renderSlider();
     }
     
     /**
@@ -306,7 +287,7 @@ var Quiz = (function() {
     function _nextStep() {
         var next = _currentStep + 1;
         if (next > CFG.QUIZ.QUESTIONS) { _finish(); }
-        _setSlider(_currentSlide + 1);
+        _slider.setSlide(_slider.getSlide() + 1);
         _setStep(next);
     }
     
@@ -328,7 +309,7 @@ var Quiz = (function() {
                 _resetProgress();
                 _pickQuestions();
                 _processQuestions();
-                _setSlider(_indexStart + 1);
+                _slider.setSlide(_indexStart + 1);
                 _setStep(1);
             }, (typeof event === typeof undefined ? 0 : CFG.TIME.ANIMATION));
         }
@@ -945,7 +926,7 @@ var Quiz = (function() {
         setTimeout(function() {
             Mediator.send(CFG.CNL.QUIZ_END);
             _clearQuestions(true);
-            _setSlider(_indexStart);
+            _slider.setSlide(_indexStart);
             _resetProgress();
             if (restart === true) { _start(); }
             setTimeout(function() {

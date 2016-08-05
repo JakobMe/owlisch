@@ -18,27 +18,22 @@ var More = (function() {
     // Template-Namen
     var _TMPL_DELIMITER         = "-";
     var _TMPL_MORE              = "more";
-    
-    // BEM-Konstanten
-    var _B_SLIDER               = "slider";
-    var _M_IS                   = "is";
-    
+
     // Data-Attribut-Konstanten
     var _DATA_OPTION            = "option";
     var _DATA_SLIDE             = "slide";
     
     // Private Variablen
+    var _slider                 = null;
     var _listIsLocked           = false;
     var _indexListbox           = 0;
     var _indexOption            = 0;
-    var _currentSlide           = 0;
     var _currentOption          = {};
     
     // DOM-Elemente
     var _$more                  = null;
     var _$items                 = null;
     var _$listbox               = null;
-    var _$slider                = null;
     var _$option                = null;
     
     /**
@@ -65,14 +60,13 @@ var More = (function() {
      * Initialisiert alle DOM-Elemente des Moduls.
      */
     function _initDom() {
-        if (_$more instanceof $) {
-            _$items       = _$more.find(_SEL_ITEM);
-            _$listbox     = _$more.find(_SEL_LISTBOX);
-            _$slider      = _$more.find(_SEL_SLIDER);
-            _$option      = _$more.find(_SEL_OPTION);
-            _indexOption  = parseInt(_$option.data(_DATA_SLIDE));
-            _indexListbox = parseInt(_$listbox.data(_DATA_SLIDE));
-        }
+        _$more        = $(_SEL_SLIDER);
+        _$items       = _$more.find(_SEL_ITEM);
+        _$listbox     = _$more.find(_SEL_LISTBOX);
+        _$option      = _$more.find(_SEL_OPTION);
+        _slider       = new Slider(_$more);
+        _indexOption  = parseInt(_$option.data(_DATA_SLIDE));
+        _indexListbox = parseInt(_$listbox.data(_DATA_SLIDE));
     }
     
     /**
@@ -104,14 +98,13 @@ var More = (function() {
                 });
             });
             
-            // Inhalte per Template einfügen, DOM-Elemente initialisieren
-            _$more = data.target;
-            Template.render(_$more, _TMPL_MORE, options, function() {
+            // Inhalte per Template einfügen
+            Template.render(data.target, _TMPL_MORE, options, function() {
                 
                 // Funktionen ausführen
                 _initDom();
-                _setSlider(_indexListbox);
                 _bindEvents();
+                _slider.setSlide(_indexListbox);
                 
                 // Wörterbuch-Daten anfragen, View einblenden
                 Mediator.send(CFG.CNL.VIEW_SHOW);
@@ -153,20 +146,8 @@ var More = (function() {
                 });
             }
             _$option.scrollTop(0);
-            _setSlider(_indexOption);
+            _slider.setSlide(_indexOption);
         });
-    }
-    
-    /**
-     * Aktuellen Slide setzen.
-     * Aktualisiert den aktiven Slide des Mehr-Sliders; entsperrt
-     * die Liste gegebenenfalls und rendert den Slider anschließend neu.
-     * @param {Number} slide Nummer des neuen Slides
-     */
-    function _setSlider(slide) {
-        _currentSlide = slide;
-        if (_currentSlide === _indexListbox) { _listIsLocked = false; }
-        _$slider.setMod(_B_SLIDER, _M_IS, _currentSlide);
     }
     
     /**
@@ -182,7 +163,8 @@ var More = (function() {
             setTimeout(function() {
                 _$option.html("");
             }, CFG.TIME.DELAY);
-            _setSlider(_indexListbox);
+            _slider.setSlide(_indexListbox);
+            _listIsLocked = false;
         }
     }
     
@@ -195,7 +177,8 @@ var More = (function() {
         if ((typeof panel    !== typeof undefined) &&
             (CFG.VIEW[panel] === CFG.VIEW.MORE)) {
             _$listbox.animate({ scrollTop: 0 }, CFG.TIME.ANIMATION);
-            _setSlider(_indexListbox);
+            _slider.setSlide(_indexListbox);
+            _listIsLocked = false;
         }
     }
     

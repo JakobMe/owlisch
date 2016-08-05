@@ -20,10 +20,6 @@ var Dictionary = (function() {
     var _TMPL_LIST              = "dictionary-list";
     var _TMPL_DETAILS           = "dictionary-details";
     
-    // BEM-Konstanten
-    var _B_SLIDER               = "slider";
-    var _M_IS                   = "is";
-    
     // Data-Attribut-Konstanten
     var _DATA_TERM              = "term";
     var _DATA_SLIDE             = "slide";
@@ -36,13 +32,13 @@ var Dictionary = (function() {
     var _currentSort            = CFG.SORTING.SORT.ALPHA;
     var _currentOrdr            = CFG.SORTING.ORDR.ASC;
     var _currentTerm            = {};
-    var _currentSlide           = 0;
     var _indexListbox           = 0;
     var _indexDetails           = 0;
     var _listIsLocked           = false;
+    var _slider                 = null;
     
     // DOM-Elemente
-    var _$slider                = null;
+    var _$dictionary            = null;
     var _$list                  = null;
     var _$listbox               = null;
     var _$details               = null;
@@ -94,8 +90,8 @@ var Dictionary = (function() {
                 
                 // Funktionen ausführen
                 _initDom();
-                _setSlider(_indexListbox);
                 _bindEvents();
+                _slider.setSlide(_indexListbox);
                 
                 // Fortschritt-Liste anfragen, View einblenden
                 Mediator.send(CFG.CNL.VIEW_SHOW)
@@ -109,10 +105,11 @@ var Dictionary = (function() {
      * Initialisiert alle DOM-Elemente des Wörterbuches.
      */
     function _initDom() {
-        _$slider      = $(_SEL_SLIDER);
-        _$list        = _$slider.find(_SEL_LIST);
-        _$listbox     = _$slider.find(_SEL_LISTBOX);
-        _$details     = _$slider.find(_SEL_DETAILS);
+        _$dictionary  = $(_SEL_SLIDER);
+        _$list        = _$dictionary.find(_SEL_LIST);
+        _$listbox     = _$dictionary.find(_SEL_LISTBOX);
+        _$details     = _$dictionary.find(_SEL_DETAILS);
+        _slider       = new Slider(_$dictionary);
         _indexDetails = parseInt(_$details.data(_DATA_SLIDE));
         _indexListbox = parseInt(_$listbox.data(_DATA_SLIDE));
     }
@@ -162,7 +159,7 @@ var Dictionary = (function() {
                     });
                 }
                 _$details.scrollTop(0);
-                _setSlider(_indexDetails);
+                _slider.setSlide(_indexDetails);
             });
         }
     }
@@ -260,7 +257,8 @@ var Dictionary = (function() {
             _filter();
             
             // Details neu rendern
-            if (_currentSlide === _indexDetails) {
+            if ((_slider !== null) &&
+                (_slider.getSlide() === _indexDetails)) {
                 _loadDetails(_currentTerm.alias, false);
             }
         }
@@ -296,18 +294,6 @@ var Dictionary = (function() {
     }
     
     /**
-     * Aktuellen Slide setzen.
-     * Aktualisiert den aktiven Slide des Wörterbuch-Sliders; entsperrt
-     * die Liste gegebenenfalls und rendert den Slider anschließend neu.
-     * @param {Number} slide Nummer des neuen Slides
-     */
-    function _setSlider(slide) {
-        _currentSlide = slide;
-        if (_currentSlide === _indexListbox) { _listIsLocked = false; }
-        _$slider.setMod(_B_SLIDER, _M_IS, _currentSlide);
-    }
-    
-    /**
      * Zurück zu Liste.
      * Bewegt den Wörterbuch-Slider anhand einer Mediatior-Nachricht
      * zurück zur Wörterbuch-Liste; leert die Begriff-Details.
@@ -320,7 +306,8 @@ var Dictionary = (function() {
             setTimeout(function() {
                 _$details.html("");
             }, CFG.TIME.DELAY);
-            _setSlider(_indexListbox);
+            _slider.setSlide(_indexListbox);
+            _listIsLocked = false;
         }
     }
     
@@ -339,7 +326,8 @@ var Dictionary = (function() {
             // Standardwerte setzen, Liste filtern und scrollen
             _currentFilter = "";
             _$listbox.animate({ scrollTop: 0 }, CFG.TIME.ANIMATION);
-            _setSlider(_indexListbox);
+            _slider.setSlide(_indexListbox);
+            _listIsLocked = false;
             _filter();
         }
     }

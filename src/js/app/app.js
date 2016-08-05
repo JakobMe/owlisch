@@ -11,6 +11,7 @@
 // @codekit-prepend "_util.js";
 // @codekit-prepend "_mediator.js";
 // @codekit-prepend "_template.js";
+// @codekit-prepend "_slider.js";
 // @codekit-prepend "_data.js";
 // @codekit-prepend "_play.js";
 // @codekit-prepend "_featured.js";

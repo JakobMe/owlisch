@@ -1,0 +1,24 @@
+<ul class="list">
+    <li class="list__title">
+        <span class="list__title-text">
+            <i class="icon icon--dictionary list__title-icon"></i> {{terms.caption}}
+            <span class="badge{{#filtered}} badge--highlight{{/filtered}}">
+                {{terms.solved}} Begriff{{^terms.single}}e{{/terms.single}}
+            </span>
+        </span>
+    </li>
+</ul>
+<p class="notice">
+    <span class="button button--danger button--margin-bottom" data-data="delete">
+        <span>Zurücksetzen</span>
+        <i class="icon icon--right icon--delete"></i>
+    </span>
+    <span class="notice__title">
+        <span class="notice__title-text">Hinweis</span>
+    </span>
+    <span class="notice__text">
+        Wenn Du Deine <b>Daten zurücksetzt</b>, sind sie für immer
+        <b>verloren</b>! Lösche sie nur, wenn Du Dir ganz sicher bist,
+        noch einmal <b>von vorne anzufangen</b>.
+    </span>
+</p>

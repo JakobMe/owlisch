@@ -39,8 +39,8 @@ var Quiz = (function() {
     var _B_STARS                = "stars";
     var _B_PROGRESSBAR          = "progressbar";
     var _B_CHART                = "chart";
+    var _B_BUTTON               = "button";
     var _E_STEP                 = "step";
-    var _E_BUTTON               = "button";
     var _E_ANSWERS              = "answers";
     var _E_ACTION               = "action";
     var _E_INPUT                = "input";
@@ -560,7 +560,7 @@ var Quiz = (function() {
                         $input.data(_DATA_INPUT, input + $btn.text());
                         $input.data(_DATA_CURRENT, i);
                         $btn.data(_DATA_LOCKED, true);
-                        $btn.setMod(_B_QUIZ, _E_BUTTON, _M_LOCKED, true);
+                        $btn.setMod(_B_BUTTON, _M_LOCKED, true);
                         return false;
                     }
                 });
@@ -592,7 +592,7 @@ var Quiz = (function() {
                 $input.data(_DATA_CURRENT, current - 1);
                 $input.data(_DATA_INPUT, input.slice(0, -1));
                 _$currentQuestion.find(_SEL_KEYBOARD).children().eq(letter)
-                    .setMod(_B_QUIZ, _E_BUTTON, _M_LOCKED, false)
+                    .setMod(_B_BUTTON, _M_LOCKED, false)
                     .data(_DATA_LOCKED, false);
                 
                 // Backspace sperren, falls keine Buchstaben mehr
@@ -609,7 +609,7 @@ var Quiz = (function() {
     function _toggleBackspace(locked) {
         if (typeof locked === typeof true) {
         _$currentQuestion.find(_SEL_BACKSPACE)
-            .setMod(_B_QUIZ, _E_BUTTON, _M_LOCKED, locked)
+            .setMod(_B_BUTTON, _M_LOCKED, locked)
             .data(_DATA_LOCKED, locked);
         }
     }
@@ -754,10 +754,10 @@ var Quiz = (function() {
             
             // Antworten modifizieren
             var status = (correct ? _M_SUCCESS : _M_ERROR);
-            $answer.setMod(_B_QUIZ, _E_BUTTON, status, true).siblings().each(
+            $answer.setMod(_B_BUTTON, status, true).siblings().each(
                 function() {
                     $(this).setMod(
-                        _B_QUIZ, _E_BUTTON, _M_SUCCESS,
+                        _B_BUTTON, _M_SUCCESS,
                         $(this).data(_DATA_ANSWER)
                     );
                 }

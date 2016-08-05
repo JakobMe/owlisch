@@ -137,6 +137,8 @@ var CFG = (function() {
             SCORES_REQUEST      : "scores:request",
             SCORES_SERVE        : "scores:serve",
             SCORES_UPDATE       : "scores:update",
+            DICTIONARY_REQUEST  : "dictionary:request",
+            DICTIONARY_SERVE    : "dictionary:serve",
             CONFIG_REQUEST      : "config:request",
             CONFIG_SERVE        : "config:serve",
             FEATURED_REQUEST    : "featured:request",

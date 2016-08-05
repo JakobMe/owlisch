@@ -8,16 +8,9 @@
  */
 
 // Modul-Variablen
-@_quiz-size-button-round:               128px;
-@_quiz-padding-button-round:            40px;
 @_quiz-line-height-title:               20px;
 @_quiz-size-button:                     44px;
-@_quiz-size-button-small:               36px;
-@_quiz-size-button-image:               110px;
-@_quiz-font-size-button:                16px;
-@_quiz-size-icon-image:                 30px;
 @_quiz-size-triangle:                   12px;
-@_quiz-size-gap-image:                  3%;
 
 // Block: Quiz
 .quiz {
@@ -48,195 +41,11 @@
         &-icon { margin-right: @app-size-gap-small; }
     }
     
-    // Element: Button
-    &__button {
-        display: block;
-        cursor: pointer;
-        overflow: hidden;
-        font-weight: bold;
-        font-style: normal;
-        position: relative;
-        text-align: center;
-        box-sizing: border-box;
-        text-decoration: none;
-        padding: (@app-size-line-medium / 2) @_quiz-size-button;
-        margin-bottom: @app-size-gap-small;
-        height: @_quiz-size-button;
-        line-height: (@_quiz-size-button - (2 * @app-size-line-medium));
-        font-size: @_quiz-font-size-button;
-        .shadow-small(@app-color-shadow-lighter);
-        .colored-gradient();
-        .border-radius();
-        .border-button();
-        .transition();
-        
-        // Icon
-        &:before {
-            display: block;
-            position: absolute;
-            text-align: center;
-            visibility: hidden;
-            font-weight: normal;
-            top: 0;
-            left: 0;
-            height: 100%;
-            content: "";
-            font-size: @app-font-size-medium;
-            color: @app-color-text-dark-pale;
-            padding: (@app-size-line-medium / 2) 0;
-            opacity: @app-opacity-invisible;
-            width: @_quiz-size-button;
-            .transition();
-        }
-        
-        // Letztes Element
-        &:last-child { margin-bottom: 0; }
-        
-        // Mod: Klein
-        &--small {
-            padding-left: @_quiz-size-button-small;
-            padding-right: @_quiz-size-button-small;
-            font-size: @app-font-size-medium;
-            height: @_quiz-size-button-small;
-            line-height: (@_quiz-size-button-small - (2 * @app-size-line-medium));
-            min-width: (@_quiz-size-button-small + (2 * @app-size-line-medium));
-            
-            // Icon
-            &:before { width: @_quiz-size-button-small; }
-        }
-        
-        // Mod: Inline
-        &--inline {
-            display: inline-block;
-            padding-left: 0;
-            padding-right: 0;
-            margin: 0 @app-size-gap-micro;
-            margin-bottom: @app-size-gap-tiny;
-            width: (@_quiz-size-button + (2 * @app-size-line-medium));
-            
-            // Icon
-            &:before { display: none; }
-        }
-        
-        // Mods: Inline & Klein
-        &--inline&--small {
-            width: (@_quiz-size-button-small + (2 * @app-size-line-medium));
-        }
-        
-        // Mod: Backspace
-        &--backspace {
-            width: auto;
-            text-transform: uppercase;
-            font-size: @app-font-size-small;
-            padding-left: @app-size-gap;
-            padding-right: @app-size-gap;
-        }
-        
-        // Mod: Bild
-        &--image {
-            float: left;
-            font-size: 0;
-            padding-left: 0;
-            padding-right: 0;
-            margin-bottom: 0;
-            background: @app-color-light;
-            height: @_quiz-size-button-image;
-            margin-top: @_quiz-size-gap-image;
-            width: ((100% - @_quiz-size-gap-image) / 2);
-            line-height: (@_quiz-size-button-image - (2 * @app-size-line-medium));
-            
-            // Alternierende Elemente, Erstes & Zweites Element
-            &:nth-child(1), &:nth-child(2) { margin-top: 0; }
-            &:nth-child(odd) { margin-right: @_quiz-size-gap-image; }
-            
-            // Icon
-            &:before {
-                top: auto;
-                bottom: 0;
-                width: @_quiz-size-icon-image;
-                height: @_quiz-size-icon-image;
-                line-height: @_quiz-size-icon-image;
-            }
-        }
-        
-        // Mod: Rund
-        &--round {
-            margin: @app-size-gap auto;
-            font-size: @app-font-size-huge;
-            width: @_quiz-size-button-round;
-            height: @_quiz-size-button-round;
-            padding: @_quiz-padding-button-round 0;
-            line-height: ((@_quiz-size-button-round - (2 * (@_quiz-padding-button-round + @app-size-line-thin))) / 2);
-            .border-radius(50%);
-        }
-        
-        // Mod: Aktion
-        &--action {
-            text-transform: uppercase;
-            .gradient(bottom, @app-color-main-light, @app-color-main);
-            .shadow-small(@app-color-shadow-dark);
-            .border-button(@app-color-main-dark);
-            .colored(@app-color-main);
-            .textshadow();
-        }
-        
-        // Mods: Erfolg & Fehler
-        &--success, &--error {
-            
-            // Mods & Icon
-            &, &:before {
-                padding-top: 0;
-                padding-bottom: 0;
-            }
-            
-            // Icon
-            &:before {
-                visibility: visible;
-                opacity: @app-opacity-full;
-            }
-        }
-        
-        // Mod: Richtig
-        &--right {
-            .fontello-icon(@fontello-icon-check, before);
-            &:before { color: @app-color-success; }
-        }
-        
-        // Mod: Falsch
-        &--wrong {
-            .fontello-icon(@fontello-icon-cancel, before);
-            &:before { color: @app-color-error; }
-        }
-        
-        // Mod: Erfolg
-        &--success {
-            .border-button(@app-color-success, @app-size-line-medium, false);
-            .animation(answer-success);
-        }
-        
-        // Mod: Fehler
-        &--error {
-            .border-button(@app-color-error, @app-size-line-medium, false);
-            .animation(answer-error);
-        }
-        
-        // Mod: Gesperrt
-        &--locked {
-            cursor: default;
-            opacity: @app-opacity-locked;
-        }
-    }
-    
     // Element: Bild
     &__image {
         display: inline-block;
         height: 100%;
         width: auto;
-    }
-    
-    // Element: Button & Mod: Rund & Element: Button-Text
-    &__button--round &__buttontext:last-child {
-        font-size: @app-font-size-medium;
     }
     
     // Element: Antworten

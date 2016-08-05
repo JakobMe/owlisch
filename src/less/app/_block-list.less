@@ -76,8 +76,10 @@
         
         // Sub-Element: Icon
         &-icon {
+            text-align: center;
             color: @app-color-text-dark-pale;
-            width: (@_list-size-height / 2);
+            margin-right: @app-size-gap-small;
+            width: @app-size-gap;
         }
         
         // Sub-Elemente: Icon & Label (aufeinanderfolgend)
@@ -103,8 +105,17 @@
             margin-bottom: 0;
         }
         
-        // Sub-Elemente: Titel-Text und -Icon
-        &-text { display: block; position: relative; }
-        &-icon { width: (@_list-size-height / 2); }
+        // Sub-Element: Text
+        &-text {
+            display: block;
+            position: relative;
+        }
+        
+        // Sub-Element: Icon
+        &-icon {
+            text-align: center;
+            margin-right: @app-size-gap-small;
+            width: @app-size-gap;
+        }
     }
 }

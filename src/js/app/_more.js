@@ -28,6 +28,7 @@ var More = (function() {
     var _indexListbox           = 0;
     var _indexOption            = 0;
     var _currentOption          = {};
+    var _data                   = {};
     
     // DOM-Elemente
     var _$more                  = null;
@@ -51,7 +52,9 @@ var More = (function() {
     function _hookMediator() {
         Mediator.hook(CFG.CNL.VIEW_LOAD, _create)
                 .hook(CFG.CNL.VIEW_RESTORE, _restore)
-                .hook(CFG.CNL.NAVBAR_ACTION, _back);
+                .hook(CFG.CNL.NAVBAR_ACTION, _back)
+                .hook(CFG.CNL.TERMS_SERVE, _updateTerms)
+                .hook(CFG.CNL.DICTIONARY_SERVE, _updateDictionary);
     }
     
     /**
@@ -106,7 +109,9 @@ var More = (function() {
                 _slider.setSlide(_indexListbox);
                 
                 // Wörterbuch-Daten anfragen, View einblenden
-                Mediator.send(CFG.CNL.VIEW_SHOW);
+                Mediator.send(CFG.CNL.VIEW_SHOW)
+                        .send(CFG.CNL.TERMS_REQUEST)
+                        .send(CFG.CNL.DICTIONARY_REQUEST);
             });
         }
     }
@@ -137,7 +142,7 @@ var More = (function() {
      */
     function _renderOption(renderNavBar) {
         var tmpl = _TMPL_MORE + _TMPL_DELIMITER + _currentOption.option;
-        Template.render(_$option, tmpl, {}, function() {
+        Template.render(_$option, tmpl, _data, function() {
             if (renderNavBar !== false) {
                 Mediator.send(CFG.CNL.NAVBAR_ACTION, {
                     act : CFG.ACT.MORE_FORWARD,
@@ -164,6 +169,39 @@ var More = (function() {
             }, CFG.TIME.DELAY);
             _slider.setSlide(_indexListbox);
             _listIsLocked = false;
+        }
+    }
+    
+    /**
+     * Begriff-Daten aktualisieren.
+     * Aktualisiert die interne Kopie der Begriff-Daten;
+     * rendert gegebenenfalls die aktuell angezeigte Option neu.
+     * @param {Object} data Daten des Events
+     */
+    function _updateTerms(data) {
+        if (typeof data !== typeof undefined) {
+            _data.terms = $.extend({}, data);
+            _data.terms.single = (_data.terms.solved === 1);
+            if ((_slider !== null) &&
+                (_slider.getSlide() === _indexOption)) {
+                _renderOption(false);
+            }
+        }
+    }
+    
+    /**
+     * Wörterbuch-Daten aktualisieren.
+     * Aktualisiert die interne Kopie der Wörterbuch-Daten;
+     * rendert gegebenenfalls die aktuell angezeigte Option neu.
+     * @param {Object} data Daten des Events
+     */
+    function _updateDictionary(data) {
+        if (typeof data !== typeof undefined) {
+            _data.dictionary = $.extend({}, data);
+            if ((_slider !== null) &&
+                (_slider.getSlide() === _indexOption)) {
+                _renderOption(false);
+            }
         }
     }
     

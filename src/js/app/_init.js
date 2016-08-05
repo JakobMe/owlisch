@@ -28,6 +28,7 @@ var App = {
         Dictionary.init();
         Quiz.init();
         Statistics.init();
+        More.init();
         NavigationBar.init();
         TabBar.init();
         Play.init();

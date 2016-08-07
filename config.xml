@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8" ?>
+<?xml version='1.0' encoding='utf-8'?>
 <widget id="com.jakobmetzger.owlisch" version="0.0.1">
     <name>OWLisch</name>
     <description>
@@ -57,4 +57,5 @@
     <plugin name="cordova-plugin-statusbar" spec="~2.1.2" />
     <plugin name="cordova-plugin-keyboard" spec="~1.1.4" />
     <plugin name="cordova-plugin-dialogs" spec="~1.2.1" />
+    <engine name="ios" spec="~4.2.0" />
 </widget>

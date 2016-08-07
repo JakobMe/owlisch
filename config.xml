@@ -56,4 +56,5 @@
     </platform>
     <plugin name="cordova-plugin-statusbar" spec="~2.1.2" />
     <plugin name="cordova-plugin-keyboard" spec="~1.1.4" />
+    <plugin name="cordova-plugin-dialogs" spec="~1.2.1" />
 </widget>

@@ -415,17 +415,30 @@ var Data = (function() {
     
     /**
      * Daten löschen.
-     * Löschte alle Daten über die letzten Spiele und den Fortschritt;
-     * speichert die Daten und stellt sie über den Mediator bereit.
+     * Löschte alle Daten über die letzten Spiele und den Fortschritt nach
+     * einer Dialog-Bestätigung; speichert die Daten und stellt sie über
+     * den Mediator bereit.
      */
     function _clearData() {
-        if (window.confirm(CFG.LABEL.DELETE)) {
+        
+        // Callback-Funktion definieren
+        var callback = function() {
             _dataScores = [];
             _dataProgress = {};
             _storeData();
             _serveDataScores();
             _processDataTerms();
-        }
+        };
+        
+        // Falls Cordova-Dialog verfügbar ist
+        if (typeof navigator.notification !== typeof undefined) {
+            navigator.notification.confirm(
+                CFG.LABEL.DELETE, callback,
+                CFG.OPTIONS.DELETE, [CFG.LABEL.YES, CFG.LABEL.NO]
+            );
+        
+        // Ansonsten Standard-Dialog verwenden
+        } else if (window.confirm(CFG.LABEL.DELETE)) { callback(); }
     }
     
     // Öffentliches Interface

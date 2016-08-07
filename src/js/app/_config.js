@@ -35,7 +35,9 @@ var CFG = (function() {
             PROGRESS            : "Fortschritt:",
             DETAILS             : "Details",
             THIS                : "das",
-            DELETE              : "Daten wirklich zurücksetzen?"
+            DELETE              : "Daten wirklich zurücksetzen?",
+            YES                 : "Ja",
+            NO                  : "Nein"
         },
         RATING: {
             PERFECT: {

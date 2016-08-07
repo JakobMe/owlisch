@@ -1,0 +1,80 @@
+{
+    "config": [
+        [
+            {
+                "keyword"  : "translation",
+                "answers"  : "answersForeign",
+                "right"    : "term",
+                "audio"    : false,
+                "buttons"  : true,
+                "image"    : false,
+                "pictures" : false,
+                "chars"    : false,
+                "input"    : false
+            },
+            {
+                "keyword"  : "term",
+                "answers"  : "answersNative",
+                "right"    : "translation",
+                "audio"    : true,
+                "buttons"  : true,
+                "image"    : false,
+                "pictures" : false,
+                "chars"    : false,
+                "input"    : false
+            },
+            {
+                "keyword"  : "term",
+                "answers"  : "answersPictures",
+                "right"    : "alias",
+                "audio"    : true,
+                "buttons"  : false,
+                "image"    : false,
+                "pictures" : true,
+                "chars"    : false,
+                "input"    : false
+            },
+            {
+                "keyword"  : null,
+                "answers"  : "answersForeign",
+                "right"    : "term",
+                "audio"    : false,
+                "buttons"  : true,
+                "image"    : true,
+                "pictures" : false,
+                "chars"    : false,
+                "input"    : false
+            }
+        ],
+        [
+            {
+                "keyword"  : "translation",
+                "answers"  : "term",
+                "right"    : "term",
+                "audio"    : false,
+                "buttons"  : false,
+                "image"    : false,
+                "pictures" : false,
+                "chars"    : true,
+                "input"    : false
+            }
+        ],
+        [
+            {
+                "keyword"  : "translation",
+                "answers"  : "term",
+                "right"    : "term",
+                "audio"    : false,
+                "buttons"  : false,
+                "image"    : false,
+                "pictures" : false,
+                "chars"    : false,
+                "input"    : true
+            }
+        ]
+    ],
+    "dictionaries": {
+        "owl"     : "Ostwestfälisch",
+        "bayern"  : "Bay­e­risch"
+    }
+}

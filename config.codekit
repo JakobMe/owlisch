@@ -592,22 +592,33 @@
 		"outputStyle": 1,
 		"syntaxCheckerStyle": 1
 		},
-	"\/src\/json\/dictionaries.json": {
+	"\/src\/json\/config-data.json": {
 		"fileType": 524288,
 		"ignore": 0,
 		"ignoreWasSetByUser": 1,
-		"inputAbbreviatedPath": "\/src\/json\/dictionaries.json",
+		"inputAbbreviatedPath": "\/src\/json\/config-data.json",
 		"orderOutput": 0,
-		"outputAbbreviatedPath": "\/www\/data\/dictionaries.json",
+		"outputAbbreviatedPath": "\/www\/data\/config.json",
 		"outputPathIsOutsideProject": 0,
 		"outputPathIsSetByUser": 1,
 		"outputStyle": 1
 		},
-	"\/src\/json\/owl.json": {
+	"\/src\/json\/config-tmpl.json": {
 		"fileType": 524288,
 		"ignore": 0,
 		"ignoreWasSetByUser": 1,
-		"inputAbbreviatedPath": "\/src\/json\/owl.json",
+		"inputAbbreviatedPath": "\/src\/json\/config-tmpl.json",
+		"orderOutput": 0,
+		"outputAbbreviatedPath": "\/www\/tmpl\/config.json",
+		"outputPathIsOutsideProject": 0,
+		"outputPathIsSetByUser": 1,
+		"outputStyle": 1
+		},
+	"\/src\/json\/data-owl.json": {
+		"fileType": 524288,
+		"ignore": 0,
+		"ignoreWasSetByUser": 1,
+		"inputAbbreviatedPath": "\/src\/json\/data-owl.json",
 		"orderOutput": 0,
 		"outputAbbreviatedPath": "\/www\/data\/owl\/owl.json",
 		"outputPathIsOutsideProject": 0,
@@ -1203,17 +1214,6 @@
 		"outputPathIsOutsideProject": 0,
 		"outputPathIsSetByUser": 0
 		},
-	"\/www\/data\/dictionaries.json": {
-		"fileType": 524288,
-		"ignore": 1,
-		"ignoreWasSetByUser": 0,
-		"inputAbbreviatedPath": "\/www\/data\/dictionaries.json",
-		"orderOutput": 0,
-		"outputAbbreviatedPath": "\/www\/data\/dictionaries-min.json",
-		"outputPathIsOutsideProject": 0,
-		"outputPathIsSetByUser": 0,
-		"outputStyle": 1
-		},
 	"\/www\/data\/owl\/image\/blume.jpg": {
 		"fileType": 16384,
 		"ignore": 0,
@@ -1457,13 +1457,13 @@
 		"outputPathIsOutsideProject": 0,
 		"outputPathIsSetByUser": 0
 		},
-	"\/www\/tmpl\/preload.json": {
+	"\/www\/tmpl\/config.json": {
 		"fileType": 524288,
 		"ignore": 1,
 		"ignoreWasSetByUser": 0,
-		"inputAbbreviatedPath": "\/www\/tmpl\/preload.json",
+		"inputAbbreviatedPath": "\/www\/tmpl\/config.json",
 		"orderOutput": 0,
-		"outputAbbreviatedPath": "\/www\/tmpl\/preload-min.json",
+		"outputAbbreviatedPath": "\/www\/tmpl\/config-min.json",
 		"outputPathIsOutsideProject": 0,
 		"outputPathIsSetByUser": 0,
 		"outputStyle": 1

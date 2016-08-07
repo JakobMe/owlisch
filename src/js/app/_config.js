@@ -9,9 +9,9 @@
 var CFG = (function() {
     return {
         DATA: {
-            DICTIONARIES        : "dictionaries",
             STORE               : "owlisch",
-            ALIAS               : "owl",
+            DEFAULT             : "owl",
+            CONFIG              : "config",
             PATH_DELIMITER      : "/",
             PATH_DATA           : "data/",
             PATH_AUDIO          : "/audio/",

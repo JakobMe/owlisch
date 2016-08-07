@@ -9,7 +9,6 @@
 var Data = (function() {
     
     // Selektor-Konstanten
-    var _SEL_BODY               = "body";
     var _SEL_DELETE             = "[data-data='delete']";
     
     // Private Variablen
@@ -32,7 +31,7 @@ var Data = (function() {
     function init() {
         _bindEvents();
         _hookMediator();
-        _loadDataDictionaries();
+        _loadDataConfig();
         _loadDataStored();
     }
     
@@ -55,7 +54,7 @@ var Data = (function() {
      * Bindet Funktionen an Events.
      */
     function _bindEvents() {
-        $(_SEL_BODY).on(CFG.EVT.CLICK, _SEL_DELETE, _clearData);
+        $(document).on(CFG.EVT.CLICK, _SEL_DELETE, _clearData);
     }
     
     /**
@@ -63,8 +62,8 @@ var Data = (function() {
      * Erstellt einen leeren Standard-Datensatz im LocalStorage.
      */
     function _initDataStored() {
-        var dataInitial = { dictionary: CFG.DATA.ALIAS };
-        dataInitial[CFG.DATA.ALIAS] = {
+        var dataInitial = { dictionary: CFG.DATA.DEFAULT };
+        dataInitial[CFG.DATA.DEFAULT] = {
             featured : {},
             progress : {},
             scores   : []
@@ -93,21 +92,26 @@ var Data = (function() {
         // Wörterbuch-Daten laden
         _loadDataTerms();
     }
-    
+
     /**
-     * Daten für verfügbare Wörterbücher laden.
-     * Lädt die Datei mit der Liste der verfügbaren Wörterbücher,
-     * speichert die Daten und sendet sie per Mediator.
+     * Daten für Wörterbuch-Konfiguration laden.
+     * Lädt die Datei mit der Konfiguration für die verfügbaren
+     * Wörterbücher und den Einstellungen für das Quiz;
+     * speichert die Daten und stellt sie per Mediator bereit.
      */
-    function _loadDataDictionaries() {
+    function _loadDataConfig() {
         
-        // Pfad zur Wörterbücher-Übersicht-Datei zusammensetzen
-        var file = CFG.DATA.PATH_DATA + CFG.DATA.DICTIONARIES +
-                   CFG.DATA.TYPE_DATA;
+        // Pfad zur Config-Datei zusammensetzen
+        var file = CFG.DATA.PATH_DATA + CFG.DATA.CONFIG + CFG.DATA.TYPE_DATA;
         
-        // AJAX-Anfrage zur Datei, im Anschluss Daten senden
-        $.getJSON(file, function(data) { _dataDictionaries = data; })
-         .done(function() { _serveDataDictionaries(); });
+        // AJAX-Anfrage zur Config-Datei, anschließend Daten bereitstellen
+        $.getJSON(file, function(data) {
+            _dataDictionaries = data.dictionaries;
+            _dataConfig = data.config;
+        }).done(function() {
+            _serveDataDictionaries();
+            _serveDataConfig();
+        });
     }
     
     /**
@@ -129,7 +133,6 @@ var Data = (function() {
                 _dictionaryCaption = data.caption;
                 _dataTerms  = data.terms;
                 _sizeTerms  = data.terms.length;
-                _dataConfig = data.config;
             }
         }).done(function() {
             _checkDictionaryFiles();

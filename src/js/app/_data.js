@@ -11,6 +11,9 @@ var Data = (function() {
     // Selektor-Konstanten
     var _SEL_DELETE             = "[data-data='delete']";
     
+    // Sonstige Konstanten
+    var _CONFIRM_TRUE           = 1;
+    
     // Private Variablen
     var _dictionaryAlias        = "";
     var _dictionaryCaption      = "";
@@ -54,7 +57,7 @@ var Data = (function() {
      * Bindet Funktionen an Events.
      */
     function _bindEvents() {
-        $(document).on(CFG.EVT.CLICK, _SEL_DELETE, _clearData);
+        $(document).on(CFG.EVT.CLICK, _SEL_DELETE, _clearConfirm);
     }
     
     /**
@@ -415,30 +418,41 @@ var Data = (function() {
     
     /**
      * Daten löschen.
-     * Löschte alle Daten über die letzten Spiele und den Fortschritt nach
-     * einer Dialog-Bestätigung; speichert die Daten und stellt sie über
-     * den Mediator bereit.
+     * Löschte alle Daten über die letzten Spiele und den Fortschritt;
+     * speichert die Daten und stellt sie über den Mediator bereit,
+     * zeigt eine Bestätigung als Alert an.
+     * @param {(Number|undefined)} [undefined] confirm Löschen bestätigen
      */
-    function _clearData() {
-        
-        // Callback-Funktion definieren
-        var callback = function() {
+    function _clearData(confirm) {
+        if ((typeof confirm === typeof undefined) ||
+            (confirm === _CONFIRM_TRUE)) {
+            
+            // Daten löschen und bereitstellen
             _dataScores = [];
             _dataProgress = {};
             _storeData();
             _serveDataScores();
             _processDataTerms();
-        };
-        
-        // Falls Cordova-Dialog verfügbar ist
-        if (typeof navigator.notification !== typeof undefined) {
-            navigator.notification.confirm(
-                CFG.LABEL.DELETE, callback,
-                CFG.OPTIONS.DELETE, [CFG.LABEL.YES, CFG.LABEL.NO]
+            
+            // Bestätigung anzeigen
+            Util.dialog(
+                CFG.DIALOG.ALERT, CFG.LABEL.DELETE_SUCCESS,
+                undefined, CFG.OPTIONS.DELETE
             );
-        
-        // Ansonsten Standard-Dialog verwenden
-        } else if (window.confirm(CFG.LABEL.DELETE)) { callback(); }
+        }
+    }
+    
+    /**
+     * Löschen bestätigen.
+     * Ruft einen Bestätigungs-Dialog zum Löschen der Daten auf;
+     * verwendet die Cordova-API, falls vorhanden, ansonsten den
+     * Standard-JavaScript-Dialog.
+     */
+    function _clearConfirm() {
+        Util.dialog(
+            CFG.DIALOG.CONFIRM, CFG.LABEL.DELETE_CONFIRM, _clearData,
+            CFG.OPTIONS.DELETE, [CFG.LABEL.YES, CFG.LABEL.NO]
+        );
     }
     
     // Öffentliches Interface

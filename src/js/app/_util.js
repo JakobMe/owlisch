@@ -155,6 +155,27 @@ var Util = (function() {
         return str;
     }
     
+    /**
+     * System-Dialog anzeigen.
+     * Zeigt einen Syste-Dialog des angegebenen Typs mit den entsprechend
+     * gewählten Eigenschaften an, z.B. Alert, Confirm, Prompt;
+     * versucht, die Cordova-API zu nutzen, falls vorhanden.
+     * @param {String} type Typ des Dialogs (alert, confirm, prompt)
+     * @param {String} text Anzuzeigender Text im Dialog
+     * @param {Function} callback Funktion, die anschließend ausgeführt wird
+     * @param {String} title Titel des Dialogs
+     * @param {String[]} buttons Labels der Buttons des Dialogs
+     */
+    function dialog(type, text, callback, title, buttons) {
+        var fn = null, cordova = false;
+        if (typeof navigator.notification !== typeof undefined) {
+            cordova = true;
+            fn = navigator.notification[type];
+        } else { fn = window[type]; }
+        if (cordova) { fn(text, callback, title, buttons); }
+        else if (fn(text) && $.isFunction(callback)) { callback(); }
+    }
+    
     // Öffentliches Interface
     return { 
         arrFromNum          : arrFromNum,
@@ -165,7 +186,8 @@ var Util = (function() {
         shuffle             : shuffle,
         limit               : limit,
         getDate             : getDate,
-        intToStr            : intToStr
+        intToStr            : intToStr,
+        dialog              : dialog
     };
     
 })();

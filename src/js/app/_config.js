@@ -35,7 +35,8 @@ var CFG = (function() {
             PROGRESS            : "Fortschritt:",
             DETAILS             : "Details",
             THIS                : "das",
-            DELETE              : "Fortschritt wirklich löschen?",
+            DELETE_CONFIRM      : "Fortschritt wirklich löschen?",
+            DELETE_SUCCESS      : "Fortschritt wurde erfolgreich gelöscht.",
             YES                 : "Ja",
             NO                  : "Nein"
         },
@@ -133,6 +134,10 @@ var CFG = (function() {
             KEYBOARD_HIDE       : "keyboardWillHide",
             KEYBOARD_SHOW       : "keyboardWillShow",
             TRANSITION          : "transitionend"
+        },
+        DIALOG: {
+            ALERT               : "alert",
+            CONFIRM             : "confirm"
         },
         CNL: {
             TERMS_REQUEST       : "terms:request",

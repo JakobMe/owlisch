@@ -38,7 +38,7 @@ var Template = (function() {
      * führt gegebenenfalls eine Callback-Funktion aus.
      * @param {Object} $target Ziel-DOM-Element
      * @param {String} content HTML-String
-     * @param {Function} [undefined] callback Callback-Funktion
+     * @param {(Function|undefined)} [undefined] callback Callback-Funktion
      */
     function _html($target, content, callback) {
         if (($target instanceof $) &&
@@ -58,7 +58,7 @@ var Template = (function() {
      * @param {Object} $target Ziel-DOM-Element
      * @param {String} template Name des Templates
      * @param {Object} data Daten, die an Mustache übergeben werden
-     * @param {Function} [undefined] callback Callback-Funktion
+     * @param {(Function|undefined)} [undefined] callback Callback-Funktion
      */
     function render($target, template, data, callback) {
         if (typeof _cache[template] === typeof undefined) {

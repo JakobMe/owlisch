@@ -246,9 +246,9 @@ var NavigationBar = (function() {
     
     /**
      * Dropdown-Menü rendern.
-     * Rendert das Dropdown-Menü anhand der aktuell gesetzte Eigenschaften
-     * des Menüs (offen/geschlossen, aktiver Menüpunkt).
-     * @param {Object} event Ausgelöstes Event
+     * Rendert das Dropdown-Menü anhand einer ausgewählten Option und den
+     * aktuell gesetzten Eigenschaften des Menüs.
+     * @param {Object} $selected Ausgewählte Dropdown-Option
      */
     function _renderDropdown($selected) {
         _$drpdwn.setMod(_B_DROPDOWN, _M_OPENED, _dropdownIsOpened);  
@@ -261,8 +261,8 @@ var NavigationBar = (function() {
     
     /**
      * Aktion ausführen.
-     * Führt anhand einer über den Mediator übermittelten Nachricht
-     * eine entsprechende Aktion aus.
+     * Führt anhand einer über den Mediator übermittelten
+     * Nachricht eine entsprechende Aktion aus.
      * @param {Object} data Übermittelte Daten
      */
     function _performAction(data) {
@@ -345,9 +345,8 @@ var NavigationBar = (function() {
     
     /**
      * Aktion auslösen.
-     * Läst anhand eines Klick-Events auf einen Navigation-Bar-Button
-     * die damit verknüpfte Aktion aus; veröffentlich die Aktion
-     * über den Mediator.
+     * Löst anhand eines Klick-Events auf einen Navigation-Bar-Button die damit
+     * verknüpfte Aktion aus; veröffentlich die Aktion über den Mediator.
      * @param {Object} event Ausgelöstes Event
      */
     function _triggerAction(event) {
@@ -360,9 +359,8 @@ var NavigationBar = (function() {
     
     /**
      * Sortierung setzen.
-     * Setzt anhand eines Klick-Events die aktuelle Sortierung;
-     * veröffentlicht die Sortierung per Mediator und blendet
-     * die Dropdown-Sortierung aus.
+     * Setzt anhand eines Klick-Events die aktuelle Sortierung; veröffentlicht
+     * die Sortierung per Mediator und blendet die Dropdown-Sortierung aus.
      * @param {Object} event Ausgelöstes Event
      */
     function _setSort(event) {
@@ -386,7 +384,7 @@ var NavigationBar = (function() {
      * setzt den zugehörigen Button entsprechend; aktualisiert optional
      * die ausgewählte Sortierungs-Option.
      * @param {Boolean} willBeOpened Angabe, ob das Dropdown geöffnet wird
-     * @param {Object} [undefined] $selected Ausgewählte Opttion
+     * @param {(Object|undefined)} [undefined] $selected Ausgewählte Opttion
      */
     function _setDropdown(willBeOpened, $selected) {
         if (_dropdownIsOpened !== willBeOpened) {
@@ -522,7 +520,7 @@ var NavigationBar = (function() {
      * Hinterlegt die aktuelle Konfiguration der Navigation-Bar
      * anhand des übergebenen Indexes im internen Cache.
      * @param {String} index Name der Konfiguration
-     * @param {String} title Alternativer neuer Titel
+     * @param {(String|undefined)} [undefined] title Alternativer neuer Titel
      */
     function _saveCache(index, head) {
         

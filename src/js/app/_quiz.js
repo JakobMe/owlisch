@@ -110,8 +110,8 @@ var Quiz = (function() {
     }
     
     /**
-     * Klick-Events binden.
-     * Bindet Klick-Funktionen an interne jQuery-Objekte.
+     * Events binden.
+     * Bindet Funktionen an Events.
      */
     function _bindEvents() {
         
@@ -341,6 +341,7 @@ var Quiz = (function() {
      * eines Bildes und die Vollständigkeit der Antwortmöglichkeiten
      * für die Auswahl hinzu.
      * @param {Object} term Begriff-Daten für den Frage-Typen
+     * @returns {Object} Konfiguration des Frage-Typs
      */
     function _pickQuestionType(term) {
         var config = null;
@@ -359,9 +360,8 @@ var Quiz = (function() {
     
     /**
      * Fragen aufbereiten.
-     * Ergänzt die ausgewählten Fragen um zusätzliche Daten für
-     * die Darstellung und Funktionsweise des Quiz; rendert
-     * die Fragen anschließend.
+     * Ergänzt die ausgewählten Fragen um zusätzliche Daten für die Darstellung
+     * und Funktionsweise des Quiz; rendert die Fragen anschließend.
      */
     function _processQuestions() {
         var type, diff, answ, chars;
@@ -573,6 +573,7 @@ var Quiz = (function() {
      * Entfernt bei Klick-Event einen Buchstaben aus dem Quiz-Input der
      * aktuellen Frage; aktualisiert die Daten des Inputs und deaktiviert
      * gegebenenfalls den Backspace-Button.
+     * @param {Object} event Ausgelöstes Klick-Event
      */
     function _removeLetter(event) {
         if (typeof event !== typeof undefined) {
@@ -637,7 +638,7 @@ var Quiz = (function() {
      * Rendert die Level-Anzeige der aktuellen Frage anhand
      * des übergebenen Levels; aktualisiert die Anzahl der Sterne
      * und beachtet dabei das Level-Maximum.
-     * @param {Boolean} level Neues Level
+     * @param {Number} level Neues Level
      */
     function _renderLevel(level) {
         if (typeof level === typeof 0) {
@@ -874,10 +875,10 @@ var Quiz = (function() {
      * Wörterbuch-Konfiguration setzen.
      * Setzt die Konfiguration des Wörterbuches
      * anhand einer Mediator-Nachricht.
-     * @param {*[]} data Übermittelte Daten
+     * @param {Object} data Übermittelte Daten
      */
     function _setConfig(data) {
-        if ((typeof data       !== typeof undefined) &&
+        if ((typeof data !== typeof undefined) &&
             (typeof data.alias === typeof "") &&
             ($.isArray(data.config))) {
             _dataConfig = data.config;

@@ -212,7 +212,7 @@ var Statistics = (function() {
      * Diagramme animieren.
      * Fügt den Diagrammen der Statistik eine Klasse hinzu oder entfernt sie,
      * um sie zu animieren; blendet Diagramm gegebenenfalls vorher aus.
-     * @param {Boolean} shrink Diagramm vorher ausblenden
+     * @param {Boolean} [false] shrink Diagramm vorher ausblenden
      */
     function _growCharts(shrink) {
         shrink = (shrink || false);

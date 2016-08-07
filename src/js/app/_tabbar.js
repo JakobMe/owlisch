@@ -42,8 +42,7 @@ var TabBar = (function() {
     
     /**
      * Tab-Bar initialisieren.
-     * Führt Funktionen aus, um die Tab-Bar in ihren Ausgangszustand
-     * zu versetzen.
+     * Startet Funktionen, um den Anfangszustand der Tab-Bar herzustellen.
      */
     function init() {
         _bindEvents();
@@ -74,7 +73,7 @@ var TabBar = (function() {
      * Tab-Bar generieren.
      * Generiert für jedes angegebene Panel einen entsprechenden
      * Tab in der Tab-Bar und aktiviert den ersten Tab.
-     * @param {Object} panels Existente Panels
+     * @param {Object} panels Vorhandene Panels
      */
     function _create(panels) {
         if (typeof panels !== typeof undefined) {
@@ -179,6 +178,6 @@ var TabBar = (function() {
     }
     
     // Öffentliches Interface
-    return { init: init, };
+    return { init: init };
     
 })();

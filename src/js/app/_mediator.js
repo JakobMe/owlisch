@@ -17,6 +17,7 @@ var Mediator = (function() {
      * erzeugt den Kanal, falls er noch nicht existiert.
      * @param {String} channel Name des Kanals
      * @param {Function} callback Callback-Funktion
+     * @returns {Object} Interface des Moduls
      */
     function sub(channel, callback) {
         if (!_channels.hasOwnProperty(channel)) { _channels[channel] = []; }
@@ -29,6 +30,7 @@ var Mediator = (function() {
      * Entfernt eine Callback-Funktion von einem Kanal des Mediators.
      * @param {String} channel Name des Kanals
      * @param {Function} callback Callback-Funktion
+     * @returns {Object} Interface des Moduls
      */
     function unsub(channel, callback) {
         if (_channels.hasOwnProperty(channel)) {
@@ -47,7 +49,8 @@ var Mediator = (function() {
      * Veröffentlich beliebige Daten auf einem angegebenen Kanal;
      * führt alle abonnierten Funktion mit den Daten als Argument aus.
      * @param {String} channel Name des Kanals
-     * @param {*} data Zu veröffentlichende Daten
+     * @param {(*|undefined)} [undefined] data Zu veröffentlichende Daten
+     * @returns {Object} Interface des Moduls
      */
     function pub(channel, data) {
         if (_channels.hasOwnProperty(channel)) {

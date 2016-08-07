@@ -158,7 +158,7 @@ var Data = (function() {
      * Prüft mittels AJAX-Anfragen, ob ein gegebener Begriff
      * über Audio- und/oder Bild-Dateien verfügt; erweitert die
      * Wörterbuch-Daten um den Datei-Status.
-     * @param {string} alias Kürzel des Begriffes
+     * @param {String} alias Kürzel des Begriffes
      * @returns {Object} AJAX-Objekte der Anfragen
      */
     function _checkTermFiles(alias) {

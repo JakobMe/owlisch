@@ -161,7 +161,7 @@ var More = (function() {
      * @param {Object} data Übermittelte Daten
      */
     function _back(data) {
-        if ((typeof data     !== typeof undefined) &&
+        if ((typeof data !== typeof undefined) &&
             (typeof data.act !== typeof undefined) &&
             (data.act === CFG.ACT.MORE_BACK)) {
             setTimeout(function() {
@@ -211,7 +211,7 @@ var More = (function() {
      * @param {String} panel Ziel-Panel des Events
      */
     function _restore(panel) {
-        if ((typeof panel    !== typeof undefined) &&
+        if ((typeof panel !== typeof undefined) &&
             (CFG.VIEW[panel] === CFG.VIEW.MORE)) {
             _$listbox.animate({ scrollTop: 0 }, CFG.TIME.ANIMATION);
             _slider.setSlide(_indexListbox);

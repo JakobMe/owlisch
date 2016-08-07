@@ -86,8 +86,8 @@ var Featured = (function() {
      * @param {Object} data Übergebene Daten
      */
     function _updateTerms(data) {
-        if ((typeof data        !== typeof undefined) &&
-            (typeof data.data   !== typeof undefined)) {  
+        if ((typeof data !== typeof undefined) &&
+            (typeof data.data !== typeof undefined)) {  
             _dataTerms  = data.data;
             _render();
         }

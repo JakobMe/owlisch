@@ -1214,6 +1214,17 @@
 		"outputPathIsOutsideProject": 0,
 		"outputPathIsSetByUser": 0
 		},
+	"\/www\/data\/config.json": {
+		"fileType": 524288,
+		"ignore": 1,
+		"ignoreWasSetByUser": 0,
+		"inputAbbreviatedPath": "\/www\/data\/config.json",
+		"orderOutput": 0,
+		"outputAbbreviatedPath": "\/www\/data\/config-min.json",
+		"outputPathIsOutsideProject": 0,
+		"outputPathIsSetByUser": 0,
+		"outputStyle": 1
+		},
 	"\/www\/data\/owl\/image\/blume.jpg": {
 		"fileType": 16384,
 		"ignore": 0,

@@ -67,7 +67,7 @@ var NavigationBar = (function() {
      */
     function init() {
         _create();
-        _hookMediator();
+        _subMediator();
     }
     
     /**
@@ -85,12 +85,12 @@ var NavigationBar = (function() {
      * Mediator abonnieren.
      * Meldet Funktionen beim Mediator an.
      */
-    function _hookMediator() {
-        Mediator.hook(CFG.CNL.VIEW_CHANGE, _update)
-                .hook(CFG.CNL.VIEW_RESTORE, _restore)
-                .hook(CFG.CNL.NAVBAR_ACTION, _performAction)
-                .hook(CFG.CNL.QUIZ_START, _performAction)
-                .hook(CFG.CNL.QUIZ_END, _performAction);
+    function _subMediator() {
+        Mediator.sub(CFG.CNL.VIEW_CHANGE, _update)
+                .sub(CFG.CNL.VIEW_RESTORE, _restore)
+                .sub(CFG.CNL.NAVBAR_ACTION, _performAction)
+                .sub(CFG.CNL.QUIZ_START, _performAction)
+                .sub(CFG.CNL.QUIZ_END, _performAction);
     }
     
     /**
@@ -354,7 +354,7 @@ var NavigationBar = (function() {
         if (!_buttonsAreDisabled && event.target) {
             var $button = $(event.target).closest(_SEL_BUTTON);
             var data = { act: $button.data(_DATA_ACT) };
-            Mediator.send(CFG.CNL.NAVBAR_ACTION, data);
+            Mediator.pub(CFG.CNL.NAVBAR_ACTION, data);
         }
     }
     
@@ -370,7 +370,7 @@ var NavigationBar = (function() {
             
             // Sortierung veröffentlichen
             var $selected = $(event.target).closest(_SEL_SORT);            
-            Mediator.send(CFG.CNL.DICTIONARY_SORT, {
+            Mediator.pub(CFG.CNL.DICTIONARY_SORT, {
                 sort : CFG.SORTING.SORT[$selected.data(_DATA_SORT)],
                 ordr : CFG.SORTING.ORDR[$selected.data(_DATA_ORDR)]
             });
@@ -480,7 +480,7 @@ var NavigationBar = (function() {
      * Sendet den aktuellen Suchbegriff an den Mediator.
      */
     function _triggerSearch() {
-        Mediator.send(
+        Mediator.pub(
             CFG.CNL.DICTIONARY_SEARCH,
             (_searchIsActive ? _$search.val() : "")
         );

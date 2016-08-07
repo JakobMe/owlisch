@@ -48,7 +48,7 @@ var Dictionary = (function() {
      * des Wörterbuches herzustellen.
      */
     function init() {
-        _hookMediator();
+        _subMediator();
     }
     
     /**
@@ -65,13 +65,13 @@ var Dictionary = (function() {
      * Mediator abonnieren.
      * Meldet Funktionen beim Mediator an.
      */
-    function _hookMediator() {
-        Mediator.hook(CFG.CNL.VIEW_LOAD, _create)
-                .hook(CFG.CNL.VIEW_RESTORE, _restore)
-                .hook(CFG.CNL.TERMS_SERVE, _update)
-                .hook(CFG.CNL.DICTIONARY_SEARCH, _filter)
-                .hook(CFG.CNL.DICTIONARY_SORT, _sort)
-                .hook(CFG.CNL.NAVBAR_ACTION, _back);
+    function _subMediator() {
+        Mediator.sub(CFG.CNL.VIEW_LOAD, _create)
+                .sub(CFG.CNL.VIEW_RESTORE, _restore)
+                .sub(CFG.CNL.TERMS_SERVE, _update)
+                .sub(CFG.CNL.DICTIONARY_SEARCH, _filter)
+                .sub(CFG.CNL.DICTIONARY_SORT, _sort)
+                .sub(CFG.CNL.NAVBAR_ACTION, _back);
     }
     
     /**
@@ -93,8 +93,8 @@ var Dictionary = (function() {
                 _slider.setSlide(_indexListbox);
                 
                 // Fortschritt-Liste anfragen, View einblenden
-                Mediator.send(CFG.CNL.VIEW_SHOW)
-                        .send(CFG.CNL.TERMS_REQUEST);
+                Mediator.pub(CFG.CNL.VIEW_SHOW)
+                        .pub(CFG.CNL.TERMS_REQUEST);
             });
         }
     }
@@ -152,7 +152,7 @@ var Dictionary = (function() {
             // Details laden, Event auslösen, Slider bewegen
             Template.render(_$details, _TMPL_DETAILS, data, function() {
                 if (renderNavBar !== false) {
-                    Mediator.send(CFG.CNL.NAVBAR_ACTION, {
+                    Mediator.pub(CFG.CNL.NAVBAR_ACTION, {
                         act : CFG.ACT.DICTIONARY_FORWARD,
                         str : CFG.LABEL.DETAILS
                     });

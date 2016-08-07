@@ -47,7 +47,7 @@ var TabBar = (function() {
      */
     function init() {
         _bindEvents();
-        _hookMediator();
+        _subMediator();
     }
     
     /**
@@ -64,10 +64,10 @@ var TabBar = (function() {
      * Mediator abonnieren.
      * Meldet Funktionen beim Mediator an.
      */
-    function _hookMediator() {
-        Mediator.hook(CFG.CNL.VIEW_INIT, _create)
-                .hook(CFG.CNL.QUIZ_START, _hide)
-                .hook(CFG.CNL.QUIZ_END, _show);
+    function _subMediator() {
+        Mediator.sub(CFG.CNL.VIEW_INIT, _create)
+                .sub(CFG.CNL.QUIZ_START, _hide)
+                .sub(CFG.CNL.QUIZ_END, _show);
     }
     
     /**
@@ -131,7 +131,7 @@ var TabBar = (function() {
     
             // Rendern, Mediator aufrufen
             _render();
-            Mediator.send(
+            Mediator.pub(
                 CFG.CNL.VIEW_SET,
                 _$tabs.eq(_tabActive).data(_DATA_PANEL)
             );

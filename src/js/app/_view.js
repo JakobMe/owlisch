@@ -47,7 +47,7 @@ var View = (function() {
     function init() {
         _create();
         _bindEvents();
-        _hookMediator();
+        _subMediator();
     }
     
     /**
@@ -63,12 +63,12 @@ var View = (function() {
      * Mediator abonnieren.
      * Meldet Funktionen beim Mediator an.
      */
-    function _hookMediator() {
-        Mediator.hook(CFG.CNL.VIEW_SHOW, _show)
-                .hook(CFG.CNL.VIEW_HIDE, _hide)
-                .hook(CFG.CNL.VIEW_SET, _setView)
-                .hook(CFG.CNL.QUIZ_END, _disableQuiz)
-                .hook(CFG.CNL.QUIZ_START, _enableQuiz);
+    function _subMediator() {
+        Mediator.sub(CFG.CNL.VIEW_SHOW, _show)
+                .sub(CFG.CNL.VIEW_HIDE, _hide)
+                .sub(CFG.CNL.VIEW_SET, _setView)
+                .sub(CFG.CNL.QUIZ_END, _disableQuiz)
+                .sub(CFG.CNL.QUIZ_START, _enableQuiz);
     }
     
     /**
@@ -96,7 +96,7 @@ var View = (function() {
             _$view.find(_SEL_PANEL).each(function() {
                 _$panels[$(this).data(_DATA_PANEL)] = $(this);
             });
-            Mediator.send(CFG.CNL.VIEW_INIT, panels);
+            Mediator.pub(CFG.CNL.VIEW_INIT, panels);
             _render();
         });
     }
@@ -148,7 +148,7 @@ var View = (function() {
             if (panel !== _currentPanel) {
                 
                 // Panel ändern, Änderung bekanntmachen
-                Mediator.send(
+                Mediator.pub(
                     CFG.CNL.VIEW_CHANGE,
                     { panelOld: _currentPanel, panelNew: panel }
                 );
@@ -158,7 +158,7 @@ var View = (function() {
                 _hide();
                 setTimeout(function() {
                     if (_$panels[panel].children().length === 0 ) {
-                        Mediator.send(CFG.CNL.VIEW_LOAD, {
+                        Mediator.pub(CFG.CNL.VIEW_LOAD, {
                             panel: panel, target: _$panels[panel]
                         });
                     } else { _show(); }
@@ -166,7 +166,7 @@ var View = (function() {
                 
             // Panel gegebenenfalls wiederherstellen
             } else {
-                Mediator.send(CFG.CNL.VIEW_RESTORE, _currentPanel);
+                Mediator.pub(CFG.CNL.VIEW_RESTORE, _currentPanel);
             }
         }
     }

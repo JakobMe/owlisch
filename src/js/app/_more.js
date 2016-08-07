@@ -42,19 +42,19 @@ var More = (function() {
      * der weiteren Optionen herzustellen.
      */
     function init() {
-        _hookMediator();
+        _subMediator();
     }
     
     /**
      * Mediator abonnieren.
      * Meldet Funktionen beim Mediator an.
      */
-    function _hookMediator() {
-        Mediator.hook(CFG.CNL.VIEW_LOAD, _create)
-                .hook(CFG.CNL.VIEW_RESTORE, _restore)
-                .hook(CFG.CNL.NAVBAR_ACTION, _back)
-                .hook(CFG.CNL.TERMS_SERVE, _updateTerms)
-                .hook(CFG.CNL.DICTIONARY_SERVE, _updateDictionary);
+    function _subMediator() {
+        Mediator.sub(CFG.CNL.VIEW_LOAD, _create)
+                .sub(CFG.CNL.VIEW_RESTORE, _restore)
+                .sub(CFG.CNL.NAVBAR_ACTION, _back)
+                .sub(CFG.CNL.TERMS_SERVE, _updateTerms)
+                .sub(CFG.CNL.DICTIONARY_SERVE, _updateDictionary);
     }
     
     /**
@@ -109,9 +109,9 @@ var More = (function() {
                 _slider.setSlide(_indexListbox);
                 
                 // Wörterbuch-Daten anfragen, View einblenden
-                Mediator.send(CFG.CNL.VIEW_SHOW)
-                        .send(CFG.CNL.TERMS_REQUEST)
-                        .send(CFG.CNL.DICTIONARY_REQUEST);
+                Mediator.pub(CFG.CNL.VIEW_SHOW)
+                        .pub(CFG.CNL.TERMS_REQUEST)
+                        .pub(CFG.CNL.DICTIONARY_REQUEST);
             });
         }
     }
@@ -144,7 +144,7 @@ var More = (function() {
         var tmpl = _TMPL_MORE + _TMPL_DELIMITER + _currentOption.option;
         Template.render(_$option, tmpl, _data, function() {
             if (renderNavBar !== false) {
-                Mediator.send(CFG.CNL.NAVBAR_ACTION, {
+                Mediator.pub(CFG.CNL.NAVBAR_ACTION, {
                     act : CFG.ACT.MORE_FORWARD,
                     str : _currentOption.label
                 });

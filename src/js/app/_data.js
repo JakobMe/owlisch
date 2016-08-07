@@ -30,7 +30,7 @@ var Data = (function() {
      */
     function init() {
         _bindEvents();
-        _hookMediator();
+        _subMediator();
         _loadDataConfig();
         _loadDataStored();
     }
@@ -39,14 +39,14 @@ var Data = (function() {
      * Mediator abonnieren.
      * Meldet Funktionen beim Mediator an.
      */
-    function _hookMediator() {
-        Mediator.hook(CFG.CNL.TERMS_REQUEST, _serveDataTerms)
-                .hook(CFG.CNL.TERMS_UPDATE, _updateDataTerm)
-                .hook(CFG.CNL.SCORES_REQUEST, _serveDataScores)
-                .hook(CFG.CNL.SCORES_UPDATE, _updateDataScore)
-                .hook(CFG.CNL.CONFIG_REQUEST, _serveDataConfig)
-                .hook(CFG.CNL.FEATURED_REQUEST, _serveDataFeatured)
-                .hook(CFG.CNL.DICTIONARY_REQUEST, _serveDataDictionaries);
+    function _subMediator() {
+        Mediator.sub(CFG.CNL.TERMS_REQUEST, _serveDataTerms)
+                .sub(CFG.CNL.TERMS_UPDATE, _updateDataTerm)
+                .sub(CFG.CNL.SCORES_REQUEST, _serveDataScores)
+                .sub(CFG.CNL.SCORES_UPDATE, _updateDataScore)
+                .sub(CFG.CNL.CONFIG_REQUEST, _serveDataConfig)
+                .sub(CFG.CNL.FEATURED_REQUEST, _serveDataFeatured)
+                .sub(CFG.CNL.DICTIONARY_REQUEST, _serveDataDictionaries);
     }
     
     /**
@@ -367,7 +367,7 @@ var Data = (function() {
      * Liefert die Fortschritt-Liste in einer Mediator-Nachricht.
      */
     function _serveDataTerms() {
-        Mediator.send(CFG.CNL.TERMS_SERVE, {
+        Mediator.pub(CFG.CNL.TERMS_SERVE, {
             caption : _dictionaryCaption,
             data    : _dataTerms,
             solved  : _sizeProgress,
@@ -380,7 +380,7 @@ var Data = (function() {
      * Liefert die Ergebnisse der letzten Spiele in einer Mediator-Nachricht.
      */
     function _serveDataScores() {
-        Mediator.send(CFG.CNL.SCORES_SERVE, {
+        Mediator.pub(CFG.CNL.SCORES_SERVE, {
             data : _dataScores,
             size : _sizeScores
         });
@@ -391,7 +391,7 @@ var Data = (function() {
      * Liefert die Konfiguration des Wörterbuches in einer Mediator-Nachricht.
      */
     function _serveDataConfig() {
-        Mediator.send(CFG.CNL.CONFIG_SERVE, {
+        Mediator.pub(CFG.CNL.CONFIG_SERVE, {
             alias  : _dictionaryAlias,
             config : _dataConfig
         });
@@ -402,7 +402,7 @@ var Data = (function() {
      * Liefert den zufälligen Begriff des Tages in einer Mediator-Nachricht.
      */
     function _serveDataFeatured() {
-        Mediator.send(CFG.CNL.FEATURED_SERVE, _dataFeatured.term);
+        Mediator.pub(CFG.CNL.FEATURED_SERVE, _dataFeatured.term);
     }
     
     /**
@@ -410,7 +410,7 @@ var Data = (function() {
      * Liefert alle verfügbaren Wörterbucher in einer Mediator-Nachricht.
      */
     function _serveDataDictionaries() {
-        Mediator.send(CFG.CNL.DICTIONARIES_SERVE, _dataDictionaries);
+        Mediator.pub(CFG.CNL.DICTIONARIES_SERVE, _dataDictionaries);
     }
     
     /**

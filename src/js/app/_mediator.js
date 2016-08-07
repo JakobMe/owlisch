@@ -18,7 +18,7 @@ var Mediator = (function() {
      * @param {String} channel Name des Kanals
      * @param {Function} callback Callback-Funktion
      */
-    function hook(channel, callback) {
+    function sub(channel, callback) {
         if (!_channels.hasOwnProperty(channel)) { _channels[channel] = []; }
         _channels[channel].push(callback);
         return this;
@@ -30,7 +30,7 @@ var Mediator = (function() {
      * @param {String} channel Name des Kanals
      * @param {Function} callback Callback-Funktion
      */
-    function unhook(channel, callback) {
+    function unsub(channel, callback) {
         if (_channels.hasOwnProperty(channel)) {
             $.each(_channels[channel], function(i, subscription) {
                 if (subscription === callback) {
@@ -49,7 +49,7 @@ var Mediator = (function() {
      * @param {String} channel Name des Kanals
      * @param {*} data Zu veröffentlichende Daten
      */
-    function send(channel, data) {
+    function pub(channel, data) {
         if (_channels.hasOwnProperty(channel)) {
             $.each(_channels[channel], function(i, subscription) {
                 if ($.isFunction(subscription)) { subscription(data); }
@@ -60,9 +60,9 @@ var Mediator = (function() {
     
     // Öffentliches Interface
     return { 
-        hook   : hook,
-        unhook : unhook,
-        send   : send
+        sub   : sub,
+        unsub : unsub,
+        pub   : pub
     };
     
 })();

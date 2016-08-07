@@ -48,18 +48,18 @@ var Statistics = (function() {
     function init() {
         _arrStepsPercent = Util.arrFromNum(_NUM_STEPS_PERCENT);
         _arrStepsScores  = Util.arrFromNum(CFG.QUIZ.QUESTIONS);
-        _hookMediator();
+        _subMediator();
     }
     
     /**
      * Mediator abonnieren.
      * Meldet Funktionen beim Mediator an.
      */
-    function _hookMediator() {
-        Mediator.hook(CFG.CNL.VIEW_LOAD, _create)
-                .hook(CFG.CNL.VIEW_RESTORE, _restore)
-                .hook(CFG.CNL.TERMS_SERVE, _updateProgress)
-                .hook(CFG.CNL.SCORES_SERVE, _updateScores);
+    function _subMediator() {
+        Mediator.sub(CFG.CNL.VIEW_LOAD, _create)
+                .sub(CFG.CNL.VIEW_RESTORE, _restore)
+                .sub(CFG.CNL.TERMS_SERVE, _updateProgress)
+                .sub(CFG.CNL.SCORES_SERVE, _updateScores);
     }
     
     /**
@@ -90,9 +90,9 @@ var Statistics = (function() {
                     _growCharts(false);
                     
                     // Mediator aufrufen
-                    Mediator.send(CFG.CNL.VIEW_SHOW)
-                            .send(CFG.CNL.TERMS_REQUEST)
-                            .send(CFG.CNL.SCORES_REQUEST);
+                    Mediator.pub(CFG.CNL.VIEW_SHOW)
+                            .pub(CFG.CNL.TERMS_REQUEST)
+                            .pub(CFG.CNL.SCORES_REQUEST);
                 }
             );
         }

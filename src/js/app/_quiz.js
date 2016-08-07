@@ -94,19 +94,19 @@ var Quiz = (function() {
      * Startet Funktionen, um den Anfangszustand der Statistik herzustellen.
      */
     function init() {
-        _hookMediator();
+        _subMediator();
     }
     
     /**
      * Mediator abonnieren.
      * Meldet Funktionen beim Mediator an.
      */
-    function _hookMediator() {
-        Mediator.hook(CFG.CNL.VIEW_LOAD, _create)
-                .hook(CFG.CNL.VIEW_RESTORE, _restore)
-                .hook(CFG.CNL.TERMS_SERVE, _update)
-                .hook(CFG.CNL.NAVBAR_ACTION, _navbarAction)
-                .hook(CFG.CNL.CONFIG_SERVE, _setConfig);
+    function _subMediator() {
+        Mediator.sub(CFG.CNL.VIEW_LOAD, _create)
+                .sub(CFG.CNL.VIEW_RESTORE, _restore)
+                .sub(CFG.CNL.TERMS_SERVE, _update)
+                .sub(CFG.CNL.NAVBAR_ACTION, _navbarAction)
+                .sub(CFG.CNL.CONFIG_SERVE, _setConfig);
     }
     
     /**
@@ -170,9 +170,9 @@ var Quiz = (function() {
                 _slider.setSlide(_indexStart);
                 
                 // Wörterbuch und Fortschritt anfragen, View einblenden
-                Mediator.send(CFG.CNL.VIEW_SHOW)
-                        .send(CFG.CNL.TERMS_REQUEST)
-                        .send(CFG.CNL.CONFIG_REQUEST);
+                Mediator.pub(CFG.CNL.VIEW_SHOW)
+                        .pub(CFG.CNL.TERMS_REQUEST)
+                        .pub(CFG.CNL.CONFIG_REQUEST);
             });
         }
     }
@@ -302,7 +302,7 @@ var Quiz = (function() {
         if (_currentStep !== 0) {
             _resetAll(true);
         } else {
-            Mediator.send(CFG.CNL.QUIZ_START, { act: CFG.ACT.QUIZ_START });
+            Mediator.pub(CFG.CNL.QUIZ_START, { act: CFG.ACT.QUIZ_START });
             setTimeout(function() {
                 _setProgressbarAnimation(true);
                 _resetProgress();
@@ -624,7 +624,7 @@ var Quiz = (function() {
         if (typeof correct === typeof true) {
             var term = $.extend({}, _questions[_currentStep - 1]);
             if (correct) { _renderLevel(term.lvl + 1); }
-            Mediator.send(CFG.CNL.TERMS_UPDATE, {
+            Mediator.pub(CFG.CNL.TERMS_UPDATE, {
                 alias : term.alias,
                 lvl   : (correct ? term.lvl + 1 : term.lvl),
                 fail  : (correct ? term.fail - 1 : term.fail + 1)
@@ -656,7 +656,7 @@ var Quiz = (function() {
      * zu deaktivieren und somit das Überspringen unmöglich zu machen.
      */
     function _lockSkip() {
-        Mediator.send(CFG.CNL.NAVBAR_ACTION, { act: CFG.ACT.QUIZ_SOLVE });
+        Mediator.pub(CFG.CNL.NAVBAR_ACTION, { act: CFG.ACT.QUIZ_SOLVE });
     }
     
     /**
@@ -665,7 +665,7 @@ var Quiz = (function() {
      * zu aktivieren und somit das Überspringen möglich zu machen.
      */
     function _unlockSkip() {
-        Mediator.send(CFG.CNL.NAVBAR_ACTION, { act: CFG.ACT.QUIZ_START });
+        Mediator.pub(CFG.CNL.NAVBAR_ACTION, { act: CFG.ACT.QUIZ_START });
     }
     
     /**
@@ -825,8 +825,8 @@ var Quiz = (function() {
         _renderFinish(result, skipped, rating);
         setTimeout(function() {
             _clearQuestions();
-            Mediator.send(CFG.CNL.QUIZ_END, { act: CFG.ACT.QUIZ_CANCEL })
-                    .send(CFG.CNL.SCORES_UPDATE, result);
+            Mediator.pub(CFG.CNL.QUIZ_END, { act: CFG.ACT.QUIZ_CANCEL })
+                    .pub(CFG.CNL.SCORES_UPDATE, result);
         }, CFG.TIME.DELAY);
     }
     
@@ -921,15 +921,15 @@ var Quiz = (function() {
      * @param {Boolean} [false] restart Quiz nach dem Zurücksetzen starten
      */
     function _resetAll(restart) {
-        Mediator.send(CFG.CNL.VIEW_HIDE);
+        Mediator.pub(CFG.CNL.VIEW_HIDE);
         setTimeout(function() {
-            Mediator.send(CFG.CNL.QUIZ_END);
+            Mediator.pub(CFG.CNL.QUIZ_END);
             _clearQuestions(true);
             _slider.setSlide(_indexStart);
             _resetProgress();
             if (restart === true) { _start(); }
             setTimeout(function() {
-                Mediator.send(CFG.CNL.VIEW_SHOW);
+                Mediator.pub(CFG.CNL.VIEW_SHOW);
             }, CFG.TIME.DELAY);
         }, CFG.TIME.DELAY);
     }

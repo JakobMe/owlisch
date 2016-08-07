@@ -22,18 +22,18 @@ var Featured = (function() {
      * des Wort des Tages herzustellen.
      */
     function init() {
-        _hookMediator();
+        _subMediator();
     }
     
     /**
      * Mediator abonnieren.
      * Meldet Funktionen beim Mediator an.
      */
-    function _hookMediator() {
-        Mediator.hook(CFG.CNL.VIEW_LOAD, _create)
-                .hook(CFG.CNL.VIEW_RESTORE, _restore)
-                .hook(CFG.CNL.TERMS_SERVE, _updateTerms)
-                .hook(CFG.CNL.FEATURED_SERVE, _updateFeatured);
+    function _subMediator() {
+        Mediator.sub(CFG.CNL.VIEW_LOAD, _create)
+                .sub(CFG.CNL.VIEW_RESTORE, _restore)
+                .sub(CFG.CNL.TERMS_SERVE, _updateTerms)
+                .sub(CFG.CNL.FEATURED_SERVE, _updateFeatured);
     }
     
     /**
@@ -50,8 +50,8 @@ var Featured = (function() {
             
             // Modulvariablen initialisieren, Mediator aufrufen
             _$featured = data.target;
-            Mediator.send(CFG.CNL.TERMS_REQUEST)
-                    .send(CFG.CNL.FEATURED_REQUEST);
+            Mediator.pub(CFG.CNL.TERMS_REQUEST)
+                    .pub(CFG.CNL.FEATURED_REQUEST);
         }
     }
     
@@ -73,7 +73,7 @@ var Featured = (function() {
             
             // Begriff des Tages per Template einfügen
             Template.render(_$featured, _TMPL_DETAILS, data, function() {
-                Mediator.send(CFG.CNL.VIEW_SHOW);
+                Mediator.pub(CFG.CNL.VIEW_SHOW);
             });
         }
     }

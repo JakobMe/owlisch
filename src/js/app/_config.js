@@ -35,7 +35,7 @@ var CFG = (function() {
             PROGRESS            : "Fortschritt:",
             DETAILS             : "Details",
             THIS                : "das",
-            DELETE              : "Daten wirklich zurücksetzen?",
+            DELETE              : "Fortschritt wirklich löschen?",
             YES                 : "Ja",
             NO                  : "Nein"
         },
@@ -95,7 +95,7 @@ var CFG = (function() {
         },
         OPTIONS: {
             HELP                : "Hilfe",
-            DELETE              : "Daten zurücksetzen",
+            DELETE              : "Fortschritt löschen",
             DICTIONARY          : "Wörterbuch ändern"
         },
         ACT: {

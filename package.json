@@ -11,7 +11,8 @@
     "url": "git+https://github.com/JakobMe/owlisch.git"
   },
   "scripts": {
-    "doc": "jsdoc2md src/js/app/_*.js --conf doc/conf.json --private --separators -d 4 --template doc/readme.hbs > README.md; doctoc README.md --notitle --maxlevel 4 --github",
+    "readme": "doctoc README.md --notitle --github",
+    "doc": "jsdoc2md src/js/app/_*.js --conf doc/conf.json --private --separators --template doc/readme.hbs > doc/readme.md",
     "init": "cordova platform add ios; cordova build ios",
     "build": "cordova build ios; npm run doc",
     "emulate": "cordova emulate ios --target=\"iPhone-5s\""

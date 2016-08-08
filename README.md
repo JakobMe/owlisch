@@ -103,11 +103,14 @@ cordova emulate ios --target="iPhone-5s"
 
 Alternativ dazu kann auch das Projekt unter `platforms/ios` direkt in Xcode geöffnet und ausgeführt werden; so erfolgt auch die Installation auf einem iPhone, falls eine gültige [Apple Developer-ID](https://developer.apple.com/developer-id/) vorliegt.
 
-Um die JavaScript-Dokumentation in dieser Readme-Datei zu aktualisieren, kann folgender Befehl benutzt werden:
+Um die JavaScript-Dokumentation des Projekts unter `doc/readme.md` zu aktualisieren oder diese Readme-Datei mit einem Inhaltsverzeichnis auszustatten, können folgende Befehle benutzt werden:
 
 ```sh
-# README.md aktualisieren
+# doc/readme.md aktualisieren
 npm run doc
+
+# README.md um Inhaltsverzeichnis erweitern
+npm run readme
 ```
 
 Um die App zu bauen ohne sie im Emulator zu starten, kann folgender Befehl verwendet werden:

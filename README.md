@@ -52,7 +52,7 @@ Alle diese Ressourcen und Dienste sind für die private und kommerzielle Nutzung
 * [Cordova](https://cordova.apache.org)
 
 ## Beteiligte Studierende an der Entwicklung des Konzepts
-Folgende Studierende waren im Zuge des Seminars _Mobile Learning_ an der [Universität Bielefeld](http://www.uni-bielefeld.de) unter Leitung von [Paul John](https://ekvv.uni-bielefeld.de/pers_publ/publ/PersonDetail.jsp?personId=3772740) an der Konzeption des ersten Prototypen von **OWLisch** beteiligt:
+Folgende Studierende waren im Zuge des Seminars _Mobile Learning_ an der [Universität Bielefeld](http://www.uni-bielefeld.de) unter Leitung von [Paul John](https://ekvv.uni-bielefeld.de/pers_publ/publ/PersonDetail.jsp?personId=3772740) an der Konzeption des [ersten Prototypen](releases/tag/v0.1-alpha) von **OWLisch** beteiligt:
 
 * Tugba Aksakal
 * Miriam Belke

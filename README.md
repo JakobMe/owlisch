@@ -7,34 +7,34 @@ Diese App wurde von **Jakob Metzger** als Bachelor-Arbeit an der [Universität B
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 
 
-  - [Verwendete Ressourcen & Dienste](#verwendete-ressourcen-&-dienste)
-      - [Frameworks, Plugins & Module](#frameworks-plugins-&-module)
-      - [JavaScript Bibliotheken](#javascript-bibliotheken)
-      - [Web-Fonts](#web-fonts)
-      - [Sonstiges](#sonstiges)
-      - [Benötigte Software zum Bearbeiten des Projekts](#ben%C3%B6tigte-software-zum-bearbeiten-des-projekts)
-  - [Beteiligte Studierende an der Entwicklung des Konzepts](#beteiligte-studierende-an-der-entwicklung-des-konzepts)
-  - [Installation](#installation)
+- [Verwendete Ressourcen & Dienste](#verwendete-ressourcen-&-dienste)
+    - [Frameworks, Plugins & Module](#frameworks-plugins-&-module)
+    - [JavaScript Bibliotheken](#javascript-bibliotheken)
+    - [Web-Fonts](#web-fonts)
+    - [Sonstiges](#sonstiges)
+    - [Benötigte Software zum Bearbeiten des Projekts](#ben%C3%B6tigte-software-zum-bearbeiten-des-projekts)
+- [Beteiligte Studierende an der Entwicklung des Konzepts](#beteiligte-studierende-an-der-entwicklung-des-konzepts)
+- [Installation](#installation)
 - [JavaScript Dokumentation](#javascript-dokumentation)
-      - [Modules](#modules)
-      - [Classes](#classes)
-      - [Members](#members)
-      - [Data](#data)
-      - [Dictionary](#dictionary)
-      - [Featured](#featured)
-      - [App](#app)
-      - [Mediator](#mediator)
-      - [More](#more)
-      - [NavigationBar](#navigationbar)
-      - [Play](#play)
-      - [Quiz](#quiz)
-      - [Statistics](#statistics)
-      - [TabBar](#tabbar)
-      - [Template](#template)
-      - [Util](#util)
-      - [View](#view)
-      - [Slider](#slider)
-      - [CFG](#cfg)
+    - [Modules](#modules)
+    - [Classes](#classes)
+    - [Members](#members)
+    - [Data](#data)
+    - [Dictionary](#dictionary)
+    - [Featured](#featured)
+    - [App](#app)
+    - [Mediator](#mediator)
+    - [More](#more)
+    - [NavigationBar](#navigationbar)
+    - [Play](#play)
+    - [Quiz](#quiz)
+    - [Statistics](#statistics)
+    - [TabBar](#tabbar)
+    - [Template](#template)
+    - [Util](#util)
+    - [View](#view)
+    - [Slider](#slider)
+    - [CFG](#cfg)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
@@ -140,7 +140,7 @@ npm run build
 cordova build ios
 ```
 
-# JavaScript Dokumentation
+## JavaScript Dokumentation
 Es folgt eine mit [jsdoc-to-markdown](https://github.com/jsdoc2md/jsdoc-to-markdown) automatisch generierte Dokumentation aller selbst geschriebenen Module und Klassen unter `src/js/app`.
 
 #### Modules

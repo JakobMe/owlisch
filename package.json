@@ -11,8 +11,9 @@
     "url": "git+https://github.com/JakobMe/owlisch.git"
   },
   "scripts": {
+    "doc": "jsdoc2md src/js/app/_*.js --conf doc/conf.json --private > doc/doc.md",
     "build": "cordova build ios; npm run doc",
-    "doc": "jsdoc2md src/js/app/_*.js --conf doc/conf.json --private > doc/doc.md"
+    "emulate": "cordova emulate ios --target=\"iPhone-5s\"; npm run doc"
   },
   "dependencies": {
     "cordova": "^6.3.0",

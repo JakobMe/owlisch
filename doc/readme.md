@@ -1,7 +1,7 @@
 # JavaScript Dokumentation
 Es folgt eine mit [jsdoc-to-markdown](https://github.com/jsdoc2md/jsdoc-to-markdown) automatisch generierte Dokumentation aller selbst geschriebenen Module und Klassen unter `src/js/app`.
 
-## Modules
+### Modules
 
 <dl>
 <dt><a href="#module_Data">Data</a></dt>
@@ -85,14 +85,14 @@ oder das Starten/Beenden des Quiz.</p>
 </dd>
 </dl>
 
-## Classes
+### Classes
 
 <dl>
 <dt><a href="#Slider">Slider</a></dt>
 <dd></dd>
 </dl>
 
-## Members
+### Members
 
 <dl>
 <dt><a href="#CFG">CFG</a></dt>
@@ -105,7 +105,7 @@ und Konstanten für Events, Icon-Namen und Zeitangaben.</p>
 
 <a name="module_Data"></a>
 
-## Data
+### Data
 Lädt und verwaltet alle benötigten Daten für die App, bereitet die
 Daten aus den Wörterbuch-Dateien auf, kann sie per Mediator an andere
 Module senden und speichert über den Mediator empfangene Daten im
@@ -146,7 +146,7 @@ LocalStorage des Browsers.
 
 <a name="module_Data..init"></a>
 
-### Data~init()
+#### Data~init()
 Initialisiert das Data-Modul; bindet Events, abonniert den Mediator
 und lädt alle benötigten Daten aus Dateien und dem LocalStorage,
 indem andere Funktionen ausgeführt werden.
@@ -158,7 +158,7 @@ indem andere Funktionen ausgeführt werden.
 
 <a name="module_Data.._subMediator"></a>
 
-### Data~_subMediator() ℗
+#### Data~_subMediator() ℗
 Abonniert interne Funktionen beim Mediator.
 
 **Kind**: inner method of <code>[Data](#module_Data)</code>  
@@ -168,7 +168,7 @@ Abonniert interne Funktionen beim Mediator.
 
 <a name="module_Data.._bindEvents"></a>
 
-### Data~_bindEvents() ℗
+#### Data~_bindEvents() ℗
 Bindet Funktionen an Events.
 
 **Kind**: inner method of <code>[Data](#module_Data)</code>  
@@ -178,7 +178,7 @@ Bindet Funktionen an Events.
 
 <a name="module_Data.._initDataStored"></a>
 
-### Data~_initDataStored() ℗
+#### Data~_initDataStored() ℗
 Erstellt einen leeren Standard-Datensatz im LocalStorage.
 
 **Kind**: inner method of <code>[Data](#module_Data)</code>  
@@ -188,7 +188,7 @@ Erstellt einen leeren Standard-Datensatz im LocalStorage.
 
 <a name="module_Data.._loadDataStored"></a>
 
-### Data~_loadDataStored() ℗
+#### Data~_loadDataStored() ℗
 Lädt alle gespeicherten Daten für das aktuelle Wörterbuch aus dem
 LocalStorage; ruft _initDataStored auf, falls noch keine Daten
 vorhanden sind.
@@ -200,7 +200,7 @@ vorhanden sind.
 
 <a name="module_Data.._loadDataConfig"></a>
 
-### Data~_loadDataConfig() ℗
+#### Data~_loadDataConfig() ℗
 Lädt die Datei mit der Konfiguration für die verfügbaren
 Wörterbücher und den Einstellungen für das Quiz;
 stellt die Daten per Mediator bereit.
@@ -212,7 +212,7 @@ stellt die Daten per Mediator bereit.
 
 <a name="module_Data.._loadDataTerms"></a>
 
-### Data~_loadDataTerms() ℗
+#### Data~_loadDataTerms() ℗
 Lädt die Datei zum eingestellten Wörterbuch und speichert die Daten in
 einer lokalen Variable; ruft weitere Funktionen auf, um die geladenen
 Daten aufzubereiten.
@@ -224,7 +224,7 @@ Daten aufzubereiten.
 
 <a name="module_Data.._checkFile"></a>
 
-### Data~_checkFile(file) ⇒ <code>Object</code> ℗
+#### Data~_checkFile(file) ⇒ <code>Object</code> ℗
 Überprüft die Existenz einer gegebenen Datei, indem eine
 Ajax-Head-Anfrage zur Dateipfad gemacht wird.
 
@@ -241,7 +241,7 @@ Ajax-Head-Anfrage zur Dateipfad gemacht wird.
 
 <a name="module_Data.._checkTermFiles"></a>
 
-### Data~_checkTermFiles(alias) ⇒ <code>Object</code> ℗
+#### Data~_checkTermFiles(alias) ⇒ <code>Object</code> ℗
 Prüft mittels Ajax-Anfragen per _checkFile, ob ein Begriff mit gegebenem
 Alias über Audio- und/oder Bild-Dateien verfügt; erweitert die internen
 Wörterbuch-Daten um den Datei-Status.
@@ -259,7 +259,7 @@ Wörterbuch-Daten um den Datei-Status.
 
 <a name="module_Data.._checkDictionaryFiles"></a>
 
-### Data~_checkDictionaryFiles()
+#### Data~_checkDictionaryFiles()
 Prüft alle Begriffe des Wörterbuches nach der Existenz von zugehörigen
 Audio- und Bild-Dateien; aktualisiert die Daten entsprechend und
 bereitet sie im Anschluss mittels _processDataTerms auf.
@@ -271,7 +271,7 @@ bereitet sie im Anschluss mittels _processDataTerms auf.
 
 <a name="module_Data.._processDataTerms"></a>
 
-### Data~_processDataTerms() ℗
+#### Data~_processDataTerms() ℗
 Verknüpft alle Daten der Wörterbuch-Begriffe mit den
 gespeicherten Fortschritts-Daten; stellt die aktuellen Daten
 über den Mediator zur Verfügung.
@@ -283,7 +283,7 @@ gespeicherten Fortschritts-Daten; stellt die aktuellen Daten
 
 <a name="module_Data.._storeData"></a>
 
-### Data~_storeData()
+#### Data~_storeData()
 Speichert alle internen Daten des aktuellen Wörterbuches
 als JSON-String im LocalStorage.
 
@@ -294,7 +294,7 @@ als JSON-String im LocalStorage.
 
 <a name="module_Data.._updateDataTerm"></a>
 
-### Data~_updateDataTerm(data) ℗
+#### Data~_updateDataTerm(data) ℗
 Setzt das neue Level und die Anzahl der Fehlschläge
 für einen bestimmten Begriff bei einer ausgelösten Mediator-Nachricht.
 
@@ -310,7 +310,7 @@ für einen bestimmten Begriff bei einer ausgelösten Mediator-Nachricht.
 
 <a name="module_Data.._setDataTerm"></a>
 
-### Data~_setDataTerm(alias, lvl, fail) ℗
+#### Data~_setDataTerm(alias, lvl, fail) ℗
 Setzt den Fortschritt für einen bestimmten Begriff; aktualisiert die
 Stufe und die Fehlschläge des Begriffs, speichert den Fortschritt und
 aktualisiert die Begriff-Daten mittels anderer Funktionen.
@@ -329,7 +329,7 @@ aktualisiert die Begriff-Daten mittels anderer Funktionen.
 
 <a name="module_Data.._updateDataScore"></a>
 
-### Data~_updateDataScore(result) ℗
+#### Data~_updateDataScore(result) ℗
 Fügt einen neuen Wert zur Liste der letzten Spiele hinzu;
 kürzt die Liste wieder auf die Maximallänge, speichert sie
 und stellt sie zur Verfügung.
@@ -346,7 +346,7 @@ und stellt sie zur Verfügung.
 
 <a name="module_Data.._updateDataFeatured"></a>
 
-### Data~_updateDataFeatured() ℗
+#### Data~_updateDataFeatured() ℗
 Prüft, ob ein gespeichertes Datum für den Begriff des Tages gesetzt ist;
 vergleicht dieses Datum gegebenenfalls mit dem aktuellen und wählt einen
 neuen zufälligen Begriff des Tages aus; stellt die Daten anschließend
@@ -359,7 +359,7 @@ mittels anderer Funktionen bereit.
 
 <a name="module_Data.._setDataFeatured"></a>
 
-### Data~_setDataFeatured([alias]) ℗
+#### Data~_setDataFeatured([alias]) ℗
 Setzt einen neuen Begriff des Tages; wählt einen zufälligen Begriff aus,
 falls keiner angegeben ist und setzt das aktuelle Datum; speichert die
 Daten und stellt sie anschließend bereit.
@@ -376,7 +376,7 @@ Daten und stellt sie anschließend bereit.
 
 <a name="module_Data.._serveDataTerms"></a>
 
-### Data~_serveDataTerms() ℗
+#### Data~_serveDataTerms() ℗
 Liefert die Fortschritt-Liste in einer Mediator-Nachricht.
 
 **Kind**: inner method of <code>[Data](#module_Data)</code>  
@@ -386,7 +386,7 @@ Liefert die Fortschritt-Liste in einer Mediator-Nachricht.
 
 <a name="module_Data.._serveDataScores"></a>
 
-### Data~_serveDataScores() ℗
+#### Data~_serveDataScores() ℗
 Liefert die Ergebnisse der letzten Spiele in einer Mediator-Nachricht.
 
 **Kind**: inner method of <code>[Data](#module_Data)</code>  
@@ -396,7 +396,7 @@ Liefert die Ergebnisse der letzten Spiele in einer Mediator-Nachricht.
 
 <a name="module_Data.._serveDataConfig"></a>
 
-### Data~_serveDataConfig() ℗
+#### Data~_serveDataConfig() ℗
 Liefert die Konfiguration des Wörterbuches in einer Mediator-Nachricht.
 
 **Kind**: inner method of <code>[Data](#module_Data)</code>  
@@ -406,7 +406,7 @@ Liefert die Konfiguration des Wörterbuches in einer Mediator-Nachricht.
 
 <a name="module_Data.._serveDataFeatured"></a>
 
-### Data~_serveDataFeatured() ℗
+#### Data~_serveDataFeatured() ℗
 Liefert den zufälligen Begriff des Tages in einer Mediator-Nachricht.
 
 **Kind**: inner method of <code>[Data](#module_Data)</code>  
@@ -416,7 +416,7 @@ Liefert den zufälligen Begriff des Tages in einer Mediator-Nachricht.
 
 <a name="module_Data.._serveDataDictionaries"></a>
 
-### Data~_serveDataDictionaries() ℗
+#### Data~_serveDataDictionaries() ℗
 Liefert alle verfügbaren Wörterbucher in einer Mediator-Nachricht.
 
 **Kind**: inner method of <code>[Data](#module_Data)</code>  
@@ -426,7 +426,7 @@ Liefert alle verfügbaren Wörterbucher in einer Mediator-Nachricht.
 
 <a name="module_Data.._clearData"></a>
 
-### Data~_clearData([confirm]) ℗
+#### Data~_clearData([confirm]) ℗
 Löschte alle Daten über die letzten Spiele und den Fortschritt,
 speichert die Daten und stellt sie über den Mediator bereit,
 zeigt eine Bestätigung als Alert an; wird nur ausgeführt, wenn
@@ -444,7 +444,7 @@ der Parameter 1 (bestätigt) oder undefined ist.
 
 <a name="module_Data.._clearConfirm"></a>
 
-### Data~_clearConfirm() ℗
+#### Data~_clearConfirm() ℗
 Ruft einen Bestätigungs-Dialog zum Löschen der Fortschritts-Daten auf;
 verwendet die Cordova-API, falls vorhanden, ansonsten den
 Standard-JavaScript-Dialog.
@@ -456,7 +456,7 @@ Standard-JavaScript-Dialog.
 
 <a name="module_Dictionary"></a>
 
-## Dictionary
+### Dictionary
 Steuert die Wörterbuch-View der App; erstellt die Liste der Begriffe
 per Template und fügt sie ein, ermöglicht das Sortieren und Filtern der
 Liste und das Anzeigen von Details für gewählte Begriffe.
@@ -487,7 +487,7 @@ Liste und das Anzeigen von Details für gewählte Begriffe.
 
 <a name="module_Dictionary..init"></a>
 
-### Dictionary~init()
+#### Dictionary~init()
 Initialisiert das Dictionary-Modul; abonniert den Mediator.
 
 **Kind**: inner method of <code>[Dictionary](#module_Dictionary)</code>  
@@ -497,7 +497,7 @@ Initialisiert das Dictionary-Modul; abonniert den Mediator.
 
 <a name="module_Dictionary.._bindEvents"></a>
 
-### Dictionary~_bindEvents() ℗
+#### Dictionary~_bindEvents() ℗
 Bindet Funktionen an Events.
 
 **Kind**: inner method of <code>[Dictionary](#module_Dictionary)</code>  
@@ -507,7 +507,7 @@ Bindet Funktionen an Events.
 
 <a name="module_Dictionary.._subMediator"></a>
 
-### Dictionary~_subMediator() ℗
+#### Dictionary~_subMediator() ℗
 Abonniert interne Funktionen beim Mediator.
 
 **Kind**: inner method of <code>[Dictionary](#module_Dictionary)</code>  
@@ -517,7 +517,7 @@ Abonniert interne Funktionen beim Mediator.
 
 <a name="module_Dictionary.._create"></a>
 
-### Dictionary~_create(data) ℗
+#### Dictionary~_create(data) ℗
 Generiert bei einer Mediator-Nachricht mit dem Dictionary-Panel als
 Daten die Inhalte des Wörterbuches; initialisiert alle DOM-Elemente
 des Moduls, bindet Events, blendet die View wieder ein und fragt
@@ -535,7 +535,7 @@ per Mediator benötigte Daten vom Data-Modul an.
 
 <a name="module_Dictionary.._initDom"></a>
 
-### Dictionary~_initDom() ℗
+#### Dictionary~_initDom() ℗
 Initialisiert alle DOM-Elemente des Wörterbuches.
 
 **Kind**: inner method of <code>[Dictionary](#module_Dictionary)</code>  
@@ -545,7 +545,7 @@ Initialisiert alle DOM-Elemente des Wörterbuches.
 
 <a name="module_Dictionary.._renderList"></a>
 
-### Dictionary~_renderList() ℗
+#### Dictionary~_renderList() ℗
 Rendert die Liste des Wörterbuches anhand eines Mustache-Templates
 und der aktuell im Modul gesetzt Wörterbuch-Daten.
 
@@ -556,7 +556,7 @@ und der aktuell im Modul gesetzt Wörterbuch-Daten.
 
 <a name="module_Dictionary.._renderDetails"></a>
 
-### Dictionary~_renderDetails(renderNavBar) ℗
+#### Dictionary~_renderDetails(renderNavBar) ℗
 Rendert die Details des aktuellen Begriffs anhand eines
 Mustache-Templates; bewegt den Wörterbuch-Slider und
 ändert gegebenenfalls die Navigation-Bar.
@@ -573,7 +573,7 @@ Mustache-Templates; bewegt den Wörterbuch-Slider und
 
 <a name="module_Dictionary.._sort"></a>
 
-### Dictionary~_sort(data) ℗
+#### Dictionary~_sort(data) ℗
 Sortiert die Liste der Begriffe anhand der von einer Mediator-Nachricht
 übergebenen Sortierung und Ordnung; rendert die Liste anschließend neu.
 
@@ -589,7 +589,7 @@ Sortiert die Liste der Begriffe anhand der von einer Mediator-Nachricht
 
 <a name="module_Dictionary.._filter"></a>
 
-### Dictionary~_filter([keyword]) ℗
+#### Dictionary~_filter([keyword]) ℗
 Filtert die Liste anhand des aktuell gesetzten Suchbegriffes
 oder einem durch eine Mediator-Nachricht übergebenen Suchbegriff;
 filtert die Original-Liste und kopiert übereinstimmende Einträge
@@ -607,7 +607,7 @@ in die Filter-Liste; sortiert die Liste anschließend.
 
 <a name="module_Dictionary.._update"></a>
 
-### Dictionary~_update(data) ℗
+#### Dictionary~_update(data) ℗
 Aktualisiert die Wörterbuch-Liste, sobald eine entsprechende
 Mediator-Nachricht mit den erforderlichen Daten empfangen wird.
 
@@ -623,7 +623,7 @@ Mediator-Nachricht mit den erforderlichen Daten empfangen wird.
 
 <a name="module_Dictionary.._setDetails"></a>
 
-### Dictionary~_setDetails(event) ℗
+#### Dictionary~_setDetails(event) ℗
 Setzt einen neuen aktuellen Begriff anhand eines ausgelösten
 Klick-Events; sperrt die Begriff-Liste und lädt und rendert den
 neuen Begriff mittels _setDetails.
@@ -640,7 +640,7 @@ neuen Begriff mittels _setDetails.
 
 <a name="module_Dictionary.._loadDetails"></a>
 
-### Dictionary~_loadDetails(alias, [renderNavBar]) ℗
+#### Dictionary~_loadDetails(alias, [renderNavBar]) ℗
 Durchsucht die Begriff-Liste nach dem gegebenen Begriff-Alias und
 aktualisiert den aktuellen Begriff; rendert die Begriff-Details neu.
 
@@ -657,7 +657,7 @@ aktualisiert den aktuellen Begriff; rendert die Begriff-Details neu.
 
 <a name="module_Dictionary.._back"></a>
 
-### Dictionary~_back(data) ℗
+#### Dictionary~_back(data) ℗
 Bewegt den Wörterbuch-Slider anhand einer Mediatior-Nachricht
 zurück zur Wörterbuch-Liste; leert die Begriff-Details.
 
@@ -673,7 +673,7 @@ zurück zur Wörterbuch-Liste; leert die Begriff-Details.
 
 <a name="module_Dictionary.._restore"></a>
 
-### Dictionary~_restore(panel) ℗
+#### Dictionary~_restore(panel) ℗
 Setzt die internen Variablen und Zustände anhand einer
 Mediator-Nachricht wieder auf ihre Standardwerte zurück; filtert die
 Liste mit einem leeren Suchbegriff, setzt den Slider zur Liste zurück
@@ -691,7 +691,7 @@ und scrollt die Liste nach oben.
 
 <a name="module_Dictionary.._compareListItems"></a>
 
-### Dictionary~_compareListItems(a, b) ⇒ <code>Number</code> ℗
+#### Dictionary~_compareListItems(a, b) ⇒ <code>Number</code> ℗
 Eine Vergleichs-Funktion für Elemente der Begriffliste;
 wird von der JavaScript-Funktion "sort" verwendet.
 
@@ -709,7 +709,7 @@ wird von der JavaScript-Funktion "sort" verwendet.
 
 <a name="module_Featured"></a>
 
-## Featured
+### Featured
 Steuert die Start-View der App; zeigt beim Start der App den Begriff des
 Tages an, indem dieser zunächst per Mediator vom Data-Modul angefragt wird.
 
@@ -731,7 +731,7 @@ Tages an, indem dieser zunächst per Mediator vom Data-Modul angefragt wird.
 
 <a name="module_Featured..init"></a>
 
-### Featured~init()
+#### Featured~init()
 Initialisiert das Featured-Modul; abonniert den Mediator.
 
 **Kind**: inner method of <code>[Featured](#module_Featured)</code>  
@@ -741,7 +741,7 @@ Initialisiert das Featured-Modul; abonniert den Mediator.
 
 <a name="module_Featured.._subMediator"></a>
 
-### Featured~_subMediator() ℗
+#### Featured~_subMediator() ℗
 Abonniert interne Funktionen beim Mediator.
 
 **Kind**: inner method of <code>[Featured](#module_Featured)</code>  
@@ -751,7 +751,7 @@ Abonniert interne Funktionen beim Mediator.
 
 <a name="module_Featured.._create"></a>
 
-### Featured~_create(data) ℗
+#### Featured~_create(data) ℗
 Generiert bei einer Mediator-Nachricht mit dem Featured-Panel als
 Daten die Inhalte der Start-View; initialisiert alle DOM-Elemente
 des Moduls und fragt per Mediator benötigte Daten vom Data-Modul an.
@@ -768,7 +768,7 @@ des Moduls und fragt per Mediator benötigte Daten vom Data-Modul an.
 
 <a name="module_Featured.._render"></a>
 
-### Featured~_render() ℗
+#### Featured~_render() ℗
 Rendert den aktuellen Begriff mittels Mustache-Template,
 falls alle benötigten Daten vorhanden sind.
 
@@ -779,7 +779,7 @@ falls alle benötigten Daten vorhanden sind.
 
 <a name="module_Featured.._updateTerms"></a>
 
-### Featured~_updateTerms(data) ℗
+#### Featured~_updateTerms(data) ℗
 Aktualisiert die Begriff-Liste, sobald eine entsprechende
 Mediator-Nachricht mit den erforderlichen Daten empfangen wird;
 rendert den Begriff neu.
@@ -796,7 +796,7 @@ rendert den Begriff neu.
 
 <a name="module_Featured.._updateFeatured"></a>
 
-### Featured~_updateFeatured(data) ℗
+#### Featured~_updateFeatured(data) ℗
 Aktualisiert den Begriff-Alias des Wort des Tages, sobald eine
 entsprechende Mediator-Nachricht mit den erforderlichen
 Daten empfangen wird; rendert den Begriff neu.
@@ -813,7 +813,7 @@ Daten empfangen wird; rendert den Begriff neu.
 
 <a name="module_Featured.._restore"></a>
 
-### Featured~_restore(panel) ℗
+#### Featured~_restore(panel) ℗
 Scrollt das Wort des Tages nach oben, wenn eine entsprechende
 Mediator-Nachricht ausgelöst wird, um den Ausgangszustand
 wiederherzustellen.
@@ -830,7 +830,7 @@ wiederherzustellen.
 
 <a name="module_App"></a>
 
-## App
+### App
 Haupt-Modul der App; aktiviert FastClick, konfiguriert die Optionen für das
 BEM-Helper-Plugin und initialisiert alle Module der App, initialisiert sich
 selbst, sobald das Dokument bereit ist.
@@ -843,7 +843,7 @@ selbst, sobald das Dokument bereit ist.
 
 <a name="module_App..init"></a>
 
-### App~init()
+#### App~init()
 Aktiviert FastClick, konfiguriert das BEM-Helpers-Plugin und
 initialisiert alle Module der App in richtiger Reihenfolge.
 
@@ -854,7 +854,7 @@ initialisiert alle Module der App in richtiger Reihenfolge.
 
 <a name="module_Mediator"></a>
 
-## Mediator
+### Mediator
 Stellt Funktionen bereit, um die Kommunikation zwischen Modulen zu
 gewährleisten; erlaubt das Abonnieren von Kanälen, indem einem Kanal
 eine Funktion hinzugefügt wird; durch das Veröffentlichen auf einem Kanal
@@ -874,7 +874,7 @@ Funktionsparameter ausgeführt.
 
 <a name="module_Mediator..sub"></a>
 
-### Mediator~sub(channel, callback) ⇒ <code>Object</code>
+#### Mediator~sub(channel, callback) ⇒ <code>Object</code>
 Fügt einem Kanal des Mediators eine Callback-Funktion hinzu;
 erzeugt den Kanal, falls er noch nicht existiert.
 
@@ -892,7 +892,7 @@ erzeugt den Kanal, falls er noch nicht existiert.
 
 <a name="module_Mediator..unsub"></a>
 
-### Mediator~unsub(channel, callback) ⇒ <code>Object</code>
+#### Mediator~unsub(channel, callback) ⇒ <code>Object</code>
 Entfernt eine Callback-Funktion von einem Kanal des Mediators.
 
 **Kind**: inner method of <code>[Mediator](#module_Mediator)</code>  
@@ -909,7 +909,7 @@ Entfernt eine Callback-Funktion von einem Kanal des Mediators.
 
 <a name="module_Mediator..pub"></a>
 
-### Mediator~pub(channel, [data]) ⇒ <code>Object</code>
+#### Mediator~pub(channel, [data]) ⇒ <code>Object</code>
 Veröffentlich beliebige Daten auf einem angegebenen Kanal;
 führt alle abonnierten Funktion mit den Daten als Argument aus.
 
@@ -927,7 +927,7 @@ führt alle abonnierten Funktion mit den Daten als Argument aus.
 
 <a name="module_More"></a>
 
-## More
+### More
 Steuert die Liste der Optionen in der Mehr-View; erzeugt die Liste
 anhand der globalen Konfiguration, initialisiert den Slider des Moduls
 und ermöglicht es, für jede Option die entsprechende Detail-Ansicht zu laden.
@@ -954,7 +954,7 @@ und ermöglicht es, für jede Option die entsprechende Detail-Ansicht zu laden.
 
 <a name="module_More..init"></a>
 
-### More~init()
+#### More~init()
 Initialisiert das More-Modul; abonniert den Mediator.
 
 **Kind**: inner method of <code>[More](#module_More)</code>  
@@ -964,7 +964,7 @@ Initialisiert das More-Modul; abonniert den Mediator.
 
 <a name="module_More.._subMediator"></a>
 
-### More~_subMediator() ℗
+#### More~_subMediator() ℗
 Abonniert interne Funktionen beim Mediator.
 
 **Kind**: inner method of <code>[More](#module_More)</code>  
@@ -974,7 +974,7 @@ Abonniert interne Funktionen beim Mediator.
 
 <a name="module_More.._initDom"></a>
 
-### More~_initDom() ℗
+#### More~_initDom() ℗
 Initialisiert alle DOM-Elemente des More-Moduls.
 
 **Kind**: inner method of <code>[More](#module_More)</code>  
@@ -984,7 +984,7 @@ Initialisiert alle DOM-Elemente des More-Moduls.
 
 <a name="module_More.._bindEvents"></a>
 
-### More~_bindEvents() ℗
+#### More~_bindEvents() ℗
 Bindet Funktionen an Events.
 
 **Kind**: inner method of <code>[More](#module_More)</code>  
@@ -994,7 +994,7 @@ Bindet Funktionen an Events.
 
 <a name="module_More.._create"></a>
 
-### More~_create(data) ℗
+#### More~_create(data) ℗
 Generiert bei einer Mediator-Nachricht mit dem More-Panel als
 Daten die Inhalte der Options-Liste; initialisiert alle DOM-Elemente
 des Moduls, bindet Events, blendet die View wieder ein und fragt
@@ -1012,7 +1012,7 @@ per Mediator benötigte Daten vom Data-Modul an.
 
 <a name="module_More.._setOption"></a>
 
-### More~_setOption(event) ℗
+#### More~_setOption(event) ℗
 Setzt bei einem Klick-Event die aktuell gewählte Option und rendert
 die Detail-Ansicht für diese Option.
 
@@ -1028,7 +1028,7 @@ die Detail-Ansicht für diese Option.
 
 <a name="module_More.._renderOption"></a>
 
-### More~_renderOption([renderNavBar]) ℗
+#### More~_renderOption([renderNavBar]) ℗
 Rendert die Detail-Ansicht der aktuell gewählten Option; fügt die
 Inhalte per Template in die App ein, bewegt den Slider des Moduls und
 sendet gegebenenfalls eine Mediator-Nachricht an die Navigation-Bar.
@@ -1045,7 +1045,7 @@ sendet gegebenenfalls eine Mediator-Nachricht an die Navigation-Bar.
 
 <a name="module_More.._back"></a>
 
-### More~_back(data) ℗
+#### More~_back(data) ℗
 Bewegt den Options-Slider anhand einer Mediatior-Nachricht
 zurück zur Options-Liste; leert die Options-Details.
 
@@ -1061,7 +1061,7 @@ zurück zur Options-Liste; leert die Options-Details.
 
 <a name="module_More.._updateTerms"></a>
 
-### More~_updateTerms(data) ℗
+#### More~_updateTerms(data) ℗
 Aktualisiert anhand einer Mediator-Nachricht die interne Kopie der
 Begriff-Daten; rendert gegebenenfalls die aktuelle Ansicht neu.
 
@@ -1077,7 +1077,7 @@ Begriff-Daten; rendert gegebenenfalls die aktuelle Ansicht neu.
 
 <a name="module_More.._updateDictionary"></a>
 
-### More~_updateDictionary(data) ℗
+#### More~_updateDictionary(data) ℗
 Aktualisiert anhand einer Mediator-Nachricht die interne Kopie der
 Wörterbuch-Daten; rendert gegebenenfalls die aktuelle Ansicht neu.
 
@@ -1093,7 +1093,7 @@ Wörterbuch-Daten; rendert gegebenenfalls die aktuelle Ansicht neu.
 
 <a name="module_More.._restore"></a>
 
-### More~_restore(panel) ℗
+#### More~_restore(panel) ℗
 Setzt die internen Variablen und Zustände anhand einer
 Mediator-Nachricht wieder auf ihre Standardwerte zurück; setzt den
 Slider zur Liste zurück und scrollt sie nach oben.
@@ -1111,7 +1111,7 @@ und scrollt die Liste nach oben.
 
 <a name="module_NavigationBar"></a>
 
-## NavigationBar
+### NavigationBar
 Steuert die Navigation-Bar der App; erzeugt die Inhalte des Moduls und
 ermöglicht es, andere Module und Funktionalitäten der App über die
 Navigations-Buttons zu steuern, indem Mediator-Nachrichten gesendet werden;
@@ -1158,7 +1158,7 @@ aktuellen Titel der View.
 
 <a name="module_NavigationBar..init"></a>
 
-### NavigationBar~init()
+#### NavigationBar~init()
 Initialisiert das NavigationBar-Modul; abonniert den Mediator und
 erzeugt anhand eines Templates den Inhalt der Navigation-Bar.
 
@@ -1169,7 +1169,7 @@ erzeugt anhand eines Templates den Inhalt der Navigation-Bar.
 
 <a name="module_NavigationBar.._bindEvents"></a>
 
-### NavigationBar~_bindEvents() ℗
+#### NavigationBar~_bindEvents() ℗
 Bindet Funktionen an Events.
 
 **Kind**: inner method of <code>[NavigationBar](#module_NavigationBar)</code>  
@@ -1179,7 +1179,7 @@ Bindet Funktionen an Events.
 
 <a name="module_NavigationBar.._subMediator"></a>
 
-### NavigationBar~_subMediator() ℗
+#### NavigationBar~_subMediator() ℗
 Abonniert interne Funktionen beim Mediator.
 
 **Kind**: inner method of <code>[NavigationBar](#module_NavigationBar)</code>  
@@ -1189,7 +1189,7 @@ Abonniert interne Funktionen beim Mediator.
 
 <a name="module_NavigationBar.._create"></a>
 
-### NavigationBar~_create() ℗
+#### NavigationBar~_create() ℗
 Erzeugt die Navigation-Bar; fügt die Navigation-Bar mittels Template
 ein und initialisiert die Elemente der Navigation-Bar.
 
@@ -1200,7 +1200,7 @@ ein und initialisiert die Elemente der Navigation-Bar.
 
 <a name="module_NavigationBar.._initDom"></a>
 
-### NavigationBar~_initDom() ℗
+#### NavigationBar~_initDom() ℗
 Initialisiert alle DOM-Elemente des NavigationBar-Moduls.
 
 **Kind**: inner method of <code>[NavigationBar](#module_NavigationBar)</code>  
@@ -1210,7 +1210,7 @@ Initialisiert alle DOM-Elemente des NavigationBar-Moduls.
 
 <a name="module_NavigationBar.._initCache"></a>
 
-### NavigationBar~_initCache() ℗
+#### NavigationBar~_initCache() ℗
 Legt für jedes in der globalen Konfiguration vorhandene View-Panel
 die Standard-Konfiguration der Navigation-Bar im internen Cache fest.
 
@@ -1221,7 +1221,7 @@ die Standard-Konfiguration der Navigation-Bar im internen Cache fest.
 
 <a name="module_NavigationBar.._render"></a>
 
-### NavigationBar~_render() ℗
+#### NavigationBar~_render() ℗
 Rendert alle Elemente der Navigation-Bar anhand der intern
 gesetzten aktuellen Variablen.
 
@@ -1232,7 +1232,7 @@ gesetzten aktuellen Variablen.
 
 <a name="module_NavigationBar.._renderBtn"></a>
 
-### NavigationBar~_renderBtn($btn) ℗
+#### NavigationBar~_renderBtn($btn) ℗
 Rendert einen gewählten Button (Links/Rechts) anhand seiner
 gesetzten Eigenschaften (Aktion/Icon).
 
@@ -1248,7 +1248,7 @@ gesetzten Eigenschaften (Aktion/Icon).
 
 <a name="module_NavigationBar.._renderHead"></a>
 
-### NavigationBar~_renderHead() ℗
+#### NavigationBar~_renderHead() ℗
 Rendert den Titel der Titelleiste anhand des aktuell gesetzten Titels.
 
 **Kind**: inner method of <code>[NavigationBar](#module_NavigationBar)</code>  
@@ -1258,7 +1258,7 @@ Rendert den Titel der Titelleiste anhand des aktuell gesetzten Titels.
 
 <a name="module_NavigationBar.._renderSearch"></a>
 
-### NavigationBar~_renderSearch() ℗
+#### NavigationBar~_renderSearch() ℗
 Rendert die Suche anhand der gesetzten Eigenschaften des Moduls.
 
 **Kind**: inner method of <code>[NavigationBar](#module_NavigationBar)</code>  
@@ -1268,7 +1268,7 @@ Rendert die Suche anhand der gesetzten Eigenschaften des Moduls.
 
 <a name="module_NavigationBar.._renderDropdown"></a>
 
-### NavigationBar~_renderDropdown($selected) ℗
+#### NavigationBar~_renderDropdown($selected) ℗
 Rendert das Dropdown-Menü anhand einer ausgewählten Option und den
 aktuell gesetzten Eigenschaften des Menüs.
 
@@ -1284,7 +1284,7 @@ aktuell gesetzten Eigenschaften des Menüs.
 
 <a name="module_NavigationBar.._performAction"></a>
 
-### NavigationBar~_performAction(data) ℗
+#### NavigationBar~_performAction(data) ℗
 Führt anhand einer Mediator-Nachricht und dem darin enthaltenen Namen
 einer Aktion die entsprechende Aktion innerhalb der Navigation-Bar aus;
 verändert dabei gegebenenfalls die Buttons, den Titel, die Suche
@@ -1302,7 +1302,7 @@ und das Dropdown der Navigation-Bar.
 
 <a name="module_NavigationBar.._triggerAction"></a>
 
-### NavigationBar~_triggerAction(event) ℗
+#### NavigationBar~_triggerAction(event) ℗
 Löst anhand eines Klick-Events auf einen Navigation-Bar-Button die damit
 verknüpfte Aktion aus; sendet die Aktion über den Mediator.
 
@@ -1318,7 +1318,7 @@ verknüpfte Aktion aus; sendet die Aktion über den Mediator.
 
 <a name="module_NavigationBar.._setSort"></a>
 
-### NavigationBar~_setSort(event) ℗
+#### NavigationBar~_setSort(event) ℗
 Setzt anhand eines Klick-Events die aktuelle Sortierung; sendet
 die Sortierung per Mediator und blendet die Dropdown-Sortierung aus.
 
@@ -1334,7 +1334,7 @@ die Sortierung per Mediator und blendet die Dropdown-Sortierung aus.
 
 <a name="module_NavigationBar.._setDropdown"></a>
 
-### NavigationBar~_setDropdown(willBeOpened, [$selected]) ℗
+#### NavigationBar~_setDropdown(willBeOpened, [$selected]) ℗
 Blendet das Dropdown-Menü anhand des übergebenen Wertes ein oder aus;
 setzt den zugehörigen Button entsprechend; aktualisiert optional
 die ausgewählte Sortierungs-Option.
@@ -1352,7 +1352,7 @@ die ausgewählte Sortierungs-Option.
 
 <a name="module_NavigationBar.._setBtn"></a>
 
-### NavigationBar~_setBtn(button, action, icon) ℗
+#### NavigationBar~_setBtn(button, action, icon) ℗
 Setzt die Aktion und das Icon eines angegebenen Buttons.
 
 **Kind**: inner method of <code>[NavigationBar](#module_NavigationBar)</code>  
@@ -1369,7 +1369,7 @@ Setzt die Aktion und das Icon eines angegebenen Buttons.
 
 <a name="module_NavigationBar.._setBtnL"></a>
 
-### NavigationBar~_setBtnL(action, icon) ℗
+#### NavigationBar~_setBtnL(action, icon) ℗
 Setzt Aktion und Icon des linken Buttons.
 
 **Kind**: inner method of <code>[NavigationBar](#module_NavigationBar)</code>  
@@ -1385,7 +1385,7 @@ Setzt Aktion und Icon des linken Buttons.
 
 <a name="module_NavigationBar.._setBtnR"></a>
 
-### NavigationBar~_setBtnR(action, icon) ℗
+#### NavigationBar~_setBtnR(action, icon) ℗
 Setzt Aktion und Icon des rechten Buttons.
 
 **Kind**: inner method of <code>[NavigationBar](#module_NavigationBar)</code>  
@@ -1401,7 +1401,7 @@ Setzt Aktion und Icon des rechten Buttons.
 
 <a name="module_NavigationBar.._setHead"></a>
 
-### NavigationBar~_setHead(title) ℗
+#### NavigationBar~_setHead(title) ℗
 Setzt den aktuellen Titel und rendert ihn neu.
 
 **Kind**: inner method of <code>[NavigationBar](#module_NavigationBar)</code>  
@@ -1416,7 +1416,7 @@ Setzt den aktuellen Titel und rendert ihn neu.
 
 <a name="module_NavigationBar.._setSearch"></a>
 
-### NavigationBar~_setSearch(willBeActive, [triggerSearch]) ℗
+#### NavigationBar~_setSearch(willBeActive, [triggerSearch]) ℗
 Aktiviert oder deaktiviert die Suche anhand des übergebenen Wertes;
 setzt den zugehörigen Button entsprechend und rendert die Suche neu.
 
@@ -1433,7 +1433,7 @@ setzt den zugehörigen Button entsprechend und rendert die Suche neu.
 
 <a name="module_NavigationBar.._triggerSearch"></a>
 
-### NavigationBar~_triggerSearch() ℗
+#### NavigationBar~_triggerSearch() ℗
 Sendet den aktuellen Suchbegriff an den Mediator.
 
 **Kind**: inner method of <code>[NavigationBar](#module_NavigationBar)</code>  
@@ -1443,7 +1443,7 @@ Sendet den aktuellen Suchbegriff an den Mediator.
 
 <a name="module_NavigationBar.._focusSearch"></a>
 
-### NavigationBar~_focusSearch() ℗
+#### NavigationBar~_focusSearch() ℗
 Fokussiert das Such-Input nach einem kurzen Delay.
 
 **Kind**: inner method of <code>[NavigationBar](#module_NavigationBar)</code>  
@@ -1453,7 +1453,7 @@ Fokussiert das Such-Input nach einem kurzen Delay.
 
 <a name="module_NavigationBar.._updateSearch"></a>
 
-### NavigationBar~_updateSearch() ℗
+#### NavigationBar~_updateSearch() ℗
 Ermittelt den aktuellen Suchbegriff und leitet diesen Wert weiter;
 blendet den Clear-Button für das Input ein/aus.
 
@@ -1464,7 +1464,7 @@ blendet den Clear-Button für das Input ein/aus.
 
 <a name="module_NavigationBar.._clearSearch"></a>
 
-### NavigationBar~_clearSearch() ℗
+#### NavigationBar~_clearSearch() ℗
 Leert und fokussiert das Suchfeld, löst ein Input-Event aus.
 
 **Kind**: inner method of <code>[NavigationBar](#module_NavigationBar)</code>  
@@ -1474,7 +1474,7 @@ Leert und fokussiert das Suchfeld, löst ein Input-Event aus.
 
 <a name="module_NavigationBar.._loadCache"></a>
 
-### NavigationBar~_loadCache(index) ℗
+#### NavigationBar~_loadCache(index) ℗
 Lädt eine Konfiguration anhand des übergebenen Indexes aus dem Cache,
 falls sie vorhanden ist, und ersetzt die aktuelle Konfiguration.
 
@@ -1490,7 +1490,7 @@ falls sie vorhanden ist, und ersetzt die aktuelle Konfiguration.
 
 <a name="module_NavigationBar.._restore"></a>
 
-### NavigationBar~_restore(panel) ℗
+#### NavigationBar~_restore(panel) ℗
 Lädt anhand einer Mediator-Nachricht den Original-Zustand der
 Navigation-Bar für ein bestimmtes View-Panel.
 
@@ -1506,7 +1506,7 @@ Navigation-Bar für ein bestimmtes View-Panel.
 
 <a name="module_NavigationBar.._update"></a>
 
-### NavigationBar~_update(data) ℗
+#### NavigationBar~_update(data) ℗
 Aktualisiert anhand einer Mediator-Nachricht den Zustand
 der Navigation-Bar; speichert den Zustand für das vorige View-Panel
 im Cache und lädt den Zustand für das neue View-Panel aus dem Cache;
@@ -1524,7 +1524,7 @@ das geschieht bei einem Wechsel der View über die Tab-Bar.
 
 <a name="module_Play"></a>
 
-## Play
+### Play
 Ermöglicht das Abspielen von Audio-Dateien im Quiz und im Wörterbuch;
 reagiert auf Klick-Events auf bestimmte Selektoren und spielt eine
 in einem Audio-Tag definierte Audio-Datei ab.
@@ -1546,7 +1546,7 @@ in einem Audio-Tag definierte Audio-Datei ab.
 
 <a name="module_Play..init"></a>
 
-### Play~init()
+#### Play~init()
 Initialisiert das Play-Modul; bindet Events.
 
 **Kind**: inner method of <code>[Play](#module_Play)</code>  
@@ -1556,7 +1556,7 @@ Initialisiert das Play-Modul; bindet Events.
 
 <a name="module_Play.._bindEvents"></a>
 
-### Play~_bindEvents() ℗
+#### Play~_bindEvents() ℗
 Bindet Funktionen an Events.
 
 **Kind**: inner method of <code>[Play](#module_Play)</code>  
@@ -1566,7 +1566,7 @@ Bindet Funktionen an Events.
 
 <a name="module_Play.._bindEventsAudio"></a>
 
-### Play~_bindEventsAudio() ℗
+#### Play~_bindEventsAudio() ℗
 Bindet Audio-spezifische Funktionen an Modul-Elemente.
 
 **Kind**: inner method of <code>[Play](#module_Play)</code>  
@@ -1576,7 +1576,7 @@ Bindet Audio-spezifische Funktionen an Modul-Elemente.
 
 <a name="module_Play.._play"></a>
 
-### Play~_play() ℗
+#### Play~_play() ℗
 Initialisiert bei einem Klick-Event eine Audio-Instanz und deren
 DOM-Elemente, bindet Funktionen an die Elemente und spiel die
 zugehörige Audio-Datei ab.
@@ -1588,7 +1588,7 @@ zugehörige Audio-Datei ab.
 
 <a name="module_Play.._setLoading"></a>
 
-### Play~_setLoading(isLoading) ℗
+#### Play~_setLoading(isLoading) ℗
 Setzt den Lade-Zustand des Audui-Moduls und rendert es neu.
 
 **Kind**: inner method of <code>[Play](#module_Play)</code>  
@@ -1603,7 +1603,7 @@ Setzt den Lade-Zustand des Audui-Moduls und rendert es neu.
 
 <a name="module_Play.._setPlaying"></a>
 
-### Play~_setPlaying(isPlaying) ℗
+#### Play~_setPlaying(isPlaying) ℗
 Setzt den aktuellen Abspiel-Zustand des Play-Moduls und rendert es neu.
 
 **Kind**: inner method of <code>[Play](#module_Play)</code>  
@@ -1618,7 +1618,7 @@ Setzt den aktuellen Abspiel-Zustand des Play-Moduls und rendert es neu.
 
 <a name="module_Play.._render"></a>
 
-### Play~_render() ℗
+#### Play~_render() ℗
 Rendert alle Elemente des Moduls anhand der intern
 gesetzten aktuellen Variablen.
 
@@ -1629,7 +1629,7 @@ gesetzten aktuellen Variablen.
 
 <a name="module_Quiz"></a>
 
-## Quiz
+### Quiz
 Steuert die Quiz-View der App; erzeugt einen Slider für das Quiz und
 füllt ihn mit Fragen, wählt die Fragen anhand der Fortschritts-Daten aus
 dem Data-Modul und einen bestimmten Algorithmus aus und stellt somit bei
@@ -1691,7 +1691,7 @@ neuen Daten über den Mediator an das Data-Modul, um sie zu speichern.
 
 <a name="module_Quiz..init"></a>
 
-### Quiz~init()
+#### Quiz~init()
 Initialisiert das Quiz-Modul; abonniert den Mediator.
 
 **Kind**: inner method of <code>[Quiz](#module_Quiz)</code>  
@@ -1701,7 +1701,7 @@ Initialisiert das Quiz-Modul; abonniert den Mediator.
 
 <a name="module_Quiz.._subMediator"></a>
 
-### Quiz~_subMediator() ℗
+#### Quiz~_subMediator() ℗
 Abonniert interne Funktionen beim Mediator.
 
 **Kind**: inner method of <code>[Quiz](#module_Quiz)</code>  
@@ -1711,7 +1711,7 @@ Abonniert interne Funktionen beim Mediator.
 
 <a name="module_Quiz.._bindEvents"></a>
 
-### Quiz~_bindEvents() ℗
+#### Quiz~_bindEvents() ℗
 Bindet Funktionen an Events.
 
 **Kind**: inner method of <code>[Quiz](#module_Quiz)</code>  
@@ -1721,7 +1721,7 @@ Bindet Funktionen an Events.
 
 <a name="module_Quiz.._create"></a>
 
-### Quiz~_create(data) ℗
+#### Quiz~_create(data) ℗
 Generiert bei einer Mediator-Nachricht mit dem Quiz-Panel als
 Daten die Inhalte des Quiz; initialisiert alle DOM-Elemente
 des Moduls, bindet Events, blendet die View wieder ein und fragt
@@ -1739,7 +1739,7 @@ per Mediator benötigte Daten vom Data-Modul an.
 
 <a name="module_Quiz.._initDom"></a>
 
-### Quiz~_initDom() ℗
+#### Quiz~_initDom() ℗
 Initialisiert alle DOM-Elemente des Quiz.
 
 **Kind**: inner method of <code>[Quiz](#module_Quiz)</code>  
@@ -1749,7 +1749,7 @@ Initialisiert alle DOM-Elemente des Quiz.
 
 <a name="module_Quiz.._renderProgressbar"></a>
 
-### Quiz~_renderProgressbar() ℗
+#### Quiz~_renderProgressbar() ℗
 Rendert alle Schritte der Fortschrittsleiste anhand 
 des aktuellen Fortschrittes.
 
@@ -1760,7 +1760,7 @@ des aktuellen Fortschrittes.
 
 <a name="module_Quiz.._setProgress"></a>
 
-### Quiz~_setProgress(step, status) ℗
+#### Quiz~_setProgress(step, status) ℗
 Setzt den Status eines Schrittes des Quizes; rendert anschließend
 die Fortschrittsleiste neu.
 
@@ -1777,7 +1777,7 @@ die Fortschrittsleiste neu.
 
 <a name="module_Quiz.._setStep"></a>
 
-### Quiz~_setStep(step) ℗
+#### Quiz~_setStep(step) ℗
 Setzt das Quiz auf den gegebenen Schritt; rendert anschließend
 die Fortschrittsleiste neu.
 
@@ -1793,7 +1793,7 @@ die Fortschrittsleiste neu.
 
 <a name="module_Quiz.._resetProgress"></a>
 
-### Quiz~_resetProgress() ℗
+#### Quiz~_resetProgress() ℗
 Setzt den aktuellen Fortschritt des Quiz zurück.
 
 **Kind**: inner method of <code>[Quiz](#module_Quiz)</code>  
@@ -1803,7 +1803,7 @@ Setzt den aktuellen Fortschritt des Quiz zurück.
 
 <a name="module_Quiz.._setProgressbarAnimation"></a>
 
-### Quiz~_setProgressbarAnimation(animated) ℗
+#### Quiz~_setProgressbarAnimation(animated) ℗
 Aktiviert oder deaktiviert die Animationen für die Icons
 des Fortschritts-Balkens.
 
@@ -1819,7 +1819,7 @@ des Fortschritts-Balkens.
 
 <a name="module_Quiz.._skipStep"></a>
 
-### Quiz~_skipStep() ℗
+#### Quiz~_skipStep() ℗
 Markiert den aktuellen Schritt als übersprungen,
 fährt zum nächsten Schritt fort.
 
@@ -1830,7 +1830,7 @@ fährt zum nächsten Schritt fort.
 
 <a name="module_Quiz.._nextStep"></a>
 
-### Quiz~_nextStep() ℗
+#### Quiz~_nextStep() ℗
 Markiert den nächsten Schritt als aktiv, bewegt den Slider weiter.
 
 **Kind**: inner method of <code>[Quiz](#module_Quiz)</code>  
@@ -1840,7 +1840,7 @@ Markiert den nächsten Schritt als aktiv, bewegt den Slider weiter.
 
 <a name="module_Quiz.._start"></a>
 
-### Quiz~_start([event]) ℗
+#### Quiz~_start([event]) ℗
 Startet das Quiz; bewegt den Slider zur ersten Frage, aktiviert den
 ersten Schritt und sendet eine Mediator-Nachricht an andere Module,
 um den Viewport anzupassen.
@@ -1857,7 +1857,7 @@ um den Viewport anzupassen.
 
 <a name="module_Quiz.._pickQuestions"></a>
 
-### Quiz~_pickQuestions() ℗
+#### Quiz~_pickQuestions() ℗
 Sucht zufällige Fragen für das Quiz aus; stellt sicher, dass
 jeder Begriff nur einmal im Quiz auftaucht, gewichtet die
 die Begriffe nach ihren bisherigen Fehlschlägen (je mehr
@@ -1870,7 +1870,7 @@ Fehlschläge, desto höher die Wahrscheinlichkeit).
 
 <a name="module_Quiz.._pickQuestionType"></a>
 
-### Quiz~_pickQuestionType(term) ⇒ <code>Object</code> ℗
+#### Quiz~_pickQuestionType(term) ⇒ <code>Object</code> ℗
 Wählt anhand eines übergebenen Begriffs und den globalen Einstellungen
 für die Quiz-Typen einen passenden Typen für die Frage zu diesem
 Begriff aus; zieht die Stufe des Begriffs, das Vorhandensein
@@ -1890,7 +1890,7 @@ für die Auswahl hinzu.
 
 <a name="module_Quiz.._processQuestions"></a>
 
-### Quiz~_processQuestions() ℗
+#### Quiz~_processQuestions() ℗
 Ergänzt die ausgewählten Fragen um zusätzliche Daten für die Darstellung
 und Funktionsweise des Quiz; rendert die Fragen anschließend.
 
@@ -1901,7 +1901,7 @@ und Funktionsweise des Quiz; rendert die Fragen anschließend.
 
 <a name="module_Quiz.._pickChars"></a>
 
-### Quiz~_pickChars(type, answer) ⇒ <code>Object</code> &#124; <code>Boolean</code> ℗
+#### Quiz~_pickChars(type, answer) ⇒ <code>Object</code> &#124; <code>Boolean</code> ℗
 Wählt anhand des gegebenen Frage-Typs und der Antworten
 die Zeichen für die Ausgabe der Lösung aus; mischt die Zeichen
 der Lösung durch und wandelt sie in Großbuchstaben um. Falls
@@ -1921,7 +1921,7 @@ der Typ oder die Antworten nicht stimmen, wird false zurückgegeben.
 
 <a name="module_Quiz.._clearQuestions"></a>
 
-### Quiz~_clearQuestions([finish]) ℗
+#### Quiz~_clearQuestions([finish]) ℗
 Entfernt sämtlichen Inhalt aus allen Fragen.
 
 **Kind**: inner method of <code>[Quiz](#module_Quiz)</code>  
@@ -1936,7 +1936,7 @@ Entfernt sämtlichen Inhalt aus allen Fragen.
 
 <a name="module_Quiz.._pickAnswers"></a>
 
-### Quiz~_pickAnswers(term, propAnswers, propRight, [pictures]) ⇒ <code>Array.&lt;Object&gt;</code> ℗
+#### Quiz~_pickAnswers(term, propAnswers, propRight, [pictures]) ⇒ <code>Array.&lt;Object&gt;</code> ℗
 Stellt für einen gegebenen Begriff zufällig Antworten zusammen.
 
 **Kind**: inner method of <code>[Quiz](#module_Quiz)</code>  
@@ -1955,7 +1955,7 @@ Stellt für einen gegebenen Begriff zufällig Antworten zusammen.
 
 <a name="module_Quiz.._processSolution"></a>
 
-### Quiz~_processSolution(correct) ℗
+#### Quiz~_processSolution(correct) ℗
 Führt Funktionen aus, um eine gegebene Lösung in Abhängigkeit
 ihrer Korrektheit zu verarbeiten; aktualisiert den Fortschritts-Balken,
 aktualisiert die gespeicherten Daten und zeigt den Weiter-Button an.
@@ -1972,7 +1972,7 @@ aktualisiert die gespeicherten Daten und zeigt den Weiter-Button an.
 
 <a name="module_Quiz.._evaluateAnswer"></a>
 
-### Quiz~_evaluateAnswer(event) ℗
+#### Quiz~_evaluateAnswer(event) ℗
 Prüft, ob eine geklickte Antwort richtig oder falsch ist; setzt den
 aktuellen Fortschritt entsprechend und rendert alle Antworten.
 
@@ -1988,7 +1988,7 @@ aktuellen Fortschritt entsprechend und rendert alle Antworten.
 
 <a name="module_Quiz.._evaluateInput"></a>
 
-### Quiz~_evaluateInput(event) ℗
+#### Quiz~_evaluateInput(event) ℗
 Evaluiert bei einem Klick-Event das Input der aktuellen Quiz-Frage;
 sperrt den Lösen-Button, rendert das Input anhand der Korrektheit
 der eingegebenen Lösung neu und verarbeitet die Lösung.
@@ -2005,7 +2005,7 @@ der eingegebenen Lösung neu und verarbeitet die Lösung.
 
 <a name="module_Quiz.._addLetter"></a>
 
-### Quiz~_addLetter(event) ℗
+#### Quiz~_addLetter(event) ℗
 Fügt bei einem Klick-Event einen Buchstaben zum Quiz-Input der aktuellen
 Frage hinzu; deaktiviert den gedrückten Button und aktualisiert die
 Daten des Inputs.
@@ -2022,7 +2022,7 @@ Daten des Inputs.
 
 <a name="module_Quiz.._removeLetter"></a>
 
-### Quiz~_removeLetter(event) ℗
+#### Quiz~_removeLetter(event) ℗
 Entfernt bei einem Klick-Event einen Buchstaben aus dem Quiz-Input der
 aktuellen Frage; aktualisiert die Daten des Inputs und deaktiviert
 gegebenenfalls den Backspace-Button.
@@ -2039,7 +2039,7 @@ gegebenenfalls den Backspace-Button.
 
 <a name="module_Quiz.._toggleBackspace"></a>
 
-### Quiz~_toggleBackspace(locked) ℗
+#### Quiz~_toggleBackspace(locked) ℗
 Sperrt oder entsperrt den Backspace-Button der aktuellen Frage.
 
 **Kind**: inner method of <code>[Quiz](#module_Quiz)</code>  
@@ -2054,7 +2054,7 @@ Sperrt oder entsperrt den Backspace-Button der aktuellen Frage.
 
 <a name="module_Quiz.._updateTerm"></a>
 
-### Quiz~_updateTerm(correct) ℗
+#### Quiz~_updateTerm(correct) ℗
 Aktualisiert den Begriff der aktuellen Frage entsprechend
 der Korrektheit der gegebenen Antwort über eine Mediator-Nachricht.
 
@@ -2070,7 +2070,7 @@ der Korrektheit der gegebenen Antwort über eine Mediator-Nachricht.
 
 <a name="module_Quiz.._renderLevel"></a>
 
-### Quiz~_renderLevel(level) ℗
+#### Quiz~_renderLevel(level) ℗
 Rendert die Level-Anzeige der aktuellen Frage anhand des übergebenen
 Levels; aktualisiert die Anzahl der Sterne und beachtet dabei das
 global definierte Level-Maximum.
@@ -2087,7 +2087,7 @@ global definierte Level-Maximum.
 
 <a name="module_Quiz.._lockSkip"></a>
 
-### Quiz~_lockSkip() ℗
+#### Quiz~_lockSkip() ℗
 Sendet eine Nachricht über den Mediator, um den Überspringen-Button
 zu deaktivieren und somit das Überspringen unmöglich zu machen.
 
@@ -2098,7 +2098,7 @@ zu deaktivieren und somit das Überspringen unmöglich zu machen.
 
 <a name="module_Quiz.._unlockSkip"></a>
 
-### Quiz~_unlockSkip() ℗
+#### Quiz~_unlockSkip() ℗
 Sendet eine Nachricht über den Mediator, um den Überspringen-Button
 zu aktivieren und somit das Überspringen möglich zu machen.
 
@@ -2109,7 +2109,7 @@ zu aktivieren und somit das Überspringen möglich zu machen.
 
 <a name="module_Quiz.._unlockContinue"></a>
 
-### Quiz~_unlockContinue() ℗
+#### Quiz~_unlockContinue() ℗
 Entsperrt den Weiter-Button der aktuellen Frage, um es zu
 ermöglichen, zur nächsten Frage fortzufahren.
 
@@ -2120,7 +2120,7 @@ ermöglichen, zur nächsten Frage fortzufahren.
 
 <a name="module_Quiz.._lockSolve"></a>
 
-### Quiz~_lockSolve() ℗
+#### Quiz~_lockSolve() ℗
 Sperrt den Lösen-Button der aktuellen Frage.
 
 **Kind**: inner method of <code>[Quiz](#module_Quiz)</code>  
@@ -2130,7 +2130,7 @@ Sperrt den Lösen-Button der aktuellen Frage.
 
 <a name="module_Quiz.._hideSolve"></a>
 
-### Quiz~_hideSolve() ℗
+#### Quiz~_hideSolve() ℗
 Blendet den Lösen-Button der aktuellen Frage aus.
 
 **Kind**: inner method of <code>[Quiz](#module_Quiz)</code>  
@@ -2140,7 +2140,7 @@ Blendet den Lösen-Button der aktuellen Frage aus.
 
 <a name="module_Quiz.._showSolve"></a>
 
-### Quiz~_showSolve() ℗
+#### Quiz~_showSolve() ℗
 Blendet den Lösen-Button der aktuellen Frage ein.
 
 **Kind**: inner method of <code>[Quiz](#module_Quiz)</code>  
@@ -2150,7 +2150,7 @@ Blendet den Lösen-Button der aktuellen Frage ein.
 
 <a name="module_Quiz.._focusInput"></a>
 
-### Quiz~_focusInput() ℗
+#### Quiz~_focusInput() ℗
 Fokussiert den Input der aktuellen Frage, falls vorhanden.
 
 **Kind**: inner method of <code>[Quiz](#module_Quiz)</code>  
@@ -2160,7 +2160,7 @@ Fokussiert den Input der aktuellen Frage, falls vorhanden.
 
 <a name="module_Quiz.._continue"></a>
 
-### Quiz~_continue(event) ℗
+#### Quiz~_continue(event) ℗
 Fährt zur nächsten Frage des Quiz fort, falls der Weiter-Button
 nicht gesperrt ist; reagiert auf ein Klick-Event.
 
@@ -2176,7 +2176,7 @@ nicht gesperrt ist; reagiert auf ein Klick-Event.
 
 <a name="module_Quiz.._renderAnswers"></a>
 
-### Quiz~_renderAnswers($answer, correct) ℗
+#### Quiz~_renderAnswers($answer, correct) ℗
 Rendert die Antworten anhand einer ausgewählten Antwort;
 aktualisiert die Status-Klasse aller benachbarten Antworten.
 
@@ -2193,7 +2193,7 @@ aktualisiert die Status-Klasse aller benachbarten Antworten.
 
 <a name="module_Quiz.._renderInput"></a>
 
-### Quiz~_renderInput($answer, correct) ℗
+#### Quiz~_renderInput($answer, correct) ℗
 Rendert den übergebenen Input; aktualisiert seine Status-Klasse
 und blendet die Lösung ein; sperrt das Input.
 
@@ -2210,7 +2210,7 @@ und blendet die Lösung ein; sperrt das Input.
 
 <a name="module_Quiz.._finish"></a>
 
-### Quiz~_finish() ℗
+#### Quiz~_finish() ℗
 Beendet das Quiz; berechnet das Endergebnis, ermittelt die
 entsprechende Bewertung aus der Konfiguration, rendert den Abschluss
 und sendet das Ergebnis über den Mediator.
@@ -2222,7 +2222,7 @@ und sendet das Ergebnis über den Mediator.
 
 <a name="module_Quiz.._renderFinish"></a>
 
-### Quiz~_renderFinish(result, skipped, rating) ℗
+#### Quiz~_renderFinish(result, skipped, rating) ℗
 Rendert das Quiz-Ende mit einem Mustache-Template; fügt
 alle Ergebnisse des Quizes ein und animiert anschließend
 das Ergebnis-Diagramm.
@@ -2241,7 +2241,7 @@ das Ergebnis-Diagramm.
 
 <a name="module_Quiz.._update"></a>
 
-### Quiz~_update(data) ℗
+#### Quiz~_update(data) ℗
 Aktualisiert die interne Kopie der Wörterbuch-Daten des Quizes
 anhand einer Mediator-Nachricht.
 
@@ -2257,7 +2257,7 @@ anhand einer Mediator-Nachricht.
 
 <a name="module_Quiz.._setConfig"></a>
 
-### Quiz~_setConfig(data) ℗
+#### Quiz~_setConfig(data) ℗
 Setzt die Konfiguration des Wörterbuches anhand einer Mediator-Nachricht.
 
 **Kind**: inner method of <code>[Quiz](#module_Quiz)</code>  
@@ -2272,7 +2272,7 @@ Setzt die Konfiguration des Wörterbuches anhand einer Mediator-Nachricht.
 
 <a name="module_Quiz.._restore"></a>
 
-### Quiz~_restore(panel) ℗
+#### Quiz~_restore(panel) ℗
 Stellt die Standard-Konfiguration des Quizes anhand
 einer Mediator-Nachricht wieder her.
 
@@ -2288,7 +2288,7 @@ einer Mediator-Nachricht wieder her.
 
 <a name="module_Quiz.._navbarAction"></a>
 
-### Quiz~_navbarAction(data) ℗
+#### Quiz~_navbarAction(data) ℗
 Entscheided anhand einer Mediator-Nachricht, welche
 Aktion beim Klick eines Navigation-Bar-Buttons ausgeführt wird.
 
@@ -2304,7 +2304,7 @@ Aktion beim Klick eines Navigation-Bar-Buttons ausgeführt wird.
 
 <a name="module_Quiz.._resetAll"></a>
 
-### Quiz~_resetAll([restart]) ℗
+#### Quiz~_resetAll([restart]) ℗
 Setzt alle Kompenenten und Daten vom Quiz zurück.
 
 **Kind**: inner method of <code>[Quiz](#module_Quiz)</code>  
@@ -2319,7 +2319,7 @@ Setzt alle Kompenenten und Daten vom Quiz zurück.
 
 <a name="module_Statistics"></a>
 
-## Statistics
+### Statistics
 Steuert die Statistik-View der App; erzeugt und animiert die Diagramme der
 Statistik über den Wörterbuch-Fortschritt und die letzten Quiz-Spiele des
 Nutzers anhand von angefragten Daten des Data-Moduls.
@@ -2346,7 +2346,7 @@ Nutzers anhand von angefragten Daten des Data-Moduls.
 
 <a name="module_Statistics..init"></a>
 
-### Statistics~init()
+#### Statistics~init()
 Initialisiert das Statistics-Modul; abonniert den Mediator.
 
 **Kind**: inner method of <code>[Statistics](#module_Statistics)</code>  
@@ -2356,7 +2356,7 @@ Initialisiert das Statistics-Modul; abonniert den Mediator.
 
 <a name="module_Statistics.._subMediator"></a>
 
-### Statistics~_subMediator() ℗
+#### Statistics~_subMediator() ℗
 Abonniert interne Funktionen beim Mediator.
 
 **Kind**: inner method of <code>[Statistics](#module_Statistics)</code>  
@@ -2366,7 +2366,7 @@ Abonniert interne Funktionen beim Mediator.
 
 <a name="module_Statistics.._create"></a>
 
-### Statistics~_create(data) ℗
+#### Statistics~_create(data) ℗
 Generiert bei einer Mediator-Nachricht mit dem Statistics-Panel als
 Daten die Inhalte der Statistik; initialisiert alle DOM-Elemente
 des Moduls, blendet die View wieder ein, fragt per Mediator benötigte
@@ -2384,7 +2384,7 @@ Daten vom Data-Modul an und animiert die Diagramme der Statistik.
 
 <a name="module_Statistics.._renderChart"></a>
 
-### Statistics~_renderChart($target, data, steps, hrznt, stars) ℗
+#### Statistics~_renderChart($target, data, steps, hrznt, stars) ℗
 Rendert ein Diagramm mit gegebenen Eigenschaften anhand eines
 Mustache-Templates in einen angegebenen Container.
 
@@ -2404,7 +2404,7 @@ Mustache-Templates in einen angegebenen Container.
 
 <a name="module_Statistics.._renderScores"></a>
 
-### Statistics~_renderScores() ℗
+#### Statistics~_renderScores() ℗
 Rendert ein Diagramm für die letzten Spielergebnisse mit Hilfe
 der _renderChart Methode.
 
@@ -2415,7 +2415,7 @@ der _renderChart Methode.
 
 <a name="module_Statistics.._renderProgress"></a>
 
-### Statistics~_renderProgress() ℗
+#### Statistics~_renderProgress() ℗
 Rendert das Diagramm für den Wörterbuch-Fortschritt mit Hilfe
 der _renderChart Methode.
 
@@ -2426,7 +2426,7 @@ der _renderChart Methode.
 
 <a name="module_Statistics.._renderDictionary"></a>
 
-### Statistics~_renderDictionary() ℗
+#### Statistics~_renderDictionary() ℗
 Rendert das Diagramm für die Wörterbuch-Zusammensetzung mit Hilfe
 der _renderChart Methode.
 
@@ -2437,7 +2437,7 @@ der _renderChart Methode.
 
 <a name="module_Statistics.._updateScores"></a>
 
-### Statistics~_updateScores(data) ℗
+#### Statistics~_updateScores(data) ℗
 Aktualisiert die Spielergebnis-Liste, sobald eine entsprechende
 Mediator-Nachricht mit den erforderlichen Daten empfangen wird.
 
@@ -2453,7 +2453,7 @@ Mediator-Nachricht mit den erforderlichen Daten empfangen wird.
 
 <a name="module_Statistics.._updateProgress"></a>
 
-### Statistics~_updateProgress(data) ℗
+#### Statistics~_updateProgress(data) ℗
 Aktualisiert die Fortschritts-Liste, sobald eine entsprechende
 Mediator-Nachricht mit den erforderlichen Daten empfangen wird.
 
@@ -2469,7 +2469,7 @@ Mediator-Nachricht mit den erforderlichen Daten empfangen wird.
 
 <a name="module_Statistics.._growCharts"></a>
 
-### Statistics~_growCharts([shrink]) ℗
+#### Statistics~_growCharts([shrink]) ℗
 Fügt den Diagrammen der Statistik eine Klasse hinzu oder entfernt sie,
 um sie zu animieren; blendet Diagramm gegebenenfalls vorher aus.
 
@@ -2485,7 +2485,7 @@ um sie zu animieren; blendet Diagramm gegebenenfalls vorher aus.
 
 <a name="module_Statistics.._restore"></a>
 
-### Statistics~_restore(panel) ℗
+#### Statistics~_restore(panel) ℗
 Scrollt die Statistik nach oben und animiert die Diagramme, wenn
 ein entsprechende Mediator-Nachricht empfangen wird.
 
@@ -2501,7 +2501,7 @@ ein entsprechende Mediator-Nachricht empfangen wird.
 
 <a name="module_TabBar"></a>
 
-## TabBar
+### TabBar
 Steuert die Tab-Bar der App; erstellt beim Initialisieren alle Tabs anhand
 der View-Panels, die dem Modul per Mediator vom View-Modul übergeben werden,
 ermöglicht das Wechseln des View-Panels per Klick auf die Tabs und das
@@ -2528,7 +2528,7 @@ Ein-/Ausblenden der Tab-Bar bei bestimmten Events und Mediator-Nachrichten.
 
 <a name="module_TabBar..init"></a>
 
-### TabBar~init()
+#### TabBar~init()
 Initialisiert das TabBar-Modul; bindet Events und abonniert den
 Mediator, indem andere Funktionen ausgeführt werden.
 
@@ -2539,7 +2539,7 @@ Mediator, indem andere Funktionen ausgeführt werden.
 
 <a name="module_TabBar.._bindEvents"></a>
 
-### TabBar~_bindEvents() ℗
+#### TabBar~_bindEvents() ℗
 Bindet Funktionen an Events.
 
 **Kind**: inner method of <code>[TabBar](#module_TabBar)</code>  
@@ -2549,7 +2549,7 @@ Bindet Funktionen an Events.
 
 <a name="module_TabBar.._subMediator"></a>
 
-### TabBar~_subMediator() ℗
+#### TabBar~_subMediator() ℗
 Abonniert interne Funktionen beim Mediator.
 
 **Kind**: inner method of <code>[TabBar](#module_TabBar)</code>  
@@ -2559,7 +2559,7 @@ Abonniert interne Funktionen beim Mediator.
 
 <a name="module_TabBar.._create"></a>
 
-### TabBar~_create(panels) ℗
+#### TabBar~_create(panels) ℗
 Generiert für jedes vom View-Modul übergebene Panel einen Tab,
 indem das Tab-Bar-Template per Mustache mit den Panel-Daten geladen
 und in die App eingefügt wird; aktiviert den ersten Tab.
@@ -2576,7 +2576,7 @@ und in die App eingefügt wird; aktiviert den ersten Tab.
 
 <a name="module_TabBar.._render"></a>
 
-### TabBar~_render() ℗
+#### TabBar~_render() ℗
 Rendert alle Elemente der Tab-Bar anhand der intern
 gesetzten aktuellen Variablen.
 
@@ -2587,7 +2587,7 @@ gesetzten aktuellen Variablen.
 
 <a name="module_TabBar.._setTab"></a>
 
-### TabBar~_setTab(tab) ℗
+#### TabBar~_setTab(tab) ℗
 Setzt den aktiven Tab anhand eines Klick-Events oder eines
 übergebenen Tab-Indexes; rendert anschließend die Tab-Bar
 und sendet das gewählte View-Panel über den Mediator.
@@ -2604,7 +2604,7 @@ und sendet das gewählte View-Panel über den Mediator.
 
 <a name="module_TabBar.._hide"></a>
 
-### TabBar~_hide() ℗
+#### TabBar~_hide() ℗
 Blendet die Tab-Bar aus.
 
 **Kind**: inner method of <code>[TabBar](#module_TabBar)</code>  
@@ -2614,7 +2614,7 @@ Blendet die Tab-Bar aus.
 
 <a name="module_TabBar.._show"></a>
 
-### TabBar~_show() ℗
+#### TabBar~_show() ℗
 Blendet die Tab-Bar ein.
 
 **Kind**: inner method of <code>[TabBar](#module_TabBar)</code>  
@@ -2624,7 +2624,7 @@ Blendet die Tab-Bar ein.
 
 <a name="module_TabBar.._disable"></a>
 
-### TabBar~_disable() ℗
+#### TabBar~_disable() ℗
 Deaktiviert die Tab-Bar.
 
 **Kind**: inner method of <code>[TabBar](#module_TabBar)</code>  
@@ -2634,7 +2634,7 @@ Deaktiviert die Tab-Bar.
 
 <a name="module_TabBar.._enable"></a>
 
-### TabBar~_enable() ℗
+#### TabBar~_enable() ℗
 Aktiviert die Tab-Bar.
 
 **Kind**: inner method of <code>[TabBar](#module_TabBar)</code>  
@@ -2644,7 +2644,7 @@ Aktiviert die Tab-Bar.
 
 <a name="module_Template"></a>
 
-## Template
+### Template
 Stellt Funktionen bereit, um Inhalte mit Mustache-Templates in die App
 einzufügen; lädt Templates vor, die in der Konfigurations-Datei des
 Template-Verzeichnisses definiert sind.
@@ -2662,7 +2662,7 @@ Template-Verzeichnisses definiert sind.
 
 <a name="module_Template..init"></a>
 
-### Template~init()
+#### Template~init()
 Lädt die Konfigurations-Datei für die Templates und lädt alle dort
 definierten Templates vor; parst die Templates mit Mustache, um das
 spätere Rendern der Templates zu beschleunigen.
@@ -2674,7 +2674,7 @@ spätere Rendern der Templates zu beschleunigen.
 
 <a name="module_Template.._html"></a>
 
-### Template~_html($target, content, [callback]) ℗
+#### Template~_html($target, content, [callback]) ℗
 Fügt einen gegebenen String als HTML in ein DOM-Objekt ein;
 führt gegebenenfalls eine Callback-Funktion aus.
 
@@ -2692,7 +2692,7 @@ führt gegebenenfalls eine Callback-Funktion aus.
 
 <a name="module_Template..render"></a>
 
-### Template~render($target, template, data, [callback])
+#### Template~render($target, template, data, [callback])
 Rendert ein Template mit gegebenem Namen mittels Mustache und fügt den
 Inhalt in einen gegebenes DOM-Element ein; lädt das Template per AJAX,
 falls es noch nicht zwischengespeichert wurde; führt gegebenenfalls
@@ -2713,7 +2713,7 @@ eine Callback-Funktion aus.
 
 <a name="module_Util"></a>
 
-## Util
+### Util
 Stellt diverse allgemeine Hilfs-Funktionen für andere Module der App bereit.
 
 **Author:** Jakob Metzger <jakob.me@gmail.com>  
@@ -2736,7 +2736,7 @@ Stellt diverse allgemeine Hilfs-Funktionen für andere Module der App bereit.
 
 <a name="module_Util..arrFromNumber"></a>
 
-### Util~arrFromNumber(number) ⇒ <code>Array.&lt;Number&gt;</code>
+#### Util~arrFromNumber(number) ⇒ <code>Array.&lt;Number&gt;</code>
 Erzeugt ein Array mit Ganzzahlen von 1 bis zur gewählten Zahl.
 
 **Kind**: inner method of <code>[Util](#module_Util)</code>  
@@ -2752,7 +2752,7 @@ Erzeugt ein Array mit Ganzzahlen von 1 bis zur gewählten Zahl.
 
 <a name="module_Util..calcPercent"></a>
 
-### Util~calcPercent(first, second, [round]) ⇒ <code>Number</code>
+#### Util~calcPercent(first, second, [round]) ⇒ <code>Number</code>
 Berechnet den prozentualen Anteil einer Zahl an einer anderen;
 gibt das Ergebnis in Prozentpunkten zurück.
 
@@ -2771,7 +2771,7 @@ gibt das Ergebnis in Prozentpunkten zurück.
 
 <a name="module_Util..countTermsWithLevel"></a>
 
-### Util~countTermsWithLevel(terms, level) ⇒ <code>Number</code>
+#### Util~countTermsWithLevel(terms, level) ⇒ <code>Number</code>
 Zählt in einer gegeben Begriff-Liste alle Einträge,
 die das angegebene Level haben.
 
@@ -2789,7 +2789,7 @@ die das angegebene Level haben.
 
 <a name="module_Util..findTerm"></a>
 
-### Util~findTerm(terms, alias) ⇒ <code>Object</code> &#124; <code>Boolean</code>
+#### Util~findTerm(terms, alias) ⇒ <code>Object</code> &#124; <code>Boolean</code>
 Sucht in einer gegebenen Begriff-Liste nach einem Begriff
 mit dem passenden gegebenen Alias; gibt entweder den Begriff
 oder false zurück, falls er nicht gefunden wurde.
@@ -2808,7 +2808,7 @@ oder false zurück, falls er nicht gefunden wurde.
 
 <a name="module_Util..getRandom"></a>
 
-### Util~getRandom(array) ⇒ <code>\*</code>
+#### Util~getRandom(array) ⇒ <code>\*</code>
 Gibt ein zufälliges Element eines Arrays zurück.
 
 **Kind**: inner method of <code>[Util](#module_Util)</code>  
@@ -2824,7 +2824,7 @@ Gibt ein zufälliges Element eines Arrays zurück.
 
 <a name="module_Util..shuffle"></a>
 
-### Util~shuffle(array) ⇒ <code>Array</code>
+#### Util~shuffle(array) ⇒ <code>Array</code>
 Mischt ein Array zufällig durch.
 
 **Kind**: inner method of <code>[Util](#module_Util)</code>  
@@ -2840,7 +2840,7 @@ Mischt ein Array zufällig durch.
 
 <a name="module_Util..limit"></a>
 
-### Util~limit(number, min, max)
+#### Util~limit(number, min, max)
 Begrenzt eine gegebene Zahl zwischen dem gegebenen Minimum und Maximum.
 
 **Kind**: inner method of <code>[Util](#module_Util)</code>  
@@ -2857,7 +2857,7 @@ Begrenzt eine gegebene Zahl zwischen dem gegebenen Minimum und Maximum.
 
 <a name="module_Util..getDate"></a>
 
-### Util~getDate() ⇒ <code>Number</code>
+#### Util~getDate() ⇒ <code>Number</code>
 Gibt das aktuelle Datum als Zahl zurück, sortiert nach Jahr, Monat und
 Tag, jeweils mit der maximalen Anzahl an Stellen; z.B. "20160612".
 
@@ -2869,7 +2869,7 @@ Tag, jeweils mit der maximalen Anzahl an Stellen; z.B. "20160612".
 
 <a name="module_Util..intToStr"></a>
 
-### Util~intToStr(number, digits) ⇒ <code>String</code>
+#### Util~intToStr(number, digits) ⇒ <code>String</code>
 Wandelt eine gegebene Ganzzahl in einen String um; stellt führende
 Nullen entsprechend der angegebenen Mindeststellen an, z.B. 2 -> 02.
 
@@ -2887,7 +2887,7 @@ Nullen entsprechend der angegebenen Mindeststellen an, z.B. 2 -> 02.
 
 <a name="module_Util..dialog"></a>
 
-### Util~dialog(type, text, callback, title, buttons)
+#### Util~dialog(type, text, callback, title, buttons)
 Zeigt einen System-Dialog des angegebenen Typs mit den entsprechend
 gewählten Eigenschaften an, z.B. Alert, Confirm, Prompt; versucht, die
 Cordova-API zu nutzen, falls vorhanden.
@@ -2908,7 +2908,7 @@ Cordova-API zu nutzen, falls vorhanden.
 
 <a name="module_View"></a>
 
-## View
+### View
 Steuert die View der App; erstellt beim Initialisieren alle View-Panels
 die im CFG-Modul angegeben sind, ermöglich das Ein-/Ausblenden der View,
 löst über den Mediator die Erstellung der View-Inhalte aus, falls diese
@@ -2939,7 +2939,7 @@ oder das Starten/Beenden des Quiz.
 
 <a name="module_View..init"></a>
 
-### View~init()
+#### View~init()
 Initialisiert das View-Modul; erstellt alle View-Panels, bindet Events
 und abonniert den Mediator, indem andere Funktionen ausgeführt werden.
 
@@ -2950,7 +2950,7 @@ und abonniert den Mediator, indem andere Funktionen ausgeführt werden.
 
 <a name="module_View.._bindEvents"></a>
 
-### View~_bindEvents() ℗
+#### View~_bindEvents() ℗
 Bindet Funktionen an Events.
 
 **Kind**: inner method of <code>[View](#module_View)</code>  
@@ -2960,7 +2960,7 @@ Bindet Funktionen an Events.
 
 <a name="module_View.._subMediator"></a>
 
-### View~_subMediator() ℗
+#### View~_subMediator() ℗
 Abonniert interne Funktionen beim Mediator.
 
 **Kind**: inner method of <code>[View](#module_View)</code>  
@@ -2970,7 +2970,7 @@ Abonniert interne Funktionen beim Mediator.
 
 <a name="module_View.._create"></a>
 
-### View~_create() ℗
+#### View~_create() ℗
 Generiert für jedes im CFG-Modul definierte Panel anhand des gesetzten
 Templates ein HTML-Panel im Content-Bereich; initialisiert die Elemente
 der View und leitet die Panel-Daten über den Mediator weiter;
@@ -2983,7 +2983,7 @@ rendert die View anschließend.
 
 <a name="module_View.._render"></a>
 
-### View~_render() ℗
+#### View~_render() ℗
 Rendert alle Elemente der View anhand der intern
 gesetzten aktuellen Variablen.
 
@@ -2994,7 +2994,7 @@ gesetzten aktuellen Variablen.
 
 <a name="module_View.._renderPanels"></a>
 
-### View~_renderPanels() ℗
+#### View~_renderPanels() ℗
 Rendert alle View-Panels; blendet sie ein oder aus.
 
 **Kind**: inner method of <code>[View](#module_View)</code>  
@@ -3004,7 +3004,7 @@ Rendert alle View-Panels; blendet sie ein oder aus.
 
 <a name="module_View.._setView"></a>
 
-### View~_setView(panel) ℗
+#### View~_setView(panel) ℗
 Setzt das aktuelle View-Panel anhand eines Mediator-Events;
 entscheidet, ob sich das Panel geändert hat oder nicht;
 teilt dem Mediator die Änderung mit und rendert die View.
@@ -3021,7 +3021,7 @@ teilt dem Mediator die Änderung mit und rendert die View.
 
 <a name="module_View.._hide"></a>
 
-### View~_hide() ℗
+#### View~_hide() ℗
 Blendet die View aus.
 
 **Kind**: inner method of <code>[View](#module_View)</code>  
@@ -3031,7 +3031,7 @@ Blendet die View aus.
 
 <a name="module_View.._show"></a>
 
-### View~_show() ℗
+#### View~_show() ℗
 Blendet die View ein.
 
 **Kind**: inner method of <code>[View](#module_View)</code>  
@@ -3041,7 +3041,7 @@ Blendet die View ein.
 
 <a name="module_View.._enableFullscreen"></a>
 
-### View~_enableFullscreen() ℗
+#### View~_enableFullscreen() ℗
 Aktiviert die volle Höhe für die View.
 
 **Kind**: inner method of <code>[View](#module_View)</code>  
@@ -3051,7 +3051,7 @@ Aktiviert die volle Höhe für die View.
 
 <a name="module_View.._disableFullscreen"></a>
 
-### View~_disableFullscreen() ℗
+#### View~_disableFullscreen() ℗
 Deaktiviert die volle Höhe für die View, wenn Quiz inaktiv ist.
 
 **Kind**: inner method of <code>[View](#module_View)</code>  
@@ -3061,7 +3061,7 @@ Deaktiviert die volle Höhe für die View, wenn Quiz inaktiv ist.
 
 <a name="module_View.._enableQuiz"></a>
 
-### View~_enableQuiz() ℗
+#### View~_enableQuiz() ℗
 Notiert, dass das Quiz aktiv ist; aktiviert Fullscreen.
 
 **Kind**: inner method of <code>[View](#module_View)</code>  
@@ -3071,7 +3071,7 @@ Notiert, dass das Quiz aktiv ist; aktiviert Fullscreen.
 
 <a name="module_View.._disableQuiz"></a>
 
-### View~_disableQuiz() ℗
+#### View~_disableQuiz() ℗
 Notiert, dass Quiz inaktiv ist; deaktiviert Fullscreen.
 
 **Kind**: inner method of <code>[View](#module_View)</code>  
@@ -3081,7 +3081,7 @@ Notiert, dass Quiz inaktiv ist; deaktiviert Fullscreen.
 
 <a name="Slider"></a>
 
-## Slider
+### Slider
 **Kind**: global class  
 **Requires**: <code>[Util](#module_Util)</code>  
 **Author:** Jakob Metzger <jakob.me@gmail.com>  
@@ -3099,7 +3099,7 @@ Notiert, dass Quiz inaktiv ist; deaktiviert Fullscreen.
 
 <a name="new_Slider_new"></a>
 
-### new Slider($target)
+#### new Slider($target)
 Erstellt einen Slider auf einem gegebenen Ziel-DOM-Element.
 
 
@@ -3112,7 +3112,7 @@ Erstellt einen Slider auf einem gegebenen Ziel-DOM-Element.
 
 <a name="Slider.._init"></a>
 
-### Slider~_init($target) ℗
+#### Slider~_init($target) ℗
 Initialisiert das DOM-Element des Sliders, die Anzahl der vorhandenen
 Slides, setzt ein Data-Attribut für jedes Slide und setzt den 
 Slider auf den ersten Slide.
@@ -3129,7 +3129,7 @@ Slider auf den ersten Slide.
 
 <a name="Slider..setSlide"></a>
 
-### Slider~setSlide(index)
+#### Slider~setSlide(index)
 Setzt den Index des Sliders auf die gegebene Zahl und ändert
 die Klasse des Slider-DOM-Element entsprechend.
 
@@ -3145,7 +3145,7 @@ die Klasse des Slider-DOM-Element entsprechend.
 
 <a name="Slider..getSlide"></a>
 
-### Slider~getSlide() ⇒ <code>Number</code>
+#### Slider~getSlide() ⇒ <code>Number</code>
 Gibt den aktuellen Slide-Index des Sliders zurück.
 
 **Kind**: inner method of <code>[Slider](#Slider)</code>  
@@ -3156,7 +3156,7 @@ Gibt den aktuellen Slide-Index des Sliders zurück.
 
 <a name="Slider..getIndexOf"></a>
 
-### Slider~getIndexOf(selector) ⇒ <code>Number</code> &#124; <code>Boolean</code>
+#### Slider~getIndexOf(selector) ⇒ <code>Number</code> &#124; <code>Boolean</code>
 Ermittelt den Slide-Index eines Elements innerhalb des Sliders
 anhand eines gegebenen Query-Selektors, falls das gesuchte Element
 ein Slide-Element des Sliders ist (ein direktes Kind-Element).
@@ -3174,7 +3174,7 @@ ein Slide-Element des Sliders ist (ein direktes Kind-Element).
 
 <a name="CFG"></a>
 
-## CFG
+### CFG
 Definiert globale Konstanten und Konfigurationen für alle Module; beinhaltet
 Label-Texte, Datei-Pfade und -Endungen, Konfigurationen für das Quiz,
 Kanal-Namen für den Mediator, Eigenschaften der View-Panels und Optionen

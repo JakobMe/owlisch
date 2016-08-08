@@ -8,11 +8,11 @@ Diese App wurde von **Jakob Metzger** als Bachelor-Arbeit an der [Universität B
 
 
 - [Verwendete Ressourcen & Dienste](#verwendete-ressourcen-&-dienste)
-  - [Frameworks, Plugins & Module](#frameworks-plugins-&-module)
-  - [JavaScript Bibliotheken](#javascript-bibliotheken)
-  - [Web-Fonts](#web-fonts)
-  - [Sonstiges](#sonstiges)
-  - [Benötigte Software zum Bearbeiten des Projekts](#ben%C3%B6tigte-software-zum-bearbeiten-des-projekts)
+    - [Frameworks, Plugins & Module](#frameworks-plugins-&-module)
+    - [JavaScript Bibliotheken](#javascript-bibliotheken)
+    - [Web-Fonts](#web-fonts)
+    - [Sonstiges](#sonstiges)
+    - [Benötigte Software zum Bearbeiten des Projekts](#ben%C3%B6tigte-software-zum-bearbeiten-des-projekts)
 - [Beteiligte Studierende an der Entwicklung des Konzepts](#beteiligte-studierende-an-der-entwicklung-des-konzepts)
 - [Installation](#installation)
 
@@ -22,7 +22,7 @@ Diese App wurde von **Jakob Metzger** als Bachelor-Arbeit an der [Universität B
 Im folgenden werden alle Ressourcen und Dienste aufgelistet, die von Drittanbietern stammen.
 Alle diese Ressourcen und Dienste sind für die private und kommerzielle Nutzung frei verfügbar.
 
-### Frameworks, Plugins & Module
+#### Frameworks, Plugins & Module
 * [Apache Cordova 6.3.0](https://cordova.apache.org)
 * [Cordova StatusBar 2.1.3](https://github.com/apache/cordova-plugin-statusbar)
 * [Cordova Keyboard 1.1.4](https://github.com/cjpearson/cordova-plugin-keyboard)
@@ -30,23 +30,23 @@ Alle diese Ressourcen und Dienste sind für die private und kommerzielle Nutzung
 * [jsdoc-to-markdown 1.3.6](https://github.com/jsdoc2md/jsdoc-to-markdown)
 * [doctoc 1.2.0](https://github.com/thlorenz/doctoc)
 
-### JavaScript Bibliotheken
+#### JavaScript Bibliotheken
 * [jQuery 2.2.3](https://github.com/jquery/jquery)
 * [FastClick 1.0.6](https://github.com/ftlabs/fastclick)
 * [jquery-bemhelpers 2.2.1](https://github.com/ingdir/jquery-bemhelpers)
 * [mustache.js 2.2.1](https://github.com/janl/mustache.js)
 
-### Web-Fonts
+#### Web-Fonts
 * [Lato Webfont](https://www.google.com/fonts/specimen/Lato)
 * [Entypo](http://www.entypo.com) via [Fontello](http://fontello.com)
 * [FontAwesome](http://fontawesome.io) via [Fontello](http://fontello.com)
 
-### Sonstiges
+#### Sonstiges
 * [FreeImages](http://www.freeimages.com)
 * [loading.io](http://loading.io)
 * [Real Favicon Generator](http://realfavicongenerator.net)
 
-### Benötigte Software zum Bearbeiten des Projekts
+#### Benötigte Software zum Bearbeiten des Projekts
 * [Xcode](https://itunes.apple.com/de/app/xcode/id497799835?mt=12)
 * [CodeKit](https://incident57.com/codekit/)
 * [Cordova](https://cordova.apache.org)

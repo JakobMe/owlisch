@@ -117,6 +117,7 @@ var Util = (function() {
      * @param {Number} number Zu begrenzende Zahl
      * @param {Number} min Minimum
      * @param {Number} max Maximum
+     * @returns {Number} Begrenzte Zahl
      * @function limit
      */
     function limit(number, min, max) {

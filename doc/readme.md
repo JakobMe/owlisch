@@ -2726,7 +2726,7 @@ Stellt diverse allgemeine Hilfs-Funktionen für andere Module der App bereit.
     * [~findTerm(terms, alias)](#module_Util..findTerm) ⇒ <code>Object</code> &#124; <code>Boolean</code>
     * [~getRandom(array)](#module_Util..getRandom) ⇒ <code>\*</code>
     * [~shuffle(array)](#module_Util..shuffle) ⇒ <code>Array</code>
-    * [~limit(number, min, max)](#module_Util..limit)
+    * [~limit(number, min, max)](#module_Util..limit) ⇒ <code>Number</code>
     * [~getDate()](#module_Util..getDate) ⇒ <code>Number</code>
     * [~intToStr(number, digits)](#module_Util..intToStr) ⇒ <code>String</code>
     * [~dialog(type, text, callback, title, buttons)](#module_Util..dialog)
@@ -2840,10 +2840,11 @@ Mischt ein Array zufällig durch.
 
 <a name="module_Util..limit"></a>
 
-#### Util~limit(number, min, max)
+#### Util~limit(number, min, max) ⇒ <code>Number</code>
 Begrenzt eine gegebene Zahl zwischen dem gegebenen Minimum und Maximum.
 
 **Kind**: inner method of <code>[Util](#module_Util)</code>  
+**Returns**: <code>Number</code> - Begrenzte Zahl  
 **Access:** public  
 
 | Param | Type | Description |

@@ -12,7 +12,7 @@ var CFG = (function() {
         DATA: {
             STORE               : "owlisch",
             DEFAULT             : "owl",
-            CONFIG              : "config",
+            CONFIG              : "conf",
             PATH_DELIMITER      : "/",
             PATH_DATA           : "data/",
             PATH_AUDIO          : "/audio/",

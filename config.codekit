@@ -603,24 +603,24 @@
 		"outputStyle": 1,
 		"syntaxCheckerStyle": 1
 		},
-	"\/src\/json\/config-data.json": {
+	"\/src\/json\/conf-data.json": {
 		"fileType": 524288,
 		"ignore": 0,
 		"ignoreWasSetByUser": 1,
-		"inputAbbreviatedPath": "\/src\/json\/config-data.json",
+		"inputAbbreviatedPath": "\/src\/json\/conf-data.json",
 		"orderOutput": 0,
-		"outputAbbreviatedPath": "\/www\/data\/config.json",
+		"outputAbbreviatedPath": "\/www\/data\/conf.json",
 		"outputPathIsOutsideProject": 0,
 		"outputPathIsSetByUser": 1,
 		"outputStyle": 1
 		},
-	"\/src\/json\/config-tmpl.json": {
+	"\/src\/json\/conf-tmpl.json": {
 		"fileType": 524288,
 		"ignore": 0,
 		"ignoreWasSetByUser": 1,
-		"inputAbbreviatedPath": "\/src\/json\/config-tmpl.json",
+		"inputAbbreviatedPath": "\/src\/json\/conf-tmpl.json",
 		"orderOutput": 0,
-		"outputAbbreviatedPath": "\/www\/tmpl\/config.json",
+		"outputAbbreviatedPath": "\/www\/tmpl\/conf.json",
 		"outputPathIsOutsideProject": 0,
 		"outputPathIsSetByUser": 1,
 		"outputStyle": 1
@@ -1225,13 +1225,13 @@
 		"outputPathIsOutsideProject": 0,
 		"outputPathIsSetByUser": 0
 		},
-	"\/www\/data\/config.json": {
+	"\/www\/data\/conf.json": {
 		"fileType": 524288,
 		"ignore": 1,
 		"ignoreWasSetByUser": 0,
-		"inputAbbreviatedPath": "\/www\/data\/config.json",
+		"inputAbbreviatedPath": "\/www\/data\/conf.json",
 		"orderOutput": 0,
-		"outputAbbreviatedPath": "\/www\/data\/config-min.json",
+		"outputAbbreviatedPath": "\/www\/data\/conf-min.json",
 		"outputPathIsOutsideProject": 0,
 		"outputPathIsSetByUser": 0,
 		"outputStyle": 1
@@ -1479,13 +1479,13 @@
 		"outputPathIsOutsideProject": 0,
 		"outputPathIsSetByUser": 0
 		},
-	"\/www\/tmpl\/config.json": {
+	"\/www\/tmpl\/conf.json": {
 		"fileType": 524288,
 		"ignore": 1,
 		"ignoreWasSetByUser": 0,
-		"inputAbbreviatedPath": "\/www\/tmpl\/config.json",
+		"inputAbbreviatedPath": "\/www\/tmpl\/conf.json",
 		"orderOutput": 0,
-		"outputAbbreviatedPath": "\/www\/tmpl\/config-min.json",
+		"outputAbbreviatedPath": "\/www\/tmpl\/conf-min.json",
 		"outputPathIsOutsideProject": 0,
 		"outputPathIsSetByUser": 0,
 		"outputStyle": 1

@@ -9,7 +9,7 @@
 var Template = (function() {
     
     // Konstanten
-    var _CONFIG                 = "tmpl/config.json";
+    var _CONFIG                 = "tmpl/conf.json";
     var _PATH                   = "tmpl/_";
     var _TYPE                   = ".html";
     

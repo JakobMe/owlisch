@@ -4,7 +4,6 @@
         "dictionaries": ["jsdoc","closure"]
     },
     "source": {
-        "exclude": ["src/js/app/app.js"],
         "includePattern": ".+\\.js(doc)?$",
         "excludePattern": ""
     },

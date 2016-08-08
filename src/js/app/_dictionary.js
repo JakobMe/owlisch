@@ -1,10 +1,14 @@
 /**
- * Wörterbuch-Modul.
- * Steuert das Wörterbuch der App.
+ * Steuert die Wörterbuch-View der App; erstellt die Liste der Begriffe
+ * per Template und fügt sie ein, ermöglicht das Sortieren und Filtern der
+ * Liste und das Anzeigen von Details für gewählte Begriffe.
  * @author Jakob Metzger <jakob.me@gmail.com>
  * @copyright 2016 Jakob Metzger
- * @licence https://opensource.org/licenses/MIT MIT
- * @link http://jmportfolio.de
+ * @licence MIT
+ * @requires Util
+ * @requires Mediator
+ * @requires Template
+ * @module Dictionary
  */
 var Dictionary = (function() {
     
@@ -43,17 +47,18 @@ var Dictionary = (function() {
     var _$details               = null;
     
     /**
-     * Wörterbuch initialisieren.
-     * Führt Funktionen aus, um den Ausgangszustand des
-     * des Wörterbuches herzustellen.
+     * Initialisiert das Dictionary-Modul; abonniert den Mediator.
+     * @access public
+     * @function init
      */
     function init() {
         _subMediator();
     }
     
     /**
-     * Events binden.
      * Bindet Funktionen an Events.
+     * @access private
+     * @function _bindEvents
      */
     function _bindEvents() {
         if (_$list instanceof $) {
@@ -62,8 +67,9 @@ var Dictionary = (function() {
     }
 
     /**
-     * Mediator abonnieren.
-     * Meldet Funktionen beim Mediator an.
+     * Abonniert interne Funktionen beim Mediator.
+     * @access private
+     * @function _subMediator
      */
     function _subMediator() {
         Mediator.sub(CFG.CNL.VIEW_LOAD, _create)
@@ -75,11 +81,13 @@ var Dictionary = (function() {
     }
     
     /**
-     * Wörterbuch erzeugen.
-     * Erzeugt das Wörterbuch anhand eines Mediator-Events; fügt das
-     * Wörterbuch mittels Template ein, initialisiert die Elemente des
-     * Wörterbuches und teilt dem Mediator weitere Events mit.
-     * @param {Object} data Übergebene Daten des Mediators
+     * Generiert bei einer Mediator-Nachricht mit dem Dictionary-Panel als
+     * Daten die Inhalte des Wörterbuches; initialisiert alle DOM-Elemente
+     * des Moduls, bindet Events, blendet die View wieder ein und fragt
+     * per Mediator benötigte Daten vom Data-Modul an.
+     * @access private
+     * @param {Object} data Übermittelte Mediator-Daten
+     * @function _create
      */
     function _create(data) {
         if ((typeof data !== typeof undefined) &&
@@ -100,8 +108,9 @@ var Dictionary = (function() {
     }
     
     /**
-     * DOM-Komponenten initialisieren.
      * Initialisiert alle DOM-Elemente des Wörterbuches.
+     * @access private
+     * @function _initDom
      */
     function _initDom() {
         _$dictionary  = $(_SEL_SLIDER);
@@ -114,8 +123,10 @@ var Dictionary = (function() {
     }
     
     /**
-     * Liste rendern.
-     * Rendert die Liste des Wörterbuches anhand eines Mustache-Templates.
+     * Rendert die Liste des Wörterbuches anhand eines Mustache-Templates
+     * und der aktuell im Modul gesetzt Wörterbuch-Daten.
+     * @access private
+     * @function _renderList
      */
     function _renderList() {
         if (_$list instanceof $) {
@@ -132,11 +143,12 @@ var Dictionary = (function() {
     }
     
     /**
-     * Begriff-Details rendern.
      * Rendert die Details des aktuellen Begriffs anhand eines
      * Mustache-Templates; bewegt den Wörterbuch-Slider und
-     * ändert die Navigation-Bar.
-     * @param {Boolean} renderNavBar Navigation rendern
+     * ändert gegebenenfalls die Navigation-Bar.
+     * @access private
+     * @param {Boolean} renderNavBar Navigation-Bar neu rendern?
+     * @function _renderDetails
      */
     function _renderDetails(renderNavBar) {
         if ((typeof _currentTerm       === typeof {}) &&
@@ -164,10 +176,11 @@ var Dictionary = (function() {
     }
     
     /**
-     * Liste sortieren.
      * Sortiert die Liste der Begriffe anhand der von einer Mediator-Nachricht
-     * übergenen Sortierung und Ordnung; rendert die Liste anschließend.
+     * übergebenen Sortierung und Ordnung; rendert die Liste anschließend neu.
+     * @access private
      * @param {Object} data Übermittelte Daten
+     * @function _sort
      */
     function _sort(data) {
 
@@ -188,12 +201,13 @@ var Dictionary = (function() {
     }
     
     /**
-     * Liste filtern.
      * Filtert die Liste anhand des aktuell gesetzten Suchbegriffes
      * oder einem durch eine Mediator-Nachricht übergebenen Suchbegriff;
      * filtert die Original-Liste und kopiert übereinstimmende Einträge
      * in die Filter-Liste; sortiert die Liste anschließend.
-     * @param {String} keyword Neuer Suchbegriff
+     * @access private
+     * @param {String} [keyword] Neuer Suchbegriff
+     * @function _filter
      */
     function _filter(keyword) {
         
@@ -228,10 +242,11 @@ var Dictionary = (function() {
     }
     
     /**
-     * Liste aktualisieren.
-     * Aktualisiert die Wörterbuch-Liste, sobald ein entsprechendes
-     * Event mit den erforderlichen Daten ausgelöst wird.
-     * @param {Object} data Daten des Events
+     * Aktualisiert die Wörterbuch-Liste, sobald eine entsprechende
+     * Mediator-Nachricht mit den erforderlichen Daten empfangen wird.
+     * @access private
+     * @param {Object} data Übermittelte Daten
+     * @function _update
      */
     function _update(data) {
         if ((typeof data      !== typeof undefined) &&
@@ -264,10 +279,12 @@ var Dictionary = (function() {
     }
     
     /**
-     * Aktuellen Begriff aktualisieren.
      * Setzt einen neuen aktuellen Begriff anhand eines ausgelösten
-     * Klick-Events; sperrt die Begriff-Liste.
-     * @param {Object} event Ausgelöstes Event
+     * Klick-Events; sperrt die Begriff-Liste und lädt und rendert den
+     * neuen Begriff mittels _setDetails.
+     * @access private
+     * @param {Object} event Ausgelöstes Klick-Event
+     * @function _setDetails
      */
     function _setDetails(event) {
         if ((typeof event !== typeof undefined) && (!_listIsLocked)) {
@@ -279,11 +296,12 @@ var Dictionary = (function() {
     }
     
     /**
-     * Aktuellen Begriff setzen.
-     * Durchsucht die Begriff-Liste nach dem Begriff-Alias und aktualisiert
-     * den aktuellen Begriff; rendert die Begriff-Details neu.
+     * Durchsucht die Begriff-Liste nach dem gegebenen Begriff-Alias und
+     * aktualisiert den aktuellen Begriff; rendert die Begriff-Details neu.
+     * @access private
      * @param {String} alias Alias des neuen Begriffs
-     * @param {Boolean} renderNavBar Navigation-Bar neu rendern
+     * @param {Boolean} [renderNavBar] Navigation-Bar neu rendern?
+     * @function _loadDetails
      */
     function _loadDetails(alias, renderNavBar) {
         if (typeof alias !== typeof undefined) {
@@ -293,10 +311,11 @@ var Dictionary = (function() {
     }
     
     /**
-     * Zurück zu Liste.
      * Bewegt den Wörterbuch-Slider anhand einer Mediatior-Nachricht
      * zurück zur Wörterbuch-Liste; leert die Begriff-Details.
-     * @param {Object} data Übermittelte Daten
+     * @access private
+     * @param {Object} data Übermittelte Mediator-Daten
+     * @function _back
      */
     function _back(data) {
         if ((typeof data     !== typeof undefined) &&
@@ -311,12 +330,13 @@ var Dictionary = (function() {
     }
     
     /**
-     * Standard-Konfiguration wiederherstellen.
-     * Setzt die internen Variablen und Zustände anhand eines ausgelösten
-     * Events wieder auf ihre Standardwerte zurück; filtert die Liste,
-     * setzt den Slider zurück und scrollt die Liste nach oben.
-     * @param {Object} event Ausgelöstes Event
-     * @param {Object} data Daten des Events
+     * Setzt die internen Variablen und Zustände anhand einer
+     * Mediator-Nachricht wieder auf ihre Standardwerte zurück; filtert die
+     * Liste mit einem leeren Suchbegriff, setzt den Slider zur Liste zurück
+     * und scrollt die Liste nach oben.
+     * @access private
+     * @param {Object} panel Übermitteltes Panel-Objekt
+     * @function _restore
      */
     function _restore(panel) {
         if ((typeof panel    !== typeof undefined) &&
@@ -332,12 +352,13 @@ var Dictionary = (function() {
     }
     
     /**
-     * Listen-Element miteinander vergleichen.
      * Eine Vergleichs-Funktion für Elemente der Begriffliste;
      * wird von der JavaScript-Funktion "sort" verwendet.
+     * @access private
      * @param {Objekt} a Erstes zu vergleichende Listen-Objekt
      * @param {Objekt} b Zweites zu vergleichende Listen-Objekt
      * @returns {Number} Ergebnis des Vergleichs
+     * @function _compareListItems
      */
     function _compareListItems(a, b) {
         

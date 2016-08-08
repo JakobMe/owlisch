@@ -1,10 +1,13 @@
 /**
- * More-Modul.
- * Steuert weitere Optionen der App.
+ * Steuert die Liste der Optionen in der Mehr-View; erzeugt die Liste
+ * anhand der globalen Konfiguration, initialisiert den Slider des Moduls
+ * und ermöglicht es, für jede Option die entsprechende Detail-Ansicht zu laden.
  * @author Jakob Metzger <jakob.me@gmail.com>
  * @copyright 2016 Jakob Metzger
- * @licence https://opensource.org/licenses/MIT MIT
- * @link http://jmportfolio.de
+ * @licence MIT
+ * @requires Mediator
+ * @requires Template
+ * @module More
  */
 var More = (function() {
     
@@ -37,17 +40,18 @@ var More = (function() {
     var _$option                = null;
     
     /**
-     * Weitere Optionen initialisieren.
-     * Führt Funktionen aus, um den Ausgangszustand
-     * der weiteren Optionen herzustellen.
+     * Initialisiert das More-Modul; abonniert den Mediator.
+     * @access public
+     * @function init
      */
     function init() {
         _subMediator();
     }
     
     /**
-     * Mediator abonnieren.
-     * Meldet Funktionen beim Mediator an.
+     * Abonniert interne Funktionen beim Mediator.
+     * @access private
+     * @function _subMediator
      */
     function _subMediator() {
         Mediator.sub(CFG.CNL.VIEW_LOAD, _create)
@@ -58,8 +62,9 @@ var More = (function() {
     }
     
     /**
-     * DOM-Komponenten initialisieren.
-     * Initialisiert alle DOM-Elemente des Moduls.
+     * Initialisiert alle DOM-Elemente des More-Moduls.
+     * @access private
+     * @function _initDom
      */
     function _initDom() {
         _$more        = $(_SEL_SLIDER);
@@ -72,18 +77,22 @@ var More = (function() {
     }
     
     /**
-     * Events binden.
      * Bindet Funktionen an Events.
+     * @access private
+     * @function _bindEvents
      */
     function _bindEvents() {
         _$items.on(CFG.EVT.CLICK, _setOption);
     }
     
     /**
-     * Weitere Optionen erzeugen.
-     * Initialisiert alle DOM-Elemente und Event-Bindings des Moduls,
-     * fügt den Inhalt per Template ein.
-     * @param {Object} data Übergebene Daten des Mediators
+     * Generiert bei einer Mediator-Nachricht mit dem More-Panel als
+     * Daten die Inhalte der Options-Liste; initialisiert alle DOM-Elemente
+     * des Moduls, bindet Events, blendet die View wieder ein und fragt
+     * per Mediator benötigte Daten vom Data-Modul an.
+     * @access private
+     * @param {Object} data Übermittelte Mediator-Daten
+     * @function _create
      */
     function _create(data) {
         if ((typeof data !== typeof undefined) &&
@@ -117,10 +126,11 @@ var More = (function() {
     }
     
     /**
-     * Aktuelle Option setzen.
-     * Setzt eine neue Option anhand eines ausgelösten Klick-Events;
-     * sperrt die Begriff-Liste, setzt die Daten der Option und rendert neu.
+     * Setzt bei einem Klick-Event die aktuell gewählte Option und rendert
+     * die Detail-Ansicht für diese Option.
+     * @access private
      * @param {Object} event Ausgelöstes Event
+     * @function _setOption
      */
     function _setOption(event) {
         if ((typeof event !== typeof undefined) && (!_listIsLocked)) {
@@ -135,10 +145,12 @@ var More = (function() {
     }
     
     /**
-     * Option rendern.
-     * Rendert die Details der aktuellen Option anhand eines Mustache-
-     * Templates; bewegt den Mehr-Slider und ändert die Navigation-Bar.
-     * @param {Boolean} renderNavBar Navigation rendern
+     * Rendert die Detail-Ansicht der aktuell gewählten Option; fügt die
+     * Inhalte per Template in die App ein, bewegt den Slider des Moduls und
+     * sendet gegebenenfalls eine Mediator-Nachricht an die Navigation-Bar.
+     * @access private
+     * @param {Boolean} [renderNavBar] Navigation neu rendern?
+     * @function _renderOption
      */
     function _renderOption(renderNavBar) {
         var tmpl = _TMPL_MORE + _TMPL_DELIMITER + _currentOption.option;
@@ -155,10 +167,11 @@ var More = (function() {
     }
     
     /**
-     * Zurück zur Liste.
-     * Bewegt den Mehr-Slider anhand einer Mediatior-Nachricht
-     * zurück zur Mehr-Liste; leert die Mehr-Details.
-     * @param {Object} data Übermittelte Daten
+     * Bewegt den Options-Slider anhand einer Mediatior-Nachricht
+     * zurück zur Options-Liste; leert die Options-Details.
+     * @access private
+     * @param {Object} data Übermittelte Mediator-Daten
+     * @function _back
      */
     function _back(data) {
         if ((typeof data !== typeof undefined) &&
@@ -173,10 +186,11 @@ var More = (function() {
     }
     
     /**
-     * Begriff-Daten aktualisieren.
-     * Aktualisiert die interne Kopie der Begriff-Daten;
-     * rendert gegebenenfalls die aktuell angezeigte Option neu.
-     * @param {Object} data Daten des Events
+     * Aktualisiert anhand einer Mediator-Nachricht die interne Kopie der
+     * Begriff-Daten; rendert gegebenenfalls die aktuelle Ansicht neu.
+     * @access private
+     * @param {Object} data Übermittelte Mediator-Daten
+     * @function _updateTerms
      */
     function _updateTerms(data) {
         if (typeof data !== typeof undefined) {
@@ -190,10 +204,11 @@ var More = (function() {
     }
     
     /**
-     * Wörterbuch-Daten aktualisieren.
-     * Aktualisiert die interne Kopie der Wörterbuch-Daten;
-     * rendert gegebenenfalls die aktuell angezeigte Option neu.
-     * @param {Object} data Daten des Events
+     * Aktualisiert anhand einer Mediator-Nachricht die interne Kopie der
+     * Wörterbuch-Daten; rendert gegebenenfalls die aktuelle Ansicht neu.
+     * @access private
+     * @param {Object} data Übermittelte Mediator-Daten
+     * @function _updateDictionary
      */
     function _updateDictionary(data) {
         if (typeof data !== typeof undefined) {
@@ -206,9 +221,13 @@ var More = (function() {
     }
     
     /**
-     * Standard-Konfiguration wiederherstellen.
-     * Bewegt den Slider zurück auf die Liste und scrollt sie nach oben.
-     * @param {String} panel Ziel-Panel des Events
+     * Setzt die internen Variablen und Zustände anhand einer
+     * Mediator-Nachricht wieder auf ihre Standardwerte zurück; setzt den
+     * Slider zur Liste zurück und scrollt sie nach oben.
+     * und scrollt die Liste nach oben.
+     * @access private
+     * @param {Object} panel Übermitteltes Panel-Objekt
+     * @function _restore
      */
     function _restore(panel) {
         if ((typeof panel !== typeof undefined) &&

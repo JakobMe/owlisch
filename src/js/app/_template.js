@@ -1,10 +1,11 @@
 /**
- * Template-Modul.
- * Stellt Hilfs-Funktionen für Templating zur Verfügung.
+ * Stellt Funktionen bereit, um Inhalte mit Mustache-Templates in die App
+ * einzufügen; lädt Templates vor, die in der Konfigurations-Datei des
+ * Template-Verzeichnisses definiert sind.
  * @author Jakob Metzger <jakob.me@gmail.com>
  * @copyright 2016 Jakob Metzger
- * @licence https://opensource.org/licenses/MIT MIT
- * @link http://jmportfolio.de
+ * @licence MIT
+ * @module Template
  */
 var Template = (function() {
     
@@ -17,9 +18,11 @@ var Template = (function() {
     var _cache                  = {};
     
     /**
-     * Templates initialisieren.
-     * Ermittelt die Liste der Templates im entsprechenden Verzeichnis
-     * und lädt alle genannten Templates vor.
+     * Lädt die Konfigurations-Datei für die Templates und lädt alle dort
+     * definierten Templates vor; parst die Templates mit Mustache, um das
+     * spätere Rendern der Templates zu beschleunigen.
+     * @access public
+     * @function init
      */
     function init() {
         $.getJSON(_CONFIG, function(data) {
@@ -33,12 +36,13 @@ var Template = (function() {
     }
     
     /**
-     * HTML einfügen.
      * Fügt einen gegebenen String als HTML in ein DOM-Objekt ein;
      * führt gegebenenfalls eine Callback-Funktion aus.
-     * @param {Object} $target Ziel-DOM-Element
-     * @param {String} content HTML-String
-     * @param {(Function|undefined)} [undefined] callback Callback-Funktion
+     * @access private
+     * @param {Object} $target Ziel-DOM-Element zum Einfügen des HTML-Strings
+     * @param {String} content HTML-String, der eingefügt werden soll
+     * @param {Function} [callback] Callback-Funktion
+     * @function _html
      */
     function _html($target, content, callback) {
         if (($target instanceof $) &&
@@ -50,15 +54,16 @@ var Template = (function() {
     }
     
     /**
-     * Template rendern.
-     * Rendern ein gegebenes Template mit Mustache und fügt den
+     * Rendert ein Template mit gegebenem Namen mittels Mustache und fügt den
      * Inhalt in einen gegebenes DOM-Element ein; lädt das Template per AJAX,
      * falls es noch nicht zwischengespeichert wurde; führt gegebenenfalls
      * eine Callback-Funktion aus.
+     * @access public
      * @param {Object} $target Ziel-DOM-Element
      * @param {String} template Name des Templates
-     * @param {Object} data Daten, die an Mustache übergeben werden
-     * @param {(Function|undefined)} [undefined] callback Callback-Funktion
+     * @param {Object} data Daten, die an Mustache übergeben werden sollen
+     * @param {Function} [callback] Callback-Funktion
+     * @function render
      */
     function render($target, template, data, callback) {
         if (typeof _cache[template] === typeof undefined) {

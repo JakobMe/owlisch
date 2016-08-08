@@ -1,10 +1,14 @@
 /**
- * Statistik-Modul.
- * Steuert die Statistik der App.
+ * Steuert die Statistik-View der App; erzeugt und animiert die Diagramme der
+ * Statistik über den Wörterbuch-Fortschritt und die letzten Quiz-Spiele des
+ * Nutzers anhand von angefragten Daten des Data-Moduls. 
  * @author Jakob Metzger <jakob.me@gmail.com>
  * @copyright 2016 Jakob Metzger
- * @licence https://opensource.org/licenses/MIT MIT
- * @link http://jmportfolio.de
+ * @licence MIT
+ * @requires Util
+ * @requires Mediator
+ * @requires Template
+ * @module Statistics
  */
 var Statistics = (function() {
     
@@ -42,8 +46,9 @@ var Statistics = (function() {
     var _$dictionary            = null;
     
     /**
-     * Statistik initialisieren.
-     * Startet Funktionen, um den Anfangszustand der Statistik herzustellen.
+     * Initialisiert das Statistics-Modul; abonniert den Mediator.
+     * @access public
+     * @function init
      */
     function init() {
         _arrStepsPercent = Util.arrFromNum(_NUM_STEPS_PERCENT);
@@ -52,8 +57,9 @@ var Statistics = (function() {
     }
     
     /**
-     * Mediator abonnieren.
-     * Meldet Funktionen beim Mediator an.
+     * Abonniert interne Funktionen beim Mediator.
+     * @access private
+     * @function _subMediator
      */
     function _subMediator() {
         Mediator.sub(CFG.CNL.VIEW_LOAD, _create)
@@ -63,11 +69,13 @@ var Statistics = (function() {
     }
     
     /**
-     * Statistik erzeugen.
-     * Erzeugt die Statistik anhand eines Mediator-Events; fügt die
-     * Statistik mittels Template ein, initialisiert die Elemente der
-     * Statistik und teilt dem Mediator weitere Events mit.
-     * @param {Object} data Übergebene Daten des Mediators
+     * Generiert bei einer Mediator-Nachricht mit dem Statistics-Panel als
+     * Daten die Inhalte der Statistik; initialisiert alle DOM-Elemente
+     * des Moduls, blendet die View wieder ein, fragt per Mediator benötigte
+     * Daten vom Data-Modul an und animiert die Diagramme der Statistik.
+     * @access private
+     * @param {Object} data Übermittelte Mediator-Daten
+     * @function _create
      */
     function _create(data) {
         if ((typeof data !== typeof undefined) &&
@@ -99,14 +107,15 @@ var Statistics = (function() {
     }
     
     /**
-     * Diagramm rendern.
      * Rendert ein Diagramm mit gegebenen Eigenschaften anhand eines
      * Mustache-Templates in einen angegebenen Container.
+     * @access private
      * @param {Object} $target Ziel-DOM-Element
      * @param {Object[]} data Array der Diagramm-Daten
      * @param {Number[]} steps Array der Skala-Schritte
-     * @param {Boolean} hrznt Horizontales Diagramm
-     * @param {Boolean} stars Level-Sterne anzeigen
+     * @param {Boolean} hrznt Horizontales Diagramm?
+     * @param {Boolean} stars Level-Sterne anzeigen?
+     * @function _renderChart
      */
     function _renderChart($target, data, steps, hrznt, stars, empty) {
         hrznt = (hrznt || false);
@@ -118,9 +127,10 @@ var Statistics = (function() {
     }
     
     /**
-     * Diagramm für letzte Spielergebnisse rendern.
-     * Rendert ein Diagramm für die letzten Spielergebnisse
-     * anhand eines Mustache-Templates.
+     * Rendert ein Diagramm für die letzten Spielergebnisse mit Hilfe
+     * der _renderChart Methode.
+     * @access private
+     * @function _renderScores
      */
     function _renderScores() {
         if (_$scores instanceof $) {
@@ -138,9 +148,10 @@ var Statistics = (function() {
     }
     
     /**
-     * Diagramme für Fortschritt rendern.
-     * Rendert die Diagramme für den Wörterbuch-Fortschritt
-     * anhand eines Mustache-Templates.
+     * Rendert das Diagramm für den Wörterbuch-Fortschritt mit Hilfe
+     * der _renderChart Methode.
+     * @access private
+     * @function _renderProgress
      */
     function _renderProgress() {
         if (_$progress instanceof $) {
@@ -154,9 +165,10 @@ var Statistics = (function() {
     }
     
     /**
-     * Diagramme für Wörterbuch rendern.
-     * Rendert die Diagramme für das Wörterbuch
-     * anhand eines Mustache-Templates.
+     * Rendert das Diagramm für die Wörterbuch-Zusammensetzung mit Hilfe
+     * der _renderChart Methode.
+     * @access private
+     * @function _renderDictionary
      */
     function _renderDictionary() {
         if (_$dictionary instanceof $) {
@@ -176,10 +188,11 @@ var Statistics = (function() {
     }
     
     /**
-     * Letzte Spielergebnisse aktualisieren.
-     * Aktualisiert die Spielergebnis-Liste, sobald ein entsprechendes
-     * Mediator-Event mit den erforderlichen Daten ausgelöst wird.
-     * @param {Object} data Übergebene Daten
+     * Aktualisiert die Spielergebnis-Liste, sobald eine entsprechende
+     * Mediator-Nachricht mit den erforderlichen Daten empfangen wird.
+     * @access private
+     * @param {Object} data Übermittelte Mediator-Daten
+     * @function _updateScores
      */
     function _updateScores(data) {
         if ((typeof data      !== typeof undefined) &&
@@ -190,10 +203,11 @@ var Statistics = (function() {
     }
     
     /**
-     * Fortschritt aktualisieren.
-     * Aktualisiert die Fortschritts-Liste, sobald ein entsprechendes
-     * Mediator-Event mit den erforderlichen Daten ausgelöst wird.
-     * @param {Object} data Übergebene Daten
+     * Aktualisiert die Fortschritts-Liste, sobald eine entsprechende
+     * Mediator-Nachricht mit den erforderlichen Daten empfangen wird.
+     * @access private
+     * @param {Object} data Übermittelte Mediator-Daten
+     * @function _updateProgress
      */
     function _updateProgress(data) {
         if ((typeof data        !== typeof undefined) &&
@@ -209,10 +223,11 @@ var Statistics = (function() {
     }
     
     /**
-     * Diagramme animieren.
      * Fügt den Diagrammen der Statistik eine Klasse hinzu oder entfernt sie,
      * um sie zu animieren; blendet Diagramm gegebenenfalls vorher aus.
-     * @param {Boolean} [false] shrink Diagramm vorher ausblenden
+     * @access private
+     * @param {Boolean} [shrink=false] Diagramm vorher ausblenden
+     * @function _growCharts
      */
     function _growCharts(shrink) {
         shrink = (shrink || false);
@@ -224,10 +239,11 @@ var Statistics = (function() {
     }
     
     /**
-     * Standard-Konfiguration wiederherstellen.
      * Scrollt die Statistik nach oben und animiert die Diagramme, wenn
-     * ein entsprechendes Mediator-Event ausgelöst wird.
-     * @param {String} panel Ziel-Panel des Events
+     * ein entsprechende Mediator-Nachricht empfangen wird.
+     * @access private
+     * @param {String} panel Übermittelte Mediator-Daten
+     * @function _restore
      */
     function _restore(panel) {
         if ((typeof panel    !== typeof undefined) &&

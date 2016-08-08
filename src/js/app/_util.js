@@ -1,18 +1,18 @@
 /**
- * Util-Modul.
- * Stellt Hilfs-Funktionen zur Verfügung.
+ * Stellt diverse allgemeine Hilfs-Funktionen für andere Module der App bereit.
  * @author Jakob Metzger <jakob.me@gmail.com>
  * @copyright 2016 Jakob Metzger
- * @licence https://opensource.org/licenses/MIT MIT
- * @link http://jmportfolio.de
+ * @licence MIT
+ * @module Util
  */
 var Util = (function() {
     
     /**
-     * Ein Array aus einer Zahl generieren.
      * Erzeugt ein Array mit Ganzzahlen von 1 bis zur gewählten Zahl.
+     * @access public
      * @param {Number} number Letzte Zahl im Array
      * @returns {Number[]} Array aus Zahlen bis zur gewählten Zahl
+     * @function arrFromNumber
      */
     function arrFromNum(number) {
         var arr = [];
@@ -21,13 +21,14 @@ var Util = (function() {
     }
     
     /**
-     * Prozentwert zweier Zahlen berechnen.
      * Berechnet den prozentualen Anteil einer Zahl an einer anderen;
      * gibt das Ergebnis in Prozentpunkten zurück.
+     * @access public
      * @param {Number} first Erster Zahlenwert
      * @param {Number} second Zweiter Zahlenwert
-     * @param {Boolean} [true] round Prozentpunkte runden
-     * @returns {Number} Prozentpunkte
+     * @param {Boolean} [round=true] Prozentpunkte runden?
+     * @returns {Number} Berechnete Prozentpunkte
+     * @function calcPercent
      */
     function calcPercent(first, second, round) {
         var result = ((first / second) * 100);
@@ -39,12 +40,13 @@ var Util = (function() {
     }
     
     /**
-     * Begriffe mit Level zählen.
      * Zählt in einer gegeben Begriff-Liste alle Einträge,
      * die das angegebene Level haben.
-     * @param {Object[]} terms Begriff-Liste
+     * @access public
+     * @param {Object[]} terms Array aus Begriff-Objekten
      * @param {Number} level Gesuchter Level
      * @returns {Number} Anzahl der gefundenen Begriffe
+     * @function countTermsWithLevel
      */
     function countTermsWithLevel(terms, level) {
         var count = 0;
@@ -58,13 +60,14 @@ var Util = (function() {
     }
     
     /**
-     * Nach Begriff suchen.
      * Sucht in einer gegebenen Begriff-Liste nach einem Begriff
      * mit dem passenden gegebenen Alias; gibt entweder den Begriff
-     * oder false zurück.
-     * @param {Object[]} terms Liste der Begriffe
+     * oder false zurück, falls er nicht gefunden wurde.
+     * @access public
+     * @param {Object[]} terms Array aus Begriff-Objekten
      * @param {String} alias Alias des gesuchten Begriffs
      * @returns {(Object|Boolean)} Gefundener Begriff oder false
+     * @function findTerm
      */
     function findTerm(terms, alias) {
         var found = false;
@@ -81,20 +84,22 @@ var Util = (function() {
     }
     
     /**
-     * Zufälliges Array-Element auswählen.
      * Gibt ein zufälliges Element eines Arrays zurück.
-     * @param {*[]} array Beliebiges Array
+     * @access public
+     * @param {Array} array Beliebiges Array
      * @returns {*} Zufälliges Element des Arrays
+     * @function getRandom
      */
     function getRandom(array) {
         return array[Math.floor(Math.random() * array.length)];
     }
     
     /**
-     * Array mischen.
      * Mischt ein Array zufällig durch.
-     * @param {*[]} array Zu mischendes Array
-     * @returns {*[]} Gemischtes Array
+     * @access public
+     * @param {Array} array Zu mischendes Array
+     * @returns {Array} Gemischtes Array
+     * @function shuffle
      */
     function shuffle(array) {
         var rand, last;
@@ -108,11 +113,12 @@ var Util = (function() {
     }
     
     /**
-     * Zahl begrenzen.
      * Begrenzt eine gegebene Zahl zwischen dem gegebenen Minimum und Maximum.
+     * @access public
      * @param {Number} number Zu begrenzende Zahl
      * @param {Number} min Minimum
      * @param {Number} max Maximum
+     * @function limit
      */
     function limit(number, min, max) {
         if (typeof number === typeof 0) {
@@ -123,10 +129,11 @@ var Util = (function() {
     }
     
     /**
-     * Aktuelles Datum ermitteln.
-     * Gibt das aktuelle Datum als Zahl zurück, sortiert nach
-     * Jahr, Monat und Tag, jeweils mit der maximalen Anzahl an Stellen.
-     * @returns {Number} Aktuelles Datum
+     * Gibt das aktuelle Datum als Zahl zurück, sortiert nach Jahr, Monat und
+     * Tag, jeweils mit der maximalen Anzahl an Stellen; z.B. "20160612".
+     * @access public
+     * @returns {Number} Aktuelles Datum als Zahl
+     * @function getDate
      */
     function getDate() {
         var date = new Date();
@@ -138,12 +145,13 @@ var Util = (function() {
     }
     
     /**
-     * Ganzzahl in String umwandeln.
-     * Wandelt eine gegebene Ganzzahl in einen String um; stellt
-     * führende Nullen entsprechend der angegebenen Mindeststellen an.
+     * Wandelt eine gegebene Ganzzahl in einen String um; stellt führende
+     * Nullen entsprechend der angegebenen Mindeststellen an, z.B. 2 -> 02.
+     * @access public
      * @param {Number} number Ganzzahl, die umgewandelt werden soll
      * @param {Number} digits Mindestanzahl der Vorkommastellen
-     * @returns {String} Umgewandelte Zahl
+     * @returns {String} In String Umgewandelte Zahl
+     * @function intToStr
      */
     function intToStr(number, digits) {
         var str = number.toString();
@@ -156,15 +164,16 @@ var Util = (function() {
     }
     
     /**
-     * System-Dialog anzeigen.
-     * Zeigt einen Syste-Dialog des angegebenen Typs mit den entsprechend
-     * gewählten Eigenschaften an, z.B. Alert, Confirm, Prompt;
-     * versucht, die Cordova-API zu nutzen, falls vorhanden.
+     * Zeigt einen System-Dialog des angegebenen Typs mit den entsprechend
+     * gewählten Eigenschaften an, z.B. Alert, Confirm, Prompt; versucht, die
+     * Cordova-API zu nutzen, falls vorhanden.
+     * @access public
      * @param {String} type Typ des Dialogs (alert, confirm, prompt)
      * @param {String} text Anzuzeigender Text im Dialog
      * @param {Function} callback Funktion, die anschließend ausgeführt wird
      * @param {String} title Titel des Dialogs
      * @param {String[]} buttons Labels der Buttons des Dialogs
+     * @function dialog
      */
     function dialog(type, text, callback, title, buttons) {
         var fn = null, cordova = false;

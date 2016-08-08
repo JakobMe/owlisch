@@ -1,10 +1,16 @@
 /**
- * Quiz-Modul.
- * Steuert das Quiz der App.
+ * Steuert die Quiz-View der App; erzeugt einen Slider für das Quiz und
+ * füllt ihn mit Fragen, wählt die Fragen anhand der Fortschritts-Daten aus
+ * dem Data-Modul und einen bestimmten Algorithmus aus und stellt somit bei
+ * jedem Start ein neues Quiz zusammen; sendet beim Lösen der Fragen die
+ * neuen Daten über den Mediator an das Data-Modul, um sie zu speichern.
  * @author Jakob Metzger <jakob.me@gmail.com>
  * @copyright 2016 Jakob Metzger
- * @licence https://opensource.org/licenses/MIT MIT
- * @link http://jmportfolio.de
+ * @licence MIT
+ * @requires Util
+ * @requires Mediator
+ * @requires Template
+ * @module Quiz
  */
 var Quiz = (function() {
     
@@ -90,16 +96,18 @@ var Quiz = (function() {
     var _$progressbar           = null;
     
     /**
-     * Statistik initialisieren.
-     * Startet Funktionen, um den Anfangszustand der Statistik herzustellen.
+     * Initialisiert das Quiz-Modul; abonniert den Mediator.
+     * @access public
+     * @function init
      */
     function init() {
         _subMediator();
     }
     
     /**
-     * Mediator abonnieren.
-     * Meldet Funktionen beim Mediator an.
+     * Abonniert interne Funktionen beim Mediator.
+     * @access private
+     * @function _subMediator
      */
     function _subMediator() {
         Mediator.sub(CFG.CNL.VIEW_LOAD, _create)
@@ -110,8 +118,9 @@ var Quiz = (function() {
     }
     
     /**
-     * Events binden.
      * Bindet Funktionen an Events.
+     * @access private
+     * @function _bindEvents
      */
     function _bindEvents() {
         
@@ -137,11 +146,13 @@ var Quiz = (function() {
     }
     
     /**
-     * Quiz erzeugen.
-     * Erzeugt das Quiz anhand eines Mediator-Events; fügt das Quiz
-     * mittels Template ein, initialisiert die Elemente des Quiz
-     * und teilt dem Mediator weitere Events mit.
-     * @param {Object} data Übergebene Daten des Mediators
+     * Generiert bei einer Mediator-Nachricht mit dem Quiz-Panel als
+     * Daten die Inhalte des Quiz; initialisiert alle DOM-Elemente
+     * des Moduls, bindet Events, blendet die View wieder ein und fragt
+     * per Mediator benötigte Daten vom Data-Modul an.
+     * @access private
+     * @param {Object} data Übermittelte Mediator-Daten
+     * @function _create
      */
     function _create(data) {
         if ((typeof data !== typeof undefined) &&
@@ -178,8 +189,9 @@ var Quiz = (function() {
     }
     
     /**
-     * DOM-Komponenten initialisieren.
-     * Initialisiert alle DOM-Elemente des Quizes.
+     * Initialisiert alle DOM-Elemente des Quiz.
+     * @access private
+     * @function _initDom
      */
     function _initDom() {
         _$quiz        = $(_SEL_SLIDER);
@@ -193,9 +205,10 @@ var Quiz = (function() {
     }
     
     /**
-     * Fortschrittsleiste rendern.
      * Rendert alle Schritte der Fortschrittsleiste anhand 
      * des aktuellen Fortschrittes.
+     * @access private
+     * @function _renderProgressbar
      */
     function _renderProgressbar() {
         if (_$progressbar instanceof $) {
@@ -217,11 +230,12 @@ var Quiz = (function() {
     }
     
     /**
-     * Fortschritt setzen.
-     * Setzt den Status eines Schrittes des Quizes;
-     * rendert anschließend die Fortschrittsleiste.
+     * Setzt den Status eines Schrittes des Quizes; rendert anschließend
+     * die Fortschrittsleiste neu.
+     * @access private
      * @param {Number} step Nummer des Quiz-Schrittes
      * @param {String} status Neuer Status des Schrittes
+     * @function _setProgress
      */
     function _setProgress(step, status) {
         if ((typeof step            === typeof 0) &&
@@ -233,10 +247,11 @@ var Quiz = (function() {
     }
     
     /**
-     * Aktuellen Schritt setzen.
-     * Setzt das Quiz auf den gegebenen Schritt; rendert die
-     * Fortschrittsleiste neu.
+     * Setzt das Quiz auf den gegebenen Schritt; rendert anschließend
+     * die Fortschrittsleiste neu.
+     * @access private
      * @param {Number} step Neuer Quiz-Schritt
+     * @function _setStep
      */
     function _setStep(step) {
         if (typeof step === typeof 0) {
@@ -247,8 +262,9 @@ var Quiz = (function() {
     }
     
     /**
-     * Fortschritt zurücksetzen.
-     * Setzt den aktuellen Fortschritt des Quizes zurück.
+     * Setzt den aktuellen Fortschritt des Quiz zurück.
+     * @access private
+     * @function _resetProgress
      */
     function _resetProgress() {
         for (var i = 1; i <= CFG.QUIZ.QUESTIONS; i++) {
@@ -258,10 +274,11 @@ var Quiz = (function() {
     }
     
     /**
-     * Fortschritts-Balken-Animationen setzen.
      * Aktiviert oder deaktiviert die Animationen für die Icons
      * des Fortschritts-Balkens.
-     * @param {Boolean} animated Animationen aktiviern oder deaktivieren
+     * @access private
+     * @param {Boolean} animated Animationen aktivieren?
+     * @function _setProgressbarAnimation
      */
     function _setProgressbarAnimation(animated) {
         if (typeof animated === typeof true) {
@@ -270,9 +287,10 @@ var Quiz = (function() {
     }
     
     /**
-     * Schritt überspringen.
      * Markiert den aktuellen Schritt als übersprungen,
-     * fährt zum nächsten Schritt vor.
+     * fährt zum nächsten Schritt fort.
+     * @access private
+     * @function _skipStep
      */
     function _skipStep() {
         _setProgress(_currentStep, _M_SKIPPED);
@@ -280,8 +298,9 @@ var Quiz = (function() {
     }
     
     /**
-     * Nächsten Schritt einleiten.
      * Markiert den nächsten Schritt als aktiv, bewegt den Slider weiter.
+     * @access private
+     * @function _nextStep
      */
     function _nextStep() {
         var next = _currentStep + 1;
@@ -291,11 +310,12 @@ var Quiz = (function() {
     }
     
     /**
-     * Quiz starten.
-     * Startet das Quiz anhand eines Klick-Events; bewegt den Slider
-     * zur ersten Frage, aktiviert den ersten Schritt und sendet
-     * eine Mediator-Nachricht an andere Module.
-     * @param {Object} event Ausgelöstes Event
+     * Startet das Quiz; bewegt den Slider zur ersten Frage, aktiviert den
+     * ersten Schritt und sendet eine Mediator-Nachricht an andere Module,
+     * um den Viewport anzupassen.
+     * @access private
+     * @param {Object} [event] Ausgelöstes Klick-Event
+     * @function _start
      */
     function _start(event) {
         if (typeof event !== typeof undefined) { event.preventDefault(); }
@@ -315,11 +335,12 @@ var Quiz = (function() {
     }
     
     /**
-     * Fragen aussuchen.
      * Sucht zufällige Fragen für das Quiz aus; stellt sicher, dass
      * jeder Begriff nur einmal im Quiz auftaucht, gewichtet die
      * die Begriffe nach ihren bisherigen Fehlschlägen (je mehr
      * Fehlschläge, desto höher die Wahrscheinlichkeit).
+     * @access private
+     * @function _pickQuestions
      */
     function _pickQuestions() {
         _questions = [];
@@ -334,14 +355,15 @@ var Quiz = (function() {
     }
     
     /**
-     * Frage-Typen auswählen.
      * Wählt anhand eines übergebenen Begriffs und den globalen Einstellungen
      * für die Quiz-Typen einen passenden Typen für die Frage zu diesem
      * Begriff aus; zieht die Stufe des Begriffs, das Vorhandensein
      * eines Bildes und die Vollständigkeit der Antwortmöglichkeiten
      * für die Auswahl hinzu.
+     * @access private
      * @param {Object} term Begriff-Daten für den Frage-Typen
      * @returns {Object} Konfiguration des Frage-Typs
+     * @function _pickQuestionType
      */
     function _pickQuestionType(term) {
         var config = null;
@@ -359,9 +381,10 @@ var Quiz = (function() {
     }
     
     /**
-     * Fragen aufbereiten.
      * Ergänzt die ausgewählten Fragen um zusätzliche Daten für die Darstellung
      * und Funktionsweise des Quiz; rendert die Fragen anschließend.
+     * @access private
+     * @function _processQuestions
      */
     function _processQuestions() {
         var type, diff, answ, chars;
@@ -393,14 +416,15 @@ var Quiz = (function() {
     }
     
     /**
-     * Zeichen auswählen.
      * Wählt anhand des gegebenen Frage-Typs und der Antworten
      * die Zeichen für die Ausgabe der Lösung aus; mischt die Zeichen
      * der Lösung durch und wandelt sie in Großbuchstaben um. Falls
      * der Typ oder die Antworten nicht stimmen, wird false zurückgegeben.
+     * @access private
      * @param {Object} type Typ der Quiz-Frage
      * @param {Object[]} answer Antworten der Quiz-Frage
      * @returns {(Object|Boolean)} Konfiguration der Buchstaben oder false
+     * @function _pickChars
      */
     function _pickChars(type, answer) {
         if ((typeof type.chars !== typeof undefined) && ($.isArray(answer)) &&
@@ -424,9 +448,10 @@ var Quiz = (function() {
     }
     
     /**
-     * Fragen leeren.
      * Entfernt sämtlichen Inhalt aus allen Fragen.
-     * @param {Boolean} finish Quiz-Ende ebenfalls leeren
+     * @access private
+     * @param {Boolean} [finish=false] Quiz-Ende ebenfalls leeren?
+     * @function _clearQuestions
      */
     function _clearQuestions(finish) {
         _$questions.each(function() { $(this).html(""); });
@@ -434,13 +459,14 @@ var Quiz = (function() {
     }
     
     /**
-     * Antworten aussuchen.
      * Stellt für einen gegebenen Begriff zufällig Antworten zusammen.
+     * @access private
      * @param {Object} term Begriff mit Antworten
      * @param {String} propAnswers Name der Antwort-Eigenschaft
      * @param {String} propRight Name der Korrektheit-Eigenschaft
-     * @param {Boolean} pictures Antworten sind Bilder
+     * @param {Boolean} [pictures=false] Antworten sind Bilder?
      * @returns {Object[]} Liste der zusammengestellten Antworten
+     * @function _pickAnswers
      */
     function _pickAnswers(term, propAnswers, propRight, pictures) {
         
@@ -469,11 +495,12 @@ var Quiz = (function() {
     }
     
     /**
-     * Lösung verarbeiten.
      * Führt Funktionen aus, um eine gegebene Lösung in Abhängigkeit
      * ihrer Korrektheit zu verarbeiten; aktualisiert den Fortschritts-Balken,
      * aktualisiert die gespeicherten Daten und zeigt den Weiter-Button an.
+     * @access private
      * @param {Boolean} correct Lösung ist korrekt
+     * @function _processSolution
      */
     function _processSolution(correct) {
         if (typeof correct === typeof true) {
@@ -485,10 +512,11 @@ var Quiz = (function() {
     }
     
     /**
-     * Antwort evaluieren.
      * Prüft, ob eine geklickte Antwort richtig oder falsch ist; setzt den
      * aktuellen Fortschritt entsprechend und rendert alle Antworten.
+     * @access private
      * @param {Object} event Ausgelöstes Klick-Event
+     * @function _evaluateAnswer
      */
     function _evaluateAnswer(event) {
         if (typeof event !== typeof undefined) {
@@ -502,11 +530,12 @@ var Quiz = (function() {
     }
     
     /**
-     * Input evaluieren.
      * Evaluiert bei einem Klick-Event das Input der aktuellen Quiz-Frage;
      * sperrt den Lösen-Button, rendert das Input anhand der Korrektheit
      * der eingegebenen Lösung neu und verarbeitet die Lösung.
-     * @param {Object} event Ausgelöstes Event
+     * @access private
+     * @param {Object} event Ausgelöstes Klick-Event
+     * @function _evaluateInput
      */
     function _evaluateInput(event) {
         if ((typeof event !== typeof undefined) && (event.target) &&
@@ -531,11 +560,12 @@ var Quiz = (function() {
     }
     
     /**
-     * Buchstaben hinzufügen.
-     * Fügt bei Klick-Event einen Buchstaben zum Quiz-Input der aktuellen
-     * Frage hinzu; deaktiviert den gedrückten Button und aktualisiert
-     * die Daten des Inputs.
-     * @param {Object} event Ausgelöstes Event
+     * Fügt bei einem Klick-Event einen Buchstaben zum Quiz-Input der aktuellen
+     * Frage hinzu; deaktiviert den gedrückten Button und aktualisiert die
+     * Daten des Inputs.
+     * @access private
+     * @param {Object} event Ausgelöstes Klick-Event
+     * @function _addLetter
      */
     function _addLetter(event) {
         if (typeof event !== typeof undefined) {
@@ -569,11 +599,12 @@ var Quiz = (function() {
     }
     
     /**
-     * Buchstaben entfernen.
-     * Entfernt bei Klick-Event einen Buchstaben aus dem Quiz-Input der
+     * Entfernt bei einem Klick-Event einen Buchstaben aus dem Quiz-Input der
      * aktuellen Frage; aktualisiert die Daten des Inputs und deaktiviert
      * gegebenenfalls den Backspace-Button.
+     * @access private
      * @param {Object} event Ausgelöstes Klick-Event
+     * @function _removeLetter
      */
     function _removeLetter(event) {
         if (typeof event !== typeof undefined) {
@@ -603,9 +634,10 @@ var Quiz = (function() {
     }
     
     /**
-     * Backspace umschalten.
      * Sperrt oder entsperrt den Backspace-Button der aktuellen Frage.
-     * @param {Boolean} locked Button sperren
+     * @access private
+     * @param {Boolean} locked Backspace-Button sperren?
+     * @function _toggleBackspace
      */
     function _toggleBackspace(locked) {
         if (typeof locked === typeof true) {
@@ -616,10 +648,11 @@ var Quiz = (function() {
     }
     
     /**
-     * Begriff aktualisieren.
      * Aktualisiert den Begriff der aktuellen Frage entsprechend
      * der Korrektheit der gegebenen Antwort über eine Mediator-Nachricht.
-     * @param {Boolean} correct Angabe, ob der Begriff richtig erraten wurde
+     * @access private
+     * @param {Boolean} correct Wurde der Begriff richtig erraten?
+     * @function _updateTerm
      */
     function _updateTerm(correct) {
         if (typeof correct === typeof true) {
@@ -634,11 +667,12 @@ var Quiz = (function() {
     }
     
     /**
-     * Level-Anzeige rendern.
-     * Rendert die Level-Anzeige der aktuellen Frage anhand
-     * des übergebenen Levels; aktualisiert die Anzahl der Sterne
-     * und beachtet dabei das Level-Maximum.
+     * Rendert die Level-Anzeige der aktuellen Frage anhand des übergebenen
+     * Levels; aktualisiert die Anzahl der Sterne und beachtet dabei das
+     * global definierte Level-Maximum.
+     * @access private
      * @param {Number} level Neues Level
+     * @function _renderLevel
      */
     function _renderLevel(level) {
         if (typeof level === typeof 0) {
@@ -652,27 +686,30 @@ var Quiz = (function() {
     }
     
     /**
-     * Überspringen sperren.
      * Sendet eine Nachricht über den Mediator, um den Überspringen-Button
      * zu deaktivieren und somit das Überspringen unmöglich zu machen.
+     * @access private
+     * @function _lockSkip
      */
     function _lockSkip() {
         Mediator.pub(CFG.CNL.NAVBAR_ACTION, { act: CFG.ACT.QUIZ_SOLVE });
     }
     
     /**
-     * Überspringen entsperren.
      * Sendet eine Nachricht über den Mediator, um den Überspringen-Button
      * zu aktivieren und somit das Überspringen möglich zu machen.
+     * @access private
+     * @function _unlockSkip
      */
     function _unlockSkip() {
         Mediator.pub(CFG.CNL.NAVBAR_ACTION, { act: CFG.ACT.QUIZ_START });
     }
     
     /**
-     * Weiter-Button entsperren.
      * Entsperrt den Weiter-Button der aktuellen Frage, um es zu
      * ermöglichen, zur nächsten Frage fortzufahren.
+     * @access private
+     * @function _unlockContinue
      */
     function _unlockContinue() {
         setTimeout(function() {
@@ -682,8 +719,9 @@ var Quiz = (function() {
     }
     
     /**
-     * Lösen.Button entsperren.
      * Sperrt den Lösen-Button der aktuellen Frage.
+     * @access private
+     * @function _lockSolve
      */
     function _lockSolve() {
         if (_$currentQuestion instanceof $) {
@@ -693,8 +731,9 @@ var Quiz = (function() {
     }
     
     /**
-     * Lösen-Button ausblenden.
-     * Blendet den Lösen-Button der aktuellen Quiz-Frage aus.
+     * Blendet den Lösen-Button der aktuellen Frage aus.
+     * @access private
+     * @function _hideSolve
      */
     function _hideSolve() {
         if (_$currentQuestion instanceof $) {
@@ -705,8 +744,9 @@ var Quiz = (function() {
     }
     
     /**
-     * Lösen-Button einblenden.
-     * Blendet den Lösen-Button der aktuellen Quiz-Frage ein.
+     * Blendet den Lösen-Button der aktuellen Frage ein.
+     * @access private
+     * @function _showSolve
      */
     function _showSolve() {
         if (_$currentQuestion instanceof $) {
@@ -717,8 +757,9 @@ var Quiz = (function() {
     }
     
     /**
-     * Input fokussieren.
-     * Fokussiert das Input der aktuellen Quiz-Frage, falls vorhanden.
+     * Fokussiert den Input der aktuellen Frage, falls vorhanden.
+     * @access private
+     * @function _focusInput
      */
     function _focusInput() {
         var $form = _$currentQuestion.find(_SEL_FORM);
@@ -730,10 +771,11 @@ var Quiz = (function() {
     }
     
     /**
-     * Quiz fortfahren.
      * Fährt zur nächsten Frage des Quiz fort, falls der Weiter-Button
      * nicht gesperrt ist; reagiert auf ein Klick-Event.
-     * @param {Object} event Ausgelöstes Klick-Event.
+     * @access private
+     * @param {Object} event Ausgelöstes Klick-Event
+     * @function _continue
      */
     function _continue(event) {
         if ((typeof event !== typeof undefined) && (event.target) &&
@@ -744,11 +786,12 @@ var Quiz = (function() {
     }
     
     /**
-     * Antworten rendern.
      * Rendert die Antworten anhand einer ausgewählten Antwort;
      * aktualisiert die Status-Klasse aller benachbarten Antworten.
+     * @access private
      * @param {Object} $answer DOM-Element der gewählten Antwort
-     * @param {Boolean} correct Angabe, ob die Antwort korrekt ist
+     * @param {Boolean} correct War die Antwort korrekt?
+     * @function _renderAnswers
      */
     function _renderAnswers($answer, correct) {
         if ($answer instanceof $) {
@@ -772,11 +815,12 @@ var Quiz = (function() {
     }
     
     /**
-     * Input rendern.
      * Rendert den übergebenen Input; aktualisiert seine Status-Klasse
      * und blendet die Lösung ein; sperrt das Input.
+     * @access private
      * @param {Object} $answer DOM-Element des Inputs
-     * @param {Boolean} correct Angabe, ob die Lösung korrekt ist
+     * @param {Boolean} correct War die Antwort korrekt?
+     * @function _renderInput
      */
     function _renderInput($input, correct) {
         if ($input instanceof $) {
@@ -796,10 +840,11 @@ var Quiz = (function() {
     }
     
     /**
-     * Quiz beenden.
-     * Berechnet das Endergebnis vom Quiz, ermittelt die entsprechende
-     * Bewertung aus der Konfiguration, rendert den Abschluss und
-     * sendet das Ergebnis an andere Module.
+     * Beendet das Quiz; berechnet das Endergebnis, ermittelt die
+     * entsprechende Bewertung aus der Konfiguration, rendert den Abschluss
+     * und sendet das Ergebnis über den Mediator.
+     * @access private
+     * @function _finish
      */
     function _finish() {
         
@@ -832,13 +877,14 @@ var Quiz = (function() {
     }
     
     /**
-     * Quiz-Ende rendern.
      * Rendert das Quiz-Ende mit einem Mustache-Template; fügt
-     * alle Ergebnisse des Quizes ein und animiert abschließend
+     * alle Ergebnisse des Quizes ein und animiert anschließend
      * das Ergebnis-Diagramm.
-     * @param {Number} result Anzahl er richtigen Fragen
+     * @access private
+     * @param {Number} result Anzahl er richtigen Antworten
      * @param {Number} skipped Anzahl der übersprungenen Fragen
      * @param {Object} rating Bewertungs-Objekt
+     * @function _renderFinish
      */
     function _renderFinish(result, skipped, rating) {
         Template.render(_$finish, _TMPL_FINISH, {
@@ -857,10 +903,11 @@ var Quiz = (function() {
     }
     
     /**
-     * Wörterbuch-Daten aktualisieren.
      * Aktualisiert die interne Kopie der Wörterbuch-Daten des Quizes
      * anhand einer Mediator-Nachricht.
-     * @param {Object} data Übermittelte Daten
+     * @access private
+     * @param {Object} data Übermittelte Mediator-Daten
+     * @function _update
      */
     function _update(data) {
         if ((typeof data         !== typeof undefined) &&
@@ -872,10 +919,10 @@ var Quiz = (function() {
     }
     
     /**
-     * Wörterbuch-Konfiguration setzen.
-     * Setzt die Konfiguration des Wörterbuches
-     * anhand einer Mediator-Nachricht.
-     * @param {Object} data Übermittelte Daten
+     * Setzt die Konfiguration des Wörterbuches anhand einer Mediator-Nachricht.
+     * @access private
+     * @param {Object} data Übermittelte Mediator-Daten
+     * @function _setConfig
      */
     function _setConfig(data) {
         if ((typeof data !== typeof undefined) &&
@@ -887,10 +934,11 @@ var Quiz = (function() {
     }
     
     /**
-     * Standard-Konfiguration wiederherstellen.
      * Stellt die Standard-Konfiguration des Quizes anhand
      * einer Mediator-Nachricht wieder her.
-     * @param {String} panel Name des View-Panels
+     * @access private
+     * @param {String} panel Übermittelte Mediator-Daten
+     * @function _restore
      */
     function _restore(panel) {
         if ((typeof panel    !== typeof undefined) &&
@@ -901,10 +949,11 @@ var Quiz = (function() {
     }
     
     /**
-     * Navigation-Bar Aktion ausführen.
      * Entscheided anhand einer Mediator-Nachricht, welche
      * Aktion beim Klick eines Navigation-Bar-Buttons ausgeführt wird.
-     * @param {Object} data Übermittelte Daten
+     * @access private
+     * @param {Object} data Übermittelte Mediatir-Daten
+     * @function _navbarAction
      */
     function _navbarAction(data) {
         if ((typeof data     !== typeof undefined) &&
@@ -917,9 +966,10 @@ var Quiz = (function() {
     }
 
     /**
-     * Alles zurücksetzen.
      * Setzt alle Kompenenten und Daten vom Quiz zurück.
-     * @param {Boolean} [false] restart Quiz nach dem Zurücksetzen starten
+     * @access private
+     * @param {Boolean} [restart=false] Quiz nach dem Zurücksetzen starten?
+     * @function _resetAll
      */
     function _resetAll(restart) {
         Mediator.pub(CFG.CNL.VIEW_HIDE);

@@ -1,10 +1,12 @@
 /**
- * Globale Konfiguration.
- * Definiert globale Konstanten und Konfigurationen für alle Module.
+ * Definiert globale Konstanten und Konfigurationen für alle Module; beinhaltet
+ * Label-Texte, Datei-Pfade und -Endungen, Konfigurationen für das Quiz,
+ * Kanal-Namen für den Mediator, Eigenschaften der View-Panels und Optionen
+ * und Konstanten für Events, Icon-Namen und Zeitangaben.
  * @author Jakob Metzger <jakob.me@gmail.com>
  * @copyright 2016 Jakob Metzger
- * @licence https://opensource.org/licenses/MIT MIT
- * @link http://jmportfolio.de
+ * @licence MIT
+ * @module CFG
  */
 var CFG = (function() {
     return {

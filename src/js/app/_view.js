@@ -1,10 +1,15 @@
 /**
- * View-Modul.
- * Steuert die View der App.
+ * Steuert die View der App; erstellt beim Initialisieren alle View-Panels
+ * die im CFG-Modul angegeben sind, ermöglich das Ein-/Ausblenden der View,
+ * löst über den Mediator die Erstellung der View-Inhalte aus, falls diese
+ * leer sind und reagiert auf Änderungen der View, z.B. durch das Keyboard
+ * oder das Starten/Beenden des Quiz.
  * @author Jakob Metzger <jakob.me@gmail.com>
  * @copyright 2016 Jakob Metzger
- * @licence https://opensource.org/licenses/MIT MIT
- * @link http://jmportfolio.de
+ * @licence MIT
+ * @requires Mediator
+ * @requires Template
+ * @module View
  */
 var View = (function() {
     
@@ -41,8 +46,10 @@ var View = (function() {
     var _$panels                = {};
     
     /**
-     * View initialisieren.
-     * Führt Funktionen aus, um den Ausgangszustand der View herzustellen.
+     * Initialisiert das View-Modul; erstellt alle View-Panels, bindet Events
+     * und abonniert den Mediator, indem andere Funktionen ausgeführt werden.
+     * @access public
+     * @function init
      */
     function init() {
         _create();
@@ -51,8 +58,9 @@ var View = (function() {
     }
     
     /**
-     * Events binden.
      * Bindet Funktionen an Events.
+     * @access private
+     * @function _bindEvents
      */
     function _bindEvents() {
         window.addEventListener(CFG.EVT.KEYBOARD_SHOW, _enableFullscreen);
@@ -60,8 +68,9 @@ var View = (function() {
     }
     
     /**
-     * Mediator abonnieren.
-     * Meldet Funktionen beim Mediator an.
+     * Abonniert interne Funktionen beim Mediator.
+     * @access private
+     * @function _subMediator
      */
     function _subMediator() {
         Mediator.sub(CFG.CNL.VIEW_SHOW, _show)
@@ -72,11 +81,12 @@ var View = (function() {
     }
     
     /**
-     * View generieren.
-     * Generiert für jedes definierte Panel anhand des gesetzten
-     * Templates ein HTML-Panel im Content-Bereich; initialisiert
-     * die Elemente der View und leitet die Panel-Daten über den
-     * Mediator weiter; rendert die View.
+     * Generiert für jedes im CFG-Modul definierte Panel anhand des gesetzten
+     * Templates ein HTML-Panel im Content-Bereich; initialisiert die Elemente
+     * der View und leitet die Panel-Daten über den Mediator weiter;
+     * rendert die View anschließend.
+     * @access private
+     * @function _create
      */
     function _create() {
         
@@ -102,9 +112,10 @@ var View = (function() {
     }
     
     /**
-     * View rendern.
      * Rendert alle Elemente der View anhand der intern
      * gesetzten aktuellen Variablen.
+     * @access private
+     * @function _render
      */
     function _render() {
             
@@ -124,8 +135,9 @@ var View = (function() {
     }
     
     /**
-     * View-Panels rendern.
      * Rendert alle View-Panels; blendet sie ein oder aus.
+     * @access private
+     * @function _renderPanels
      */
     function _renderPanels() {
         $.each(_$panels, function(name, $panel) {
@@ -134,11 +146,12 @@ var View = (function() {
     }
     
     /**
-     * Aktuelles View-Panel setzen.
      * Setzt das aktuelle View-Panel anhand eines Mediator-Events;
      * entscheidet, ob sich das Panel geändert hat oder nicht;
      * teilt dem Mediator die Änderung mit und rendert die View.
+     * @access private
      * @param {String} panel Name des neuen Panels
+     * @function _setView
      */
     function _setView(panel) {
         if ((typeof panel !== typeof undefined) &&
@@ -172,8 +185,9 @@ var View = (function() {
     }
     
     /**
-     * View ausblenden.
      * Blendet die View aus.
+     * @access private
+     * @function _hide
      */
     function _hide() {
         _isVisible = false;
@@ -181,8 +195,9 @@ var View = (function() {
     }
     
     /**
-     * View einblenden.
      * Blendet die View ein.
+     * @access private
+     * @function _show
      */
     function _show() {
         _isVisible = true;
@@ -190,8 +205,9 @@ var View = (function() {
     }
     
     /**
-     * Fullscreen aktivieren.
      * Aktiviert die volle Höhe für die View.
+     * @access private
+     * @function _enableFullscreen
      */
     function _enableFullscreen() {
         _isFullscreen = true;
@@ -199,8 +215,9 @@ var View = (function() {
     }
     
     /**
-     * Fullscreen deaktivieren.
      * Deaktiviert die volle Höhe für die View, wenn Quiz inaktiv ist.
+     * @access private
+     * @function _disableFullscreen
      */
     function _disableFullscreen() {
         if (!_isQuiz) {
@@ -210,8 +227,9 @@ var View = (function() {
     }
     
     /**
-     * Quiz aktivieren.
      * Notiert, dass das Quiz aktiv ist; aktiviert Fullscreen.
+     * @access private
+     * @function _enableQuiz
      */
     function _enableQuiz() {
         _isQuiz = true;
@@ -219,8 +237,9 @@ var View = (function() {
     }
     
     /**
-     * Quiz deaktivieren.
      * Notiert, dass Quiz inaktiv ist; deaktiviert Fullscreen.
+     * @access private
+     * @function _disableQuiz
      */
     function _disableQuiz() {
         _isQuiz = false;

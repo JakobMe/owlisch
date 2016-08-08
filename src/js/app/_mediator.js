@@ -1,10 +1,13 @@
 /**
- * Mediator-Modul.
- * Übernimmt die Komminikation zwischen den Modulen.
+ * Stellt Funktionen bereit, um die Kommunikation zwischen Modulen zu
+ * gewährleisten; erlaubt das Abonnieren von Kanälen, indem einem Kanal
+ * eine Funktion hinzugefügt wird; durch das Veröffentlichen auf einem Kanal
+ * werden alle gebundenen Funktionen mit den veröffentlichten Daten als
+ * Funktionsparameter ausgeführt.
  * @author Jakob Metzger <jakob.me@gmail.com>
  * @copyright 2016 Jakob Metzger
- * @licence https://opensource.org/licenses/MIT MIT
- * @link http://jmportfolio.de
+ * @licence MIT
+ * @module Mediator
  */
 var Mediator = (function() {
     
@@ -12,12 +15,13 @@ var Mediator = (function() {
     var _channels = {};
     
     /**
-     * Kanal abonnieren.
      * Fügt einem Kanal des Mediators eine Callback-Funktion hinzu;
      * erzeugt den Kanal, falls er noch nicht existiert.
+     * @access public
      * @param {String} channel Name des Kanals
      * @param {Function} callback Callback-Funktion
      * @returns {Object} Interface des Moduls
+     * @function sub
      */
     function sub(channel, callback) {
         if (!_channels.hasOwnProperty(channel)) { _channels[channel] = []; }
@@ -26,11 +30,12 @@ var Mediator = (function() {
     }
     
     /**
-     * Kanal deabonnieren.
      * Entfernt eine Callback-Funktion von einem Kanal des Mediators.
+     * @access public
      * @param {String} channel Name des Kanals
      * @param {Function} callback Callback-Funktion
      * @returns {Object} Interface des Moduls
+     * @function unsub
      */
     function unsub(channel, callback) {
         if (_channels.hasOwnProperty(channel)) {
@@ -45,12 +50,13 @@ var Mediator = (function() {
     }
     
     /**
-     * Daten veröffentlichen.
      * Veröffentlich beliebige Daten auf einem angegebenen Kanal;
      * führt alle abonnierten Funktion mit den Daten als Argument aus.
+     * @access public
      * @param {String} channel Name des Kanals
-     * @param {(*|undefined)} [undefined] data Zu veröffentlichende Daten
+     * @param {*} [data] Zu veröffentlichende Daten
      * @returns {Object} Interface des Moduls
+     * @function pub
      */
     function pub(channel, data) {
         if (_channels.hasOwnProperty(channel)) {

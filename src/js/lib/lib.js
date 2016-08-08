@@ -1,10 +1,8 @@
-/*
- * Library Master-Datei.
- * Importiert alle Bibliotheken.
+/**
+ * Lib Master-Datei; importiert alle Bibliotheken mit Codekit-Prepend.
  * @author Jakob Metzger <jakob.me@gmail.com>
  * @copyright 2016 Jakob Metzger
- * @licence https://opensource.org/licenses/MIT MIT
- * @link http://jmportfolio.de
+ * @licence MIT
  */
 
 // @codekit-prepend "_jquery.js";

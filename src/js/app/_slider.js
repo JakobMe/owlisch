@@ -1,10 +1,11 @@
 /**
- * Slider-Modul.
- * Steuert die Funktionalitäten von Slidern.
+ * Erstellt einen Slider auf einem gegebenen Ziel-DOM-Element.
  * @author Jakob Metzger <jakob.me@gmail.com>
  * @copyright 2016 Jakob Metzger
- * @licence https://opensource.org/licenses/MIT MIT
- * @link http://jmportfolio.de
+ * @licence MIT
+ * @requires Util
+ * @param {Object} $target Ziel-DOM-Element des Sliders
+ * @constructor
  */
 var Slider = function($target) {
     
@@ -23,11 +24,12 @@ var Slider = function($target) {
     var _current                = 0;
     
     /**
-     * Slider Initialisieren.
-     * Initialiert das DOM-Element des Sliders, die Anzahl der vorhandenen
+     * Initialisiert das DOM-Element des Sliders, die Anzahl der vorhandenen
      * Slides, setzt ein Data-Attribut für jedes Slide und setzt den 
      * Slider auf den ersten Slide.
-     * @param {Object} $target Ziel-DOM-Element des Sliders.
+     * @inner
+     * @access private
+     * @param {Object} $target Ziel-DOM-Element des Sliders
      */
     function _init($target) {
         if ($target instanceof $) {
@@ -42,8 +44,10 @@ var Slider = function($target) {
     }
     
     /**
-     * Slider setzen.
-     * Setzt den Index des Sliders auf die gegebene Zahl.
+     * Setzt den Index des Sliders auf die gegebene Zahl und ändert
+     * die Klasse des Slider-DOM-Element entsprechend.
+     * @inner
+     * @access public
      * @param {Number} index Neuer Index des Sliders
      */
     function setSlide(index) {
@@ -54,8 +58,9 @@ var Slider = function($target) {
     }
     
     /**
-     * Aktuellen Index ermitteln.
-     * Gibt den aktuellen Slider-Index zurück.
+     * Gibt den aktuellen Slide-Index des Sliders zurück.
+     * @inner
+     * @access public
      * @returns {Number} Aktueller index
      */
     function getSlide() {
@@ -63,9 +68,11 @@ var Slider = function($target) {
     }
     
     /**
-     * Index eines Elements ermitteln.
      * Ermittelt den Slide-Index eines Elements innerhalb des Sliders
-     * anhand eines gegebenen Query-Selektors.
+     * anhand eines gegebenen Query-Selektors, falls das gesuchte Element
+     * ein Slide-Element des Sliders ist (ein direktes Kind-Element).
+     * @inner
+     * @access public
      * @param {String} selector Query-Selektor
      * @returns {(Number|Boolean)} Index des gefundenen Elements oder false
      */

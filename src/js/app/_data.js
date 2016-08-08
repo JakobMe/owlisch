@@ -1,10 +1,14 @@
 /**
- * Data-Modul.
- * Steuert den Spielstand und die Wörterbuch-Daten.
+ * Lädt und verwaltet alle benötigten Daten für die App, bereitet die
+ * Daten aus den Wörterbuch-Dateien auf, kann sie per Mediator an andere
+ * Module senden und speichert über den Mediator empfangene Daten im
+ * LocalStorage des Browsers.
  * @author Jakob Metzger <jakob.me@gmail.com>
  * @copyright 2016 Jakob Metzger
- * @licence https://opensource.org/licenses/MIT MIT
- * @link http://jmportfolio.de
+ * @licence MIT
+ * @requires Util
+ * @requires Mediator
+ * @module Data
  */
 var Data = (function() {
     
@@ -28,8 +32,11 @@ var Data = (function() {
     var _sizeProgress           = 0;
     
     /**
-     * Daten initialisieren.
-     * Startet Funktionen, um den Anfangszustand des Data-Moduls herzustellen.
+     * Initialisiert das Data-Modul; bindet Events, abonniert den Mediator
+     * und lädt alle benötigten Daten aus Dateien und dem LocalStorage,
+     * indem andere Funktionen ausgeführt werden.
+     * @access public
+     * @function init
      */
     function init() {
         _bindEvents();
@@ -39,8 +46,9 @@ var Data = (function() {
     }
     
     /**
-     * Mediator abonnieren.
-     * Meldet Funktionen beim Mediator an.
+     * Abonniert interne Funktionen beim Mediator.
+     * @access private
+     * @function _subMediator
      */
     function _subMediator() {
         Mediator.sub(CFG.CNL.TERMS_REQUEST, _serveDataTerms)
@@ -53,16 +61,18 @@ var Data = (function() {
     }
     
     /**
-     * Events binden.
      * Bindet Funktionen an Events.
+     * @access private
+     * @function _bindEvents
      */
     function _bindEvents() {
         $(document).on(CFG.EVT.CLICK, _SEL_DELETE, _clearConfirm);
     }
     
     /**
-     * Gespeicherte Daten initialisieren.
      * Erstellt einen leeren Standard-Datensatz im LocalStorage.
+     * @access private
+     * @function _initDataStored
      */
     function _initDataStored() {
         var dataInitial = { dictionary: CFG.DATA.DEFAULT };
@@ -76,8 +86,11 @@ var Data = (function() {
     }
     
     /**
-     * Gespeicherte Daten laden.
-     * Lädt alle gespeicherten Daten aus dem LocalStorage.
+     * Lädt alle gespeicherten Daten für das aktuelle Wörterbuch aus dem
+     * LocalStorage; ruft _initDataStored auf, falls noch keine Daten
+     * vorhanden sind.
+     * @access private
+     * @function _loadDataStored
      */
     function _loadDataStored() {
         
@@ -97,10 +110,11 @@ var Data = (function() {
     }
 
     /**
-     * Daten für Wörterbuch-Konfiguration laden.
      * Lädt die Datei mit der Konfiguration für die verfügbaren
      * Wörterbücher und den Einstellungen für das Quiz;
-     * speichert die Daten und stellt sie per Mediator bereit.
+     * stellt die Daten per Mediator bereit.
+     * @access private
+     * @function _loadDataConfig
      */
     function _loadDataConfig() {
         
@@ -118,9 +132,11 @@ var Data = (function() {
     }
     
     /**
-     * Wörterbuch-Datei laden.
-     * Lädt die Datei zum eingestellten Wörterbuch und
-     * speichert die Daten in einer lokalen Variable.
+     * Lädt die Datei zum eingestellten Wörterbuch und speichert die Daten in
+     * einer lokalen Variable; ruft weitere Funktionen auf, um die geladenen
+     * Daten aufzubereiten.
+     * @access private
+     * @function _loadDataTerms
      */
     function _loadDataTerms() {
         
@@ -144,10 +160,12 @@ var Data = (function() {
     }
     
     /**
-     * Datei überprüfen.
-     * Überprüft die Existenz einer gegebenen Datei.
-     * @param {String} file Dateipfad
-     * @returns {Object} AJAX-Antwort
+     * Überprüft die Existenz einer gegebenen Datei, indem eine
+     * Ajax-Head-Anfrage zur Dateipfad gemacht wird.
+     * @access private
+     * @param {String} file Pfad zur Datei
+     * @returns {Object} Ajax-Antwort
+     * @function _checkFile
      */
     function _checkFile(file) {
         return $.ajax({
@@ -157,12 +175,13 @@ var Data = (function() {
     }
     
     /**
-     * Dateien eines Begriffes prüfen.
-     * Prüft mittels AJAX-Anfragen, ob ein gegebener Begriff
-     * über Audio- und/oder Bild-Dateien verfügt; erweitert die
+     * Prüft mittels Ajax-Anfragen per _checkFile, ob ein Begriff mit gegebenem
+     * Alias über Audio- und/oder Bild-Dateien verfügt; erweitert die internen
      * Wörterbuch-Daten um den Datei-Status.
-     * @param {String} alias Kürzel des Begriffes
-     * @returns {Object} AJAX-Objekte der Anfragen
+     * @access private
+     * @param {String} alias Alias des Begriffes
+     * @returns {Object} Ajax-Objekte der Anfragen für Audio- und Bild-Dateien
+     * @function _checkTermFiles
      */
     function _checkTermFiles(alias) {
         if (typeof alias === typeof "") {
@@ -183,10 +202,11 @@ var Data = (function() {
     }
     
     /**
-     * Wörterbuch nach Existenz von Dateien überprüfen.
-     * Prüft alle Begriffe des Wörterbuches nach der Existenz von
-     * zugehörigen Audio- und Bild-Dateien; aktualisiert anschließend
-     * die Begriff-Daten.
+     * Prüft alle Begriffe des Wörterbuches nach der Existenz von zugehörigen
+     * Audio- und Bild-Dateien; aktualisiert die Daten entsprechend und
+     * bereitet sie im Anschluss mittels _processDataTerms auf.
+     * @acces private
+     * @function _checkDictionaryFiles
      */
     function _checkDictionaryFiles() {
         
@@ -209,10 +229,11 @@ var Data = (function() {
     }
     
     /**
-     * Begriff-Daten aufbereiten.
      * Verknüpft alle Daten der Wörterbuch-Begriffe mit den
      * gespeicherten Fortschritts-Daten; stellt die aktuellen Daten
      * über den Mediator zur Verfügung.
+     * @access private
+     * @function _processDataTerms
      */
     function _processDataTerms() {
 
@@ -232,8 +253,10 @@ var Data = (function() {
     }
     
     /**
-     * Daten speichern.
-     * Speichert alle aktuellen Daten als JSON-String im LocalStorage.
+     * Speichert alle internen Daten des aktuellen Wörterbuches
+     * als JSON-String im LocalStorage.
+     * @acess private
+     * @function _storeData
      */
     function _storeData() {
         
@@ -249,10 +272,11 @@ var Data = (function() {
     }
     
     /**
-     * Begriff-Daten aktualisieren.
      * Setzt das neue Level und die Anzahl der Fehlschläge
-     * für einen bestimmten Begriff beim entsprechenden Event.
-     * @param {Object} data Daten des Events
+     * für einen bestimmten Begriff bei einer ausgelösten Mediator-Nachricht.
+     * @access private
+     * @param {Object} data Übermittelte Mediator-Daten
+     * @function _updateDataTerm
      */
     function _updateDataTerm(data) {
         if ((typeof data       !== typeof undefined) &&
@@ -264,13 +288,14 @@ var Data = (function() {
     }
     
     /**
-     * Begriff-Daten setzen.
-     * Setzt den Fortschritt für einen bestimmten Begriff;
-     * aktualisiert die Stufe und die Fehlschläge des Begriffs,
-     * speichert den Fortschritt und aktualisiert die Begriff-Daten.
+     * Setzt den Fortschritt für einen bestimmten Begriff; aktualisiert die
+     * Stufe und die Fehlschläge des Begriffs, speichert den Fortschritt und
+     * aktualisiert die Begriff-Daten mittels anderer Funktionen.
+     * @access private
      * @param {String} alias Alias des Begriffs
      * @param {Number} lvl Neue Stufe des Begriffs
      * @param {Number} fail Neue Fehlschläge des Begriffs
+     * @function _setDataTerm
      */
     function _setDataTerm(alias, lvl, fail) {
         if ((typeof lvl  === typeof 0) &&
@@ -296,11 +321,12 @@ var Data = (function() {
     }
 
     /**
-     * Die letzten Spiele setzen.
      * Fügt einen neuen Wert zur Liste der letzten Spiele hinzu;
      * kürzt die Liste wieder auf die Maximallänge, speichert sie
      * und stellt sie zur Verfügung.
+     * @access private
      * @param {Number} result Neues Quiz-Ergebnis
+     * @function _updateDataScore
      */
     function _updateDataScore(score) {
         if (typeof score === typeof 0) {
@@ -321,11 +347,12 @@ var Data = (function() {
     }
     
     /**
-     * Begriff des Tages aktualisieren.
-     * Prüft, ob ein gespeichertes Datum für das Begriff des Tages gesetzt
-     * ist; vergleicht dieses Datum gegebenenfalls mit dem aktuellen und
-     * wählt ein neues zufälliges Begriff des Tages aus; speichert die Daten
-     * und stellt sie bereit.
+     * Prüft, ob ein gespeichertes Datum für den Begriff des Tages gesetzt ist;
+     * vergleicht dieses Datum gegebenenfalls mit dem aktuellen und wählt einen
+     * neuen zufälligen Begriff des Tages aus; stellt die Daten anschließend
+     * mittels anderer Funktionen bereit.
+     * @access private
+     * @function _updateDataFeatured
      */
     function _updateDataFeatured() {
         if ($.isEmptyObject(_dataFeatured) ||
@@ -335,11 +362,12 @@ var Data = (function() {
     }
     
     /**
-     * Begriff des Tages setzen.
-     * Setzt ein neues Begriff des Tages; wählt ein zufälliges Wort aus,
-     * falls keines gegeben ist und setzt das aktuelle Datum;
-     * speichert die Daten und stellt sie bereit.
-     * @param {(String|undefined)} [undefined] alias Begriff-Alias
+     * Setzt einen neuen Begriff des Tages; wählt einen zufälligen Begriff aus,
+     * falls keiner angegeben ist und setzt das aktuelle Datum; speichert die
+     * Daten und stellt sie anschließend bereit.
+     * @access private
+     * @param {String} [alias] Begriff-Alias des Tages
+     * @function _setDataFeatured
      */
     function _setDataFeatured(alias) {
         
@@ -366,8 +394,9 @@ var Data = (function() {
     }
     
     /**
-     * Fortschritt-Liste bereitstellen.
      * Liefert die Fortschritt-Liste in einer Mediator-Nachricht.
+     * @access private
+     * @function _serveDataTerms
      */
     function _serveDataTerms() {
         Mediator.pub(CFG.CNL.TERMS_SERVE, {
@@ -379,8 +408,9 @@ var Data = (function() {
     }
     
     /**
-     * Die letzten Spieleergebnisse bereitstellen.
      * Liefert die Ergebnisse der letzten Spiele in einer Mediator-Nachricht.
+     * @access private
+     * @function _serveDataScores
      */
     function _serveDataScores() {
         Mediator.pub(CFG.CNL.SCORES_SERVE, {
@@ -390,8 +420,9 @@ var Data = (function() {
     }
     
     /**
-     * Wörberbuch-Konfiguration bereitstellen.
      * Liefert die Konfiguration des Wörterbuches in einer Mediator-Nachricht.
+     * @access private
+     * @function _serveDataConfig
      */
     function _serveDataConfig() {
         Mediator.pub(CFG.CNL.CONFIG_SERVE, {
@@ -401,27 +432,31 @@ var Data = (function() {
     }
     
     /**
-     * Begriff des Tages bereitstellen.
      * Liefert den zufälligen Begriff des Tages in einer Mediator-Nachricht.
+     * @access private
+     * @function _serveDataFeatured
      */
     function _serveDataFeatured() {
         Mediator.pub(CFG.CNL.FEATURED_SERVE, _dataFeatured.term);
     }
     
     /**
-     * Verfügbare Wörterbücher bereitstellen.
      * Liefert alle verfügbaren Wörterbucher in einer Mediator-Nachricht.
+     * @access private
+     * @function _serveDataDictionaries
      */
     function _serveDataDictionaries() {
         Mediator.pub(CFG.CNL.DICTIONARIES_SERVE, _dataDictionaries);
     }
     
     /**
-     * Daten löschen.
-     * Löschte alle Daten über die letzten Spiele und den Fortschritt;
+     * Löschte alle Daten über die letzten Spiele und den Fortschritt,
      * speichert die Daten und stellt sie über den Mediator bereit,
-     * zeigt eine Bestätigung als Alert an.
-     * @param {(Number|undefined)} [undefined] confirm Löschen bestätigen
+     * zeigt eine Bestätigung als Alert an; wird nur ausgeführt, wenn
+     * der Parameter 1 (bestätigt) oder undefined ist.
+     * @access private
+     * @param {Number} [confirm] Löschen bestätigt
+     * @function _clearData
      */
     function _clearData(confirm) {
         if ((typeof confirm === typeof undefined) ||
@@ -443,10 +478,11 @@ var Data = (function() {
     }
     
     /**
-     * Löschen bestätigen.
-     * Ruft einen Bestätigungs-Dialog zum Löschen der Daten auf;
+     * Ruft einen Bestätigungs-Dialog zum Löschen der Fortschritts-Daten auf;
      * verwendet die Cordova-API, falls vorhanden, ansonsten den
      * Standard-JavaScript-Dialog.
+     * @access private
+     * @function _clearConfirm
      */
     function _clearConfirm() {
         Util.dialog(

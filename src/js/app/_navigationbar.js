@@ -1,10 +1,18 @@
 /**
- * Navigation-Bar-Modul.
- * Steuert die Navigation-Bar der App.
+ * Steuert die Navigation-Bar der App; erzeugt die Inhalte des Moduls und
+ * ermöglicht es, andere Module und Funktionalitäten der App über die
+ * Navigations-Buttons zu steuern, indem Mediator-Nachrichten gesendet werden;
+ * reagiert auch auf Mediator-Nachrichten, um auf Änderungen in den Views
+ * zu reagieren und die Navigation-Bar entsprechend anzupassen; enthält
+ * zudem ein Sortier-Dropdown, ein Suchfeld für das Wörterbuch und den
+ * aktuellen Titel der View.
  * @author Jakob Metzger <jakob.me@gmail.com>
  * @copyright 2016 Jakob Metzger
- * @licence https://opensource.org/licenses/MIT MIT
- * @link http://jmportfolio.de
+ * @licence MIT
+ * @requires Util
+ * @requires Mediator
+ * @requires Template
+ * @module NavigationBar
  */
 var NavigationBar = (function() {
 
@@ -61,9 +69,10 @@ var NavigationBar = (function() {
     var _$btnR                  = null;
     
     /**
-     * Navigation-Bar initialisieren.
-     * Führt Funktionen aus, um den Anfangszustand der
-     * Navigation-Bar herzustellen.
+     * Initialisiert das NavigationBar-Modul; abonniert den Mediator und
+     * erzeugt anhand eines Templates den Inhalt der Navigation-Bar.
+     * @access public
+     * @function init
      */
     function init() {
         _create();
@@ -71,8 +80,9 @@ var NavigationBar = (function() {
     }
     
     /**
-     * Events binden.
      * Bindet Funktionen an Events.
+     * @access private
+     * @function _bindEvents
      */
     function _bindEvents() {
         _$sort.on(CFG.EVT.CLICK, _setSort);
@@ -82,8 +92,9 @@ var NavigationBar = (function() {
     }
     
     /**
-     * Mediator abonnieren.
-     * Meldet Funktionen beim Mediator an.
+     * Abonniert interne Funktionen beim Mediator.
+     * @access private
+     * @function _subMediator
      */
     function _subMediator() {
         Mediator.sub(CFG.CNL.VIEW_CHANGE, _update)
@@ -94,10 +105,10 @@ var NavigationBar = (function() {
     }
     
     /**
-     * Navigation-Bar erzeugen.
      * Erzeugt die Navigation-Bar; fügt die Navigation-Bar mittels Template
-     * ein, initialisiert die Elemente der Navigation-Bar und teilt dem
-     * Mediator weitere Events mit.
+     * ein und initialisiert die Elemente der Navigation-Bar.
+     * @access private
+     * @function _create
      */
     function _create() {
         
@@ -129,8 +140,9 @@ var NavigationBar = (function() {
     }
     
     /**
-     * DOM-Komponenten initialisieren.
-     * Initialisiert alle DOM-Elemente der Navigation-Bar.
+     * Initialisiert alle DOM-Elemente des NavigationBar-Moduls.
+     * @access private
+     * @function _initDom
      */
     function _initDom() {
         _$search = _$navbar.find(_SEL_SEARCH);
@@ -143,9 +155,10 @@ var NavigationBar = (function() {
     }
     
     /**
-     * Standard-Konfiguration im Cache speichern.
-     * Legt für jedes vorhandene View-Panel die Standard-Konfiguration
-     * der Navigation-Bar im Cache fest.
+     * Legt für jedes in der globalen Konfiguration vorhandene View-Panel
+     * die Standard-Konfiguration der Navigation-Bar im internen Cache fest.
+     * @access private
+     * @function _initCache
      */
     function _initCache() {
         
@@ -175,9 +188,10 @@ var NavigationBar = (function() {
     }
     
     /**
-     * Navigation-Bar rendern.
      * Rendert alle Elemente der Navigation-Bar anhand der intern
      * gesetzten aktuellen Variablen.
+     * @access private
+     * @function _render
      */
     function _render() {
         _$navbar.setMod(_B_BAR, _M_WEBAPP, _isWebapp);
@@ -189,10 +203,11 @@ var NavigationBar = (function() {
     }
     
     /**
-     * Button rendern.
      * Rendert einen gewählten Button (Links/Rechts) anhand seiner
      * gesetzten Eigenschaften (Aktion/Icon).
-     * @param {Object} $btn jQuery-Objekt des Buttons
+     * @access private
+     * @param {Object} $btn DOM-Element des Buttons
+     * @function _renderBtn
      */
     function _renderBtn($btn) {
         if ($btn instanceof $) {
@@ -219,9 +234,9 @@ var NavigationBar = (function() {
     }
     
     /**
-     * Titel rendern.
-     * Rendert den Titel der Titelleiste anhand des
-     * aktuell gesetzten Titels neu.
+     * Rendert den Titel der Titelleiste anhand des aktuell gesetzten Titels.
+     * @access private
+     * @function _renderHead
      */
     function _renderHead() {
         if (_$head instanceof $) {
@@ -234,8 +249,9 @@ var NavigationBar = (function() {
     }
     
     /**
-     * Suche rendern.
      * Rendert die Suche anhand der gesetzten Eigenschaften des Moduls.
+     * @access private
+     * @function _renderSearch
      */
     function _renderSearch() {
         _$navbar.setMod(_B_BAR, _M_SEARCH, false);
@@ -245,10 +261,11 @@ var NavigationBar = (function() {
     }
     
     /**
-     * Dropdown-Menü rendern.
      * Rendert das Dropdown-Menü anhand einer ausgewählten Option und den
      * aktuell gesetzten Eigenschaften des Menüs.
-     * @param {Object} $selected Ausgewählte Dropdown-Option
+     * @access private
+     * @param {Object} $selected Ausgewählte Dropdown-Option als DOM-Element
+     * @function _renderDropdown
      */
     function _renderDropdown($selected) {
         _$drpdwn.setMod(_B_DROPDOWN, _M_OPENED, _dropdownIsOpened);  
@@ -260,10 +277,13 @@ var NavigationBar = (function() {
     }
     
     /**
-     * Aktion ausführen.
-     * Führt anhand einer über den Mediator übermittelten
-     * Nachricht eine entsprechende Aktion aus.
-     * @param {Object} data Übermittelte Daten
+     * Führt anhand einer Mediator-Nachricht und dem darin enthaltenen Namen
+     * einer Aktion die entsprechende Aktion innerhalb der Navigation-Bar aus;
+     * verändert dabei gegebenenfalls die Buttons, den Titel, die Suche
+     * und das Dropdown der Navigation-Bar.
+     * @access private
+     * @param {Object} data Übermittelte Mediator-Daten
+     * @function _performAction
      */
     function _performAction(data) {
         if ((typeof data     !== typeof undefined) &&
@@ -344,10 +364,11 @@ var NavigationBar = (function() {
     }
     
     /**
-     * Aktion auslösen.
      * Löst anhand eines Klick-Events auf einen Navigation-Bar-Button die damit
-     * verknüpfte Aktion aus; veröffentlich die Aktion über den Mediator.
-     * @param {Object} event Ausgelöstes Event
+     * verknüpfte Aktion aus; sendet die Aktion über den Mediator.
+     * @access private
+     * @param {Object} event Ausgelöstes Klick-Event
+     * @function _triggerAction
      */
     function _triggerAction(event) {
         if (!_buttonsAreDisabled && event.target) {
@@ -358,10 +379,11 @@ var NavigationBar = (function() {
     }
     
     /**
-     * Sortierung setzen.
-     * Setzt anhand eines Klick-Events die aktuelle Sortierung; veröffentlicht
+     * Setzt anhand eines Klick-Events die aktuelle Sortierung; sendet
      * die Sortierung per Mediator und blendet die Dropdown-Sortierung aus.
-     * @param {Object} event Ausgelöstes Event
+     * @access private
+     * @param {Object} event Ausgelöstes Klick-Event
+     * @function _setSort
      */
     function _setSort(event) {
         if ((typeof event !== typeof undefined) && (event.target)) {
@@ -379,12 +401,13 @@ var NavigationBar = (function() {
     }
     
     /**
-     * Dropdown-Sortierung ein-/ausblenden.
      * Blendet das Dropdown-Menü anhand des übergebenen Wertes ein oder aus;
      * setzt den zugehörigen Button entsprechend; aktualisiert optional
      * die ausgewählte Sortierungs-Option.
-     * @param {Boolean} willBeOpened Angabe, ob das Dropdown geöffnet wird
-     * @param {(Object|undefined)} [undefined] $selected Ausgewählte Opttion
+     * @access private
+     * @param {Boolean} willBeOpened Soll Dropdown geöffnet werden?
+     * @param {Object} [$selected] DOM-Element der gewählten Option
+     * @function _setDropdown
      */
     function _setDropdown(willBeOpened, $selected) {
         if (_dropdownIsOpened !== willBeOpened) {
@@ -398,11 +421,12 @@ var NavigationBar = (function() {
     }
     
     /**
-     * Button-Eigenschaften setzen.
-     * Setzt die Aktion und das Icon eines gegebenen Buttons.
-     * @param {Object} button Button-Objekt
-     * @param {String} action Name der Button-Aktion
-     * @param {String} icon Name des Button-Icons
+     * Setzt die Aktion und das Icon eines angegebenen Buttons.
+     * @access private
+     * @param {Object} button DOM-Element des Buttons
+     * @param {String} action Neue Aktion
+     * @param {String} icon Neues Icon
+     * @function _setBtn
      */
     function _setBtn($btn, act, ico) {
         if ($btn instanceof $) {
@@ -423,29 +447,32 @@ var NavigationBar = (function() {
     }
     
     /**
-     * Button Links setzen.
      * Setzt Aktion und Icon des linken Buttons.
+     * @access private
      * @param {String} action Neue Aktion
      * @param {String} icon Neues Icon
+     * @function _setBtnL
      */
     function _setBtnL(act, ico) {
         _setBtn(_$btnL, act, ico);
     }
     
     /**
-     * Button Rechts setzen.
      * Setzt Aktion und Icon des rechten Buttons.
+     * @access private
      * @param {String} action Neue Aktion
      * @param {String} icon Neues Icon
+     * @function _setBtnR
      */
     function _setBtnR(act, ico) {
         _setBtn(_$btnR, act, ico);
     }
     
     /**
-     * Titel setzen.
      * Setzt den aktuellen Titel und rendert ihn neu.
+     * @access private
      * @param {String} title Neuer Titel
+     * @function _setHead
      */
     function _setHead(head) {
         if (typeof head === typeof "") {
@@ -455,11 +482,12 @@ var NavigationBar = (function() {
     }
     
     /**
-     * Suche (de-)aktivieren.
      * Aktiviert oder deaktiviert die Suche anhand des übergebenen Wertes;
      * setzt den zugehörigen Button entsprechend und rendert die Suche neu.
-     * @param {Boolean} willBeActive Angabe, ob die Suche aktiviert wird
-     * @param {Boolean} triggerSearch Angabe, ob Such-Event ausgelöst wird
+     * @access private
+     * @param {Boolean} willBeActive Wird Suche aktiviert?
+     * @param {Boolean} [triggerSearch=true] Suchbegriff an Mediator senden?
+     * @function _setSearch
      */
     function _setSearch(willBeActive, triggerSearch) {
         if (_searchIsActive !== willBeActive) {
@@ -474,8 +502,9 @@ var NavigationBar = (function() {
     }
     
     /**
-     * Suche auslösen.
      * Sendet den aktuellen Suchbegriff an den Mediator.
+     * @access private
+     * @function _triggerSearch
      */
     function _triggerSearch() {
         Mediator.pub(
@@ -485,8 +514,9 @@ var NavigationBar = (function() {
     }
     
     /**
-     * Suche fokussieren.
      * Fokussiert das Such-Input nach einem kurzen Delay.
+     * @access private
+     * @function _focusSearch
      */
     function _focusSearch() {
         setTimeout(function() {
@@ -495,9 +525,10 @@ var NavigationBar = (function() {
     }
     
     /**
-     * Suche aktualisieren.
      * Ermittelt den aktuellen Suchbegriff und leitet diesen Wert weiter;
      * blendet den Clear-Button für das Input ein/aus.
+     * @access private
+     * @function _updateSearch
      */
     function _updateSearch() {
         var search = _$search.val();
@@ -506,9 +537,9 @@ var NavigationBar = (function() {
     }
     
     /**
-     * Suchfeld leeren.
-     * Leert das Suchfeld, löst ein Input-Event aus
-     * und fokussiert das Suchfeld.
+     * Leert und fokussiert das Suchfeld, löst ein Input-Event aus.
+     * @access private
+     * @function _clearSearch
      */
     function _clearSearch() {
         _$search.val("").trigger(CFG.EVT.INPUT);
@@ -516,11 +547,12 @@ var NavigationBar = (function() {
     }
     
     /**
-     * Aktuelle Navigation-Bar im Cache speichern.
      * Hinterlegt die aktuelle Konfiguration der Navigation-Bar
      * anhand des übergebenen Indexes im internen Cache.
+     * @access private
      * @param {String} index Name der Konfiguration
-     * @param {(String|undefined)} [undefined] title Alternativer neuer Titel
+     * @param {String} [title] Alternativer neuer Titel
+     * @functio _saveCache
      */
     function _saveCache(index, head) {
         
@@ -540,10 +572,11 @@ var NavigationBar = (function() {
     }
     
     /**
-     * Aktuelle Konfiguration aus Cache wiederherstellen.
      * Lädt eine Konfiguration anhand des übergebenen Indexes aus dem Cache,
      * falls sie vorhanden ist, und ersetzt die aktuelle Konfiguration.
+     * @access private
      * @param {String} index Name der Konfiguration
+     * @function _loadCache
      */
     function _loadCache(index) {
         
@@ -560,10 +593,11 @@ var NavigationBar = (function() {
     }
     
     /**
-     * Standard-Konfiguration wiederherstellen.
      * Lädt anhand einer Mediator-Nachricht den Original-Zustand der
      * Navigation-Bar für ein bestimmtes View-Panel.
+     * @access private
      * @param {String} panel Name des View-Panels
+     * @function _restore
      */
     function _restore(panel) {
         if ((typeof panel            !== typeof undefined) &&
@@ -583,11 +617,13 @@ var NavigationBar = (function() {
     }
     
     /**
-     * Navigation-Bar aktualisieren.
      * Aktualisiert anhand einer Mediator-Nachricht den Zustand
      * der Navigation-Bar; speichert den Zustand für das vorige View-Panel
-     * im Cache und lädt den Zustand für das neue View-Panel aus dem Cache.
-     * @param {Object} data Empfangene Daten
+     * im Cache und lädt den Zustand für das neue View-Panel aus dem Cache;
+     * das geschieht bei einem Wechsel der View über die Tab-Bar.
+     * @access private
+     * @param {Object} data Empfangene Mediator-Daten
+     * @function _update
      */
     function _update(data) {
         if ((typeof data          !== typeof undefined) &&

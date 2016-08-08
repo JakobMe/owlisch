@@ -1,10 +1,13 @@
 /**
- * Featured-Modul.
- * Steuert das Wort des Tages der App.
+ * Steuert die Start-View der App; zeigt beim Start der App den Begriff des
+ * Tages an, indem dieser zunächst per Mediator vom Data-Modul angefragt wird.
  * @author Jakob Metzger <jakob.me@gmail.com>
  * @copyright 2016 Jakob Metzger
- * @licence https://opensource.org/licenses/MIT MIT
- * @link http://jmportfolio.de
+ * @licence MIT
+ * @requires Util
+ * @requires Mediator
+ * @requires Template
+ * @module Featured
  */
 var Featured = (function() {
     
@@ -17,17 +20,18 @@ var Featured = (function() {
     var _$featured              = null;
     
     /**
-     * Wort des Tages initialisieren.
-     * Führt Funktionen aus, um den Ausgangszustand
-     * des Wort des Tages herzustellen.
+     * Initialisiert das Featured-Modul; abonniert den Mediator.
+     * @access public
+     * @function init
      */
     function init() {
         _subMediator();
     }
     
     /**
-     * Mediator abonnieren.
-     * Meldet Funktionen beim Mediator an.
+     * Abonniert interne Funktionen beim Mediator.
+     * @access private
+     * @function _subMediator
      */
     function _subMediator() {
         Mediator.sub(CFG.CNL.VIEW_LOAD, _create)
@@ -37,11 +41,12 @@ var Featured = (function() {
     }
     
     /**
-     * Wort des Tages erzeugen.
-     * Erzeugt das Wort des Tages anhand eines Mediator-Events; sendet
-     * Anfragen für benötigte Daten über den Mediator und initialisiert
-     * benötigte DOM-Elemente.
-     * @param {Object} data Übergebene Daten des Mediators
+     * Generiert bei einer Mediator-Nachricht mit dem Featured-Panel als
+     * Daten die Inhalte der Start-View; initialisiert alle DOM-Elemente
+     * des Moduls und fragt per Mediator benötigte Daten vom Data-Modul an.
+     * @access private
+     * @param {Object} data Übermittelte Mediator-Daten
+     * @function _create
      */
     function _create(data) {
         if ((typeof data !== typeof undefined) &&
@@ -56,9 +61,10 @@ var Featured = (function() {
     }
     
     /**
-     * Begriff des Tages rendern.
      * Rendert den aktuellen Begriff mittels Mustache-Template,
      * falls alle benötigten Daten vorhanden sind.
+     * @access private
+     * @function _render
      */
     function _render() {
         if ((_$featured instanceof $) &&
@@ -79,11 +85,12 @@ var Featured = (function() {
     }
     
     /**
-     * Begriff-Daten aktualisieren.
-     * Aktualisiert die Begriff-Liste, sobald ein entsprechendes
-     * Mediator-Event mit den erforderlichen Daten ausgelöst wird;
+     * Aktualisiert die Begriff-Liste, sobald eine entsprechende
+     * Mediator-Nachricht mit den erforderlichen Daten empfangen wird;
      * rendert den Begriff neu.
-     * @param {Object} data Übergebene Daten
+     * @access private
+     * @param {Object} data Übermittelte Daten
+     * @function _updateTerms
      */
     function _updateTerms(data) {
         if ((typeof data !== typeof undefined) &&
@@ -94,11 +101,12 @@ var Featured = (function() {
     }
     
     /**
-     * Wort des Tages aktualisieren.
-     * Aktualisiert den Begriff-Alias des Wort des Tages, sobald ein
-     * entsprechendes Mediator-Event mit den erforderlichen
-     * Daten ausgelöst wird; rendert den Begriff neu.
+     * Aktualisiert den Begriff-Alias des Wort des Tages, sobald eine
+     * entsprechende Mediator-Nachricht mit den erforderlichen
+     * Daten empfangen wird; rendert den Begriff neu.
+     * @access private
      * @param {String} data Übergebene Daten
+     * @function _updateFeatured
      */
     function _updateFeatured(data) {
         if (typeof data === typeof "") {  
@@ -108,10 +116,12 @@ var Featured = (function() {
     }
     
     /**
-     * Standard-Konfiguration wiederherstellen.
-     * Scrollt das Wort des Tages nach oben, wenn ein
-     * entsprechendes Mediator-Event ausgelöst wird.
-     * @param {String} panel Ziel-Panel des Events
+     * Scrollt das Wort des Tages nach oben, wenn eine entsprechende
+     * Mediator-Nachricht ausgelöst wird, um den Ausgangszustand
+     * wiederherzustellen.
+     * @access private
+     * @param {String} panel Übermittelte Daten
+     * @function _restore
      */
     function _restore(panel) {
         if ((typeof panel    !== typeof undefined) &&

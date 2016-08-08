@@ -1,11 +1,9 @@
-/*
- * Master-Datei.
- * Importiert alle anderen Bibliotheken und Module; wird zu einer
- * einzigen minimierten JS-Datei zusammengefügt (/js/main.min.js).
+/**
+ * Master-Datei; importiert alle App-Module und Bibliotheken mit
+ * Codekit-Prepend, wird zu www/js/index.min.js zusammengefügt.
  * @author Jakob Metzger <jakob.me@gmail.com>
  * @copyright 2016 Jakob Metzger
- * @licence https://opensource.org/licenses/MIT MIT
- * @link http://jmportfolio.de
+ * @licence MIT
  */
 
 // @codekit-prepend "lib/lib.js";

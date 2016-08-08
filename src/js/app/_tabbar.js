@@ -1,10 +1,15 @@
 /**
- * Tab-Bar-Modul.
- * Steuert die Tab-Bar der App.
+ * Steuert die Tab-Bar der App; erstellt beim Initialisieren alle Tabs anhand
+ * der View-Panels, die dem Modul per Mediator vom View-Modul übergeben werden,
+ * ermöglicht das Wechseln des View-Panels per Klick auf die Tabs und das
+ * Ein-/Ausblenden der Tab-Bar bei bestimmten Events und Mediator-Nachrichten.
  * @author Jakob Metzger <jakob.me@gmail.com>
  * @copyright 2016 Jakob Metzger
- * @licence https://opensource.org/licenses/MIT MIT
- * @link http://jmportfolio.de
+ * @licence MIT
+ * @requires Util
+ * @requires Mediator
+ * @requires Template
+ * @module TabBar
  */
 var TabBar = (function() {
     
@@ -41,8 +46,10 @@ var TabBar = (function() {
     var _$tabs                  = null;
     
     /**
-     * Tab-Bar initialisieren.
-     * Startet Funktionen, um den Anfangszustand der Tab-Bar herzustellen.
+     * Initialisiert das TabBar-Modul; bindet Events und abonniert den
+     * Mediator, indem andere Funktionen ausgeführt werden.
+     * @access public
+     * @function init
      */
     function init() {
         _bindEvents();
@@ -50,8 +57,9 @@ var TabBar = (function() {
     }
     
     /**
-     * Events binden.
      * Bindet Funktionen an Events.
+     * @access private
+     * @function _bindEvents
      */
     function _bindEvents() {
         _$tabbar.on(CFG.EVT.CLICK, _SEL_TAB, _setTab);
@@ -60,8 +68,9 @@ var TabBar = (function() {
     }
     
     /**
-     * Mediator abonnieren.
-     * Meldet Funktionen beim Mediator an.
+     * Abonniert interne Funktionen beim Mediator.
+     * @access private
+     * @function _subMediator
      */
     function _subMediator() {
         Mediator.sub(CFG.CNL.VIEW_INIT, _create)
@@ -73,7 +82,15 @@ var TabBar = (function() {
      * Tab-Bar generieren.
      * Generiert für jedes angegebene Panel einen entsprechenden
      * Tab in der Tab-Bar und aktiviert den ersten Tab.
-     * @param {Object} panels Vorhandene Panels
+     
+     */
+    /**
+     * Generiert für jedes vom View-Modul übergebene Panel einen Tab,
+     * indem das Tab-Bar-Template per Mustache mit den Panel-Daten geladen
+     * und in die App eingefügt wird; aktiviert den ersten Tab.
+     * @access private
+     * @param {Object} panels Vom View-Modul übergebenes Panel-Objekt
+     * @function _create
      */
     function _create(panels) {
         if (typeof panels !== typeof undefined) {
@@ -90,9 +107,10 @@ var TabBar = (function() {
     }
     
     /**
-     * Tab-Bar rendern.
      * Rendert alle Elemente der Tab-Bar anhand der intern
      * gesetzten aktuellen Variablen.
+     * @access private
+     * @function _render
      */
     function _render() {
         
@@ -107,11 +125,12 @@ var TabBar = (function() {
     }
     
     /**
-     * Aktiven Tab setzen.
      * Setzt den aktiven Tab anhand eines Klick-Events oder eines
      * übergebenen Tab-Indexes; rendert anschließend die Tab-Bar
      * und sendet das gewählte View-Panel über den Mediator.
+     * @access private
      * @param {(Object|Number)} tab Klick-Event vom Tab oder Tab-Index
+     * @function _setTab
      */
     function _setTab(tab) {
         if (!_isLocked) {
@@ -138,8 +157,9 @@ var TabBar = (function() {
     }
     
     /**
-     * Tab-Bar ausblenden.
      * Blendet die Tab-Bar aus.
+     * @access private
+     * @function _hide
      */
     function _hide() {
         _isHidden = true;
@@ -148,8 +168,9 @@ var TabBar = (function() {
     }
     
     /**
-     * Tab-Bar einblenden.
      * Blendet die Tab-Bar ein.
+     * @access private
+     * @function _show
      */
     function _show() {
         _isHidden = false;
@@ -158,8 +179,9 @@ var TabBar = (function() {
     }
     
     /**
-     * Tab-Bar deaktivieren.
      * Deaktiviert die Tab-Bar.
+     * @access private
+     * @function _disable
      */
     function _disable() {
         _isDisabled = true;
@@ -168,8 +190,9 @@ var TabBar = (function() {
     }
     
     /**
-     * Tab-Bar aktivieren.
      * Aktiviert die Tab-Bar.
+     * @access private
+     * @function _enable
      */
     function _enable() {
         _isDisabled = false;

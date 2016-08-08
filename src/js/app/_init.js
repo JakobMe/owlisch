@@ -1,15 +1,32 @@
 /**
- * App initialisieren.
- * Initialisiert alle Komponenten/Module der App.
+ * Haupt-Modul der App; aktiviert FastClick, konfiguriert die Optionen für das
+ * BEM-Helper-Plugin und initialisiert alle Module der App, initialisiert sich
+ * selbst, sobald das Dokument bereit ist.
  * @author Jakob Metzger <jakob.me@gmail.com>
  * @copyright 2016 Jakob Metzger
- * @licence https://opensource.org/licenses/MIT MIT
- * @link http://jmportfolio.de
+ * @licence MIT
+ * @requires Template
+ * @requires Data
+ * @requires Featured
+ * @requires Dictionary
+ * @requires Quiz
+ * @requires Statistics
+ * @requires More
+ * @requires NavigationBar
+ * @requires TabBar
+ * @requires Play
+ * @requires View
+ * @module App
  */
-var App = {
+var App = (function() {
     
-    // Initialisieren
-    init: function() {
+    /**
+     * Aktiviert FastClick, konfiguriert das BEM-Helpers-Plugin und
+     * initialisiert alle Module der App in richtiger Reihenfolge.
+     * @access public
+     * @function init
+     */
+    function init() {
         
         // FastClick initialisieren
         FastClick.attach(document.body);
@@ -21,7 +38,7 @@ var App = {
             modKeyVal : CFG.BEM.M_KEY
         });
         
-        // Komponenten initialisieren
+        // Module initialisieren
         Template.init();
         Data.init();
         Featured.init();
@@ -34,9 +51,11 @@ var App = {
         Play.init();
         View.init();
     }
-};
+    
+    // Öffentliches Interface
+    return { init: init };
+    
+})();
 
 // App initialisieren
-$(document).ready(function() {
-    App.init();
-});
+$(document).ready(function() { App.init(); });

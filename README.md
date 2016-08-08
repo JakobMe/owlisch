@@ -73,7 +73,7 @@ cordova platform add ios
 cordova build ios
 ```
 
-Um die App in einem Emulator zu starten können folgende Befehle verwendet werden:
+Um die App in einem Emulator zu starten, können folgende Befehle verwendet werden:
 
 ```sh
 # Kurzfassung
@@ -85,14 +85,14 @@ cordova emulate ios --target=\"iPhone-5s\"
 
 Alternativ dazu kann auch das Projekt unter `platforms/ios` direkt in Xcode geöffnet und ausgeführt werden; so erfolgt auch die Installation auf einem iPhone, falls eine gültige [Apple Developer-ID](https://developer.apple.com/developer-id/) vorliegt.
 
-Um die JavaScript-Dokumentation in dieser Readme-Datei zu aktualisieren kann folgender Befehl benutzt werden:
+Um die JavaScript-Dokumentation in dieser Readme-Datei zu aktualisieren, kann folgender Befehl benutzt werden:
 
 ```sh
 # README.md aktualisieren
 npm run doc
 ```
 
-Um die App zu bauen ohne sie im Emulator zu starten kann folgender Befehl verwendet werden:
+Um die App zu bauen ohne sie im Emulator zu starten, kann folgender Befehl verwendet werden:
 
 ```sh
 # Mit Dokumentation
@@ -103,7 +103,7 @@ cordova build ios
 ```
 
 # JavaScript Dokumentation
-Es folgt eine mit _jsdoc-to-markdown_ automatisch generierte Dokumentation aller selbst geschriebenen Module und Klassen unter `src/js/app`.
+Es folgt eine mit [jsdoc-to-markdown](https://github.com/jsdoc2md/jsdoc-to-markdown) automatisch generierte Dokumentation aller selbst geschriebenen Module und Klassen unter `src/js/app`.
 
 ## Modules
 

@@ -6,11 +6,12 @@ Diese App wurde von **Jakob Metzger** als Bachelor-Arbeit an der [Universität B
 Im folgenden werden alle Ressourcen und Dienste aufgelistet, die von Drittanbietern stammen.
 Alle diese Ressourcen und Dienste sind für die private und kommerzielle Nutzung frei verfügbar.
 
-#### Frameworks & Plugins
+#### Frameworks, Plugins & Module
 * [Apache Cordova 6.3.0](https://cordova.apache.org)
 * [Cordova StatusBar 2.1.3](https://github.com/apache/cordova-plugin-statusbar)
 * [Cordova Keyboard 1.1.4](https://github.com/cjpearson/cordova-plugin-keyboard)
 * [Cordova Dialogs 1.2.1](https://github.com/apache/cordova-plugin-dialogs)
+* [jsdoc-to-markdown 1.3.6](https://github.com/jsdoc2md/jsdoc-to-markdown)
 
 #### JavaScript Bibliotheken
 * [jQuery 2.2.3](https://github.com/jquery/jquery)

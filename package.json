@@ -11,13 +11,9 @@
     "url": "git+https://github.com/JakobMe/owlisch.git"
   },
   "scripts": {
-    "doc": "jsdoc2md src/js/app/_*.js --conf doc/conf.json --private > doc/doc.md",
-    "init": "npm install; cordova platform add ios; cordova build ios",
+    "doc": "jsdoc2md src/js/app/_*.js --conf doc/conf.json --private --template doc/readme.hbs > README.md",
+    "init": "cordova platform add ios; cordova build ios",
     "build": "cordova build ios; npm run doc",
-    "emulate": "cordova emulate ios --target=\"iPhone-5s\"; npm run doc"
-  },
-  "dependencies": {
-    "cordova": "^6.3.0",
-    "jsdoc-to-markdown": "^1.3.6"
+    "emulate": "cordova emulate ios --target=\"iPhone-5s\""
   }
 }

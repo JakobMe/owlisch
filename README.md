@@ -108,12 +108,6 @@ Es folgt eine mit [jsdoc-to-markdown](https://github.com/jsdoc2md/jsdoc-to-markd
 ## Modules
 
 <dl>
-<dt><a href="#module_CFG">CFG</a></dt>
-<dd><p>Definiert globale Konstanten und Konfigurationen für alle Module; beinhaltet
-Label-Texte, Datei-Pfade und -Endungen, Konfigurationen für das Quiz,
-Kanal-Namen für den Mediator, Eigenschaften der View-Panels und Optionen
-und Konstanten für Events, Icon-Namen und Zeitangaben.</p>
-</dd>
 <dt><a href="#module_Data">Data</a></dt>
 <dd><p>Lädt und verwaltet alle benötigten Daten für die App, bereitet die
 Daten aus den Wörterbuch-Dateien auf, kann sie per Mediator an andere
@@ -202,16 +196,17 @@ oder das Starten/Beenden des Quiz.</p>
 <dd></dd>
 </dl>
 
-<a name="module_CFG"></a>
+## Members
 
-## CFG
-Definiert globale Konstanten und Konfigurationen für alle Module; beinhaltet
+<dl>
+<dt><a href="#CFG">CFG</a></dt>
+<dd><p>Definiert globale Konstanten und Konfigurationen für alle Module; beinhaltet
 Label-Texte, Datei-Pfade und -Endungen, Konfigurationen für das Quiz,
 Kanal-Namen für den Mediator, Eigenschaften der View-Panels und Optionen
-und Konstanten für Events, Icon-Namen und Zeitangaben.
+und Konstanten für Events, Icon-Namen und Zeitangaben.</p>
+</dd>
+</dl>
 
-**Author:** Jakob Metzger <jakob.me@gmail.com>  
-**Copyright**: 2016 Jakob Metzger  
 <a name="module_Data"></a>
 
 ## Data
@@ -2663,6 +2658,17 @@ ein Slide-Element des Sliders ist (ein direktes Kind-Element).
 | --- | --- | --- |
 | selector | <code>String</code> | Query-Selektor |
 
+<a name="CFG"></a>
+
+## CFG
+Definiert globale Konstanten und Konfigurationen für alle Module; beinhaltet
+Label-Texte, Datei-Pfade und -Endungen, Konfigurationen für das Quiz,
+Kanal-Namen für den Mediator, Eigenschaften der View-Panels und Optionen
+und Konstanten für Events, Icon-Namen und Zeitangaben.
+
+**Kind**: global variable  
+**Author:** Jakob Metzger <jakob.me@gmail.com>  
+**Copyright**: 2016 Jakob Metzger  
 
 * * *
 

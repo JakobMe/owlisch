@@ -2,6 +2,10 @@
 Eine iOS-App zum Lernen von Dialekt-Wörtern aus Ostwestfalen-Lippe.
 Diese App wurde von **Jakob Metzger** als Bachelor-Arbeit an der [Universität Bielefeld](http://www.uni-bielefeld.de) entwickelt.
 
+## Inhaltsverzeichnis
+<!-- START doctoc -->
+<!-- END doctoc -->
+
 ## Verwendete Ressourcen & Dienste
 Im folgenden werden alle Ressourcen und Dienste aufgelistet, die von Drittanbietern stammen.
 Alle diese Ressourcen und Dienste sind für die private und kommerzielle Nutzung frei verfügbar.
@@ -12,6 +16,7 @@ Alle diese Ressourcen und Dienste sind für die private und kommerzielle Nutzung
 * [Cordova Keyboard 1.1.4](https://github.com/cjpearson/cordova-plugin-keyboard)
 * [Cordova Dialogs 1.2.1](https://github.com/apache/cordova-plugin-dialogs)
 * [jsdoc-to-markdown 1.3.6](https://github.com/jsdoc2md/jsdoc-to-markdown)
+* [doctoc 1.2.0](https://github.com/thlorenz/doctoc)
 
 #### JavaScript Bibliotheken
 * [jQuery 2.2.3](https://github.com/jquery/jquery)
@@ -57,6 +62,7 @@ xcode-select --install
 # Node Module
 npm install -g cordova
 npm install -g jsdoc-to-markdown
+npm install -g doctoc
 npm install -g ios-sim
 ```
 Um das Projekt anschließend zu initialisieren und ein lauffähiges Xcode-Projekt unter `platforms/ios` anzulegen, können folgende Befehle verwendet werden:
@@ -80,7 +86,7 @@ Um die App in einem Emulator zu starten, können folgende Befehle verwendet werd
 npm run emulate
 
 # Alternativ
-cordova emulate ios --target=\"iPhone-5s\"
+cordova emulate ios --target="iPhone-5s"
 ```
 
 Alternativ dazu kann auch das Projekt unter `platforms/ios` direkt in Xcode geöffnet und ausgeführt werden; so erfolgt auch die Installation auf einem iPhone, falls eine gültige [Apple Developer-ID](https://developer.apple.com/developer-id/) vorliegt.
@@ -106,7 +112,5 @@ cordova build ios
 Es folgt eine mit [jsdoc-to-markdown](https://github.com/jsdoc2md/jsdoc-to-markdown) automatisch generierte Dokumentation aller selbst geschriebenen Module und Klassen unter `src/js/app`.
 
 {{>main}}
-
-* * *
 
 &copy; 2016 Jakob Metzger [\<jakob.me@gmail.com\>](mailto:jakob.me@gmail.com). Dokumentiert mit [jsdoc-to-markdown](https://github.com/jsdoc2md/jsdoc-to-markdown).

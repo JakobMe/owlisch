@@ -1,0 +1,21 @@
+{
+  "name": "owlisch",
+  "version": "1.0.0",
+  "description": "Eine Lern-App für Dialektwörter aus Ostwestfalen-Lippe",
+  "author": "Jakob Metzger",
+  "license": "MIT",
+  "private": true,
+  "homepage": "https://github.com/JakobMe/owlisch#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/JakobMe/owlisch.git"
+  },
+  "scripts": {
+    "build": "cordova build; npm run doc",
+    "doc": "jsdoc2md src/js/app/_*.js --conf doc/conf.json --private > doc/doc.md"
+  },
+  "dependencies": {
+    "cordova": "^6.3.0",
+    "jsdoc-to-markdown": "^1.3.6"
+  }
+}

@@ -2,7 +2,6 @@
  * Stellt diverse allgemeine Hilfs-Funktionen für andere Module der App bereit.
  * @author Jakob Metzger <jakob.me@gmail.com>
  * @copyright 2016 Jakob Metzger
- * @licence MIT
  * @module Util
  */
 var Util = (function() {

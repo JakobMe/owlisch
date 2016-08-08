@@ -5,7 +5,6 @@
  * LocalStorage des Browsers.
  * @author Jakob Metzger <jakob.me@gmail.com>
  * @copyright 2016 Jakob Metzger
- * @licence MIT
  * @requires Util
  * @requires Mediator
  * @module Data

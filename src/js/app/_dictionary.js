@@ -4,7 +4,6 @@
  * Liste und das Anzeigen von Details für gewählte Begriffe.
  * @author Jakob Metzger <jakob.me@gmail.com>
  * @copyright 2016 Jakob Metzger
- * @licence MIT
  * @requires Util
  * @requires Mediator
  * @requires Template

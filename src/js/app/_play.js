@@ -4,7 +4,6 @@
  * in einem Audio-Tag definierte Audio-Datei ab.
  * @author Jakob Metzger <jakob.me@gmail.com>
  * @copyright 2016 Jakob Metzger
- * @licence MIT
  * @module Play
  */
 var Play = (function() {

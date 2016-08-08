@@ -2,7 +2,6 @@
  * Erstellt einen Slider auf einem gegebenen Ziel-DOM-Element.
  * @author Jakob Metzger <jakob.me@gmail.com>
  * @copyright 2016 Jakob Metzger
- * @licence MIT
  * @requires Util
  * @param {Object} $target Ziel-DOM-Element des Sliders
  * @constructor

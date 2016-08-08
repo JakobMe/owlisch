@@ -6,7 +6,6 @@
  * oder das Starten/Beenden des Quiz.
  * @author Jakob Metzger <jakob.me@gmail.com>
  * @copyright 2016 Jakob Metzger
- * @licence MIT
  * @requires Mediator
  * @requires Template
  * @module View

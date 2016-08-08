@@ -5,7 +5,6 @@
  * und Konstanten für Events, Icon-Namen und Zeitangaben.
  * @author Jakob Metzger <jakob.me@gmail.com>
  * @copyright 2016 Jakob Metzger
- * @licence MIT
  * @module CFG
  */
 var CFG = (function() {

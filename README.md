@@ -210,7 +210,6 @@ Label-Texte, Datei-Pfade und -Endungen, Konfigurationen für das Quiz,
 Kanal-Namen für den Mediator, Eigenschaften der View-Panels und Optionen
 und Konstanten für Events, Icon-Namen und Zeitangaben.
 
-**Licence**: MIT  
 **Author:** Jakob Metzger <jakob.me@gmail.com>  
 **Copyright**: 2016 Jakob Metzger  
 <a name="module_Data"></a>
@@ -222,7 +221,6 @@ Module senden und speichert über den Mediator empfangene Daten im
 LocalStorage des Browsers.
 
 **Requires**: <code>[Util](#module_Util)</code>, <code>[Mediator](#module_Mediator)</code>  
-**Licence**: MIT  
 **Author:** Jakob Metzger <jakob.me@gmail.com>  
 **Copyright**: 2016 Jakob Metzger  
 
@@ -498,7 +496,6 @@ per Template und fügt sie ein, ermöglicht das Sortieren und Filtern der
 Liste und das Anzeigen von Details für gewählte Begriffe.
 
 **Requires**: <code>[Util](#module_Util)</code>, <code>[Mediator](#module_Mediator)</code>, <code>[Template](#module_Template)</code>  
-**Licence**: MIT  
 **Author:** Jakob Metzger <jakob.me@gmail.com>  
 **Copyright**: 2016 Jakob Metzger  
 
@@ -703,7 +700,6 @@ Steuert die Start-View der App; zeigt beim Start der App den Begriff des
 Tages an, indem dieser zunächst per Mediator vom Data-Modul angefragt wird.
 
 **Requires**: <code>[Util](#module_Util)</code>, <code>[Mediator](#module_Mediator)</code>, <code>[Template](#module_Template)</code>  
-**Licence**: MIT  
 **Author:** Jakob Metzger <jakob.me@gmail.com>  
 **Copyright**: 2016 Jakob Metzger  
 
@@ -802,7 +798,6 @@ BEM-Helper-Plugin und initialisiert alle Module der App, initialisiert sich
 selbst, sobald das Dokument bereit ist.
 
 **Requires**: <code>[Template](#module_Template)</code>, <code>[Data](#module_Data)</code>, <code>[Featured](#module_Featured)</code>, <code>[Dictionary](#module_Dictionary)</code>, <code>[Quiz](#module_Quiz)</code>, <code>[Statistics](#module_Statistics)</code>, <code>[More](#module_More)</code>, <code>[NavigationBar](#module_NavigationBar)</code>, <code>[TabBar](#module_TabBar)</code>, <code>[Play](#module_Play)</code>, <code>[View](#module_View)</code>  
-**Licence**: MIT  
 **Author:** Jakob Metzger <jakob.me@gmail.com>  
 **Copyright**: 2016 Jakob Metzger  
 <a name="module_App..init"></a>
@@ -822,7 +817,6 @@ eine Funktion hinzugefügt wird; durch das Veröffentlichen auf einem Kanal
 werden alle gebundenen Funktionen mit den veröffentlichten Daten als
 Funktionsparameter ausgeführt.
 
-**Licence**: MIT  
 **Author:** Jakob Metzger <jakob.me@gmail.com>  
 **Copyright**: 2016 Jakob Metzger  
 
@@ -883,7 +877,6 @@ anhand der globalen Konfiguration, initialisiert den Slider des Moduls
 und ermöglicht es, für jede Option die entsprechende Detail-Ansicht zu laden.
 
 **Requires**: <code>[Mediator](#module_Mediator)</code>, <code>[Template](#module_Template)</code>  
-**Licence**: MIT  
 **Author:** Jakob Metzger <jakob.me@gmail.com>  
 **Copyright**: 2016 Jakob Metzger  
 
@@ -1036,7 +1029,6 @@ zudem ein Sortier-Dropdown, ein Suchfeld für das Wörterbuch und den
 aktuellen Titel der View.
 
 **Requires**: <code>[Util](#module_Util)</code>, <code>[Mediator](#module_Mediator)</code>, <code>[Template](#module_Template)</code>  
-**Licence**: MIT  
 **Author:** Jakob Metzger <jakob.me@gmail.com>  
 **Copyright**: 2016 Jakob Metzger  
 
@@ -1361,7 +1353,6 @@ Ermöglicht das Abspielen von Audio-Dateien im Quiz und im Wörterbuch;
 reagiert auf Klick-Events auf bestimmte Selektoren und spielt eine
 in einem Audio-Tag definierte Audio-Datei ab.
 
-**Licence**: MIT  
 **Author:** Jakob Metzger <jakob.me@gmail.com>  
 **Copyright**: 2016 Jakob Metzger  
 
@@ -1446,7 +1437,6 @@ jedem Start ein neues Quiz zusammen; sendet beim Lösen der Fragen die
 neuen Daten über den Mediator an das Data-Modul, um sie zu speichern.
 
 **Requires**: <code>[Util](#module_Util)</code>, <code>[Mediator](#module_Mediator)</code>, <code>[Template](#module_Template)</code>  
-**Licence**: MIT  
 **Author:** Jakob Metzger <jakob.me@gmail.com>  
 **Copyright**: 2016 Jakob Metzger  
 
@@ -2000,7 +1990,6 @@ Statistik über den Wörterbuch-Fortschritt und die letzten Quiz-Spiele des
 Nutzers anhand von angefragten Daten des Data-Moduls.
 
 **Requires**: <code>[Util](#module_Util)</code>, <code>[Mediator](#module_Mediator)</code>, <code>[Template](#module_Template)</code>  
-**Licence**: MIT  
 **Author:** Jakob Metzger <jakob.me@gmail.com>  
 **Copyright**: 2016 Jakob Metzger  
 
@@ -2148,7 +2137,6 @@ ermöglicht das Wechseln des View-Panels per Klick auf die Tabs und das
 Ein-/Ausblenden der Tab-Bar bei bestimmten Events und Mediator-Nachrichten.
 
 **Requires**: <code>[Util](#module_Util)</code>, <code>[Mediator](#module_Mediator)</code>, <code>[Template](#module_Template)</code>  
-**Licence**: MIT  
 **Author:** Jakob Metzger <jakob.me@gmail.com>  
 **Copyright**: 2016 Jakob Metzger  
 
@@ -2257,7 +2245,6 @@ Stellt Funktionen bereit, um Inhalte mit Mustache-Templates in die App
 einzufügen; lädt Templates vor, die in der Konfigurations-Datei des
 Template-Verzeichnisses definiert sind.
 
-**Licence**: MIT  
 **Author:** Jakob Metzger <jakob.me@gmail.com>  
 **Copyright**: 2016 Jakob Metzger  
 
@@ -2313,7 +2300,6 @@ eine Callback-Funktion aus.
 ## Util
 Stellt diverse allgemeine Hilfs-Funktionen für andere Module der App bereit.
 
-**Licence**: MIT  
 **Author:** Jakob Metzger <jakob.me@gmail.com>  
 **Copyright**: 2016 Jakob Metzger  
 
@@ -2481,7 +2467,6 @@ leer sind und reagiert auf Änderungen der View, z.B. durch das Keyboard
 oder das Starten/Beenden des Quiz.
 
 **Requires**: <code>[Mediator](#module_Mediator)</code>, <code>[Template](#module_Template)</code>  
-**Licence**: MIT  
 **Author:** Jakob Metzger <jakob.me@gmail.com>  
 **Copyright**: 2016 Jakob Metzger  
 
@@ -2608,7 +2593,6 @@ Notiert, dass Quiz inaktiv ist; deaktiviert Fullscreen.
 ## Slider
 **Kind**: global class  
 **Requires**: <code>[Util](#module_Util)</code>  
-**Licence**: MIT  
 **Author:** Jakob Metzger <jakob.me@gmail.com>  
 **Copyright**: 2016 Jakob Metzger  
 

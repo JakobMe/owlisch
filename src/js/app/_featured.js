@@ -3,7 +3,6 @@
  * Tages an, indem dieser zunächst per Mediator vom Data-Modul angefragt wird.
  * @author Jakob Metzger <jakob.me@gmail.com>
  * @copyright 2016 Jakob Metzger
- * @licence MIT
  * @requires Util
  * @requires Mediator
  * @requires Template

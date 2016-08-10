@@ -15,6 +15,9 @@ Diese App wurde von **Jakob Metzger** als Bachelor-Arbeit an der [Universität B
     - [Benötigte Software zum Bearbeiten des Projekts](#ben%C3%B6tigte-software-zum-bearbeiten-des-projekts)
 - [Beteiligte Studierende an der Entwicklung des Konzepts](#beteiligte-studierende-an-der-entwicklung-des-konzepts)
 - [Installation](#installation)
+- [Wörterbücher](#w%C3%B6rterb%C3%BCcher)
+    - [Neue Begriffe hinzufügen](#neue-begriffe-hinzuf%C3%BCgen)
+    - [Ostwestfälisch-Wörterbuch](#ostwestf%C3%A4lisch-w%C3%B6rterbuch)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
@@ -122,3 +125,93 @@ npm run build
 # Ohne Dokumentation
 cordova build ios
 ```
+
+## Wörterbücher
+
+Im folgenden wird beschrieben, wie man die bereits vorhandenen Wörterbücher um neue Begriffe erweitern kann und wie man neue Wörterbücher anlegt, die in der App ausgewählt werden können.
+
+#### Neue Begriffe hinzufügen
+
+Einem Wörterbuch können beliebig viele Begriffe hinzugefügt werden. Die Wörterbücher liegen als JSON-Dateien im Verzeichnis `src/json` vor, mit dem Präfix `data-`, also z.B. `src/json/data-owl.json`. Diese Wörterbuch-Dateien werden von Codekit minimiert und ohne Präfix unter `www/data/` abgelegt, z.B. `www/data/owl/owl.json`.
+
+Eine solche Datei ist wie folgt aufgebaut:
+
+```json
+{
+    "alias": "Dateiname",
+    "caption": "Anzeigename",
+    "terms": [
+        ...
+    ]
+}
+```
+
+Der Dateiname `alias` muss dabei dem echten Dateinamen des Wörterbuches entsprechen, der Anzeigename `caption` wird in der App so angezeigt, wie er definiert wurde (z.B. in der Wörterbuch-View oder im Quiz).
+
+Die eigentlichen Begriffe des Wörterbuches werden im `terms` Array als JSON-Objekte in folgendem Format definiert:
+
+```json
+{
+    "alias"           : "Kurzname",
+    "article"         : "Artikel, optional",
+    "term"            : "Anzeigename",
+    "translation"     : "Übersetzung",
+    "info"            : "Beschreibungstext",
+    "answersNative"   : ["Deutsche Antwort", ...],
+    "answersForeign"  : ["Fremdsprachen-Antwort", ...],
+    "answersPictures" : ["Bild-Datei", ...]
+}
+```
+
+* `alias`: Dient der Identifikation; er sollte nur Kleinbuchstaben und keine Sonderzeichen enthalten, aus _Dönekens_ wird also z.B. _doenekens_. Eventuell vorhandene Bild- und Audio-Dateien müssen genauso heißen.
+* `article`: Der optionale Artikel des Begriffs, also _der_, _die_, _das_.
+* `term`: Der vollständige Anzeigename des Begriffs.
+* `translation`: Die vollständige Übersetzung des Begriffs.
+* `info`: Ein relativ kurzer Beschreibungstext mit näheren Informationen zum Begriff.
+* `answersNative`: Ein Array aus deutschen Wörtern, die im Quiz als falsche Antwortmöglichkeiten dienen; es müssen mindestens drei vorhanden sein.
+* `answersForeign`: Ein Array aus Fremdsprachen-Antworten, die im Quiz als falsche Antwortmöglichkeiten dienen; es müssen mindestens drei vorhanden sein.
+* `answersPictures`: Ein optionales Array aus Dateinamen für Bilder unter `www/data/{alias}/image/{file}.jpg`; diese Bilder kommen im Quiz zum Einsatz, um als Antwortmöglichkeiten zu dienen. Es müssen mindestens drei Bilder angegeben werden und der Begriff muss selbst ebenfalls über ein Bild verfügen. Soll der Begriff über keine Bilder verfügen, muss ein leeres Array `[]` als Wert angegeben werden.
+
+Um einen neuen Begriff hinzuzufügen, muss in der entsprechenden Datei ein neues Objekt mit den obigen Daten zum `terms` Array hinzugefügt werden:
+
+```json
+"terms": [
+    {
+        "alias": "neu",
+        ...
+    },
+    ...
+]
+```
+
+#### Ostwestfälisch-Wörterbuch
+
+Für ein besseres Verständnis über die Struktur der Wörterbücher und Begriffe sollte man einen Blick auf das Hauptwörterbuch [Ostwestfälisch](src/json/data-owl.json) unter `src/json/data-owl.json` werfen.
+
+In diesem Wörterbuch sind zum aktuellen Zeitpunkt folgende Begriffe vorhanden:
+
+* **angeschickert** – „angetrunken“
+* **beömmeln** – „sich totlachen“
+* **Bollerbuchse**, die – „Jogginghose“
+* **Bömsken**, das – „Bonbon“
+* **Bütterken**, das – „kleines Butterbrot“
+* **dölmern** – „spielen“
+* **Dönekens**, die – „Anekdoten“
+* **fickerich** – „nervös“
+* **Knüpp**, der – „Knoten“
+* **Latüchte**, die – „Laterne“
+* **Mäse**, die – „Hintern“
+* **Möttke**, die – „Schlamm“
+* **Mürker**, der – „Maurer“
+* **nöhlen** – „meckern“
+* **nönkern** – „Mittagsschlaf halten“
+* **nüschen** – „durchwühlen“
+* **öddelich** – „dreckig“
+* **pecken** – „kleben“
+* **Pinneken**, das – „Schnapsglas“
+* **Pläte**, die – „Glatze“
+* **Plüdden**, die – „alte Klamotten“
+* **ratzen** – „schlafen“
+* **Töffel**, der – „Trottel“
+* **vermackeln** – „beschädigen“
+* **wullacken** – „schuften“

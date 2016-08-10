@@ -10,7 +10,7 @@
             "info"            : "Die „Latüchte“ ist ein eigentümlicher Vokabelmix aus der lateinischen „laterna“ und der plattdeutschen „Lüchte“, also quasi Römisches Platt bzw. plattdeutsches Latein. Verschiedene Lichtquellen können gemeint sein.",
             "answersNative"   : ["Toilette", "Längengrad", "fleißige Person", "Schalter", "Tüte"],
             "answersForeign"  : ["Ziepel", "Tacken", "Schore", "Lappes", "Lelleck"],
-            "answersPictures" : ["pinneken", "blume", "buetterken", "pinienzapfen", "schraube"]
+            "answersPictures" : ["toilette", "schalter", "tuete"]
             
         },
         {
@@ -19,9 +19,9 @@
             "term"            : "Pinneken",
             "translation"     : "Schnapsglas",
             "info"            : "Das Schnapsglas: Ein genormtes Schnapsglas, Pinneken, Pinnchen oder auch Stamperl genannt, fasst in Deutschland 2 cl (20 ml) oder 4 cl bei „doppelten“.",
-            "answersNative"   : ["Pinnwand", "Nagel", "Knopf", "Knabe", "Schlüssel"],
+            "answersNative"   : ["Pinnwand", "Schraube", "Knopf", "Knabe", "Schlüssel"],
             "answersForeign"  : ["Siff", "Spucht", "Dierken", "Pütt", "Schott"],
-            "answersPictures" : []
+            "answersPictures" : ["schraube", "knopf", "schluessel"]
         },
         {
             "alias"           : "moettke",
@@ -37,11 +37,11 @@
             "alias"           : "buetterken",
             "article"         : "das",
             "term"            : "Bütterken",
-            "translation"     : "kleines Butterbrot",
+            "translation"     : "Butterbrot",
             "info"            : "Ein Butterbrot ist eine mit Butter bestrichene Scheibe Brot. In Teilen Norddeutschlands bezeichnet das Wort Butterbrot eine belegte Scheibe Brot, wobei Butter nicht zum Belag gehören muss. Ein Hamburger Butterbrot ist die Bezeichnung für ein Schwarzbrot mit einem halben Brötchen.",
-            "answersNative"   : ["Brücke", "Großmutter", "Buttermilch", "Polizist", "Buckel"],
+            "answersNative"   : ["Milchzahn", "Großmutter", "Butterkeks", "Frühstück", "Butterblume"],
             "answersForeign"  : ["Penunsen", "Blötschen", "Krampe", "Pettken", "Tacken"],
-            "answersPictures" : []
+            "answersPictures" : ["butterblume", "butterkeks", "fruehstueck"]
         },
         {
             "alias"           : "doelmern",
@@ -149,9 +149,9 @@
             "term"            : "Knüpp",
             "translation"     : "Knoten",
             "info"            : "Eine besonders schöne Wortsippe ist die Gruppe germanischer  Wörter, die mit „kn“ anfangen. Ihnen ist gemein, dass sie etwas mit „zusammendrücken, pressen, klemmen, ballen“ zu tun haben (z.B. Knödel, Knospe, Knorpel, Knauf und Knopf). So auch der Knoten. Und weil man mit einem Knoten zwei Seilenden verknüpfen kann, heißt der Knoten in Westfalen „Knüpp“.",
-            "answersNative"   : ["Knabe", "Knopf", "Knall", "Toilette", "Klingel"],
+            "answersNative"   : ["Knabe", "Knopf", "Knall", "Trommel", "Klingel"],
             "answersForeign"  : ["Ömmes", "Tacken", "Kniffte", "Muffe", "Blag"],
-            "answersPictures" : []
+            "answersPictures" : ["knopf", "trommel", "klingel"]
         },
         {
             "alias"           : "muerker",
@@ -199,9 +199,9 @@
             "term"            : "Bollerbuchse",
             "translation"     : "Jogginghose",
             "info"            : "Eine abgetragene, etwas verlotterte Jogginghose, die hauptsächlich zu Hause getragen wird.",
-            "answersNative"   : ["Gewehr", "Granate", "Clownshose", "Lautsprecher", "Motor"],
+            "answersNative"   : ["Patrone", "Kasette", "Plattenspieler", "Lautsprecher", "Motor"],
             "answersForeign"  : ["Döneken", "Brummfitz", "Löper", "Flattermann", "Pölter"],
-            "answersPictures" : []
+            "answersPictures" : ["patrone", "kasette", "plattenspieler", "lautsprecher"]
         },
         {
             "alias"           : "boemsken",
@@ -209,9 +209,9 @@
             "term"            : "Bömsken",
             "translation"     : "Bonbon",
             "info"            : "Ein Bömsken oder Bömskes ist ein Bonbon oder eine Süßigkeit, ursprünglich aus dem Französischen (bon, „gut“).",
-            "answersNative"   : ["Parkticket", "Kassenzettel", "Knall", "Stoß", "Rülpser"],
+            "answersNative"   : ["Ticket", "Kassenzettel", "Knall", "Stoß", "Kirsche"],
             "answersForeign"  : ["Bello", "Brocken", "Bubu", "Kappes", "Pinneken"],
-            "answersPictures" : []
+            "answersPictures" : ["ticket", "kassenzettel", "kirsche"]
         },
         {
             "alias"           : "wullacken",
@@ -239,19 +239,9 @@
             "term"            : "Pläte",
             "translation"     : "Glatze",
             "info"            : "Eine Glatze oder Halbglatze, manchmal ist auch allgemein der Kopf gemeint — „einen auf die Pläte bekommen“ oder „Ich brauch einen Hut, meine Pläte wird ganz kalt!“",
-            "answersNative"   : ["Platz", "Schallplatte", "Geld", "Straße", "Grundstück"],
+            "answersNative"   : ["Plätzchen", "Schallplatte", "Geld", "Straße", "Grundstück"],
             "answersForeign"  : ["Butze", "Mäse", "Möttke", "Gosche", "Dötze"],
-            "answersPictures" : []
-        },
-        {
-            "alias"           : "plaete",
-            "article"         : "die",
-            "term"            : "Pläte",
-            "translation"     : "Glatze",
-            "info"            : "Eine Glatze oder Halbglatze, manchmal ist auch allgemein der Kopf gemeint — „einen auf die Pläte bekommen“ oder „Ich brauch einen Hut, meine Pläte wird ganz kalt!“",
-            "answersNative"   : ["Platz", "Schallplatte", "Geld", "Straße", "Grundstück"],
-            "answersForeign"  : ["Butze", "Mäse", "Möttke", "Gosche", "Dötze"],
-            "answersPictures" : []
+            "answersPictures" : ["plaetzchen", "schallplatte", "geld"]
         },
         {
             "alias"           : "ratzen",

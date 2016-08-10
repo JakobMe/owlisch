@@ -16,8 +16,8 @@ Diese App wurde von **Jakob Metzger** als Bachelor-Arbeit an der [Universität B
 - [Beteiligte Studierende an der Entwicklung des Konzepts](#beteiligte-studierende-an-der-entwicklung-des-konzepts)
 - [Installation](#installation)
 - [Wörterbücher](#w%C3%B6rterb%C3%BCcher)
-    - [Neue Begriffe hinzufügen](#neue-begriffe-hinzuf%C3%BCgen)
-    - [Ostwestfälisch-Wörterbuch](#ostwestf%C3%A4lisch-w%C3%B6rterbuch)
+  - [Neue Begriffe hinzufügen](#neue-begriffe-hinzuf%C3%BCgen)
+  - [Ostwestfälisch-Wörterbuch](#ostwestf%C3%A4lisch-w%C3%B6rterbuch)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
@@ -130,7 +130,7 @@ cordova build ios
 
 Im folgenden wird beschrieben, wie man die bereits vorhandenen Wörterbücher um neue Begriffe erweitern kann und wie man neue Wörterbücher anlegt, die in der App ausgewählt werden können.
 
-#### Neue Begriffe hinzufügen
+### Neue Begriffe hinzufügen
 
 Einem Wörterbuch können beliebig viele Begriffe hinzugefügt werden. Die Wörterbücher liegen als JSON-Dateien im Verzeichnis `src/json` vor, mit dem Präfix `data-`, also z.B. `src/json/data-owl.json`. Diese Wörterbuch-Dateien werden von Codekit minimiert und ohne Präfix unter `www/data/` abgelegt, z.B. `www/data/owl/owl.json`.
 
@@ -141,7 +141,7 @@ Eine solche Datei ist wie folgt aufgebaut:
     "alias": "Dateiname",
     "caption": "Anzeigename",
     "terms": [
-        ...
+    
     ]
 }
 ```
@@ -157,9 +157,9 @@ Die eigentlichen Begriffe des Wörterbuches werden im `terms` Array als JSON-Obj
     "term"            : "Anzeigename",
     "translation"     : "Übersetzung",
     "info"            : "Beschreibungstext",
-    "answersNative"   : ["Deutsche Antwort", ...],
-    "answersForeign"  : ["Fremdsprachen-Antwort", ...],
-    "answersPictures" : ["Bild-Datei", ...]
+    "answersNative"   : ["Deutsche Antwort"],
+    "answersForeign"  : ["Fremdsprachen-Antwort"],
+    "answersPictures" : ["Bild-Datei"]
 }
 ```
 
@@ -178,13 +178,11 @@ Um einen neuen Begriff hinzuzufügen, muss in der entsprechenden Datei ein neues
 "terms": [
     {
         "alias": "neu",
-        ...
     },
-    ...
 ]
 ```
 
-#### Ostwestfälisch-Wörterbuch
+### Ostwestfälisch-Wörterbuch
 
 Für ein besseres Verständnis über die Struktur der Wörterbücher und Begriffe sollte man einen Blick auf das Hauptwörterbuch [Ostwestfälisch](src/json/data-owl.json) unter `src/json/data-owl.json` werfen.
 

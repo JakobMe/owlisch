@@ -17,6 +17,7 @@ Diese App wurde von **Jakob Metzger** als Bachelor-Arbeit an der [Universität B
 - [Installation](#installation)
 - [Wörterbücher](#w%C3%B6rterb%C3%BCcher)
   - [Neue Begriffe hinzufügen](#neue-begriffe-hinzuf%C3%BCgen)
+  - [Bilder und Audio-Dateien](#bilder-und-audio-dateien)
   - [Ostwestfälisch-Wörterbuch](#ostwestf%C3%A4lisch-w%C3%B6rterbuch)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
@@ -170,7 +171,7 @@ Die eigentlichen Begriffe des Wörterbuches werden im `terms` Array als JSON-Obj
 * `info`: Ein relativ kurzer Beschreibungstext mit näheren Informationen zum Begriff.
 * `answersNative`: Ein Array aus deutschen Wörtern, die im Quiz als falsche Antwortmöglichkeiten dienen; es müssen mindestens drei vorhanden sein.
 * `answersForeign`: Ein Array aus Fremdsprachen-Antworten, die im Quiz als falsche Antwortmöglichkeiten dienen; es müssen mindestens drei vorhanden sein.
-* `answersPictures`: Ein optionales Array aus Dateinamen für Bilder unter `www/data/{alias}/image/{file}.jpg`; diese Bilder kommen im Quiz zum Einsatz, um als Antwortmöglichkeiten zu dienen. Es müssen mindestens drei Bilder angegeben werden und der Begriff muss selbst ebenfalls über ein Bild verfügen. Soll der Begriff über keine Bilder verfügen, muss ein leeres Array `[]` als Wert angegeben werden.
+* `answersPictures`: Ein optionales Array aus Dateinamen für Bilder unter `www/data/{alias}/image/{bild}.jpg`; diese Bilder kommen im Quiz zum Einsatz, um als Antwortmöglichkeiten zu dienen. Es müssen mindestens drei Bilder angegeben werden und der Begriff muss selbst ebenfalls über ein Bild verfügen. Soll der Begriff über keine Bilder verfügen, muss ein leeres Array `[]` als Wert angegeben werden.
 
 Um einen neuen Begriff hinzuzufügen, muss in der entsprechenden Datei ein neues Objekt mit den obigen Daten zum `terms` Array hinzugefügt werden:
 
@@ -181,6 +182,29 @@ Um einen neuen Begriff hinzuzufügen, muss in der entsprechenden Datei ein neues
     },
 ]
 ```
+
+### Bilder und Audio-Dateien
+
+Jedes Wörterbuch verfügt über seine eigenen Bild- und Audio-Dateien im entsprechenden Verzeichnis unter `www/data/{alias}/image` und `www/data/{alias}/audio`. Audio-Dateien müssen als `.mp3` vorliegen, Bilder als `.jpg` mit einer Größe von `280x280px`. Die Dateinamen müssen dabei immer dem Alias des zugehörigen Begriffes entsprechen; wenn also der Begriff _Pinneken_ mit dem Alias _pinneken_ über Dateien verfügen soll, muss es `image/pinneken.jpg` und `audio/pinneken.mp3` geben.
+
+Beim Laden des Wörterbuches wird automatisch nach zugehörigen Dateien gesucht; gibt es kein Bild, sind bestimmte Quiz-Typen für diesen Begriff ausgeschlossen, ohne Audio-Datei fehlt der Button zum Vorlesen des Begriffes.
+
+Soll es für einen Begriff möglich sein, ein Bilder-Rätsel im Quiz zu erhalten, müssen, wie oben erwähnt, entsprechende Bilder definiert werden. Auch hier müssen die definierten Bildnamen mit den Dateinamen übereinstimmen; sind z.B. folgende Bilder definiert,
+
+```json
+"answersPictures" : ["schraube", "knopf", "schluessel"]
+```
+
+so müssen auch folgende Dateien existieren:
+
+```
+image/
+    schraube.jpg
+    knopf.jpg
+    schluessel.jpg
+```
+
+Es müssen immer mindestens drei Bilder angegeben werden, da es im Quiz immer vier Antwortmöglichkeiten gibt und das eigentliche Bild des Begriffs ebenfalls eine Antwortmöglichkeit ist.
 
 ### Ostwestfälisch-Wörterbuch
 

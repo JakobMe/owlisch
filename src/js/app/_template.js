@@ -4,6 +4,7 @@
  * Template-Verzeichnisses definiert sind.
  * @author Jakob Metzger <jakob.me@gmail.com>
  * @copyright 2016 Jakob Metzger
+ * @license MIT
  * @module Template
  */
 var Template = (function() {

@@ -5,6 +5,7 @@
  * Ein-/Ausblenden der Tab-Bar bei bestimmten Events und Mediator-Nachrichten.
  * @author Jakob Metzger <jakob.me@gmail.com>
  * @copyright 2016 Jakob Metzger
+ * @license MIT
  * @requires Util
  * @requires Mediator
  * @requires Template

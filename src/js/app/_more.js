@@ -4,6 +4,7 @@
  * und ermöglicht es, für jede Option die entsprechende Detail-Ansicht zu laden.
  * @author Jakob Metzger <jakob.me@gmail.com>
  * @copyright 2016 Jakob Metzger
+ * @license MIT
  * @requires Mediator
  * @requires Template
  * @module More

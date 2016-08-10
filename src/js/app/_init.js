@@ -4,6 +4,7 @@
  * selbst, sobald das Dokument bereit ist.
  * @author Jakob Metzger <jakob.me@gmail.com>
  * @copyright 2016 Jakob Metzger
+ * @license MIT
  * @requires Template
  * @requires Data
  * @requires Featured

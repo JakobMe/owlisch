@@ -6,6 +6,7 @@
  * Funktionsparameter ausgeführt.
  * @author Jakob Metzger <jakob.me@gmail.com>
  * @copyright 2016 Jakob Metzger
+ * @license MIT
  * @module Mediator
  */
 var Mediator = (function() {

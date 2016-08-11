@@ -113,6 +113,7 @@ LocalStorage des Browsers.
 
 **Requires**: <code>[Util](#module_Util)</code>, <code>[Mediator](#module_Mediator)</code>  
 **Author:** Jakob Metzger <jakob.me@gmail.com>  
+**License**: MIT  
 **Copyright**: 2016 Jakob Metzger  
 
 * [Data](#module_Data)
@@ -463,6 +464,7 @@ Liste und das Anzeigen von Details für gewählte Begriffe.
 
 **Requires**: <code>[Util](#module_Util)</code>, <code>[Mediator](#module_Mediator)</code>, <code>[Template](#module_Template)</code>  
 **Author:** Jakob Metzger <jakob.me@gmail.com>  
+**License**: MIT  
 **Copyright**: 2016 Jakob Metzger  
 
 * [Dictionary](#module_Dictionary)
@@ -715,6 +717,7 @@ Tages an, indem dieser zunächst per Mediator vom Data-Modul angefragt wird.
 
 **Requires**: <code>[Util](#module_Util)</code>, <code>[Mediator](#module_Mediator)</code>, <code>[Template](#module_Template)</code>  
 **Author:** Jakob Metzger <jakob.me@gmail.com>  
+**License**: MIT  
 **Copyright**: 2016 Jakob Metzger  
 
 * [Featured](#module_Featured)
@@ -837,6 +840,7 @@ selbst, sobald das Dokument bereit ist.
 
 **Requires**: <code>[Template](#module_Template)</code>, <code>[Data](#module_Data)</code>, <code>[Featured](#module_Featured)</code>, <code>[Dictionary](#module_Dictionary)</code>, <code>[Quiz](#module_Quiz)</code>, <code>[Statistics](#module_Statistics)</code>, <code>[More](#module_More)</code>, <code>[NavigationBar](#module_NavigationBar)</code>, <code>[TabBar](#module_TabBar)</code>, <code>[Play](#module_Play)</code>, <code>[View](#module_View)</code>  
 **Author:** Jakob Metzger <jakob.me@gmail.com>  
+**License**: MIT  
 **Copyright**: 2016 Jakob Metzger  
 
 -
@@ -862,6 +866,7 @@ werden alle gebundenen Funktionen mit den veröffentlichten Daten als
 Funktionsparameter ausgeführt.
 
 **Author:** Jakob Metzger <jakob.me@gmail.com>  
+**License**: MIT  
 **Copyright**: 2016 Jakob Metzger  
 
 * [Mediator](#module_Mediator)
@@ -934,6 +939,7 @@ und ermöglicht es, für jede Option die entsprechende Detail-Ansicht zu laden.
 
 **Requires**: <code>[Mediator](#module_Mediator)</code>, <code>[Template](#module_Template)</code>  
 **Author:** Jakob Metzger <jakob.me@gmail.com>  
+**License**: MIT  
 **Copyright**: 2016 Jakob Metzger  
 
 * [More](#module_More)
@@ -1122,6 +1128,7 @@ aktuellen Titel der View.
 
 **Requires**: <code>[Util](#module_Util)</code>, <code>[Mediator](#module_Mediator)</code>, <code>[Template](#module_Template)</code>  
 **Author:** Jakob Metzger <jakob.me@gmail.com>  
+**License**: MIT  
 **Copyright**: 2016 Jakob Metzger  
 
 * [NavigationBar](#module_NavigationBar)
@@ -1530,6 +1537,7 @@ reagiert auf Klick-Events auf bestimmte Selektoren und spielt eine
 in einem Audio-Tag definierte Audio-Datei ab.
 
 **Author:** Jakob Metzger <jakob.me@gmail.com>  
+**License**: MIT  
 **Copyright**: 2016 Jakob Metzger  
 
 * [Play](#module_Play)
@@ -1638,6 +1646,7 @@ neuen Daten über den Mediator an das Data-Modul, um sie zu speichern.
 
 **Requires**: <code>[Util](#module_Util)</code>, <code>[Mediator](#module_Mediator)</code>, <code>[Template](#module_Template)</code>  
 **Author:** Jakob Metzger <jakob.me@gmail.com>  
+**License**: MIT  
 **Copyright**: 2016 Jakob Metzger  
 
 * [Quiz](#module_Quiz)
@@ -2326,6 +2335,7 @@ Nutzers anhand von angefragten Daten des Data-Moduls.
 
 **Requires**: <code>[Util](#module_Util)</code>, <code>[Mediator](#module_Mediator)</code>, <code>[Template](#module_Template)</code>  
 **Author:** Jakob Metzger <jakob.me@gmail.com>  
+**License**: MIT  
 **Copyright**: 2016 Jakob Metzger  
 
 * [Statistics](#module_Statistics)
@@ -2509,6 +2519,7 @@ Ein-/Ausblenden der Tab-Bar bei bestimmten Events und Mediator-Nachrichten.
 
 **Requires**: <code>[Util](#module_Util)</code>, <code>[Mediator](#module_Mediator)</code>, <code>[Template](#module_Template)</code>  
 **Author:** Jakob Metzger <jakob.me@gmail.com>  
+**License**: MIT  
 **Copyright**: 2016 Jakob Metzger  
 
 * [TabBar](#module_TabBar)
@@ -2650,6 +2661,7 @@ einzufügen; lädt Templates vor, die in der Konfigurations-Datei des
 Template-Verzeichnisses definiert sind.
 
 **Author:** Jakob Metzger <jakob.me@gmail.com>  
+**License**: MIT  
 **Copyright**: 2016 Jakob Metzger  
 
 * [Template](#module_Template)
@@ -2717,6 +2729,7 @@ eine Callback-Funktion aus.
 Stellt diverse allgemeine Hilfs-Funktionen für andere Module der App bereit.
 
 **Author:** Jakob Metzger <jakob.me@gmail.com>  
+**License**: MIT  
 **Copyright**: 2016 Jakob Metzger  
 
 * [Util](#module_Util)
@@ -2918,6 +2931,7 @@ oder das Starten/Beenden des Quiz.
 
 **Requires**: <code>[Mediator](#module_Mediator)</code>, <code>[Template](#module_Template)</code>  
 **Author:** Jakob Metzger <jakob.me@gmail.com>  
+**License**: MIT  
 **Copyright**: 2016 Jakob Metzger  
 
 * [View](#module_View)
@@ -3086,6 +3100,7 @@ Notiert, dass Quiz inaktiv ist; deaktiviert Fullscreen.
 **Kind**: global class  
 **Requires**: <code>[Util](#module_Util)</code>  
 **Author:** Jakob Metzger <jakob.me@gmail.com>  
+**License**: MIT  
 **Copyright**: 2016 Jakob Metzger  
 
 * [Slider](#Slider)
@@ -3183,6 +3198,7 @@ und Konstanten für Events, Icon-Namen und Zeitangaben.
 
 **Kind**: global variable  
 **Author:** Jakob Metzger <jakob.me@gmail.com>  
+**License**: MIT  
 **Copyright**: 2016 Jakob Metzger  
 
 -

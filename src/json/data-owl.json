@@ -252,6 +252,56 @@
             "answersNative"   : ["eingravieren", "sich beeilen", "weglaufen", "ausrasten", "schneiden"],
             "answersForeign"  : ["dameln", "schallern", "schlörren", "düpsen", "abplauzen"],
             "answersPictures" : []
+        },
+        {
+            "alias"           : "kroppzeug",
+            "article"         : "das",
+            "term"            : "Kroppzeug",
+            "translation"     : "Krempel",
+            "info"            : "Unnützer Krempel, Kram, Gerümpel oder Trödel, manchmal auch abwertend für bestimmte Personen oder Gruppen (Pack) — urspünglich vom niederdeutschen „krōp“, was eine Bezeichnung für (Klein)view ist.",
+            "answersNative"   : ["Feuerzeug", "Kartoffeln", "Werkzeug", "Besteck", "Fahrrad"],
+            "answersForeign"  : ["Krampe", "Knifte", "Möttke", "Knust", "Schmull"],
+            "answersPictures" : []
+        },
+        {
+            "alias"           : "poelter",
+            "article"         : "der",
+            "term"            : "Pölter",
+            "translation"     : "Schlafanzug",
+            "info"            : "Ein altes Wort aus Ostwestfalen und dem Rurhgebiet für Schlafanzug/Pyjama — „Wenn ich abends schlafen gehe, ziehe ich meinen Pölter an.“",
+            "answersNative"   : ["Dachboden", "Keller", "Krach", "Motor", "Hintern"],
+            "answersForeign"  : ["Babbel", "Flautsche", "Wämmsken", "Sipsch", "Schnotten"],
+            "answersPictures" : []
+        },
+        {
+            "alias"           : "betuppen",
+            "article"         : "",
+            "term"            : "betuppen",
+            "translation"     : "betrügen",
+            "info"            : "Jemanden betrügen oder übers Ohr hauen, wahrscheinlich vom französischen „duper“ oder deutschen „düpieren“ abgeleitet — „Du, der hat dich aber derbe betuppt!“",
+            "answersNative"   : ["bemalen", "abtasten", "auftanken", "aufwecken", "kitzeln"],
+            "answersForeign"  : ["bekakeln", "gallern", "juckeln", "beömmeln", "nickoppen"],
+            "answersPictures" : []
+        },
+        {
+            "alias"           : "paettkenschnuewer",
+            "article"         : "der",
+            "term"            : "Pättkenschnüwer",
+            "translation"     : "Moped",
+            "info"            : "Als Pättkenschnüwer werden heutzutage historische, geländegängige Mopeds und Leichtkrafträder bezeichnet. Eine wörtliche Übersetzung wäre in etwa „Feldwegschnaufer“, denn „Pättken“ oder „Patt“ bezeichnet einen schmalen Pfad, während „schnüwen“ als „schnaufen“ übersetzt werden kann, was sich wohl auf das undefinierbare Fahrgeräusch dieser Mopeds bezieht.",
+            "answersNative"   : ["Nagetier", "Besen", "Raupe", "Paketband", "Schnupfen"],
+            "answersForeign"  : ["Möttke", "Muckefuck", "Mäse", "Püster", "Töffte"],
+            "answersPictures" : ["nagetier", "besen", "raupe", "paketband"]
+        },
+        {
+            "alias"           : "pillepoppen",
+            "article"         : "die",
+            "term"            : "Pillepoppen",
+            "translation"     : "Kaulquappen",
+            "info"            : "Trotz der Wortbestandteile „Pille“ und „poppen“ hat der Begriff nichts mit Schwangerschaftsverhütung oder Viagra zu tun — gemeint sind einfach nur Kaulquappen, die amphibischen Larven von Kröten und Fröschen.",
+            "answersNative"   : ["Viagra", "Kissen", "Korken", "Badesandalen", "Blödsinn"],
+            "answersForeign"  : ["Köttke", "Killefit", "Kluten", "Pinnöckel", "Schlonten"],
+            "answersPictures" : ["viagra", "kissen", "korken", "badesandalen"]
         }
     ]
 }

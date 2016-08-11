@@ -214,6 +214,7 @@ In diesem Wörterbuch sind zum aktuellen Zeitpunkt folgende Begriffe vorhanden:
 
 * **angeschickert** – „angetrunken“
 * **beömmeln** – „sich totlachen“
+* **betuppen** – „betrügen“
 * **Bollerbuchse**, die – „Jogginghose“
 * **Bömsken**, das – „Bonbon“
 * **Bütterken**, das – „kleines Butterbrot“
@@ -221,6 +222,7 @@ In diesem Wörterbuch sind zum aktuellen Zeitpunkt folgende Begriffe vorhanden:
 * **Dönekens**, die – „Anekdoten“
 * **fickerich** – „nervös“
 * **Knüpp**, der – „Knoten“
+* **Kroppzeug**, das – „Krempel“
 * **Latüchte**, die – „Laterne“
 * **Mäse**, die – „Hintern“
 * **Möttke**, die – „Schlamm“
@@ -229,10 +231,13 @@ In diesem Wörterbuch sind zum aktuellen Zeitpunkt folgende Begriffe vorhanden:
 * **nönkern** – „Mittagsschlaf halten“
 * **nüschen** – „durchwühlen“
 * **öddelich** – „dreckig“
+* **Pättkenschnüwer**, der – „Moped“
 * **pecken** – „kleben“
+* **Pillepoppen**, die - „Kaulquappen“
 * **Pinneken**, das – „Schnapsglas“
 * **Pläte**, die – „Glatze“
 * **Plüdden**, die – „alte Klamotten“
+* **Pölter**, der – „Schlafanzug“
 * **ratzen** – „schlafen“
 * **Töffel**, der – „Trottel“
 * **vermackeln** – „beschädigen“

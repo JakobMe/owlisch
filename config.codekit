@@ -1236,6 +1236,28 @@
 		"outputPathIsSetByUser": 0,
 		"outputStyle": 1
 		},
+	"\/www\/data\/owl\/image\/badesandalen.jpg": {
+		"fileType": 16384,
+		"ignore": 0,
+		"ignoreWasSetByUser": 0,
+		"initialSize": 51756,
+		"inputAbbreviatedPath": "\/www\/data\/owl\/image\/badesandalen.jpg",
+		"outputAbbreviatedPath": "\/www\/data\/owl\/image\/badesandalen.jpg",
+		"outputPathIsOutsideProject": 0,
+		"outputPathIsSetByUser": 0,
+		"processed": 0
+		},
+	"\/www\/data\/owl\/image\/besen.jpg": {
+		"fileType": 16384,
+		"ignore": 0,
+		"ignoreWasSetByUser": 0,
+		"initialSize": 28098,
+		"inputAbbreviatedPath": "\/www\/data\/owl\/image\/besen.jpg",
+		"outputAbbreviatedPath": "\/www\/data\/owl\/image\/besen.jpg",
+		"outputPathIsOutsideProject": 0,
+		"outputPathIsSetByUser": 0,
+		"processed": 1
+		},
 	"\/www\/data\/owl\/image\/boemsken.jpg": {
 		"fileType": 16384,
 		"ignore": 0,
@@ -1346,6 +1368,17 @@
 		"outputPathIsSetByUser": 0,
 		"processed": 1
 		},
+	"\/www\/data\/owl\/image\/kissen.jpg": {
+		"fileType": 16384,
+		"ignore": 0,
+		"ignoreWasSetByUser": 0,
+		"initialSize": 31884,
+		"inputAbbreviatedPath": "\/www\/data\/owl\/image\/kissen.jpg",
+		"outputAbbreviatedPath": "\/www\/data\/owl\/image\/kissen.jpg",
+		"outputPathIsOutsideProject": 0,
+		"outputPathIsSetByUser": 0,
+		"processed": 0
+		},
 	"\/www\/data\/owl\/image\/klingel.jpg": {
 		"fileType": 16384,
 		"ignore": 0,
@@ -1379,6 +1412,17 @@
 		"outputPathIsSetByUser": 0,
 		"processed": 1
 		},
+	"\/www\/data\/owl\/image\/korken.jpg": {
+		"fileType": 16384,
+		"ignore": 0,
+		"ignoreWasSetByUser": 0,
+		"initialSize": 35170,
+		"inputAbbreviatedPath": "\/www\/data\/owl\/image\/korken.jpg",
+		"outputAbbreviatedPath": "\/www\/data\/owl\/image\/korken.jpg",
+		"outputPathIsOutsideProject": 0,
+		"outputPathIsSetByUser": 0,
+		"processed": 0
+		},
 	"\/www\/data\/owl\/image\/latuechte.jpg": {
 		"fileType": 16384,
 		"ignore": 0,
@@ -1401,6 +1445,39 @@
 		"outputPathIsSetByUser": 0,
 		"processed": 1
 		},
+	"\/www\/data\/owl\/image\/nagetier.jpg": {
+		"fileType": 16384,
+		"ignore": 0,
+		"ignoreWasSetByUser": 0,
+		"initialSize": 19246,
+		"inputAbbreviatedPath": "\/www\/data\/owl\/image\/nagetier.jpg",
+		"outputAbbreviatedPath": "\/www\/data\/owl\/image\/nagetier.jpg",
+		"outputPathIsOutsideProject": 0,
+		"outputPathIsSetByUser": 0,
+		"processed": 1
+		},
+	"\/www\/data\/owl\/image\/paettkenschnuewer.jpg": {
+		"fileType": 16384,
+		"ignore": 0,
+		"ignoreWasSetByUser": 0,
+		"initialSize": 26461,
+		"inputAbbreviatedPath": "\/www\/data\/owl\/image\/paettkenschnuewer.jpg",
+		"outputAbbreviatedPath": "\/www\/data\/owl\/image\/paettkenschnuewer.jpg",
+		"outputPathIsOutsideProject": 0,
+		"outputPathIsSetByUser": 0,
+		"processed": 0
+		},
+	"\/www\/data\/owl\/image\/paketband.jpg": {
+		"fileType": 16384,
+		"ignore": 0,
+		"ignoreWasSetByUser": 0,
+		"initialSize": 26886,
+		"inputAbbreviatedPath": "\/www\/data\/owl\/image\/paketband.jpg",
+		"outputAbbreviatedPath": "\/www\/data\/owl\/image\/paketband.jpg",
+		"outputPathIsOutsideProject": 0,
+		"outputPathIsSetByUser": 0,
+		"processed": 1
+		},
 	"\/www\/data\/owl\/image\/patrone.jpg": {
 		"fileType": 16384,
 		"ignore": 0,
@@ -1411,6 +1488,17 @@
 		"outputPathIsOutsideProject": 0,
 		"outputPathIsSetByUser": 0,
 		"processed": 1
+		},
+	"\/www\/data\/owl\/image\/pillepoppen.jpg": {
+		"fileType": 16384,
+		"ignore": 0,
+		"ignoreWasSetByUser": 0,
+		"initialSize": 21893,
+		"inputAbbreviatedPath": "\/www\/data\/owl\/image\/pillepoppen.jpg",
+		"outputAbbreviatedPath": "\/www\/data\/owl\/image\/pillepoppen.jpg",
+		"outputPathIsOutsideProject": 0,
+		"outputPathIsSetByUser": 0,
+		"processed": 0
 		},
 	"\/www\/data\/owl\/image\/pinienzapfen.jpg": {
 		"fileType": 16384,
@@ -1463,6 +1551,17 @@
 		"initialSize": 21745,
 		"inputAbbreviatedPath": "\/www\/data\/owl\/image\/plattenspieler.jpg",
 		"outputAbbreviatedPath": "\/www\/data\/owl\/image\/plattenspieler.jpg",
+		"outputPathIsOutsideProject": 0,
+		"outputPathIsSetByUser": 0,
+		"processed": 1
+		},
+	"\/www\/data\/owl\/image\/raupe.jpg": {
+		"fileType": 16384,
+		"ignore": 0,
+		"ignoreWasSetByUser": 0,
+		"initialSize": 18032,
+		"inputAbbreviatedPath": "\/www\/data\/owl\/image\/raupe.jpg",
+		"outputAbbreviatedPath": "\/www\/data\/owl\/image\/raupe.jpg",
 		"outputPathIsOutsideProject": 0,
 		"outputPathIsSetByUser": 0,
 		"processed": 1
@@ -1554,6 +1653,17 @@
 		"outputPathIsOutsideProject": 0,
 		"outputPathIsSetByUser": 0,
 		"processed": 1
+		},
+	"\/www\/data\/owl\/image\/viagra.jpg": {
+		"fileType": 16384,
+		"ignore": 0,
+		"ignoreWasSetByUser": 0,
+		"initialSize": 28396,
+		"inputAbbreviatedPath": "\/www\/data\/owl\/image\/viagra.jpg",
+		"outputAbbreviatedPath": "\/www\/data\/owl\/image\/viagra.jpg",
+		"outputPathIsOutsideProject": 0,
+		"outputPathIsSetByUser": 0,
+		"processed": 0
 		},
 	"\/www\/data\/owl\/owl.json": {
 		"fileType": 524288,

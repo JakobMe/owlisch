@@ -212,15 +212,15 @@ Für ein besseres Verständnis über die Struktur der Wörterbücher und Begriff
 
 In diesem Wörterbuch sind zum aktuellen Zeitpunkt folgende Begriffe vorhanden:
 
- 1. **angeschickert** — „angetrunken“
- 2. **beömmeln** — „sich totlachen“
- 3. **betuppen** — „betrügen“
- 4. **Bollerbuchse**, _die_ — „Jogginghose“
- 5. **Bömsken**, _das_ — „Bonbon“
- 6. **Bütterken**, _das_ — „kleines Butterbrot“
- 7. **dölmern** — „spielen“
- 8. **Dönekens**, _die_ — „Anekdoten“
- 9. **fickerich** — „nervös“
+1. **angeschickert** — „angetrunken“
+2. **beömmeln** — „sich totlachen“
+3. **betuppen** — „betrügen“
+4. **Bollerbuchse**, _die_ — „Jogginghose“
+5. **Bömsken**, _das_ — „Bonbon“
+6. **Bütterken**, _das_ — „kleines Butterbrot“
+7. **dölmern** — „spielen“
+8. **Dönekens**, _die_ — „Anekdoten“
+9. **fickerich** — „nervös“
 10. **Knüpp**, _der_ — „Knoten“
 11. **Kroppzeug**, _das_ — „Krempel“
 12. **Latüchte**, _die_ — „Laterne“

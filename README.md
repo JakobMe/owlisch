@@ -212,33 +212,33 @@ Für ein besseres Verständnis über die Struktur der Wörterbücher und Begriff
 
 In diesem Wörterbuch sind zum aktuellen Zeitpunkt folgende Begriffe vorhanden:
 
-* **angeschickert** – „angetrunken“
-* **beömmeln** – „sich totlachen“
-* **betuppen** – „betrügen“
-* **Bollerbuchse**, die – „Jogginghose“
-* **Bömsken**, das – „Bonbon“
-* **Bütterken**, das – „kleines Butterbrot“
-* **dölmern** – „spielen“
-* **Dönekens**, die – „Anekdoten“
-* **fickerich** – „nervös“
-* **Knüpp**, der – „Knoten“
-* **Kroppzeug**, das – „Krempel“
-* **Latüchte**, die – „Laterne“
-* **Mäse**, die – „Hintern“
-* **Möttke**, die – „Schlamm“
-* **Mürker**, der – „Maurer“
-* **nöhlen** – „meckern“
-* **nönkern** – „Mittagsschlaf halten“
-* **nüschen** – „durchwühlen“
-* **öddelich** – „dreckig“
-* **Pättkenschnüwer**, der – „Moped“
-* **pecken** – „kleben“
-* **Pillepoppen**, die - „Kaulquappen“
-* **Pinneken**, das – „Schnapsglas“
-* **Pläte**, die – „Glatze“
-* **Plüdden**, die – „alte Klamotten“
-* **Pölter**, der – „Schlafanzug“
-* **ratzen** – „schlafen“
-* **Töffel**, der – „Trottel“
-* **vermackeln** – „beschädigen“
-* **wullacken** – „schuften“
+ 1. **angeschickert** — „angetrunken“
+ 2. **beömmeln** — „sich totlachen“
+ 3. **betuppen** — „betrügen“
+ 4. **Bollerbuchse**, _die_ — „Jogginghose“
+ 5. **Bömsken**, _das_ — „Bonbon“
+ 6. **Bütterken**, _das_ — „kleines Butterbrot“
+ 7. **dölmern** — „spielen“
+ 8. **Dönekens**, _die_ — „Anekdoten“
+ 9. **fickerich** — „nervös“
+10. **Knüpp**, _der_ — „Knoten“
+11. **Kroppzeug**, _das_ — „Krempel“
+12. **Latüchte**, _die_ — „Laterne“
+13. **Mäse**, _die_ — „Hintern“
+14. **Möttke**, _die_ — „Schlamm“
+15. **Mürker**, _der_ — „Maurer“
+16. **nöhlen** — „meckern“
+17. **nönkern** — „Mittagsschlaf halten“
+18. **öddelich** — „dreckig“
+19. **Pättkenschnüwer**, _der_ — „Moped“
+20. **pecken** — „kleben“
+21. **Pillepoppen**, _die_ — „Kaulquappen“
+22. **Pinneken**, _das_ — „Schnapsglas“
+23. **plästern** — „regnen“
+24. **Pläte**, _die_ — „Glatze“
+25. **Plüdden**, _die_ — „alte Klamotten“
+26. **Pölter**, _der_ — „Schlafanzug“
+27. **ratzen** — „schlafen“
+28. **Töffel**, _der_ — „Trottel“
+29. **vermackeln** — „beschädigen“
+30. **wullacken** — „schuften“

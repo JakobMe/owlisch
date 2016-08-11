@@ -164,13 +164,13 @@
             "answersPictures" : []
         },
         {
-            "alias"           : "nueschen",
+            "alias"           : "plaestern",
             "article"         : "",
-            "term"            : "nüschen",
-            "translation"     : "durchwühlen",
-            "info"            : "Ursprünglich aus dem Plattdeutschen — „Etwas mit der Nase durchwühlen wie die Schweine und Hunde“, Deutsches Wörterbuch von Jacob Grimm und Wilhelm Grimm.",
-            "answersNative"   : ["nähen", "flüstern", "nuckeln", "knabbern", "niesen"],
-            "answersForeign"  : ["abplauzen", "drömmeln", "düpsen", "dameln", "spinksen"],
+            "term"            : "plästern",
+            "translation"     : "regnen",
+            "info"            : "Es plästert, wenn es in Strömen regnet oder schüttet — ursprünglich aus dem lateinischen „plastrum“ für Pflaster, meint es wohl eigentlich „(mit Mörtel) bespritzen“ (vgl. niederländisch pleisteren, verputzen).",
+            "answersNative"   : ["pflastern", "kleistern", "kleben", "hinsetzen", "tuscheln"],
+            "answersForeign"  : ["abplauzen", "drömmeln", "düpsen", "trönen", "spinksen"],
             "answersPictures" : []
         },
         {

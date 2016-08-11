@@ -229,7 +229,7 @@
             "term"            : "Töffel",
             "translation"     : "Trottel",
             "info"            : "Ein Tollpatsch, Trottel, Tölpel, Armleuchter oder Dummkopf — ein dummer, ungeschickter Mensch mit eingeschränkter Intelligenz, oder als Beleidigung.",
-            "answersNative"   : ["Esslöffel", "Kleines Auto", "Schultafel", "Flaschenöffner", "Türgriff"],
+            "answersNative"   : ["Esslöffel", "kleines Auto", "Schultafel", "Flaschenöffner", "Türgriff"],
             "answersForeign"  : ["Tröte", "Trulla", "Totten", "Mürker", "Schlunz"],
             "answersPictures" : []
         },

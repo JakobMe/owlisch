@@ -11,7 +11,7 @@ var Template = (function() {
     
     // Konstanten
     var _CONFIG                 = "tmpl/conf.json";
-    var _PATH                   = "tmpl/_";
+    var _PATH                   = "tmpl/";
     var _TYPE                   = ".html";
     
     // Private Variablen

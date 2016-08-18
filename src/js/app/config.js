@@ -198,3 +198,6 @@ var CFG = (function() {
         }
     };
 })();
+
+/*global FastClick */
+/*global Mustache */

@@ -1,16 +1,16 @@
-// Module
-var gulp         = require("gulp"),
-    util         = require("gulp-util"),
-    less         = require("gulp-less"),
-    jshint       = require("gulp-jshint"),
-    concat       = require("gulp-concat"),
-    uglify       = require("gulp-uglify"),
-    rename       = require("gulp-rename"),
-    cssmin       = require("gulp-cssmin"),
-    imagemin     = require("gulp-imagemin"),
-    sourcemaps   = require("gulp-sourcemaps"),
-    minify       = require("gulp-json-minify"),
-    autoprefixer = require("gulp-autoprefixer");
+// Modules
+var gulp = require("gulp");
+var util = require("gulp-util");
+var less = require("gulp-less");
+var jshint = require("gulp-jshint");
+var concat = require("gulp-concat");
+var uglify = require("gulp-uglify");
+var rename = require("gulp-rename");
+var cssmin = require("gulp-cssmin");
+var imagemin = require("gulp-imagemin");
+var sourcemaps = require("gulp-sourcemaps");
+var minify = require("gulp-json-minify");
+var autoprefixer = require("gulp-autoprefixer");
 
 // Default-Task
 gulp.task("default", ["watch"]);

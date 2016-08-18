@@ -38,9 +38,10 @@
         position: relative;
         text-align: center;
         z-index: 1000;
+        background: @app-color-main;
+        color: @app-color-text-light;
         height: @app-size-height-navigationbar;
         .border(bottom, @app-color-main-dark);
-        .colored(@app-color-main);
     }
     
     // Element: Titel
@@ -132,7 +133,7 @@
             line-height: (@_navigationbar-size-search - @app-size-line-thin);
             font-size: @_navigationbar-font-size-search;
             content: @fontello-icon-search;
-            .color-on(@app-color-main, true);
+            color: @app-color-text-light-pale;
             .font-icon();
         }
         
@@ -151,7 +152,6 @@
             font-size: @app-font-size-small;
             height: @_navigationbar-size-search;
             padding: @_navigationbar-size-padding (@_navigationbar-size-search + @_navigationbar-size-padding);
-            line-height: (@_navigationbar-size-search - (@_navigationbar-size-padding * 2));
             .colored(@app-color-main-dark);
             .border-radius();
             .textshadow();

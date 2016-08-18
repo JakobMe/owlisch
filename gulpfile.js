@@ -68,10 +68,8 @@ gulp.task("js", function() {
 
 // LESS-Task
 gulp.task("less", function() {
-    return gulp.src("src/less/**/*.less")
+    return gulp.src("src/less/index.less")
         .pipe(sourcemaps.init())
-        .pipe(concat("index.min.css"))
-        .pipe(gulp.dest("www/css/"))
         .pipe(rename("index.min.css"))
         .pipe(less())
         .pipe(gulp.dest("www/css/"))

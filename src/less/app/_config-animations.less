@@ -7,21 +7,11 @@
  */
 
 /*
- * Animation: Highlight.
- * Lässt Elemente kurz aufleuchten.
- */
-@keyframes highlight {
-    0%   { .shadow-glow(); }
-    100% { .shadow-none(); }
-}
-
-/*
  * Animation: Fortschritts-Stufe Fehler.
  * Lässt eine Fortschritts-Stufe kurz rot aufleuchten.
  */
 @keyframes progress-step-error {
-    0%   { .block-glow(@app-color-error); }
-    100% { .block-glow-none(); }
+    0% { .block-glow(@app-color-error); }
 }
 
 /*
@@ -29,8 +19,7 @@
  * Lässt eine Fortschritts-Stufe kurz grün aufleuchten.
  */
 @keyframes progress-step-success {
-    0%   { .block-glow(@app-color-success); }
-    100% { .block-glow-none(); }
+    0% { .block-glow(@app-color-success); }
 }
 
 /*
@@ -56,6 +45,5 @@
  * Lässt einen Stufen-Stern kurz gelb aufleuchten.
  */
 @keyframes level-up {
-    0%   { .text-glow(@app-color-star); }
-    100% { .text-glow-none(); }
+    0% { .text-glow(@app-color-star); }
 }

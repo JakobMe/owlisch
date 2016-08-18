@@ -147,14 +147,6 @@
 }
 
 /**
- * Mixin: Schatten zurücksetzen.
- * Setzt den Schatten auf den ursprünglichen Zustand.
- */
-.shadow-reset() {
-    box-shadow: inherit;
-}
-
-/**
  * Mixin: Text-Schatten.
  * @param {#color} color - Farbe des Text-Schattens
  * @param {*px} size - Größe des Text-Schattens
@@ -289,31 +281,11 @@
 }
 
 /**
- * Mixin: Leuchtenden Block deaktivieren.
- * Negiert alle Auswirkungen eines leuchtenden Blocks.
- */
-.block-glow-none() {
-    color: inherit;
-    background: inherit;
-    border-color: inherit;
-    .shadow-reset();
-}
-
-/**
  * Mixin: Leuchtender Text.
  * Setzt Farbe und Schatten für Text.
  * @param {#color}color - Farbe des Textes
  */
- .text-glow(@color) {
+.text-glow(@color) {
      color: @color;
      .textshadow-glow(@color);
- }
- 
- /**
- * Mixin: Leuchtenden Text deaktivieren.
- * Negiert alle Auswirkungen des leuchtendes Textes.
- */
- .text-glow-none() {
-     color: inherit;
-     text-shadow: inherit;
- }
+}

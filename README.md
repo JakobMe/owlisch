@@ -8,13 +8,15 @@ Diese App wurde von **Jakob Metzger** als Bachelor-Arbeit an der [Universität B
 
 
 - [Verwendete Ressourcen & Dienste](#verwendete-ressourcen-&-dienste)
-    - [Frameworks, Plugins & Module](#frameworks-plugins-&-module)
-    - [JavaScript Bibliotheken](#javascript-bibliotheken)
-    - [Web-Fonts](#web-fonts)
-    - [Sonstiges](#sonstiges)
-    - [Benötigte Software zum Bearbeiten des Projekts](#ben%C3%B6tigte-software-zum-bearbeiten-des-projekts)
+  - [Frameworks, Plugins & Module](#frameworks-plugins-&-module)
+  - [JavaScript Bibliotheken](#javascript-bibliotheken)
+  - [Web-Fonts](#web-fonts)
+  - [Sonstiges](#sonstiges)
+  - [Benötigte Software zum Bearbeiten des Projekts](#ben%C3%B6tigte-software-zum-bearbeiten-des-projekts)
 - [Beteiligte Studierende an der Entwicklung des Konzepts](#beteiligte-studierende-an-der-entwicklung-des-konzepts)
 - [Installation](#installation)
+  - [Initialisieren und Starten](#initialisieren-und-starten)
+  - [Projekt bearbeiten](#projekt-bearbeiten)
 - [Wörterbücher](#w%C3%B6rterb%C3%BCcher)
   - [Neue Begriffe hinzufügen](#neue-begriffe-hinzuf%C3%BCgen)
   - [Bilder und Audio-Dateien](#bilder-und-audio-dateien)
@@ -26,34 +28,35 @@ Diese App wurde von **Jakob Metzger** als Bachelor-Arbeit an der [Universität B
 Im folgenden werden alle Ressourcen und Dienste aufgelistet, die von Drittanbietern stammen.
 Alle diese Ressourcen und Dienste sind für die private und kommerzielle Nutzung frei verfügbar.
 
-#### Frameworks, Plugins & Module
+### Frameworks, Plugins & Module
 * [Apache Cordova 6.3.0](https://cordova.apache.org)
 * [Cordova StatusBar 2.1.3](https://github.com/apache/cordova-plugin-statusbar)
 * [Cordova Keyboard 1.1.4](https://github.com/cjpearson/cordova-plugin-keyboard)
 * [Cordova Dialogs 1.2.1](https://github.com/apache/cordova-plugin-dialogs)
+* [gulp 3.9.1](https://github.com/gulpjs/gulp)
 * [jsdoc-to-markdown 1.3.6](https://github.com/jsdoc2md/jsdoc-to-markdown)
 * [doctoc 1.2.0](https://github.com/thlorenz/doctoc)
 
-#### JavaScript Bibliotheken
+### JavaScript Bibliotheken
 * [jQuery 2.2.3](https://github.com/jquery/jquery)
 * [FastClick 1.0.6](https://github.com/ftlabs/fastclick)
 * [jquery-bemhelpers 2.2.1](https://github.com/ingdir/jquery-bemhelpers)
 * [mustache.js 2.2.1](https://github.com/janl/mustache.js)
 
-#### Web-Fonts
+### Web-Fonts
 * [Lato Webfont](https://www.google.com/fonts/specimen/Lato)
 * [Entypo](http://www.entypo.com) via [Fontello](http://fontello.com)
 * [FontAwesome](http://fontawesome.io) via [Fontello](http://fontello.com)
 
-#### Sonstiges
+### Sonstiges
 * [FreeImages](http://www.freeimages.com)
 * [loading.io](http://loading.io)
-* [Real Favicon Generator](http://realfavicongenerator.net)
 
-#### Benötigte Software zum Bearbeiten des Projekts
+### Benötigte Software zum Bearbeiten des Projekts
 * [Xcode](https://itunes.apple.com/de/app/xcode/id497799835?mt=12)
-* [CodeKit](https://incident57.com/codekit/)
+* [NPM](https://nodejs.org/en/)
 * [Cordova](https://cordova.apache.org)
+* [gulp](https://github.com/gulpjs/gulp)
 
 ## Beteiligte Studierende an der Entwicklung des Konzepts
 Folgende Studierende waren im Zuge des Seminars _Mobile Learning_ an der [Universität Bielefeld](http://www.uni-bielefeld.de) unter Leitung von [Paul John](https://ekvv.uni-bielefeld.de/pers_publ/publ/PersonDetail.jsp?personId=3772740) an der Konzeption des [ersten Prototypen](https://github.com/JakobMe/owlisch/releases/tag/v0.1-alpha) von **OWLisch** beteiligt:
@@ -67,7 +70,14 @@ Folgende Studierende waren im Zuge des Seminars _Mobile Learning_ an der [Univer
 * Jakob Metzger
 * Philipp Niewöhner
 
+Alle in der App enthaltenen Audio-Dateien wurden von **Miriam Belke** eingesprochen und bearbeitet.
+
 ## Installation
+
+Im folgenden wird beschrieben, wie das Projekt installiert und bearbeitet werden kann.
+
+### Initialisieren und Starten
+
 Für die Installation werden zunächst [NPM](https://nodejs.org/en/) und [Xcode](https://itunes.apple.com/de/app/xcode/id497799835?mt=12) benötigt.
 Als nächstes müssen per Kommandozeile einige Pakete installiert werden:
 
@@ -126,6 +136,36 @@ npm run build
 # Ohne Dokumentation
 cordova build ios
 ```
+
+### Projekt bearbeiten
+
+Um das Projekt zu bearbeiten, wird ein beliebiger Texteditor benötigt; zwingend erforderlich ist auch [gulp](https://github.com/gulpjs/gulp), um alle Quelldateien unter `src/` an der richtigen Ort unter `www/` 
+zu kopieren und gegebenenfalls zu kompilieren.
+
+Dafür muss, wie oben bereits beschrieben, _NPM_ installiert sein; anschließend kann _gulp_ mit allen erforderlichen Modulen über folgende Befehle installiert werden:
+
+```sh
+# gulp global installieren
+npm install -g gulp
+
+# Alle Module für das Projekt installieren
+npm install
+```
+
+Um _gulp_ zu starten und im Hintergrund laufen zu lassen oder bestimmte Tasks manuell auszuführen können folgende Befehle verwendet werden:
+
+```sh
+# gulp starten
+gulp
+
+# www-Verzeichnis komplett neu erstellen
+gulp all
+
+# Einzelne Tasks ausführen (siehe gulpfile.js)
+gulp [jshint|js|less|json|html|fonts|data|img]
+```
+
+Zu beachten ist, dass ausschließlich Dateien im `src/` Verzeichnis bearbeitet werden dürfen; alle Dateien in `www/` werden automatisiert erstellt und überschrieben, sobald die zugehörigen Quelldateien geändert werden und _gulp_ bereits gestartet wurde!
 
 ## Wörterbücher
 

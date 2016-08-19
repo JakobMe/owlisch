@@ -51,6 +51,7 @@ Alle diese Ressourcen und Dienste sind für die private und kommerzielle Nutzung
 ### Sonstiges
 * [FreeImages](http://www.freeimages.com)
 * [loading.io](http://loading.io)
+* [RealFaviconGenerator](http://realfavicongenerator.net)
 
 ### Benötigte Software zum Bearbeiten des Projekts
 * [Xcode](https://itunes.apple.com/de/app/xcode/id497799835?mt=12)
@@ -162,7 +163,7 @@ gulp
 gulp all
 
 # Einzelne Tasks ausführen (siehe gulpfile.js)
-gulp [jshint|js|less|json|html|fonts|data|img]
+gulp <jshint|js|less|html|fonts|data|json|img|favicon|res>
 ```
 
 Zu beachten ist, dass ausschließlich Dateien im `src/` Verzeichnis bearbeitet werden dürfen; alle Dateien in `www/` werden automatisiert erstellt und überschrieben, sobald die zugehörigen Quelldateien geändert werden und _gulp_ bereits gestartet wurde!
@@ -173,7 +174,7 @@ Im folgenden wird beschrieben, wie man die bereits vorhandenen Wörterbücher um
 
 ### Neue Begriffe hinzufügen
 
-Einem Wörterbuch können beliebig viele Begriffe hinzugefügt werden. Die Wörterbücher liegen als JSON-Dateien im Verzeichnis `src/json` vor, mit dem Präfix `data-`, also z.B. `src/json/data-owl.json`. Diese Wörterbuch-Dateien werden von Codekit minimiert und ohne Präfix unter `www/data/` abgelegt, z.B. `www/data/owl/owl.json`.
+Einem Wörterbuch können beliebig viele Begriffe hinzugefügt werden. Die Wörterbücher liegen als JSON-Dateien im Verzeichnis `src/data/<alias>/<alias>.json` vor, also z.B. `src/data/owl/owl.json`. Diese Wörterbuch-Dateien werden von Gulp minimiert und unter `www/data/` abgelegt, z.B. `www/data/owl/owl.json`.
 
 Eine solche Datei ist wie folgt aufgebaut:
 
@@ -193,14 +194,14 @@ Die eigentlichen Begriffe des Wörterbuches werden im `terms` Array als JSON-Obj
 
 ```json
 {
-    "alias"           : "Kurzname",
+    "alias"           : "kurzname",
     "article"         : "Artikel, optional",
     "term"            : "Anzeigename",
     "translation"     : "Übersetzung",
     "info"            : "Beschreibungstext",
-    "answersNative"   : ["Deutsche Antwort"],
-    "answersForeign"  : ["Fremdsprachen-Antwort"],
-    "answersPictures" : ["Bild-Datei"]
+    "answersNative"   : ["Deutsche Antwort", "..."],
+    "answersForeign"  : ["Fremdsprachen-Antwort", "..."],
+    "answersPictures" : ["Bild-Datei", "..."]
 }
 ```
 
@@ -211,7 +212,7 @@ Die eigentlichen Begriffe des Wörterbuches werden im `terms` Array als JSON-Obj
 * `info`: Ein relativ kurzer Beschreibungstext mit näheren Informationen zum Begriff.
 * `answersNative`: Ein Array aus deutschen Wörtern, die im Quiz als falsche Antwortmöglichkeiten dienen; es müssen mindestens drei vorhanden sein.
 * `answersForeign`: Ein Array aus Fremdsprachen-Antworten, die im Quiz als falsche Antwortmöglichkeiten dienen; es müssen mindestens drei vorhanden sein.
-* `answersPictures`: Ein optionales Array aus Dateinamen für Bilder unter `www/data/{alias}/image/{bild}.jpg`; diese Bilder kommen im Quiz zum Einsatz, um als Antwortmöglichkeiten zu dienen. Es müssen mindestens drei Bilder angegeben werden und der Begriff muss selbst ebenfalls über ein Bild verfügen. Soll der Begriff über keine Bilder verfügen, muss ein leeres Array `[]` als Wert angegeben werden.
+* `answersPictures`: Ein optionales Array aus Dateinamen für Bilder unter `www/data/<alias>/image/<bild>.jpg`; diese Bilder kommen im Quiz zum Einsatz, um als Antwortmöglichkeiten zu dienen. Es müssen mindestens drei Bilder angegeben werden und der Begriff muss selbst ebenfalls über ein Bild verfügen. Soll der Begriff über keine Bilder verfügen, muss ein leeres Array `[]` als Wert angegeben werden.
 
 Um einen neuen Begriff hinzuzufügen, muss in der entsprechenden Datei ein neues Objekt mit den obigen Daten zum `terms` Array hinzugefügt werden:
 
@@ -225,7 +226,9 @@ Um einen neuen Begriff hinzuzufügen, muss in der entsprechenden Datei ein neues
 
 ### Bilder und Audio-Dateien
 
-Jedes Wörterbuch verfügt über seine eigenen Bild- und Audio-Dateien im entsprechenden Verzeichnis unter `www/data/{alias}/image` und `www/data/{alias}/audio`. Audio-Dateien müssen als `.mp3` vorliegen, Bilder als `.jpg` mit einer Größe von `280x280px`. Die Dateinamen müssen dabei immer dem Alias des zugehörigen Begriffes entsprechen; wenn also der Begriff _Pinneken_ mit dem Alias _pinneken_ über Dateien verfügen soll, muss es `image/pinneken.jpg` und `audio/pinneken.mp3` geben.
+Jedes Wörterbuch verfügt über seine eigenen Bild- und Audio-Dateien im entsprechenden Verzeichnis unter `src/data/<alias>/image` und `src/data/<alias>/audio`. Audio-Dateien müssen als `.mp3` vorliegen, Bilder als `.jpg` mit einer Größe von `280x280px`. Die Dateinamen müssen dabei immer dem Alias des zugehörigen Begriffes entsprechen; wenn also der Begriff _Pinneken_ mit dem Alias _pinneken_ über Dateien verfügen soll, muss es `image/pinneken.jpg` und `audio/pinneken.mp3` geben.
+
+Diese Dateien werden von Gulp automatisch in das `www/data/` Verzeichnis kopiert und im Falle der Bilder auch komprimiert.
 
 Beim Laden des Wörterbuches wird automatisch nach zugehörigen Dateien gesucht; gibt es kein Bild, sind bestimmte Quiz-Typen für diesen Begriff ausgeschlossen, ohne Audio-Datei fehlt der Button zum Vorlesen des Begriffes.
 
@@ -248,7 +251,7 @@ Es müssen immer mindestens drei Bilder angegeben werden, da es im Quiz immer vi
 
 ### Ostwestfälisch-Wörterbuch
 
-Für ein besseres Verständnis über die Struktur der Wörterbücher und Begriffe sollte man einen Blick auf das Hauptwörterbuch [Ostwestfälisch](src/json/data-owl.json) unter `src/json/data-owl.json` werfen.
+Für ein besseres Verständnis über die Struktur der Wörterbücher und Begriffe sollte man einen Blick auf das Hauptwörterbuch [Ostwestfälisch](src/data/owl/owl.json) unter `src/data/owl/owl.json` werfen.
 
 In diesem Wörterbuch sind zum aktuellen Zeitpunkt folgende Begriffe vorhanden:
 

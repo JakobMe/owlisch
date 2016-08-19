@@ -115,4 +115,7 @@ gulp.task("res", function() {
 });
 
 // All-Task
-gulp.task("all", ["jshint", "js", "less", "json", "html", "fonts", "data", "img"]);
+gulp.task(
+    "all",
+    ["jshint", "js", "less", "html", "fonts", "data", "json", "img", "res"]
+);

@@ -4,6 +4,11 @@ Es folgt eine mit [jsdoc-to-markdown](https://github.com/jsdoc2md/jsdoc-to-markd
 ### Modules
 
 <dl>
+<dt><a href="#module_App">App</a></dt>
+<dd><p>Haupt-Modul der App; aktiviert FastClick, konfiguriert die Optionen für das
+BEM-Helper-Plugin und initialisiert alle Module der App, initialisiert sich
+selbst, sobald das Dokument bereit ist.</p>
+</dd>
 <dt><a href="#module_Data">Data</a></dt>
 <dd><p>Lädt und verwaltet alle benötigten Daten für die App, bereitet die
 Daten aus den Wörterbuch-Dateien auf, kann sie per Mediator an andere
@@ -18,11 +23,6 @@ Liste und das Anzeigen von Details für gewählte Begriffe.</p>
 <dt><a href="#module_Featured">Featured</a></dt>
 <dd><p>Steuert die Start-View der App; zeigt beim Start der App den Begriff des
 Tages an, indem dieser zunächst per Mediator vom Data-Modul angefragt wird.</p>
-</dd>
-<dt><a href="#module_App">App</a></dt>
-<dd><p>Haupt-Modul der App; aktiviert FastClick, konfiguriert die Optionen für das
-BEM-Helper-Plugin und initialisiert alle Module der App, initialisiert sich
-selbst, sobald das Dokument bereit ist.</p>
 </dd>
 <dt><a href="#module_Mediator">Mediator</a></dt>
 <dd><p>Stellt Funktionen bereit, um die Kommunikation zwischen Modulen zu
@@ -102,6 +102,31 @@ Kanal-Namen für den Mediator, Eigenschaften der View-Panels und Optionen
 und Konstanten für Events, Icon-Namen und Zeitangaben.</p>
 </dd>
 </dl>
+
+<a name="module_App"></a>
+
+### App
+Haupt-Modul der App; aktiviert FastClick, konfiguriert die Optionen für das
+BEM-Helper-Plugin und initialisiert alle Module der App, initialisiert sich
+selbst, sobald das Dokument bereit ist.
+
+**Requires**: <code>[Template](#module_Template)</code>, <code>[Data](#module_Data)</code>, <code>[Featured](#module_Featured)</code>, <code>[Dictionary](#module_Dictionary)</code>, <code>[Quiz](#module_Quiz)</code>, <code>[Statistics](#module_Statistics)</code>, <code>[More](#module_More)</code>, <code>[NavigationBar](#module_NavigationBar)</code>, <code>[TabBar](#module_TabBar)</code>, <code>[Play](#module_Play)</code>, <code>[View](#module_View)</code>  
+**Author:** Jakob Metzger <jakob.me@gmail.com>  
+**License**: MIT  
+**Copyright**: 2016 Jakob Metzger  
+
+-
+
+<a name="module_App..init"></a>
+
+#### App~init()
+Aktiviert FastClick, konfiguriert das BEM-Helpers-Plugin und
+initialisiert alle Module der App in richtiger Reihenfolge.
+
+**Kind**: inner method of <code>[App](#module_App)</code>  
+**Access:** public  
+
+-
 
 <a name="module_Data"></a>
 
@@ -828,31 +853,6 @@ wiederherzustellen.
 | --- | --- | --- |
 | panel | <code>String</code> | Übermittelte Daten |
 
-
--
-
-<a name="module_App"></a>
-
-### App
-Haupt-Modul der App; aktiviert FastClick, konfiguriert die Optionen für das
-BEM-Helper-Plugin und initialisiert alle Module der App, initialisiert sich
-selbst, sobald das Dokument bereit ist.
-
-**Requires**: <code>[Template](#module_Template)</code>, <code>[Data](#module_Data)</code>, <code>[Featured](#module_Featured)</code>, <code>[Dictionary](#module_Dictionary)</code>, <code>[Quiz](#module_Quiz)</code>, <code>[Statistics](#module_Statistics)</code>, <code>[More](#module_More)</code>, <code>[NavigationBar](#module_NavigationBar)</code>, <code>[TabBar](#module_TabBar)</code>, <code>[Play](#module_Play)</code>, <code>[View](#module_View)</code>  
-**Author:** Jakob Metzger <jakob.me@gmail.com>  
-**License**: MIT  
-**Copyright**: 2016 Jakob Metzger  
-
--
-
-<a name="module_App..init"></a>
-
-#### App~init()
-Aktiviert FastClick, konfiguriert das BEM-Helpers-Plugin und
-initialisiert alle Module der App in richtiger Reihenfolge.
-
-**Kind**: inner method of <code>[App](#module_App)</code>  
-**Access:** public  
 
 -
 

@@ -55,7 +55,7 @@ gulp.task("js", function() {
             "src/js/app/navigationbar.js",
             "src/js/app/view.js",
             "src/js/app/tabbar.js",
-            "src/js/app/init.js"
+            "src/js/app/app.js"
         ])
         .pipe(sourcemaps.init())
         .pipe(concat("index.min.js"))

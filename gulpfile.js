@@ -23,6 +23,7 @@ gulp.task("watch", function() {
     gulp.watch("src/data/**/*", ["data"]);
     gulp.watch("src/less/**/*.less", ["less"]);
     gulp.watch("src/img/*", ["img"]);
+    gulp.watch("src/favicon/*", ["favicon"]);
 });
 
 // JSHint-Task
@@ -95,7 +96,7 @@ gulp.task("fonts", function() {
 
 // Data-Task
 gulp.task("data", function() {
-    return gulp.src("src/data/**/*")
+    return gulp.src(["src/data/**/*.mp3", "src/data/**/*.jpg"])
         .pipe(imagemin())
         .pipe(gulp.dest("www/data/"));
 });
@@ -105,6 +106,13 @@ gulp.task("img", function() {
     return gulp.src("src/img/*")
         .pipe(imagemin())
         .pipe(gulp.dest("www/img/"));
+});
+
+// Favicon-Task
+gulp.task("favicon", function() {
+    return gulp.src("src/favicon/*")
+        .pipe(imagemin())
+        .pipe(gulp.dest("www/favicon/"));
 });
 
 // Resource-Task
@@ -117,5 +125,5 @@ gulp.task("res", function() {
 // All-Task
 gulp.task(
     "all",
-    ["jshint", "js", "less", "html", "fonts", "data", "json", "img", "res"]
+    ["jshint", "js", "less", "html", "fonts", "data", "json", "img", "favicon", "res"]
 );

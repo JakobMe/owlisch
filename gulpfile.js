@@ -107,5 +107,12 @@ gulp.task("img", function() {
         .pipe(gulp.dest("www/img/"));
 });
 
+// Resource-Task
+gulp.task("res", function() {
+    return gulp.src("res/**/*.png")
+        .pipe(imagemin())
+        .pipe(gulp.dest("res"));
+});
+
 // All-Task
 gulp.task("all", ["jshint", "js", "less", "json", "html", "fonts", "data", "img"]);

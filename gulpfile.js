@@ -8,7 +8,6 @@ var uglify = require("gulp-uglify");
 var rename = require("gulp-rename");
 var cssmin = require("gulp-cssmin");
 var imagemin = require("gulp-imagemin");
-var sourcemaps = require("gulp-sourcemaps");
 var minify = require("gulp-json-minify");
 var autoprefixer = require("gulp-autoprefixer");
 
@@ -57,25 +56,20 @@ gulp.task("js", function() {
             "src/js/app/tabbar.js",
             "src/js/app/app.js"
         ])
-        .pipe(sourcemaps.init())
         .pipe(concat("index.min.js"))
         .pipe(gulp.dest("www/js/"))
-        .pipe(rename("index.min.js"))
         .pipe(uglify())
-        .pipe(sourcemaps.write("./"))
         .pipe(gulp.dest("www/js/"));
 });
 
 // LESS-Task
 gulp.task("less", function() {
     return gulp.src("src/less/index.less")
-        .pipe(sourcemaps.init())
         .pipe(rename("index.min.css"))
         .pipe(less())
         .pipe(gulp.dest("www/css/"))
         .pipe(autoprefixer())
         .pipe(cssmin())
-        .pipe(sourcemaps.write("./"))
         .pipe(gulp.dest("www/css/"));
 });
 

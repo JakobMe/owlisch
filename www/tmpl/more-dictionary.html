@@ -12,7 +12,7 @@
 <ul class="dropdown dropdown--static">
     {{#dictionaries.list}}
     <li class="dropdown__item{{#current}} dropdown__item--selected{{/current}}"
-        data-alias="{{alias}}" data-data="dictionary">
+        {{^current}}data-alias="{{alias}}" data-data="dictionary"{{/current}}>
         <span class="dropdown__label">
             {{caption}}
         </span>

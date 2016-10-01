@@ -39,6 +39,7 @@ var Quiz = (function() {
     var _TMPL_QUIZ              = "quiz";
     var _TMPL_FINISH            = "quiz-finish";
     var _TMPL_QUESTION          = "quiz-question";
+    var _TMPL_START             = "quiz-start";
     
     // BEM-Konstanten
     var _B_QUIZ                 = "quiz";
@@ -168,16 +169,14 @@ var Quiz = (function() {
             
             // Template füllen, Callback ausführen
             Template.render(data.target, _TMPL_QUIZ, {
-                slides    : slides,
-                questions : questions,
-                caption   : _dataCaption,
-                size      : slides - extra
+                questions : questions
             }, function() {
 
                 // Funktionen ausführen
                 _initDom();
                 _resetProgress();
                 _bindEvents();
+                _renderStart();
                 _slider.setSlide(_indexStart);
                 
                 // Wörterbuch und Fortschritt anfragen, View einblenden
@@ -903,6 +902,20 @@ var Quiz = (function() {
     }
     
     /**
+     * Rendert das Start-Slide des Quizes anhand eines Mustache-Templates neu.
+     * @access private
+     * @function _renderStart
+     */
+    function _renderStart() {
+        if (_$start instanceof $) {
+            Template.render(_$start, _TMPL_START, {
+                caption : _dataCaption,
+                size    : CFG.QUIZ.QUESTIONS
+            });
+        }
+    }
+    
+    /**
      * Aktualisiert die interne Kopie der Wörterbuch-Daten des Quizes
      * anhand einer Mediator-Nachricht.
      * @access private
@@ -915,6 +928,7 @@ var Quiz = (function() {
             (typeof data.caption !== typeof undefined)) {
             _dataCaption = data.caption;
             _dataTerms = data.data;
+            _renderStart();
         }
     }
     

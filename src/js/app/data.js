@@ -85,30 +85,24 @@ var Data = (function() {
     function _initDataStored(dictionary) {
         
         // Daten initialisieren
-        var dataInitial = {};
+        var dataKey = CFG.DATA.DEFAULT;
+        var dataInitial = { dictionary: CFG.DATA.DEFAULT };
+        var dataEmpty = {
+            featured : {},
+            progress : {},
+            scores   : []
+        };
         
-        // Falls Wörterbuch angegeben ist, Daten dafür anlegen
+        // Falls Wörterbuch angegeben ist, Ziel-Daten ändern
         if (typeof dictionary === typeof "") {
             dataInitial = JSON.parse(localStorage.getItem(CFG.DATA.STORE));
-            dataInitial[dictionary] = {
-                featured : {},
-                progress : {},
-                scores   : []
-            };
-        
-        // Ansonsten einen neuen leeren Datensatz anlegen
-        } else {
-            dataInitial = { dictionary: CFG.DATA.DEFAULT };
-            dataInitial[CFG.DATA.DEFAULT] = {
-                featured : {},
-                progress : {},
-                scores   : []
-            };
+            dataKey = dictionary;
         }
         
         // Daten speichern und laden
+        dataInitial[dataKey] = dataEmpty;
         localStorage.setItem(CFG.DATA.STORE, JSON.stringify(dataInitial));
-        _loadDataStored();
+        _loadDataStored(dictionary);
     }
     
     /**
@@ -396,7 +390,8 @@ var Data = (function() {
      */
     function _updateDataFeatured() {
         if ($.isEmptyObject(_dataFeatured) ||
-            (_dataFeatured.date < Util.getDate())) {
+            (_dataFeatured.date < Util.getDate()) ||
+            (Util.findTerm(_dataTerms, _dataFeatured.term) === false)) {
             _setDataFeatured();
         } else { _serveDataFeatured(); }
     }
@@ -581,11 +576,12 @@ var Data = (function() {
         if (typeof event !== typeof undefined) {
             var $clicked = $(event.target).closest(_SEL_DICTIONARY);
             _dictionaryChange = $clicked.data(_DATA_ALIAS);
+            Util.dialog(
+                CFG.DIALOG.CONFIRM, CFG.LABEL.DICTIONARY_CONFIRM,
+                _changeDictionary, CFG.OPTIONS.DICTIONARY,
+                [CFG.LABEL.YES, CFG.LABEL.NO]
+            );
         }
-        Util.dialog(
-            CFG.DIALOG.CONFIRM, CFG.LABEL.DICTIONARY_CONFIRM, _changeDictionary,
-            CFG.OPTIONS.DICTIONARY, [CFG.LABEL.YES, CFG.LABEL.NO]
-        );
     }
     
     // Öffentliches Interface

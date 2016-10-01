@@ -1,0 +1,31 @@
+<ul class="list">
+    <li class="list__title">
+        <span class="list__title-text">
+            <i class="icon icon--dictionary list__title-icon"></i>
+            Verfügbar
+            <span class="badge">
+                {{dictionaries.size}} Wörterbüch{{^dictionaries.single}}er{{/dictionaries.single}}
+            </span>
+        </span>
+    </li>
+</ul>
+<ul class="dropdown dropdown--static">
+    {{#dictionaries.list}}
+    <li class="dropdown__item{{#current}} dropdown__item--selected{{/current}}"
+        data-alias="{{alias}}" data-data="dictionary">
+        <span class="dropdown__label">
+            {{caption}}
+        </span>
+    </li>
+    {{/dictionaries.list}}
+</ul>
+<p class="notice">
+    <span class="notice__title">
+        <span class="notice__title-text">Hinweis</span>
+    </span>
+    <span class="notice__text">
+        Das Ändern des Wörterbuches hat <b>keine</b> Auswirkungen auf Deinen
+        bisherigen <b>Fortschritt</b>. Du kannst das aktive Wörterbuch beliebig
+        hin und her wechseln, ohne Deine Daten zu verlieren.
+    </span>
+</p>

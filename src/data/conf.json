@@ -73,8 +73,14 @@
             }
         ]
     ],
-    "dictionaries": {
-        "owl"     : "Ostwestfälisch",
-        "bayern"  : "Bay­e­risch"
-    }
+    "dictionaries": [
+        {
+            "alias"   : "owl",
+            "caption" : "Ostwestfälisch"
+        },
+        {
+            "alias"   : "bayern",
+            "caption" : "Bayerisch"
+        }
+    ]
 }

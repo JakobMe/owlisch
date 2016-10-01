@@ -39,6 +39,9 @@ var CFG = (function() {
             THIS                : "das",
             DELETE_CONFIRM      : "Fortschritt wirklich löschen?",
             DELETE_SUCCESS      : "Fortschritt wurde erfolgreich gelöscht.",
+            DICTIONARY_CONFIRM  : "Wörterbuch wirklich ändern?",
+            DICTIONARY_SUCCESS  : "Wörterbuch wurde erfolgreich geändert.",
+            DICTIONARY_ERROR    : "Beim Ändern ist ein Fehler aufgetreten!",
             YES                 : "Ja",
             NO                  : "Nein"
         },

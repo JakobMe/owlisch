@@ -58,7 +58,8 @@ var More = (function() {
                 .sub(CFG.CNL.VIEW_RESTORE, _restore)
                 .sub(CFG.CNL.NAVBAR_ACTION, _back)
                 .sub(CFG.CNL.TERMS_SERVE, _updateTerms)
-                .sub(CFG.CNL.DICTIONARY_SERVE, _updateDictionary);
+                .sub(CFG.CNL.DICTIONARY_SERVE, _updateDictionary)
+                .sub(CFG.CNL.DICTIONARIES_SERVE, _updateDictionaries);
     }
     
     /**
@@ -213,6 +214,28 @@ var More = (function() {
     function _updateDictionary(data) {
         if (typeof data !== typeof undefined) {
             _data.dictionary = $.extend({}, data);
+            if ((_slider !== null) &&
+                (_slider.getSlide() === _indexOption)) {
+                _renderOption(false);
+            }
+        }
+    }
+    
+    /**
+     * Aktualisiert anhand einer Mediator-Nachricht die interne Kopie der
+     * vorhandenen Wörterbücher; rendert gegebenenfalls die aktuelle
+     * Ansicht neu.
+     * @access private
+     * @param {Object} data Übermittelte Mediator-Daten
+     * @function _updateDictionaries
+     */
+    function _updateDictionaries(data) {
+        if (typeof data !== typeof undefined) {
+            _data.dictionaries = {
+                list   : data,
+                size   : data.length,
+                single : data.length === 1
+            };
             if ((_slider !== null) &&
                 (_slider.getSlide() === _indexOption)) {
                 _renderOption(false);

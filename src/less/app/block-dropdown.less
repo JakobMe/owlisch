@@ -34,6 +34,18 @@
         .translate();
     }
     
+    // Mod: Statisch
+    &--static {
+        position: static;
+        visibility: visible;
+        opacity: @app-opacity-full;
+        margin-top: @app-size-gap;
+        .shadow-none();
+        .border(bottom);
+        .border(top);
+        .translate();
+    }
+    
     // Element: Listenpunkt
     &__item {
         display: block;

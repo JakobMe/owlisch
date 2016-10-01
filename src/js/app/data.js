@@ -14,13 +14,16 @@ var Data = (function() {
     
     // Selektor-Konstanten
     var _SEL_DELETE             = "[data-data='delete']";
+    var _SEL_DICTIONARY         = "[data-data='dictionary']";
     
     // Sonstige Konstanten
     var _CONFIRM_TRUE           = 1;
+    var _DATA_ALIAS             = "alias";
     
     // Private Variablen
     var _dictionaryAlias        = "";
     var _dictionaryCaption      = "";
+    var _dictionaryChange       = "";
     var _dataScores             = [];
     var _dataTerms              = [];
     var _dataConfig             = [];
@@ -66,46 +69,77 @@ var Data = (function() {
      * @function _bindEvents
      */
     function _bindEvents() {
-        $(document).on(CFG.EVT.CLICK, _SEL_DELETE, _clearConfirm);
+        $(document).on(CFG.EVT.CLICK, _SEL_DELETE, _deleteConfirm);
+        $(document).on(CFG.EVT.CLICK, _SEL_DICTIONARY, _dictionaryConfirm);
     }
     
     /**
-     * Erstellt einen leeren Standard-Datensatz im LocalStorage.
+     * Erstellt einen leeren Standard-Datensatz im LocalStorage; bei Angabe
+     * eines optionalen Wörterbuch-Alias wird für das entsprechende Wörterbuch
+     * ein leerer Datensatz angelegt, während die restlichen Daten unberührt
+     * bleiben.
      * @access private
+     * @param {String} [dictionary] Optionaler Wörterbuch-Alias
      * @function _initDataStored
      */
-    function _initDataStored() {
-        var dataInitial = { dictionary: CFG.DATA.DEFAULT };
-        dataInitial[CFG.DATA.DEFAULT] = {
-            featured : {},
-            progress : {},
-            scores   : []
-        };
+    function _initDataStored(dictionary) {
+        
+        // Daten initialisieren
+        var dataInitial = {};
+        
+        // Falls Wörterbuch angegeben ist, Daten dafür anlegen
+        if (typeof dictionary === typeof "") {
+            dataInitial = JSON.parse(localStorage.getItem(CFG.DATA.STORE));
+            dataInitial[dictionary] = {
+                featured : {},
+                progress : {},
+                scores   : []
+            };
+        
+        // Ansonsten einen neuen leeren Datensatz anlegen
+        } else {
+            dataInitial = { dictionary: CFG.DATA.DEFAULT };
+            dataInitial[CFG.DATA.DEFAULT] = {
+                featured : {},
+                progress : {},
+                scores   : []
+            };
+        }
+        
+        // Daten speichern und laden
         localStorage.setItem(CFG.DATA.STORE, JSON.stringify(dataInitial));
         _loadDataStored();
     }
     
     /**
-     * Lädt alle gespeicherten Daten für das aktuelle Wörterbuch aus dem
-     * LocalStorage; ruft _initDataStored auf, falls noch keine Daten
-     * vorhanden sind.
+     * Lädt alle gespeicherten Daten für das aktuelle oder ein optional
+     * angegebenes Wörterbuch aus dem LocalStorage; ruft _initDataStored auf,
+     * falls noch keine Daten vorhanden sind.
+     * zudem 
      * @access private
+     * @param {String} [dictionary] Optionaler Wörterbuch-Alias
      * @function _loadDataStored
      */
-    function _loadDataStored() {
+    function _loadDataStored(dictionary) {
         
         // Daten aus dem LocalStorage laden
         var dataStored = JSON.parse(localStorage.getItem(CFG.DATA.STORE));
         if (dataStored === null) { _initDataStored(); return false; }
+        if ((typeof dictionary === typeof "") &&
+            (typeof dataStored[dictionary] === typeof undefined)) {
+            _initDataStored(dictionary);
+            return false;
+        }
         
         // Daten setzen
-        _dictionaryAlias = dataStored.dictionary;
+        _dictionaryAlias = (dictionary || dataStored.dictionary);
         _dataProgress = dataStored[_dictionaryAlias].progress;
         _dataFeatured = dataStored[_dictionaryAlias].featured;
         _dataScores = dataStored[_dictionaryAlias].scores;
         _sizeScores = _dataScores.length;
         
-        // Wörterbuch-Daten laden
+        // Wörterbuch-Daten laden und speichern
+        if (typeof dictionary === typeof "") { _storeData(); }
         _loadDataTerms();
     }
 
@@ -124,6 +158,12 @@ var Data = (function() {
         // AJAX-Anfrage zur Config-Datei, anschließend Daten bereitstellen
         $.getJSON(file, function(data) {
             _dataDictionaries = data.dictionaries;
+            $.each(_dataDictionaries, function(i, dictionary) {
+                if (typeof dictionary.alias !== typeof undefined) {
+                    var isCurrent = (dictionary.alias === _dictionaryAlias);
+                    dictionary.current = isCurrent;
+                }
+            });
             _dataConfig = data.config;
         }).done(function() {
             _serveDataDictionaries();
@@ -458,7 +498,7 @@ var Data = (function() {
      * @param {Number} [confirm] Löschen bestätigt
      * @function _clearData
      */
-    function _clearData(confirm) {
+    function _deleteData(confirm) {
         if ((typeof confirm === typeof undefined) ||
             (confirm === _CONFIRM_TRUE)) {
             
@@ -478,16 +518,73 @@ var Data = (function() {
     }
     
     /**
+     * Wechselt das aktuelle Wörterbuch anhand des intern gesetzten neuen
+     * Wörterbuch-Alias zeigt eine Bestätigung als Alert an; wird nur
+     * ausgeführt, wenn der Parameter 1 (bestätigt) oder undefined ist.
+     * @access private
+     * @param {Number} [confirm] Ändern bestätigt
+     * @function _clearData
+     */
+    function _changeDictionary(confirm) {
+        if (((typeof confirm === typeof undefined) ||
+            (confirm === _CONFIRM_TRUE)) &&
+            (_dictionaryChange !== "")) {
+            
+            // Prüfen, ob das zu änderne Wörterbuch existiert
+            var dictionaryExists = false;
+            var dialogText = CFG.LABEL.DICTIONARY_SUCCESS;
+            $.each(_dataDictionaries, function(i, dictionary) {
+                if (dictionary.alias === _dictionaryChange) {
+                    dictionaryExists = true;
+                    return;
+                }
+            });
+            
+            // Neue Wörterbuch-Daten laden
+            if (dictionaryExists) {
+                _loadDataStored(_dictionaryChange);
+                _loadDataConfig();
+            } else {
+                dialogText = CFG.LABEL.DICTIONARY_ERROR;
+            }
+            
+            // Bestätigung anzeigen
+            Util.dialog(
+                CFG.DIALOG.ALERT, dialogText,
+                undefined, CFG.OPTIONS.DICTIONARY
+            );
+        }
+    }
+    
+    /**
      * Ruft einen Bestätigungs-Dialog zum Löschen der Fortschritts-Daten auf;
      * verwendet die Cordova-API, falls vorhanden, ansonsten den
      * Standard-JavaScript-Dialog.
      * @access private
-     * @function _clearConfirm
+     * @function _deleteConfirm
      */
-    function _clearConfirm() {
+    function _deleteConfirm() {
         Util.dialog(
-            CFG.DIALOG.CONFIRM, CFG.LABEL.DELETE_CONFIRM, _clearData,
+            CFG.DIALOG.CONFIRM, CFG.LABEL.DELETE_CONFIRM, _deleteData,
             CFG.OPTIONS.DELETE, [CFG.LABEL.YES, CFG.LABEL.NO]
+        );
+    }
+    
+    /**
+     * Ruft einen Bestätigungs-Dialog zum Ändern des Wörterbuches auf;
+     * verwendet die Cordova-API, falls vorhanden, ansonsten den
+     * Standard-JavaScript-Dialog.
+     * @access private
+     * @function _changeConfirm
+     */
+    function _dictionaryConfirm(event) {
+        if (typeof event !== typeof undefined) {
+            var $clicked = $(event.target).closest(_SEL_DICTIONARY);
+            _dictionaryChange = $clicked.data(_DATA_ALIAS);
+        }
+        Util.dialog(
+            CFG.DIALOG.CONFIRM, CFG.LABEL.DICTIONARY_CONFIRM, _changeDictionary,
+            CFG.OPTIONS.DICTIONARY, [CFG.LABEL.YES, CFG.LABEL.NO]
         );
     }
     

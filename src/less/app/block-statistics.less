@@ -21,20 +21,8 @@
         &:last-of-type { margin-bottom: 0; }
     }
     
-    // Element: Titel
-    &__title {
-        display: block;
-        text-align: center;
-        font-weight: normal;
-        font-style: italic;
-        margin: 0 0 @app-size-gap-small 0;
-        font-size: @app-font-size-large;
-        padding: @app-size-gap;
-        .colored(@app-color-light);
-    }
-    
-    // Elemente: Diagramm & Titel
-    &__chart, &__title {
+    // Element: Diagramm
+    &__chart {
         .border(bottom);
         .border(top);
     }

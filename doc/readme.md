@@ -145,8 +145,8 @@ LocalStorage des Browsers.
     * [~init()](#module_Data..init)
     * [~_subMediator()](#module_Data.._subMediator) ℗
     * [~_bindEvents()](#module_Data.._bindEvents) ℗
-    * [~_initDataStored()](#module_Data.._initDataStored) ℗
-    * [~_loadDataStored()](#module_Data.._loadDataStored) ℗
+    * [~_initDataStored([dictionary])](#module_Data.._initDataStored) ℗
+    * [~_loadDataStored([dictionary])](#module_Data.._loadDataStored) ℗
     * [~_loadDataConfig()](#module_Data.._loadDataConfig) ℗
     * [~_loadDataTerms()](#module_Data.._loadDataTerms) ℗
     * [~_checkFile(file)](#module_Data.._checkFile) ⇒ <code>Object</code> ℗
@@ -165,7 +165,9 @@ LocalStorage des Browsers.
     * [~_serveDataFeatured()](#module_Data.._serveDataFeatured) ℗
     * [~_serveDataDictionaries()](#module_Data.._serveDataDictionaries) ℗
     * [~_clearData([confirm])](#module_Data.._clearData) ℗
-    * [~_clearConfirm()](#module_Data.._clearConfirm) ℗
+    * [~_clearData([confirm])](#module_Data.._clearData) ℗
+    * [~_deleteConfirm()](#module_Data.._deleteConfirm) ℗
+    * [~_changeConfirm()](#module_Data.._changeConfirm) ℗
 
 
 -
@@ -204,23 +206,37 @@ Bindet Funktionen an Events.
 
 <a name="module_Data.._initDataStored"></a>
 
-#### Data~_initDataStored() ℗
-Erstellt einen leeren Standard-Datensatz im LocalStorage.
+#### Data~_initDataStored([dictionary]) ℗
+Erstellt einen leeren Standard-Datensatz im LocalStorage; bei Angabe
+eines optionalen Wörterbuch-Alias wird für das entsprechende Wörterbuch
+ein leerer Datensatz angelegt, während die restlichen Daten unberührt
+bleiben.
 
 **Kind**: inner method of <code>[Data](#module_Data)</code>  
 **Access:** private  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| [dictionary] | <code>String</code> | Optionaler Wörterbuch-Alias |
+
 
 -
 
 <a name="module_Data.._loadDataStored"></a>
 
-#### Data~_loadDataStored() ℗
-Lädt alle gespeicherten Daten für das aktuelle Wörterbuch aus dem
-LocalStorage; ruft _initDataStored auf, falls noch keine Daten
-vorhanden sind.
+#### Data~_loadDataStored([dictionary]) ℗
+Lädt alle gespeicherten Daten für das aktuelle oder ein optional
+angegebenes Wörterbuch aus dem LocalStorage; ruft _initDataStored auf,
+falls noch keine Daten vorhanden sind.
+zudem
 
 **Kind**: inner method of <code>[Data](#module_Data)</code>  
 **Access:** private  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| [dictionary] | <code>String</code> | Optionaler Wörterbuch-Alias |
+
 
 -
 
@@ -468,10 +484,39 @@ der Parameter 1 (bestätigt) oder undefined ist.
 
 -
 
-<a name="module_Data.._clearConfirm"></a>
+<a name="module_Data.._clearData"></a>
 
-#### Data~_clearConfirm() ℗
+#### Data~_clearData([confirm]) ℗
+Wechselt das aktuelle Wörterbuch anhand des intern gesetzten neuen
+Wörterbuch-Alias zeigt eine Bestätigung als Alert an; wird nur
+ausgeführt, wenn der Parameter 1 (bestätigt) oder undefined ist.
+
+**Kind**: inner method of <code>[Data](#module_Data)</code>  
+**Access:** private  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| [confirm] | <code>Number</code> | Ändern bestätigt |
+
+
+-
+
+<a name="module_Data.._deleteConfirm"></a>
+
+#### Data~_deleteConfirm() ℗
 Ruft einen Bestätigungs-Dialog zum Löschen der Fortschritts-Daten auf;
+verwendet die Cordova-API, falls vorhanden, ansonsten den
+Standard-JavaScript-Dialog.
+
+**Kind**: inner method of <code>[Data](#module_Data)</code>  
+**Access:** private  
+
+-
+
+<a name="module_Data.._changeConfirm"></a>
+
+#### Data~_changeConfirm() ℗
+Ruft einen Bestätigungs-Dialog zum Ändern des Wörterbuches auf;
 verwendet die Cordova-API, falls vorhanden, ansonsten den
 Standard-JavaScript-Dialog.
 
@@ -953,6 +998,7 @@ und ermöglicht es, für jede Option die entsprechende Detail-Ansicht zu laden.
     * [~_back(data)](#module_More.._back) ℗
     * [~_updateTerms(data)](#module_More.._updateTerms) ℗
     * [~_updateDictionary(data)](#module_More.._updateDictionary) ℗
+    * [~_updateDictionaries(data)](#module_More.._updateDictionaries) ℗
     * [~_restore(panel)](#module_More.._restore) ℗
 
 
@@ -1086,6 +1132,23 @@ Begriff-Daten; rendert gegebenenfalls die aktuelle Ansicht neu.
 #### More~_updateDictionary(data) ℗
 Aktualisiert anhand einer Mediator-Nachricht die interne Kopie der
 Wörterbuch-Daten; rendert gegebenenfalls die aktuelle Ansicht neu.
+
+**Kind**: inner method of <code>[More](#module_More)</code>  
+**Access:** private  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| data | <code>Object</code> | Übermittelte Mediator-Daten |
+
+
+-
+
+<a name="module_More.._updateDictionaries"></a>
+
+#### More~_updateDictionaries(data) ℗
+Aktualisiert anhand einer Mediator-Nachricht die interne Kopie der
+vorhandenen Wörterbücher; rendert gegebenenfalls die aktuelle
+Ansicht neu.
 
 **Kind**: inner method of <code>[More](#module_More)</code>  
 **Access:** private  
@@ -1689,6 +1752,7 @@ neuen Daten über den Mediator an das Data-Modul, um sie zu speichern.
     * [~_renderInput($answer, correct)](#module_Quiz.._renderInput) ℗
     * [~_finish()](#module_Quiz.._finish) ℗
     * [~_renderFinish(result, skipped, rating)](#module_Quiz.._renderFinish) ℗
+    * [~_renderStart()](#module_Quiz.._renderStart) ℗
     * [~_update(data)](#module_Quiz.._update) ℗
     * [~_setConfig(data)](#module_Quiz.._setConfig) ℗
     * [~_restore(panel)](#module_Quiz.._restore) ℗
@@ -2245,6 +2309,16 @@ das Ergebnis-Diagramm.
 | skipped | <code>Number</code> | Anzahl der übersprungenen Fragen |
 | rating | <code>Object</code> | Bewertungs-Objekt |
 
+
+-
+
+<a name="module_Quiz.._renderStart"></a>
+
+#### Quiz~_renderStart() ℗
+Rendert das Start-Slide des Quizes anhand eines Mustache-Templates neu.
+
+**Kind**: inner method of <code>[Quiz](#module_Quiz)</code>  
+**Access:** private  
 
 -
 

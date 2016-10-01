@@ -151,9 +151,9 @@ LocalStorage des Browsers.
     * [~_loadDataTerms()](#module_Data.._loadDataTerms) ℗
     * [~_checkFile(file)](#module_Data.._checkFile) ⇒ <code>Object</code> ℗
     * [~_checkTermFiles(alias)](#module_Data.._checkTermFiles) ⇒ <code>Object</code> ℗
-    * [~_checkDictionaryFiles()](#module_Data.._checkDictionaryFiles)
+    * [~_checkDictionaryFiles()](#module_Data.._checkDictionaryFiles) ℗
     * [~_processDataTerms()](#module_Data.._processDataTerms) ℗
-    * [~_storeData()](#module_Data.._storeData)
+    * [~_storeData()](#module_Data.._storeData) ℗
     * [~_updateDataTerm(data)](#module_Data.._updateDataTerm) ℗
     * [~_setDataTerm(alias, lvl, fail)](#module_Data.._setDataTerm) ℗
     * [~_updateDataScore(result)](#module_Data.._updateDataScore) ℗
@@ -164,10 +164,10 @@ LocalStorage des Browsers.
     * [~_serveDataConfig()](#module_Data.._serveDataConfig) ℗
     * [~_serveDataFeatured()](#module_Data.._serveDataFeatured) ℗
     * [~_serveDataDictionaries()](#module_Data.._serveDataDictionaries) ℗
-    * [~_clearData([confirm])](#module_Data.._clearData) ℗
-    * [~_clearData([confirm])](#module_Data.._clearData) ℗
+    * [~_deleteData([confirm])](#module_Data.._deleteData) ℗
+    * [~_changeDictionary([confirm])](#module_Data.._changeDictionary) ℗
     * [~_deleteConfirm()](#module_Data.._deleteConfirm) ℗
-    * [~_changeConfirm()](#module_Data.._changeConfirm) ℗
+    * [~_dictionaryConfirm()](#module_Data.._dictionaryConfirm) ℗
 
 
 -
@@ -301,13 +301,13 @@ Wörterbuch-Daten um den Datei-Status.
 
 <a name="module_Data.._checkDictionaryFiles"></a>
 
-#### Data~_checkDictionaryFiles()
+#### Data~_checkDictionaryFiles() ℗
 Prüft alle Begriffe des Wörterbuches nach der Existenz von zugehörigen
 Audio- und Bild-Dateien; aktualisiert die Daten entsprechend und
 bereitet sie im Anschluss mittels _processDataTerms auf.
 
 **Kind**: inner method of <code>[Data](#module_Data)</code>  
-**Acces**: private  
+**Access:** private  
 
 -
 
@@ -325,12 +325,12 @@ gespeicherten Fortschritts-Daten; stellt die aktuellen Daten
 
 <a name="module_Data.._storeData"></a>
 
-#### Data~_storeData()
+#### Data~_storeData() ℗
 Speichert alle internen Daten des aktuellen Wörterbuches
 als JSON-String im LocalStorage.
 
 **Kind**: inner method of <code>[Data](#module_Data)</code>  
-**Acess**: private  
+**Access:** private  
 
 -
 
@@ -466,9 +466,9 @@ Liefert alle verfügbaren Wörterbucher in einer Mediator-Nachricht.
 
 -
 
-<a name="module_Data.._clearData"></a>
+<a name="module_Data.._deleteData"></a>
 
-#### Data~_clearData([confirm]) ℗
+#### Data~_deleteData([confirm]) ℗
 Löschte alle Daten über die letzten Spiele und den Fortschritt,
 speichert die Daten und stellt sie über den Mediator bereit,
 zeigt eine Bestätigung als Alert an; wird nur ausgeführt, wenn
@@ -484,9 +484,9 @@ der Parameter 1 (bestätigt) oder undefined ist.
 
 -
 
-<a name="module_Data.._clearData"></a>
+<a name="module_Data.._changeDictionary"></a>
 
-#### Data~_clearData([confirm]) ℗
+#### Data~_changeDictionary([confirm]) ℗
 Wechselt das aktuelle Wörterbuch anhand des intern gesetzten neuen
 Wörterbuch-Alias zeigt eine Bestätigung als Alert an; wird nur
 ausgeführt, wenn der Parameter 1 (bestätigt) oder undefined ist.
@@ -513,9 +513,9 @@ Standard-JavaScript-Dialog.
 
 -
 
-<a name="module_Data.._changeConfirm"></a>
+<a name="module_Data.._dictionaryConfirm"></a>
 
-#### Data~_changeConfirm() ℗
+#### Data~_dictionaryConfirm() ℗
 Ruft einen Bestätigungs-Dialog zum Ändern des Wörterbuches auf;
 verwendet die Cordova-API, falls vorhanden, ansonsten den
 Standard-JavaScript-Dialog.

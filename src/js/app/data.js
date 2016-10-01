@@ -239,7 +239,7 @@ var Data = (function() {
      * Prüft alle Begriffe des Wörterbuches nach der Existenz von zugehörigen
      * Audio- und Bild-Dateien; aktualisiert die Daten entsprechend und
      * bereitet sie im Anschluss mittels _processDataTerms auf.
-     * @acces private
+     * @access private
      * @function _checkDictionaryFiles
      */
     function _checkDictionaryFiles() {
@@ -289,7 +289,7 @@ var Data = (function() {
     /**
      * Speichert alle internen Daten des aktuellen Wörterbuches
      * als JSON-String im LocalStorage.
-     * @acess private
+     * @access private
      * @function _storeData
      */
     function _storeData() {
@@ -491,7 +491,7 @@ var Data = (function() {
      * der Parameter 1 (bestätigt) oder undefined ist.
      * @access private
      * @param {Number} [confirm] Löschen bestätigt
-     * @function _clearData
+     * @function _deleteData
      */
     function _deleteData(confirm) {
         if ((typeof confirm === typeof undefined) ||
@@ -518,7 +518,7 @@ var Data = (function() {
      * ausgeführt, wenn der Parameter 1 (bestätigt) oder undefined ist.
      * @access private
      * @param {Number} [confirm] Ändern bestätigt
-     * @function _clearData
+     * @function _changeDictionary
      */
     function _changeDictionary(confirm) {
         if (((typeof confirm === typeof undefined) ||
@@ -570,7 +570,7 @@ var Data = (function() {
      * verwendet die Cordova-API, falls vorhanden, ansonsten den
      * Standard-JavaScript-Dialog.
      * @access private
-     * @function _changeConfirm
+     * @function _dictionaryConfirm
      */
     function _dictionaryConfirm(event) {
         if (typeof event !== typeof undefined) {

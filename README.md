@@ -21,6 +21,7 @@ Diese App wurde von **Jakob Metzger** als Bachelor-Arbeit an der [Universität B
   - [Neue Begriffe hinzufügen](#neue-begriffe-hinzuf%C3%BCgen)
   - [Bilder und Audio-Dateien](#bilder-und-audio-dateien)
   - [Ostwestfälisch-Wörterbuch](#ostwestf%C3%A4lisch-w%C3%B6rterbuch)
+  - [Wörterbücher hinzufügen](#w%C3%B6rterb%C3%BCcher-hinzuf%C3%BCgen)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
@@ -140,7 +141,7 @@ cordova build ios
 
 ### Projekt bearbeiten
 
-Um das Projekt zu bearbeiten, wird ein beliebiger Texteditor benötigt; zwingend erforderlich ist auch [gulp](https://github.com/gulpjs/gulp), um alle Quelldateien unter `src/` an der richtigen Ort unter `www/` 
+Um das Projekt zu bearbeiten, wird ein beliebiger Texteditor benötigt; zwingend erforderlich ist auch [gulp](https://github.com/gulpjs/gulp), um alle Quelldateien unter `src/` an der richtigen Ort unter `www/`
 zu kopieren und gegebenenfalls zu kompilieren.
 
 Dafür muss, wie oben bereits beschrieben, _NPM_ installiert sein; anschließend kann _gulp_ mit allen erforderlichen Modulen über folgende Befehle installiert werden:
@@ -183,7 +184,7 @@ Eine solche Datei ist wie folgt aufgebaut:
     "alias": "Dateiname",
     "caption": "Anzeigename",
     "terms": [
-    
+
     ]
 }
 ```
@@ -285,3 +286,45 @@ In diesem Wörterbuch sind zum aktuellen Zeitpunkt folgende Begriffe vorhanden:
 28. **Töffel**, _der_ — „Trottel“
 29. **vermackeln** — „beschädigen“
 30. **wullacken** — „schuften“
+
+### Wörterbücher hinzufügen
+
+Um ein neues Wörterbuch hinzuzufügen, müssen zunächst alle erforderlichen Dateien unter `src/data/` angelegt werden; ein Verzeichnis mit dem Kurznamen des Wörterbüches, eine entsprechende JSON-Datei mit dem gleichen Namen und die Verzeichnisse `image` und `audio` im Wörterbuch Verzeichnis. Das sieht beispielsweise so aus:
+
+```
+data/
+    bayerisch/
+        audio/
+            <audio.mp3>
+            <...>
+        image/
+            <image.jpg>
+            <...>
+        bayerisch.json
+```
+
+Wie eine Wörterbuch-Datei aufgebaut ist und neue Begriffe hinzugefügt werden können ist bereits im Abschnitt _Neue Begriffe hinzufügen_ erklärt worden. Audio-Dateien müssen als `.mp3` vorliegen, Bilder als `.jpg` in der Größe `280x280px`.
+
+Zusätzlich dazu muss das neue Wörterbuch zur Liste der verfügbaren Wörterbücher in der Datei `src/data/conf.json` hinzugefügt werden; in dieser Datei befindet sich das Array `dictionaries`, welches wie folgt aufgebaut ist:
+
+```json
+"dictionaries": [
+    {
+        "alias"   : "owl",
+        "caption" : "Ostwestfälisch"
+    },
+]
+```
+
+Hier muss für das neue Wörterbuch ein neues Objekt zum Array hinzugefügt werden. Dabei entspricht `alias` dem Dateinamen des Wörterbuches (z.B. `bayerisch`), während `caption` der vollständige Anzeigename ist.
+
+Um das neue Wörterbuch in die App zu integrieren, können die folgenden Befehle ausgeführt werden (wenn Gulp nicht ohnehin schon gestartet wurde):
+
+```
+gulp json
+gulp data
+```
+
+Damit werden alle Dateien in das `www/data/` Verzeichnis kopiert und im Falle von Bildern und JSON-Dateien zusätzlich minimiert.
+
+Mit `npm run build` kann nun abschließend die iOS-App neu erzeugt und mit Xcode entweder auf einem iPhone installiert oder im Simulator gestartet werden.

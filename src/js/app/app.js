@@ -19,7 +19,7 @@
  * @module App
  */
 var App = (function() {
-    
+
     /**
      * Aktiviert FastClick, konfiguriert das BEM-Helpers-Plugin und
      * initialisiert alle Module der App in richtiger Reihenfolge.
@@ -27,17 +27,17 @@ var App = (function() {
      * @function init
      */
     function init() {
-        
+
         // FastClick initialisieren
         FastClick.attach(document.body);
-        
+
         // BEM-Syntax anpassen
         $.BEMsyntax({
             elem      : CFG.BEM.E_DELIMITER,
             modBefore : CFG.BEM.M_DELIMITER,
             modKeyVal : CFG.BEM.M_KEY
         });
-        
+
         // Module initialisieren
         Template.init();
         Data.init();
@@ -51,10 +51,10 @@ var App = (function() {
         Play.init();
         View.init();
     }
-    
+
     // Öffentliches Interface
     return { init: init };
-    
+
 })();
 
 // App initialisieren

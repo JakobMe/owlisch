@@ -18,15 +18,15 @@
     height: 100%;
     padding-top: @app-size-height-navigationbar;
     padding-bottom: @app-size-height-tabbar;
-    
+
     // Mod: Webapp
     &--webapp {
         padding-top: (@app-size-height-navigationbar + @app-size-height-statusbar);
     }
-    
+
     // Mod: Volle Höhe
     &--fullscreen { padding-bottom: 0; }
-    
+
     // Element: Content
     &__content {
         -webkit-backface-visibility: hidden;
@@ -38,11 +38,11 @@
         font-size: @app-font-size-medium;
         .colored(@app-color-background);
         .transition(opacity);
-        
+
         // Mod: Sichtbar
         &--visible { opacity: @app-opacity-full; }
     }
-    
+
     // Element: Panel
     &__panel {
         -webkit-overflow-scrolling: touch;
@@ -55,7 +55,7 @@
         width: 100%;
         height: 100%;
         background: @app-color-background;
-        
+
         // Mod: Aktuell
         &--current { display: block; }
     }
@@ -63,7 +63,7 @@
 
 // Responsive
 @media screen and (min-width: @app-size-max) {
-    
+
     // Block: View
     .view {
         padding-top: (@app-size-height-navigationbar + @app-size-height-statusbar);

@@ -8,28 +8,28 @@
  * @module Play
  */
 var Play = (function() {
-    
+
     // Selektor-Konstanten
     var _SEL_MAIN               = "[data-play='main']";
     var _SEL_AUDIO              = "[data-play='audio']";
-    
+
     // BEM-Konstanten
     var _B                      = "play";
     var _M_PLAYING              = "playing";
     var _M_LOADING              = "loading";
-    
+
     // Sonstige Konstanten
     var _READY_VALUE            = 4;
     var _READY_PROP             = "readyState";
-    
+
     // Private Variablen
     var _isPlaying              = false;
     var _isLoading              = false;
-    
+
     // DOM-Elemente
     var _$play                  = null;
     var _$audio                 = null;
-    
+
     /**
      * Initialisiert das Play-Modul; bindet Events.
      * @access public
@@ -38,7 +38,7 @@ var Play = (function() {
     function init() {
         _bindEvents();
     }
-    
+
     /**
      * Bindet Funktionen an Events.
      * @access private
@@ -47,7 +47,7 @@ var Play = (function() {
     function _bindEvents() {
         $(document).on(CFG.EVT.CLICK, _SEL_MAIN, _play);
     }
-    
+
     /**
      * Bindet Audio-spezifische Funktionen an Modul-Elemente.
      * @access private
@@ -60,7 +60,7 @@ var Play = (function() {
                    .on(CFG.EVT.ENDED, function() { _setPlaying(false); });
         }
     }
-    
+
     /**
      * Initialisiert bei einem Klick-Event eine Audio-Instanz und deren
      * DOM-Elemente, bindet Funktionen an die Elemente und spiel die
@@ -70,11 +70,11 @@ var Play = (function() {
      */
     function _play(event) {
         if (typeof event !== typeof undefined) {
-            
+
             // Play-Button und Audio definieren
             _$play = $(event.target).closest(_SEL_MAIN);
             _$audio = _$play.find(_SEL_AUDIO);
-            
+
             // Abspielen, Audio-Events binden, Zustand aktualisieren
             _$audio.trigger(CFG.EVT.PLAY);
             _bindEventsAudio();
@@ -82,7 +82,7 @@ var Play = (function() {
             _setPlaying(true);
         }
     }
-    
+
     /**
      * Setzt den Lade-Zustand des Audui-Moduls und rendert es neu.
      * @access private
@@ -95,7 +95,7 @@ var Play = (function() {
             _render();
         }
     }
-    
+
     /**
      * Setzt den aktuellen Abspiel-Zustand des Play-Moduls und rendert es neu.
      * @access private
@@ -108,7 +108,7 @@ var Play = (function() {
             _render();
         }
     }
-    
+
     /**
      * Rendert alle Elemente des Moduls anhand der intern
      * gesetzten aktuellen Variablen.
@@ -119,8 +119,8 @@ var Play = (function() {
         _$play.setMod(_B, _M_LOADING, _isLoading)
               .setMod(_B, _M_PLAYING, _isPlaying);
     }
-    
+
     // Öffentliches Interface
     return { init: init };
-    
+
 })();

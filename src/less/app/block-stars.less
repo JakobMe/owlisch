@@ -15,13 +15,13 @@
     vertical-align: top;
     display: inline-block;
     font-size: @_stars-font-size;
-    
+
     // Mod: Klein
     &--small {
         font-size: @_stars-font-size-small;
         letter-spacing: -(@app-size-line-thin);
     }
-    
+
     // Mod: Sterne-Zustand und enthaltene Sterne
     &--is-1 &__star--1,
     &--is-2 &__star--1, &--is-2 &__star--2,
@@ -29,14 +29,14 @@
         color: @app-color-star;
         &:after { content: @fontello-icon-star; }
     }
-    
+
     // Mods: Animiert & Sterne-Zustand und enthaltene Sterne
     &--animated&--is-1 &__star--1,
     &--animated&--is-2 &__star--1, &--animated&--is-2 &__star--2,
     &--animated&--is-3 &__star--1, &--animated&--is-3 &__star--2, &--animated&--is-3 &__star--3 {
         .animation(level-up);
     }
-    
+
     // Element: Stern
     &__star {
         font-style: normal;

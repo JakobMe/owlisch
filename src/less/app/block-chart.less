@@ -40,13 +40,13 @@
     padding-left: @app-size-gap;
     padding-right: @_chart-size-info;
     .colored-gradient(@app-color-background-light);
-    
+
     // Mod: Vertikal
     &--vertical {
         padding-left: 0;
         padding-right: 0;
     }
-    
+
     // Element: Container
     &__container {
         display: block;
@@ -57,20 +57,20 @@
         height: 100%;
         padding: (@app-size-gap - @_chart-size-gap) 0;
     }
-    
+
     // Mod: Vertikal & Element: Container
     &--vertical, &--vertical &__container {
         padding-top: @app-size-gap;
         padding-bottom: (@app-size-gap + @_chart-size-label);
     }
-    
+
     // Mod: Vertikal & Element: Container
     &--vertical &__container {
         position: absolute;
         padding-left: @app-size-gap;
         padding-right: @app-size-gap;
     }
-    
+
     // Element: Linien
     &__lines {
         position: absolute;
@@ -78,14 +78,14 @@
         left: @app-size-gap;
         right: @_chart-size-info;
     }
-    
+
     // Mod: Vertikal & Element: linien
     &--vertical &__lines {
         position: static;
         left: auto;
         right: auto;
     }
-    
+
     // Element: Linie
     &__line {
         display: block;
@@ -98,7 +98,7 @@
         .gradient(bottom, @app-color-background, @app-color-background-light);
         ._chart-loop-lines-horizontal(@_chart-number-percent);
     }
-    
+
     // Mod: Vertikal & Element: Linie
     &--vertical &__line {
         width: 100%;
@@ -108,11 +108,11 @@
         .border(top, @app-color-background);
         .gradient-none();
         ._chart-loop-lines-vertical(@app-number-questions);
-        
+
         // Erstes Element
         &:first-child { border-top: none; }
     }
-    
+
     // Element: Daten
     &__data {
         display: block;
@@ -124,7 +124,7 @@
         .transition();
         ._chart-loop-data(@app-number-lastgames);
     }
-    
+
     // Mod: Vertikal & Element: Daten
     &--vertical &__data {
         float: left;
@@ -133,13 +133,13 @@
         width: (100% / @app-number-lastgames);
         .translate(0, 125%);
     }
-    
+
     // Mod: Wachsen & Element: Daten
     &--grow &__data {
         opacity: @app-opacity-full;
         .translate();
     }
-    
+
     // Element: Balken
     &__bar {
         display: block;
@@ -152,7 +152,7 @@
         .border-radius();
         .shadow-small();
     }
-    
+
     // Mod: Vertikal & Element: Balken
     &--vertical &__bar {
         position: absolute;
@@ -161,14 +161,14 @@
         width: @_chart-size-bar;
         margin-left: -(@_chart-size-bar / 2);
     }
-    
+
     // Mod: Spielergebnis & Element: Balken
     &--score &__bar {
         border-color: @app-color-main-dark;
         border-bottom-color: shade(@app-color-main-dark, 10%);
         .gradient(bottom, @app-color-main-light, @app-color-main);
     }
-    
+
     // Element: Label
     &__label {
         display: block;
@@ -177,13 +177,13 @@
         font-weight: bold;
         top: 0;
         height: 100%;
-        font-size: @app-font-size-small;        
+        font-size: @app-font-size-small;
         line-height: (@_chart-size-bar + (2 * @_chart-size-gap));
         padding: 0 @app-size-gap;
         width: @_chart-size-info;
         right: -(@_chart-size-info);
     }
-    
+
     // Mod: Vertikal & Element: Label
     &--vertical &__label {
         text-align: center;
@@ -196,15 +196,15 @@
         line-height: @_chart-size-label;
         bottom: -(@_chart-size-label);
     }
-    
+
     // Element: Text
     &__text {
         display: block;
         float: left;
-        
+
         // Mod: Sterne
         &--stars { font-weight: normal; }
-        
+
         // Mod: Prozenz
         &--percent {
             float: right;
@@ -215,7 +215,7 @@
             margin-top: @app-size-line-thin;
             width: @_chart-size-label;
         }
-        
+
         // Mod: Wert
         &--value {
             float: right;
@@ -224,12 +224,12 @@
             padding: 0 @app-size-gap-tiny;
         }
     }
-    
+
     // Mod: Vertikal & Element: Text
     &--vertical &__text {
         float: none;
     }
-    
+
     // Element: Daten & Mod: Ohne & Element: Balken & Text & Label
     &__data--none &__bar { width: (@app-size-line-thin * 3) !important; }
     &__data--none &__text { color: @app-color-text-dark-pale; }

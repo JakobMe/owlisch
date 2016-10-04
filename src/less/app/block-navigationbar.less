@@ -13,7 +13,7 @@
 @_navigationbar-font-size-icon:        20px;
 @_navigationbar-size-search:           28px;
 @_navigationbar-size-padding:          6px;
- 
+
 // Block: Navigation-Bar
 .navigationbar {
     position: absolute;
@@ -25,13 +25,13 @@
     height: @app-size-height-navigationbar;
     .border(bottom, @app-color-main-dark);
     .colored(@app-color-main);
-    
+
     // Mods & Elemente
     &--webapp { height: (@app-size-height-statusbar + @app-size-height-navigationbar); }
     &--webapp &__wrapper { padding-top: @app-size-height-statusbar; }
     &--search &__search { opacity: @app-opacity-full; }
     &--search &__heading { opacity: @app-opacity-invisible; .translate(0, 100%); }
-    
+
     // Element: Wrapper
     &__wrapper {
         overflow: hidden;
@@ -43,7 +43,7 @@
         height: @app-size-height-navigationbar;
         .border(bottom, @app-color-main-dark);
     }
-    
+
     // Element: Titel
     &__heading {
         font-weight: bold;
@@ -61,11 +61,11 @@
         .transition();
         .textshadow();
         .ellipsis();
-        
+
         // Mod: Versteckt
         &--hidden { opacity: @app-opacity-invisible; }
     }
-    
+
     // Element: Button
     &__button {
         display: block;
@@ -85,17 +85,17 @@
         width: @app-size-height-navigationbar;
         .transition();
         .textshadow();
-        
+
         // Mod: Links/Rechts
         &--left { left: 0; }
         &--right { right: 0; }
-        
+
         // Mod: Deaktiviert
         &--disabled {
             cursor: default;
             opacity: @app-opacity-invisible;
         }
-        
+
         // Mod: Icons
         &--icon-cancel { .fontello-icon(@fontello-icon-cancel); }
         &--icon-skip { .fontello-icon(@fontello-icon-skip); }
@@ -103,7 +103,7 @@
         &--icon-search { .fontello-icon(@fontello-icon-search); }
         &--icon-sort { .fontello-icon(@fontello-icon-sort); }
     }
-    
+
     // Element: Suche
     &__search {
         overflow: hidden;
@@ -118,7 +118,7 @@
         height: @_navigationbar-size-search;
         opacity: @app-opacity-invisible;
         .transition(opacity);
-        
+
         // Icon: Suche
         &:before {
             display: block;
@@ -136,7 +136,7 @@
             color: @app-color-text-light-pale;
             .font-icon();
         }
-        
+
         // Element: Input
         &-input {
             -webkit-appearance: none;
@@ -163,7 +163,7 @@
                 .textshadow-none();
             }
         }
-        
+
         // Element: Entfernen
         &-clear {
             display: block;
@@ -181,7 +181,7 @@
             .fontello-icon(@fontello-icon-clear);
             .color-on(@app-color-main-dark, true);
             .translate();
-            
+
             // Mod: Versteckt
             &--hidden { .translate(100%); }
         }
@@ -190,11 +190,11 @@
 
 // Responsive
 @media screen and (min-width: @app-size-max) {
-    
+
     // Block: Navigation-Bar
     .navigationbar {
         height: (@app-size-height-statusbar + @app-size-height-navigationbar);
-        
+
         // Statusbar-Overlay
         &:after {
             display: block;
@@ -207,7 +207,7 @@
             height: @app-size-height-statusbar;
             background: @app-color-main-dark;
         }
-        
+
         // Element: Wrapper
         &__wrapper { padding-top: @app-size-height-statusbar; }
     }

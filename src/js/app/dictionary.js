@@ -11,22 +11,22 @@
  * @module Dictionary
  */
 var Dictionary = (function() {
-    
+
     // Selektor-Konstanten
     var _SEL_LIST               = "[data-dictionary='list']";
     var _SEL_LISTBOX            = "[data-dictionary='listbox']";
     var _SEL_ITEM               = "[data-dictionary='item']";
     var _SEL_DETAILS            = "[data-dictionary='details']";
     var _SEL_SLIDER             = "[data-dictionary='slider']";
-    
+
     // Template-Namen
     var _TMPL_DICTIONARY        = "dictionary";
     var _TMPL_LIST              = "dictionary-list";
     var _TMPL_DETAILS           = "dictionary-details";
-    
+
     // Data-Attribut-Konstanten
     var _DATA_TERM              = "term";
-    
+
     // Private Variablen
     var _listOriginal           = [];
     var _listFiltered           = [];
@@ -39,13 +39,13 @@ var Dictionary = (function() {
     var _indexDetails           = 0;
     var _listIsLocked           = false;
     var _slider                 = null;
-    
+
     // DOM-Elemente
     var _$dictionary            = null;
     var _$list                  = null;
     var _$listbox               = null;
     var _$details               = null;
-    
+
     /**
      * Initialisiert das Dictionary-Modul; abonniert den Mediator.
      * @access public
@@ -54,7 +54,7 @@ var Dictionary = (function() {
     function init() {
         _subMediator();
     }
-    
+
     /**
      * Bindet Funktionen an Events.
      * @access private
@@ -79,7 +79,7 @@ var Dictionary = (function() {
                 .sub(CFG.CNL.DICTIONARY_SORT, _sort)
                 .sub(CFG.CNL.NAVBAR_ACTION, _back);
     }
-    
+
     /**
      * Generiert bei einer Mediator-Nachricht mit dem Dictionary-Panel als
      * Daten die Inhalte des Wörterbuches; initialisiert alle DOM-Elemente
@@ -94,19 +94,19 @@ var Dictionary = (function() {
             (CFG.VIEW[data.panel] === CFG.VIEW.DICTIONARY) &&
             (data.target instanceof $)) {
             Template.render(data.target, _TMPL_DICTIONARY, null, function() {
-                
+
                 // Funktionen ausführen
                 _initDom();
                 _bindEvents();
                 _slider.setSlide(_indexListbox);
-                
+
                 // Fortschritt-Liste anfragen, View einblenden
                 Mediator.pub(CFG.CNL.VIEW_SHOW)
                         .pub(CFG.CNL.TERMS_REQUEST);
             });
         }
     }
-    
+
     /**
      * Initialisiert alle DOM-Elemente des Wörterbuches.
      * @access private
@@ -121,7 +121,7 @@ var Dictionary = (function() {
         _indexDetails = _slider.getIndexOf(_SEL_DETAILS);
         _indexListbox = _slider.getIndexOf(_SEL_LISTBOX);
     }
-    
+
     /**
      * Rendert die Liste des Wörterbuches anhand eines Mustache-Templates
      * und der aktuell im Modul gesetzt Wörterbuch-Daten.
@@ -141,7 +141,7 @@ var Dictionary = (function() {
             });
         }
     }
-    
+
     /**
      * Rendert die Details des aktuellen Begriffs anhand eines
      * Mustache-Templates; bewegt den Wörterbuch-Slider und
@@ -154,13 +154,13 @@ var Dictionary = (function() {
         if ((typeof _currentTerm       === typeof {}) &&
             (typeof _currentTerm.alias !== typeof undefined) &&
             (typeof _currentTerm.term  !== typeof undefined)) {
-            
+
             // Daten definieren
             var data = $.extend({
                 levels : CFG.QUIZ.LEVELS,
                 label  : CFG.LABEL.PROGRESS
             }, _currentTerm);
-            
+
             // Details laden, Event auslösen, Slider bewegen
             Template.render(_$details, _TMPL_DETAILS, data, function() {
                 if (renderNavBar !== false) {
@@ -174,7 +174,7 @@ var Dictionary = (function() {
             });
         }
     }
-    
+
     /**
      * Sortiert die Liste der Begriffe anhand der von einer Mediator-Nachricht
      * übergebenen Sortierung und Ordnung; rendert die Liste anschließend neu.
@@ -191,7 +191,7 @@ var Dictionary = (function() {
             _currentSort = data.sort;
             _currentOrdr = data.ordr;
         }
-        
+
         // Liste sortieren und rendern
         _listFiltered.sort(_compareListItems);
         if (_currentOrdr === CFG.SORTING.ORDR.DESC) {
@@ -199,7 +199,7 @@ var Dictionary = (function() {
         }
         _renderList();
     }
-    
+
     /**
      * Filtert die Liste anhand des aktuell gesetzten Suchbegriffes
      * oder einem durch eine Mediator-Nachricht übergebenen Suchbegriff;
@@ -210,16 +210,16 @@ var Dictionary = (function() {
      * @function _filter
      */
     function _filter(keyword) {
-        
+
         // Filter-Wort gegebenenfalls aktualisieren
         if (typeof keyword === typeof "") {
             _currentFilter = keyword.toLowerCase();
         }
-        
+
         // Wenn Suchbegriff leer ist, Original-Liste setzen
         if (_currentFilter === "") {
             _listFiltered = _listOriginal.slice(0);
-        
+
         // Ansonsten Filter-Liste neu erzeugen
         } else {
             _listFiltered = [];
@@ -236,11 +236,11 @@ var Dictionary = (function() {
                 }
             });
         }
-        
+
         // Liste sortieren
         _sort();
     }
-    
+
     /**
      * Aktualisiert die Wörterbuch-Liste, sobald eine entsprechende
      * Mediator-Nachricht mit den erforderlichen Daten empfangen wird.
@@ -251,12 +251,12 @@ var Dictionary = (function() {
     function _update(data) {
         if ((typeof data      !== typeof undefined) &&
             (typeof data.data !== typeof undefined)) {
-                
+
             // Daten zurücksetzen
             var listTemp  = data.data;
             _listCaption  = data.caption;
             _listOriginal = [];
-            
+
             // Liste erweitert und filtern
             $.each(listTemp, function(i, item) {
                 if (item.lvl > 0) {
@@ -269,7 +269,7 @@ var Dictionary = (function() {
                 }
             });
             _filter();
-            
+
             // Details neu rendern
             if ((_slider !== null) &&
                 (_slider.getSlide() === _indexDetails)) {
@@ -277,7 +277,7 @@ var Dictionary = (function() {
             }
         }
     }
-    
+
     /**
      * Setzt einen neuen aktuellen Begriff anhand eines ausgelösten
      * Klick-Events; sperrt die Begriff-Liste und lädt und rendert den
@@ -294,7 +294,7 @@ var Dictionary = (function() {
             );
         }
     }
-    
+
     /**
      * Durchsucht die Begriff-Liste nach dem gegebenen Begriff-Alias und
      * aktualisiert den aktuellen Begriff; rendert die Begriff-Details neu.
@@ -306,10 +306,10 @@ var Dictionary = (function() {
     function _loadDetails(alias, renderNavBar) {
         if (typeof alias !== typeof undefined) {
             _currentTerm = Util.findTerm(_listFiltered, alias);
-            _renderDetails(renderNavBar !== false);  
+            _renderDetails(renderNavBar !== false);
         }
     }
-    
+
     /**
      * Bewegt den Wörterbuch-Slider anhand einer Mediatior-Nachricht
      * zurück zur Wörterbuch-Liste; leert die Begriff-Details.
@@ -328,7 +328,7 @@ var Dictionary = (function() {
             _listIsLocked = false;
         }
     }
-    
+
     /**
      * Setzt die internen Variablen und Zustände anhand einer
      * Mediator-Nachricht wieder auf ihre Standardwerte zurück; filtert die
@@ -341,7 +341,7 @@ var Dictionary = (function() {
     function _restore(panel) {
         if ((typeof panel    !== typeof undefined) &&
             (CFG.VIEW[panel] === CFG.VIEW.DICTIONARY)) {
-                
+
             // Standardwerte setzen, Liste filtern und scrollen
             _currentFilter = "";
             _$listbox.animate({ scrollTop: 0 }, CFG.TIME.ANIMATION);
@@ -350,7 +350,7 @@ var Dictionary = (function() {
             _filter();
         }
     }
-    
+
     /**
      * Eine Vergleichs-Funktion für Elemente der Begriffliste;
      * wird von der JavaScript-Funktion "sort" verwendet.
@@ -361,18 +361,18 @@ var Dictionary = (function() {
      * @function _compareListItems
      */
     function _compareListItems(a, b) {
-        
+
         // Sortierung: Numerisch
         if (_currentSort === CFG.SORTING.SORT.NUMERIC) {
             if      (parseInt(a.lvl) < parseInt(b.lvl)) { return -1; }
             else if (parseInt(a.lvl) > parseInt(b.lvl)) { return  1; }
             else { return a.term.localeCompare(b.term); }
-            
+
         // Standard-Sortierung: Alphabetisch
         } else { return a.term.localeCompare(b.term); }
     }
-    
+
     // Öffentliches Interface
     return { init: init };
-    
+
 })();

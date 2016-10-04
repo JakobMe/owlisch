@@ -10,21 +10,21 @@
  * @module More
  */
 var More = (function() {
-    
+
     // Selektor-Konstanten
     var _SEL_LISTBOX            = "[data-more='listbox']";
     var _SEL_ITEM               = "[data-more='item']";
     var _SEL_OPTION             = "[data-more='option']";
     var _SEL_SLIDER             = "[data-more='slider']";
     var _SEL_LABEL              = "[data-more='label']";
-    
+
     // Template-Namen
     var _TMPL_DELIMITER         = "-";
     var _TMPL_MORE              = "more";
 
     // Data-Attribut-Konstanten
     var _DATA_OPTION            = "option";
-    
+
     // Private Variablen
     var _slider                 = null;
     var _listIsLocked           = false;
@@ -32,13 +32,13 @@ var More = (function() {
     var _indexOption            = 0;
     var _currentOption          = {};
     var _data                   = {};
-    
+
     // DOM-Elemente
     var _$more                  = null;
     var _$items                 = null;
     var _$listbox               = null;
     var _$option                = null;
-    
+
     /**
      * Initialisiert das More-Modul; abonniert den Mediator.
      * @access public
@@ -47,7 +47,7 @@ var More = (function() {
     function init() {
         _subMediator();
     }
-    
+
     /**
      * Abonniert interne Funktionen beim Mediator.
      * @access private
@@ -61,7 +61,7 @@ var More = (function() {
                 .sub(CFG.CNL.DICTIONARY_SERVE, _updateDictionary)
                 .sub(CFG.CNL.DICTIONARIES_SERVE, _updateDictionaries);
     }
-    
+
     /**
      * Initialisiert alle DOM-Elemente des More-Moduls.
      * @access private
@@ -76,7 +76,7 @@ var More = (function() {
         _indexOption  = _slider.getIndexOf(_SEL_OPTION);
         _indexListbox = _slider.getIndexOf(_SEL_LISTBOX);
     }
-    
+
     /**
      * Bindet Funktionen an Events.
      * @access private
@@ -85,7 +85,7 @@ var More = (function() {
     function _bindEvents() {
         _$items.on(CFG.EVT.CLICK, _setOption);
     }
-    
+
     /**
      * Generiert bei einer Mediator-Nachricht mit dem More-Panel als
      * Daten die Inhalte der Options-Liste; initialisiert alle DOM-Elemente
@@ -99,7 +99,7 @@ var More = (function() {
         if ((typeof data !== typeof undefined) &&
             (CFG.VIEW[data.panel] === CFG.VIEW.MORE) &&
             (data.target instanceof $)) {
-            
+
             // Optionen ermitteln
             var options = { size: 0, list: [] };
             $.each(CFG.OPTIONS, function(option, label) {
@@ -109,15 +109,15 @@ var More = (function() {
                     label  : label
                 });
             });
-            
+
             // Inhalte per Template einfügen
             Template.render(data.target, _TMPL_MORE, options, function() {
-                
+
                 // Funktionen ausführen
                 _initDom();
                 _bindEvents();
                 _slider.setSlide(_indexListbox);
-                
+
                 // Wörterbuch-Daten anfragen, View einblenden
                 Mediator.pub(CFG.CNL.VIEW_SHOW)
                         .pub(CFG.CNL.TERMS_REQUEST)
@@ -125,7 +125,7 @@ var More = (function() {
             });
         }
     }
-    
+
     /**
      * Setzt bei einem Klick-Event die aktuell gewählte Option und rendert
      * die Detail-Ansicht für diese Option.
@@ -144,7 +144,7 @@ var More = (function() {
             _renderOption();
         }
     }
-    
+
     /**
      * Rendert die Detail-Ansicht der aktuell gewählten Option; fügt die
      * Inhalte per Template in die App ein, bewegt den Slider des Moduls und
@@ -166,7 +166,7 @@ var More = (function() {
             _slider.setSlide(_indexOption);
         });
     }
-    
+
     /**
      * Bewegt den Options-Slider anhand einer Mediatior-Nachricht
      * zurück zur Options-Liste; leert die Options-Details.
@@ -185,7 +185,7 @@ var More = (function() {
             _listIsLocked = false;
         }
     }
-    
+
     /**
      * Aktualisiert anhand einer Mediator-Nachricht die interne Kopie der
      * Begriff-Daten; rendert gegebenenfalls die aktuelle Ansicht neu.
@@ -203,7 +203,7 @@ var More = (function() {
             }
         }
     }
-    
+
     /**
      * Aktualisiert anhand einer Mediator-Nachricht die interne Kopie der
      * Wörterbuch-Daten; rendert gegebenenfalls die aktuelle Ansicht neu.
@@ -220,7 +220,7 @@ var More = (function() {
             }
         }
     }
-    
+
     /**
      * Aktualisiert anhand einer Mediator-Nachricht die interne Kopie der
      * vorhandenen Wörterbücher; rendert gegebenenfalls die aktuelle
@@ -242,7 +242,7 @@ var More = (function() {
             }
         }
     }
-    
+
     /**
      * Setzt die internen Variablen und Zustände anhand einer
      * Mediator-Nachricht wieder auf ihre Standardwerte zurück; setzt den
@@ -260,8 +260,8 @@ var More = (function() {
             _listIsLocked = false;
         }
     }
-    
+
     // Öffentliches Interface
     return { init: init };
-    
+
 })();

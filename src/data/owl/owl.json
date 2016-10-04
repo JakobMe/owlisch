@@ -11,7 +11,7 @@
             "answersNative"   : ["Toilette", "Längengrad", "fleißige Person", "Schalter", "Tüte"],
             "answersForeign"  : ["Ziepel", "Tacken", "Schore", "Lappes", "Lelleck"],
             "answersPictures" : ["toilette", "schalter", "tuete"]
-            
+
         },
         {
             "alias"           : "pinneken",

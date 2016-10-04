@@ -15,7 +15,7 @@
     cursor: pointer;
     font-size: @app-font-size-medium;
     .transition();
-    
+
     // Pseudo-Element: Lade-Icon
     &:before {
         display: block;
@@ -32,19 +32,19 @@
         width: @_play-size-loading;
         .transition(opacity);
     }
-    
+
     // Mod: Abspielend & nicht Mod: Ladend & Element: Icon
     &--playing:not(&--loading) {
         color: @app-color-highlight-dark;
         .textshadow-glow();
     }
-    
+
     // Mod: Ladend
     &--loading:before { opacity: @app-opacity-full; }
-    
+
     // Element: Icon
     &__icon { font-size: @_play-font-size-icon; }
-    
+
     // Element: Audio
     &__audio { display: none; }
 }

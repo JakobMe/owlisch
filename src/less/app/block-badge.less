@@ -28,17 +28,17 @@
     .border-radius(@_badge-size-height / 2);
     .translate(0, -50%);
     .transition();
-    
+
     // Mod: Deaktiviert
     &--disabled {
         opacity: @app-opacity-locked;
     }
-    
+
     // Mod: Highlight
     &--highlight {
         .fontello-icon(@fontello-icon-search, before);
         .colored-highlight();
-        
+
         // Icon
         &:before {
             font-weight: 100;

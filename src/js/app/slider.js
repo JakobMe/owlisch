@@ -8,24 +8,24 @@
  * @constructor
  */
 var Slider = function($target) {
-    
+
     // BEM-Konstanten
     var _B_SLIDER               = "slider";
     var _M_HAS                  = "has";
     var _M_IS                   = "is";
-    
+
     // Sonstige Konstanten
     var _DATA_SLIDE             = "data-slide";
     var _INDEX_MIN              = 1;
-    
+
     // Private Variablen
     var _$slider                = null;
     var _slides                 = 0;
     var _current                = 0;
-    
+
     /**
      * Initialisiert das DOM-Element des Sliders, die Anzahl der vorhandenen
-     * Slides, setzt ein Data-Attribut für jedes Slide und setzt den 
+     * Slides, setzt ein Data-Attribut für jedes Slide und setzt den
      * Slider auf den ersten Slide.
      * @inner
      * @access private
@@ -42,7 +42,7 @@ var Slider = function($target) {
             setSlide(_INDEX_MIN);
         }
     }
-    
+
     /**
      * Setzt den Index des Sliders auf die gegebene Zahl und ändert
      * die Klasse des Slider-DOM-Element entsprechend.
@@ -56,7 +56,7 @@ var Slider = function($target) {
             _$slider.setMod(_B_SLIDER, _M_IS, _current);
         }
     }
-    
+
     /**
      * Gibt den aktuellen Slide-Index des Sliders zurück.
      * @inner
@@ -66,7 +66,7 @@ var Slider = function($target) {
     function getSlide() {
         return _current;
     }
-    
+
     /**
      * Ermittelt den Slide-Index eines Elements innerhalb des Sliders
      * anhand eines gegebenen Query-Selektors, falls das gesuchte Element
@@ -88,10 +88,10 @@ var Slider = function($target) {
         }
         return index;
     }
-    
+
     // Initialisieren
     _init($target);
-    
+
     // Öffentliches Interface
     return {
         setSlide   : setSlide,

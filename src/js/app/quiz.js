@@ -13,7 +13,7 @@
  * @module Quiz
  */
 var Quiz = (function() {
-    
+
     // Selektor-Konstanten
     var _SEL_SLIDER             = "[data-quiz='slider']";
     var _SEL_START              = "[data-quiz='start']";
@@ -34,13 +34,13 @@ var Quiz = (function() {
     var _SEL_SOLUTION           = "[data-quiz='solution']";
     var _SEL_SOLVE              = "[data-quiz='solve']";
     var _SEL_FORM               = "[data-quiz='form']";
-    
+
     // Template-Namen
     var _TMPL_QUIZ              = "quiz";
     var _TMPL_FINISH            = "quiz-finish";
     var _TMPL_QUESTION          = "quiz-question";
     var _TMPL_START             = "quiz-start";
-    
+
     // BEM-Konstanten
     var _B_QUIZ                 = "quiz";
     var _B_STARS                = "stars";
@@ -61,7 +61,7 @@ var Quiz = (function() {
     var _M_LOCKED               = "locked";
     var _M_HIDDEN               = "hidden";
     var _M_GROW                 = "grow";
-    
+
     // Data-Attribut-Konstanten
     var _DATA_ANSWER            = "answer";
     var _DATA_LOCKED            = "locked";
@@ -69,13 +69,13 @@ var Quiz = (function() {
     var _DATA_SOLUTION          = "solution";
     var _DATA_INPUT             = "input";
     var _DATA_CURRENT           = "current";
-    
+
     // Sonstige Konstanten
     var _NUM_SLIDES_BEFORE      = 1;
     var _NUM_SLIDES_AFTER       = 1;
     var _NUM_CHARS_BREAK        = 10;
     var _ATTR_READONLY          = "readonly";
-    
+
     // Private Variablen
     var _indexStart             = 0;
     var _indexFinish            = 0;
@@ -87,7 +87,7 @@ var Quiz = (function() {
     var _dataAlias              = "";
     var _dataCaption            = "";
     var _slider                 = null;
-    
+
     // DOM-Elemente
     var _$quiz                  = null;
     var _$start                 = null;
@@ -95,7 +95,7 @@ var Quiz = (function() {
     var _$questions             = null;
     var _$currentQuestion       = null;
     var _$progressbar           = null;
-    
+
     /**
      * Initialisiert das Quiz-Modul; abonniert den Mediator.
      * @access public
@@ -104,7 +104,7 @@ var Quiz = (function() {
     function init() {
         _subMediator();
     }
-    
+
     /**
      * Abonniert interne Funktionen beim Mediator.
      * @access private
@@ -117,23 +117,23 @@ var Quiz = (function() {
                 .sub(CFG.CNL.NAVBAR_ACTION, _navbarAction)
                 .sub(CFG.CNL.CONFIG_SERVE, _setConfig);
     }
-    
+
     /**
      * Bindet Funktionen an Events.
      * @access private
      * @function _bindEvents
      */
     function _bindEvents() {
-        
+
         // Lösen-Button ein-/ausblenden
         window.addEventListener(CFG.EVT.KEYBOARD_SHOW, _hideSolve);
         window.addEventListener(CFG.EVT.KEYBOARD_HIDE, _showSolve);
-        
+
         // Start-Buttons
         if ((_$start instanceof $) && (_$finish instanceof $)) {
             _$start.add(_$finish).on(CFG.EVT.CLICK, _SEL_BUTTON, _start);
         }
-        
+
         // Frage-Funktionalitäten
         if (_$questions instanceof $) {
             _$questions.on(CFG.EVT.CLICK, _SEL_ANSWER, _evaluateAnswer)
@@ -145,7 +145,7 @@ var Quiz = (function() {
                        .on(CFG.EVT.TRANSITION, _focusInput);
         }
     }
-    
+
     /**
      * Generiert bei einer Mediator-Nachricht mit dem Quiz-Panel als
      * Daten die Inhalte des Quiz; initialisiert alle DOM-Elemente
@@ -159,14 +159,14 @@ var Quiz = (function() {
         if ((typeof data !== typeof undefined) &&
             (CFG.VIEW[data.panel] === CFG.VIEW.QUIZ) &&
             (data.target instanceof $)) {
-            
+
             // Daten zusammenstellen
             var extra     = _NUM_SLIDES_BEFORE + _NUM_SLIDES_AFTER;
             var slides    = extra + CFG.QUIZ.QUESTIONS;
             var questions = Util.arrFromNum(slides).slice(
                 _NUM_SLIDES_BEFORE, slides - _NUM_SLIDES_AFTER
             );
-            
+
             // Template füllen, Callback ausführen
             Template.render(data.target, _TMPL_QUIZ, {
                 questions : questions
@@ -178,7 +178,7 @@ var Quiz = (function() {
                 _bindEvents();
                 _renderStart();
                 _slider.setSlide(_indexStart);
-                
+
                 // Wörterbuch und Fortschritt anfragen, View einblenden
                 Mediator.pub(CFG.CNL.VIEW_SHOW)
                         .pub(CFG.CNL.TERMS_REQUEST)
@@ -186,7 +186,7 @@ var Quiz = (function() {
             });
         }
     }
-    
+
     /**
      * Initialisiert alle DOM-Elemente des Quiz.
      * @access private
@@ -202,9 +202,9 @@ var Quiz = (function() {
         _indexStart   = _slider.getIndexOf(_SEL_START);
         _indexFinish  = _slider.getIndexOf(_SEL_FINISH);
     }
-    
+
     /**
-     * Rendert alle Schritte der Fortschrittsleiste anhand 
+     * Rendert alle Schritte der Fortschrittsleiste anhand
      * des aktuellen Fortschrittes.
      * @access private
      * @function _renderProgressbar
@@ -212,13 +212,13 @@ var Quiz = (function() {
     function _renderProgressbar() {
         if (_$progressbar instanceof $) {
             $.each(_$progressbar.find(_SEL_STEP), function(i, step) {
-                
+
                 // Status ermitteln
                 var current = (i + 1 === _currentStep);
                 var skipped = (_progress[i + 1] === _M_SKIPPED);
                 var success = (_progress[i + 1] === _M_SUCCESS);
                 var error   = (_progress[i + 1] === _M_ERROR);
-                
+
                 // Fortschritts-Schritte rendern
                 $(step).setMod(_B_PROGRESSBAR, _E_STEP, _M_CURRENT, current)
                        .setMod(_B_PROGRESSBAR, _E_STEP, _M_SKIPPED, skipped)
@@ -227,7 +227,7 @@ var Quiz = (function() {
             });
         }
     }
-    
+
     /**
      * Setzt den Status eines Schrittes des Quizes; rendert anschließend
      * die Fortschrittsleiste neu.
@@ -244,7 +244,7 @@ var Quiz = (function() {
             _renderProgressbar();
         }
     }
-    
+
     /**
      * Setzt das Quiz auf den gegebenen Schritt; rendert anschließend
      * die Fortschrittsleiste neu.
@@ -259,7 +259,7 @@ var Quiz = (function() {
             _renderProgressbar();
         }
     }
-    
+
     /**
      * Setzt den aktuellen Fortschritt des Quiz zurück.
      * @access private
@@ -271,7 +271,7 @@ var Quiz = (function() {
         }
         _setStep(0);
     }
-    
+
     /**
      * Aktiviert oder deaktiviert die Animationen für die Icons
      * des Fortschritts-Balkens.
@@ -284,7 +284,7 @@ var Quiz = (function() {
             _$progressbar.setMod(_B_PROGRESSBAR, _M_ANIMATED, animated);
         }
     }
-    
+
     /**
      * Markiert den aktuellen Schritt als übersprungen,
      * fährt zum nächsten Schritt fort.
@@ -295,7 +295,7 @@ var Quiz = (function() {
         _setProgress(_currentStep, _M_SKIPPED);
         _nextStep();
     }
-    
+
     /**
      * Markiert den nächsten Schritt als aktiv, bewegt den Slider weiter.
      * @access private
@@ -307,7 +307,7 @@ var Quiz = (function() {
         _slider.setSlide(_slider.getSlide() + 1);
         _setStep(next);
     }
-    
+
     /**
      * Startet das Quiz; bewegt den Slider zur ersten Frage, aktiviert den
      * ersten Schritt und sendet eine Mediator-Nachricht an andere Module,
@@ -332,7 +332,7 @@ var Quiz = (function() {
             }, (typeof event === typeof undefined ? 0 : CFG.TIME.ANIMATION));
         }
     }
-    
+
     /**
      * Sucht zufällige Fragen für das Quiz aus; stellt sicher, dass
      * jeder Begriff nur einmal im Quiz auftaucht, gewichtet die
@@ -352,7 +352,7 @@ var Quiz = (function() {
             }
         }
     }
-    
+
     /**
      * Wählt anhand eines übergebenen Begriffs und den globalen Einstellungen
      * für die Quiz-Typen einen passenden Typen für die Frage zu diesem
@@ -378,7 +378,7 @@ var Quiz = (function() {
         }
         return config;
     }
-    
+
     /**
      * Ergänzt die ausgewählten Fragen um zusätzliche Daten für die Darstellung
      * und Funktionsweise des Quiz; rendert die Fragen anschließend.
@@ -388,13 +388,13 @@ var Quiz = (function() {
     function _processQuestions() {
         var type, diff, answ, chars;
         $.each(_questions, function(i, term) {
-            
+
             // Daten zusammenstellen
             type  = _pickQuestionType(term);
             answ  = _pickAnswers(term, type.answers, type.right, type.pictures);
             chars = _pickChars(type, answ);
             diff  = Util.limit(term.lvl, 0, CFG.QUIZ.DIFF.length - 1);
-            
+
             // Frage einfügen
             Template.render(_$questions.eq(i), _TMPL_QUESTION, {
                 answers    : answ,
@@ -413,7 +413,7 @@ var Quiz = (function() {
             });
         });
     }
-    
+
     /**
      * Wählt anhand des gegebenen Frage-Typs und der Antworten
      * die Zeichen für die Ausgabe der Lösung aus; mischt die Zeichen
@@ -428,12 +428,12 @@ var Quiz = (function() {
     function _pickChars(type, answer) {
         if ((typeof type.chars !== typeof undefined) && ($.isArray(answer)) &&
             (type.chars !== false) && (answer.length === 1)) {
-            
+
             // Buchstaben mischen und in Großbuchstaben umwandeln
             var letters = [];
             $.each(Util.shuffle(answer[0].label.split("")),
                 function(i, self) { letters.push(self.toUpperCase()); });
-            
+
             // Konfiguration zurückgeben
             return {
                 letters  : letters,
@@ -441,11 +441,11 @@ var Quiz = (function() {
                 width    : Util.calcPercent(1, letters.length, false),
                 small    : (letters.length > _NUM_CHARS_BREAK)
             };
-            
+
         // Ansonsten Buchstaben deaktivieren
         } else { return false; }
     }
-    
+
     /**
      * Entfernt sämtlichen Inhalt aus allen Fragen.
      * @access private
@@ -456,7 +456,7 @@ var Quiz = (function() {
         _$questions.each(function() { $(this).html(""); });
         if (finish === true) { _$finish.html(""); }
     }
-    
+
     /**
      * Stellt für einen gegebenen Begriff zufällig Antworten zusammen.
      * @access private
@@ -468,7 +468,7 @@ var Quiz = (function() {
      * @function _pickAnswers
      */
     function _pickAnswers(term, propAnswers, propRight, pictures) {
-        
+
         // Antworten zusammenstellen und mischen
         var answers = [{ label: term[propRight], correct: true }];
         if ($.isArray(term[propAnswers])) {
@@ -480,7 +480,7 @@ var Quiz = (function() {
             }
             Util.shuffle(answers);
         }
-        
+
         // Bei Bildern das Label durch Bild-Pfad ersetzen
         if (pictures) {
             var path = CFG.DATA.PATH_DATA + _dataAlias + CFG.DATA.PATH_IMAGE;
@@ -488,11 +488,11 @@ var Quiz = (function() {
                 answer.label = path + answer.label + CFG.DATA.TYPE_IMAGE;
             });
         }
-        
+
         // Antworten zurückgeben
         return answers;
     }
-    
+
     /**
      * Führt Funktionen aus, um eine gegebene Lösung in Abhängigkeit
      * ihrer Korrektheit zu verarbeiten; aktualisiert den Fortschritts-Balken,
@@ -509,7 +509,7 @@ var Quiz = (function() {
             _lockSkip();
         }
     }
-    
+
     /**
      * Prüft, ob eine geklickte Antwort richtig oder falsch ist; setzt den
      * aktuellen Fortschritt entsprechend und rendert alle Antworten.
@@ -527,7 +527,7 @@ var Quiz = (function() {
             }
         }
     }
-    
+
     /**
      * Evaluiert bei einem Klick-Event das Input der aktuellen Quiz-Frage;
      * sperrt den Lösen-Button, rendert das Input anhand der Korrektheit
@@ -539,17 +539,17 @@ var Quiz = (function() {
     function _evaluateInput(event) {
         if ((typeof event !== typeof undefined) && (event.target) &&
             (!$(event.target).closest(_SEL_SOLVE).data(_DATA_LOCKED))) {
-            
+
             // Event verhindern
             event.preventDefault();
-            
+
             // DOM-Elemente und Daten initialisieren
             var $input   = _$currentQuestion.find(_SEL_INPUT);
             var solution = $input.data(_DATA_SOLUTION).toUpperCase();
             var input    = $input.data(_DATA_INPUT);
                 input    = (input !== undefined ? input : $input.val());
             var correct  = (input.toUpperCase() === solution);
-            
+
             // Lösen sperren, Input aktualisiert, Lösung verarbeiten
             $input.blur();
             _lockSolve();
@@ -557,7 +557,7 @@ var Quiz = (function() {
             _processSolution(correct);
         }
     }
-    
+
     /**
      * Fügt bei einem Klick-Event einen Buchstaben zum Quiz-Input der aktuellen
      * Frage hinzu; deaktiviert den gedrückten Button und aktualisiert die
@@ -571,15 +571,15 @@ var Quiz = (function() {
             var $btn = $(event.target).closest(_SEL_LETTER);
             if (!$btn.data(_DATA_LOCKED) &&
                 !$btn.parents(_SEL_ANSWERS).data(_DATA_LOCKED)) {
-                
+
                 // Daten ermitteln, DOM-Elemente initialisieren
                 var $char  = null;
                 var $input = _$currentQuestion.find(_SEL_INPUT);
                 var input  = $input.data(_DATA_INPUT);
-                
+
                 // Löschen entsperren
                 _toggleBackspace(false);
-                
+
                 // Nach leerem Input suchen, Buchstabe einfügen
                 $input.children().each(function(i) {
                     $char = $(this);
@@ -596,7 +596,7 @@ var Quiz = (function() {
             }
         }
     }
-    
+
     /**
      * Entfernt bei einem Klick-Event einen Buchstaben aus dem Quiz-Input der
      * aktuellen Frage; aktualisiert die Daten des Inputs und deaktiviert
@@ -610,14 +610,14 @@ var Quiz = (function() {
             var $btn = $(event.target).closest(_SEL_BACKSPACE);
             if (!$btn.data(_DATA_LOCKED) &&
                 !$btn.parents(_SEL_ANSWERS).data(_DATA_LOCKED)) {
-                
+
                 // DOM-Elemente und Daten initialisieren
                 var $input   = _$currentQuestion.find(_SEL_INPUT);
                 var current  = $input.data(_DATA_CURRENT);
                 var $current = $input.children().eq(current);
                 var letter   = $current.data(_DATA_LETTER);
                 var input    = $input.data(_DATA_INPUT);
-                
+
                 // Elemente und Daten aktualisieren
                 $current.text("").removeData(_DATA_LETTER);
                 $input.data(_DATA_CURRENT, current - 1);
@@ -625,13 +625,13 @@ var Quiz = (function() {
                 _$currentQuestion.find(_SEL_KEYBOARD).children().eq(letter)
                     .setMod(_B_BUTTON, _M_LOCKED, false)
                     .data(_DATA_LOCKED, false);
-                
+
                 // Backspace sperren, falls keine Buchstaben mehr
                 if (current <= 0) { _toggleBackspace(true); }
             }
         }
     }
-    
+
     /**
      * Sperrt oder entsperrt den Backspace-Button der aktuellen Frage.
      * @access private
@@ -645,7 +645,7 @@ var Quiz = (function() {
             .data(_DATA_LOCKED, locked);
         }
     }
-    
+
     /**
      * Aktualisiert den Begriff der aktuellen Frage entsprechend
      * der Korrektheit der gegebenen Antwort über eine Mediator-Nachricht.
@@ -664,7 +664,7 @@ var Quiz = (function() {
             });
         }
     }
-    
+
     /**
      * Rendert die Level-Anzeige der aktuellen Frage anhand des übergebenen
      * Levels; aktualisiert die Anzahl der Sterne und beachtet dabei das
@@ -683,7 +683,7 @@ var Quiz = (function() {
             }
         }
     }
-    
+
     /**
      * Sendet eine Nachricht über den Mediator, um den Überspringen-Button
      * zu deaktivieren und somit das Überspringen unmöglich zu machen.
@@ -693,7 +693,7 @@ var Quiz = (function() {
     function _lockSkip() {
         Mediator.pub(CFG.CNL.NAVBAR_ACTION, { act: CFG.ACT.QUIZ_SOLVE });
     }
-    
+
     /**
      * Sendet eine Nachricht über den Mediator, um den Überspringen-Button
      * zu aktivieren und somit das Überspringen möglich zu machen.
@@ -703,7 +703,7 @@ var Quiz = (function() {
     function _unlockSkip() {
         Mediator.pub(CFG.CNL.NAVBAR_ACTION, { act: CFG.ACT.QUIZ_START });
     }
-    
+
     /**
      * Entsperrt den Weiter-Button der aktuellen Frage, um es zu
      * ermöglichen, zur nächsten Frage fortzufahren.
@@ -716,7 +716,7 @@ var Quiz = (function() {
                 .setMod(_B_QUIZ, _E_ACTION, _M_LOCKED, false);
         }, CFG.TIME.DELAY);
     }
-    
+
     /**
      * Sperrt den Lösen-Button der aktuellen Frage.
      * @access private
@@ -728,7 +728,7 @@ var Quiz = (function() {
                 .setMod(_B_QUIZ, _E_ACTION, _M_LOCKED, true);
         }
     }
-    
+
     /**
      * Blendet den Lösen-Button der aktuellen Frage aus.
      * @access private
@@ -741,7 +741,7 @@ var Quiz = (function() {
             );
         }
     }
-    
+
     /**
      * Blendet den Lösen-Button der aktuellen Frage ein.
      * @access private
@@ -754,7 +754,7 @@ var Quiz = (function() {
             );
         }
     }
-    
+
     /**
      * Fokussiert den Input der aktuellen Frage, falls vorhanden.
      * @access private
@@ -768,7 +768,7 @@ var Quiz = (function() {
             }, CFG.TIME.DELAY + CFG.TIME.ANIMATION);
         }
     }
-    
+
     /**
      * Fährt zur nächsten Frage des Quiz fort, falls der Weiter-Button
      * nicht gesperrt ist; reagiert auf ein Klick-Event.
@@ -783,7 +783,7 @@ var Quiz = (function() {
             _nextStep();
         }
     }
-    
+
     /**
      * Rendert die Antworten anhand einer ausgewählten Antwort;
      * aktualisiert die Status-Klasse aller benachbarten Antworten.
@@ -794,7 +794,7 @@ var Quiz = (function() {
      */
     function _renderAnswers($answer, correct) {
         if ($answer instanceof $) {
-            
+
             // Antworten modifizieren
             var status = (correct ? _M_SUCCESS : _M_ERROR);
             $answer.setMod(_B_BUTTON, status, true).siblings().each(
@@ -805,14 +805,14 @@ var Quiz = (function() {
                     );
                 }
             );
-            
+
             // Antworten sperren
             $answer.parents(_SEL_ANSWERS)
                    .setMod(_B_QUIZ, _E_ANSWERS, _M_LOCKED, true)
                    .data(_DATA_LOCKED, true);
         }
     }
-    
+
     /**
      * Rendert den übergebenen Input; aktualisiert seine Status-Klasse
      * und blendet die Lösung ein; sperrt das Input.
@@ -823,21 +823,21 @@ var Quiz = (function() {
      */
     function _renderInput($input, correct) {
         if ($input instanceof $) {
-                
+
             // Input modifizieren
             var status = (correct ? _M_SUCCESS : _M_ERROR);
             $input.setMod(_B_QUIZ, _E_INPUT, status, true)
                   .attr(_ATTR_READONLY, _ATTR_READONLY)
                   .parents(_SEL_ANSWERS).data(_DATA_LOCKED, true)
                   .setMod(_B_QUIZ, _E_ANSWERS, _M_LOCKED, true);
-            
+
             // Lösung anzeigen
             _$currentQuestion.find(_SEL_SOLUTION)
                 .setMod(_B_QUIZ, _E_SOLUTION, _M_LOCKED, false)
                 .setMod(_B_QUIZ, _E_SOLUTION, status, true);
         }
     }
-    
+
     /**
      * Beendet das Quiz; berechnet das Endergebnis, ermittelt die
      * entsprechende Bewertung aus der Konfiguration, rendert den Abschluss
@@ -846,7 +846,7 @@ var Quiz = (function() {
      * @function _finish
      */
     function _finish() {
-        
+
         // Ergebnis ermitteln
         var result = 0;
         var skipped = 0;
@@ -854,7 +854,7 @@ var Quiz = (function() {
             if (status === _M_SUCCESS) { result++; }
             if (status === _M_SKIPPED) { skipped++; }
         });
-        
+
         // Bewertung ermitteln
         var rating  = CFG.RATING.BAD;
         var percent = Util.calcPercent(result, CFG.QUIZ.QUESTIONS);
@@ -864,7 +864,7 @@ var Quiz = (function() {
                  rating          = val;
             }
         });
-        
+
         // Rendern und Ergebnis senden
         _setProgressbarAnimation(false);
         _renderFinish(result, skipped, rating);
@@ -874,7 +874,7 @@ var Quiz = (function() {
                     .pub(CFG.CNL.SCORES_UPDATE, result);
         }, CFG.TIME.DELAY);
     }
-    
+
     /**
      * Rendert das Quiz-Ende mit einem Mustache-Template; fügt
      * alle Ergebnisse des Quizes ein und animiert anschließend
@@ -900,7 +900,7 @@ var Quiz = (function() {
             _$finish.find(_SEL_CHART).setMod(_B_CHART, _M_GROW, true);
         }, CFG.TIME.ANIMATION));
     }
-    
+
     /**
      * Rendert das Start-Slide des Quizes anhand eines Mustache-Templates neu.
      * @access private
@@ -914,7 +914,7 @@ var Quiz = (function() {
             });
         }
     }
-    
+
     /**
      * Aktualisiert die interne Kopie der Wörterbuch-Daten des Quizes
      * anhand einer Mediator-Nachricht.
@@ -931,7 +931,7 @@ var Quiz = (function() {
             _renderStart();
         }
     }
-    
+
     /**
      * Setzt die Konfiguration des Wörterbuches anhand einer Mediator-Nachricht.
      * @access private
@@ -946,7 +946,7 @@ var Quiz = (function() {
             _dataAlias  = data.alias;
         }
     }
-    
+
     /**
      * Stellt die Standard-Konfiguration des Quizes anhand
      * einer Mediator-Nachricht wieder her.
@@ -961,7 +961,7 @@ var Quiz = (function() {
             _resetAll();
         }
     }
-    
+
     /**
      * Entscheided anhand einer Mediator-Nachricht, welche
      * Aktion beim Klick eines Navigation-Bar-Buttons ausgeführt wird.
@@ -998,8 +998,8 @@ var Quiz = (function() {
             }, CFG.TIME.DELAY);
         }, CFG.TIME.DELAY);
     }
-    
+
     // Öffentliches Interface
     return { init: init };
-    
+
 })();

@@ -10,10 +10,10 @@
  * @module Mediator
  */
 var Mediator = (function() {
-    
+
     // Private Variablen
     var _channels = {};
-    
+
     /**
      * Fügt einem Kanal des Mediators eine Callback-Funktion hinzu;
      * erzeugt den Kanal, falls er noch nicht existiert.
@@ -28,7 +28,7 @@ var Mediator = (function() {
         _channels[channel].push(callback);
         return this;
     }
-    
+
     /**
      * Entfernt eine Callback-Funktion von einem Kanal des Mediators.
      * @access public
@@ -48,7 +48,7 @@ var Mediator = (function() {
         }
         return this;
     }
-    
+
     /**
      * Veröffentlich beliebige Daten auf einem angegebenen Kanal;
      * führt alle abonnierten Funktion mit den Daten als Argument aus.
@@ -66,12 +66,12 @@ var Mediator = (function() {
         }
         return this;
     }
-    
+
     // Öffentliches Interface
-    return { 
+    return {
         sub   : sub,
         unsub : unsub,
         pub   : pub
     };
-    
+
 })();

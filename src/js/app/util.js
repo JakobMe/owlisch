@@ -6,7 +6,7 @@
  * @module Util
  */
 var Util = (function() {
-    
+
     /**
      * Erzeugt ein Array mit Ganzzahlen von 1 bis zur gewählten Zahl.
      * @access public
@@ -19,7 +19,7 @@ var Util = (function() {
         for (var i = 0; i < number; i++) { arr.push(i + 1); }
         return arr;
     }
-    
+
     /**
      * Berechnet den prozentualen Anteil einer Zahl an einer anderen;
      * gibt das Ergebnis in Prozentpunkten zurück.
@@ -38,7 +38,7 @@ var Util = (function() {
         }
         return (isNaN(result) ? 0 : result);
     }
-    
+
     /**
      * Zählt in einer gegeben Begriff-Liste alle Einträge,
      * die das angegebene Level haben.
@@ -58,7 +58,7 @@ var Util = (function() {
         }
         return count;
     }
-    
+
     /**
      * Sucht in einer gegebenen Begriff-Liste nach einem Begriff
      * mit dem passenden gegebenen Alias; gibt entweder den Begriff
@@ -82,7 +82,7 @@ var Util = (function() {
         }
         return found;
     }
-    
+
     /**
      * Gibt ein zufälliges Element eines Arrays zurück.
      * @access public
@@ -93,7 +93,7 @@ var Util = (function() {
     function getRandom(array) {
         return array[Math.floor(Math.random() * array.length)];
     }
-    
+
     /**
      * Mischt ein Array zufällig durch.
      * @access public
@@ -111,7 +111,7 @@ var Util = (function() {
         }
         return array;
     }
-    
+
     /**
      * Begrenzt eine gegebene Zahl zwischen dem gegebenen Minimum und Maximum.
      * @access public
@@ -128,7 +128,7 @@ var Util = (function() {
             return number;
         }
     }
-    
+
     /**
      * Gibt das aktuelle Datum als Zahl zurück, sortiert nach Jahr, Monat und
      * Tag, jeweils mit der maximalen Anzahl an Stellen; z.B. "20160612".
@@ -144,7 +144,7 @@ var Util = (function() {
             intToStr(date.getDate(), 2)
         );
     }
-    
+
     /**
      * Wandelt eine gegebene Ganzzahl in einen String um; stellt führende
      * Nullen entsprechend der angegebenen Mindeststellen an, z.B. 2 -> 02.
@@ -163,7 +163,7 @@ var Util = (function() {
         }
         return str;
     }
-    
+
     /**
      * Zeigt einen System-Dialog des angegebenen Typs mit den entsprechend
      * gewählten Eigenschaften an, z.B. Alert, Confirm, Prompt; versucht, die
@@ -185,9 +185,9 @@ var Util = (function() {
         if (cordova) { fn(text, callback, title, buttons); }
         else if (fn(text) && $.isFunction(callback)) { callback(); }
     }
-    
+
     // Öffentliches Interface
-    return { 
+    return {
         arrFromNum          : arrFromNum,
         calcPercent         : calcPercent,
         findTerm            : findTerm,
@@ -199,5 +199,5 @@ var Util = (function() {
         intToStr            : intToStr,
         dialog              : dialog
     };
-    
+
 })();

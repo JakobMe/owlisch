@@ -26,14 +26,14 @@
     .translate(0, -150%);
     .transition();
     .shadow-big();
-    
+
     // Mod: Offen
     &--opened {
         visibility: visible;
         opacity: @app-opacity-full;
         .translate();
     }
-    
+
     // Mod: Statisch
     &--static {
         position: static;
@@ -45,10 +45,10 @@
         .border(top);
         .translate();
     }
-    
+
     // Mod: Statisch & Element: Listenpunkt
     &--static &__item { font-size: @app-font-size-medium; }
-    
+
     // Element: Listenpunkt
     &__item {
         display: block;
@@ -64,7 +64,7 @@
         .colored(@app-color-light, true);
         .transition(color);
         .ellipsis();
-        
+
         // Icon
         &:after {
             display: block;
@@ -78,7 +78,7 @@
             width: @_dropdown-size-height;
             .transition(color);
         }
-        
+
         // Ausnahme: Letztes Element
         &:not(:last-child) { .border(bottom); }
 
@@ -89,13 +89,13 @@
             &:after { color: @app-color-main; }
         }
     }
-    
+
     // Element: Icon
     &__icon {
         margin-right: @app-size-gap-small;
         font-size: @app-font-size-medium;
     }
-    
+
     // Element: Label
     &__label { font-weight: bold; }
 }

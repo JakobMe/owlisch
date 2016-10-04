@@ -12,15 +12,15 @@
  * @module View
  */
 var View = (function() {
-    
+
     // Selektor-Konstanten
     var _SEL_MAIN               = "[data-view='main']";
     var _SEL_PANEL              = "[data-view='panel']";
     var _SEL_CONTENT            = "[data-view='content']";
-    
+
     // Template-Namen
     var _TMPL_VIEW              = "view";
-    
+
     // BEM-Konstanten
     var _B                      = "view";
     var _E_CONTENT              = "content";
@@ -29,22 +29,22 @@ var View = (function() {
     var _M_FULLSCREEN           = "fullscreen";
     var _M_WEBAPP               = "webapp";
     var _M_CURRENT              = "current";
-    
+
     // Data-Konstanten
     var _DATA_PANEL             = "panel";
-    
+
     // Private Variablen
     var _currentPanel           = null;
     var _isQuiz                 = false;
     var _isVisible              = false;
     var _isFullscreen           = false;
     var _isWebapp               = (CFG.WEBAPP.IOS || CFG.WEBAPP.CORDOVA);
-    
+
     // DOM-Elemente
     var _$view                  = $(_SEL_MAIN);
     var _$content               = null;
     var _$panels                = {};
-    
+
     /**
      * Initialisiert das View-Modul; erstellt alle View-Panels, bindet Events
      * und abonniert den Mediator, indem andere Funktionen ausgeführt werden.
@@ -56,7 +56,7 @@ var View = (function() {
         _bindEvents();
         _subMediator();
     }
-    
+
     /**
      * Bindet Funktionen an Events.
      * @access private
@@ -66,7 +66,7 @@ var View = (function() {
         window.addEventListener(CFG.EVT.KEYBOARD_SHOW, _enableFullscreen);
         window.addEventListener(CFG.EVT.KEYBOARD_HIDE, _disableFullscreen);
     }
-    
+
     /**
      * Abonniert interne Funktionen beim Mediator.
      * @access private
@@ -79,7 +79,7 @@ var View = (function() {
                 .sub(CFG.CNL.QUIZ_END, _disableQuiz)
                 .sub(CFG.CNL.QUIZ_START, _enableQuiz);
     }
-    
+
     /**
      * Generiert für jedes im CFG-Modul definierte Panel anhand des gesetzten
      * Templates ein HTML-Panel im Content-Bereich; initialisiert die Elemente
@@ -89,7 +89,7 @@ var View = (function() {
      * @function _create
      */
     function _create() {
-        
+
         // Panel-Array erzeugen
         var panels = [];
         $.each(CFG.VIEW, function(alias, props) {
@@ -99,7 +99,7 @@ var View = (function() {
             });
             panels.push(panelProps);
         });
-        
+
         // Template laden, Elemente initialisieren
         Template.render(_$view, _TMPL_VIEW, panels, function() {
             _$content = _$view.find(_SEL_CONTENT);
@@ -110,7 +110,7 @@ var View = (function() {
             _render();
         });
     }
-    
+
     /**
      * Rendert alle Elemente der View anhand der intern
      * gesetzten aktuellen Variablen.
@@ -118,12 +118,12 @@ var View = (function() {
      * @function _render
      */
     function _render() {
-            
+
         // View und Content rendern
         _$view.setMod(_B, _M_WEBAPP, _isWebapp);
         _$view.setMod(_B, _M_FULLSCREEN, _isFullscreen);
         _$content.setMod(_B, _E_CONTENT, _M_VISIBLE, _isVisible);
-        
+
         // View-Panels (de-)aktivieren
         if (!_isVisible) {
             setTimeout(function() {
@@ -133,7 +133,7 @@ var View = (function() {
             _renderPanels();
         }
     }
-    
+
     /**
      * Rendert alle View-Panels; blendet sie ein oder aus.
      * @access private
@@ -144,7 +144,7 @@ var View = (function() {
             $panel.setMod(_B, _E_PANEL, _M_CURRENT, (name === _currentPanel));
         });
     }
-    
+
     /**
      * Setzt das aktuelle View-Panel anhand eines Mediator-Events;
      * entscheidet, ob sich das Panel geändert hat oder nicht;
@@ -156,17 +156,17 @@ var View = (function() {
     function _setView(panel) {
         if ((typeof panel !== typeof undefined) &&
             (_$panels[panel] instanceof $)) {
-            
+
             // Wenn Panel neu ist
             if (panel !== _currentPanel) {
-                
+
                 // Panel ändern, Änderung bekanntmachen
                 Mediator.pub(
                     CFG.CNL.VIEW_CHANGE,
                     { panelOld: _currentPanel, panelNew: panel }
                 );
                 _currentPanel = panel;
-                
+
                 // Ausblenden, gegebenenfalls laden, einblenden
                 _hide();
                 setTimeout(function() {
@@ -176,14 +176,14 @@ var View = (function() {
                         });
                     } else { _show(); }
                 }, CFG.TIME.ANIMATION);
-                
+
             // Panel gegebenenfalls wiederherstellen
             } else {
                 Mediator.pub(CFG.CNL.VIEW_RESTORE, _currentPanel);
             }
         }
     }
-    
+
     /**
      * Blendet die View aus.
      * @access private
@@ -193,7 +193,7 @@ var View = (function() {
         _isVisible = false;
         _render();
     }
-    
+
     /**
      * Blendet die View ein.
      * @access private
@@ -203,7 +203,7 @@ var View = (function() {
         _isVisible = true;
         _render();
     }
-    
+
     /**
      * Aktiviert die volle Höhe für die View.
      * @access private
@@ -213,7 +213,7 @@ var View = (function() {
         _isFullscreen = true;
         _render();
     }
-    
+
     /**
      * Deaktiviert die volle Höhe für die View, wenn Quiz inaktiv ist.
      * @access private
@@ -225,7 +225,7 @@ var View = (function() {
             _render();
         }
     }
-    
+
     /**
      * Notiert, dass das Quiz aktiv ist; aktiviert Fullscreen.
      * @access private
@@ -235,7 +235,7 @@ var View = (function() {
         _isQuiz = true;
         _enableFullscreen();
     }
-    
+
     /**
      * Notiert, dass Quiz inaktiv ist; deaktiviert Fullscreen.
      * @access private
@@ -245,8 +245,8 @@ var View = (function() {
         _isQuiz = false;
         _disableFullscreen();
     }
-    
+
     // Öffentliches Interface
     return { init: init };
-    
+
 })();

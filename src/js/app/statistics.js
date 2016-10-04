@@ -1,7 +1,7 @@
 /**
  * Steuert die Statistik-View der App; erzeugt und animiert die Diagramme der
  * Statistik über den Wörterbuch-Fortschritt und die letzten Quiz-Spiele des
- * Nutzers anhand von angefragten Daten des Data-Moduls. 
+ * Nutzers anhand von angefragten Daten des Data-Moduls.
  * @author Jakob Metzger <jakob.me@gmail.com>
  * @copyright 2016 Jakob Metzger
  * @license MIT
@@ -11,26 +11,26 @@
  * @module Statistics
  */
 var Statistics = (function() {
-    
+
     // Selektor-Konstanten
     var _SEL_MAIN               = "[data-statistics='main']";
     var _SEL_CHART              = "[data-statistics='chart']";
     var _SEL_SCORES             = "[data-statistics='scores']";
     var _SEL_PROGRESS           = "[data-statistics='progress']";
     var _SEL_DICTIONARY         = "[data-statistics='dictionary']";
-    
+
     // Template-Namen
     var _TMPL_STATISTICS        = "statistics";
     var _TMPL_CHART             = "statistics-chart";
-    
+
     // BEM-Konstanten
     var _B_CHART                = "chart";
     var _M_GROW                 = "grow";
-    
+
     // Sonstige Konstanten
     var _NUM_STEPS_PERCENT      = 10;
     var _DELIMITER_SCORE        = "/";
-    
+
     // Private Variablen
     var _dataScores             = [];
     var _dataTerms              = [];
@@ -38,13 +38,13 @@ var Statistics = (function() {
     var _arrStepsScores         = [];
     var _sizeSolved             = 0;
     var _sizeTerms              = 0;
-    
+
     // DOM-Elemente
     var _$statistics            = null;
     var _$scores                = null;
     var _$progress              = null;
     var _$dictionary            = null;
-    
+
     /**
      * Initialisiert das Statistics-Modul; abonniert den Mediator.
      * @access public
@@ -55,7 +55,7 @@ var Statistics = (function() {
         _arrStepsScores  = Util.arrFromNum(CFG.QUIZ.QUESTIONS);
         _subMediator();
     }
-    
+
     /**
      * Abonniert interne Funktionen beim Mediator.
      * @access private
@@ -67,7 +67,7 @@ var Statistics = (function() {
                 .sub(CFG.CNL.TERMS_SERVE, _updateProgress)
                 .sub(CFG.CNL.SCORES_SERVE, _updateScores);
     }
-    
+
     /**
      * Generiert bei einer Mediator-Nachricht mit dem Statistics-Panel als
      * Daten die Inhalte der Statistik; initialisiert alle DOM-Elemente
@@ -81,22 +81,22 @@ var Statistics = (function() {
         if ((typeof data !== typeof undefined) &&
             (CFG.VIEW[data.panel] === CFG.VIEW.STATISTICS) &&
             (data.target instanceof $)) {
-            
+
             // Mit Template rendern
             Template.render(
                 data.target, _TMPL_STATISTICS,
                 { games: CFG.QUIZ.LASTGAMES },
                 function() {
-                    
+
                     // Modulvariablen initialisieren
                     _$statistics = $(_SEL_MAIN);
                     _$scores     = _$statistics.find(_SEL_SCORES);
                     _$progress   = _$statistics.find(_SEL_PROGRESS);
                     _$dictionary = _$statistics.find(_SEL_DICTIONARY);
-                    
+
                     // Diagramme animieren
                     _growCharts(false);
-                    
+
                     // Mediator aufrufen
                     Mediator.pub(CFG.CNL.VIEW_SHOW)
                             .pub(CFG.CNL.TERMS_REQUEST)
@@ -105,7 +105,7 @@ var Statistics = (function() {
             );
         }
     }
-    
+
     /**
      * Rendert ein Diagramm mit gegebenen Eigenschaften anhand eines
      * Mustache-Templates in einen angegebenen Container.
@@ -125,7 +125,7 @@ var Statistics = (function() {
             data: data, hrznt: hrznt, steps: steps, stars: stars, empty: empty
         });
     }
-    
+
     /**
      * Rendert ein Diagramm für die letzten Spielergebnisse mit Hilfe
      * der _renderChart Methode.
@@ -146,7 +146,7 @@ var Statistics = (function() {
                 false, false, (_dataScores.length === 0));
         }
     }
-    
+
     /**
      * Rendert das Diagramm für den Wörterbuch-Fortschritt mit Hilfe
      * der _renderChart Methode.
@@ -163,7 +163,7 @@ var Statistics = (function() {
             _renderChart(_$progress, data, _arrStepsPercent, true);
         }
     }
-    
+
     /**
      * Rendert das Diagramm für die Wörterbuch-Zusammensetzung mit Hilfe
      * der _renderChart Methode.
@@ -186,7 +186,7 @@ var Statistics = (function() {
             _renderChart(_$dictionary, data, _arrStepsPercent, true, true);
         }
     }
-    
+
     /**
      * Aktualisiert die Spielergebnis-Liste, sobald eine entsprechende
      * Mediator-Nachricht mit den erforderlichen Daten empfangen wird.
@@ -201,7 +201,7 @@ var Statistics = (function() {
             _renderScores();
         }
     }
-    
+
     /**
      * Aktualisiert die Fortschritts-Liste, sobald eine entsprechende
      * Mediator-Nachricht mit den erforderlichen Daten empfangen wird.
@@ -213,7 +213,7 @@ var Statistics = (function() {
         if ((typeof data        !== typeof undefined) &&
             (typeof data.solved !== typeof undefined) &&
             (typeof data.data   !== typeof undefined) &&
-            (typeof data.size   !== typeof undefined)) {  
+            (typeof data.size   !== typeof undefined)) {
             _dataTerms  = data.data;
             _sizeSolved = data.solved;
             _sizeTerms  = data.size;
@@ -221,7 +221,7 @@ var Statistics = (function() {
             _renderDictionary();
         }
     }
-    
+
     /**
      * Fügt den Diagrammen der Statistik eine Klasse hinzu oder entfernt sie,
      * um sie zu animieren; blendet Diagramm gegebenenfalls vorher aus.
@@ -237,7 +237,7 @@ var Statistics = (function() {
             $charts.setMod(_B_CHART, _M_GROW, true);
         }, (shrink ? CFG.TIME.DELAY : CFG.TIME.ANIMATION));
     }
-    
+
     /**
      * Scrollt die Statistik nach oben und animiert die Diagramme, wenn
      * ein entsprechende Mediator-Nachricht empfangen wird.
@@ -255,8 +255,8 @@ var Statistics = (function() {
             );
         }
     }
-    
+
     // Öffentliches Interface
     return { init: init };
-    
+
 })();

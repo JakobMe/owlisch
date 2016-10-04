@@ -37,7 +37,7 @@
     .border-radius();
     .border-button();
     .transition();
-    
+
     // Icon
     &:before {
         display: block;
@@ -56,10 +56,10 @@
         width: @_button-size;
         .transition();
     }
-    
+
     // Letztes Element
     &:not(&--inline):last-child { margin-bottom: 0; }
-    
+
     // Mod: Klein
     &--small {
         padding-left: @_button-size-small;
@@ -68,11 +68,11 @@
         height: @_button-size-small;
         line-height: (@_button-size-small - (2 * @app-size-line-medium));
         min-width: (@_button-size-small + (2 * @app-size-line-medium));
-        
+
         // Icon
         &:before { width: @_button-size-small; }
     }
-    
+
     // Mod: Inline
     &--inline {
         display: inline-block;
@@ -81,16 +81,16 @@
         margin: 0 @app-size-gap-micro;
         margin-bottom: @app-size-gap-tiny;
         width: (@_button-size + (2 * @app-size-line-medium));
-        
+
         // Icon
         &:before { display: none; }
     }
-    
+
     // Mods: Inline & Klein
     &--inline&--small {
         width: (@_button-size-small + (2 * @app-size-line-medium));
     }
-    
+
     // Mod: Backspace
     &--backspace {
         width: auto;
@@ -99,7 +99,7 @@
         padding-left: @app-size-gap;
         padding-right: @app-size-gap;
     }
-    
+
     // Mod: Bild
     &--image {
         float: left;
@@ -112,11 +112,11 @@
         margin-top: @_button-size-gap-image;
         width: ((100% - @_button-size-gap-image) / 2);
         line-height: (@_button-size-image - (2 * @app-size-line-medium));
-        
+
         // Alternierende Elemente, Erstes & Zweites Element
         &:nth-child(1), &:nth-child(2) { margin-top: 0; }
         &:nth-child(odd) { margin-right: @_button-size-gap-image; }
-        
+
         // Icon
         &:before {
             top: auto;
@@ -126,7 +126,7 @@
             line-height: @_button-size-icon-image;
         }
     }
-    
+
     // Mod: Rund
     &--round {
         margin: @app-size-gap auto;
@@ -137,7 +137,7 @@
         line-height: ((@_button-size-round - (2 * (@_button-padding-round + @app-size-line-thin))) / 2);
         .border-radius(50%);
     }
-    
+
     // Mod: Aktion
     &--action {
         text-transform: uppercase;
@@ -147,7 +147,7 @@
         .border-button(@app-color-main-dark);
         .textshadow();
     }
-    
+
     // Mod: Gefährlich
     &--danger {
         text-transform: uppercase;
@@ -157,58 +157,58 @@
         .border-button(@app-color-error-dark);
         .textshadow();
     }
-    
+
     // Mods: Erfolg & Fehler
     &--success, &--error {
-        
+
         // Mods & Icon
         &, &:before {
             padding-top: 0;
             padding-bottom: 0;
         }
-        
+
         // Icon
         &:before {
             visibility: visible;
             opacity: @app-opacity-full;
         }
     }
-    
+
     // Mod: Richtig
     &--right {
         .fontello-icon(@fontello-icon-check, before);
         &:before { color: @app-color-success; }
     }
-    
+
     // Mod: Falsch
     &--wrong {
         .fontello-icon(@fontello-icon-cancel, before);
         &:before { color: @app-color-error; }
     }
-    
+
     // Mod: Erfolg
     &--success {
         .border-button(@app-color-success, @app-size-line-medium, false);
         .animation(answer-success);
     }
-    
+
     // Mod: Fehler
     &--error {
         .border-button(@app-color-error, @app-size-line-medium, false);
         .animation(answer-error);
     }
-    
+
     // Mod: Gesperrt
     &--locked {
         cursor: default;
         opacity: @app-opacity-locked;
     }
-    
+
     // Mod: Großer Abstand
     &--margin-bottom {
         margin-bottom: @app-size-gap;
     }
-    
+
     // Mod: Rund & Element: Button-Text
     &--round &__text:last-child {
         font-size: @app-font-size-medium;

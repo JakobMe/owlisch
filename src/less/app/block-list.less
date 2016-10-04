@@ -17,7 +17,7 @@
     margin: 0;
     padding: 0;
     .border(bottom);
-    
+
     // Element: Item
     &__item {
         display: block;
@@ -36,7 +36,7 @@
         .colored-gradient();
         .border(top);
         .ellipsis();
-        
+
         // Icon
         &:after {
             display: block;
@@ -57,22 +57,22 @@
             .transition(color);
             .font-icon();
         }
-        
+
         // Sub-Element: Label
         &-label {
             font-weight: bold;
             &:not(:first-child) { margin-left: @app-size-gap-small; }
         }
-        
+
         // Sub-Element: Highlight
         &-highlight {
             .colored-highlight();
             .border-radius();
-            
+
             // Leer
             &:empty { display: none; }
         }
-        
+
         // Sub-Element: Icon
         &-icon {
             text-align: center;
@@ -80,11 +80,11 @@
             margin-right: @app-size-gap-small;
             width: @app-size-gap;
         }
-        
+
         // Sub-Elemente: Icon & Label (aufeinanderfolgend)
         &-icon + &-label { margin-left: 0; }
     }
-    
+
     // Element: Titel
     &__title {
         display: block;
@@ -97,19 +97,19 @@
         .colored(@app-color-light, true);
         .border(bottom);
         .border(top);
-        
+
         // Ausnahme: Letztes Element
         &:last-child {
             border-bottom: none;
             margin-bottom: 0;
         }
-        
+
         // Sub-Element: Text
         &-text {
             display: block;
             position: relative;
         }
-        
+
         // Sub-Element: Icon
         &-icon {
             text-align: center;

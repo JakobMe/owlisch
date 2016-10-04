@@ -12,15 +12,15 @@
  * @module TabBar
  */
 var TabBar = (function() {
-    
+
     // Selektor-Konstanten
     var _SEL_MAIN               = "[data-tabbar='main']";
     var _SEL_LIST               = "[data-tabbar='list']";
     var _SEL_TAB                = "[data-tabbar='tab']";
-    
+
     // Template-Namen
     var _TMPL_TABBAR            = "tabbar";
-    
+
     // BEM-Konstanten
     var _B                      = "tabbar";
     var _E_TAB                  = "tab";
@@ -29,22 +29,22 @@ var TabBar = (function() {
     var _M_HIDDEN               = "hidden";
     var _M_DISABLED             = "disabled";
     var _M_TAB                  = "tab";
-    
+
     // Data-Attibut-Konstanten
     var _DATA_PANEL             = "panel";
-    
+
     // Private Variablen
     var _tabActive              = 0;
     var _tabNumber              = 0;
     var _isHidden               = false;
     var _isDisabled             = false;
     var _isLocked               = false;
-    
+
     // DOM-Elemente
     var _$tabbar                = $(_SEL_MAIN);
     var _$list                  = null;
     var _$tabs                  = null;
-    
+
     /**
      * Initialisiert das TabBar-Modul; bindet Events und abonniert den
      * Mediator, indem andere Funktionen ausgeführt werden.
@@ -55,7 +55,7 @@ var TabBar = (function() {
         _bindEvents();
         _subMediator();
     }
-    
+
     /**
      * Bindet Funktionen an Events.
      * @access private
@@ -66,7 +66,7 @@ var TabBar = (function() {
         window.addEventListener(CFG.EVT.KEYBOARD_SHOW, _disable);
         window.addEventListener(CFG.EVT.KEYBOARD_HIDE, _enable);
     }
-    
+
     /**
      * Abonniert interne Funktionen beim Mediator.
      * @access private
@@ -77,12 +77,12 @@ var TabBar = (function() {
                 .sub(CFG.CNL.QUIZ_START, _hide)
                 .sub(CFG.CNL.QUIZ_END, _show);
     }
-    
+
     /**
      * Tab-Bar generieren.
      * Generiert für jedes angegebene Panel einen entsprechenden
      * Tab in der Tab-Bar und aktiviert den ersten Tab.
-     
+
      */
     /**
      * Generiert für jedes vom View-Modul übergebene Panel einen Tab,
@@ -105,7 +105,7 @@ var TabBar = (function() {
             });
         }
     }
-    
+
     /**
      * Rendert alle Elemente der Tab-Bar anhand der intern
      * gesetzten aktuellen Variablen.
@@ -113,17 +113,17 @@ var TabBar = (function() {
      * @function _render
      */
     function _render() {
-        
+
         // Status rendern
         _$tabbar.setMod(_B, _M_HIDDEN, _isHidden);
         _$tabbar.setMod(_B, _M_DISABLED, _isDisabled);
         _$tabbar.setMod(_B, _M_TAB, _tabActive);
-        
+
         // Tabs aktivieren/deaktivieren
         _$tabs.eq(_tabActive).setMod(_B, _E_TAB, _M_ACTIVE, true)
                   .siblings().setMod(_B, _E_TAB, _M_ACTIVE, false);
     }
-    
+
     /**
      * Setzt den aktiven Tab anhand eines Klick-Events oder eines
      * übergebenen Tab-Indexes; rendert anschließend die Tab-Bar
@@ -134,19 +134,19 @@ var TabBar = (function() {
      */
     function _setTab(tab) {
         if (!_isLocked) {
-            
+
             // Tabs sperren und entsperren
             _isLocked = true;
             setTimeout(function() {
                 _isLocked = false;
             }, CFG.TIME.ANIMATION);
-            
+
             // Aktiven Tab ermitteln
             _tabActive = Util.limit(
                 (tab.target ? $(tab.target).closest(_SEL_TAB).index() : tab),
                 0, _tabNumber
             );
-    
+
             // Rendern, Mediator aufrufen
             _render();
             Mediator.pub(
@@ -155,7 +155,7 @@ var TabBar = (function() {
             );
         }
     }
-    
+
     /**
      * Blendet die Tab-Bar aus.
      * @access private
@@ -166,7 +166,7 @@ var TabBar = (function() {
         _isLocked = true;
         _render();
     }
-    
+
     /**
      * Blendet die Tab-Bar ein.
      * @access private
@@ -177,7 +177,7 @@ var TabBar = (function() {
         _isLocked = false;
         _render();
     }
-    
+
     /**
      * Deaktiviert die Tab-Bar.
      * @access private
@@ -188,7 +188,7 @@ var TabBar = (function() {
         _isLocked = true;
         _render();
     }
-    
+
     /**
      * Aktiviert die Tab-Bar.
      * @access private
@@ -199,8 +199,8 @@ var TabBar = (function() {
         _isLocked = false;
         _render();
     }
-    
+
     // Öffentliches Interface
     return { init: init };
-    
+
 })();

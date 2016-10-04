@@ -8,15 +8,15 @@
  * @module Template
  */
 var Template = (function() {
-    
+
     // Konstanten
     var _CONFIG                 = "tmpl/conf.json";
     var _PATH                   = "tmpl/";
     var _TYPE                   = ".html";
-    
+
     // Private Variablen
     var _cache                  = {};
-    
+
     /**
      * Lädt die Konfigurations-Datei für die Templates und lädt alle dort
      * definierten Templates vor; parst die Templates mit Mustache, um das
@@ -34,7 +34,7 @@ var Template = (function() {
             });
         });
     }
-    
+
     /**
      * Fügt einen gegebenen String als HTML in ein DOM-Objekt ein;
      * führt gegebenenfalls eine Callback-Funktion aus.
@@ -52,7 +52,7 @@ var Template = (function() {
             });
         }
     }
-    
+
     /**
      * Rendert ein Template mit gegebenem Namen mittels Mustache und fügt den
      * Inhalt in einen gegebenes DOM-Element ein; lädt das Template per AJAX,
@@ -75,11 +75,11 @@ var Template = (function() {
             _html($target, Mustache.render(_cache[template], data), callback);
         }
     }
-    
+
     // Öffentliches Interface
     return {
         init   : init,
         render : render
     };
-    
+
 })();

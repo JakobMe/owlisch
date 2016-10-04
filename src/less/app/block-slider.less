@@ -10,7 +10,7 @@
 @_slider-number-dictionary:             2;
 @_slider-number-quiz:                   2;
 
-// Äußerer Loop: Slider 
+// Äußerer Loop: Slider
 ._slider-loop(@n, @i: 1) when (@i <= @n) {
     &--has-@{n}&--is-@{i} { .slider-loop-inner(@i);}
     ._slider-loop(@n, (@i + 1));
@@ -31,7 +31,7 @@
     width: 100%;
     ._slider-loop(@_slider-number-dictionary);
     ._slider-loop(@app-number-questions + @_slider-number-quiz);
-    
+
     // Element: Slide
     &__slide {
         -webkit-backface-visibility: hidden;

@@ -13,7 +13,7 @@
 
 // Block: Begriff
 .term {
-    
+
     // Element: Header
     &__header {
         font-size: 0;
@@ -24,23 +24,23 @@
         .border(bottom);
         .border(top);
     }
-    
+
     // Mod: Quiz & Element: Header
     &--quiz &__header {
         margin-bottom: 0;
-        margin-top: @app-size-gap-small; 
+        margin-top: @app-size-gap-small;
     }
-    
+
     // Element: Bild
     &__image {
         display: block;
         margin: 0 auto;
         height: @_term-size-image;
     }
-    
+
     // Mod: Quiz & Element: Bild
     &--quiz &__image { margin-top: @app-size-gap-small; }
-    
+
     // Element: Titel
     &__title {
         display: block;
@@ -51,20 +51,20 @@
         padding-bottom: @app-size-gap;
         font-size: @app-font-size-large;
     }
-    
+
     // Mod: Kein Bild & Element: Titel
     &--no-image &__title { padding-top: @app-size-gap; }
-    
+
     // Mod: Quiz & Element: Bild
     &--quiz &__image { height: @_term-size-image-quiz; }
-    
+
     // Element: Artikel & Mod: Quiz & Element: Titel
     &__article, &--quiz &__title { font-weight: normal; }
-    
+
     // Elemente: Schlüsselwort & Artikel
     &__keyword, &__article { font-style: italic; }
     &__keyword { font-weight: bold;}
-    
+
     // Element: Info
     &__info {
         display: block;
@@ -74,18 +74,18 @@
         line-height: @_term-size-info;
         font-size: @app-font-size-small;
         .color-on(@app-color-light, true);
-        
+
         // Mod: Links & Rechts
         &--left, &--right {
             position: absolute;
             bottom: 0;
         }
-        
+
         // Mod: Links & Rechts
         &--left { left: 0; }
         &--right { right: 0; }
     }
-    
+
     // Element: Label
     &__label {
         font-weight: bold;

@@ -23,14 +23,14 @@
     .colored(@app-color-light, true);
     .border(bottom);
     .border(top);
-    
+
     // Element: Wrapper
     &__wrapper {
         display: block;
         position: relative;
         height: @app-size-height-progressbar;
     }
-    
+
     // Element: Linie
     &__line {
         display: block;
@@ -44,7 +44,7 @@
         margin-top: -(@_progressbar-size-line / 2);
         .border-radius(@_progressbar-size-line);
     }
-    
+
     // Element: Schritte
     &__steps {
         display: block;
@@ -59,7 +59,7 @@
         height: @app-size-height-progressbar;
         line-height: @app-size-height-progressbar;
     }
-    
+
     // Element: Schritt
     &__step {
         float: left;
@@ -72,7 +72,7 @@
         width: (100% / @app-number-questions);
         .transition();
     }
-    
+
     // Element: Icon
     &__icon {
         display: block;
@@ -88,7 +88,7 @@
         .border-radius(50%);
         .transition(all, @app-time-animation-long);
     }
-    
+
     // Mod: Aktuell & Übersprungen & Fehler & Erfolg & Element: Icon
     &__step--error   &__icon,
     &__step--current &__icon,
@@ -99,25 +99,25 @@
         height: @app-size-height-progressbar;
         line-height: (@app-size-height-progressbar - (2 * @_progressbar-size-line));
     }
-    
+
     // Mod: Übersprungen
     &__step--skipped &__icon {
         background: transparent;
         box-shadow: inset 0 0 0 @_progressbar-size-line @app-color-light;
     }
-    
+
     // Mod: Fehler & Element: Icon
     &__step--error &__icon:after {
         content: @fontello-icon-cancel;
         color: @app-color-error;
     }
-    
+
     // Mod: Erfolg & Element: Icon
     &__step--success &__icon:after {
         content: @fontello-icon-check;
         color: @app-color-success;
     }
-    
+
     // Mod: Animiert & Elemente: Schritt und Icon
     &--animated &__step--success &__icon { .animation(progress-step-success); }
     &--animated &__step--error &__icon { .animation(progress-step-error); }

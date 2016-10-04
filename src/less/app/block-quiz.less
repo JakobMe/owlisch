@@ -18,10 +18,10 @@
     box-sizing: border-box;
     height: 100%;
     padding-top: (((@app-size-gap + @app-size-line-thin) * 2) + @app-size-height-progressbar);
-    
+
     // Block: Slider & Element: Slide
     .slider__slide { overflow: hidden; }
-    
+
     // Element: Titel
     &__title {
         display: block;
@@ -34,26 +34,26 @@
         .colored(@app-color-light, true);
         .border(bottom);
         .border(top);
-        
+
         // Sub-Elemente: Titel-Text und -Icon
         &-text { display: block; position: relative; }
         &-icon { margin-right: @app-size-gap-small; }
     }
-    
+
     // Element: Bild
     &__image {
         display: inline-block;
         height: 100%;
         width: auto;
     }
-    
+
     // Element: Antworten
     &__answers {
         font-size: 0;
         position: relative;
         text-align: center;
         padding: @app-size-gap;
-        
+
         // Clearfix
         &:after {
             content: "";
@@ -61,35 +61,35 @@
             display: table;
         }
     }
-    
+
     // Element: Antworten & Mod: Gesperrt & Element: Button
     &__answers--locked &__button { cursor: default; }
     &__answers--locked &__button:not(&__button--error):not(&__button--success) {
         opacity: @app-opacity-locked;
     }
-    
+
     // Element: Keyboard
     &__keyboard { .transition(); }
-    
+
     // Element: Antworten & Mod: Gesperrt & Element: Tastatur
     &__answers--locked &__keyboard {
         opacity: @app-opacity-invisible;
         .translate(0, 50%);
     }
-    
+
     // Element: Antworten & Mod: Gesperrt & Element: Hinweis
     &__answers .notice { .transition(); }
     &__answers--locked .notice {
         opacity: @app-opacity-invisible;
         .translate(0, 100%);
     }
-    
+
     // Element: Diagramm
     &__chart {
         .border(bottom);
         .border(top);
     }
-    
+
     // Element: Input
     &__input {
         -webkit-appearance: none;
@@ -115,7 +115,7 @@
         .gradient(top);
         .transition();
         .font-main();
-        
+
         // Mod: Buchstaben
         &--letters {
             padding-left: 0;
@@ -124,31 +124,31 @@
             line-height: (@_quiz-size-button - (2 * @app-size-line-medium));
             margin-bottom: @app-size-gap;
         }
-        
+
         // Mod: Klein
         &--small {
             font-size: @app-font-size-small;
         }
-        
+
         // Mods: Erfolg & Fehler
         &--success, &--error {
             padding-top: 0;
             padding-bottom: 0;
         }
-        
+
         // Mod: Erfolg
         &--success {
             .border-button(@app-color-success, @app-size-line-medium, false);
             .animation(answer-success);
         }
-        
+
         // Mod: Fehler
         &--error {
             .border-button(@app-color-error, @app-size-line-medium, false);
             .animation(answer-error);
         }
     }
-    
+
     // Element: Lösung
     &__solution {
         display: block;
@@ -167,7 +167,7 @@
         .border-button();
         .transition();
         .translate();
-        
+
         // Dreieck
         &:before {
             display: block;
@@ -181,7 +181,7 @@
             transform: translate3d(-50%, 0, 0) rotate(45deg);
             .shadow(-(@app-size-line-thin), -(@app-size-line-thin), 0, 0, @app-color-background-dark);
         }
-        
+
         // Icon
         &:after {
             display: block;
@@ -195,26 +195,26 @@
             width: @_quiz-size-button;
             content: "";
         }
-        
+
         // Mod: Erfolg
         &--success {
             .fontello-icon(@fontello-icon-check);
             &:after { color: @app-color-success; }
         }
-        
+
         // Mod: Fehler
         &--error {
             .fontello-icon(@fontello-icon-cancel);
             &:after { color: @app-color-error; }
         }
-        
+
         // Mod: Gesperrt
         &--locked {
             opacity: @app-opacity-invisible;
             .translate(0, -100%);
         }
     }
-    
+
     // Element: Buchstabe
     &__letter {
         float: left;
@@ -223,11 +223,11 @@
         height: (@_quiz-size-button - @app-size-line-medium);
         .border(right, @app-color-background-light);
         .transition();
-        
+
         // Letztes Element
         &:last-child { border: none; }
     }
-    
+
     // Element: Aktion
     &__action {
         -webkit-backface-visibility: hidden;
@@ -242,17 +242,17 @@
         opacity: @app-opacity-full;
         .transition();
         .translate();
-        
+
         // Mod: Gesperrt
         &--locked {
             opacity: @app-opacity-invisible;
             .translate(0, 100%);
         }
-        
+
         // Mod: Versteckt
         &--hidden { display: none; }
     }
-    
+
     // Element: Absenden
     &__submit { display: none; }
 }

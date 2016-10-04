@@ -289,7 +289,7 @@ In diesem Wörterbuch sind zum aktuellen Zeitpunkt folgende Begriffe vorhanden:
 
 ### Wörterbücher hinzufügen
 
-Um ein neues Wörterbuch hinzuzufügen, müssen zunächst alle erforderlichen Dateien unter `src/data/` angelegt werden; ein Verzeichnis mit dem Kurznamen des Wörterbüches, eine entsprechende JSON-Datei mit dem gleichen Namen und die Verzeichnisse `image` und `audio` im Wörterbuch Verzeichnis. Das sieht beispielsweise so aus:
+Um ein neues Wörterbuch hinzuzufügen, müssen zunächst alle erforderlichen Dateien unter `src/data/` angelegt werden; ein Verzeichnis mit dem Kurznamen des Wörterbuches, eine entsprechende JSON-Datei mit dem gleichen Namen und die Verzeichnisse `image` und `audio` im Wörterbuch-Verzeichnis. Das sieht beispielsweise so aus:
 
 ```
 data/

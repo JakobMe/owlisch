@@ -132,21 +132,6 @@ var Data = (function() {
         _dataScores = dataStored[_dictionaryAlias].scores;
         _sizeScores = _dataScores.length;
 
-        // Prüfen, ob Wörterbuch existiert
-        var dictionaryExists = false;
-        $.each(_dataDictionaries, function(i, data) {
-            if (data.alias === _dictionaryAlias) {
-                dictionaryExists = true;
-                return true;
-            }
-        });
-
-        // Standard laden, falls Wörterbuch nicht existiert
-        if (!dictionaryExists) {
-            _loadDataStored(CFG.DATA.DEFAULT);
-            return false;
-        }
-
         // Wörterbuch-Daten laden und speichern
         if (typeof dictionary === typeof "") { _storeData(); }
         _loadDataTerms();
@@ -202,9 +187,11 @@ var Data = (function() {
                 _dataTerms  = data.terms;
                 _sizeTerms  = data.terms.length;
             }
-        }).done(function() {
+        }).success(function() {
             _checkDictionaryFiles();
             _updateDataFeatured();
+        }).error(function() {
+            _loadDataStored(CFG.DATA.DEFAULT);
         });
     }
 

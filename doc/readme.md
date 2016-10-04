@@ -1823,7 +1823,7 @@ Initialisiert alle DOM-Elemente des Quiz.
 <a name="module_Quiz.._renderProgressbar"></a>
 
 #### Quiz~_renderProgressbar() ℗
-Rendert alle Schritte der Fortschrittsleiste anhand 
+Rendert alle Schritte der Fortschrittsleiste anhand
 des aktuellen Fortschrittes.
 
 **Kind**: inner method of <code>[Quiz](#module_Quiz)</code>  
@@ -3204,7 +3204,7 @@ Erstellt einen Slider auf einem gegebenen Ziel-DOM-Element.
 
 #### Slider~_init($target) ℗
 Initialisiert das DOM-Element des Sliders, die Anzahl der vorhandenen
-Slides, setzt ein Data-Attribut für jedes Slide und setzt den 
+Slides, setzt ein Data-Attribut für jedes Slide und setzt den
 Slider auf den ersten Slide.
 
 **Kind**: inner method of <code>[Slider](#Slider)</code>  
